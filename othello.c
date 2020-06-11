@@ -9,6 +9,8 @@
 // 1 billion
 #define INFINITY 1000000000
 
+#define printDecimal(x) printf("%d\n", x)
+
 // 64bit
 typedef long int int8B;
 
@@ -782,6 +784,21 @@ int play(void) {
     return 0;
 }
 
+int rotL90DegAd(int src) {
+    int dst;
+    int r, c;
+    r = src / 16;
+    c = src % 16 / 2;
+    dst = (7 - c) * 16 + r * 2;
+    return dst;
+}
+
+// rotate the board 90 degrees to the left
+Board rotL90DegBoard(Board b1) {
+    Board b2;
+    return b2;
+}
+
 // main
 int main(void) {
     // initial configure
@@ -797,7 +814,9 @@ int main(void) {
     sample2.board[1] = 0x0000200209021202;
     //play();
     showBoard(sample2);
-    putKoma(&sample2, 4, 0b10);
+    putKoma(&sample2, 40, 0b10);
     showBoard(sample2);
+    i = rotL90DegAd(0);
+    printDecimal(i);
     return 0;
 }
