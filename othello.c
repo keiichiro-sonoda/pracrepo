@@ -805,12 +805,9 @@ int rotL90DegAd(int src) {
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1) {
     Board b2 = createEmptyBoard();
-    int src, dst, koma;
-    for (src = 0; src < 128; src += 2) {
-        dst = rotL90DegAd(src);
-        koma = getKoma(b1, src);
-        putKoma(&b2, dst, koma);
-    }
+    int src;
+    for (src = 0; src < 128; src += 2)
+        putKoma(&b2, rotL90DegAd(src), getKoma(b1, src));
     return b2;
 }
 
@@ -829,13 +826,13 @@ int main(void) {
     sample2.board[1] = 0x0000200209021202;
     //play();
     showBoard(sample2);
-    putKoma(&sample2, 40, 0b10);
+    sample2 = rotL90DegBoard(sample2);
     showBoard(sample2);
-    emptyBoard(&sample1);
-    showBoard(sample1);
-    i = rotL90DegAd(126);
-    printDecimal(i);
-    sample1 = rotL90DegBoard(sample2);
-    showBoard(sample1);
+    sample2 = rotL90DegBoard(sample2);
+    showBoard(sample2);
+    sample2 = rotL90DegBoard(sample2);
+    showBoard(sample2);
+    sample2 = rotL90DegBoard(sample2);
+    showBoard(sample2);
     return 0;
 }
