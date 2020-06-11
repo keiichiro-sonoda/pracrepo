@@ -36,12 +36,9 @@ int getKoma(Board b, int ad) {
 }
 
 // put a piece at a certain address
-int putKoma(Board *pb, int ad, int koma) {
-    int8B mask;
-    mask = koma;
-    mask <<= ad & 0x3f;
-    (*pb).board[ad >> 6] |= mask;
-    return 0;
+void putKoma(Board *pb, int ad, int koma) {
+    (*pb).board[ad >> 6] |= (int8B)koma << (ad & 0x3f);
+    return;
 }
 
 // show a board
@@ -798,6 +795,9 @@ int main(void) {
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    play();
+    //play();
+    showBoard(sample2);
+    putKoma(&sample2, 4, 0b10);
+    showBoard(sample2);
     return 0;
 }
