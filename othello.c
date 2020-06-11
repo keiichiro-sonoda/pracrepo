@@ -50,6 +50,13 @@ void emptyBoard(Board *bp) {
     return;
 }
 
+Board createEmptyBoard(void) {
+    Board eb;
+    eb.board[0] = 0;
+    eb.board[1] = 0;
+    return eb;
+}
+
 // show a board
 int showBoard(Board b) {
     // column symbol
@@ -797,7 +804,13 @@ int rotL90DegAd(int src) {
 
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1) {
-    Board b2;
+    Board b2 = createEmptyBoard();
+    int src, dst, koma;
+    for (src = 0; src < 128; src += 2) {
+        dst = rotL90DegAd(src);
+        koma = getKoma(b1, src);
+        putKoma(&b2, dst, koma);
+    }
     return b2;
 }
 
@@ -822,5 +835,7 @@ int main(void) {
     showBoard(sample1);
     i = rotL90DegAd(126);
     printDecimal(i);
+    sample1 = rotL90DegBoard(sample2);
+    showBoard(sample1);
     return 0;
 }
