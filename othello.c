@@ -811,6 +811,18 @@ Board rotL90DegBoard(Board b1) {
     return b2;
 }
 
+Board mirrorHLBoard(Board b1) {
+    Board b2 = createEmptyBoard();
+    int i, j, row;
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            row = (b1.board[i] >> 16 * j) & 0xFFFF;
+            b2.board[1 - i] |= (int8B)row << 16 * (3 - j);
+        }
+    }
+    return b2;
+}
+
 // main
 int main(void) {
     // initial configure
@@ -826,11 +838,11 @@ int main(void) {
     sample2.board[1] = 0x0000200209021202;
     //play();
     showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
+    sample2 = mirrorHLBoard(sample2);
     showBoard(sample2);
     sample2 = rotL90DegBoard(sample2);
     showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
+    sample2 = mirrorHLBoard(sample2);
     showBoard(sample2);
     sample2 = rotL90DegBoard(sample2);
     showBoard(sample2);
