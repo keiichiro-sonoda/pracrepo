@@ -38,8 +38,15 @@ int getKoma(Board b, int ad) {
 }
 
 // put a piece at a certain address
-void putKoma(Board *pb, int ad, int koma) {
-    (*pb).board[ad >> 6] |= (int8B)koma << (ad & 0x3f);
+void putKoma(Board *bp, int ad, int koma) {
+    bp->board[ad >> 6] |= (int8B)koma << (ad & 0x3f);
+    return;
+}
+
+// empty the board
+void emptyBoard(Board *bp) {
+    bp->board[0] = 0;
+    bp->board[1] = 0;
     return;
 }
 
@@ -785,12 +792,7 @@ int play(void) {
 }
 
 int rotL90DegAd(int src) {
-    int dst;
-    int r, c;
-    r = src / 16;
-    c = src % 16 / 2;
-    dst = (7 - c) * 16 + r * 2;
-    return dst;
+    return (14 - src % 16) * 8 + (src / 16) * 2;
 }
 
 // rotate the board 90 degrees to the left
@@ -816,7 +818,9 @@ int main(void) {
     showBoard(sample2);
     putKoma(&sample2, 40, 0b10);
     showBoard(sample2);
-    i = rotL90DegAd(0);
+    emptyBoard(&sample1);
+    showBoard(sample1);
+    i = rotL90DegAd(126);
     printDecimal(i);
     return 0;
 }
