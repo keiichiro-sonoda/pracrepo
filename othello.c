@@ -791,9 +791,6 @@ int main(void) {
     START.board[0] = 0x0240000000000000;
     START.board[1] = 0x0000000000000180;
     int i, j;
-    int cpb[NEXT_MAX];
-    int cpw[NEXT_MAX];
-    int kc[3] = {0, 0, 0};
     Board nbs[NEXT_MAX];
     // sample boards
     Board sample1, sample2;
@@ -801,20 +798,6 @@ int main(void) {
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    //printf("%ld\n", sizeof START);
-    //play();
-    time_t t1, t2;
-    struct timespec ts1, ts2;
-    time(&t1);
-    timespec_get(&ts1, TIME_UTC);
-    sleep(3);
-    putchar('\n');
-    time(&t2);
-    timespec_get(&ts2, TIME_UTC);
-    printf("%ld, %ld\n", ts1.tv_sec, ts1.tv_nsec);
-    printf("%ld, %ld\n", ts2.tv_sec, ts2.tv_nsec);
-    printf("%ld\n", t1);
-    printf("%ld\n", t2);
-    printf("%ld\n", t2 - t1);
+    play();
     return 0;
 }
