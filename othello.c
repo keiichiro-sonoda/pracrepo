@@ -823,6 +823,19 @@ Board mirrorHLBoard(Board b1) {
     return b2;
 }
 
+// get the smaller board
+Board minBoard(Board b1, Board b2) {
+    if (b1.board[1] < b2.board[1])
+        return b1;
+    if (b1.board[1] > b2.board[1])
+        return b2;
+    if (b1.board[0] < b2.board[0])
+        return b1;
+    if (b1.board[0] < b2.board[0])
+        return b2;
+    return b1;
+}
+
 // main
 int main(void) {
     // initial configure
@@ -836,15 +849,10 @@ int main(void) {
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    //play();
+    showBoard(sample1);
+    showBoardHex(sample1);
     showBoard(sample2);
-    sample2 = mirrorHLBoard(sample2);
-    showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
-    showBoard(sample2);
-    sample2 = mirrorHLBoard(sample2);
-    showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
-    showBoard(sample2);
+    showBoardHex(sample2);
+    showBoard(minBoard(sample1, sample2));
     return 0;
 }
