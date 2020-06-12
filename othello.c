@@ -10,9 +10,10 @@
 #define INFINITY 1000000000
 
 #define printDecimal(x) printf("%d\n", x)
+#define kugiri() printf("----------------------------------\n");
 
 // 64bit
-typedef long int int8B;
+typedef unsigned long int int8B;
 
 // othello board
 // 128 bits
@@ -829,7 +830,7 @@ Board minBoard(Board b1, Board b2) {
         return b2;
     if (b1.board[0] < b2.board[0])
         return b1;
-    if (b1.board[0] < b2.board[0])
+    if (b1.board[0] > b2.board[0])
         return b2;
     return b1;
 }
@@ -839,18 +840,32 @@ Board normalBoard(Board b1) {
     Board b2, b3, b4, b5, b6, b7, b8, bm;
     b2 = rotL90DegBoard(b1);
     bm = minBoard(b1, b2);
+    showBoard(b2);
+    showBoard(bm);
     b3 = rotL90DegBoard(b2);
     bm = minBoard(bm, b3);
+    showBoard(b3);
+    showBoard(bm);
     b4 = rotL90DegBoard(b3);
     bm = minBoard(bm, b4);
+    showBoard(b4);
+    showBoard(bm);
     b5 = mirrorHLBoard(b1);
     bm = minBoard(bm, b5);
+    showBoard(b5);
+    showBoard(bm);
     b6 = mirrorHLBoard(b2);
     bm = minBoard(bm, b6);
+    showBoard(b6);
+    showBoard(bm);
     b7 = mirrorHLBoard(b3);
     bm = minBoard(bm, b7);
+    showBoard(b7);
+    showBoard(bm);
     b8 = mirrorHLBoard(b4);
     bm = minBoard(bm, b8);
+    showBoard(b8);
+    showBoard(bm);
     return bm;
 }
 
@@ -868,11 +883,12 @@ int main(void) {
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
     showBoard(sample2);
-    sample2 = normalBoard(sample2);
+    //sample2 = normalBoard(sample2);
     showBoard(sample2);
     sample2 = swapBoard(sample2);
     showBoard(sample2);
+    kugiri()
     sample2 = normalBoard(sample2);
-    showBoard(sample2);
+    //showBoard(sample2);
     return 0;
 }
