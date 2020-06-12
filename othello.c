@@ -573,13 +573,19 @@ void initBoard(void) {
 // main
 int main(void) {
     initBoard();
-    int i, j;
     // sample boards
     Board sample1, sample2;
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    play();
+    //play();
+    showBoard(sample1);
+    sample1 = swapBoard(sample1);
+    kugiri();
+    showBoard(sample1);
+    sample1 = normalBoard(sample1);
+    kugiri();
+    showBoard(sample1);
     return 0;
 }
