@@ -567,16 +567,6 @@ int zeros2D(int *iaa[], int l1, int l2) {
     return 0;
 }
 
-// all zero 3D array
-// int iaaa[l1][l2][l3]
-int zeros3D(int ***iaaa, int l1, int l2, int l3) {
-    int i;
-    for (i = 0; i < l1; i++) {
-        zeros2D(iaaa[i], l2, l3);
-    }
-    return 0;
-}
-
 int indexes(int *ia, int ia_len) {
     int i;
     for (i = 0; i < ia_len; i++)
