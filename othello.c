@@ -262,9 +262,9 @@ int canPutBlackPlus(Board b, int *cpb, Board *nbs) {
                 if (getKoma(b, ads[0]) ^ 0b10) continue;
                 // white
                 ads[1] = ads[0] + dir;
-                j = 1;
+                // while -> for
+                for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
                 // check the diagonal
-                while (ifNeighbor(ads[j - 1], ads[j])) {
                     koma = getKoma(b, ads[j]);
                     // black
                     // can put!!
@@ -283,9 +283,9 @@ int canPutBlackPlus(Board b, int *cpb, Board *nbs) {
                     else if (koma == 0b00) break;
                     // white
                     // may be able to reverse
-                    j++;
-                    ads[j] = ads[j - 1] + dir;
+                    ads[j + 1] = ads[j] + dir;
                 }
+
             }
         }
         // all directions were checked and reversed
@@ -422,6 +422,7 @@ int canPutWhitePlus(Board b, int *cpw, Board *nbs) {
                     cb = b;
                     reRange(&cb, ads, j);
                     nbs[index] = nextBoardWhite(cb, oad);
+                    // just in case
                     putKoma(nbs + index, oad, 0b10);
                     index++;
                 }
@@ -831,5 +832,10 @@ int play(void) {
         // next turn
         turn ^= 0b11;
     }
+    return 0;
+}
+
+int main(void) {
+    printf("Hello!!\n");
     return 0;
 }
