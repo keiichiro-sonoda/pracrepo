@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -7,13 +8,10 @@
 // 1 million
 #define MILLION 1000000
 // 1 billion
-#define INFINITY 1000000000
-
-#define printDecimal(x) printf("%d\n", x)
-#define kugiri() printf("----------------------------------\n");
+#define BILLION 1000000000
 
 // 64bit
-typedef unsigned long int int8B;
+typedef long int int8B;
 
 // othello board
 // 128 bits
@@ -39,23 +37,12 @@ int getKoma(Board b, int ad) {
 }
 
 // put a piece at a certain address
-void putKoma(Board *bp, int ad, int koma) {
-    bp->board[ad >> 6] |= (int8B)koma << (ad & 0x3f);
-    return;
-}
-
-// empty the board
-void emptyBoard(Board *bp) {
-    bp->board[0] = 0;
-    bp->board[1] = 0;
-    return;
-}
-
-Board createEmptyBoard(void) {
-    Board eb;
-    eb.board[0] = 0;
-    eb.board[1] = 0;
-    return eb;
+int putKoma(Board *pb, int ad, int koma) {
+    int8B mask;
+    mask = koma;
+    mask <<= ad & 0x3f;
+    (*pb).board[ad >> 6] |= mask;
+    return 0;
 }
 
 // show a board
@@ -173,7 +160,7 @@ int inArray(int *ar, int ar_len, int el) {
     return 0;
 }
 
-int getIndex(int *ar, int ar_len, int el) {
+int getIndex(const int *ar, int ar_len, int el) {
     int i;
     // check all elements
     for (i = 0; i < ar_len; i++) {
@@ -186,7 +173,7 @@ int getIndex(int *ar, int ar_len, int el) {
 // get maximum value of array
 int getMax(int *ar, int ar_len) {
     int i;
-    int mx = -INFINITY;
+    int mx = -BILLION;
     for (i = 0; i < ar_len; i++) {
         mx = (mx < ar[i] ? ar[i] : mx);
     }
@@ -458,8 +445,10 @@ int showBoardArray(Board *ba, int ba_len) {
 
 // swap white and black
 Board swapBoard(Board b) {
+    Board sb;
     int i;
-    Board sb = createEmptyBoard();
+    sb.board[0] = 0;
+    sb.board[1] = 0;
     for (i = 0; i < 64; i++) {
         sb.board[0] = (sb.board[0] << 1) | (b.board[1] & 0b1);
         sb.board[1] = (sb.board[1] << 1) | (b.board[0] & 0b1);
@@ -510,7 +499,7 @@ int ad2coo(int ad, char *dst) {
     return 0;
 }
 
-int showCoordinates(int *can_put, int length) {
+int showCoordinates(const int *can_put, int length) {
     if (length == 0) {
         printf("pass\n");
         return -1;
@@ -523,6 +512,15 @@ int showCoordinates(int *can_put, int length) {
         printf("%s ", str);
     }
     putchar('\n');
+    return 0;
+}
+
+int showCanPut(Board b, const int *can_put, int next_count) {
+    int i;
+    for (i = 0; i < next_count; i++)
+        putKoma(&b, can_put[i], 0b11);
+    showBoard(b);
+    showCoordinates(can_put, next_count);
     return 0;
 }
 
@@ -549,6 +547,43 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
     return length;
 }
 
+
+// all zero
+int zeros(int *ia, int ia_len) {
+    int i;
+    for (i = 0; i < ia_len; i++) {
+        ia[i] = 0;
+    }
+    return 0;
+}
+
+// all zero 2D array
+// int iaa[l1][l2]
+int zeros2D(int *iaa[], int l1, int l2) {
+    int i;
+    for (i = 0; i < l1; i++) {
+        zeros(iaa[i], l2);
+    }
+    return 0;
+}
+
+// all zero 3D array
+// int iaaa[l1][l2][l3]
+int zeros3D(int ***iaaa, int l1, int l2, int l3) {
+    int i;
+    for (i = 0; i < l1; i++) {
+        zeros2D(iaaa[i], l2, l3);
+    }
+    return 0;
+}
+
+int indexes(int *ia, int ia_len) {
+    int i;
+    for (i = 0; i < ia_len; i++)
+        ia[i] = i;
+    return 0;
+}
+
 // 5 arguments
 // count the number of pieces
 int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_count) {
@@ -559,6 +594,8 @@ int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_cou
     int ads[8];
     // opponent's color
     int opc = color ^ 0b11;
+    // reset count
+    zeros(koma_count, 3);
     // check all addresses
     for (ad = 0; ad < 128; ad += 2) {
         // check a piece
@@ -631,7 +668,7 @@ int negaMax(Board b, int color, int depth, int pass) {
         point = negaMax(b, opc, depth - 1, 1);
     } // general
     else {
-        point = -INFINITY;
+        point = -BILLION;
         // search next
         for (i = 0; i < nc; i++) {
             tp = negaMax(nba[i], opc, depth - 1, 0);
@@ -649,7 +686,7 @@ int wrapNegaMax(Board b, int color) {
     int cpa[NEXT_MAX];
     int kc[3] = {0, 0, 0};
     int opc = color ^ 0b11;
-    int mxpt = -INFINITY;
+    int mxpt = -BILLION;
     Board nba[NEXT_MAX];
     char moji[3];
     // calculate next
@@ -719,7 +756,7 @@ int wrapNegaMaxAB(Board b, int color) {
     int cpa[NEXT_MAX];
     int kc[3] = {0, 0, 0};
     int opc = color ^ 0b11;
-    int alpha = -INFINITY;
+    int alpha = -BILLION;
     Board nba[NEXT_MAX];
     char moji[3];
     // calculate next
@@ -728,7 +765,7 @@ int wrapNegaMaxAB(Board b, int color) {
     if (nc == 0) return -1;
     // opponent's turn
     for (index = 0; index < nc; index++) {
-        pt = negaMaxAB(nba[index], opc, 6, 0, -INFINITY, -alpha);
+        pt = negaMaxAB(nba[index], opc, 4, 0, -BILLION, -alpha);
         te = cpa[index];
         // bad action??
         if (te == 18 || te == 28 || te == 98 || te == 108) {
@@ -780,9 +817,9 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            //te = wrapNegaMaxAB(main_board, turn);
+            te = wrapNegaMaxAB(main_board, turn);
             //te = wrapNegaMax(main_board, turn);
-            te = getValidActStdin(can_put, count);
+            //te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
@@ -794,98 +831,5 @@ int play(void) {
         // next turn
         turn ^= 0b11;
     }
-    return 0;
-}
-
-int rotL90DegAd(int src) {
-    return (14 - src % 16) * 8 + (src / 16) * 2;
-}
-
-// rotate the board 90 degrees to the left
-Board rotL90DegBoard(Board b1) {
-    Board b2 = createEmptyBoard();
-    int src;
-    for (src = 0; src < 128; src += 2)
-        putKoma(&b2, rotL90DegAd(src), getKoma(b1, src));
-    return b2;
-}
-
-Board mirrorHLBoard(Board b1) {
-    Board b2 = createEmptyBoard();
-    int i, j, row;
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 4; j++) {
-            row = (b1.board[i] >> 16 * j) & 0xFFFF;
-            b2.board[1 - i] |= (int8B)row << 16 * (3 - j);
-        }
-    }
-    return b2;
-}
-
-// get the smaller board
-Board minBoard(Board b1, Board b2) {
-    if (b1.board[1] < b2.board[1])
-        return b1;
-    if (b1.board[1] > b2.board[1])
-        return b2;
-    if (b1.board[0] < b2.board[0])
-        return b1;
-    if (b1.board[0] > b2.board[0])
-        return b2;
-    return b1;
-}
-
-// normalize a board
-Board normalBoard(Board b1) {
-    Board b2, b3, b4, b5, b6, b7, b8, bm;
-    b2 = rotL90DegBoard(b1);
-    bm = minBoard(b1, b2);
-    //showBoard(b2);
-    //showBoard(bm);
-    b3 = rotL90DegBoard(b2);
-    bm = minBoard(bm, b3);
-    //showBoard(b3);
-    //showBoard(bm);
-    b4 = rotL90DegBoard(b3);
-    bm = minBoard(bm, b4);
-    //showBoard(b4);
-    //showBoard(bm);
-    b5 = mirrorHLBoard(b1);
-    bm = minBoard(bm, b5);
-    //showBoard(b5);
-    //showBoard(bm);
-    b6 = mirrorHLBoard(b2);
-    bm = minBoard(bm, b6);
-    //showBoard(b6);
-    //showBoard(bm);
-    b7 = mirrorHLBoard(b3);
-    bm = minBoard(bm, b7);
-    //showBoard(b7);
-    //showBoard(bm);
-    b8 = mirrorHLBoard(b4);
-    bm = minBoard(bm, b8);
-    //showBoard(b8);
-    //showBoard(bm);
-    return bm;
-}
-
-// initial configure
-void initBoard(void) {
-    START.board[1] = 0x0000000000000180L;
-    START.board[0] = 0x0240000000000000L;
-    return;
-}
-
-// main
-int main(void) {
-    initBoard();
-    int i, j;
-    // sample boards
-    Board sample1, sample2;
-    sample1.board[0] = 0xaaaa2aa902aa5541;
-    sample1.board[1] = 0x00000000000000aa;
-    sample2.board[0] = 0xaaaa28a90aaa5545;
-    sample2.board[1] = 0x0000200209021202;
-    play();
     return 0;
 }
