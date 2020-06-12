@@ -10,6 +10,8 @@
 // 1 billion
 #define BILLION 1000000000
 
+#define kugiri() printf("--------------------------\n")
+
 // 64bit
 typedef unsigned long int int8B;
 
