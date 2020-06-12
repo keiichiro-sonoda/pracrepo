@@ -826,6 +826,7 @@ void initBoard(void) {
     return;
 }
 
+/*
 // main
 int main(void) {
     initBoard();
@@ -848,3 +849,4 @@ int main(void) {
     showBoard(sample1);
     return 0;
 }
+*/
