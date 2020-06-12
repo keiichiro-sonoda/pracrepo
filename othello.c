@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -7,10 +8,9 @@
 // 1 million
 #define MILLION 1000000
 // 1 billion
-#define INFINITY 1000000000
+#define BILLION 1000000000
 
-#define printDecimal(x) printf("%d\n", x)
-#define kugiri() printf("----------------------------------\n");
+#define kugiri() printf("--------------------------\n")
 
 // 64bit
 typedef unsigned long int int8B;
@@ -28,10 +28,10 @@ Board START;
 // bin -> char
 // black: (0b01, o), white: (0b10, x), empty: (0b00, -)
 // can put sign: (0b11, !)
-const char B2C[] = "-ox!";
+const char B2C[5] = "-ox!";
 
 // 8 directions
-const int DIRECTION[] = {18, 16, 14, 2, -2, -14, -16, -18};
+const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 
 // get a piece at a certain address
 int getKoma(Board b, int ad) {
@@ -126,7 +126,7 @@ int inArray(int *ar, int ar_len, int el) {
     return 0;
 }
 
-int getIndex(int *ar, int ar_len, int el) {
+int getIndex(const int *ar, int ar_len, int el) {
     int i;
     // check all elements
     for (i = 0; i < ar_len; i++) {
@@ -139,7 +139,7 @@ int getIndex(int *ar, int ar_len, int el) {
 // get maximum value of array
 int getMax(int *ar, int ar_len) {
     int i;
-    int mx = -INFINITY;
+    int mx = -BILLION;
     for (i = 0; i < ar_len; i++) {
         mx = (mx < ar[i] ? ar[i] : mx);
     }
@@ -175,8 +175,10 @@ void showBoardArray(const Board *ba, int ba_len) {
 
 // swap white and black
 Board swapBoard(Board b) {
+    Board sb;
     int i;
-    Board sb = createEmptyBoard();
+    sb.board[0] = 0;
+    sb.board[1] = 0;
     for (i = 0; i < 64; i++) {
         sb.board[0] = (sb.board[0] << 1) | (b.board[1] & 0b1);
         sb.board[1] = (sb.board[1] << 1) | (b.board[0] & 0b1);
@@ -227,7 +229,7 @@ int ad2coo(int ad, char *dst) {
     return 0;
 }
 
-int showCoordinates(int *can_put, int length) {
+int showCoordinates(const int *can_put, int length) {
     if (length == 0) {
         printf("pass\n");
         return -1;
@@ -243,6 +245,65 @@ int showCoordinates(int *can_put, int length) {
     return 0;
 }
 
+int showCanPut(Board b, const int *can_put, int next_count) {
+    int i;
+    for (i = 0; i < next_count; i++)
+        putKoma(&b, can_put[i], 0b11);
+    showBoard(b);
+    showCoordinates(can_put, next_count);
+    return 0;
+}
+
+int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
+    int i, length;
+    switch (color) {
+        // black
+        case 0b01:
+            length = canPutBlackPlus(b, can_put, next_boards);
+            break;
+        // white
+        case 0b10:
+            length = canPutWhitePlus(b, can_put, next_boards);
+            break;
+        default:
+            length = 0;
+    }
+    for (i = 0; i < length; i++) {
+        putKoma(&b, can_put[i], 0b11);
+    }
+    // view
+    showBoard(b);
+    showCoordinates(can_put, length);
+    return length;
+}
+
+
+// all zero
+int zeros(int *ia, int ia_len) {
+    int i;
+    for (i = 0; i < ia_len; i++) {
+        ia[i] = 0;
+    }
+    return 0;
+}
+
+// all zero 2D array
+// int iaa[l1][l2]
+int zeros2D(int *iaa[], int l1, int l2) {
+    int i;
+    for (i = 0; i < l1; i++) {
+        zeros(iaa[i], l2);
+    }
+    return 0;
+}
+
+int indexes(int *ia, int ia_len) {
+    int i;
+    for (i = 0; i < ia_len; i++)
+        ia[i] = i;
+    return 0;
+}
+
 // 5 arguments
 // count the number of pieces
 int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_count) {
@@ -253,6 +314,8 @@ int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_cou
     int ads[8];
     // opponent's color
     int opc = color ^ 0b11;
+    // reset count
+    zeros(koma_count, 3);
     // check all addresses
     for (ad = 0; ad < 128; ad += 2) {
         // check a piece
@@ -338,7 +401,7 @@ int negaMax(Board b, int color, int depth, int pass) {
         point = negaMax(b, opc, depth - 1, 1);
     } // general
     else {
-        point = -INFINITY;
+        point = -BILLION;
         // search next
         for (i = 0; i < nc; i++) {
             tp = negaMax(nba[i], opc, depth - 1, 0);
@@ -356,7 +419,7 @@ int wrapNegaMax(Board b, int color) {
     int cpa[NEXT_MAX];
     int kc[3] = {0, 0, 0};
     int opc = color ^ 0b11;
-    int mxpt = -INFINITY;
+    int mxpt = -BILLION;
     Board nba[NEXT_MAX];
     char moji[3];
     // calculate next
@@ -426,7 +489,7 @@ int wrapNegaMaxAB(Board b, int color, int height) {
     int cpa[NEXT_MAX];
     int kc[3] = {0, 0, 0};
     int opc = color ^ 0b11;
-    int alpha = -INFINITY;
+    int alpha = -BILLION;
     Board nba[NEXT_MAX];
     char moji[3];
     // calculate next
@@ -435,7 +498,7 @@ int wrapNegaMaxAB(Board b, int color, int height) {
     if (nc == 0) return -1;
     // opponent's turn
     for (index = 0; index < nc; index++) {
-        pt = negaMaxAB(nba[index], opc, height, 0, -INFINITY, -alpha);
+        pt = negaMaxAB(nba[index], opc, 4, 0, -BILLION, -alpha);
         te = cpa[index];
         // bad action??
         if (te == 18 || te == 28 || te == 98 || te == 108) {

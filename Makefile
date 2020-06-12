@@ -1,3 +1,5 @@
+exe: genetic.c othello.c
+	gcc genetic.c othello.c -o exe
 othello: othello.c
 	gcc othello.c -o othello
 test002: test002.c
