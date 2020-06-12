@@ -12,8 +12,17 @@ typedef struct singlel {
     struct singlel *next;
 } Singlel;
 
+typedef struct doublel {
+    struct doublel *prev;
+    int key;
+    struct doublel *next;
+} Doublel;
+
 Singlel *S_HEAD = NULL;
 Singlel *S_TAIL = NULL;
+
+Doublel *D_HEAD = NULL;
+Doublel *D_TAIL = NULL;
 
 void printIntArray(const int *A, int n) {
     int i;
@@ -25,6 +34,10 @@ void printIntArray(const int *A, int n) {
 
 Singlel *newNode(void) {
     return (Singlel *)malloc(sizeof(Singlel));
+}
+
+Doublel *newNodeDoublel(void) {
+    return (Doublel *)malloc(sizeof(Doublel));
 }
 
 void addNode(int x) {
@@ -41,12 +54,43 @@ void addNode(int x) {
     return;
 }
 
+void addNodeDoublel(int x) {
+    Doublel *new = newNodeDoublel();
+    if (new == NULL) {
+        printf("cannot malloc.\n");
+        return;
+    }
+    new->key = x;
+    if (D_HEAD == NULL) {
+        D_HEAD = new;
+        new->prev = NULL;
+    } else {
+        D_TAIL->next = new;
+        new->prev = D_TAIL;
+    }
+    new->next = NULL;
+    D_TAIL = new;
+    return;
+}
+
 void printSinglel(void) {
     Singlel *current = S_HEAD;
     while (current != NULL) {
         printf("now : %x\n", current);
         printf("key : %d\n", current->key);
         printf("next: %x\n", current->next);
+        kugiri();
+        current = current->next;
+    }
+    return;
+}
+
+void printDoublel(void) {
+    Doublel *current = D_HEAD;
+    while (current != NULL) {
+        printf("prev: %x\n", current->prev);
+        printf("key : %d\n", current->key);
+        printf("next: %d\n", current->next);
         kugiri();
         current = current->next;
     }
@@ -144,11 +188,11 @@ void heapsort(int *A, int n) {
 
 int main(void) {
     srand((unsigned)time(NULL));
-    int heap1[] = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
-    int l1 = arrayLength(heap1);
-    printDecimal(l1);
-    printIntArray(heap1, l1);
-    heapsort(heap1, l1);
-    printIntArray(heap1, l1);
+    int dla[] = {9, 16, 4, 1};
+    int dll = arrayLength(dla);
+    int i;
+    for (i = 0; i < dll; i++)
+        addNodeDoublel(dla[i]);
+    printDoublel();
     return 0;
 }
