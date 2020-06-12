@@ -4,6 +4,7 @@
 
 #define kugiri() printf("---------------------------------\n")
 #define printSize(x) printf("%ld\n", sizeof x)
+#define printDecimal(x) printf("%d\n", x)
 
 typedef struct singlel {
     int key;
@@ -86,19 +87,25 @@ void insertionSortRecursive(int *A, int n) {
     return;
 }
 
+int heapParent(int i) {
+    return (i - 1) >> 1;
+}
+
+int heapLeft(int i) {
+    return (i << 1) + 1;
+}
+
+int heapRight(int i) {
+    return i + 1 << 1;
+}
+
 int main(void) {
     srand((unsigned)time(NULL));
-    int i, r;
-    int l = 16;
-    int *sample1 = makeArrayRand(l);
-    printIntArray(sample1, l);
-    insertionSortRecursive(sample1, l);
-    printIntArray(sample1, l);
-    printSize(S_HEAD);
-    for (i = 0; i < 10; i++) {
-        r = rand() % 100;
-        addNode(r);
-    }
-    printSinglel();
+    int heap1[] = {16, 14, 10, 8, 7, 9, 3, 2, 4, 1};
+    int i;
+    i = 3;
+    printDecimal(heapLeft(i));
+    printDecimal(heapRight(i));
+    printDecimal(heapParent(i));
     return 0;
 }
