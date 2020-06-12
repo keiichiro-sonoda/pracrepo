@@ -117,7 +117,7 @@ void maxHeapify(int *A, int i, int n) {
         largest = r;
     if (largest != i) {
         swap(A, i, largest);
-        printf("%d %d\n", A[i], A[largest]);
+        //printf("%d %d\n", A[i], A[largest]);
         maxHeapify(A, largest, n);
     }
     return;
@@ -126,8 +126,18 @@ void maxHeapify(int *A, int i, int n) {
 void buildMaxHeap(int *A, int n) {
     int i;
     for (i = heapParent(n - 1); i >= 0; i--) {
-        printDecimal(i);
+        //printDecimal(i);
         maxHeapify(A, i, n);
+    }
+    return;
+}
+
+void heapsort(int *A, int n) {
+    int i;
+    buildMaxHeap(A, n);
+    for (i = n - 1; i >= 1; i--) {
+        swap(A, 0, i);
+        maxHeapify(A, 0, i);
     }
     return;
 }
@@ -138,7 +148,7 @@ int main(void) {
     int l1 = arrayLength(heap1);
     printDecimal(l1);
     printIntArray(heap1, l1);
-    buildMaxHeap(heap1, l1);
+    heapsort(heap1, l1);
     printIntArray(heap1, l1);
     return 0;
 }
