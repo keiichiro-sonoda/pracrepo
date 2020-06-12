@@ -11,7 +11,7 @@
 #define BILLION 1000000000
 
 // 64bit
-typedef long int int8B;
+typedef unsigned long int int8B;
 
 // othello board
 // 128 bits
@@ -104,52 +104,6 @@ int ifNeighbor(int src, int dst) {
     return 1;
 }
 
-// find addresses to put black
-// empty base
-int canPutBlack(Board b, int *cpb) {
-    int i, ad, nad, nnad, dir, koma;
-    int index = 0;
-    int flag = 0;
-    for (ad = 0; ad < 128; ad += 2) {
-        // not empty
-        if (getKoma(b, ad)) continue;
-        // empty
-        for (i = 0; i < 8; i++) {
-            dir = DIRECTION[i];
-            nad = ad + dir;
-            // neighbor!
-            if (ifNeighbor(ad, nad)) {
-                // not white
-                if (getKoma(b, nad) ^ 0b10) continue;
-                // white
-                nnad = nad + dir;
-                // check the diagonal
-                while (ifNeighbor(nad, nnad)) {
-                    koma = getKoma(b, nnad);
-                    // black
-                    if (koma == 0b01) {
-                        cpb[index] = ad;
-                        flag = 1;
-                        index++;
-                        break;
-                    } // empty
-                    else if (koma == 0b00) {
-                        break;
-                    } // white
-                    nad = nnad;
-                    nnad += dir;
-                } // discovered
-                if (flag) {
-                    flag = 0;
-                    break;
-                }
-            }
-        }
-    }
-    // return array length
-    return index;
-}
-
 // check if the element is in the array
 int inArray(int *ar, int ar_len, int el) {
     int i;
@@ -180,49 +134,6 @@ int getMax(int *ar, int ar_len) {
     return mx;
 }
 
-// find addresses to put white
-// white base
-int canPutWhite(Board b, int *cpw) {
-    int i, ad, nad, nnad, dir, con;
-    int index = 0;
-    // check all addresses
-    for (ad = 0; ad < 128; ad += 2) {
-        // not white
-        if (getKoma(b, ad) ^ 0b10) continue;
-        // white
-        // check 8 directions
-        for (i = 0; i < 8; i++) {
-            dir = DIRECTION[i];
-            nad = ad + dir;
-            // not neighbor or neighbor is not black
-            if (!ifNeighbor(ad, nad) || (getKoma(b, nad) ^ 0b01)) continue;
-            nnad = nad + dir;
-            con = 1;
-            // check the diagonal
-            while (con && ifNeighbor(nad, nnad)) {
-                switch (getKoma(b, nnad)) {
-                    // black
-                    case 0b01:
-                        nad = nnad;
-                        nnad += dir;
-                        break;
-                    // empty
-                    case 0b00:
-                        // first
-                        if (!inArray(cpw, index, nnad)) {
-                            cpw[index] = nnad;
-                            index++;
-                        }
-                    // white or empty
-                    default:
-                        con = 0;
-                }
-            }
-        }
-    }
-    return index;
-}
-
 // reverse a piece at a certain address
 // give a Board pointer to rewrite it
 int reOneAd(Board *pb, int ad) {
@@ -240,207 +151,14 @@ int reRange(Board *pb, int *ads, int length) {
     return 0;
 }
 
-// find addresses to put black
-// and calculate nextboard
-int canPutBlackPlus(Board b, int *cpb, Board *nbs) {
-    int i, j, ad, dir, koma;
-    int index = 0;
-    int flag = 0;
-    // reversible addresses
-    int ads[8];
-    // check all addresses
-    for (ad = 0; ad < 128; ad += 2) {
-        // not empty
-        if (getKoma(b, ad)) continue;
-        // empty
-        for (i = 0; i < 8; i++) {
-            dir = DIRECTION[i];
-            ads[0] = ad + dir;
-            // neighbor!
-            if (ifNeighbor(ad, ads[0])) {
-                // not white
-                if (getKoma(b, ads[0]) ^ 0b10) continue;
-                // white
-                ads[1] = ads[0] + dir;
-                j = 1;
-                // check the diagonal
-                while (ifNeighbor(ads[j - 1], ads[j])) {
-                    koma = getKoma(b, ads[j]);
-                    // black
-                    // can put!!
-                    if (koma == 0b01) {
-                        // first
-                        if (!flag) {
-                            // copy board
-                            nbs[index] = b;
-                            cpb[index] = ad;
-                            flag = 1;
-                        }
-                        // reverse
-                        reRange(nbs + index, ads, j);
-                        break;
-                    } // empty
-                    else if (koma == 0b00) break;
-                    // white
-                    // may be able to reverse
-                    j++;
-                    ads[j] = ads[j - 1] + dir;
-                }
-            }
-        }
-        // all directions were checked and reversed
-        // put the piece!
-        if (flag) {
-            putKoma(nbs + index, ad, 0x01);
-            index++;
-            flag = 0;
-        }
-    }
-    // return array length
-    return index;
-}
-
-// return next board (put black)
-// if invalid action, return same board
-Board nextBoardBlack(Board b, int te) {
-    // not empty
-    if (getKoma(b, te)) return b;
-    int i, j, con, dir;
-    int ads[8];
-    // validity
-    int valid = 0;
-    Board nb;
-    // deep copy
-    nb = b;
-    // check 8 directions
-    for (i = 0; i < 8; i++) {
-        dir = DIRECTION[i];
-        ads[0] = te + dir;
-        // not neighbor
-        if (!ifNeighbor(te, ads[0])) continue;
-        // not white
-        if (getKoma(b, ads[0]) ^ 0b10) continue;
-        ads[1] = ads[0] + dir;
-        // continue flag
-        con = 1;
-        // check diagonal
-        for (j = 1; con && ifNeighbor(ads[j - 1], ads[j]); j++) {
-            switch (getKoma(b, ads[j])) {
-                // white
-                case 0b10:
-                    ads[j + 1] = ads[j] + dir;
-                    break;
-                // black
-                case 0b01:
-                    reRange(&nb, ads, j);
-                    valid = 1;
-                // black or empty
-                default:
-                    con = 0;
-            }
-        }
-    }
-    // can put!!
-    if (valid) {
-        putKoma(&nb, te, 0b01);
-    } else printf("cannot put\n");
-    return nb;
-}
-
-// return next board (put white)
-Board nextBoardWhite(Board b, int te) {
-    // not empty
-    if (getKoma(b, te)) return b;
-    int i, j, dir, koma;
-    int ads[8];
-    // changed
-    int flag = 0;
-    // check 8 directions
-    for (i = 0; i < 8; i++) {
-        dir = DIRECTION[i];
-        ads[0] = te + dir;
-        // not neighbor or neighbor is not black
-        if (!ifNeighbor(te, ads[0]) || (getKoma(b, ads[0]) ^ 0b01)) continue;
-        ads[1] = ads[0] + dir;
-        // check the diagonal
-        for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
-            koma = getKoma(b, ads[j]);
-            // black
-            if (koma == 0b01) {
-                ads[j + 1] = ads[j] + dir;
-                continue;
-            } // white
-            else if (koma == 0b10) {
-                reRange(&b, ads, j);
-                flag = 1;
-            }
-            // white or empty
-            break;
-        }
-    }
-    // put white
-    if (flag) {
-        putKoma(&b, te, 0b10);
-    }
-    return b;
-}
-
-// find addresses to put white (black base)
-// and calculate nextboard
-int canPutWhitePlus(Board b, int *cpw, Board *nbs) {
-    int i, j, ad, oad, dir, koma;
-    int index = 0;
-    int ads[8];
-    // temporary variable
-    Board cb;
-    // check all addresses
-    for (ad = 0; ad < 128; ad += 2) {
-        // not black
-        if (getKoma(b, ad) ^ 0b01) continue;
-        // check 8 directions
-        for (i = 0; i < 8; i++) {
-            dir = DIRECTION[i];
-            // check the opposite
-            oad = ad - dir;
-            // not neighbor or neighbor is not empty
-            if (!ifNeighbor(ad, oad) || getKoma(b, oad)) continue;
-            // already known
-            if (inArray(cpw, index, oad)) continue;
-            ads[0] = ad;
-            ads[1] = ad + dir;
-            // check the diagonal
-            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
-                koma = getKoma(b, ads[j]);
-                // black
-                if (koma == 0b01) {
-                    ads[j + 1] = ads[j] + dir;
-                    continue;
-                } // white
-                if (koma == 0b10) {
-                    cpw[index] = oad;
-                    // copy
-                    cb = b;
-                    reRange(&cb, ads, j);
-                    nbs[index] = nextBoardWhite(cb, oad);
-                    putKoma(nbs + index, oad, 0b10);
-                    index++;
-                }
-                // white or empty
-                break;
-            }
-        }
-    }
-    return index;
-}
-
 // show some boards
-int showBoardArray(Board *ba, int ba_len) {
+void showBoardArray(const Board *ba, int ba_len) {
     int i;
     for (i = 0; i < ba_len; i++) {
         showBoardHex(ba[i]);
         showBoard(ba[i]);
     }
-    return 0;
+    return;
 }
 
 // swap white and black
@@ -635,6 +353,19 @@ int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_cou
     return index;
 }
 
+int showCanPutPP(Board b, int color, int *can_put, Board *next_boards) {
+    int i, length;
+    int kc[3] = {0, 0, 0};
+    length = canPutPP(b, color, can_put, next_boards, kc);
+    for (i = 0; i < length; i++) {
+        putKoma(&b, can_put[i], 0b11);
+    }
+    // view
+    showBoard(b);
+    showCoordinates(can_put, length);
+    return length;
+}
+
 // nega max
 int negaMax(Board b, int color, int depth, int pass) {
     int i, point, tp, nc, dif;
@@ -739,7 +470,7 @@ int negaMaxAB(Board b, int color, int depth, int pass, int alpha, int beta) {
     return -alpha;
 }
 
-int wrapNegaMaxAB(Board b, int color) {
+int wrapNegaMaxAB(Board b, int color, int height) {
     // best action?
     int best_te = -1;
     int index, nc, pt, te;
@@ -789,7 +520,7 @@ int play(void) {
     int turn = 0b01;
     while (1) {
         printf("turn %2d: %c\n", t_count, B2C[turn]);
-        count = showCanPutPlus(main_board, turn, can_put, next_boards);
+        count = showCanPutPP(main_board, turn, can_put, next_boards);
         // cannot put a piece anywhere
         if (count == 0) {
             // cannot do anything each other
@@ -807,13 +538,13 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            te = wrapNegaMaxAB(main_board, turn);
+            te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
             //te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
-            te = wrapNegaMaxAB(main_board, turn);
+            te = wrapNegaMaxAB(main_board, turn, 4);
             //te = wrapNegaMax(main_board, turn);
             index = getIndex(can_put, count, te);
         } // update board
