@@ -5,6 +5,7 @@
 #define kugiri() printf("---------------------------------\n")
 #define printSize(x) printf("%ld\n", sizeof x)
 #define printDecimal(x) printf("%d\n", x)
+#define arrayLength(A) sizeof(A) / sizeof(A[0])
 
 typedef struct singlel {
     int key;
@@ -99,13 +100,45 @@ int heapRight(int i) {
     return i + 1 << 1;
 }
 
+void swap(int *A, int i, int j) {
+    int tv = A[i];
+    A[i] = A[j];
+    A[j] = tv;
+    return;
+}
+
+void maxHeapify(int *A, int i, int n) {
+    int largest = i;
+    int l = heapLeft(i);
+    int r = heapRight(i);
+    if (l < n && A[l] > A[i])
+        largest = l;
+    if (r < n && A[r] > A[largest])
+        largest = r;
+    if (largest != i) {
+        swap(A, i, largest);
+        printf("%d %d\n", A[i], A[largest]);
+        maxHeapify(A, largest, n);
+    }
+    return;
+}
+
+void buildMaxHeap(int *A, int n) {
+    int i;
+    for (i = heapParent(n - 1); i >= 0; i--) {
+        printDecimal(i);
+        maxHeapify(A, i, n);
+    }
+    return;
+}
+
 int main(void) {
     srand((unsigned)time(NULL));
-    int heap1[] = {16, 14, 10, 8, 7, 9, 3, 2, 4, 1};
-    int i;
-    i = 3;
-    printDecimal(heapLeft(i));
-    printDecimal(heapRight(i));
-    printDecimal(heapParent(i));
+    int heap1[] = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
+    int l1 = arrayLength(heap1);
+    printDecimal(l1);
+    printIntArray(heap1, l1);
+    buildMaxHeap(heap1, l1);
+    printIntArray(heap1, l1);
     return 0;
 }
