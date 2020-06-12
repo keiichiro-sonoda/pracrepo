@@ -728,7 +728,7 @@ int wrapNegaMaxAB(Board b, int color) {
     if (nc == 0) return -1;
     // opponent's turn
     for (index = 0; index < nc; index++) {
-        pt = negaMaxAB(nba[index], opc, 4, 0, -INFINITY, -alpha);
+        pt = negaMaxAB(nba[index], opc, 6, 0, -INFINITY, -alpha);
         te = cpa[index];
         // bad action??
         if (te == 18 || te == 28 || te == 98 || te == 108) {
@@ -780,9 +780,9 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            te = wrapNegaMaxAB(main_board, turn);
+            //te = wrapNegaMaxAB(main_board, turn);
             //te = wrapNegaMax(main_board, turn);
-            //te = getValidActStdin(can_put, count);
+            te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
@@ -886,6 +886,6 @@ int main(void) {
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    showBoard(START);
+    play();
     return 0;
 }
