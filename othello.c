@@ -554,3 +554,88 @@ int play(void) {
     }
     return 0;
 }
+
+int rotL90DegAd(int src) {
+    return (14 - src % 16) * 8 + (src / 16) * 2;
+}
+
+// rotate the board 90 degrees to the left
+Board rotL90DegBoard(Board b1) {
+    Board b2 = createEmptyBoard();
+    int src;
+    for (src = 0; src < 128; src += 2)
+        putKoma(&b2, rotL90DegAd(src), getKoma(b1, src));
+    return b2;
+}
+
+Board mirrorHLBoard(Board b1) {
+    Board b2 = createEmptyBoard();
+    int i, j, row;
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            row = (b1.board[i] >> 16 * j) & 0xFFFF;
+            b2.board[1 - i] |= (int8B)row << 16 * (3 - j);
+        }
+    }
+    return b2;
+}
+
+// get the smaller board
+Board minBoard(Board b1, Board b2) {
+    if (b1.board[1] < b2.board[1])
+        return b1;
+    if (b1.board[1] > b2.board[1])
+        return b2;
+    if (b1.board[0] < b2.board[0])
+        return b1;
+    if (b1.board[0] > b2.board[0])
+        return b2;
+    return b1;
+}
+
+// normalize a board
+Board normalBoard(Board b1) {
+    Board b2, b3, b4, b5, b6, b7, b8, bm;
+    b2 = rotL90DegBoard(b1);
+    bm = minBoard(b1, b2);
+    b3 = rotL90DegBoard(b2);
+    bm = minBoard(bm, b3);
+    b4 = rotL90DegBoard(b3);
+    bm = minBoard(bm, b4);
+    b5 = mirrorHLBoard(b1);
+    bm = minBoard(bm, b5);
+    b6 = mirrorHLBoard(b2);
+    bm = minBoard(bm, b6);
+    b7 = mirrorHLBoard(b3);
+    bm = minBoard(bm, b7);
+    b8 = mirrorHLBoard(b4);
+    bm = minBoard(bm, b8);
+    return bm;
+}
+
+// initial configure
+void initBoard(void) {
+    START.board[1] = 0x0000000000000180L;
+    START.board[0] = 0x0240000000000000L;
+    return;
+}
+
+// main
+int main(void) {
+    initBoard();
+    // sample boards
+    Board sample1, sample2;
+    sample1.board[0] = 0xaaaa2aa902aa5541;
+    sample1.board[1] = 0x00000000000000aa;
+    sample2.board[0] = 0xaaaa28a90aaa5545;
+    sample2.board[1] = 0x0000200209021202;
+    //play();
+    showBoard(sample1);
+    sample1 = swapBoard(sample1);
+    kugiri();
+    showBoard(sample1);
+    sample1 = normalBoard(sample1);
+    kugiri();
+    showBoard(sample1);
+    return 0;
+}
