@@ -10,9 +10,10 @@
 #define INFINITY 1000000000
 
 #define printDecimal(x) printf("%d\n", x)
+#define kugiri() printf("----------------------------------\n");
 
 // 64bit
-typedef long int int8B;
+typedef unsigned long int int8B;
 
 // othello board
 // 128 bits
@@ -457,10 +458,8 @@ int showBoardArray(Board *ba, int ba_len) {
 
 // swap white and black
 Board swapBoard(Board b) {
-    Board sb;
     int i;
-    sb.board[0] = 0;
-    sb.board[1] = 0;
+    Board sb = createEmptyBoard();
     for (i = 0; i < 64; i++) {
         sb.board[0] = (sb.board[0] << 1) | (b.board[1] & 0b1);
         sb.board[1] = (sb.board[1] << 1) | (b.board[0] & 0b1);
@@ -729,7 +728,7 @@ int wrapNegaMaxAB(Board b, int color) {
     if (nc == 0) return -1;
     // opponent's turn
     for (index = 0; index < nc; index++) {
-        pt = negaMaxAB(nba[index], opc, 4, 0, -INFINITY, -alpha);
+        pt = negaMaxAB(nba[index], opc, 6, 0, -INFINITY, -alpha);
         te = cpa[index];
         // bad action??
         if (te == 18 || te == 28 || te == 98 || te == 108) {
@@ -781,9 +780,9 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            te = wrapNegaMaxAB(main_board, turn);
+            //te = wrapNegaMaxAB(main_board, turn);
             //te = wrapNegaMax(main_board, turn);
-            //te = getValidActStdin(can_put, count);
+            te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
@@ -823,28 +822,70 @@ Board mirrorHLBoard(Board b1) {
     return b2;
 }
 
+// get the smaller board
+Board minBoard(Board b1, Board b2) {
+    if (b1.board[1] < b2.board[1])
+        return b1;
+    if (b1.board[1] > b2.board[1])
+        return b2;
+    if (b1.board[0] < b2.board[0])
+        return b1;
+    if (b1.board[0] > b2.board[0])
+        return b2;
+    return b1;
+}
+
+// normalize a board
+Board normalBoard(Board b1) {
+    Board b2, b3, b4, b5, b6, b7, b8, bm;
+    b2 = rotL90DegBoard(b1);
+    bm = minBoard(b1, b2);
+    //showBoard(b2);
+    //showBoard(bm);
+    b3 = rotL90DegBoard(b2);
+    bm = minBoard(bm, b3);
+    //showBoard(b3);
+    //showBoard(bm);
+    b4 = rotL90DegBoard(b3);
+    bm = minBoard(bm, b4);
+    //showBoard(b4);
+    //showBoard(bm);
+    b5 = mirrorHLBoard(b1);
+    bm = minBoard(bm, b5);
+    //showBoard(b5);
+    //showBoard(bm);
+    b6 = mirrorHLBoard(b2);
+    bm = minBoard(bm, b6);
+    //showBoard(b6);
+    //showBoard(bm);
+    b7 = mirrorHLBoard(b3);
+    bm = minBoard(bm, b7);
+    //showBoard(b7);
+    //showBoard(bm);
+    b8 = mirrorHLBoard(b4);
+    bm = minBoard(bm, b8);
+    //showBoard(b8);
+    //showBoard(bm);
+    return bm;
+}
+
+// initial configure
+void initBoard(void) {
+    START.board[1] = 0x0000000000000180L;
+    START.board[0] = 0x0240000000000000L;
+    return;
+}
+
 // main
 int main(void) {
-    // initial configure
-    START.board[0] = 0x0240000000000000;
-    START.board[1] = 0x0000000000000180;
+    initBoard();
     int i, j;
-    Board nbs[NEXT_MAX];
     // sample boards
     Board sample1, sample2;
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    //play();
-    showBoard(sample2);
-    sample2 = mirrorHLBoard(sample2);
-    showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
-    showBoard(sample2);
-    sample2 = mirrorHLBoard(sample2);
-    showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
-    showBoard(sample2);
+    play();
     return 0;
 }
