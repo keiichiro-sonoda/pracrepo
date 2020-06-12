@@ -53,8 +53,7 @@ void emptyBoard(Board *bp) {
 
 Board createEmptyBoard(void) {
     Board eb;
-    eb.board[0] = 0;
-    eb.board[1] = 0;
+    emptyBoard(&eb);
     return eb;
 }
 
@@ -585,6 +584,9 @@ int main(void) {
     kugiri();
     showBoard(sample1);
     sample1 = normalBoard(sample1);
+    kugiri();
+    showBoard(sample1);
+    sample1 = createEmptyBoard();
     kugiri();
     showBoard(sample1);
     return 0;
