@@ -153,6 +153,7 @@ void reOneAd(Board *bp, int ad) {
     return;
 }
 
+// reverse pieces in some addresses?
 void reRange(Board *bp, int *ads, int length) {
     int i;
     for (i = 0; i < length; i++)
@@ -823,18 +824,24 @@ void initBoard(void) {
     return;
 }
 
+// swap and normalize a board
+void swapNormalizeBoard(Board *bp) {
+    *bp = normalBoard(swapBoard(*bp));
+    return;
+}
+
 // give a normalized board
 // next turn is always black
 int nextBoardNormal(Board b, Board *next_boards, int *koma_count) {
     int index = 0;
-    int i, j, ad, dif, flag;
+    int i, j, ad, dif, cnt;
     int ads[8];
     Board nbs_t[32];
+    int flag = 0;
     // search all addresses
     for (ad = 0; ad < 128; ad += 2) {
         // not empty
         if (getKoma(b, ad)) continue;
-        flag = 0;
         // search neighbor
         for (i = 0; i < 8; i++) {
             dif = DIRECTION[i];
@@ -842,11 +849,13 @@ int nextBoardNormal(Board b, Board *next_boards, int *koma_count) {
             // not neighbor or neighbor is not white
             if (!ifNeighbor(ad, ads[0]) || getKoma(b, ads[0]) ^ 0b10) continue;
             ads[1] = ads[0] + dif;
+            cnt = 1;
             // search the diagonal
-            for (j = 1; ifNeighbor(ads[j-1], ads[j]); j++) {
+            for (j = 1; cnt && ifNeighbor(ads[j - 1], ads[j]); j++) {
                 switch(getKoma(b, ads[j])) {
                     // white
                     case 0b10:
+                        ads[j + 1] = ads[j] + dif;
                         continue;
                     // black
                     case 0b01:
@@ -856,12 +865,22 @@ int nextBoardNormal(Board b, Board *next_boards, int *koma_count) {
                             nbs_t[index] = b;
                             flag = 1;
                         }
+                        // reverse!
                         reRange(nbs_t + index, ads, j);
                     // black or empty
                     default:
+                        cnt = 0;
                         break;
                 }
             }
+        }
+        // can put
+        if (flag) {
+            // put black
+            putKoma(nbs_t + index, ad, 0b01);
+            swapNormalizeBoard(nbs_t + index);
+            flag = 0;
+            index++;
         }
     }
     return index;
@@ -877,15 +896,8 @@ int main(void) {
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
     //play();
-    showBoard(sample1);
-    sample1 = swapBoard(sample1);
-    kugiri();
-    showBoard(sample1);
-    sample1 = normalBoard(sample1);
-    kugiri();
-    showBoard(sample1);
-    sample1 = createEmptyBoard();
-    kugiri();
-    showBoard(sample1);
+    showBoard(sample2);
+    swapNormalizeBoard(&sample2);
+    showBoard(sample2);
     return 0;
 }
