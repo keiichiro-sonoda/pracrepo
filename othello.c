@@ -830,13 +830,28 @@ void swapNormalizeBoard(Board *bp) {
     return;
 }
 
+int sameBoard(Board b1, Board b2) {
+    if (b1.board[0] != b2.board[0]) return 0;
+    if (b1.board[1] != b2.board[1]) return 0;
+    return 1;
+}
+
+// check if it's a known board
+int knownBoard(const Board *ba, int n, Board b) {
+    int i;
+    for (i = 0; i < n; i++) {
+        if (sameBoard(ba[i], b)) return 1;
+    }
+    return 0;
+}
+
 // give a normalized board
 // next turn is always black
 int nextBoardNormal(Board b, Board *next_boards) {
     int index = 0;
     int i, j, ad, dif, cnt;
     int ads[8];
-    Board nbs_t[32];
+    Board nb_t[0];
     int flag = 0;
     // search all addresses
     for (ad = 0; ad < 128; ad += 2) {
@@ -862,11 +877,11 @@ int nextBoardNormal(Board b, Board *next_boards) {
                         // first
                         if (!flag) {
                             // board copy
-                            nbs_t[index] = b;
+                            nb_t[0] = b;
                             flag = 1;
                         }
                         // reverse!
-                        reRange(nbs_t + index, ads, j);
+                        reRange(nb_t, ads, j);
                     // black or empty
                     default:
                         cnt = 0;
@@ -877,14 +892,18 @@ int nextBoardNormal(Board b, Board *next_boards) {
         // can put
         if (flag) {
             // put black
-            putKoma(nbs_t + index, ad, 0b01);
-            swapNormalizeBoard(nbs_t + index);
+            putKoma(nb_t, ad, 0b01);
+            swapNormalizeBoard(nb_t);
+            // new board
+            if (!knownBoard(next_boards, index, nb_t[0])) {
+                next_boards[index] = nb_t[0];
+                index++;
+            }
             flag = 0;
-            index++;
         }
     }
     // check
-    showBoardArray(nbs_t, index);
+    showBoardArray(next_boards, index);
     return index;
 }
 
@@ -893,12 +912,13 @@ int main(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;
+    Board nbs[32];
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
     //play();
-    showBoard(sample2);
-    nextBoardNormal(sample2, NULL);
+    showBoard(START);
+    nextBoardNormal(START, nbs);
     return 0;
 }
