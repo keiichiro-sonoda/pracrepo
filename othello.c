@@ -148,19 +148,16 @@ int getMax(int *ar, int ar_len) {
 
 // reverse a piece at a certain address
 // give a Board pointer to rewrite it
-int reOneAd(Board *pb, int ad) {
-    int8B mask = 0b11;
-    mask <<= ad & 0x3f;
-    (*pb).board[ad >> 6] ^= mask;
-    return 0;
+void reOneAd(Board *bp, int ad) {
+    bp->board[ad >> 6] ^= (int8B)0b11 << ad & 0x3F;
+    return;
 }
 
-int reRange(Board *pb, int *ads, int length) {
+void reRange(Board *bp, int *ads, int length) {
     int i;
-    for (i = 0; i < length; i++) {
-        reOneAd(pb, ads[i]);
-    }
-    return 0;
+    for (i = 0; i < length; i++)
+        reOneAd(bp, ads[i]);
+    return;
 }
 
 // find addresses to put black
@@ -826,8 +823,47 @@ void initBoard(void) {
     return;
 }
 
-int nextBoardNormal(Board b, int *can_put, Board *next_boards, int *koma_count) {
+// give a normalized board
+// next turn is always black
+int nextBoardNormal(Board b, Board *next_boards, int *koma_count) {
     int index = 0;
+    int i, j, ad, dif, flag;
+    int ads[8];
+    Board nbs_t[32];
+    // search all addresses
+    for (ad = 0; ad < 128; ad += 2) {
+        // not empty
+        if (getKoma(b, ad)) continue;
+        flag = 0;
+        // search neighbor
+        for (i = 0; i < 8; i++) {
+            dif = DIRECTION[i];
+            ads[0] = ad + dif;
+            // not neighbor or neighbor is not white
+            if (!ifNeighbor(ad, ads[0]) || getKoma(b, ads[0]) ^ 0b10) continue;
+            ads[1] = ads[0] + dif;
+            // search the diagonal
+            for (j = 1; ifNeighbor(ads[j-1], ads[j]); j++) {
+                switch(getKoma(b, ads[j])) {
+                    // white
+                    case 0b10:
+                        continue;
+                    // black
+                    case 0b01:
+                        // first
+                        if (!flag) {
+                            // board copy
+                            nbs_t[index] = b;
+                            flag = 1;
+                        }
+                        reRange(nbs_t + index, ads, j);
+                    // black or empty
+                    default:
+                        break;
+                }
+            }
+        }
+    }
     return index;
 }
 
