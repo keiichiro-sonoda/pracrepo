@@ -826,7 +826,11 @@ void initBoard(void) {
     return;
 }
 
-/*
+int nextBoardNormal(Board b, int *can_put, Board *next_boards, int *koma_count) {
+    int index = 0;
+    return index;
+}
+
 // main
 int main(void) {
     initBoard();
@@ -849,4 +853,3 @@ int main(void) {
     showBoard(sample1);
     return 0;
 }
-*/
