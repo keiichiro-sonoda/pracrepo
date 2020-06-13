@@ -149,7 +149,7 @@ int getMax(int *ar, int ar_len) {
 // reverse a piece at a certain address
 // give a Board pointer to rewrite it
 void reOneAd(Board *bp, int ad) {
-    bp->board[ad >> 6] ^= (int8B)0b11 << ad & 0x3F;
+    (bp->board)[ad >> 6] ^= (int8B)0b11 << (ad & 0x3F);
     return;
 }
 
@@ -832,7 +832,7 @@ void swapNormalizeBoard(Board *bp) {
 
 // give a normalized board
 // next turn is always black
-int nextBoardNormal(Board b, Board *next_boards, int *koma_count) {
+int nextBoardNormal(Board b, Board *next_boards) {
     int index = 0;
     int i, j, ad, dif, cnt;
     int ads[8];
@@ -883,6 +883,8 @@ int nextBoardNormal(Board b, Board *next_boards, int *koma_count) {
             index++;
         }
     }
+    // check
+    showBoardArray(nbs_t, index);
     return index;
 }
 
@@ -897,7 +899,6 @@ int main(void) {
     sample2.board[1] = 0x0000200209021202;
     //play();
     showBoard(sample2);
-    swapNormalizeBoard(&sample2);
-    showBoard(sample2);
+    nextBoardNormal(sample2, NULL);
     return 0;
 }
