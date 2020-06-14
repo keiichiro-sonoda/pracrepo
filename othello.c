@@ -10,6 +10,9 @@
 // 1 billion
 #define BILLION 1000000000
 
+#define START_H 0x0000000000000180L
+#define START_L 0x0240000000000000L
+
 #define kugiri() printf("--------------------------\n")
 
 // 64bit
@@ -819,8 +822,8 @@ Board normalBoard(Board b1) {
 
 // initial configure
 void initBoard(void) {
-    START.board[1] = 0x0000000000000180L;
-    START.board[0] = 0x0240000000000000L;
+    START.board[1] = START_H;
+    START.board[0] = START_L;
     return;
 }
 

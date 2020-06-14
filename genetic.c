@@ -20,9 +20,6 @@
 
 #define SURVIVE_NUM 10
 
-#define START_H 0x0000000000000180L
-#define START_L 0x0240000000000000L
-
 // types
 
 typedef long int8B;
@@ -63,6 +60,7 @@ int indexes(int *ia, int ia_len);
 int showCanPut(Board b, const int *can_put, const int next_count);
 int getValidActStdin(int *can_put, int length);
 int getIndex(const int *ar, int ar_len, int el);
+int initBoard(void);
 
 // functions
 
@@ -790,21 +788,9 @@ int vsTopGeneration(int gene_num) {
 }
 
 int main(int argc, char *argv[]) {
-    int i;
-    int st = 400;
-    int loop = 0;
-    long st_tm, tm;
     // initial configuration
-    START.board[1] = START_H;
-    START.board[0] = START_L;
-    // seed reset
-    srand((unsigned)time(&st_tm));
-    for (i = st; i < st + loop; i++) {
-        nextGeneration(i);
-        time(&tm);
-        printf("elapsed time: %lds\n", tm - st_tm);
-    }
-    vsTopGeneration(400);
-    printf("%s\n", B2C);
+    initBoard();
+    // test
+    showBoard(START);
     return 0;
 }
