@@ -928,11 +928,15 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
     Board sb = swapBoard(b);
     // check all addresses
     for (ad = 0; ad < 128; ad += 2) {
-        // check a piece
+        // check a piece (on swapped board)
         koma = getKoma(sb, ad);
-        koma_count[koma]++;
         // not empty
-        if (koma) continue;
+        if (koma) {
+            koma_count[koma ^ 0b11]++;
+            continue;
+        }
+        // empty
+        koma_count[0]++;
         // empty
         for (i = 0; i < 8; i++) {
             dir = DIRECTION[i];

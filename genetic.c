@@ -22,7 +22,7 @@
 
 // types
 
-typedef long int8B;
+typedef unsigned long int8B;
 
 typedef struct {
     int8B board[2];
@@ -364,6 +364,7 @@ int oneToOneNormal(const Param *spp, const Param *gpp) {
                 break;
             }
             // pass
+            printf("pass\n");
             swapNormalizeBoard(&main_board);
             turn ^= 0b11;
             pass = 1;
@@ -372,15 +373,19 @@ int oneToOneNormal(const Param *spp, const Param *gpp) {
         pass = 0;
         // determine a next board
         // black (first)
-        if (turn == 0b01)
+        if (turn == 0b01) {
+            printf("black\n");
             main_board = getBestBoardForBlack(nba, n, spp);
-        // white (second)
-        else
+        } // white (second)
+        else {
+            printf("white\n");
             main_board = getBestBoardForBlack(nba, n, gpp);
+        }
         turn ^= 0b11;
     }
     // difference between black and white
     dif = kc[1] - kc[2];
+    printIntDec(dif);
     if (dif > 0) return turn;
     if (dif < 0) return turn ^ 0b11;
     // draw
@@ -881,6 +886,8 @@ int main(int argc, char *argv[]) {
     Param p1, p2;
     paramRand(&p1);
     paramRand(&p2);
-    oneToOneNormal(&p1, &p2);
+    START.board[1] = (int8B)0x0100;
+    i = oneToOneNormal(&p1, &p2);
+    printIntDec(i);
     return 0;
 }
