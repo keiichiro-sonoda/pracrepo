@@ -113,6 +113,20 @@ int binarySearchRecursive(const int *A, int p, int r, int v) {
     return -1;
 }
 
+int binarySearchRecursive2(const int *A, int p, int r, int v) {
+    if (p < r) {
+        int q = (p + r) / 2;
+        if (A[q] < v)
+            return binarySearchRecursive2(A, q + 1, r, v);
+        if (A[q] > v)
+            return binarySearchRecursive2(A, p, q - 1, v);
+        else
+            return q;
+    }
+    // 最終的に収束した値を返す
+    return p;
+}
+
 // 集合Sに和がxとなるペアが存在するか
 // Sはソート済み配列とする
 int searchPairSumX(int *S, int n, int x) {
@@ -133,7 +147,8 @@ int main(void) {
     sl = deduplication(sample1, l);
     printDecimal(sl);
     printIntArray(sample1, sl);
-    i = binarySearchRecursive(sample1, 0, sl - 1, 800);
+    i = binarySearchRecursive2(sample1, 0, sl - 1, 800);
     printDecimal(i);
+    printDecimal(sample1[i]);
     return 0;
 }
