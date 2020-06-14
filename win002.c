@@ -83,12 +83,33 @@ void randomizedQuicksort(int *A, int p, int r) {
     return;
 }
 
+// 重複排除関数
+// A: ソート済み配列, n: 配列長
+int deduplication(int *A, int n) {
+    int i;
+    int dup_count = 0;
+    for (i = 1; i < n; i++) {
+        // 重複発見
+        if (A[i - 1] == A[i]) {
+            dup_count++;
+        }
+        // 今までの重複数だけ前にずらす
+        A[i - dup_count] = A[i];
+    }
+    // 重複を含まない部分の長さを返す
+    return n - dup_count;
+}
+
 int main(void) {
     srand((unsigned)time(NULL));
-    int l = 100;
+    int l = 1000;
     int *sample1 = makeArrayRand3Digits(l);
-    printIntArray(sample1, l);
+    int sl;
+    //printIntArray(sample1, l);
     randomizedQuicksort(sample1, 0, l - 1);
     printIntArray(sample1, l);
+    sl = deduplication(sample1, l);
+    printDecimal(sl);
+    printIntArray(sample1, sl);
     return 0;
 }
