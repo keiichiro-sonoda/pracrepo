@@ -173,7 +173,7 @@ int *searchPairSumX(const int *S, int n, int x) {
 
 int main(void) {
     srand((unsigned)time(NULL));
-    int l = 100;
+    int l = 200;
     // 3桁の乱数の配列を作成
     int *sample1 = makeArrayRand3Digits(l);
     int n, i, x;
