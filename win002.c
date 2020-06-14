@@ -128,27 +128,67 @@ int binarySearchRecursive2(const int *A, int p, int r, int v) {
 }
 
 // 集合Sに和がxとなるペアが存在するか
-// Sはソート済み配列とする
-int searchPairSumX(int *S, int n, int x) {
-    int i, j;
+// Sは重複無しソート済み配列とする
+int *searchPairSumX(const int *S, int n, int x) {
+    int *pair;
+    pair = (int *)malloc(2 * sizeof(int));
+    if (pair == NULL) {
+        printf("can't malloc.\n");
+        return NULL;
+    }
+    int i, j, k, l, partner;
     int h = x / 2;
-    for (i = 0; S[i] < h; i++);
-    return 0;
+    // hに最も近い添え字をiに代入
+    i = binarySearchRecursive2(S, 0, n - 1, h);
+    // xのちょうど半分の値が見つかった
+    if (x % 2 == 0 && S[i] == h) {
+        pair[0] = h;
+        pair[1] = h;
+        return pair;
+    }
+    // iはh以下で最大の要素の添え字とする
+    // S[i]がhより大きければデクリメント
+    if (S[i] > h)
+        i--;
+    // jはx以下で最大の要素の添え字とする
+    j = binarySearchRecursive2(S, i, n - 1, x);
+    if (S[j] > x)
+        j--;
+    // h以下の要素を調べる
+    for (k = 0; k <= i; k++) {
+        // 足してxになる値を計算
+        partner = x - S[k];
+        l = binarySearchRecursive(S, i + 1, j, partner);
+        // ペアが見つかった
+        if (l >= 0) {
+            pair[0] = S[k];
+            pair[1] = S[l];
+            return pair;
+        }
+    }
+    // 見つからなければNULLを返す
+    return NULL;
 }
 
 int main(void) {
     srand((unsigned)time(NULL));
-    int l = 1000;
+    int l = 100;
     int *sample1 = makeArrayRand3Digits(l);
-    int sl, i;
+    int sl, i, x;
+    int *p;
     //printIntArray(sample1, l);
     randomizedQuicksort(sample1, 0, l - 1);
     //printIntArray(sample1, l);
     sl = deduplication(sample1, l);
     printDecimal(sl);
     printIntArray(sample1, sl);
-    i = binarySearchRecursive2(sample1, 0, sl - 1, 800);
-    printDecimal(i);
-    printDecimal(sample1[i]);
+    x = rand() % 1999;
+    printf("x = %d\n", x);
+    p = searchPairSumX(sample1, sl, x);
+    if (p == NULL) {
+        printf("nothing.\n");
+    } else {
+        printf("%d + %d = %d\n", p[0], p[1], x);
+    }
     return 0;
 }
