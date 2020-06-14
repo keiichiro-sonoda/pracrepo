@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -7,12 +8,12 @@
 // 1 million
 #define MILLION 1000000
 // 1 billion
-#define INFINITY 1000000000
+#define BILLION 1000000000
 
-#define printDecimal(x) printf("%d\n", x)
+#define kugiri() printf("--------------------------\n")
 
 // 64bit
-typedef long int int8B;
+typedef unsigned long int int8B;
 
 // othello board
 // 128 bits
@@ -27,10 +28,10 @@ Board START;
 // bin -> char
 // black: (0b01, o), white: (0b10, x), empty: (0b00, -)
 // can put sign: (0b11, !)
-const char B2C[] = "-ox!";
+const char B2C[5] = "-ox!";
 
 // 8 directions
-const int DIRECTION[] = {18, 16, 14, 2, -2, -14, -16, -18};
+const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 
 // get a piece at a certain address
 int getKoma(Board b, int ad) {
@@ -52,8 +53,7 @@ void emptyBoard(Board *bp) {
 
 Board createEmptyBoard(void) {
     Board eb;
-    eb.board[0] = 0;
-    eb.board[1] = 0;
+    emptyBoard(&eb);
     return eb;
 }
 
@@ -116,52 +116,6 @@ int ifNeighbor(int src, int dst) {
     return 1;
 }
 
-// find addresses to put black
-// empty base
-int canPutBlack(Board b, int *cpb) {
-    int i, ad, nad, nnad, dir, koma;
-    int index = 0;
-    int flag = 0;
-    for (ad = 0; ad < 128; ad += 2) {
-        // not empty
-        if (getKoma(b, ad)) continue;
-        // empty
-        for (i = 0; i < 8; i++) {
-            dir = DIRECTION[i];
-            nad = ad + dir;
-            // neighbor!
-            if (ifNeighbor(ad, nad)) {
-                // not white
-                if (getKoma(b, nad) ^ 0b10) continue;
-                // white
-                nnad = nad + dir;
-                // check the diagonal
-                while (ifNeighbor(nad, nnad)) {
-                    koma = getKoma(b, nnad);
-                    // black
-                    if (koma == 0b01) {
-                        cpb[index] = ad;
-                        flag = 1;
-                        index++;
-                        break;
-                    } // empty
-                    else if (koma == 0b00) {
-                        break;
-                    } // white
-                    nad = nnad;
-                    nnad += dir;
-                } // discovered
-                if (flag) {
-                    flag = 0;
-                    break;
-                }
-            }
-        }
-    }
-    // return array length
-    return index;
-}
-
 // check if the element is in the array
 int inArray(int *ar, int ar_len, int el) {
     int i;
@@ -172,7 +126,7 @@ int inArray(int *ar, int ar_len, int el) {
     return 0;
 }
 
-int getIndex(int *ar, int ar_len, int el) {
+int getIndex(const int *ar, int ar_len, int el) {
     int i;
     // check all elements
     for (i = 0; i < ar_len; i++) {
@@ -185,71 +139,26 @@ int getIndex(int *ar, int ar_len, int el) {
 // get maximum value of array
 int getMax(int *ar, int ar_len) {
     int i;
-    int mx = -INFINITY;
+    int mx = -BILLION;
     for (i = 0; i < ar_len; i++) {
         mx = (mx < ar[i] ? ar[i] : mx);
     }
     return mx;
 }
 
-// find addresses to put white
-// white base
-int canPutWhite(Board b, int *cpw) {
-    int i, ad, nad, nnad, dir, con;
-    int index = 0;
-    // check all addresses
-    for (ad = 0; ad < 128; ad += 2) {
-        // not white
-        if (getKoma(b, ad) ^ 0b10) continue;
-        // white
-        // check 8 directions
-        for (i = 0; i < 8; i++) {
-            dir = DIRECTION[i];
-            nad = ad + dir;
-            // not neighbor or neighbor is not black
-            if (!ifNeighbor(ad, nad) || (getKoma(b, nad) ^ 0b01)) continue;
-            nnad = nad + dir;
-            con = 1;
-            // check the diagonal
-            while (con && ifNeighbor(nad, nnad)) {
-                switch (getKoma(b, nnad)) {
-                    // black
-                    case 0b01:
-                        nad = nnad;
-                        nnad += dir;
-                        break;
-                    // empty
-                    case 0b00:
-                        // first
-                        if (!inArray(cpw, index, nnad)) {
-                            cpw[index] = nnad;
-                            index++;
-                        }
-                    // white or empty
-                    default:
-                        con = 0;
-                }
-            }
-        }
-    }
-    return index;
-}
-
 // reverse a piece at a certain address
 // give a Board pointer to rewrite it
-int reOneAd(Board *pb, int ad) {
-    int8B mask = 0b11;
-    mask <<= ad & 0x3f;
-    (*pb).board[ad >> 6] ^= mask;
-    return 0;
+void reOneAd(Board *bp, int ad) {
+    (bp->board)[ad >> 6] ^= (int8B)0b11 << (ad & 0x3F);
+    return;
 }
 
-int reRange(Board *pb, int *ads, int length) {
+// reverse pieces in some addresses?
+void reRange(Board *bp, int *ads, int length) {
     int i;
-    for (i = 0; i < length; i++) {
-        reOneAd(pb, ads[i]);
-    }
-    return 0;
+    for (i = 0; i < length; i++)
+        reOneAd(bp, ads[i]);
+    return;
 }
 
 // find addresses to put black
@@ -274,9 +183,9 @@ int canPutBlackPlus(Board b, int *cpb, Board *nbs) {
                 if (getKoma(b, ads[0]) ^ 0b10) continue;
                 // white
                 ads[1] = ads[0] + dir;
-                j = 1;
+                // while -> for
+                for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
                 // check the diagonal
-                while (ifNeighbor(ads[j - 1], ads[j])) {
                     koma = getKoma(b, ads[j]);
                     // black
                     // can put!!
@@ -295,9 +204,9 @@ int canPutBlackPlus(Board b, int *cpb, Board *nbs) {
                     else if (koma == 0b00) break;
                     // white
                     // may be able to reverse
-                    j++;
-                    ads[j] = ads[j - 1] + dir;
+                    ads[j + 1] = ads[j] + dir;
                 }
+
             }
         }
         // all directions were checked and reversed
@@ -434,6 +343,7 @@ int canPutWhitePlus(Board b, int *cpw, Board *nbs) {
                     cb = b;
                     reRange(&cb, ads, j);
                     nbs[index] = nextBoardWhite(cb, oad);
+                    // just in case
                     putKoma(nbs + index, oad, 0b10);
                     index++;
                 }
@@ -446,13 +356,13 @@ int canPutWhitePlus(Board b, int *cpw, Board *nbs) {
 }
 
 // show some boards
-int showBoardArray(Board *ba, int ba_len) {
+void showBoardArray(const Board *ba, int ba_len) {
     int i;
     for (i = 0; i < ba_len; i++) {
         showBoardHex(ba[i]);
         showBoard(ba[i]);
     }
-    return 0;
+    return;
 }
 
 // swap white and black
@@ -511,7 +421,7 @@ int ad2coo(int ad, char *dst) {
     return 0;
 }
 
-int showCoordinates(int *can_put, int length) {
+int showCoordinates(const int *can_put, int length) {
     if (length == 0) {
         printf("pass\n");
         return -1;
@@ -524,6 +434,15 @@ int showCoordinates(int *can_put, int length) {
         printf("%s ", str);
     }
     putchar('\n');
+    return 0;
+}
+
+int showCanPut(Board b, const int *can_put, int next_count) {
+    int i;
+    for (i = 0; i < next_count; i++)
+        putKoma(&b, can_put[i], 0b11);
+    showBoard(b);
+    showCoordinates(can_put, next_count);
     return 0;
 }
 
@@ -550,6 +469,33 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
     return length;
 }
 
+
+// all zero
+int zeros(int *ia, int ia_len) {
+    int i;
+    for (i = 0; i < ia_len; i++) {
+        ia[i] = 0;
+    }
+    return 0;
+}
+
+// all zero 2D array
+// int iaa[l1][l2]
+int zeros2D(int *iaa[], int l1, int l2) {
+    int i;
+    for (i = 0; i < l1; i++) {
+        zeros(iaa[i], l2);
+    }
+    return 0;
+}
+
+int indexes(int *ia, int ia_len) {
+    int i;
+    for (i = 0; i < ia_len; i++)
+        ia[i] = i;
+    return 0;
+}
+
 // 5 arguments
 // count the number of pieces
 int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_count) {
@@ -560,6 +506,8 @@ int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_cou
     int ads[8];
     // opponent's color
     int opc = color ^ 0b11;
+    // reset count
+    zeros(koma_count, 3);
     // check all addresses
     for (ad = 0; ad < 128; ad += 2) {
         // check a piece
@@ -609,6 +557,19 @@ int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_cou
     return index;
 }
 
+int showCanPutPP(Board b, int color, int *can_put, Board *next_boards) {
+    int i, length;
+    int kc[3] = {0, 0, 0};
+    length = canPutPP(b, color, can_put, next_boards, kc);
+    for (i = 0; i < length; i++) {
+        putKoma(&b, can_put[i], 0b11);
+    }
+    // view
+    showBoard(b);
+    showCoordinates(can_put, length);
+    return length;
+}
+
 // nega max
 int negaMax(Board b, int color, int depth, int pass) {
     int i, point, tp, nc, dif;
@@ -632,7 +593,7 @@ int negaMax(Board b, int color, int depth, int pass) {
         point = negaMax(b, opc, depth - 1, 1);
     } // general
     else {
-        point = -INFINITY;
+        point = -BILLION;
         // search next
         for (i = 0; i < nc; i++) {
             tp = negaMax(nba[i], opc, depth - 1, 0);
@@ -650,7 +611,7 @@ int wrapNegaMax(Board b, int color) {
     int cpa[NEXT_MAX];
     int kc[3] = {0, 0, 0};
     int opc = color ^ 0b11;
-    int mxpt = -INFINITY;
+    int mxpt = -BILLION;
     Board nba[NEXT_MAX];
     char moji[3];
     // calculate next
@@ -713,14 +674,14 @@ int negaMaxAB(Board b, int color, int depth, int pass, int alpha, int beta) {
     return -alpha;
 }
 
-int wrapNegaMaxAB(Board b, int color) {
+int wrapNegaMaxAB(Board b, int color, int height) {
     // best action?
     int best_te = -1;
     int index, nc, pt, te;
     int cpa[NEXT_MAX];
     int kc[3] = {0, 0, 0};
     int opc = color ^ 0b11;
-    int alpha = -INFINITY;
+    int alpha = -BILLION;
     Board nba[NEXT_MAX];
     char moji[3];
     // calculate next
@@ -729,7 +690,7 @@ int wrapNegaMaxAB(Board b, int color) {
     if (nc == 0) return -1;
     // opponent's turn
     for (index = 0; index < nc; index++) {
-        pt = negaMaxAB(nba[index], opc, 4, 0, -INFINITY, -alpha);
+        pt = negaMaxAB(nba[index], opc, 4, 0, -BILLION, -alpha);
         te = cpa[index];
         // bad action??
         if (te == 18 || te == 28 || te == 98 || te == 108) {
@@ -763,7 +724,7 @@ int play(void) {
     int turn = 0b01;
     while (1) {
         printf("turn %2d: %c\n", t_count, B2C[turn]);
-        count = showCanPutPlus(main_board, turn, can_put, next_boards);
+        count = showCanPutPP(main_board, turn, can_put, next_boards);
         // cannot put a piece anywhere
         if (count == 0) {
             // cannot do anything each other
@@ -781,13 +742,13 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            te = wrapNegaMaxAB(main_board, turn);
+            te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
             //te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
-            te = wrapNegaMaxAB(main_board, turn);
+            te = wrapNegaMaxAB(main_board, turn, 4);
             //te = wrapNegaMax(main_board, turn);
             index = getIndex(can_put, count, te);
         } // update board
@@ -823,28 +784,141 @@ Board mirrorHLBoard(Board b1) {
     return b2;
 }
 
+// get the smaller board
+Board minBoard(Board b1, Board b2) {
+    if (b1.board[1] < b2.board[1])
+        return b1;
+    if (b1.board[1] > b2.board[1])
+        return b2;
+    if (b1.board[0] < b2.board[0])
+        return b1;
+    if (b1.board[0] > b2.board[0])
+        return b2;
+    return b1;
+}
+
+// normalize a board
+Board normalBoard(Board b1) {
+    Board b2, b3, b4, b5, b6, b7, b8, bm;
+    b2 = rotL90DegBoard(b1);
+    bm = minBoard(b1, b2);
+    b3 = rotL90DegBoard(b2);
+    bm = minBoard(bm, b3);
+    b4 = rotL90DegBoard(b3);
+    bm = minBoard(bm, b4);
+    b5 = mirrorHLBoard(b1);
+    bm = minBoard(bm, b5);
+    b6 = mirrorHLBoard(b2);
+    bm = minBoard(bm, b6);
+    b7 = mirrorHLBoard(b3);
+    bm = minBoard(bm, b7);
+    b8 = mirrorHLBoard(b4);
+    bm = minBoard(bm, b8);
+    return bm;
+}
+
+// initial configure
+void initBoard(void) {
+    START.board[1] = 0x0000000000000180L;
+    START.board[0] = 0x0240000000000000L;
+    return;
+}
+
+// swap and normalize a board
+void swapNormalizeBoard(Board *bp) {
+    *bp = normalBoard(swapBoard(*bp));
+    return;
+}
+
+int sameBoard(Board b1, Board b2) {
+    if (b1.board[0] != b2.board[0]) return 0;
+    if (b1.board[1] != b2.board[1]) return 0;
+    return 1;
+}
+
+// check if it's a known board
+int knownBoard(const Board *ba, int n, Board b) {
+    int i;
+    for (i = 0; i < n; i++) {
+        if (sameBoard(ba[i], b)) return 1;
+    }
+    return 0;
+}
+
+// give a normalized board
+// next turn is always black
+int nextBoardNormal(Board b, Board *next_boards) {
+    int index = 0;
+    int i, j, ad, dif, cnt;
+    int ads[8];
+    Board nb_t[0];
+    int flag = 0;
+    // search all addresses
+    for (ad = 0; ad < 128; ad += 2) {
+        // not empty
+        if (getKoma(b, ad)) continue;
+        // search neighbor
+        for (i = 0; i < 8; i++) {
+            dif = DIRECTION[i];
+            ads[0] = ad + dif;
+            // not neighbor or neighbor is not white
+            if (!ifNeighbor(ad, ads[0]) || getKoma(b, ads[0]) ^ 0b10) continue;
+            ads[1] = ads[0] + dif;
+            cnt = 1;
+            // search the diagonal
+            for (j = 1; cnt && ifNeighbor(ads[j - 1], ads[j]); j++) {
+                switch(getKoma(b, ads[j])) {
+                    // white
+                    case 0b10:
+                        ads[j + 1] = ads[j] + dif;
+                        continue;
+                    // black
+                    case 0b01:
+                        // first
+                        if (!flag) {
+                            // board copy
+                            nb_t[0] = b;
+                            flag = 1;
+                        }
+                        // reverse!
+                        reRange(nb_t, ads, j);
+                    // black or empty
+                    default:
+                        cnt = 0;
+                        break;
+                }
+            }
+        }
+        // can put
+        if (flag) {
+            // put black
+            putKoma(nb_t, ad, 0b01);
+            swapNormalizeBoard(nb_t);
+            // new board
+            if (!knownBoard(next_boards, index, nb_t[0])) {
+                next_boards[index] = nb_t[0];
+                index++;
+            }
+            flag = 0;
+        }
+    }
+    // check
+    showBoardArray(next_boards, index);
+    return index;
+}
+
 // main
 int main(void) {
-    // initial configure
-    START.board[0] = 0x0240000000000000;
-    START.board[1] = 0x0000000000000180;
-    int i, j;
-    Board nbs[NEXT_MAX];
+    initBoard();
     // sample boards
     Board sample1, sample2;
+    Board nbs[32];
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
     //play();
-    showBoard(sample2);
-    sample2 = mirrorHLBoard(sample2);
-    showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
-    showBoard(sample2);
-    sample2 = mirrorHLBoard(sample2);
-    showBoard(sample2);
-    sample2 = rotL90DegBoard(sample2);
-    showBoard(sample2);
+    showBoard(START);
+    nextBoardNormal(START, nbs);
     return 0;
 }
