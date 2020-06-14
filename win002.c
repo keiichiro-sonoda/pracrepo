@@ -69,9 +69,18 @@ int partition(int *A, int p, int r) {
 
 int randomizedPartition(int *A, int p, int r) {
     int i = randomRange(p, r);
-    printDecimal(A[i]);
+    //printDecimal(A[i]);
     swap(A, i, r);
     return partition(A, p, r);
+}
+
+void randomizedQuicksort(int *A, int p, int r) {
+    if (p < r) {
+        int q = randomizedPartition(A, p, r);
+        randomizedQuicksort(A, p, q - 1);
+        randomizedQuicksort(A, q + 1, r);
+    }
+    return;
 }
 
 int main(void) {
@@ -79,7 +88,7 @@ int main(void) {
     int l = 100;
     int *sample1 = makeArrayRand3Digits(l);
     printIntArray(sample1, l);
-    randomizedPartition(sample1, 0, l - 1);
+    randomizedQuicksort(sample1, 0, l - 1);
     printIntArray(sample1, l);
     return 0;
 }
