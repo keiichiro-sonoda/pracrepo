@@ -6,11 +6,20 @@
 #define printSize(x) printf("%ld\n", sizeof x)
 #define printDecimal(x) printf("%d\n", x)
 
-void printIntArray(const int *A, int n) {
+void printIntArrayRange(const int *A, int p, int r) {
     int i;
-    for (i = 0; i < n; i++)
-        printf("%d ", A[i]);
-    putchar('\n');
+    printf("{");
+    for (i = p; i <= r; i++) {
+        printf("%d", A[i]);
+        if (i < r)
+            printf(", ");
+    }
+    printf("}\n");
+    return;
+}
+
+void printIntArray(const int *A, int n) {
+    printIntArrayRange(A, 0, n - 1);
     return;
 }
 
@@ -101,7 +110,7 @@ int deduplication(int *A, int n) {
 }
 
 int binarySearchRecursive(const int *A, int p, int r, int v) {
-    if (p < r) {
+    if (p <= r) {
         int q = (p + r) / 2;
         if (A[q] < v)
             return binarySearchRecursive(A, q + 1, r, v);
@@ -114,7 +123,7 @@ int binarySearchRecursive(const int *A, int p, int r, int v) {
 }
 
 int binarySearchRecursive2(const int *A, int p, int r, int v) {
-    if (p < r) {
+    if (p <= r) {
         int q = (p + r) / 2;
         if (A[q] < v)
             return binarySearchRecursive2(A, q + 1, r, v);
@@ -150,10 +159,12 @@ int *searchPairSumX(const int *S, int n, int x) {
     // S[i]がhより大きければデクリメント
     if (S[i] > h)
         i--;
+    printIntArrayRange(S, 0, i);
     // jはx以下で最大の要素の添え字とする
     j = binarySearchRecursive2(S, i, n - 1, x);
     if (S[j] > x)
         j--;
+    printIntArrayRange(S, i + 1, j);
     // h以下の要素を調べる
     for (k = 0; k <= i; k++) {
         // 足してxになる値を計算
