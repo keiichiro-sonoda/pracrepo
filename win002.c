@@ -23,19 +23,6 @@ void printIntArray(const int *A, int n) {
     return;
 }
 
-void printBin(int x) {
-    int A[64];
-    int i, j;
-    for (i = 0; x != 0; i++) {
-        A[i] = x & 1;
-        x >>= 1;
-    }
-    for (j = i - 1; j >= 0; j--)
-        printf("%d", A[j]);
-    putchar('\n');
-    return;
-}
-
 int *makeArrayRand3Digits(int n) {
     int *A;
     int i;
@@ -146,10 +133,12 @@ int *searchPairSumX(const int *S, int n, int x) {
         return NULL;
     }
     int i, j, k, l, partner;
+    // xの1/2の整数部分を取得
+    // 和がxになるペアのうち, 片方は必ずx/2以下になる
     int h = x / 2;
     // hに最も近い添え字をiに代入
     i = binarySearchRecursive2(S, 0, n - 1, h);
-    // xのちょうど半分の値が見つかった
+    // xのちょうど半分の値が存在
     if (x % 2 == 0 && S[i] == h) {
         pair[0] = h;
         pair[1] = h;
@@ -159,16 +148,17 @@ int *searchPairSumX(const int *S, int n, int x) {
     // S[i]がhより大きければデクリメント
     if (S[i] > h)
         i--;
-    printIntArrayRange(S, 0, i);
+    //printIntArrayRange(S, 0, i);
     // jはx以下で最大の要素の添え字とする
     j = binarySearchRecursive2(S, i, n - 1, x);
     if (S[j] > x)
         j--;
-    printIntArrayRange(S, i + 1, j);
+    //printIntArrayRange(S, i + 1, j);
     // h以下の要素を調べる
     for (k = 0; k <= i; k++) {
         // 足してxになる値を計算
         partner = x - S[k];
+        // h以上x以下の範囲で2分探索
         l = binarySearchRecursive(S, i + 1, j, partner);
         // ペアが見つかった
         if (l >= 0) {
@@ -184,21 +174,29 @@ int *searchPairSumX(const int *S, int n, int x) {
 int main(void) {
     srand((unsigned)time(NULL));
     int l = 100;
+    // 3桁の乱数の配列を作成
     int *sample1 = makeArrayRand3Digits(l);
-    int sl, i, x;
+    int n, i, x;
     int *p;
     //printIntArray(sample1, l);
+    // 乱択版クイックソート
     randomizedQuicksort(sample1, 0, l - 1);
     //printIntArray(sample1, l);
-    sl = deduplication(sample1, l);
-    printDecimal(sl);
-    printIntArray(sample1, sl);
+    // 重複排除
+    n = deduplication(sample1, l);
+    // 集合要素数と要素表示
+    printf("n = %d\nS = ", n);
+    printIntArray(sample1, n);
+    // ランダムにxを選ぶ(0 ~ 1998)
     x = rand() % 1999;
     printf("x = %d\n", x);
-    p = searchPairSumX(sample1, sl, x);
+    // 足してxになるペアを探す
+    p = searchPairSumX(sample1, n, x);
+    // 見つからなかった
     if (p == NULL) {
         printf("nothing.\n");
-    } else {
+    } // 見つかった
+    else {
         printf("%d + %d = %d\n", p[0], p[1], x);
     }
     return 0;
