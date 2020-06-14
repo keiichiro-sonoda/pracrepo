@@ -95,6 +95,24 @@ int board2array(Board src, int *dst) {
     return 0;
 }
 
+// black: +1, empty: 0, white: -1
+void board2arraySymmetry(Board src, int *dst) {
+    int i;
+    for (i = 0; i < 64; i++) {
+        switch(getKoma(src, i << 1)) {
+            case 0b01: // black
+                dst[i] = 1;
+                break;
+            case 0b10: // white
+                dst[i] = -1;
+                break;
+            default: // else
+                dst[i] = 0;
+        }
+    }
+    return;
+}
+
 int checkParam(Param pr) {
     int i, j;
     // first layer
@@ -191,7 +209,7 @@ int familyRand(Family *fmp) {
 }
 
 // calculate point
-// the more advantageous to black, the higher the score
+// the more advantageous to black, the higher the score???
 float evaluation(Board b, Param pr) {
     int i, j;
     int pa0[64];
@@ -199,7 +217,7 @@ float evaluation(Board b, Param pr) {
     // output point
     float pa6 = 0;
     // input array
-    board2array(b, pa0);
+    board2arraySymmetry(b, pa0);
     // first layer
     for (i = 0; i < 32; i++) {
         // initialization
@@ -249,6 +267,24 @@ Board getBestBoard(Board *next_boards, int next_count, int color, Param prm) {
         t_point = evaluation(next_boards[i], prm);
         // if the color is white, reverse the sign
         if (color == 0b10) t_point = -t_point;
+        if (mx_point < t_point) {
+            // update
+            mx_point = t_point;
+            best_board = next_boards[i];
+        }
+    }
+    return best_board;
+}
+
+// assume that the next turn is black
+// n: the number of next boards
+Board getBestBoardForBlack(Board *next_boards, int n, Param prm) {
+    float mx_point = -FLT_MAX;
+    float t_point;
+    int i;
+    Board best_board;
+    for (i = 0; i < n; i++) {
+        t_point = evaluation(next_boards[i], prm);
         if (mx_point < t_point) {
             // update
             mx_point = t_point;
@@ -792,6 +828,14 @@ int vsTopGeneration(int gene_num) {
 int main(int argc, char *argv[]) {
     // initial configuration
     initBoard();
-    main2();
+    int ba[64];
+    int i, j;
+    board2arraySymmetry(START, ba);
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            printf("%2d ", ba[i * 8 + j]);
+        }
+        putchar('\n');
+    }
     return 0;
 }
