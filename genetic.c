@@ -886,7 +886,7 @@ int main(int argc, char *argv[]) {
     Param p1, p2;
     paramRand(&p1);
     paramRand(&p2);
-    START.board[1] = (int8B)0x0100;
+    //START.board[1] = (int8B)0x0100;
     i = oneToOneNormal(&p1, &p2);
     printIntDec(i);
     return 0;
