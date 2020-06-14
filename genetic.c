@@ -61,6 +61,7 @@ int showCanPut(Board b, const int *can_put, const int next_count);
 int getValidActStdin(int *can_put, int length);
 int getIndex(const int *ar, int ar_len, int el);
 int initBoard(void);
+void swapNormalizeBoard(Board *bp);
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 int main2(void);
 
@@ -279,19 +280,20 @@ Board getBestBoard(Board *next_boards, int next_count, int color, Param prm) {
 
 // assume that the next turn is black
 // n: the number of next boards
-Board getBestBoardForBlack(Board *next_boards, int n, Param prm) {
+Board getBestBoardForBlack(Board *next_boards, int n, const Param *prp) {
     float mx_point = -FLT_MAX;
     float t_point;
     int i;
     Board best_board;
     for (i = 0; i < n; i++) {
-        t_point = evaluation(next_boards[i], prm);
+        t_point = evaluation(next_boards[i], *prp);
         if (mx_point < t_point) {
             // update
             mx_point = t_point;
             best_board = next_boards[i];
         }
     }
+    printf("%5.2f\n", mx_point);
     return best_board;
 }
 
@@ -340,6 +342,49 @@ int oneToOne(Param sente, Param gote) {
     // draw
     else winner = 0;
     return winner;
+}
+
+int oneToOneNormal(const Param *spp, const Param *gpp) {
+    Board nba[NEXT_MAX];
+    int kc[3];
+    int pass = 0;
+    int n, dif;
+    // set turn
+    int turn = 0b01;
+    // set initial board
+    Board main_board = START;
+    while (1) {
+        n = nextBoardNormal2(main_board, nba, kc);
+        showBoard(main_board);
+        // can't put a piece anywhere
+        if (n == 0) {
+            // can't do anything one another
+            if (pass) {
+                printf("end\n");
+                break;
+            }
+            // pass
+            swapNormalizeBoard(&main_board);
+            turn ^= 0b11;
+            pass = 1;
+            continue;
+        }
+        pass = 0;
+        // determine a next board
+        // black (first)
+        if (turn == 0b01)
+            main_board = getBestBoardForBlack(nba, n, spp);
+        // white (second)
+        else
+            main_board = getBestBoardForBlack(nba, n, gpp);
+        turn ^= 0b11;
+    }
+    // difference between black and white
+    dif = kc[1] - kc[2];
+    if (dif > 0) return turn;
+    if (dif < 0) return turn ^ 0b11;
+    // draw
+    return 0;
 }
 
 int leagueMatch(Family fml) {
@@ -833,15 +878,9 @@ int main(int argc, char *argv[]) {
     srand((unsigned)time(NULL));
     int ba[64];
     int i, j;
-    Param p1;
-    board2arraySymmetry(START, ba);
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++) {
-            printf("%2d ", ba[i * 8 + j]);
-        }
-        putchar('\n');
-    }
+    Param p1, p2;
     paramRand(&p1);
-    checkParam(p1);
+    paramRand(&p2);
+    oneToOneNormal(&p1, &p2);
     return 0;
 }
