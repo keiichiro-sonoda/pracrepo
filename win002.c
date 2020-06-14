@@ -30,6 +30,10 @@ int *makeArrayRand3Digits(int n) {
     int *A;
     int i;
     A = (int *)malloc(n * sizeof(int));
+    if (A == NULL) {
+        printf("can't malloc.\n");
+        return NULL;
+    }
     for (i = 0; i < n; i++) {
         A[i] = rand() % 1000;
     }
