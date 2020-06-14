@@ -4,6 +4,7 @@
 
 #define kugiri() printf("---------------------------------\n")
 #define printSize(x) printf("%ld\n", sizeof x)
+#define printDecimal(x) printf("%d\n", x)
 
 void printIntArray(const int *A, int n) {
     int i;
@@ -40,10 +41,45 @@ int *makeArrayRand3Digits(int n) {
     return A;
 }
 
+void swap(int *A, int i, int j) {
+    int tv = A[i];
+    A[i] = A[j];
+    A[j] = tv;
+    return;
+}
+
+// a以上b以下の任意の整数を返す.
+int randomRange(int a, int b) {
+    return rand() % (b - a + 1) + a;
+}
+
+int partition(int *A, int p, int r) {
+    int j;
+    int x = A[r];
+    int i = p;
+    for (j = p; j < r; j++) {
+        if (A[j] < x) {
+            swap(A, i, j);
+            i++;
+        }
+    }
+    swap(A, i, r);
+    return i;
+}
+
+int randomizedPartition(int *A, int p, int r) {
+    int i = randomRange(p, r);
+    printDecimal(A[i]);
+    swap(A, i, r);
+    return partition(A, p, r);
+}
+
 int main(void) {
     srand((unsigned)time(NULL));
     int l = 100;
     int *sample1 = makeArrayRand3Digits(l);
+    printIntArray(sample1, l);
+    randomizedPartition(sample1, 0, l - 1);
     printIntArray(sample1, l);
     return 0;
 }
