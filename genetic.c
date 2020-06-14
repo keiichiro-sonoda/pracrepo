@@ -61,6 +61,8 @@ int showCanPut(Board b, const int *can_put, const int next_count);
 int getValidActStdin(int *can_put, int length);
 int getIndex(const int *ar, int ar_len, int el);
 int initBoard(void);
+int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
+int main2(void);
 
 // functions
 
@@ -790,7 +792,6 @@ int vsTopGeneration(int gene_num) {
 int main(int argc, char *argv[]) {
     // initial configuration
     initBoard();
-    // test
-    showBoard(START);
+    main2();
     return 0;
 }

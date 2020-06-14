@@ -827,6 +827,11 @@ void initBoard(void) {
     return;
 }
 
+void normalizeBoard(Board *bp) {
+    *bp = normalBoard(*bp);
+    return;
+}
+
 // swap and normalize a board
 void swapNormalizeBoard(Board *bp) {
     *bp = normalBoard(swapBoard(*bp));
@@ -910,18 +915,83 @@ int nextBoardNormal(Board b, Board *next_boards) {
     return index;
 }
 
+// count the number of pieces
+int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
+    int i, j, ad, dir, koma;
+    int index = 0;
+    int flag = 0;
+    // reversible addresses
+    int ads[8];
+    // reset count
+    zeros(koma_count, 3);
+    // swap the board
+    Board sb = swapBoard(b);
+    // check all addresses
+    for (ad = 0; ad < 128; ad += 2) {
+        // check a piece
+        koma = getKoma(sb, ad);
+        koma_count[koma]++;
+        // not empty
+        if (koma) continue;
+        // empty
+        for (i = 0; i < 8; i++) {
+            dir = DIRECTION[i];
+            ads[0] = ad + dir;
+            // not neighbor or the neighbor is not black
+            if (!ifNeighbor(ad, ads[0]) || (getKoma(sb, ads[0]) ^ 0b01)) continue;
+            // white
+            ads[1] = ads[0] + dir;
+            // check the diagonal
+            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+                koma = getKoma(sb, ads[j]);
+                // white
+                // can put!!
+                if (koma == 0b10) {
+                    // first
+                    if (!flag) {
+                        // copy the swapped board
+                        next_boards[index] = sb;
+                        flag = 1;
+                    }
+                    // reverse
+                    reRange(next_boards + index, ads, j);
+                    break;
+                } // empty
+                else if (koma == 0b00) break;
+                // black
+                ads[j + 1] = ads[j] + dir;
+            }
+        }
+        // all directions were checked and reversed
+        if (flag) {
+            // put white
+            putKoma(next_boards + index, ad, 0b10);
+            normalizeBoard(next_boards + index);
+            // new board
+            if (!knownBoard(next_boards, index, next_boards[index]))
+                index++;
+            flag = 0;
+        }
+    }
+    // return array length
+    return index;
+}
+
 // main
 int main2(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;
     Board nbs[32];
+    int i;
+    int kc[3];
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
     //play();
-    showBoard(START);
-    nextBoardNormal(START, nbs);
+    showBoard(sample2);
+    i = nextBoardNormal2(sample2, nbs, kc);
+    showBoardArray(nbs, i);
     return 0;
 }
