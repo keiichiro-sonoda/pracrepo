@@ -100,16 +100,40 @@ int deduplication(int *A, int n) {
     return n - dup_count;
 }
 
+int binarySearchRecursive(const int *A, int p, int r, int v) {
+    if (p < r) {
+        int q = (p + r) / 2;
+        if (A[q] < v)
+            return binarySearchRecursive(A, q + 1, r, v);
+        if (A[q] > v)
+            return binarySearchRecursive(A, p, q - 1, v);
+        else
+            return q;
+    }
+    return -1;
+}
+
+// 集合Sに和がxとなるペアが存在するか
+// Sはソート済み配列とする
+int searchPairSumX(int *S, int n, int x) {
+    int i, j;
+    int h = x / 2;
+    for (i = 0; S[i] < h; i++);
+    return 0;
+}
+
 int main(void) {
     srand((unsigned)time(NULL));
     int l = 1000;
     int *sample1 = makeArrayRand3Digits(l);
-    int sl;
+    int sl, i;
     //printIntArray(sample1, l);
     randomizedQuicksort(sample1, 0, l - 1);
-    printIntArray(sample1, l);
+    //printIntArray(sample1, l);
     sl = deduplication(sample1, l);
     printDecimal(sl);
     printIntArray(sample1, sl);
+    i = binarySearchRecursive(sample1, 0, sl - 1, 800);
+    printDecimal(i);
     return 0;
 }
