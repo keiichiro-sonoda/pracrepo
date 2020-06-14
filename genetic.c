@@ -113,6 +113,7 @@ void board2arraySymmetry(Board src, int *dst) {
     return;
 }
 
+// check parameters
 int checkParam(Param pr) {
     int i, j;
     // first layer
@@ -160,43 +161,43 @@ int checkParam(Param pr) {
 }
 
 // randomly determine parameter
-int paramRand(Param *prp) {
+void paramRand(Param *prp) {
     int i, j;
     // first layer
     for (i = 0; i < 32; i++) {
         for (j = 0; j < 64; j++) {
-            (*prp).weight1[i][j] = frand();
+            prp->weight1[i][j] = frand();
         }
-        (*prp).bias1[i] = frand();
+        prp->bias1[i] = frand();
     } // second layer
     for (i = 0; i < 16; i++) {
         for (j = 0; j < 32; j++) {
-            (*prp).weight2[i][j] = frand();
+            prp->weight2[i][j] = frand();
         }
-        (*prp).bias2[i] = frand();
+        prp->bias2[i] = frand();
     } // third layer
     for (i = 0; i < 8; i++) {
         for (j = 0; j < 16; j++) {
-            (*prp).weight3[i][j] = frand();
+            prp->weight3[i][j] = frand();
         }
-        (*prp).bias3[i] = frand();
+        prp->bias3[i] = frand();
     } // fourth layer
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 8; j++) {
-            (*prp).weight4[i][j] = frand();
+            prp->weight4[i][j] = frand();
         }
-        (*prp).bias4[i] = frand();
+        prp->bias4[i] = frand();
     } // fifth layer
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            (*prp).weight5[i][j] = frand();
+            prp->weight5[i][j] = frand();
         }
-        (*prp).bias5[i] = frand();
+        prp->bias5[i] = frand();
     } // sixth layer
     for (j = 0; j < 2; j++) {
-        (*prp).weight6[j] = frand();
+        prp->weight6[j] = frand();
     }
-    return 0;
+    return;
 }
 
 // generation initialization
@@ -828,8 +829,11 @@ int vsTopGeneration(int gene_num) {
 int main(int argc, char *argv[]) {
     // initial configuration
     initBoard();
+    // seed reset
+    srand((unsigned)time(NULL));
     int ba[64];
     int i, j;
+    Param p1;
     board2arraySymmetry(START, ba);
     for (i = 0; i < 8; i++) {
         for (j = 0; j < 8; j++) {
@@ -837,5 +841,7 @@ int main(int argc, char *argv[]) {
         }
         putchar('\n');
     }
+    paramRand(&p1);
+    checkParam(p1);
     return 0;
 }
