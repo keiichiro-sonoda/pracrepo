@@ -814,8 +814,7 @@ void makeFirstTenPrmsFile(void) {
     Param prma[10];
     snprintf(pathw, FILENAME_MAX, DAT_DIR_FORMAT, fnamew);
     if ((fp = fopen(pathw, "wb")) == NULL) {
-        printf("%s cannot be opened.\n", pathw);
-        return;
+        printf("%s can't be opened.\n", pathw);
     } else {
         for (i = 0; i < 10; i++)
             paramRand(prma + i);
@@ -836,6 +835,13 @@ void checkPrmsFile(int n) {
     snprintf(fnamer, FILENAME_MAX, format, n);
     snprintf(pathr, FILENAME_MAX, DAT_DIR_FORMAT, fnamer);
     printf("%s\n", pathr);
+    if ((fp = fopen(pathr, "rb")) == NULL) {
+        printf("%s can't be opened.\n", pathr);
+    } else {
+        fread(prma, sizeof prma, 1, fp);
+        fclose(fp);
+        checkParam(prma[5]);
+    }
     return;
 }
 
