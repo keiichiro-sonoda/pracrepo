@@ -810,12 +810,18 @@ void makeFirstTenPrmsFile(void) {
     FILE *fp;
     char pathw[FILENAME_MAX];
     char fnamew[] = "parents000.bin";
+    int i;
     Param prma[10];
     snprintf(pathw, FILENAME_MAX, DAT_DIR_FORMAT, fnamew);
     if ((fp = fopen(pathw, "wb")) == NULL) {
         printf("%s cannot be opened.\n", pathw);
         return;
     } else {
+        for (i = 0; i < 10; i++)
+            paramRand(prma + i);
+        checkParam(prma[5]);
+        printSize(prma);
+        fwrite(prma, sizeof prma, 1, fp);
         fclose(fp);
     }
     return;
