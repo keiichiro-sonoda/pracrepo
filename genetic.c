@@ -827,6 +827,18 @@ void makeFirstTenPrmsFile(void) {
     return;
 }
 
+void checkPrmsFile(int n) {
+    FILE *fp;
+    char pathr[FILENAME_MAX];
+    char fnamer[1024];
+    char format[] = "parents%03d.bin";
+    Param prma[10];
+    snprintf(fnamer, FILENAME_MAX, format, n);
+    snprintf(pathr, FILENAME_MAX, DAT_DIR_FORMAT, fnamer);
+    printf("%s\n", pathr);
+    return;
+}
+
 int vsTopGeneration(int gene_num) {
     int i, count, winner, nc, act;
     char format[] = "generation%03d.bin";
@@ -903,7 +915,6 @@ int main(int argc, char *argv[]) {
     initBoard();
     // seed reset
     srand((unsigned)time(NULL));
-    // make first data file
-    makeFirstTenPrmsFile();
+    checkPrmsFile(0);
     return 0;
 }
