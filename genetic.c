@@ -50,6 +50,7 @@ typedef struct {
 
 Board START;
 const char B2C[5];
+const char DAT_DIR_FORMAT[] = "./prm/%s";
 
 // functions from othello.c
 int getKoma(Board b, int ad);
@@ -805,6 +806,21 @@ int nextGeneration(int gene_num) {
     return 0;
 }
 
+void makeFirstTenPrmsFile(void) {
+    FILE *fp;
+    char pathw[FILENAME_MAX];
+    char fnamew[] = "parents000.bin";
+    Param prma[10];
+    snprintf(pathw, FILENAME_MAX, DAT_DIR_FORMAT, fnamew);
+    if ((fp = fopen(pathw, "wb")) == NULL) {
+        printf("%s cannot be opened.\n", pathw);
+        return;
+    } else {
+        fclose(fp);
+    }
+    return;
+}
+
 int vsTopGeneration(int gene_num) {
     int i, count, winner, nc, act;
     char format[] = "generation%03d.bin";
@@ -881,13 +897,7 @@ int main(int argc, char *argv[]) {
     initBoard();
     // seed reset
     srand((unsigned)time(NULL));
-    int ba[64];
-    int i, j;
-    Param p1, p2;
-    paramRand(&p1);
-    paramRand(&p2);
-    //START.board[1] = (int8B)0x0100;
-    i = oneToOneNormal(&p1, &p2);
-    printIntDec(i);
+    // make first data file
+    makeFirstTenPrmsFile();
     return 0;
 }
