@@ -133,6 +133,7 @@ int main(void) {
     showSprm(p1);
     //showDecimalArray(INDEXES, MASU_NUM);
     showBoard(START);
+    // afte one action
     Board sample;
     sample = START;
     sample.board[1] = 0x0000000000000150;
