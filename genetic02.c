@@ -37,6 +37,10 @@ int getMin(int a, int b) {
     return (a < b ? a : b);
 }
 
+int mirrorRLAd(int src) {
+    return 0;
+}
+
 // normalize an address
 int normalAd(int ad1) {
     int ad2, ad3, ad4, adm;
