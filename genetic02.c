@@ -51,6 +51,18 @@ void showSprm(Sprm pr) {
     }
 }
 
+void showFloatArray(float *fa, int n) {
+    int i;
+    putchar('{');
+    for (i = 0; i < n; i++) {
+        printf("%5.2f", fa[i]);
+        if (i < n - 1) {
+            printf(", ");
+        }
+    }
+    printf("}\n");
+}
+
 int getMin(int a, int b) {
     return (a < b ? a : b);
 }
@@ -101,6 +113,37 @@ void randSprm(Sprm *prp) {
     }
 }
 
+// calculate average
+Sprm makeChildAverageSprm(Sprm mother, Sprm father) {
+    Sprm child;
+    int i;
+    for (i = 0; i < SPRM_LEN; i++) {
+        child.weight[i] = (mother.weight[i] + father.weight[i]) / 2;
+    }
+    return child;
+}
+
+// give mutant rate
+float fcrossMFlex(float a, float b, float rate) {
+    // 0.0 ~ 1.0
+    float r = (float)rand() / RAND_MAX;
+    // mutant!
+    if (r <= rate) return (float)rand() / RAND_MAX - 0.5;
+    r = (float)rand() / RAND_MAX;
+    // 50 : 50
+    if (r < 0.5) return a;
+    return b;
+}
+
+Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
+    Sprm child;
+    int i;
+    for (i = 0; i < SPRM_LEN; i++) {
+        child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.05);
+    }
+    return child;
+}
+
 // convert from an address to the weight index?
 void setIndexes(void) {
     int i, ad;
@@ -147,7 +190,7 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
 }
 
 // return winner
-int oneToOneNormalSimple(const Sprm *spp, const Sprm *gpp) {
+int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     Board nba[NEXT_MAX];
     int kc[3];
     int pass = 0;
@@ -206,12 +249,16 @@ int main(void) {
     initBoard();
 
     int res;
-    Sprm p1, p2;
+    Sprm p1, p2, p3;
+    // random paramater
     randSprm(&p1);
     randSprm(&p2);
     //showSprm(p1);
+    showFloatArray(p1.weight, SPRM_LEN);
+    showFloatArray(p2.weight, SPRM_LEN);
     // afte one action
-    res = oneToOneNormalSimple(&p1, &p2);
-    printDecimal(res);
+    //res = oneToOneNormalSprm(&p1, &p2);
+    p3 = makeChildAverageSprm(p1, p2);
+    showFloatArray(p3.weight, SPRM_LEN);
     return 0;
 }
