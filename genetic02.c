@@ -332,6 +332,8 @@ float distSprm(Sprm p1, Sprm p2) {
         // add square distance
         d += (float)pow(p1.weight[i] - p2.weight[i], 2.0);
     }
+    // divided by number of parameters
+    d /= SPRM_LEN;
     // return the square root
     return (float)sqrt(d);
 }
@@ -352,19 +354,20 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     quicksortDD(result, number, 0, GENE_NUM - 1);
     // show ranking
     printf("rank change\n");
-    for (i = 0; i < SURVIVE_NUM; i++) {
-        // winner's index
+    for (i = 0; i < GENE_NUM; i++) {
+        // rank 11 .. 99 aren't displayed
+        if (10 <= i && i < 99) continue;
+        // winner's index (or worst index)
         j = number[i];
         printf("%3d", j + 1);
         if (j < 10) printf("(p)");
         else printf("(c)");
         printf(" -> ");
         printf("%2d: %3dpt\n", i + 1, result[i]);
-        survivors[i] = generation[j];
+        // record winners
+        if (i < 10)
+            survivors[i] = generation[j];
     }
-    // reference
-    printf("worst: %3dpt\n", result[GENE_NUM - 1]);
-
     // calculate the distance between the previous top and the current top
     dist = distSprm(survivors[0], generation[0]);
     printf("distance: %6.4f\n", dist);
@@ -458,6 +461,7 @@ int main(void) {
     // set initial board
     initBoard();
 
-    nextGenerationSprmLoop(1, 3);
+    nextGenerationSprmLoop(4, 1);
+    //checkSprmFile(4);
     return 0;
 }
