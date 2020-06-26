@@ -47,11 +47,7 @@ int getMinArray(const int *A, int n) {
 }
 
 int mirrorLRAd(int src) {
-    int row, col, ncol;
-    row = src / 16;
-    col = src % 16;
-    ncol = 14 - col;
-    return row * 16 + ncol;
+    return (src / 16) * 16 + 14 - src % 16;
 }
 
 // normalize an address
