@@ -8,6 +8,7 @@
 #define printDecimal(x) printf("%d\n", x)
 
 // types
+
 typedef unsigned long int8B;
 
 // board information
@@ -29,6 +30,7 @@ int rotL90DegAd(int src);
 void showDecimalArray(const int *ia, int ia_len);
 void initBoard(void);
 int showBoard(Board b);
+void board2arraySymmetry(Board src, int *dst);
 
 // functions
 
@@ -102,6 +104,12 @@ void setIndexes(void) {
     }
 }
 
+// caluculate point
+float evaluationSimple(Board b, Sprm pr) {
+    float pt;
+    return pt;
+}
+
 int main(void) {
     // seed reset
     srand((unsigned)time(NULL));
@@ -109,7 +117,6 @@ int main(void) {
     setIndexes();
     // set initial board
     initBoard();
-    showDecimalArray(INDEXES, MASU_NUM);
     Sprm p1;
     randSprm(&p1);
     showSprm(p1);

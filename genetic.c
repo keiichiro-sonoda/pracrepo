@@ -65,6 +65,7 @@ void initBoard(void);
 void swapNormalizeBoard(Board *bp);
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 int main2(void);
+void board2arraySymmetry(Board src, int *dst);
 
 // functions
 
@@ -112,7 +113,6 @@ void board2arraySymmetry(Board src, int *dst) {
                 dst[i] = 0;
         }
     }
-    return;
 }
 
 // check parameters

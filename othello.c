@@ -980,6 +980,23 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
     return index;
 }
 
+// black: +1, empty: 0, white: -1
+void board2arraySymmetry(Board src, int *dst) {
+    int i;
+    for (i = 0; i < 64; i++) {
+        switch(getKoma(src, i << 1)) {
+            case 0b01: // black
+                dst[i] = 1;
+                break;
+            case 0b10: // white
+                dst[i] = -1;
+                break;
+            default: // else
+                dst[i] = 0;
+        }
+    }
+}
+
 // main
 int main2(void) {
     initBoard();
