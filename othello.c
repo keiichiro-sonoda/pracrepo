@@ -88,13 +88,12 @@ int showBoardHex(Board b) {
     return 0;
 }
 
-int showDecimalArray(int *ia, int ia_len) {
+void showDecimalArray(const int *ia, int ia_len) {
     int i;
     for (i = 0; i < ia_len; i++) {
         printf("%03d ", ia[i]);
     }
     putchar('\n');
-    return 0;
 }
 
 int showHexArray(int *ia, int ia_len) {
