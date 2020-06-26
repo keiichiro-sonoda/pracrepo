@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <float.h>
+#include <math.h>
 
 #define NEXT_MAX 32
 #define MASU_NUM 64
@@ -217,11 +218,11 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
         if (n == 0) {
             // can't do anything one another
             if (pass) {
-                printf("end\n");
+                //printf("end\n");
                 break;
             }
             // pass
-            printf("pass\n");
+            //printf("pass\n");
             swapNormalizeBoard(&main_board);
             turn ^= 0b11;
             pass = 1;
@@ -323,6 +324,52 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
     }
 }
 
+// calculate distance
+float distSprm(Sprm p1, Sprm p2) {
+    int i;
+    float d = 0.0;
+    for (i = 0; i < SPRM_LEN; i++) {
+        // add square distance
+        d += (float)pow(p1.weight[i] - p2.weight[i], 2.0);
+    }
+    // return the square root
+    return (float)sqrt(d);
+}
+
+// choose survivors
+// Sprm[100]
+void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
+    int i, j;
+    int result[GENE_NUM];
+    int number[GENE_NUM];
+    float dist;
+    // number = {0, 1, 2, ..., 99}
+    for (i = 0; i < GENE_NUM; i++)
+        number[i] = i;
+    // game!
+    leagueMatchSimpleSprm(generation, result);
+    // sort (descending order)
+    quicksortDD(result, number, 0, GENE_NUM - 1);
+    // show ranking
+    printf("rank change\n");
+    for (i = 0; i < SURVIVE_NUM; i++) {
+        // winner's index
+        j = number[i];
+        printf("%3d", j + 1);
+        if (j < 10) printf("(p)");
+        else printf("(c)");
+        printf(" -> ");
+        printf("%2d: %3dpt\n", i + 1, result[i]);
+        survivors[i] = generation[j];
+    }
+    // reference
+    printf("worst: %3dpt\n", result[GENE_NUM - 1]);
+
+    // calculate the distance between the previous top and the current top
+    dist = distSprm(survivors[0], generation[0]);
+    printf("distance: %6.4f\n", dist);
+}
+
 // make next generation file
 int nextGenerationSprm(int gene_num) {
     int i, j, count;
@@ -373,9 +420,9 @@ int nextGenerationSprm(int gene_num) {
         }
     }
     // calcurate survivors
-    Sprm suvivors[SURVIVE_NUM];
-    // ....
-    // sort generation
+    Sprm survivors[SURVIVE_NUM];
+    // battle!
+    getSurvivorSprm(generation, survivors);
 
     // write current survivors
     if ((fp = fopen(fnamew, "wb")) == NULL) {
@@ -383,8 +430,7 @@ int nextGenerationSprm(int gene_num) {
         return -1;
     }
     // opened!
-    // only top 10
-    fwrite(generation, sizeof(Sprm) * SURVIVE_NUM, 1, fp);
+    fwrite(survivors, sizeof survivors, 1, fp);
     fclose(fp);
 
     return 0;
@@ -398,6 +444,6 @@ int main(void) {
     // set initial board
     initBoard();
 
-    //nextGenerationSprm(0);
+    nextGenerationSprm(0);
     return 0;
 }
