@@ -128,7 +128,10 @@ float fcrossMFlex(float a, float b, float rate) {
     // 0.0 ~ 1.0
     float r = (float)rand() / RAND_MAX;
     // mutant!
-    if (r <= rate) return (float)rand() / RAND_MAX - 0.5;
+    if (r <= rate) {
+        //printf("m!\n");
+        return (float)rand() / RAND_MAX - 0.5;
+    }
     r = (float)rand() / RAND_MAX;
     // 50 : 50
     if (r < 0.5) return a;
@@ -259,6 +262,8 @@ int main(void) {
     // afte one action
     //res = oneToOneNormalSprm(&p1, &p2);
     p3 = makeChildAverageSprm(p1, p2);
+    showFloatArray(p3.weight, SPRM_LEN);
+    p3 = makeChildCrossMSprm(p2, p1);
     showFloatArray(p3.weight, SPRM_LEN);
     return 0;
 }
