@@ -9,6 +9,7 @@
 
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
+#define printSize(x) printf("%ld\n", sizeof x)
 
 // types
 
@@ -245,6 +246,30 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     return 0;
 }
 
+// make first file
+void makeFirstSprmsFile(void) {
+    FILE *fp;
+    char fnamew[] = "prm/simple_prm000.bin";
+    int i;
+    Sprm pra[10];
+    // open a file to write (or make a file)
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamew);
+        return;
+    }
+    // opened!
+    // random parameters
+    for (i = 0; i < 10; i++)
+        randSprm(pra + i);
+    showSprm(pra[3]);
+    // check size 800B?
+    printSize(pra);
+    fwrite(pra, sizeof pra, 1, fp);
+    // close
+    fclose(fp);
+}
+
 int main(void) {
     // seed reset
     srand((unsigned)time(NULL));
@@ -253,19 +278,6 @@ int main(void) {
     // set initial board
     initBoard();
 
-    int res;
-    Sprm p1, p2, p3;
-    // random paramater
-    randSprm(&p1);
-    randSprm(&p2);
-    //showSprm(p1);
-    showFloatArray(p1.weight, SPRM_LEN);
-    showFloatArray(p2.weight, SPRM_LEN);
-    // afte one action
-    //res = oneToOneNormalSprm(&p1, &p2);
-    p3 = makeChildAverageSprm(p1, p2);
-    showFloatArray(p3.weight, SPRM_LEN);
-    p3 = makeChildCrossMSprm(p2, p1);
-    showFloatArray(p3.weight, SPRM_LEN);
+    makeFirstSprmsFile();
     return 0;
 }
