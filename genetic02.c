@@ -289,9 +289,9 @@ void checkSprmFile(int gene_num) {
     Sprm pa[SURVIVE_NUM];
     fread(&pa, sizeof pa, 1, fp);
     fclose(fp);
-    // check
-    //showSprm(pa[9]);
-    showFloatArray(pa[4].weight, SPRM_LEN);
+    // check the top parameter
+    showSprm(pa[0]);
+    showFloatArray(pa[0].weight, SPRM_LEN);
 }
 
 // use Sprm[100]
@@ -436,6 +436,20 @@ int nextGenerationSprm(int gene_num) {
     return 0;
 }
 
+// loop several times
+void nextGenerationSprmLoop(int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    int i;
+    for (i = st; i < st + loop; i++) {
+        nextGenerationSprm(i);
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
 int main(void) {
     // seed reset
     srand((unsigned)time(NULL));
@@ -444,6 +458,6 @@ int main(void) {
     // set initial board
     initBoard();
 
-    nextGenerationSprm(0);
+    nextGenerationSprmLoop(1, 3);
     return 0;
 }
