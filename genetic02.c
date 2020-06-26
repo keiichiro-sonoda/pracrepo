@@ -63,10 +63,7 @@ int normalAd(int ad) {
         eq_ads[i + 1] = rotL90DegAd(eq_ads[i]);
         eq_ads[i + 5] = mirrorLRAd(eq_ads[i + 1]);
     }
-    showDecimalArray(eq_ads, 8);
-    adm = getMinArray(eq_ads, 8);
-    printDecimal(adm);
-    return adm;
+    return getMinArray(eq_ads, 8);
 }
 
 // ad: normalized address
@@ -85,10 +82,8 @@ int ad2index(int ad) {
 // -0.5 ~ 0.5
 void randSprm(Sprm *prp) {
     int i;
-    float r;
     for (i = 0; i < SPRM_LEN; i++) {
-        r = (float)rand() / RAND_MAX - 0.5;
-        prp->weight[i] = r;
+        prp->weight[i] = (float)rand() / RAND_MAX - 0.5;
     }
 }
 
