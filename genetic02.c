@@ -3,6 +3,7 @@
 #include <time.h>
 #include <float.h>
 
+#define NEXT_MAX 32
 #define MASU_NUM 64
 #define SPRM_LEN 10
 
@@ -33,6 +34,8 @@ void showDecimalArray(const int *ia, int ia_len);
 void initBoard(void);
 int showBoard(Board b);
 void board2arraySymmetry(Board src, int *dst);
+void swapNormalizeBoard(Board *bp);
+int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 
 // functions
 
@@ -125,7 +128,7 @@ float evaluationSimple(Board b, Sprm pr) {
 // assume that the next turn is black
 // n: the number of next boards
 // use simple parameter
-Board getBestBoardForBlackSprm(Board *next_boards, int n, const Sprm *prp) {
+Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
     float mx_point = -FLT_MAX;
     float t_point;
     int i;
@@ -138,8 +141,59 @@ Board getBestBoardForBlackSprm(Board *next_boards, int n, const Sprm *prp) {
             best_board = next_boards[i];
         }
     }
-    printf("%5.2f\n", mx_point);
+    //printf("%5.2f\n", mx_point);
     return best_board;
+}
+
+// return winner
+int oneToOneNormalSimple(const Sprm *spp, const Sprm *gpp) {
+    Board nba[NEXT_MAX];
+    int kc[3];
+    int pass = 0;
+    int n, dif;
+    // set turn
+    int turn = 0b01;
+    // set initial board
+    Board main_board = START;
+    while (1) {
+        // calculate next
+        n = nextBoardNormal2(main_board, nba, kc);
+        showBoard(main_board);
+        // can't put a piece anywhere
+        if (n == 0) {
+            // can't do anything one another
+            if (pass) {
+                printf("end\n");
+                break;
+            }
+            // pass
+            printf("pass\n");
+            swapNormalizeBoard(&main_board);
+            turn ^= 0b11;
+            pass = 1;
+            continue;
+        }
+        pass = 0;
+        // determine a next board
+        // black (first)
+        if (turn == 0b01) {
+            printf("black\n");
+            main_board = getBestBoardForBlackSimple(nba, n, spp);
+        } // white (second)
+        else {
+            printf("white\n");
+            main_board = getBestBoardForBlackSimple(nba, n, gpp);
+        }
+        // switch turn
+        turn ^= 0b11;
+    }
+    // difference between black and white
+    dif = kc[1] - kc[2];
+    printDecimal(dif);
+    if (dif > 0) return turn;
+    if (dif < 0) return turn ^ 0b11;
+    // draw
+    return 0;
 }
 
 int main(void) {
