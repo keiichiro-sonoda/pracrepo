@@ -5,6 +5,8 @@
 #define MASU_NUM 64
 #define SPRM_LEN 16
 
+#define printDecimal(x) printf("%d\n", x)
+
 // simple parameter
 typedef struct {
     float weight[SPRM_LEN];
@@ -18,6 +20,18 @@ int rotL90DegAd(int src);
 void showDecimalArray(const int *ia, int ia_len);
 
 // functions
+
+void showSprm(Sprm pr) {
+    int i;
+    float p;
+    for (i = 0; i < MASU_NUM; i++) {
+        p = pr.weight[INDEXES[i]];
+        printf("%5.2f ", p);
+        if (i % 8 == 7) {
+            putchar('\n');
+        }
+    }
+}
 
 int getMin(int a, int b) {
     return (a < b ? a : b);
@@ -41,17 +55,19 @@ int ad2index(int ad) {
     if (ad < 32)
         return ad / 2 - 2;
     if (ad < 48)
-        return ad / 2 - 5;
+        return ad / 2 - 6;
     if (ad < 64)
-        return ad / 2 - 11;
+        return ad / 2 - 12;
     return -1;
 }
 
 // -0.5 ~ 0.5
 void randSprm(Sprm *prp) {
     int i;
+    float r;
     for (i = 0; i < SPRM_LEN; i++) {
-        prp->weight[i] = (float)(rand() / RAND_MAX - 0.5);
+        r = rand() / RAND_MAX;
+        prp->weight[i] = r;
     }
 }
 
@@ -66,7 +82,12 @@ void setIndexes(void) {
 int main(void) {
     // seed reset
     srand((unsigned)time(NULL));
+    // set global variable
     setIndexes();
-    showDecimalArray(INDEXES, MASU_NUM);
+    Sprm p1;
+    randSprm(&p1);
+    showSprm(p1);
+    //showDecimalArray(INDEXES, MASU_NUM);
+    printDecimal(RAND_MAX);
     return 0;
 }
