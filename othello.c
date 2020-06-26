@@ -54,6 +54,7 @@ void emptyBoard(Board *bp) {
     return;
 }
 
+// all zero
 Board createEmptyBoard(void) {
     Board eb;
     emptyBoard(&eb);
@@ -90,10 +91,13 @@ int showBoardHex(Board b) {
 
 void showDecimalArray(const int *ia, int ia_len) {
     int i;
+    putchar('{');
     for (i = 0; i < ia_len; i++) {
-        printf("%03d ", ia[i]);
+        printf("%03d", ia[i]);
+        if (i < ia_len - 1)
+            printf(", ");
     }
-    putchar('\n');
+    printf("}\n");
 }
 
 int showHexArray(int *ia, int ia_len) {

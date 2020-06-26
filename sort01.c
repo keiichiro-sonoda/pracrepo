@@ -38,13 +38,12 @@ int partitionDD(int *A, int *B, int p, int r) {
 }
 
 // descending order
-int quicksortDD(int *A, int *B, int p, int r) {
+void quicksortDD(int *A, int *B, int p, int r) {
     if (p < r) {
         int q = partitionDD(A, B, p, r);
         quicksortDD(A, B, p, q - 1);
         quicksortDD(A, B, q + 1, r);
     }
-    return 0;
 }
 
 /*

@@ -37,6 +37,7 @@ int showBoard(Board b);
 void board2arraySymmetry(Board src, int *dst);
 void swapNormalizeBoard(Board *bp);
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
+void quicksortDD(int *A, int *B, int p, int r);
 
 // functions
 
@@ -278,6 +279,11 @@ int main(void) {
     // set initial board
     initBoard();
 
-    makeFirstSprmsFile();
+    //makeFirstSprmsFile();
+    int sample1[] = {5, 3, 2, 1, 4};
+    int index[] = {1, 2, 3, 4, 5};
+    quicksortDD(sample1, index, 0, 4);
+    showDecimalArray(sample1, 5);
+    showDecimalArray(index, 5);
     return 0;
 }
