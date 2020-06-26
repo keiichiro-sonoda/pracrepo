@@ -288,7 +288,8 @@ void checkSprmFile(int gene_num) {
     fread(&pa, sizeof pa, 1, fp);
     fclose(fp);
     // check
-    showSprm(pa[9]);
+    //showSprm(pa[9]);
+    showFloatArray(pa[4].weight, SPRM_LEN);
 }
 
 // make next generation file
@@ -367,6 +368,8 @@ int main(void) {
     initBoard();
 
     //nextGenerationSprm(0);
+    checkSprmFile(0);
     checkSprmFile(1);
+    checkSprmFile(2);
     return 0;
 }
