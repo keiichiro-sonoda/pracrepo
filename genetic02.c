@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <float.h>
 
 #define MASU_NUM 64
 #define SPRM_LEN 10
@@ -121,6 +122,26 @@ float evaluationSimple(Board b, Sprm pr) {
     return pt;
 }
 
+// assume that the next turn is black
+// n: the number of next boards
+// use simple parameter
+Board getBestBoardForBlackSprm(Board *next_boards, int n, const Sprm *prp) {
+    float mx_point = -FLT_MAX;
+    float t_point;
+    int i;
+    Board best_board;
+    for (i = 0; i < n; i++) {
+        t_point = evaluationSimple(next_boards[i], *prp);
+        if (mx_point < t_point) {
+            // update
+            mx_point = t_point;
+            best_board = next_boards[i];
+        }
+    }
+    printf("%5.2f\n", mx_point);
+    return best_board;
+}
+
 int main(void) {
     // seed reset
     srand((unsigned)time(NULL));
@@ -128,11 +149,10 @@ int main(void) {
     setIndexes();
     // set initial board
     initBoard();
+
     Sprm p1;
     randSprm(&p1);
     showSprm(p1);
-    //showDecimalArray(INDEXES, MASU_NUM);
-    showBoard(START);
     // afte one action
     Board sample;
     sample = START;
