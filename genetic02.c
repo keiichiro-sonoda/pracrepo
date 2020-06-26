@@ -51,7 +51,7 @@ int mirrorLRAd(int src) {
     row = src / 16;
     col = src % 16;
     ncol = 14 - col;
-    return row + ncol;
+    return row * 16 + ncol;
 }
 
 // normalize an address
@@ -63,6 +63,7 @@ int normalAd(int ad) {
         eq_ads[i + 1] = rotL90DegAd(eq_ads[i]);
         eq_ads[i + 5] = mirrorLRAd(eq_ads[i + 1]);
     }
+    showDecimalArray(eq_ads, 8);
     adm = getMinArray(eq_ads, 8);
     printDecimal(adm);
     return adm;
