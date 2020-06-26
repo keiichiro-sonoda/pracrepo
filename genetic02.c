@@ -134,7 +134,8 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
     int i;
     Board best_board;
     for (i = 0; i < n; i++) {
-        t_point = evaluationSimple(next_boards[i], *prp);
+        // sign inversion!!
+        t_point = -evaluationSimple(next_boards[i], *prp);
         if (mx_point < t_point) {
             // update
             mx_point = t_point;
