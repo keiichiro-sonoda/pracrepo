@@ -4,6 +4,8 @@
 int rotL90DegAd(int src);
 void showDecimalArray(const int *ia, int ia_len);
 
+// functions
+
 int getMin(int a, int b) {
     return (a < b ? a : b);
 }
@@ -19,15 +21,33 @@ int normalAd(int ad1) {
     return getMin(adm, ad4);
 }
 
+// ad: normalized address
+int ad2index(int ad) {
+    if (ad < 16)
+        return ad / 2;
+    if (ad < 32)
+        return ad / 2 - 2;
+    if (ad < 48)
+        return ad / 2 - 5;
+    if (ad < 64)
+        return ad / 2 - 11;
+    return -1;
+}
+
 int main(void) {
     printf("Hello World!!\n");
-    int ad2index[64];
+    int n = 64;
+    int indexes[n];
     int i, ad, eq_ad;
-    for (i = 0; i < 64; i++) {
+    for (i = 0; i < n; i++) {
         ad = i * 2;
         eq_ad = normalAd(ad);
-        ad2index[i] = eq_ad;
+        indexes[i] = eq_ad;
     }
-    showDecimalArray(ad2index, 64);
+    showDecimalArray(indexes, n);
+    for (i = 0; i < n; i++) {
+        indexes[i] = ad2index(indexes[i]);
+    }
+    showDecimalArray(indexes, n);
     return 0;
 }
