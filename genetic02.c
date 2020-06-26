@@ -3,7 +3,7 @@
 #include <time.h>
 
 #define MASU_NUM 64
-#define SPRM_LEN 16
+#define SPRM_LEN 10
 
 #define printDecimal(x) printf("%d\n", x)
 
@@ -37,19 +37,35 @@ int getMin(int a, int b) {
     return (a < b ? a : b);
 }
 
-int mirrorRLAd(int src) {
-    return 0;
+int getMinArray(const int *A, int n) {
+    int i;
+    int min = 0x7fffffff;
+    for (i = 0; i < n; i++) {
+        min = getMin(A[i], min);
+    }
+    return min;
+}
+
+int mirrorLRAd(int src) {
+    int row, col, ncol;
+    row = src / 16;
+    col = src % 16;
+    ncol = 14 - col;
+    return row + ncol;
 }
 
 // normalize an address
-int normalAd(int ad1) {
-    int ad2, ad3, ad4, adm;
-    ad2 = rotL90DegAd(ad1);
-    adm = getMin(ad1, ad2);
-    ad3 = rotL90DegAd(ad2);
-    adm = getMin(adm, ad3);
-    ad4 = rotL90DegAd(ad3);
-    return getMin(adm, ad4);
+int normalAd(int ad) {
+    int i, eq_ads[8], adm;
+    eq_ads[0] = ad;
+    eq_ads[4] = mirrorLRAd(ad);
+    for (i = 0; i < 3; i++) {
+        eq_ads[i + 1] = rotL90DegAd(eq_ads[i]);
+        eq_ads[i + 5] = mirrorLRAd(eq_ads[i + 1]);
+    }
+    adm = getMinArray(eq_ads, 8);
+    printDecimal(adm);
+    return adm;
 }
 
 // ad: normalized address
@@ -57,11 +73,11 @@ int ad2index(int ad) {
     if (ad < 16)
         return ad / 2;
     if (ad < 32)
-        return ad / 2 - 2;
+        return ad / 2 - 5;
     if (ad < 48)
-        return ad / 2 - 6;
+        return ad / 2 - 11;
     if (ad < 64)
-        return ad / 2 - 12;
+        return ad / 2 - 18;
     return -1;
 }
 
@@ -88,6 +104,7 @@ int main(void) {
     srand((unsigned)time(NULL));
     // set global variable
     setIndexes();
+    showDecimalArray(INDEXES, MASU_NUM);
     Sprm p1;
     randSprm(&p1);
     showSprm(p1);
