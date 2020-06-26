@@ -15,7 +15,7 @@
 #define printSize(x) printf("%ld\n", sizeof x)
 
 // types
-
+// environmental dependence
 typedef unsigned long int8B;
 
 // board information
@@ -465,8 +465,8 @@ int main(void) {
     setIndexes();
     // set initial board
     initBoard();
-
-    nextGenerationSprmLoop(6, 1);
+    // go to 300!
+    nextGenerationSprmLoop(7, 293);
     //checkSprmFile(4);
     return 0;
 }

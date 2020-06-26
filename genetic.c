@@ -56,7 +56,7 @@ const char DAT_DIR_FORMAT[] = "./prm/%s";
 int getKoma(Board b, int ad);
 int showBoard(Board b);
 int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_count);
-void zeros(int *ia, int ia_len);
+ zeros(int *ia, int ia_len);
 int indexes(int *ia, int ia_len);
 int showCanPut(Board b, const int *can_put, const int next_count);
 int getValidActStdin(int *can_put, int length);
