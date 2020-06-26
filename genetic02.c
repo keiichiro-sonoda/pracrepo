@@ -6,6 +6,8 @@
 #define NEXT_MAX 32
 #define MASU_NUM 64
 #define SPRM_LEN 10
+#define SURVIVE_NUM 10
+#define GENE_NUM 100
 
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
@@ -271,6 +273,73 @@ void makeFirstSprmsFile(void) {
     fclose(fp);
 }
 
+// make next generation file
+int nextGenerationSprm(int gene_num) {
+    int i, j, count;
+    char format[] = "prm/simple_prm%03d.bin";
+    char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
+    // previous survivors
+    Sprm parents[SURVIVE_NUM];
+    FILE *fp;
+    // read file name
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    // write file name
+    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
+    // view
+    printf("read file : %s\n", fnamer);
+    printf("write file: %s\n", fnamew);
+    // read parents
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        printf("\a%s can't be opened\n", fnamer);
+        return -1;
+    }
+    // opened!
+    fread(parents, sizeof parents, 1, fp);
+    fclose(fp);
+    // check write file (can read?)
+    if ((fp = fopen(fnamew, "rb")) != NULL) {
+        printf("\a%s exists. Can I overwrite it? (y): ", fnamew);
+        fclose(fp);
+        // don't overwrite
+        if (getchar() != 'y') {
+            printf("terminated\n");
+            return -1;
+        }
+    }
+    // make children!
+    Sprm generation[GENE_NUM];
+    // 10 parents copy
+    for (count = 0; count < SURVIVE_NUM; count++) {
+        generation[count] = parents[count];
+    }
+    // make children
+    // 45 combinations, 2 children per couple
+    for (i = 0; i < SURVIVE_NUM - 1; i++) {
+        for (j = i + 1; j < SURVIVE_NUM; j++) {
+            generation[count] = makeChildAverageSprm(parents[i], parents[j]);
+            count++;
+            generation[count] = makeChildCrossMSprm(parents[i], parents[j]);
+            count++;
+        }
+    }
+    // calcurate survivors
+    Sprm suvivors[SURVIVE_NUM];
+    // ....
+    // sort generation
+
+    // write current survivors
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        printf("\a%s cannot be opened\n", fnamew);
+        return -1;
+    }
+    // opened!
+    // only top 10
+    fwrite(generation, sizeof(Sprm) * SURVIVE_NUM, 1, fp);
+    fclose(fp);
+
+    return 0;
+}
+
 int main(void) {
     // seed reset
     srand((unsigned)time(NULL));
@@ -279,11 +348,6 @@ int main(void) {
     // set initial board
     initBoard();
 
-    //makeFirstSprmsFile();
-    int sample1[] = {5, 3, 2, 1, 4};
-    int index[] = {1, 2, 3, 4, 5};
-    quicksortDD(sample1, index, 0, 4);
-    showDecimalArray(sample1, 5);
-    showDecimalArray(index, 5);
+    nextGenerationSprm(0);
     return 0;
 }
