@@ -117,7 +117,7 @@ float evaluationSimple(Board b, Sprm pr) {
     int ba[MASU_NUM];
     // Board -> int array
     board2arraySymmetry(b, ba);
-    showDecimalArray(ba, MASU_NUM);
+    //showDecimalArray(ba, MASU_NUM);
     for (i = 0; i < MASU_NUM; i++) {
         // calculate inner product
         pt += ba[i] * pr.weight[INDEXES[i]];
@@ -204,14 +204,13 @@ int main(void) {
     // set initial board
     initBoard();
 
-    Sprm p1;
+    int res;
+    Sprm p1, p2;
     randSprm(&p1);
-    showSprm(p1);
+    randSprm(&p2);
+    //showSprm(p1);
     // afte one action
-    Board sample;
-    sample = START;
-    sample.board[1] = 0x0000000000000150;
-    showBoard(sample);
-    printFloat(evaluationSimple(sample, p1));
+    res = oneToOneNormalSimple(&p1, &p2);
+    printDecimal(res);
     return 0;
 }
