@@ -1,4 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MASU_NUM 64
+#define SPRM_LEN 16
+
+// simple parameter
+typedef struct {
+    float weight[SPRM_LEN];
+} Sprm;
+
+// global variables
+int INDEXES[MASU_NUM];
 
 // functions defined in othello.c
 int rotL90DegAd(int src);
@@ -34,20 +47,26 @@ int ad2index(int ad) {
     return -1;
 }
 
-int main(void) {
-    printf("Hello World!!\n");
-    int n = 64;
-    int indexes[n];
-    int i, ad, eq_ad;
-    for (i = 0; i < n; i++) {
+// -0.5 ~ 0.5
+void randSprm(Sprm *prp) {
+    int i;
+    for (i = 0; i < SPRM_LEN; i++) {
+        prp->weight[i] = (float)(rand() / RAND_MAX - 0.5);
+    }
+}
+
+void setIndexes(void) {
+    int i, ad;
+    for (i = 0; i < MASU_NUM; i++) {
         ad = i * 2;
-        eq_ad = normalAd(ad);
-        indexes[i] = eq_ad;
+        INDEXES[i] = ad2index(normalAd(ad));
     }
-    showDecimalArray(indexes, n);
-    for (i = 0; i < n; i++) {
-        indexes[i] = ad2index(indexes[i]);
-    }
-    showDecimalArray(indexes, n);
+}
+
+int main(void) {
+    // seed reset
+    srand((unsigned)time(NULL));
+    setIndexes();
+    showDecimalArray(INDEXES, MASU_NUM);
     return 0;
 }
