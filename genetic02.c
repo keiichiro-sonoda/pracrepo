@@ -338,8 +338,8 @@ float distSprm(Sprm p1, Sprm p2) {
     return (float)sqrt(d);
 }
 
-// choose survivors
-// Sprm[100]
+// choose survivors from Sprm[100]
+// and show match results
 void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     int i, j;
     int result[GENE_NUM];
@@ -356,14 +356,17 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     printf("rank change\n");
     for (i = 0; i < GENE_NUM; i++) {
         // rank 11 .. 99 aren't displayed
-        if (10 <= i && i < 99) continue;
+        if (10 <= i && i < GENE_NUM - 1) continue;
+        // worst!
+        if (i == GENE_NUM - 1)
+            printf("        ...\n");
         // winner's index (or worst index)
         j = number[i];
         printf("%3d", j + 1);
         if (j < 10) printf("(p)");
         else printf("(c)");
         printf(" -> ");
-        printf("%2d: %3dpt\n", i + 1, result[i]);
+        printf("%3d: %3dpt\n", i + 1, result[i]);
         // record winners
         if (i < 10)
             survivors[i] = generation[j];
@@ -371,6 +374,8 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     // calculate the distance between the previous top and the current top
     dist = distSprm(survivors[0], generation[0]);
     printf("distance: %6.4f\n", dist);
+    printf("top parameters view:\n");
+    showSprm(survivors[0]);
 }
 
 // make next generation file
@@ -461,7 +466,7 @@ int main(void) {
     // set initial board
     initBoard();
 
-    nextGenerationSprmLoop(4, 1);
+    nextGenerationSprmLoop(6, 1);
     //checkSprmFile(4);
     return 0;
 }
