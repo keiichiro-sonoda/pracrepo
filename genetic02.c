@@ -138,10 +138,12 @@ float fcrossMFlex(float a, float b, float rate) {
     return b;
 }
 
+// cross parameters?
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     Sprm child;
     int i;
     for (i = 0; i < SPRM_LEN; i++) {
+        // rate 5%
         child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.05);
     }
     return child;
