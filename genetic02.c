@@ -7,17 +7,28 @@
 
 #define printDecimal(x) printf("%d\n", x)
 
+// types
+typedef unsigned long int8B;
+
+// board information
+typedef struct {
+    int8B board[2];
+} Board;
+
 // simple parameter
 typedef struct {
     float weight[SPRM_LEN];
 } Sprm;
 
 // global variables
+Board START;
 int INDEXES[MASU_NUM];
 
 // functions defined in othello.c
 int rotL90DegAd(int src);
 void showDecimalArray(const int *ia, int ia_len);
+void initBoard(void);
+int showBoard(Board b);
 
 // functions
 
@@ -96,10 +107,13 @@ int main(void) {
     srand((unsigned)time(NULL));
     // set global variable
     setIndexes();
+    // set initial board
+    initBoard();
     showDecimalArray(INDEXES, MASU_NUM);
     Sprm p1;
     randSprm(&p1);
     showSprm(p1);
     //showDecimalArray(INDEXES, MASU_NUM);
+    showBoard(START);
     return 0;
 }

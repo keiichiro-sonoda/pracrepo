@@ -61,7 +61,7 @@ int indexes(int *ia, int ia_len);
 int showCanPut(Board b, const int *can_put, const int next_count);
 int getValidActStdin(int *can_put, int length);
 int getIndex(const int *ar, int ar_len, int el);
-int initBoard(void);
+void initBoard(void);
 void swapNormalizeBoard(Board *bp);
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 int main2(void);
