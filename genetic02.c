@@ -6,6 +6,7 @@
 #define SPRM_LEN 10
 
 #define printDecimal(x) printf("%d\n", x)
+#define printFloat(x) printf("%f\n", x)
 
 // types
 
@@ -96,6 +97,7 @@ void randSprm(Sprm *prp) {
     }
 }
 
+// convert from an address to the weight index?
 void setIndexes(void) {
     int i, ad;
     for (i = 0; i < MASU_NUM; i++) {
@@ -106,7 +108,16 @@ void setIndexes(void) {
 
 // caluculate point
 float evaluationSimple(Board b, Sprm pr) {
-    float pt;
+    float pt = 0;
+    int i;
+    int ba[MASU_NUM];
+    // Board -> int array
+    board2arraySymmetry(b, ba);
+    showDecimalArray(ba, MASU_NUM);
+    for (i = 0; i < MASU_NUM; i++) {
+        // calculate inner product
+        pt += ba[i] * pr.weight[INDEXES[i]];
+    }
     return pt;
 }
 
@@ -122,5 +133,10 @@ int main(void) {
     showSprm(p1);
     //showDecimalArray(INDEXES, MASU_NUM);
     showBoard(START);
+    Board sample;
+    sample = START;
+    sample.board[1] = 0x0000000000000150;
+    showBoard(sample);
+    printFloat(evaluationSimple(sample, p1));
     return 0;
 }
