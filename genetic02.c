@@ -66,7 +66,7 @@ void randSprm(Sprm *prp) {
     int i;
     float r;
     for (i = 0; i < SPRM_LEN; i++) {
-        r = rand() / RAND_MAX;
+        r = (float)rand() / RAND_MAX - 0.5;
         prp->weight[i] = r;
     }
 }
@@ -88,6 +88,5 @@ int main(void) {
     randSprm(&p1);
     showSprm(p1);
     //showDecimalArray(INDEXES, MASU_NUM);
-    printDecimal(RAND_MAX);
     return 0;
 }
