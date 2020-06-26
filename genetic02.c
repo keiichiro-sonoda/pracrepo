@@ -40,6 +40,7 @@ void board2arraySymmetry(Board src, int *dst);
 void swapNormalizeBoard(Board *bp);
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 void quicksortDD(int *A, int *B, int p, int r);
+void zeros(int *ia, int n);
 
 // functions
 
@@ -211,7 +212,7 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     while (1) {
         // calculate next
         n = nextBoardNormal2(main_board, nba, kc);
-        showBoard(main_board);
+        //showBoard(main_board);
         // can't put a piece anywhere
         if (n == 0) {
             // can't do anything one another
@@ -230,11 +231,11 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
         // determine a next board
         // black (first)
         if (turn == 0b01) {
-            printf("black\n");
+            //printf("black\n");
             main_board = getBestBoardForBlackSimple(nba, n, spp);
         } // white (second)
         else {
-            printf("white\n");
+            //printf("white\n");
             main_board = getBestBoardForBlackSimple(nba, n, gpp);
         }
         // switch turn
@@ -242,7 +243,7 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     }
     // difference between black and white
     dif = kc[1] - kc[2];
-    printDecimal(dif);
+    //printDecimal(dif);
     if (dif > 0) return turn;
     if (dif < 0) return turn ^ 0b11;
     // draw
@@ -290,6 +291,36 @@ void checkSprmFile(int gene_num) {
     // check
     //showSprm(pa[9]);
     showFloatArray(pa[4].weight, SPRM_LEN);
+}
+
+// use Sprm[100]
+// win: +2, draw: +1, lose: 0
+void leagueMatchSimpleSprm(Sprm *generation, int *result) {
+    int i, j, k;
+    // all zero
+    zeros(result, GENE_NUM);
+    // black index
+    for (i = 0; i < GENE_NUM; i++) {
+        //printf("\ai = %d / %d", i, FAMILY_NUM);
+        // white index
+        for (j = 0; j < GENE_NUM; j++) {
+            if (i == j) continue;
+            switch(oneToOneNormalSprm(generation + i, generation + j)) {
+                // black won
+                case 1:
+                    result[i] += 2;
+                    break;
+                // white won
+                case 2:
+                    result[j] += 2;
+                    break;
+                // draw
+                default:
+                    result[i]++;
+                    result[j]++;
+            }
+        }
+    }
 }
 
 // make next generation file
@@ -368,8 +399,5 @@ int main(void) {
     initBoard();
 
     //nextGenerationSprm(0);
-    checkSprmFile(0);
-    checkSprmFile(1);
-    checkSprmFile(2);
     return 0;
 }

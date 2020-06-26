@@ -477,12 +477,10 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
 
 
 // all zero
-int zeros(int *ia, int ia_len) {
+void zeros(int *ia, int ia_len) {
     int i;
-    for (i = 0; i < ia_len; i++) {
+    for (i = 0; i < ia_len; i++)
         ia[i] = 0;
-    }
-    return 0;
 }
 
 // all zero 2D array
