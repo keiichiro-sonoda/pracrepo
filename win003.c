@@ -1,6 +1,38 @@
 #include <stdio.h>
 
+// プロトタイプ宣言
+void printDecimalArray(const int *A, int n);
+void range(int *A, int n, int start, int step);
+void init(int *A, int n, int num);
+void zeros(int *A, int n);
+
+int main(void) {
+    int size; size = 5;
+
+    int A[size]; range(A, size, 1, 1);
+    int B[size]; range(B, size, 1, -1);
+    int C[size]; zeros(C, size);
+
+    printf("A = ");
+    printDecimalArray(A, size);
+    printf("B = ");
+    printDecimalArray(B, size);
+    printf("C = ");
+    printDecimalArray(C, size);
+
+    for (int i = 0; i < size; i++) {
+        C[i] = A[i] + B[i];
+    }
+
+    printf("\nC = ");
+    printDecimalArray(C, size);
+
+    return 0;
+}
+
 // int型の配列を表示
+// これはデバッグでよく使われるらしい
+// 誰もが通る道なのか..
 void printDecimalArray(const int *A, int n) {
     putchar('{');
     for (int i = 0; i < n; i++) {
@@ -28,28 +60,4 @@ void init(int *A, int n, int num) {
 // 全零配列特化(せっかくなのでinitを使う)
 void zeros(int *A, int n) {
     init(A, n, 0);
-}
-
-int main(void) {
-    int size; size = 5;
-
-    int A[size]; range(A, size, 1, 1);
-    int B[size]; range(B, size, 1, -1);
-    int C[size]; zeros(C, size);
-
-    printf("A = ");
-    printDecimalArray(A, size);
-    printf("B = ");
-    printDecimalArray(B, size);
-    printf("C = ");
-    printDecimalArray(C, size);
-
-    for (int i = 0; i < size; i++) {
-        C[i] = A[i] + B[i];
-    }
-
-    printf("\nC = ");
-    printDecimalArray(C, size);
-
-    return 0;
 }
