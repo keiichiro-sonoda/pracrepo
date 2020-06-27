@@ -3,6 +3,8 @@
 
 // maximum number of next boards
 #define NEXT_MAX 32
+// マスの数
+#define MASU_NUM 64
 // 1 million
 #define MILLION 1000000
 // 1 billion
@@ -25,15 +27,17 @@ typedef struct {
 } Board;
 
 // intial board
-Board START;
+// 複数ファイルで共有するときは extern を付けるらしい
+// const は諦めよう
+extern Board START;
 
 // bin -> char
 // black: (0b01, o), white: (0b10, x), empty: (0b00, -)
 // can put sign: (0b11, !)
-const char B2C[5] = "-ox!";
+extern const char B2C[5];
 
 // 8 directions
-const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
+extern const int DIRECTION[8];
 
 // get a piece at a certain address
 int getKoma(Board b, int ad);

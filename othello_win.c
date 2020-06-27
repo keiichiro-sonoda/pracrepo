@@ -4,7 +4,11 @@
 #include <unistd.h>
 #include "othello_win.h"
 
+// ヘッダファイル関数の中身を書くファイル
 // ヘッダファイルのおかげで型定義もしなくて済む
+// やっぱグローバル変数は厄介かも
+const char B2C[5] = "-ox!";
+const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 
 // get a piece at a certain address
 int getKoma(Board b, int ad) {
@@ -972,7 +976,7 @@ void board2arraySymmetry(Board src, int *dst) {
 // main
 // othello_win.c はメインを定義しないことにする?
 // デバッグ用にmain()に改名
-int main(void) {
+int main2(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;
