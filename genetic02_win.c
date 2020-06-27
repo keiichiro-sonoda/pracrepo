@@ -316,7 +316,7 @@ void getSprmFilePy(int gene_num, float f_pointer[64]) {
     fclose(fp);
     // チェック
     showFloatArray(pa[0].weight, SPRM_LEN);
-    showDecimalArray(INDEXES, MASU_NUM);
+    //showDecimalArray(INDEXES, MASU_NUM);
     // 適切な位置にパラメータを配置
     for (i = 0; i < MASU_NUM; i++) {
         f_pointer[i] = pa[0].weight[INDEXES[i]];
