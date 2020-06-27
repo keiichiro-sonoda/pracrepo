@@ -1,9 +1,14 @@
+# -*- coding: utf-8 -*-
+# ctypes の練習
 import numpy as np
+import sys
+import ctypes
 
-l1 = [i for i in range(10)]
+kernel32 = ctypes.WinDLL("kernel32")
+kernel32.Sleep.restype = None # void
+kernel32.Sleep.argtypes = (ctypes.c_uint32,) # (unsigned int)
 
-print(l1)
-
-na1 = np.array(l1)
-
-print(na1)
+print("started")
+sys.stdout.flush()
+kernel32.Sleep(1000)
+print("finished")
