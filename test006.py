@@ -103,14 +103,25 @@ class Widget(QWidget):
         pen.setColor(Qt.black)
         pen.setWidth(4)
         imgcanvas.setPen(pen)
+        # なんとなく色配列作っておく
+        rgb = [0, 0, 0]
         # 評価値によって色を変えた正方形を描きたい
         for i in range(8):
             for j in range(8):
                 # パラメータの添え字を計算
                 index = i * 8 + j
-                # まずは赤色の度合いを変えてみる
-                red = 128 + int(255 * self.use_sprm[index])
-                color = QColor(red, red, red)
+                # 評価値を取り出す
+                value = self.use_sprm[index]
+                # 正なら緑に近づけたい, 負なら赤に
+                # 0は黄色
+                if value >= 0:
+                    rgb[0] = 255 - int(510 * value)
+                    rgb[1] = 255
+                else:
+                    rgb[0] = 255
+                    rgb[1] = 255 + int(510 * value)
+                # ここで配列分割 * の出番?
+                color = QColor(*rgb)
                 imgcanvas.setBrush(color)
                 # 正方形を描く
                 x = self.margin + self.SQLEN * i
