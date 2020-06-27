@@ -4,15 +4,11 @@ import numpy as np
 import sys
 import ctypes
 
-# kernel32とかいうファイルを読み込む?
-kernel32 = ctypes.WinDLL("kernel32")
-# 返り値指定
-kernel32.Sleep.restype = None # void
-# 引数指定(要素1の配列)
-# unit と間違えないように! (間違えた)
-kernel32.Sleep.argtypes = (ctypes.c_uint32,) # (unsigned int)
+user32 = ctypes.WinDLL("user32")
+# A/Wの区別がある場合はWを使う??
+user32.MessageBoxW.restype = ctypes.c_int32
+user32.MessageBoxW.argtypes = (
+    ctypes.c_void_p, ctypes.c_wchar_p, ctypes.c_wchar_p, ctypes.c_uint32
+)
 
-print("started")
-sys.stdout.flush()
-kernel32.Sleep(1000)
-print("finished")
+user32.MessageBoxW(None, u"テスト", u"タイトル", 0)
