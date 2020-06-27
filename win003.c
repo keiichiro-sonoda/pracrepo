@@ -31,25 +31,25 @@ void zeros(int *A, int n) {
 }
 
 int main(void) {
-    int size = 10;
-    int i, a[size], b[size];
-    // これで初期化できるってほんと?
-    //int c[size] = {0};
-    int c[size];
+    int size; size = 5;
 
-    init(c, size, 99);
-    //zeros(c, size);
-    range(a, size, 1, 1);
-    range(b, size, 1, -1);
-    printDecimalArray(a, size);
-    printDecimalArray(b, size);
-    printDecimalArray(c, size);
+    int A[size]; range(A, size, 1, 1);
+    int B[size]; range(B, size, 1, -1);
+    int C[size]; zeros(C, size);
 
-    for (i = 0; i < size; i++) {
-        c[i] = a[i] + b[i];
+    printf("A = ");
+    printDecimalArray(A, size);
+    printf("B = ");
+    printDecimalArray(B, size);
+    printf("C = ");
+    printDecimalArray(C, size);
+
+    for (int i = 0; i < size; i++) {
+        C[i] = A[i] + B[i];
     }
 
-    printDecimalArray(c, size);
+    printf("\nC = ");
+    printDecimalArray(C, size);
 
     return 0;
 }
