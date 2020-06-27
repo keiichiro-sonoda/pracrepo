@@ -9,6 +9,7 @@ kernel32 = ctypes.WinDLL("kernel32")
 # 返り値指定
 kernel32.Sleep.restype = None # void
 # 引数指定(要素1の配列)
+# unit と間違えないように! (間違えた)
 kernel32.Sleep.argtypes = (ctypes.c_uint32,) # (unsigned int)
 
 print("started")
