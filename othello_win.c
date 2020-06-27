@@ -2,40 +2,9 @@
 #include <math.h>
 #include <time.h>
 #include <unistd.h>
+#include "othello_win.h"
 
-// maximum number of next boards
-#define NEXT_MAX 32
-// 1 million
-#define MILLION 1000000
-// 1 billion
-#define BILLION 1000000000
-
-#define START_H 0x0000000000000180L
-#define START_L 0x0240000000000000L
-
-#define kugiri() printf("--------------------------\n")
-
-// 64bit
-// mingw64 long long int
-typedef unsigned long long int8B;
-
-// othello board
-// 128 bits
-typedef struct {
-    // low bits, high bits
-    int8B board[2];
-} Board;
-
-// intial board
-Board START;
-
-// bin -> char
-// black: (0b01, o), white: (0b10, x), empty: (0b00, -)
-// can put sign: (0b11, !)
-const char B2C[5] = "-ox!";
-
-// 8 directions
-const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
+// ヘッダファイルのおかげで型定義もしなくて済む
 
 // get a piece at a certain address
 int getKoma(Board b, int ad) {
@@ -747,13 +716,13 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            te = wrapNegaMaxAB(main_board, turn, 6);
+            //te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
-            //te = getValidActStdin(can_put, count);
+            te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
-            te = wrapNegaMaxAB(main_board, turn, 4);
+            te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
             index = getIndex(can_put, count, te);
         } // update board
@@ -1001,20 +970,21 @@ void board2arraySymmetry(Board src, int *dst) {
 }
 
 // main
-int main2(void) {
+// othello_win.c はメインを定義しないことにする?
+// デバッグ用にmain()に改名
+int main(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;
     Board nbs[32];
     int i;
     int kc[3];
+    // 偏ったサンプル
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    //play();
-    showBoard(sample2);
-    i = nextBoardNormal2(sample2, nbs, kc);
-    showBoardArray(nbs, i);
+    play();
+    //showBoard(START);
     return 0;
 }

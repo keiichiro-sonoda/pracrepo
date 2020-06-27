@@ -8,6 +8,8 @@ exe2_win.so: genetic02_win.c othello_win.c sort01_win.o
 	gcc genetic02_win.c othello_win.c sort01_win.o -o exe2_win.so -shared -fPIC -lm
 othello: othello.c
 	gcc othello.c -o othello
+othello_win.exe: othello_win.c
+	gcc othello_win.c -o othello_win.exe
 test002: test002.c
 	gcc test002.c -o test002
 sort01.o: sort01.c
