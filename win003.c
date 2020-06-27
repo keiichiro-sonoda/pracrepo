@@ -26,11 +26,17 @@ void init(int *A, int n, int num) {
     }
 }
 
+// 全零配列特化(せっかくなのでinitを使う)
+void zeros(int *A, int n) {
+    init(A, n, 0);
+}
+
 int main(void) {
     int size = 10;
     int i, a[size], b[size], c[size];
 
-    init(c, size, 99);
+    //init(c, size, 99);
+    zeros(c, size);
     range(a, size, 1, 1);
     range(b, size, 1, -1);
     printDecimalArray(a, size);
