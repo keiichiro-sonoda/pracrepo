@@ -19,12 +19,12 @@ getSprmFile = exe2_win.getSprmFilePy
 getSprmFile.rectype = ct.POINTER(ct.c_float)
 getSprmFile.argtypes = (ct.c_int32,)
 
+# メモリ開放用
 freeMemory = exe2_win.freeMemoryPy
 
 if __name__ == "__main__":
     # 使ってみる!
     print(add(1, 2))
-    checkSprmFile(300)
-    a = getSprmFile(300)
-    print(type(a))
+    #checkSprmFile(300)
+    getSprmFile(300)
     freeMemory()
