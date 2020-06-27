@@ -70,7 +70,8 @@ class Widget(QWidget):
         # float[64]のインスタンスを作成
         f_arr_c = FloatArray64()
         # 300世代目のトップ評価値を入手
-        getSprmFile(300, f_arr_c)
+        # 確認するならここの値を変更
+        getSprmFile(0, f_arr_c)
         # タプルとしてクラス内変数とする
         self.use_sprm = tuple(f_arr_c)
         # チェック
@@ -103,6 +104,10 @@ class Widget(QWidget):
         pen.setColor(Qt.black)
         pen.setWidth(4)
         imgcanvas.setPen(pen)
+        # フォント設定
+        font = QFont()
+        font.setPointSize(12)
+        imgcanvas.setFont(font)
         # なんとなく色配列作っておく
         rgb = [0, 0, 0]
         # 評価値によって色を変えた正方形を描きたい
@@ -127,6 +132,7 @@ class Widget(QWidget):
                 x = self.margin + self.SQLEN * i
                 y = self.margin + self.SQLEN * j
                 imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
+                imgcanvas.drawText(x + 18, y + 45, "{:5.2f}".format(value))
 
     # テストボタンが押された
     # 状態の切り替えのみ行なう
