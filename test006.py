@@ -26,7 +26,7 @@ class Widget(QWidget):
     # よく使う色は先に定義してみる?
     MYGREEN = QColor(0, 200, 51)
     # マスの大きさ
-    SQLEN = 79
+    SQLEN = 80
     # ペイントみたいに線をマウスで線を描いてみる?
     def __init__(self, parent=None):
         super(Widget, self).__init__(parent)
@@ -74,7 +74,21 @@ class Widget(QWidget):
         # タプルとしてクラス内変数とする
         self.use_sprms = tuple(f_arr_c)
         # チェック
-        print(self.use_sprms)
+        #print(self.use_sprms)
+        self.setButtons()
+    
+    # ボタン作成
+    def setButtons(self):
+        self.test_button = QPushButton("test", self)
+        self.test_button.move(100, 820)
+        self.test_button.setStyleSheet("\
+            font-size:20pt;\
+            font-weight:bold;\
+            font-family:Monotype Corsiva;\
+            background:#ffffff")
+        self.test_button.resize(140, 50)
+        # クリックされたときに実行
+        #self.test_button.clicked.connect(self.clickButton)
     
     # 関数をオーバーライド?
     # print関数入れると, この関数の実行頻度半端ねぇ
