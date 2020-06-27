@@ -15,16 +15,24 @@ checkSprmFile.rectype = None
 checkSprmFile.argtypes =(ct.c_int32,)
 
 getSprmFile = exe2_win.getSprmFilePy
-# 返り値は float のポインタ
-getSprmFile.rectype = ct.POINTER(ct.c_float)
-getSprmFile.argtypes = (ct.c_int32,)
+# 返り値はなし
+getSprmFile.rectype = None
+# 引数に float のポインタを入れて, そこに入れてもらおう
+# Python ならメモリ確保動的にやってくれる..よね?
+getSprmFile.argtypes = (ct.c_int32, ct.POINTER(ct.c_float))
 
-# メモリ開放用
-freeMemory = exe2_win.freeMemoryPy
+# float 64の型を作る!
+# こんなやり方があんのか...
+FloatArray64 = ct.c_float * 64
+f_arr = [float(i) for i in range(64)]
+f_arr_c = FloatArray64(*f_arr)
 
 if __name__ == "__main__":
     # 使ってみる!
-    print(add(1, 2))
-    #checkSprmFile(300)
-    getSprmFile(300)
-    freeMemory()
+    a = add(1, 2)
+    print(a, type(a))
+    #print(FloatArray64)
+    #print(f_arr)
+    print(f_arr_c)
+    getSprmFile(300, f_arr_c)
+    print(f_arr_c)

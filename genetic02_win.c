@@ -32,9 +32,6 @@ typedef struct {
 Board START;
 int INDEXES[MASU_NUM];
 
-// ctypes用のグローバル変数
-float *f_pointer;
-
 // functions defined in othello.c
 int rotL90DegAd(int src);
 void showDecimalArray(const int *ia, int ia_len);
@@ -297,28 +294,17 @@ void checkSprmFile(int gene_num) {
     showFloatArray(pa[0].weight, SPRM_LEN);
 }
 
-// pythonからパラメータを読み取りたい
-// float 64個のポインタを返す
-// 終わったらメモリ開放推奨
-float *getSprmFilePy(int gene_num) {
+// pythonでパラメータを読み取りたい
+// 書き換えるための float のポインタを与える
+void getSprmFilePy(int gene_num, float *f_pointer) {
     printf("called!\n");
-    int s;
-    s = sizeof(float) * MASU_NUM;
-    printDecimal(s);
-    // マスの数だけ float の領域を確保
-    f_pointer = (float *)malloc(s);
-    if (f_pointer == NULL)
-        printf("malloc failed.\n");
-        return NULL;
-    printf("yeah\n");
     FILE *fp;
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, "prm/simple_prm%03d.bin", gene_num);
     // ファイルを開く. 開けなかったらメモリ開放してNULLを返す
     if ((fp = fopen(fnamer, "rb")) == NULL) {
         printf("%s can't be opened.\n", fnamer);
-        free(f_pointer);
-        return NULL;
+        return;
     }
     int i;
     // 10個のパラメータを読み込むが, 使うのは1位だけ
@@ -331,13 +317,6 @@ float *getSprmFilePy(int gene_num) {
     for (i = 0; i < MASU_NUM; i++) {
         f_pointer[i] = pa[0].weight[INDEXES[i]];
     }
-    return f_pointer;
-}
-
-// メモリ開放するだけの関数
-void freeMemoryPy(void) {
-    printf("free!\n");
-    free(f_pointer);
 }
 
 // use Sprm[100]
