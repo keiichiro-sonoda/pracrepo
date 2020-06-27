@@ -91,7 +91,7 @@ FindNextFileW.argtypes = (
 FindClose.restype = ctypes.c_bool
 FindClose.argtypes = (ctypes.c_void_p,)
 
-pattern = "C:\Windows\*.exe"
+pattern = "C:\\Windows\\*.exe"
 # インスタンス作成
 findData = WIN32_FINE_DATAW()
 hfind = FindFirstFileW(pattern, findData)
