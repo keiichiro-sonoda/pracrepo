@@ -482,14 +482,8 @@ int main(void) {
     setIndexes();
     // set initial board
     initBoard();
-    // go to 300!
     //nextGenerationSprmLoop(7, 293);
-    //checkSprmFile(300);
-    float flp[128];
-    // warning になるか確認
-    // 64個の指定をしなくてもエラーにはならない(警告も出ない)
-    // オーバーフローの温床になりそう?
-    getSprmFilePy(0, flp);
-    kugiri();
+    showBoard(START);
+    checkSprmFile(300);
     return 0;
 }
