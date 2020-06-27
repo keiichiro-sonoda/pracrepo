@@ -13,8 +13,14 @@ exe2_win = ctypes.cdll.LoadLibrary(".//exe2_win.so")
 # c_float が64個の配列型を定義
 FloatArray64 = ctypes.c_float * 64
 # 共有ライブラリを使う際の初期化
-#exe2_win.initPy()
-exe2_win.showStartPy()
+# これが無いと不具合の可能性大
+exe2_win.initPy()
+# 初期盤面確認
+#exe2_win.showStartPy()
+# 関数取得 & 返り値, 引数指定
+getSprmFile = exe2_win.getSprmFilePy
+getSprmFile.rectype = None
+getSprmFile.argtypes = (ctypes.c_int32, FloatArray64)
 
 class Widget(QWidget):
     # よく使う色は先に定義してみる?
@@ -252,6 +258,14 @@ class Application(QApplication):
         self.gui.show()
         sys.exit(self.exec_())
 
-if __name__ == "__main__":
+
+def main():
+    f_arr_c = FloatArray64()
+    getSprmFile(300, f_arr_c)
+    f_arr = list(f_arr_c)
+    print(f_arr)
     app = Application()
     app.run()
+
+if __name__ == "__main__":
+    main()
