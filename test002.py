@@ -41,6 +41,5 @@ if __name__ == "__main__":
     getSprmFile(300, f_arr_c)
     # リスト型に変換
     f_arr = list(f_arr_c)
-    print(f_arr)
+    print(("{:6.4f} " * 64).format(*f_arr))
     print(type(f_arr[0]))
-

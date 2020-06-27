@@ -496,6 +496,11 @@ int main(void) {
     initBoard();
     // go to 300!
     //nextGenerationSprmLoop(7, 293);
-    checkSprmFile(300);
+    //checkSprmFile(300);
+    float *flp;
+    // warning になるか確認
+    // 64個の指定をしなくてもエラーにはならない(警告も出ない)
+    // オーバーフローの温床になりそう?
+    //getSprmFilePy(0, flp);
     return 0;
 }
