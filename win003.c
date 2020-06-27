@@ -33,7 +33,10 @@ void zeros(int *A, int n) {
 
 int main(void) {
     int size = 10;
-    int i, a[size], b[size], c[size];
+    int i, a[size], b[size];
+    // これで初期化できるってほんと?
+    //int c[size] = {0};
+    int c[size];
 
     //init(c, size, 99);
     zeros(c, size);
