@@ -20,10 +20,9 @@ void range(int *A, int n, int start, int step) {
 }
 
 // 全ての要素を特定の数字で初期化
+// 初項n, 交差0の等差数列で考える(気付かなかった)
 void init(int *A, int n, int num) {
-    for (int i = 0; i < n; i++) {
-        A[i] = num;
-    }
+    range(A, n, num, 0);
 }
 
 // 全零配列特化(せっかくなのでinitを使う)
@@ -38,8 +37,8 @@ int main(void) {
     //int c[size] = {0};
     int c[size];
 
-    //init(c, size, 99);
-    zeros(c, size);
+    init(c, size, 99);
+    //zeros(c, size);
     range(a, size, 1, 1);
     range(b, size, 1, -1);
     printDecimalArray(a, size);
