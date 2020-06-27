@@ -91,18 +91,18 @@ class Widget(QWidget):
         self.test_button.resize(140, 50)
         # クリックされたときに実行
         self.test_button.clicked.connect(self.testClicked)
-        # 一応キャンバスもここで作っておく
+        # テスト画像初期化
+        self.setTestImage()
+    
+    # テスト用画像を作成
+    def setTestImage(self):
         self.test_img = QImage(self.SQLEN * 10, self.SQLEN * 10, QImage.Format_ARGB32)
-
-    # テストボタンが押された
-    def testClicked(self):
-        if self.test_flag:
-            self.test_flag = False
-            self.update()
-            return
-        print("yeah")
-        # キャンバス取り出す
         imgcanvas = QPainter(self.test_img)
+        # ペン設定
+        pen = QPen()
+        pen.setColor(Qt.black)
+        pen.setWidth(4)
+        imgcanvas.setPen(pen)
         # 評価値によって色を変えた正方形を描きたい
         for i in range(8):
             for j in range(8):
@@ -110,13 +110,22 @@ class Widget(QWidget):
                 index = i * 8 + j
                 # まずは赤色の度合いを変えてみる
                 red = 128 + int(255 * self.use_sprm[index])
-                color = QColor(red, 0, 0)
-                imgcanvas.setPen(color)
+                color = QColor(red, red, red)
                 imgcanvas.setBrush(color)
                 # 正方形を描く
                 x = self.margin + self.SQLEN * i
                 y = self.margin + self.SQLEN * j
                 imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
+
+    # テストボタンが押された
+    # 状態の切り替えのみ行なう
+    def testClicked(self):
+        # 通常に戻す
+        if self.test_flag:
+            self.test_flag = False
+            self.update()
+            return
+        # テストモードにする
         self.test_flag = True
         self.update()
     
