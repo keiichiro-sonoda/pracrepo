@@ -466,7 +466,6 @@ int main(void) {
     // set initial board
     initBoard();
     // go to 300!
-    //nextGenerationSprmLoop(7, 293);
-    checkSprmFile(300);
+    nextGenerationSprmLoop(300, 1);
     return 0;
 }
