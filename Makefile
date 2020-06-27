@@ -4,6 +4,8 @@ exe2: genetic02.c othello.c sort01.o
 	gcc genetic02.c othello.c sort01.o -o exe2 -lm
 exe2_win: genetic02_win.c othello_win.c sort01_win.o
 	gcc genetic02_win.c othello_win.c sort01_win.o -o exe2_win -lm
+exe2_win.so: genetic02_win.c othello_win.c sort01_win.o
+	gcc genetic02_win.c othello_win.c sort01_win.o -o exe2_win.so -shared -fPIC -lm
 othello: othello.c
 	gcc othello.c -o othello
 test002: test002.c
