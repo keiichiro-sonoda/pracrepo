@@ -329,6 +329,7 @@ float *getSprmFilePy(int gene_num) {
 
 // メモリ開放するだけの関数
 void freeMemoryPy(void) {
+    printf("free!\n");
     free(f_pointer);
 }
 
