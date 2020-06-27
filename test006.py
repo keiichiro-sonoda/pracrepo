@@ -67,7 +67,14 @@ class Widget(QWidget):
                 # 正方形の中央の座標を記録
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
         
-        #print(self.tag2pos)
+        # float[64]のインスタンスを作成
+        f_arr_c = FloatArray64()
+        # 300世代目のトップ評価値を入手
+        getSprmFile(300, f_arr_c)
+        # タプルとしてクラス内変数とする
+        self.use_sprms = tuple(f_arr_c)
+        # チェック
+        print(self.use_sprms)
     
     # 関数をオーバーライド?
     # print関数入れると, この関数の実行頻度半端ねぇ
@@ -260,10 +267,6 @@ class Application(QApplication):
 
 
 def main():
-    f_arr_c = FloatArray64()
-    getSprmFile(300, f_arr_c)
-    f_arr = list(f_arr_c)
-    print(f_arr)
     app = Application()
     app.run()
 
