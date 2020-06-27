@@ -1,11 +1,20 @@
 import sys
 import time
 import random as rd
+import ctypes
 # インポート個別に
 # 予約語被る可能性低そうだし, 全部インポートしちゃおうか
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+
+# 共有ライブラリ読み込み
+exe2_win = ctypes.cdll.LoadLibrary(".//exe2_win.so")
+# c_float が64個の配列型を定義
+FloatArray64 = ctypes.c_float * 64
+# 共有ライブラリを使う際の初期化
+#exe2_win.initPy()
+exe2_win.showStartPy()
 
 class Widget(QWidget):
     # よく使う色は先に定義してみる?

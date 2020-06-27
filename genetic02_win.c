@@ -303,7 +303,7 @@ void getSprmFilePy(int gene_num, float f_pointer[64]) {
     fread(pa, sizeof pa, 1, fp);
     fclose(fp);
     // チェック
-    showFloatArray(pa[0].weight, SPRM_LEN);
+    //showFloatArray(pa[0].weight, SPRM_LEN);
     //showDecimalArray(INDEXES, MASU_NUM);
     // 適切な位置にパラメータを配置
     for (i = 0; i < MASU_NUM; i++) {
@@ -473,6 +473,21 @@ void nextGenerationSprmLoop(int st, int loop) {
         time(&t1);
         printf("elapsed time: %lds\n", t1 - t0);
     }
+}
+
+// python で使うときにまず実行する
+void initPy(void) {
+    // これは不要かも
+    srand((unsigned)time(NULL));
+    // これはまじで必須
+    setIndexes();
+    // 念のため
+    initBoard();
+}
+
+// 初期化できているか確認
+void showStartPy(void) {
+    showBoard(START);
 }
 
 int main(void) {
