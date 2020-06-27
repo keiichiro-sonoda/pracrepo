@@ -1,16 +1,20 @@
 #include <stdio.h>
 
 int main(void) {
-    int a[5] = {1, 2, 3, 4, 5};
-    int b[5] = {1, 0, -1, -2, -3};
-    int c[5];
+    int size = 10;
+    int i, a[size], b[size], c[size];
 
-    for (int i = 0; i < 5; i++) {
+    for (i = 0; i < size; i++) {
+        a[i] = i + 1;
+        b[i] = 1 - i;
+    }
+    
+    for (i = 0; i < size; i++) {
         c[i] = a[i] + b[i];
     }
 
     printf("c = [");
-    for (int i = 0; i < 5; i++) {
+    for (i = 0; i < size; i++) {
         printf("%d,", c[i]);
     }
 
