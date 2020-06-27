@@ -72,10 +72,12 @@ class Widget(QWidget):
         # 300世代目のトップ評価値を入手
         getSprmFile(300, f_arr_c)
         # タプルとしてクラス内変数とする
-        self.use_sprms = tuple(f_arr_c)
+        self.use_sprm = tuple(f_arr_c)
         # チェック
         #print(self.use_sprms)
         self.setButtons()
+        # 謎フラグ
+        self.test_flag = False
     
     # ボタン作成
     def setButtons(self):
@@ -88,12 +90,44 @@ class Widget(QWidget):
             background:#ffffff")
         self.test_button.resize(140, 50)
         # クリックされたときに実行
-        #self.test_button.clicked.connect(self.clickButton)
+        self.test_button.clicked.connect(self.testClicked)
+        # 一応キャンバスもここで作っておく
+        self.test_img = QImage(self.SQLEN * 10, self.SQLEN * 10, QImage.Format_ARGB32)
+
+    # テストボタンが押された
+    def testClicked(self):
+        if self.test_flag:
+            self.test_flag = False
+            self.update()
+            return
+        print("yeah")
+        # キャンバス取り出す
+        imgcanvas = QPainter(self.test_img)
+        # 評価値によって色を変えた正方形を描きたい
+        for i in range(8):
+            for j in range(8):
+                # パラメータの添え字を計算
+                index = i * 8 + j
+                # まずは赤色の度合いを変えてみる
+                red = 128 + int(255 * self.use_sprm[index])
+                color = QColor(red, 0, 0)
+                imgcanvas.setPen(color)
+                imgcanvas.setBrush(color)
+                # 正方形を描く
+                x = self.margin + self.SQLEN * i
+                y = self.margin + self.SQLEN * j
+                imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
+        self.test_flag = True
+        self.update()
     
     # 関数をオーバーライド?
     # print関数入れると, この関数の実行頻度半端ねぇ
     # 重い処理をここでするのは不向きらしい
     def paintEvent(self, event):
+        if self.test_flag:
+            canvas = QPainter(self)
+            canvas.drawImage(0, 0, self.test_img)
+            return
         # ここで休止を入れるとかくかくになる
         canvas = QPainter(self)
         canvas.drawImage(0, 0, self.img)
