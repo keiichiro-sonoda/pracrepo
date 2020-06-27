@@ -33,6 +33,7 @@ if __name__ == "__main__":
     print(a, type(a))
     #print(FloatArray64)
     #print(f_arr)
+    checkSprmFile(300)
     print(f_arr_c)
     getSprmFile(300, f_arr_c)
     print(f_arr_c)

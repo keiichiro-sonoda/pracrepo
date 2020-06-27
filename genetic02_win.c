@@ -296,7 +296,10 @@ void checkSprmFile(int gene_num) {
 
 // pythonでパラメータを読み取りたい
 // 書き換えるための float のポインタを与える
-void getSprmFilePy(int gene_num, float *f_pointer) {
+// 引数に配列の個数も指定できちゃうの??
+// main関数実行前提で考えてた
+// 何もしないと INDEXES は設定されない!
+void getSprmFilePy(int gene_num, float f_pointer[64]) {
     printf("called!\n");
     FILE *fp;
     char fnamer[FILENAME_MAX];
@@ -313,6 +316,7 @@ void getSprmFilePy(int gene_num, float *f_pointer) {
     fclose(fp);
     // チェック
     showFloatArray(pa[0].weight, SPRM_LEN);
+    showDecimalArray(INDEXES, MASU_NUM);
     // 適切な位置にパラメータを配置
     for (i = 0; i < MASU_NUM; i++) {
         f_pointer[i] = pa[0].weight[INDEXES[i]];
