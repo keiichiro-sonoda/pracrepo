@@ -102,15 +102,25 @@ class Widget(QWidget):
     # グラフ作成
     def setGraphs(self):
         pg.setConfigOptions(
-            antialias=True, foreground='k', background='w'
+            antialias=True, foreground='k', background=(20, 200, 100)
         )
         self.win = pg.GraphicsWindow(
             size=(400, 300), border=True, parent=self
         )
         self.win.move(800, 50)
+        # ローカル変数でも維持されるっぽい?
+        # グラフの追加とタイトルの設定
         graph = self.win.addPlot(title="Data")
+        # 'bottom' は縦軸, 'left' は横軸
+        # 'units' は軸の単位
         graph.setLabel('left', "Power", units='W')
         graph.setLabel('bottom', "Time", units='s')
+        graph.setRange(xRange=[0, 3], yRange=[-2, 2])
+        xaxis = graph.getAxis('bottom')
+        xaxis.setTicks([[(0, '00:00'), (1.5, '12:00'), (3, '24:00')]])
+        yaxis = graph.getAxis('left')
+        yaxis.setTicks([[(-2, 'low'), (0, '0'), (2, 'high')]])
+        graph.showGrid(x=True, y=True)
     
     # テスト用画像を作成
     def setTestImage(self):
