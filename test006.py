@@ -35,7 +35,7 @@ class Widget(QWidget):
         self.setWindowTitle("Othello")
         # ウィンドウの位置と大きさ
         # サイズはマスから計算
-        self.setGeometry(100, 100, self.SQLEN * 11, self.SQLEN * 11)
+        self.setGeometry(100, 100, self.SQLEN * 11 + 500, self.SQLEN * 11)
         # 背景カラー(微妙にグレー)
         self.setStyleSheet("background:#eeeeee")
         # タグからマスの中心座標に変換したい
@@ -104,6 +104,10 @@ class Widget(QWidget):
         pg.setConfigOptions(
             antialias=True,foreground='k', background='w'
         )
+        self.win = pg.GraphicsWindow(
+            size=(400, 300), border=True, parent=self
+        )
+        self.win.move(800, 50)
     
     # テスト用画像を作成
     def setTestImage(self):
