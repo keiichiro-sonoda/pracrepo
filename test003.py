@@ -31,7 +31,13 @@ class GraphWindow(QMainWindow):
             pen=pg.mkPen(color="r", style=Qt.SolidLine),
             antialias=True
         )
-        scatter = pg.ScatterPlotItem(x, y2)
+        scatter = pg.ScatterPlotItem(
+            x=x, y=y2,
+            pen=pg.mkPen(None),
+            brush=pg.mkBrush('b'),
+            size=20.0,
+            antialias=True
+        )
         p1.addItem(curve)
         p1.addItem(scatter)
 
