@@ -111,7 +111,7 @@ class Widget(QWidget):
             antialias=True, foreground='k', background=(255, 255, 255)
         )
         self.win = pg.GraphicsWindow(
-            size=(400, 300), border=True, parent=self
+            size=(500, 400), border=True, parent=self
         )
         self.win.move(800, 50)
         # ローカル変数でも維持されるっぽい?
@@ -121,7 +121,7 @@ class Widget(QWidget):
         # 'units' は軸の単位
         graph.setLabel('left', "point")
         graph.setLabel('bottom', "generation")
-        x_range = [0, 1]
+        x_range = [0, 300]
         y_range = [-0.5, 0.5]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
         graph.setRange(xRange=x_range, yRange=y_range)
@@ -138,27 +138,26 @@ class Widget(QWidget):
         graph.showGrid(x=True, y=True)
         x = []
         # 10 マス分のデータの配列を用意
-        ys = [[]] * 10
-        essence = [0, 1, 2, 3, 9, 10, 11, 18, 19, 23]
-        print(ys)
+        # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
+        # タプルのリストで試してみる?
+        ys = [()] * 10
+        essence = (0, 1, 2, 3, 9, 10, 11, 18, 19, 23)
+        #print(ys)
         for i in range(x_range[0], x_range[1] + 1):
             x.append(i)
             # i 世代のパラメータを取り出す(等価マスも含む64個)
             tprm = getSprmFileWrap(i)
-            print(tprm[0], tprm[56])
+            #print(tprm[0], tprm[56])
             #print(tprm)
             # 主要な10個の要素だけ取り出す
             for j, k in enumerate(essence):
-                print(j, k)
-                ys[j].append(tprm[k])
+                ys[j] += (tprm[k],)
+                #print(ys)
 
-        #print(ys)
-        x = np.arange(0, 600, 0.2)
-        y1 = np.sin(x / 600) / 2
-        y2 = np.sin(x / 300) / 2
-        gpen = pg.mkPen(120, 23, 200)
-        curve1 = graph.plot(x, y1, pen=gpen, width=2)
-        curve2 = graph.plot(x, y2, pen=gpen, width=2)
+        gpen = pg.mkPen((0, 0, 0), width=2)
+        for i in range(10):
+            gpen.setColor(Qt.GlobalColor(i))
+            graph.plot(x, ys[i], pen=gpen)
     
     # テスト用画像を作成
     def setTestImage(self):
