@@ -117,16 +117,18 @@ class Widget(QWidget):
         graph.setLabel('left', "point")
         graph.setLabel('bottom', "generation")
         x_range = [0, 600]
-        y_range = [0, 600]
+        y_range = [-0.5, 0.5]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
         graph.setRange(xRange=x_range, yRange=y_range)
         xaxis = graph.getAxis('bottom')
-        # 横軸の目盛の場所とラベル
+        # 横軸の目盛の場所とラベル (数値, ラベル) のタプルのリスト?
+        # 数値 = ラベルとしておく
         x_ticks = [(i, i) for i in range(x_range[0], x_range[1] + 1, 100)]
         xaxis.setTicks([x_ticks])
         yaxis = graph.getAxis('left')
         # 縦軸の目盛の場所とラベル
-        yaxis.setTicks([[(-2, 'low'), (0, '0'), (2, 'high')]])
+        y_ticks = [(i, i) for i in [-0.5, -0.25, 0, 0.25, 0.5]]
+        yaxis.setTicks([y_ticks])
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
         x = np.arange(0, 600, 0.2)
