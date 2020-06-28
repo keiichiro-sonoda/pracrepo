@@ -103,7 +103,7 @@ class Widget(QWidget):
     # グラフ作成
     def setGraphs(self):
         pg.setConfigOptions(
-            antialias=True, foreground='k', background=(20, 200, 255)
+            antialias=True, foreground='k', background=(200, 100, 20)
         )
         self.win = pg.GraphicsWindow(
             size=(400, 300), border=True, parent=self
@@ -127,8 +127,11 @@ class Widget(QWidget):
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
         x = np.arange(0, 3, 0.2)
-        y = np.sin(2 * x)
-        curve = graph.plot(x, y, pen=pg.mkPen((120, 23, 200), width=2))
+        y1 = np.sin(2 * x)
+        y2 = np.sin(3 * x)
+        gpen = pg.mkPen(120, 23, 200)
+        curve1 = graph.plot(x, y1, pen=gpen, width=2)
+        curve2 = graph.plot(x, y2, pen=gpen, width=2)
     
     # テスト用画像を作成
     def setTestImage(self):
@@ -199,7 +202,7 @@ class Widget(QWidget):
         # 座標をタグに変換
         tag = self.pos2tag(event.pos())
         # チェック
-        print(tag)
+        #print(tag)
         # 範囲外
         if tag == "z0":
             return
