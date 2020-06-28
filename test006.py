@@ -103,7 +103,7 @@ class Widget(QWidget):
     # グラフ作成
     def setGraphs(self):
         pg.setConfigOptions(
-            antialias=True, foreground='k', background=(200, 100, 20)
+            antialias=True, foreground='k', background=(255, 255, 255)
         )
         self.win = pg.GraphicsWindow(
             size=(400, 300), border=True, parent=self
@@ -114,21 +114,24 @@ class Widget(QWidget):
         graph = self.win.addPlot(title="Data")
         # 'bottom' は縦軸, 'left' は横軸
         # 'units' は軸の単位
-        graph.setLabel('left', "Power", units='W')
-        graph.setLabel('bottom', "Time", units='s')
+        graph.setLabel('left', "point")
+        graph.setLabel('bottom', "generation")
+        x_range = [0, 600]
+        y_range = [0, 600]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
-        graph.setRange(xRange=[0, 3], yRange=[-2, 2])
+        graph.setRange(xRange=x_range, yRange=y_range)
         xaxis = graph.getAxis('bottom')
         # 横軸の目盛の場所とラベル
-        xaxis.setTicks([[(0, '00:00'), (1.5, '12:00'), (3, '24:00')]])
+        x_ticks = [(i, i) for i in range(x_range[0], x_range[1] + 1, 100)]
+        xaxis.setTicks([x_ticks])
         yaxis = graph.getAxis('left')
         # 縦軸の目盛の場所とラベル
         yaxis.setTicks([[(-2, 'low'), (0, '0'), (2, 'high')]])
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
-        x = np.arange(0, 3, 0.2)
-        y1 = np.sin(2 * x)
-        y2 = np.sin(3 * x)
+        x = np.arange(0, 600, 0.2)
+        y1 = np.sin(x / 600) / 2
+        y2 = np.sin(x / 300) / 2
         gpen = pg.mkPen(120, 23, 200)
         curve1 = graph.plot(x, y1, pen=gpen, width=2)
         curve2 = graph.plot(x, y2, pen=gpen, width=2)
