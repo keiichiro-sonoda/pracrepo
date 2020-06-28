@@ -121,7 +121,7 @@ class Widget(QWidget):
         # 'units' は軸の単位
         graph.setLabel('left', "point")
         graph.setLabel('bottom', "generation")
-        x_range = [0, 600]
+        x_range = [0, 1]
         y_range = [-0.5, 0.5]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
         graph.setRange(xRange=x_range, yRange=y_range)
@@ -137,12 +137,22 @@ class Widget(QWidget):
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
         x = []
-        ys = [] * 10
-        print(ys)
+        # 10 マス分のデータの配列を用意
+        ys = [[]] * 10
+        essence = [0, 1, 2, 3, 9, 10, 11, 18, 19, 23]
         print(ys)
         for i in range(x_range[0], x_range[1] + 1):
             x.append(i)
+            # i 世代のパラメータを取り出す(等価マスも含む64個)
             tprm = getSprmFileWrap(i)
+            print(tprm[0], tprm[56])
+            #print(tprm)
+            # 主要な10個の要素だけ取り出す
+            for j, k in enumerate(essence):
+                print(j, k)
+                ys[j].append(tprm[k])
+
+        #print(ys)
         x = np.arange(0, 600, 0.2)
         y1 = np.sin(x / 600) / 2
         y2 = np.sin(x / 300) / 2
