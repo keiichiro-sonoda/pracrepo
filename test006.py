@@ -2,6 +2,7 @@ import sys
 import time
 import random as rd
 import ctypes
+import numpy as np
 # インポート個別に
 # 予約語被る可能性低そうだし, 全部インポートしちゃおうか
 from PyQt5.QtWidgets import *
@@ -102,7 +103,7 @@ class Widget(QWidget):
     # グラフ作成
     def setGraphs(self):
         pg.setConfigOptions(
-            antialias=True, foreground='k', background=(20, 200, 100)
+            antialias=True, foreground='k', background=(20, 200, 255)
         )
         self.win = pg.GraphicsWindow(
             size=(400, 300), border=True, parent=self
@@ -115,12 +116,19 @@ class Widget(QWidget):
         # 'units' は軸の単位
         graph.setLabel('left', "Power", units='W')
         graph.setLabel('bottom', "Time", units='s')
+        # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
         graph.setRange(xRange=[0, 3], yRange=[-2, 2])
         xaxis = graph.getAxis('bottom')
+        # 横軸の目盛の場所とラベル
         xaxis.setTicks([[(0, '00:00'), (1.5, '12:00'), (3, '24:00')]])
         yaxis = graph.getAxis('left')
+        # 縦軸の目盛の場所とラベル
         yaxis.setTicks([[(-2, 'low'), (0, '0'), (2, 'high')]])
+        # グリッド線の表示
         graph.showGrid(x=True, y=True)
+        x = np.arange(0, 3, 0.2)
+        y = np.sin(2 * x)
+        curve = graph.plot(x, y, pen=pg.mkPen((120, 23, 200), width=2))
     
     # テスト用画像を作成
     def setTestImage(self):
