@@ -1,4 +1,5 @@
 # pyqtgraph を学びたい
+# プロットの詳細設定を追加したい
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -25,7 +26,8 @@ class GraphWindow(QMainWindow):
         y2 = [4 - i for i in x]
 
         # 散布図と折れ線グラフを描写する
-        p1.addItem(pg.PlotCurveItem(x=x, y=y1))
+        curve = pg.PlotCurveItem(x=x, y=y1)
+        p1.addItem(curve)
         p1.addItem(pg.ScatterPlotItem(x=x, y=y2))
 
 if __name__ == '__main__':
