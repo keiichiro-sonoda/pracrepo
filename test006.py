@@ -7,9 +7,11 @@ import ctypes
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import pyqtgraph as pg
 
 # 共有ライブラリ読み込み
-exe2_win = ctypes.cdll.LoadLibrary("./exe2_win.so")
+# このライブラリがある場所に移動して実行する
+exe2_win = ctypes.cdll.LoadLibrary("exe2_win.so")
 # c_float が64個の配列型を定義
 FloatArray64 = ctypes.c_float * 64
 # 共有ライブラリを使う際の初期化
@@ -77,8 +79,10 @@ class Widget(QWidget):
         # チェック
         #print(self.use_sprms)
         self.setButtons()
-        # 謎フラグ
+        # 画面切り替えフラグ?
         self.test_flag = False
+        # グラフセット
+        self.setGraphs()
     
     # ボタン作成
     def setButtons(self):
@@ -94,6 +98,12 @@ class Widget(QWidget):
         self.test_button.clicked.connect(self.testClicked)
         # テスト画像初期化
         self.setTestImage()
+    
+    # グラフ作成
+    def setGraphs(self):
+        pg.setConfigOptions(
+            antialias=True,foreground='k', background='w'
+        )
     
     # テスト用画像を作成
     def setTestImage(self):
