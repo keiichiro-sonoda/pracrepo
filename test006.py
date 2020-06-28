@@ -136,8 +136,13 @@ class Widget(QWidget):
         yaxis.setTicks([y_ticks])
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
+        x = []
+        ys = [] * 10
+        print(ys)
+        print(ys)
         for i in range(x_range[0], x_range[1] + 1):
-            x = i
+            x.append(i)
+            tprm = getSprmFileWrap(i)
         x = np.arange(0, 600, 0.2)
         y1 = np.sin(x / 600) / 2
         y2 = np.sin(x / 300) / 2

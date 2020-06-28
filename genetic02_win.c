@@ -288,7 +288,7 @@ void checkSprmFile(int gene_num) {
 // main関数実行前提で考えてた
 // 何もしないと INDEXES は設定されない!
 void getSprmFilePy(int gene_num, float f_pointer[64]) {
-    printf("called!\n");
+    //printf("called!\n");
     FILE *fp;
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, "prm/simple_prm%03d.bin", gene_num);
