@@ -102,12 +102,15 @@ class Widget(QWidget):
     # グラフ作成
     def setGraphs(self):
         pg.setConfigOptions(
-            antialias=True,foreground='k', background='w'
+            antialias=True, foreground='k', background='w'
         )
         self.win = pg.GraphicsWindow(
             size=(400, 300), border=True, parent=self
         )
         self.win.move(800, 50)
+        graph = self.win.addPlot(title="Data")
+        graph.setLabel('left', "Power", units='W')
+        graph.setLabel('bottom', "Time", units='s')
     
     # テスト用画像を作成
     def setTestImage(self):
