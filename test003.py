@@ -26,7 +26,11 @@ class GraphWindow(QMainWindow):
         y2 = [4 - i for i in x]
 
         # 散布図と折れ線グラフを描写する
-        curve = pg.PlotCurveItem(x, y1)
+        curve = pg.PlotCurveItem(
+            x=x, y=y1,
+            pen=pg.mkPen(color="r", style=Qt.SolidLine),
+            antialias=True
+        )
         scatter = pg.ScatterPlotItem(x, y2)
         p1.addItem(curve)
         p1.addItem(scatter)
