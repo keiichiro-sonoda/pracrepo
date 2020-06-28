@@ -11,11 +11,25 @@ class GraphWindow(QMainWindow):
     def __init__(self, parent=None):
         super(GraphWindow, self).__init__(parent)
 
+        # 枠線, 軸の方向を設定
+        vb = pg.ViewBox(
+            border=pg.mkPen(color='#000000'),
+            invertX=False,
+            invertY=True
+        )
+
         # PlotWidgetを作成する
-        pw = pg.PlotWidget()
+        pw = pg.PlotWidget(viewBox=vb)
 
         # ウィンドウにウィジェットを設定する
         self.setCentralWidget(pw)
+
+        # 背景色を設定(透過?)
+        pw.setBackground("#ffffff00")
+
+        # グラフのサイズ固定
+        pw.setMinimumSize(500, 400)
+        pw.setMaximumSize(500, 400)
 
         # plotItemを呼び出す
         p1 = pw.plotItem
