@@ -9,7 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
 # 共有ライブラリ読み込み
-exe2_win = ctypes.cdll.LoadLibrary(".//exe2_win.so")
+exe2_win = ctypes.cdll.LoadLibrary("./exe2_win.so")
 # c_float が64個の配列型を定義
 FloatArray64 = ctypes.c_float * 64
 # 共有ライブラリを使う際の初期化
@@ -69,9 +69,9 @@ class Widget(QWidget):
         
         # float[64]のインスタンスを作成
         f_arr_c = FloatArray64()
-        # 300世代目のトップ評価値を入手
+        # 評価値入手
         # 確認するならここの値を変更
-        getSprmFile(0, f_arr_c)
+        getSprmFile(601, f_arr_c)
         # タプルとしてクラス内変数とする
         self.use_sprm = tuple(f_arr_c)
         # チェック
