@@ -38,6 +38,13 @@ class Widget(QWidget):
     MYGREEN = QColor(0, 200, 51)
     # マスの大きさ
     SQLEN = 80
+    # グラフ用に12色決めておく
+    MYCOLORS = (QColor(0xde, 0x96, 0x10), QColor(0xc9, 0x3a, 0x40),
+                QColor(0xff, 0xf0, 0x01), QColor(0xd0, 0x6d, 0x8c),
+                QColor(0x65, 0xac, 0xe4), QColor(0xa0, 0xc2, 0x38),
+                QColor(0x56, 0xa7, 0x64), QColor(0xd1, 0x6b, 0x16),
+                QColor(0xcc, 0x52, 0x8b), QColor(0x94, 0x60, 0xa0),
+                QColor(0xf2, 0xcf, 0x01), QColor(0x00, 0x74, 0xbf))
     # ペイントみたいに線をマウスで線を描いてみる?
     def __init__(self, parent=None):
         super(Widget, self).__init__(parent)
@@ -156,7 +163,7 @@ class Widget(QWidget):
 
         gpen = pg.mkPen((0, 0, 0), width=2)
         for i in range(10):
-            gpen.setColor(Qt.GlobalColor(i))
+            gpen.setColor(self.MYCOLORS[i])
             graph.plot(x, ys[i], pen=gpen)
     
     # テスト用画像を作成
