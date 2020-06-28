@@ -25,6 +25,14 @@ getSprmFile = exe2_win.getSprmFilePy
 getSprmFile.rectype = None
 getSprmFile.argtypes = (ctypes.c_int32, FloatArray64)
 
+# ライブラリの関数を使いやすく包みたい
+# 引数には欲しい世代番号を与える
+def getSprmFileWrap(n):
+    f_arr_c = FloatArray64()
+    getSprmFile(n, f_arr_c)
+    # リストに戻して返す
+    return list(f_arr_c)
+
 class Widget(QWidget):
     # よく使う色は先に定義してみる?
     MYGREEN = QColor(0, 200, 51)
@@ -70,13 +78,10 @@ class Widget(QWidget):
                 # 正方形の中央の座標を記録
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
         
-        # float[64]のインスタンスを作成
-        f_arr_c = FloatArray64()
-        # 評価値入手
+        # 評価値リストを入手
         # 確認するならここの値を変更
-        getSprmFile(601, f_arr_c)
-        # タプルとしてクラス内変数とする
-        self.use_sprm = tuple(f_arr_c)
+        # クラス内変数で所持
+        self.use_sprm = getSprmFileWrap(601)
         # チェック
         #print(self.use_sprms)
         self.setButtons()
@@ -131,6 +136,8 @@ class Widget(QWidget):
         yaxis.setTicks([y_ticks])
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
+        for i in range(x_range[0], x_range[1] + 1):
+            x = i
         x = np.arange(0, 600, 0.2)
         y1 = np.sin(x / 600) / 2
         y2 = np.sin(x / 300) / 2
