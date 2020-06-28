@@ -140,7 +140,7 @@ class Widget(QWidget):
         # 10 マス分のデータの配列を用意
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
         # タプルのリストで試してみる?
-        ys = [()] * 10
+        ys = [[] for i in range(10)]
         essence = (0, 1, 2, 3, 9, 10, 11, 18, 19, 23)
         #print(ys)
         for i in range(x_range[0], x_range[1] + 1):
@@ -151,7 +151,7 @@ class Widget(QWidget):
             #print(tprm)
             # 主要な10個の要素だけ取り出す
             for j, k in enumerate(essence):
-                ys[j] += (tprm[k],)
+                ys[j].append(tprm[k])
                 #print(ys)
 
         gpen = pg.mkPen((0, 0, 0), width=2)
