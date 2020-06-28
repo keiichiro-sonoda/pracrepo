@@ -143,6 +143,8 @@ class Widget(QWidget):
         yaxis.setTicks([y_ticks])
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
+        # 反例を表示
+        graph.addLegend()
         x = []
         # 10 マス分のデータの配列を用意
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
@@ -164,7 +166,7 @@ class Widget(QWidget):
         gpen = pg.mkPen((0, 0, 0), width=2)
         for i in range(10):
             gpen.setColor(self.MYCOLORS[i])
-            graph.plot(x, ys[i], pen=gpen)
+            graph.plot(x, ys[i], pen=gpen, name=i)
     
     # テスト用画像を作成
     def setTestImage(self):
