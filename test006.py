@@ -45,6 +45,8 @@ class Widget(QWidget):
                 QColor(0x56, 0xa7, 0x64), QColor(0xd1, 0x6b, 0x16),
                 QColor(0xcc, 0x52, 0x8b), QColor(0x94, 0x60, 0xa0),
                 QColor(0xf2, 0xcf, 0x01), QColor(0x00, 0x74, 0xbf))
+    # 色数値を色に変換
+    NUM2COLOR = {1: Qt.black, 2: Qt.white}
     # ペイントみたいに線をマウスで線を描いてみる?
     def __init__(self, parent=None):
         super(Widget, self).__init__(parent)
@@ -114,11 +116,16 @@ class Widget(QWidget):
         pass
 
     # 盤面情報を標準出力で確認する
+    # 配列の先頭が右下になるように文字列を組み立てる
     def printBoard(self):
         moji = ""
+        # 縦
         for y in range(9, 81, 9):
+            # 横
             for x in range(1, 9):
+                # 文字列の先頭に加えてゆく
                 moji = "{:1d} ".format(self.board_info[x + y]) + moji
+            # 横が一通り終わったら改行
             moji = "\n" + moji
         print(moji)
     
@@ -268,13 +275,21 @@ class Widget(QWidget):
         if tag == "z0":
             return
         # 色をランダム指定
-        color = rd.choice([Qt.white, Qt.black])
+        c_num = rd.choice([1, 2])
         # キャンバスゲット
         imgcanvas = QPainter(self.img)
         # そこにコマを置く
-        self.putKoma(tag, color, imgcanvas)
+        self.putKoma(tag, c_num, imgcanvas)
         # 描画
         self.update()
+    
+    # マウスが動いた時の座標取得?
+    def mouseMoveEvent(self, event):
+        pass
+    
+    # マウスが離された
+    def mouseReleaseEvent(self, event):
+        pass
     
     # QtCore.QPoint のオブジェクトを与えると, 該当するタグを返す
     def pos2tag(self, pos):
@@ -296,27 +311,26 @@ class Widget(QWidget):
         return chr(105 - sub % 9) + chr(57 - sub // 9)
     
     # 該当するタグのマスに円を描く
-    # 色も指定
+    # 色は数値で指定するように変更
     # 呼び出し元で既に self.img が使われているとエラーになる
     # 引数にキャンバスを与えることにする
-    def putKoma(self, tag, color, imgcanvas):
+    # キャンバスだけでなく, 配列も同期するようにする
+    def putKoma(self, tag, c_num, imgcanvas):
         # 中心座標を得る
         center = self.tag2pos[tag]
+        # 色を得る
+        color = self.NUM2COLOR[c_num]
         # 枠も中身も同じ色で統一
         imgcanvas.setPen(color)
         imgcanvas.setBrush(color)
+        # 円を描く
         imgcanvas.drawEllipse(center, self.radius, self.radius)
-        # 盤面表示
+        # 配列も書き換え
+        sub = self.tag2sub(tag)
+        self.board_info[sub] = c_num
+        # 盤面表示(確認用)
         self.printBoard()
 
-    # マウスが動いた時の座標取得?
-    def mouseMoveEvent(self, event):
-        pass
-    
-    # マウスが離された
-    def mouseReleaseEvent(self, event):
-        pass
-    
     # ボタンを押したときのスロット?
     def onButtonClick(self):
         print("yeah")
