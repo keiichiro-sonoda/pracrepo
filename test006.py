@@ -456,7 +456,7 @@ class Widget(QWidget):
         koma = self.board_info[sub]
         # 空マスか番兵の場合, ひっくり返せるマスは無い
         if koma <= 0:
-            rev_tags = []
+            rev_tags.clear()
             return
         # 自分のコマの場合
         if koma == self.turn:
