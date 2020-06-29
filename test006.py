@@ -479,13 +479,17 @@ class Widget(QWidget):
             self._search(sub + d, d, rev_tags)
     
     # 候補手のところの色を変える
-    def coloringCandidates(self, imgcanvas):
+    # 元に戻すなら back を True に
+    def coloringCandidates(self, imgcanvas, back=False):
         # ペン設定
         pen = QPen(Qt.black)
         pen.setWidth(4)
         imgcanvas.setPen(pen)
         # ブラシ設定
-        imgcanvas.setBrush(self.CANDGREEN)
+        if back:
+            imgcanvas.setBrush(self.MYGREEN)
+        else:
+            imgcanvas.setBrush(self.CANDGREEN)
         for tag in self.candidates.keys():
             # 正方形の左上の座標(タプル)を取得してスターで分解
             imgcanvas.drawRect(*self.tag2pos[tag][1], self.SQLEN, self.SQLEN)
