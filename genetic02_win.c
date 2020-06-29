@@ -315,7 +315,7 @@ void getSprmFilePy(int gene_num, float f_pointer[64]) {
 // 逆に0に近づいてしまうか?
 void getTop10AvePy(int gene_num, float f_pointer[10]) {
     // 一応呼び出された関数が分かるようにする
-    printf("getTop10AvePy called!");
+    printf("getTop10AvePy called!\n");
     FILE *fp;
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, "prm/simple_prm%03d.bin", gene_num);
@@ -327,11 +327,23 @@ void getTop10AvePy(int gene_num, float f_pointer[10]) {
     Sprm pa[SURVIVE_NUM];
     fread(pa, sizeof pa, 1, fp);
     fclose(fp);
+    // Top10 の各マスの合計を計算
+    float weight_sum[SPRM_LEN];
+    // 0 で初期化
+    for (int i = 0; i < SPRM_LEN; i++)
+        weight_sum[i] = 0.0;
     // この i は for 文の中だけ有効らしい
     for (int i = 0; i < SURVIVE_NUM; i++) {
         // 一応10個チェック
         showFloatArray(pa[i].weight, SPRM_LEN);
+        // 評価値の合計に足していく
+        for (int j = 0; j < SPRM_LEN; j++){
+            weight_sum[j] += pa[i].weight[j];
+        }
     }
+    // 確認用
+    putchar('\n');
+    showFloatArray(weight_sum, SPRM_LEN);
 }
 
 // use Sprm[100]
