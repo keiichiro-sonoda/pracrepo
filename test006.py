@@ -429,7 +429,8 @@ class Widget(QWidget):
         # 候補手がある
         else:
             self.pass_count = 0
-        print(self.candidates)
+        # 確認用
+        #print(self.candidates)
 
     # 探索関数
     def search(self, tag):
@@ -570,7 +571,7 @@ class Application(QApplication):
             font-weight:600;\
             font-family:游ゴシック;\
             background:#ffff00")
-        self.show_full_button.resize(100, 100)
+        self.show_full_button.resize(100, 50)
         self.show_full_button.clicked.connect(self.gui.showFullScreen)
     
 
