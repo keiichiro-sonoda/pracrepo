@@ -91,7 +91,11 @@ class Widget(QWidget):
                 tag = chr(i + 97) + chr(j + 49)
                 # 正方形の中央の座標を記録
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
-                print(self.tag2sub(tag))
+                print(tag, end=", ")
+                sub = self.tag2sub(tag)
+                print(sub, end=", ")
+                tag_re = self.sub2tag(sub)
+                print(tag_re)
         
         # 初期盤面設定
         self.setInitBoard()
@@ -277,6 +281,14 @@ class Widget(QWidget):
     # タグから添え字に変換する
     def tag2sub(self, tag):
         return (57 - ord(tag[1])) * 9 + 105 - ord(tag[0])
+    
+    # 添え字からタグに変換する
+    def sub2tag(self, sub):
+        nx = 8 - sub % 9
+        ny = 8 - sub // 9
+        cx = chr(nx + 97)
+        cy = chr(ny + 49)
+        return cx + cy
     
     # 該当するタグのマスに円を描く
     # 色も指定(デフォルトは黒)
