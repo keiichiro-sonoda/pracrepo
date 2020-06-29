@@ -64,7 +64,7 @@ class Widget(QWidget):
         self.radius = int(self.SQLEN * 0.45)
         # 盤面情報1次元配列(番兵付き)
         # 黒1, 白2, 空0, 番兵-1とする
-        self.board_info = [int(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
+        self.board_info = [-(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
         print(self.board_info)
         # オセロ盤面設定
         imgcanvas = QPainter(self.img)
