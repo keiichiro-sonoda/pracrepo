@@ -62,6 +62,10 @@ class Widget(QWidget):
         self.margin = self.SQLEN
         # コマ半径
         self.radius = int(self.SQLEN * 0.45)
+        # 盤面情報1次元配列(番兵付き)
+        # 黒1, 白2, 空0, 番兵-1とする
+        self.board_info = [(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
+        print(self.board_info)
         # オセロ盤面設定
         imgcanvas = QPainter(self.img)
         pen = QPen(Qt.black)
@@ -71,6 +75,7 @@ class Widget(QWidget):
         font = QFont()
         font.setPointSize(15)
         imgcanvas.setFont(font)
+        # 空盤面を作る
         for i in range(8):
             # アルファベット表示(列)
             imgcanvas.drawText(self.margin + self.SQLEN * i + self.SQLEN // 2 - 10, self.margin - 20, chr(i + 97))
@@ -85,6 +90,8 @@ class Widget(QWidget):
                 # 正方形の中央の座標を記録
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
         
+        # 初期盤面設定
+        self.setInitBoard()
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
@@ -96,6 +103,11 @@ class Widget(QWidget):
         self.test_flag = False
         # グラフセット
         self.setGraphs()
+    
+    # 初期盤面を設定したい
+    def setInitBoard(self):
+        #imgcanvas = QPainter(self.img)
+        pass
     
     # ボタン作成
     def setButtons(self):
