@@ -30,7 +30,7 @@ def getSprmFileWrap(n):
 def getTop10AveWrap(n):
     f_arr_c = FloatArray10()
     getTop10Ave(n, f_arr_c)
-    return
+    return list(f_arr_c)
 
 def multGraphSample():
     # x 全部同じやん
@@ -102,4 +102,5 @@ def dataView01():
 
 if __name__ == "__main__":
     #dataView01()
-    getTop10AveWrap(0)
+    l = getTop10AveWrap(600)
+    print(("{:6.4f} " * 10).format(*l))

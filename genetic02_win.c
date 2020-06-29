@@ -287,7 +287,7 @@ void checkSprmFile(int gene_num) {
 // 引数に配列の個数も指定できちゃうの??
 // main関数実行前提で考えてた
 // 何もしないと INDEXES は設定されない!
-void getSprmFilePy(int gene_num, float f_pointer[64]) {
+void getSprmFilePy(int gene_num, float f_pointer[MASU_NUM]) {
     //printf("called!\n");
     FILE *fp;
     char fnamer[FILENAME_MAX];
@@ -313,9 +313,9 @@ void getSprmFilePy(int gene_num, float f_pointer[64]) {
 
 // トップだけを観察するとばらつきが大きいため, トップ10の平均値を取ってみる
 // 逆に0に近づいてしまうか?
-void getTop10AvePy(int gene_num, float f_pointer[10]) {
+void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
     // 一応呼び出された関数が分かるようにする
-    printf("getTop10AvePy called!\n");
+    //printf("getTop10AvePy called!\n");
     FILE *fp;
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, "prm/simple_prm%03d.bin", gene_num);
@@ -342,12 +342,12 @@ void getTop10AvePy(int gene_num, float f_pointer[10]) {
         }
     }
     // 確認用
-    putchar('\n');
+    //putchar('\n');
     //showFloatArray(weight_sum, SPRM_LEN);
     // データ数だけ割って, 平均値にする
+    // ここで引数を登場させるの忘れてた
     for (int i = 0; i < SPRM_LEN; i++)
-        weight_sum[i] /= SURVIVE_NUM;
-    showFloatArray(weight_sum, SPRM_LEN);
+        f_pointer[i] = weight_sum[i] / 10;
 }
 
 // use Sprm[100]
