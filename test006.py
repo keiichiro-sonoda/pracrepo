@@ -113,7 +113,9 @@ class Widget(QWidget):
     
     # 初期盤面設定
     def setInitBoard(self, imgcanvas):
-        pass
+        # 最初の4つのコマを配置
+        for tag, c_num in [("d4", 1), ("d5", 2), ("e4", 2), ("e5", 1)]:
+            self.putKoma(tag, c_num, imgcanvas)
 
     # 盤面情報を標準出力で確認する
     # 配列の先頭が右下になるように文字列を組み立てる
