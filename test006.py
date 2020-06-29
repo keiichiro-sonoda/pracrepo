@@ -370,18 +370,6 @@ class Widget(QWidget):
         # 盤面表示(確認用)
         #self.printBoard()
     
-    # 芝生を置く
-    def putLawn(self, tag, imgcanvas):
-        # 正方形の左上を取得
-        pos = self.tag2pos[tag][1]
-        # ペン設定
-        pen = QPen(Qt.black)
-        pen.setWidth(4)
-        imgcanvas.setPen(pen)
-        # ブラシ設定
-        imgcanvas.setBrush(self.CANDGREEN)
-        imgcanvas.drawRect(*pos, self.SQLEN, self.SQLEN)
-    
     # リセットボタンクリック時動作
     def resetClicked(self):
         # ポップアップ表示を追加
@@ -488,8 +476,16 @@ class Widget(QWidget):
     
     # 候補手のところの色を変える
     def coloringCandidates(self, imgcanvas):
+        # ペン設定
+        pen = QPen(Qt.black)
+        pen.setWidth(4)
+        imgcanvas.setPen(pen)
+        # ブラシ設定
+        imgcanvas.setBrush(self.CANDGREEN)
         for tag in self.candidates.keys():
-            self.putLawn(tag, imgcanvas)
+            # 正方形の左上の座標を取得(タプル)して分解
+            # 正方形を描く
+            imgcanvas.drawRect(*self.tag2pos[tag][1], self.SQLEN, self.SQLEN)
 
     # 盤面更新
     def updateBoard(self, tag):
