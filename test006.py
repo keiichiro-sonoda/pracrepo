@@ -67,7 +67,6 @@ class Widget(QWidget):
         # ペインター作成?
         imgcanvas = QPainter(self.img)
         # フォント設定
-        self.board_info = [-(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
         font = QFont()
         font.setPointSize(15)
         imgcanvas.setFont(font)
@@ -88,7 +87,7 @@ class Widget(QWidget):
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
         
         # 初期盤面設定
-        #self.setInitBoard(imgcanvas)
+        self.setInitBoard(imgcanvas)
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
@@ -156,6 +155,18 @@ class Widget(QWidget):
         self.test_button.clicked.connect(self.testClicked)
         # テスト画像初期化
         self.setTestImage()
+
+        # リセットボタン
+        self.reset_button = QPushButton("Button", self)
+        self.reset_button.move(100, 750)
+        self.reset_button.setStyleSheet("\
+            font-size:20pt;\
+            font-weight:bold;\
+            font-family:Monotype Corsiva;\
+            background:#ffffff")
+        self.reset_button.resize(140, 50)
+        # クリックされたときに実行
+        self.reset_button.clicked.connect(self.resetClicked)
     
     # グラフ作成
     def setGraphs(self):
@@ -343,6 +354,20 @@ class Widget(QWidget):
         self.board_info[sub] = c_num
         # 盤面表示(確認用)
         self.printBoard()
+    
+    # リセットボタンクリック時動作
+    def resetClicked(self):
+        # ポップアップ表示を追加
+        reply = QMessageBox.question(self, "Menu", "Do you reset the board?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.Yes
+        )
+        if reply == QMessageBox.Yes:
+            print("reset!!")
+            # 盤面を初期状態に
+            self.setInitBoard(QPainter(self.img))
+            
+        self.test_button.setText("Clicked")
 
     # ボタンを押したときのスロット?
     def onButtonClick(self):
@@ -402,17 +427,6 @@ class Application(QApplication):
     
     def setButtons(self):
         y = 750
-        # ボタン
-        self.button = QPushButton("Button", self.gui)
-        self.button.move(100, y)
-        self.button.setStyleSheet("\
-            font-size:20pt;\
-            font-weight:bold;\
-            font-family:Monotype Corsiva;\
-            background:#ffffff")
-        self.button.resize(140, 50)
-        # クリックされたときに実行
-        self.button.clicked.connect(self.clickButton)
         # 終了ボタン
         self.end_button = QPushButton("終了", self.gui)
         self.end_button.move(250, y)
@@ -442,19 +456,6 @@ class Application(QApplication):
         self.show_full_button.resize(100, 100)
         self.show_full_button.clicked.connect(self.gui.showFullScreen)
     
-    # クリック時動作
-    def clickButton(self):
-        #print("Clicked!!")
-        # ポップアップ表示を追加
-        reply = QMessageBox.question(self.gui, "Menu Text", "Question",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.Yes
-        )
-        if reply == QMessageBox.Yes:
-            print("Yes clicked")
-            # 黒い円を描く
-            self.gui.onButtonClick()
-        self.button.setText("Clicked")
 
     # 終了ボタン
     def clickEndButton(self):
