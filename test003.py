@@ -34,6 +34,7 @@ class GraphWindow(QMainWindow):
         # plotItemを呼び出す
         p1 = pw.plotItem
 
+
         # データ
         x = [0, 1, 2, 3, 4]
         y1 = x.copy()
