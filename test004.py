@@ -53,8 +53,36 @@ def multGraphSample():
     print("end?")
 
 if __name__ == "__main__":
-    l1 = getSprmFileWrap(300)
+    #l1 = getSprmFileWrap(300)
     #print(l1)
     x = np.linspace(0, 1, 100)
     y = x ** 2
-    multGraphSample()
+
+    # データ作成プロセス
+    # 最大値と最小値の設定
+    x_min = 0
+    x_max = 20
+    y_min = -0.5
+    y_max = 0.5
+    x = []
+    # 10 マス分のデータの配列を用意
+    ys = [[] for i in range(10)]
+    # 等価マスを省略
+    essence = (0, 1, 2, 3, 9, 10, 11, 18, 19, 23)
+    #print(ys)
+    for i in range(x_min, x_max + 1):
+        # x は範囲内の整数全て
+        x.append(i)
+        # i 世代のパラメータを取り出す(等価マスも含む64個)
+        tprm = getSprmFileWrap(i)
+        # 主要な10個の要素だけ取り出す
+        for j, k in enumerate(essence):
+            ys[j].append(tprm[k])
+    
+    # 使い慣れたいからオブジェクト指向にしよう
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111)
+    # 各マスの変移をプロット
+    for i in range(10):
+        ax.plot(x, ys[i])
+    plt.show()
