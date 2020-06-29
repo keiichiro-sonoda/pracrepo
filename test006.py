@@ -59,6 +59,8 @@ class Widget(QWidget):
         # 背景カラー(微妙にグレー)
         self.setStyleSheet("background:#eeeeee")
         # タグからマスの中心座標に変換したい
+        # 需要が出てきそうなのでマスの左上の座標も追加する
+        # (マスの中心, マスの左上)
         self.tag2pos = dict()
         # 初期盤面画像
         self.img = QImage(self.SQLEN * 10, self.SQLEN * 10, QImage.Format_ARGB32)
@@ -91,8 +93,8 @@ class Widget(QWidget):
                 # 正方形を描く
                 y = self.margin + self.SQLEN * j
                 tag = chr(i + 97) + chr(j + 49)
-                # 正方形の中央の座標を記録
-                self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
+                # 正方形の中央の座標と左上の座標を記録
+                self.tag2pos[tag] = (QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2), QPoint(x, y))
         
         # 初期盤面設定
         self.setInitBoard(imgcanvas)
@@ -350,7 +352,7 @@ class Widget(QWidget):
     # キャンバスだけでなく, 配列も同期するようにする
     def putKoma(self, tag, c_num, imgcanvas):
         # 中心座標を得る
-        center = self.tag2pos[tag]
+        center = self.tag2pos[tag][0]
         # 色を得る
         color = self.NUM2COLOR[c_num]
         # 枠も中身も同じ色で統一
@@ -400,8 +402,8 @@ class Widget(QWidget):
     # 置ける場所を探す
     def getCandidates(self):
         # 候補初期化
-        # 置ける場所のタグをキーとし, そこに置いた時にひっくり返す
-        # タグのリストを値とする
+        # 置ける場所のタグをキーとし, ひっくり返すマスの
+        # 一次元配列の添え字をキーとする
         self.candidates = dict()
         for tag in self.tag2pos.keys():
             # 空マスじゃなければやり直し
@@ -435,7 +437,7 @@ class Widget(QWidget):
             # リスト初期化
             rev_tags = []
             # その方向でひっくり返せるマスのリストを取得
-            # 空リストに追加していく
+            # 空リストを参照渡しで書き換えてもらう
             self._search(sub + d, d, rev_tags)
             # ひっくり返せるマスがないなら他の方向を探索
             if not rev_tags:
@@ -467,6 +469,15 @@ class Widget(QWidget):
             # ひっくり返せるマスに追加し, 先のマスを探索
             rev_tags.append(sub)
             self._search(sub + d, d, rev_tags)
+    
+    # 候補手のところの色を変える
+    def coloringCandidatesself(self):
+        for tag in self.candidates.keys():
+            pass
+
+    # 盤面更新
+    def updateBoard(self, tag):
+        pass
 
 class Application(QApplication):
     def __init__(self):
