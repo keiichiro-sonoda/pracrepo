@@ -102,4 +102,4 @@ def dataView01():
 
 if __name__ == "__main__":
     #dataView01()
-    getTop10AveWrap(100)
+    getTop10AveWrap(0)

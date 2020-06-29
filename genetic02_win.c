@@ -343,6 +343,10 @@ void getTop10AvePy(int gene_num, float f_pointer[10]) {
     }
     // 確認用
     putchar('\n');
+    //showFloatArray(weight_sum, SPRM_LEN);
+    // データ数だけ割って, 平均値にする
+    for (int i = 0; i < SPRM_LEN; i++)
+        weight_sum[i] /= SURVIVE_NUM;
     showFloatArray(weight_sum, SPRM_LEN);
 }
 
