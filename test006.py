@@ -157,12 +157,12 @@ class Widget(QWidget):
         self.setTestImage()
 
         # リセットボタン
-        self.reset_button = QPushButton("Button", self)
+        self.reset_button = QPushButton("Reset", self)
         self.reset_button.move(100, 750)
         self.reset_button.setStyleSheet("\
             font-size:20pt;\
             font-weight:bold;\
-            font-family:Monotype Corsiva;\
+            font-family:Times New Roman;\
             background:#ffffff")
         self.reset_button.resize(140, 50)
         # クリックされたときに実行
@@ -353,7 +353,7 @@ class Widget(QWidget):
         sub = self.tag2sub(tag)
         self.board_info[sub] = c_num
         # 盤面表示(確認用)
-        self.printBoard()
+        #self.printBoard()
     
     # リセットボタンクリック時動作
     def resetClicked(self):
@@ -362,12 +362,11 @@ class Widget(QWidget):
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.Yes
         )
+        # イエスが押された場合
         if reply == QMessageBox.Yes:
             print("reset!!")
             # 盤面を初期状態に
             self.setInitBoard(QPainter(self.img))
-            
-        self.test_button.setText("Clicked")
 
     # ボタンを押したときのスロット?
     def onButtonClick(self):
