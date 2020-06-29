@@ -317,12 +317,8 @@ class Widget(QWidget):
         # 範囲外
         if tag == "z0":
             return
-        # 色をランダム指定
-        c_num = rd.choice([1, 2])
-        # キャンバスゲット
-        imgcanvas = QPainter(self.img)
-        # そこにコマを置く
-        self.putKoma(tag, c_num, imgcanvas)
+        # 盤面更新
+        self.updateBoard(tag)
         # 描画
         self.update()
     
@@ -495,8 +491,22 @@ class Widget(QWidget):
             imgcanvas.drawRect(*self.tag2pos[tag][1], self.SQLEN, self.SQLEN)
 
     # 盤面更新
+    # コマを置くタグを渡す
     def updateBoard(self, tag):
-        pass
+        # キャンバス取り出し
+        imgcanvas = QPainter(self.img)
+        self.coloringCandidates(imgcanvas, back=True)
+        # ひっくり返すマスの添え字を代入
+        for sub in self.candidates[tag]:
+            # タグに変換してコマをひっくり返す
+            self.putKoma(self.sub2tag(sub), self.turn, imgcanvas)
+        # コマを置く
+        self.putKoma(tag, self.turn, imgcanvas)
+        # 盤面情報表示
+        self.printBoard()
+        self.turn ^= 3
+        self.getCandidates()
+        self.coloringCandidates(imgcanvas)
 
 class Application(QApplication):
     def __init__(self):
