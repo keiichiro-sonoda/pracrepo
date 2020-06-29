@@ -47,6 +47,8 @@ class Widget(QWidget):
                 QColor(0xf2, 0xcf, 0x01), QColor(0x00, 0x74, 0xbf))
     # 色数値を色に変換
     NUM2COLOR = {1: Qt.black, 2: Qt.white}
+    # 8方向を示す数値のタプル
+    DIRECTIONS = (-10, -9, -8, -1, 1, 8, 9, 10)
     # ペイントみたいに線をマウスで線を描いてみる?
     def __init__(self, parent=None):
         super(Widget, self).__init__(parent)
@@ -398,6 +400,8 @@ class Widget(QWidget):
     # 置ける場所を探す
     def getCandidates(self):
         # 候補初期化
+        # 置ける場所のタグをキーとし, そこに置いた時にひっくり返す
+        # タグのリストを値とする
         self.candidates = dict()
         for tag in self.tag2pos.keys():
             # 空マスじゃなければやり直し
@@ -421,10 +425,48 @@ class Widget(QWidget):
         # 候補手がある
         else:
             self.pass_count = 0
+        print(self.candidates)
 
     # 探索関数
     def search(self, tag):
         sub = self.tag2sub(tag)
+        # 8方向探索
+        for d in self.DIRECTIONS:
+            # リスト初期化
+            rev_tags = []
+            # その方向でひっくり返せるマスのリストを取得
+            # 空リストに追加していく
+            self._search(sub + d, d, rev_tags)
+            # ひっくり返せるマスがないなら他の方向を探索
+            if not rev_tags:
+                continue
+            # 既に候補に入っている
+            if tag in self.candidates:
+                self.candidates[tag] += rev_tags
+            # 初めてひっくり返せる方向が見つかった
+            else:
+                self.candidates[tag] = rev_tags
+    
+    # 一定方向探索関数(再帰)
+    # sub: 現在のマスの添え字
+    # d: 探索方向
+    # rev_tags: これまででひっくり返せるコマの候補
+    def _search(self, sub, d, rev_tags):
+        # コマ取得
+        koma = self.board_info[sub]
+        # 空マスか番兵の場合, ひっくり返せるマスは無い
+        if koma <= 0:
+            rev_tags = []
+            return
+        # 自分のコマの場合
+        if koma == self.turn:
+            # これまでのリストを返す
+            return
+        # 相手のコマの場合
+        else:
+            # ひっくり返せるマスに追加し, 先のマスを探索
+            rev_tags.append(sub)
+            self._search(sub + d, d, rev_tags)
 
 class Application(QApplication):
     def __init__(self):
