@@ -108,7 +108,7 @@ def dataView01():
 # 平均値表示したい
 def dataView02():
     x_min = 0
-    x_max = 10
+    x_max = 600
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
@@ -123,7 +123,11 @@ def dataView02():
     
     # 使い慣れたいからオブジェクト指向にしよう
     fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(111)
+    ax = fig.add_subplot(
+        111,
+        xlabel="generation",
+        ylabel="point"
+    )
     # 各マスの変移をプロット
     for i in range(10):
         lw = 1
