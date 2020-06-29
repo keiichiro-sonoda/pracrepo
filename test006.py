@@ -217,6 +217,7 @@ class Widget(QWidget):
                 x = self.margin + self.SQLEN * i
                 y = self.margin + self.SQLEN * j
                 imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
+                # 数値も表示
                 imgcanvas.drawText(x + 18, y + 45, "{:5.2f}".format(value))
 
     # テストボタンが押された
