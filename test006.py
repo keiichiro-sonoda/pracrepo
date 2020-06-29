@@ -51,7 +51,7 @@ class Widget(QWidget):
     NUM2COLOR = {1: Qt.black, 2: Qt.white}
     # 8方向を示す数値のタプル
     DIRECTIONS = (-10, -9, -8, -1, 1, 8, 9, 10)
-    # ペイントみたいに線をマウスで線を描いてみる?
+    
     def __init__(self, parent=None):
         super(Widget, self).__init__(parent)
         self.setWindowTitle("Othello")
@@ -90,7 +90,7 @@ class Widget(QWidget):
             imgcanvas.drawText(x + self.SQLEN // 2 - 10, self.margin - 20, chr(i + 97))
             # 数字表示(行)
             # 変数 x を y 座標の決定に使う(ややこしい)
-            imgcanvas.drawText(self.margin - 30, x + self.SQLEN // 2, chr(i + 49))
+            imgcanvas.drawText(self.margin - 30, x + self.SQLEN // 2 + 10, chr(i + 49))
             for j in range(8):
                 # 正方形を描く
                 y = self.margin + self.SQLEN * j
@@ -112,6 +112,9 @@ class Widget(QWidget):
         self.test_flag = False
         # グラフセット
         self.setGraphs()
+        # テスト画像初期化
+        #self.setTestImage()
+        self.setEssImage()
     
     # 初期盤面設定
     # リセットしたいキャンバスを与える
@@ -125,16 +128,9 @@ class Widget(QWidget):
         imgcanvas.setPen(pen)
         # ブラシ設定
         imgcanvas.setBrush(self.MYGREEN)
-        # 左から
-        for i in range(8):
-            # 正方形の左上のx座標を計算
-            x = self.margin + self.SQLEN * i
-            # 上から
-            for j in range(8):
-                # 正方形の左上のy座標を計算
-                y = self.margin + self.SQLEN * j
-                # 正方形を描く
-                imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
+        # タグと座標の辞書から座標を取り出す
+        for pos in self.tag2pos.values():
+            imgcanvas.drawRect(*pos[1], self.SQLEN, self.SQLEN)
         
         # 最初の4つのコマを配置
         for tag, c_num in [("d4", 1), ("d5", 2), ("e4", 2), ("e5", 1)]:
@@ -172,8 +168,6 @@ class Widget(QWidget):
         self.test_button.resize(140, 50)
         # クリックされたときに実行
         self.test_button.clicked.connect(self.testClicked)
-        # テスト画像初期化
-        self.setTestImage()
 
         # リセットボタン
         self.reset_button = QPushButton("Reset", self)
@@ -282,6 +276,23 @@ class Widget(QWidget):
                 imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
                 # 数値も表示
                 imgcanvas.drawText(x + 18, y + 45, "{:5.2f}".format(value))
+    
+    # 主要マスのみ強調した画像を作りたい
+    def setEssImage(self):
+        self.test_img = QImage(self.SQLEN * 10, self.SQLEN * 10, QImage.Format_ARGB32)
+        imgcanvas = QPainter(self.test_img)
+        # ペン設定
+        pen = QPen()
+        pen.setColor(Qt.black)
+        pen.setWidth(4)
+        imgcanvas.setPen(pen)
+        # フォント設定
+        font = QFont()
+        font.setPointSize(12)
+        imgcanvas.setFont(font)
+        imgcanvas.setBrush(Qt.black)
+        for tag, pos in self.tag2pos.items():
+            imgcanvas.drawRect(*pos[1], self.SQLEN, self.SQLEN)
 
     # テストボタンが押された
     # 状態の切り替えのみ行なう
