@@ -38,6 +38,8 @@ class Widget(QWidget):
     MYGREEN = QColor(0, 200, 51)
     # 候補手用緑
     CANDGREEN = QColor(124, 252, 0)
+    # うっすら緑
+    BYAKUROKU = QColor(218, 234, 208)
     # マスの大きさ
     SQLEN = 80
     # グラフ用に12色決めておく
@@ -291,7 +293,14 @@ class Widget(QWidget):
         font.setPointSize(12)
         imgcanvas.setFont(font)
         imgcanvas.setBrush(Qt.black)
+        # 左上の主要マス
+        essence = ("a1", "b1", "b2", "c1", "c2", "c3", "d1", "d2", "d3", "d4")
         for tag, pos in self.tag2pos.items():
+            # 主要マスかどうかで色分け
+            if tag in essence:
+                imgcanvas.setBrush(self.MYGREEN)
+            else:
+                imgcanvas.setBrush(self.BYAKUROKU)
             imgcanvas.drawRect(*pos[1], self.SQLEN, self.SQLEN)
 
     # テストボタンが押された
