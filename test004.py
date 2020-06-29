@@ -25,5 +25,10 @@ if __name__ == "__main__":
     #print(l1)
     x = np.linspace(0, 1, 100)
     y = x ** 2
-    plt.plot(x, y)
+    # オブジェクト指向で
+    # ウィンドウ的な
+    fig = plt.figure()
+    # 一つのグラフ的な
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
     plt.show()
