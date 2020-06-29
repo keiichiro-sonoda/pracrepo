@@ -61,7 +61,7 @@ if __name__ == "__main__":
     # データ作成プロセス
     # 最大値と最小値の設定
     x_min = 0
-    x_max = 20
+    x_max = 100
     y_min = -0.5
     y_max = 0.5
     x = []
@@ -84,5 +84,12 @@ if __name__ == "__main__":
     ax = fig.add_subplot(111)
     # 各マスの変移をプロット
     for i in range(10):
-        ax.plot(x, ys[i])
+        lc = "#000000"
+        if i == 0:
+            lc = "b"
+        elif i == 4:
+            lc = "r"
+        # ラベル付け
+        ax.plot(x, ys[i], label="{:d}".format(i + 1), color=lc)
+    plt.legend(loc="best")
     plt.show()
