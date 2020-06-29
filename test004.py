@@ -1,4 +1,6 @@
 from ctypes import *
+import numpy as np
+from matplotlib import pyplot as plt
 
 exe2_win = cdll.LoadLibrary("exe2_win.so")
 FloatArray64 = c_float * 64
@@ -20,4 +22,8 @@ def getSprmFileWrap(n):
 
 if __name__ == "__main__":
     l1 = getSprmFileWrap(300)
-    print(l1)
+    #print(l1)
+    x = np.linspace(0, 1, 100)
+    y = x ** 2
+    plt.plot(x, y)
+    plt.show()
