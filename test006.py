@@ -67,6 +67,7 @@ class Widget(QWidget):
         # ペインター作成?
         imgcanvas = QPainter(self.img)
         # フォント設定
+        self.board_info = [-(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
         font = QFont()
         font.setPointSize(15)
         imgcanvas.setFont(font)
@@ -87,7 +88,7 @@ class Widget(QWidget):
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
         
         # 初期盤面設定
-        self.setInitBoard(imgcanvas)
+        #self.setInitBoard(imgcanvas)
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
