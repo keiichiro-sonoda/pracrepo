@@ -88,6 +88,7 @@ class Widget(QWidget):
         
         # 初期盤面設定
         self.setInitBoard(imgcanvas)
+        self.getCandidates()
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
@@ -387,6 +388,13 @@ class Widget(QWidget):
         # 型を知りたい
         # PyQt5.Qtcore.Qt.GlobalColor というものらしい
         self.update()
+    
+    # 置ける場所を探す
+    def getCandidates(self):
+        # 候補初期化
+        self.candidates = dict()
+        for tag in self.tag2pos.keys():
+            print(tag)
 
 class Application(QApplication):
     def __init__(self):
