@@ -31,7 +31,8 @@ def multGraphSample():
     x_4 = np.linspace(0, 1, 100)
     y_4 = x_4 ** 4
     # ウィンドウ的な何か
-    fig = plt.figure()
+    # ここでグラフのサイズ調整も
+    fig = plt.figure(figsize=(12, 8))
 
     # 2 x 2 の枠にグラフを描画?
     # 左上
