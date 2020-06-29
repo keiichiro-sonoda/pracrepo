@@ -32,6 +32,11 @@ def getTop10AveWrap(n):
     getTop10Ave(n, f_arr_c)
     return list(f_arr_c)
 
+LINE_COLORS = [
+    "#00ff00", "#1f77b4", "#ff7f0e", "#9467bd", "#ff0000",
+    "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+]
+
 def multGraphSample():
     # x 全部同じやん
     x_1 = np.linspace(0, 1, 100)
@@ -103,7 +108,7 @@ def dataView01():
 # 平均値表示したい
 def dataView02():
     x_min = 0
-    x_max = 600
+    x_max = 300
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
@@ -121,14 +126,18 @@ def dataView02():
     ax = fig.add_subplot(111)
     # 各マスの変移をプロット
     for i in range(10):
-        lc = "#000000"
-        if i == 0:
-            lc = "b"
-        elif i == 4:
-            lc = "r"
+        lw = 1
+        lc = LINE_COLORS[i]
+        if i in [0, 4]:
+            lw = 4
         # ラベル付け
-        ax.plot(x, ys[i], label="{:d}".format(i + 1), color=lc)
-    plt.legend(loc="best")
+        ax.plot(x, ys[i],
+            label="{:d}".format(i + 1),
+            color=lc,
+            linewidth=lw
+        )
+    #plt.legend(loc="best")
+    plt.legend()
     plt.show()
 
 if __name__ == "__main__":
