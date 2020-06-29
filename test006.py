@@ -91,12 +91,12 @@ class Widget(QWidget):
                 tag = chr(i + 97) + chr(j + 49)
                 # 正方形の中央の座標を記録
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
-                sub = self.tag2sub(tag)
-                tag_re = self.sub2tag(sub)
-                print(tag, sub, tag_re)
+                #sub = self.tag2sub(tag)
+                #tag_re = self.sub2tag(sub)
+                #print(tag, sub, tag_re)
         
         # 初期盤面設定
-        self.setInitBoard()
+        self.putKoma("a1", Qt.white, imgcanvas)
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
@@ -108,11 +108,6 @@ class Widget(QWidget):
         self.test_flag = False
         # グラフセット
         self.setGraphs()
-    
-    # 初期盤面を設定したい
-    def setInitBoard(self):
-        #imgcanvas = QPainter(self.img)
-        pass
     
     # ボタン作成
     def setButtons(self):
@@ -260,8 +255,10 @@ class Widget(QWidget):
             return
         # 色をランダム指定
         color = rd.choice([Qt.white, Qt.black])
+        # キャンバスゲット
+        imgcanvas = QPainter(self.img)
         # そこにコマを置く
-        self.putKoma(tag, color)
+        self.putKoma(tag, color, imgcanvas)
         # 描画
         self.update()
     
@@ -285,12 +282,12 @@ class Widget(QWidget):
         return chr(105 - sub % 9) + chr(57 - sub // 9)
     
     # 該当するタグのマスに円を描く
-    # 色も指定(デフォルトは黒)
-    def putKoma(self, tag, color=Qt.black):
+    # 色も指定
+    # 呼び出し元で既に self.img が使われているとエラーになる
+    # 引数にキャンバスを与えることにする
+    def putKoma(self, tag, color, imgcanvas):
         # 中心座標を得る
         center = self.tag2pos[tag]
-        # イメージを取り出す
-        imgcanvas = QPainter(self.img)
         # 枠も中身も同じ色で統一
         imgcanvas.setPen(color)
         imgcanvas.setBrush(color)
