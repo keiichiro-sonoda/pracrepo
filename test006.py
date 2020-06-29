@@ -58,26 +58,19 @@ class Widget(QWidget):
         self.setStyleSheet("background:#eeeeee")
         # タグからマスの中心座標に変換したい
         self.tag2pos = dict()
-        # 初期盤面キャンバス?
+        # 初期盤面画像
         self.img = QImage(self.SQLEN * 10, self.SQLEN * 10, QImage.Format_ARGB32)
         # 余白幅
         self.margin = self.SQLEN
         # コマ半径
         self.radius = int(self.SQLEN * 0.45)
-        # 盤面情報1次元配列(番兵付き)
-        # 黒1, 白2, 空0, 番兵-1とする
-        self.board_info = [-(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
-        #print(self.board_info)
-        # オセロ盤面設定
+        # ペインター作成?
         imgcanvas = QPainter(self.img)
-        pen = QPen(Qt.black)
-        pen.setWidth(4)
-        imgcanvas.setPen(pen)
-        imgcanvas.setBrush(self.MYGREEN)
+        # フォント設定
         font = QFont()
         font.setPointSize(15)
         imgcanvas.setFont(font)
-        # 空盤面を作る
+        # 座標を示す文字を描画, タグと座標の対応辞書の作成
         for i in range(8):
             # 左側から埋めていく
             x = self.margin + self.SQLEN * i
@@ -89,13 +82,9 @@ class Widget(QWidget):
             for j in range(8):
                 # 正方形を描く
                 y = self.margin + self.SQLEN * j
-                imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
                 tag = chr(i + 97) + chr(j + 49)
                 # 正方形の中央の座標を記録
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
-                #sub = self.tag2sub(tag)
-                #tag_re = self.sub2tag(sub)
-                #print(tag, sub, tag_re)
         
         # 初期盤面設定
         self.setInitBoard(imgcanvas)
@@ -112,7 +101,28 @@ class Widget(QWidget):
         self.setGraphs()
     
     # 初期盤面設定
+    # リセットしたいキャンバスを与える
     def setInitBoard(self, imgcanvas):
+        # 盤面情報一次元配列を初期化
+        # 黒1, 白2, 空0, 番兵-1とする
+        self.board_info = [-(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
+        # ペン設定
+        pen = QPen(Qt.black)
+        pen.setWidth(4)
+        imgcanvas.setPen(pen)
+        # ブラシ設定
+        imgcanvas.setBrush(self.MYGREEN)
+        # 左から
+        for i in range(8):
+            # 正方形の左上のx座標を計算
+            x = self.margin + self.SQLEN * i
+            # 上から
+            for j in range(8):
+                # 正方形の左上のy座標を計算
+                y = self.margin + self.SQLEN * j
+                # 正方形を描く
+                imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
+        
         # 最初の4つのコマを配置
         for tag, c_num in [("d4", 1), ("d5", 2), ("e4", 2), ("e5", 1)]:
             self.putKoma(tag, c_num, imgcanvas)
