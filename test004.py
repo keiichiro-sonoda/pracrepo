@@ -3,7 +3,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 exe2_win = cdll.LoadLibrary("exe2_win.so")
+# 配列型定義
 FloatArray64 = c_float * 64
+FloatArray10 = c_float * 10
+# 初期化関数
 exe2_win.initPy()
 # ただ確認するだけの関数
 checkSprmFile = exe2_win.checkSprmFile
@@ -15,10 +18,19 @@ getSprmFile = exe2_win.getSprmFilePy
 getSprmFile.rectype = None
 getSprmFile.argtypes = (c_int32, FloatArray64)
 
+getTop10Ave = exe2_win.getTop10AvePy
+getTop10Ave.rectype = None
+getTop10Ave.argtypes = (c_int32, FloatArray10)
+
 def getSprmFileWrap(n):
     f_arr_c = FloatArray64()
     getSprmFile(n, f_arr_c)
     return list(f_arr_c)
+
+def getTop10AveWrap(n):
+    f_arr_c = FloatArray10()
+    getTop10Ave(n, f_arr_c)
+    return
 
 def multGraphSample():
     # x 全部同じやん
@@ -89,4 +101,5 @@ def dataView01():
     plt.show()
 
 if __name__ == "__main__":
-    dataView01()
+    #dataView01()
+    getTop10AveWrap(100)
