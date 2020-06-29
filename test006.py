@@ -290,18 +290,25 @@ class Widget(QWidget):
         imgcanvas.setPen(pen)
         # フォント設定
         font = QFont()
-        font.setPointSize(12)
+        font.setPointSize(25)
         imgcanvas.setFont(font)
-        imgcanvas.setBrush(Qt.black)
         # 左上の主要マス
-        essence = ("a1", "b1", "b2", "c1", "c2", "c3", "d1", "d2", "d3", "d4")
+        essence = {
+            "a1": " 1", "b1": " 2", "b2": " 5", "c1": " 3", "c2": " 6",
+            "c3": " 8", "d1": " 4", "d2": " 7", "d3": " 9", "d4": "10"
+        }
         for tag, pos in self.tag2pos.items():
+            # アンパック代入?
+            x, y = pos[1]
             # 主要マスかどうかで色分け
             if tag in essence:
                 imgcanvas.setBrush(self.MYGREEN)
+                moji = essence[tag]
             else:
                 imgcanvas.setBrush(self.BYAKUROKU)
-            imgcanvas.drawRect(*pos[1], self.SQLEN, self.SQLEN)
+                moji = ""
+            imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
+            imgcanvas.drawText(x + 15, y + 60, moji)
 
     # テストボタンが押された
     # 状態の切り替えのみ行なう
