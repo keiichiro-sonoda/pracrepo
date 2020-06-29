@@ -312,10 +312,8 @@ class Widget(QWidget):
         #print(type(event.pos()))
         # 座標をタグに変換
         tag = self.pos2tag(event.pos())
-        # チェック
-        #print(tag)
-        # 範囲外
-        if tag == "z0":
+        # 候補手に含まれないなら何もしない
+        if tag not in self.candidates:
             return
         # 盤面更新
         self.updateBoard(tag)
