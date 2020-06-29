@@ -100,7 +100,36 @@ def dataView01():
     plt.legend(loc="best")
     plt.show()
 
+# 平均値表示したい
+def dataView02():
+    x_min = 0
+    x_max = 600
+    x = []
+    # 10 マス分のデータの配列を用意
+    ys = [[] for i in range(10)]
+    for i in range(x_min, x_max + 1):
+        # x は範囲内の整数全て
+        x.append(i)
+        # i 世代のトップ10の平均値(主要パラメータのみ)を取り出す
+        tprm = getTop10AveWrap(i)
+        # それぞれのマスの評価値に代入!
+        for j in range(10):
+            ys[j].append(tprm[j])
+    
+    # 使い慣れたいからオブジェクト指向にしよう
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111)
+    # 各マスの変移をプロット
+    for i in range(10):
+        lc = "#000000"
+        if i == 0:
+            lc = "b"
+        elif i == 4:
+            lc = "r"
+        # ラベル付け
+        ax.plot(x, ys[i], label="{:d}".format(i + 1), color=lc)
+    plt.legend(loc="best")
+    plt.show()
+
 if __name__ == "__main__":
-    #dataView01()
-    l = getTop10AveWrap(600)
-    print(("{:6.4f} " * 10).format(*l))
+    dataView02()

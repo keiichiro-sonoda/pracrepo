@@ -335,7 +335,7 @@ void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
     // この i は for 文の中だけ有効らしい
     for (int i = 0; i < SURVIVE_NUM; i++) {
         // 一応10個チェック
-        showFloatArray(pa[i].weight, SPRM_LEN);
+        //showFloatArray(pa[i].weight, SPRM_LEN);
         // 評価値の合計に足していく
         for (int j = 0; j < SPRM_LEN; j++){
             weight_sum[j] += pa[i].weight[j];
