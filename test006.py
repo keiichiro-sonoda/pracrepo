@@ -276,9 +276,7 @@ class Widget(QWidget):
     
     # タグから添え字に変換する
     def tag2sub(self, tag):
-        nx = 105 - ord(tag[0])
-        ny = 57 - ord(tag[1])
-        return ny * 9 + nx
+        return (57 - ord(tag[1])) * 9 + 105 - ord(tag[0])
     
     # 該当するタグのマスに円を描く
     # 色も指定(デフォルトは黒)
