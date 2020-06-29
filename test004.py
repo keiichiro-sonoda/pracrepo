@@ -52,14 +52,8 @@ def multGraphSample():
 
     print("end?")
 
-if __name__ == "__main__":
-    #l1 = getSprmFileWrap(300)
-    #print(l1)
-    x = np.linspace(0, 1, 100)
-    y = x ** 2
-
-    # データ作成プロセス
-    # 最大値と最小値の設定
+# なんとなく関数保存
+def dataView01():
     x_min = 0
     x_max = 100
     y_min = -0.5
@@ -93,3 +87,6 @@ if __name__ == "__main__":
         ax.plot(x, ys[i], label="{:d}".format(i + 1), color=lc)
     plt.legend(loc="best")
     plt.show()
+
+if __name__ == "__main__":
+    dataView01()

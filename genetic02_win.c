@@ -311,6 +311,29 @@ void getSprmFilePy(int gene_num, float f_pointer[64]) {
     }
 }
 
+// トップだけを観察するとばらつきが大きいため, トップ10の平均値を取ってみる
+// 逆に0に近づいてしまうか?
+void getTop10AvePy(int gene_num, float f_pointer[10]) {
+    // 一応呼び出された関数が分かるようにする
+    printf("getTop10AvePy called!");
+    FILE *fp;
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, "prm/simple_prm%03d.bin", gene_num);
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // ファイルに保存してあるSprm配列を格納
+    Sprm pa[SURVIVE_NUM];
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // この i は for 文の中だけ有効らしい
+    for (int i = 0; i < SURVIVE_NUM; i++) {
+        // 一応10個チェック
+        showFloatArray(pa[i].weight, SPRM_LEN);
+    }
+}
+
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {
