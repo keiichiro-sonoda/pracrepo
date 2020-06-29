@@ -101,8 +101,6 @@ class Widget(QWidget):
         
         # 初期盤面設定
         self.setInitBoard(imgcanvas)
-        self.getCandidates()
-        self.coloringCandidates(imgcanvas)
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
@@ -141,6 +139,12 @@ class Widget(QWidget):
         # 最初の4つのコマを配置
         for tag, c_num in [("d4", 1), ("d5", 2), ("e4", 2), ("e5", 1)]:
             self.putKoma(tag, c_num, imgcanvas)
+        # ターンを先手にする
+        self.turn = 1
+        # 候補手探し
+        self.getCandidates()
+        # 色塗り
+        self.coloringCandidates(imgcanvas)
 
     # 盤面情報を標準出力で確認する
     # 配列の先頭が右下になるように文字列を組み立てる
@@ -377,7 +381,7 @@ class Widget(QWidget):
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.Yes
         )
-        # イエスが押された場合
+        # Yesが押された場合
         if reply == QMessageBox.Yes:
             print("reset!!")
             # 盤面を初期状態に
@@ -483,8 +487,7 @@ class Widget(QWidget):
         # ブラシ設定
         imgcanvas.setBrush(self.CANDGREEN)
         for tag in self.candidates.keys():
-            # 正方形の左上の座標を取得(タプル)して分解
-            # 正方形を描く
+            # 正方形の左上の座標(タプル)を取得してスターで分解
             imgcanvas.drawRect(*self.tag2pos[tag][1], self.SQLEN, self.SQLEN)
 
     # 盤面更新
