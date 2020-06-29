@@ -36,6 +36,8 @@ def getSprmFileWrap(n):
 class Widget(QWidget):
     # よく使う色は先に定義してみる?
     MYGREEN = QColor(0, 200, 51)
+    # 候補手用緑
+    CANDGREEN = QColor(124, 252, 0)
     # マスの大きさ
     SQLEN = 80
     # グラフ用に12色決めておく
@@ -94,11 +96,13 @@ class Widget(QWidget):
                 y = self.margin + self.SQLEN * j
                 tag = chr(i + 97) + chr(j + 49)
                 # 正方形の中央の座標と左上の座標を記録
-                self.tag2pos[tag] = (QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2), QPoint(x, y))
+                # 左上の座標はタプルのまま!
+                self.tag2pos[tag] = (QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2), (x, y))
         
         # 初期盤面設定
         self.setInitBoard(imgcanvas)
         self.getCandidates()
+        self.coloringCandidates(imgcanvas)
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
@@ -366,6 +370,18 @@ class Widget(QWidget):
         # 盤面表示(確認用)
         #self.printBoard()
     
+    # 芝生を置く
+    def putLawn(self, tag, imgcanvas):
+        # 正方形の左上を取得
+        pos = self.tag2pos[tag][1]
+        # ペン設定
+        pen = QPen(Qt.black)
+        pen.setWidth(4)
+        imgcanvas.setPen(pen)
+        # ブラシ設定
+        imgcanvas.setBrush(self.CANDGREEN)
+        imgcanvas.drawRect(*pos, self.SQLEN, self.SQLEN)
+    
     # リセットボタンクリック時動作
     def resetClicked(self):
         # ポップアップ表示を追加
@@ -471,9 +487,9 @@ class Widget(QWidget):
             self._search(sub + d, d, rev_tags)
     
     # 候補手のところの色を変える
-    def coloringCandidatesself(self):
+    def coloringCandidates(self, imgcanvas):
         for tag in self.candidates.keys():
-            pass
+            self.putLawn(tag, imgcanvas)
 
     # 盤面更新
     def updateBoard(self, tag):
