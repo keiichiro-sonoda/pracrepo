@@ -441,6 +441,8 @@ class Widget(QWidget):
             # パス2回連続で終了
             if self.pass_count == 2:
                 self.end_flag = True
+                # 結果のポップアップ表示へ
+                self.resultPopup()
             # 1回目
             else:
                 # ターン変更してもう一度探索
@@ -526,6 +528,24 @@ class Widget(QWidget):
         self.turn ^= 3
         self.getCandidates()
         self.coloringCandidates(imgcanvas)
+    
+    # 結果のポップアップ
+    def resultPopup(self):
+        # それぞれのコマを数える
+        bc = sum(1 for i in self.board_info if i == 1)
+        wc = sum(1 for i in self.board_info if i == 2)
+        dif = bc -wc
+        if dif == 0:
+            moji = "引き分け"
+        if dif > 0:
+            moji = "黒の{:2d}枚勝ち".format(dif)
+        elif dif < 0:
+            moji = "白の{:2d}枚勝ち".format(-dif)
+        # 選択肢はOKのみ
+        reply = QMessageBox.question(self, "対局終了", moji,
+            QMessageBox.Ok,
+            QMessageBox.Ok
+        )
 
 class Application(QApplication):
     def __init__(self):
