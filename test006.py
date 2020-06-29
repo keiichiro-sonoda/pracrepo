@@ -96,7 +96,7 @@ class Widget(QWidget):
                 #print(tag, sub, tag_re)
         
         # 初期盤面設定
-        self.putKoma("a1", Qt.white, imgcanvas)
+        self.setInitBoard(imgcanvas)
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
@@ -108,6 +108,19 @@ class Widget(QWidget):
         self.test_flag = False
         # グラフセット
         self.setGraphs()
+    
+    # 初期盤面設定
+    def setInitBoard(self, imgcanvas):
+        pass
+
+    # 盤面情報を標準出力で確認する
+    def printBoard(self):
+        moji = ""
+        for y in range(9, 81, 9):
+            for x in range(1, 9):
+                moji = "{:1d} ".format(self.board_info[x + y]) + moji
+            moji = "\n" + moji
+        print(moji)
     
     # ボタン作成
     def setButtons(self):
@@ -293,6 +306,8 @@ class Widget(QWidget):
         imgcanvas.setPen(color)
         imgcanvas.setBrush(color)
         imgcanvas.drawEllipse(center, self.radius, self.radius)
+        # 盤面表示
+        self.printBoard()
 
     # マウスが動いた時の座標取得?
     def mouseMoveEvent(self, event):
