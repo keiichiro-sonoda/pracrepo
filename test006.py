@@ -64,6 +64,12 @@ class Widget(QWidget):
         self.margin = self.SQLEN
         # コマ半径
         self.radius = int(self.SQLEN * 0.45)
+        # 黒の手番からスタート
+        self.turn = 1
+        # パスカウンタ(2になったら終了)
+        self.pass_count = 0
+        # ゲーム終了フラグ
+        self.end_flag = False
         # ペインター作成?
         imgcanvas = QPainter(self.img)
         # フォント設定
@@ -394,7 +400,31 @@ class Widget(QWidget):
         # 候補初期化
         self.candidates = dict()
         for tag in self.tag2pos.keys():
-            print(tag)
+            # 空マスじゃなければやり直し
+            if self.board_info[self.tag2sub(tag)] != 0:
+                continue
+            # 空マスなら探索
+            self.search(tag)
+        
+        # 候補手がない
+        if len(self.candidates) == 0:
+            print("パス")
+            self.pass_count += 1
+            # パス2回連続で終了
+            if self.pass_count == 2:
+                self.end_flag = True
+            # 1回目
+            else:
+                # ターン変更してもう一度探索
+                self.turn ^= 3
+                self.getCandidates()
+        # 候補手がある
+        else:
+            self.pass_count = 0
+
+    # 探索関数
+    def search(self, tag):
+        sub = self.tag2sub(tag)
 
 class Application(QApplication):
     def __init__(self):
