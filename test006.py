@@ -65,7 +65,7 @@ class Widget(QWidget):
         # 盤面情報1次元配列(番兵付き)
         # 黒1, 白2, 空0, 番兵-1とする
         self.board_info = [-(i <= 8 or i % 9 == 0 or i >= 81) for i in range(91)]
-        print(self.board_info)
+        #print(self.board_info)
         # オセロ盤面設定
         imgcanvas = QPainter(self.img)
         pen = QPen(Qt.black)
@@ -77,18 +77,21 @@ class Widget(QWidget):
         imgcanvas.setFont(font)
         # 空盤面を作る
         for i in range(8):
+            # 左側から埋めていく
+            x = self.margin + self.SQLEN * i
             # アルファベット表示(列)
-            imgcanvas.drawText(self.margin + self.SQLEN * i + self.SQLEN // 2 - 10, self.margin - 20, chr(i + 97))
+            imgcanvas.drawText(x + self.SQLEN // 2 - 10, self.margin - 20, chr(i + 97))
             # 数字表示(行)
-            imgcanvas.drawText(self.margin - 30, self.margin + self.SQLEN * i + self.SQLEN // 2, chr(i + 49))
+            # 変数 x を y 座標の決定に使う(ややこしい)
+            imgcanvas.drawText(self.margin - 30, x + self.SQLEN // 2, chr(i + 49))
             for j in range(8):
                 # 正方形を描く
-                x = self.margin + self.SQLEN * i
                 y = self.margin + self.SQLEN * j
                 imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
                 tag = chr(i + 97) + chr(j + 49)
                 # 正方形の中央の座標を記録
                 self.tag2pos[tag] = QPoint(x + self.SQLEN // 2, y + self.SQLEN // 2)
+                print(self.tag2sub(tag))
         
         # 初期盤面設定
         self.setInitBoard()
@@ -270,6 +273,12 @@ class Widget(QWidget):
             return "z0"
         # ASCII で元に戻す
         return chr(nx + 97) + chr(ny + 49)
+    
+    # タグから添え字に変換する
+    def tag2sub(self, tag):
+        nx = 105 - ord(tag[0])
+        ny = 57 - ord(tag[1])
+        return ny * 9 + nx
     
     # 該当するタグのマスに円を描く
     # 色も指定(デフォルトは黒)
