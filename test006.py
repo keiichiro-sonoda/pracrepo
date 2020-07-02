@@ -422,7 +422,7 @@ class Widget(QWidget):
     
     # 押された座標取得
     def mousePressEvent(self, event):
-        # ゲーム中以外もしくはロック中
+        # ゲーム中以外
         if self.end_flag or self.test_flag:
             return
         if self.press_lock:
@@ -433,7 +433,7 @@ class Widget(QWidget):
         # 候補手に含まれないなら何もしない
         if tag not in self.candidates:
             return
-        # そもそも有効な手の場合のみロックを掛ければいいのでは?
+        # 有効な手なら処理が終わるまでロック
         self.press_lock = True
         # 盤面更新
         self.updateBoard(tag)
@@ -441,11 +441,9 @@ class Widget(QWidget):
         self.update()
         # AIのターンならランダムに打たせる
         if self.players[1] and self.turn == 2:
-            self.randomAction()
-        if self.players[0] and self.turn == 1:
-            self.randomAction()
-        # 鍵を外す
-        self.press_lock = False
+            self.timer.start(500)
+        elif self.players[0] and self.turn == 1:
+            self.timer.start(500)
     
     # マウスが動いた時の座標取得?
     def mouseMoveEvent(self, event):
