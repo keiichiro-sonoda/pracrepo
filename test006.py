@@ -257,9 +257,10 @@ class Widget(QWidget):
         self.rbutton2.resize(150, 50)
         # 初期値は人
         self.rbutton1.setChecked(True)
-        # 無名関数?
-        self.rbutton1.toggled.connect(self.detSentePlayer)
-        self.rbutton2.toggled.connect(self.detSentePlayer)
+        # プレイヤー変更は片方のラジオボタンだけ見れば大丈夫
+        # そもそもラジオボタンよりチェックボックスの方がよかったのでは?
+        # それは後々考えよう
+        self.rbutton1.toggled.connect(lambda : self.detPlayer(0))
 
         # 後手をAIにするか人間にするか決めるラジオボタン
         self.rgroup2 = QButtonGroup(self)
@@ -274,14 +275,14 @@ class Widget(QWidget):
         # 初期値は人
         self.rbutton3.setChecked(True)
         # 無名関数?
-        self.rbutton3.toggled.connect(lambda : self.toggleRadio(self.rbutton3))
-        self.rbutton4.toggled.connect(lambda : self.toggleRadio(self.rbutton4))
+        self.rbutton3.toggled.connect(lambda : self.detPlayer(1))
     
-    def detSentePlayer(self):
-        if self.rbutton1.isChecked():
-            self.players[0] = False
+    def detPlayer(self, index):
+        # ブールそのまま代入すればいいのでは?
+        if index == 0:
+            self.players[0] = self.rbutton2.isChecked()
         else:
-            self.players[0] = True
+            self.players[1] = self.rbutton4.isChecked()
         print(self.players)
 
     # ラジオボタン選択時の動作
