@@ -78,6 +78,10 @@ class Widget(QWidget):
         self.pass_count = 0
         # ゲーム終了フラグ
         self.end_flag = False
+        # プレイヤーがAIか人か判別するための変数
+        # players[0] が先手, [1]が後手
+        # False が人, True がAI
+        self.players = [False, False]
         # ペインター作成?
         imgcanvas = QPainter(self.img)
         # フォント設定
@@ -241,29 +245,34 @@ class Widget(QWidget):
     
     # ラジオボタンの設定
     def setRadioButtons(self):
+        # 先手をAIにするか人間にするか決めるラジオボタン
         self.rgroup1 = QButtonGroup(self)
-        self.rbutton1 = QRadioButton("Choice 1", self)
+        self.rbutton1 = QRadioButton("human", self)
         self.rgroup1.addButton(self.rbutton1)
-        self.rbutton2 = QRadioButton("Choice 2", self)
+        self.rbutton2 = QRadioButton("AI", self)
         self.rgroup1.addButton(self.rbutton2)
         self.rbutton1.move(800, 500)
         self.rbutton2.move(800, 550)
         self.rbutton1.resize(150, 50)
         self.rbutton2.resize(150, 50)
+        # 初期値は人
         self.rbutton1.setChecked(True)
         # 無名関数?
         self.rbutton1.toggled.connect(lambda : self.toggleRadio(self.rbutton1))
         self.rbutton2.toggled.connect(lambda : self.toggleRadio(self.rbutton2))
-    
+
+        # 後手をAIにするか人間にするか決めるラジオボタン
         self.rgroup2 = QButtonGroup(self)
-        self.rbutton3 = QRadioButton("Choice 3", self)
+        self.rbutton3 = QRadioButton("human", self)
         self.rgroup2.addButton(self.rbutton3)
-        self.rbutton4 = QRadioButton("Choice 4", self)
+        self.rbutton4 = QRadioButton("AI", self)
         self.rgroup2.addButton(self.rbutton4)
         self.rbutton3.move(800, 600)
         self.rbutton4.move(800, 650)
         self.rbutton3.resize(150, 50)
         self.rbutton4.resize(150, 50)
+        # 初期値は人
+        self.rbutton3.setChecked(True)
         # 無名関数?
         self.rbutton3.toggled.connect(lambda : self.toggleRadio(self.rbutton3))
         self.rbutton4.toggled.connect(lambda : self.toggleRadio(self.rbutton4))
