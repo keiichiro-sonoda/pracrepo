@@ -79,6 +79,9 @@ class Widget(QWidget):
         # ゲーム終了フラグ
         # まだ使い道無いからスタートフラグも兼ねるか
         self.end_flag = True
+        # キャンバスのマウスクリック動作のロックフラグ
+        # AIのターンで勝手に操作出来ないようにする予定
+        self.press_lock = True
         # プレイヤーがAIか人か判別するための変数
         # players[0] が先手, [1]が後手
         # False が人, True がAI
@@ -418,8 +421,8 @@ class Widget(QWidget):
     
     # 押された座標取得
     def mousePressEvent(self, event):
-        # ゲーム中以外
-        if self.end_flag:
+        # ゲーム中以外もしくはロック中
+        if self.end_flag or self.press_lock:
             return
         #print(type(event.pos()))
         # 座標をタグに変換
@@ -544,6 +547,7 @@ class Widget(QWidget):
             self.pass_count += 1
             # パス2回連続で終了
             if self.pass_count == 2:
+                # エンドフラグを立てる
                 self.end_flag = True
                 # 結果のポップアップ表示へ
                 self.resultPopup()
