@@ -81,7 +81,7 @@ class Widget(QWidget):
         self.end_flag = True
         # キャンバスのマウスクリック動作のロックフラグ
         # AIのターンで勝手に操作出来ないようにする予定
-        self.press_lock = True
+        self.press_lock = False
         # プレイヤーがAIか人か判別するための変数
         # players[0] が先手, [1]が後手
         # False が人, True がAI
@@ -501,6 +501,10 @@ class Widget(QWidget):
         print("START!!")
         # ゲーム開始!
         self.end_flag = False
+        self.rbutton1.setEnabled(False)
+        self.rbutton2.setEnabled(False)
+        self.rbutton3.setEnabled(False)
+        self.rbutton4.setEnabled(False)
         # ボタンテキストも変更
         self.start_button.setText("yeah")
         # 候補手色塗り
