@@ -277,7 +277,12 @@ class Widget(QWidget):
         # それは後々考えよう
         self.rbutton1.toggled.connect(lambda : self.detPlayer(0))
 
+        # フォントの決め方を変える
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
         self.label2 = QLabel("white", self)
+        self.label2.setFont(font)
         self.label2.move(x, 600)
         # 後手をAIにするか人間にするか決めるラジオボタン
         self.rgroup2 = QButtonGroup(self)
