@@ -520,22 +520,24 @@ class Widget(QWidget):
     # スタートボタンクリック時動作
     def startClicked(self):
         print("START!!")
-        # ゲーム開始!
-        self.end_flag = False
         self.rbutton1.setEnabled(False)
         self.rbutton2.setEnabled(False)
         self.rbutton3.setEnabled(False)
         self.rbutton4.setEnabled(False)
         # ゲーム中はボタン無効化
         self.start_button.setEnabled(False)
-        # 両方AIの場合
-        if self.players[0] and self.players[1]:
-            self.press_lock = True
-            self.timer.start(1)
         # 候補手色塗り
         self.coloringCandidates(QPainter(self.img))
         # 画像変更を適用
         self.update()
+        # ゲーム開始!
+        self.end_flag = False
+        # 両方AIの場合
+        if self.players[0] and self.players[1]:
+            self.press_lock = True
+            # 1発だけ
+            self.timer.setSingleShot(True)
+            self.timer.start(1)
     
     # 置ける場所を探す
     def getCandidates(self):
@@ -644,6 +646,7 @@ class Widget(QWidget):
         self.printBoard()
         self.turn ^= 3
         self.getCandidates()
+        # 次の候補手を色塗り
         self.coloringCandidates(imgcanvas)
     
     # 結果のポップアップ
@@ -663,15 +666,18 @@ class Widget(QWidget):
             QMessageBox.Ok,
             QMessageBox.Ok
         )
-        # タイマー停止
-        self.timer.stop()
     
     # 候補手からランダムに選択
     def randomAction(self):
         cand_list = list(self.candidates.keys())
-        tag = rd.choice(cand_list)
-        self.updateBoard(tag)
+        # 候補手が存在しない
+        if not cand_list:
+            return
+        self.updateBoard(rd.choice(cand_list))
         self.update()
+        # お互いAIならすぐに次を実行
+        if self.players[0] and self.players[1]:
+            self.timer.start(1)
 
 class Application(QApplication):
     def __init__(self):
