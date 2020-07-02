@@ -425,15 +425,13 @@ class Widget(QWidget):
         if self.press_lock:
             print("locked")
             return
-        # 処理中は鍵をかける
-        self.press_lock = True
         # 座標をタグに変換
         tag = self.pos2tag(event.pos())
         # 候補手に含まれないなら何もしない
-        # ここで鍵を外さないとこれ以降何もできなくなる
         if tag not in self.candidates:
-            self.press_lock = False
             return
+        # そもそも有効な手の場合のみロックを掛ければいいのでは?
+        self.press_lock = True
         # 盤面更新
         self.updateBoard(tag)
         # 描画
