@@ -325,6 +325,8 @@ class Widget(QWidget):
         self.timer.setSingleShot(True)
         # 関数を繋げる
         self.timer.timeout.connect(self.randomAction)
+        # 待ち時間(ミリ秒)
+        self.wait_time = 1000
     
     # ラジオボタンが変更されたとき実行
     def detPlayer(self, index):
@@ -333,7 +335,7 @@ class Widget(QWidget):
             self.players[0] = self.rbutton2.isChecked()
         else:
             self.players[1] = self.rbutton4.isChecked()
-        print(self.players)
+        #print(self.players)
     
     # テスト用画像を作成
     def setTestImage(self):
@@ -448,10 +450,11 @@ class Widget(QWidget):
         # 描画
         self.update()
         # AIのターンならランダムに打たせる
+        # 待ち時間は適当
         if self.players[0] and self.turn == 1:
-            self.timer.start(500)
+            self.timer.start(self.wait_time)
         elif self.players[1] and self.turn == 2:
-            self.timer.start(500)
+            self.timer.start(self.wait_time)
         # 相手も人, もしくはパスでもう一度指せる場合はロック解除
         else:
             self.press_lock = False
