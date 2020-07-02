@@ -86,9 +86,6 @@ class Widget(QWidget):
         # players[0] が先手, [1]が後手
         # False が人, True がAI
         self.players = [False, False]
-        # タイマー設定
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.randomAction)
         # ペインター作成?
         imgcanvas = QPainter(self.img)
         # フォント設定
@@ -121,6 +118,8 @@ class Widget(QWidget):
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
+        # タイマー設定
+        self.setTimers()
         # 画面切り替えフラグ?
         self.test_flag = False
         # グラフセット
@@ -317,6 +316,15 @@ class Widget(QWidget):
         self.rbutton3.setChecked(True)
         # 無名関数?
         self.rbutton3.toggled.connect(lambda : self.detPlayer(1))
+    
+    # タイマー設定関数
+    # 複数形だけど今のところひとつ
+    def setTimers(self):
+        self.timer = QTimer(self)
+        # 一発ずつ実行
+        self.timer.setSingleShot(True)
+        # 関数を繋げる
+        self.timer.timeout.connect(self.randomAction)
     
     # ラジオボタンが変更されたとき実行
     def detPlayer(self, index):
@@ -535,7 +543,6 @@ class Widget(QWidget):
             # ロック
             self.press_lock = True
             # 1発だけ
-            self.timer.setSingleShot(True)
             self.timer.start(1)
     
     # 置ける場所を探す
