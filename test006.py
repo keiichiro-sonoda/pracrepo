@@ -430,7 +430,9 @@ class Widget(QWidget):
         # 座標をタグに変換
         tag = self.pos2tag(event.pos())
         # 候補手に含まれないなら何もしない
+        # ここで鍵を外さないとこれ以降何もできなくなる
         if tag not in self.candidates:
+            self.press_lock = False
             return
         # 盤面更新
         self.updateBoard(tag)
