@@ -77,7 +77,8 @@ class Widget(QWidget):
         # パスカウンタ(2になったら終了)
         self.pass_count = 0
         # ゲーム終了フラグ
-        self.end_flag = False
+        # まだ使い道無いからスタートフラグも兼ねるか
+        self.end_flag = True
         # プレイヤーがAIか人か判別するための変数
         # players[0] が先手, [1]が後手
         # False が人, True がAI
@@ -414,6 +415,9 @@ class Widget(QWidget):
     
     # 押された座標取得
     def mousePressEvent(self, event):
+        # ゲーム中以外
+        if self.end_flag:
+            return
         #print(type(event.pos()))
         # 座標をタグに変換
         tag = self.pos2tag(event.pos())
