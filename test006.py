@@ -86,6 +86,9 @@ class Widget(QWidget):
         # players[0] が先手, [1]が後手
         # False が人, True がAI
         self.players = [False, False]
+        # タイマー設定
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.randomAction)
         # ペインター作成?
         imgcanvas = QPainter(self.img)
         # フォント設定
@@ -436,8 +439,10 @@ class Widget(QWidget):
         self.updateBoard(tag)
         # 描画
         self.update()
-        # 後手がAIでかつ, 手番が後手の場合
+        # AIのターンならランダムに打たせる
         if self.players[1] and self.turn == 2:
+            self.randomAction()
+        if self.players[0] and self.turn == 1:
             self.randomAction()
         # 鍵を外す
         self.press_lock = False
@@ -509,6 +514,8 @@ class Widget(QWidget):
             self.start_button.setEnabled(True)
             # 盤面を初期状態に
             self.setInitBoard(QPainter(self.img))
+            # 盤面クリックは有効にしておく
+            self.press_lock = False
     
     # スタートボタンクリック時動作
     def startClicked(self):
@@ -521,6 +528,10 @@ class Widget(QWidget):
         self.rbutton4.setEnabled(False)
         # ゲーム中はボタン無効化
         self.start_button.setEnabled(False)
+        # 両方AIの場合
+        if self.players[0] and self.players[1]:
+            self.press_lock = True
+            self.timer.start(1)
         # 候補手色塗り
         self.coloringCandidates(QPainter(self.img))
         # 画像変更を適用
