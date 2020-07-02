@@ -643,6 +643,8 @@ class Widget(QWidget):
         self.putKoma(tag, self.turn, imgcanvas)
         # 盤面情報表示
         self.printBoard()
+        # ターンを変更して候補手探し
+        # 次がパスならターンが元に戻る可能性あり
         self.turn ^= 3
         self.getCandidates()
         # 次の候補手を色塗り
@@ -675,11 +677,14 @@ class Widget(QWidget):
         if not cand_list:
             return
         self.updateBoard(rd.choice(cand_list))
-        # お互いAIならすぐに次を実行
-        if self.players[0] and self.players[1]:
+        # 次が人ならターンをロック解除
+        if not self.players[0] and self.turn == 1:
+            self.press_lock = False
+        elif not self.players[1] and self.turn == 2:
+            self.press_lock = False
+        # 次もAIならすぐにこの関数を実行
+        else:
             self.timer.start(1)
-        # 次が人ならロック解除
-        self.press_lock = False
 
 class Application(QApplication):
     def __init__(self):
