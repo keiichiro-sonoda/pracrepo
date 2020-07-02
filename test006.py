@@ -424,7 +424,8 @@ class Widget(QWidget):
         # ゲーム中以外もしくはロック中
         if self.end_flag or self.press_lock:
             return
-        #print(type(event.pos()))
+        # 処理中は鍵をかける
+        self.press_lock = True
         # 座標をタグに変換
         tag = self.pos2tag(event.pos())
         # 候補手に含まれないなら何もしない
@@ -434,6 +435,11 @@ class Widget(QWidget):
         self.updateBoard(tag)
         # 描画
         self.update()
+        # 後手がAIでかつ, 手番が後手の場合
+        if self.players[1] and self.turn == 2:
+            self.randomAction()
+        # 鍵を外す
+        self.press_lock = False
     
     # マウスが動いた時の座標取得?
     def mouseMoveEvent(self, event):
@@ -560,7 +566,7 @@ class Widget(QWidget):
                 self.end_flag = True
                 # 結果のポップアップ表示へ
                 self.resultPopup()
-            # 1回目
+            # パス1回目
             else:
                 # ターン変更してもう一度探索
                 self.turn ^= 3
@@ -568,8 +574,6 @@ class Widget(QWidget):
         # 候補手がある
         else:
             self.pass_count = 0
-        # 確認用
-        #print(self.candidates)
 
     # 探索関数
     def search(self, tag):
@@ -633,6 +637,7 @@ class Widget(QWidget):
     def updateBoard(self, tag):
         # キャンバス取り出し
         imgcanvas = QPainter(self.img)
+        # 候補手の色を元に戻す
         self.coloringCandidates(imgcanvas, back=True)
         # ひっくり返すマスの添え字を代入
         for sub in self.candidates[tag]:
@@ -663,6 +668,13 @@ class Widget(QWidget):
             QMessageBox.Ok,
             QMessageBox.Ok
         )
+    
+    # 候補手からランダムに選択
+    def randomAction(self):
+        cand_list = list(self.candidates.keys())
+        tag = rd.choice(cand_list)
+        self.updateBoard(tag)
+        self.update()
 
 class Application(QApplication):
     def __init__(self):
