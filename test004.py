@@ -126,7 +126,7 @@ def dataView02():
     ax = fig.add_subplot(
         111,
         xlabel="generation",
-        ylabel="point"
+        ylabel="point",
     )
     # 各マスの変移をプロット
     for i in range(10):
@@ -148,6 +148,8 @@ def dataView02():
         borderaxespad=0,
         fontsize=10
     )
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("point", fontsize=15)
     plt.show()
 
 if __name__ == "__main__":

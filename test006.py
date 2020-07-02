@@ -66,7 +66,7 @@ class Widget(QWidget):
         # 需要が出てきそうなのでマスの左上の座標も追加する
         # (マスの中心, マスの左上)
         self.tag2pos = dict()
-        # 初期盤面画像
+        # 盤面画像作成
         self.img = QImage(self.SQLEN * 10, self.SQLEN * 10, QImage.Format_ARGB32)
         # 余白幅
         self.margin = self.SQLEN
