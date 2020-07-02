@@ -245,6 +245,8 @@ class Widget(QWidget):
         self.rbutton2 = QRadioButton("Choice 2", self)
         self.rbutton1.move(800, 500)
         self.rbutton2.move(800, 550)
+        self.rbutton1.resize(150, 50)
+        self.rbutton2.resize(150, 50)
         # 無名関数?
         self.rbutton1.toggled.connect(lambda : self.toggleRadio(self.rbutton1))
         self.rbutton2.toggled.connect(lambda : self.toggleRadio(self.rbutton2))
