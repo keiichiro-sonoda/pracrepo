@@ -245,13 +245,15 @@ class Widget(QWidget):
     
     # ラジオボタンの設定
     def setRadioButtons(self):
+        # ラジオボタンのx座標
+        x = 800
         self.label = QLabel("black", self)
         # テキストの位置を指定
-        self.label.move(800, 470)
+        self.label.move(x, 470)
         # テキストの詳細設定
         # CSSフォーマットとは何ぞや
         self.label.setStyleSheet("\
-            font-size:15pt;\
+            font-size:10pt;\
             font-weight:500;\
             color:#000000;\
             ")
@@ -265,8 +267,8 @@ class Widget(QWidget):
         self.rgroup1.addButton(self.rbutton1)
         self.rbutton2 = QRadioButton("AI", self)
         self.rgroup1.addButton(self.rbutton2)
-        self.rbutton1.move(800, 500)
-        self.rbutton2.move(800, 530)
+        self.rbutton1.move(x, 500)
+        self.rbutton2.move(x, 530)
         self.rbutton1.resize(150, 30)
         self.rbutton2.resize(150, 40)
         # 初期値は人
@@ -282,8 +284,8 @@ class Widget(QWidget):
         self.rgroup2.addButton(self.rbutton3)
         self.rbutton4 = QRadioButton("AI", self)
         self.rgroup2.addButton(self.rbutton4)
-        self.rbutton3.move(800, 600)
-        self.rbutton4.move(800, 650)
+        self.rbutton3.move(x, 600)
+        self.rbutton4.move(x, 650)
         self.rbutton3.resize(150, 50)
         self.rbutton4.resize(150, 50)
         # 初期値は人
