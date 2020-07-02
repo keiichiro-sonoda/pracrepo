@@ -241,8 +241,11 @@ class Widget(QWidget):
     
     # ラジオボタンの設定
     def setRadioButtons(self):
+        self.rgroup1 = QButtonGroup(self)
         self.rbutton1 = QRadioButton("Choice 1", self)
+        self.rgroup1.addButton(self.rbutton1)
         self.rbutton2 = QRadioButton("Choice 2", self)
+        self.rgroup1.addButton(self.rbutton2)
         self.rbutton1.move(800, 500)
         self.rbutton2.move(800, 550)
         self.rbutton1.resize(150, 50)
