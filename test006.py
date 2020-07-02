@@ -107,9 +107,9 @@ class Widget(QWidget):
         # 確認するならここの値を変更
         # クラス内変数で所持
         self.use_sprm = getSprmFileWrap(601)
-        # チェック
-        #print(self.use_sprms)
+        # ボタン等設定
         self.setButtons()
+        self.setRadioButtons()
         # 画面切り替えフラグ?
         self.test_flag = False
         # グラフセット
@@ -238,6 +238,10 @@ class Widget(QWidget):
         for i in range(10):
             gpen.setColor(self.MYCOLORS[i])
             graph.plot(x, ys[i], pen=gpen, name=i)
+    
+    # ラジオボタンの設定
+    def setRadioButtons(self):
+        pass
     
     # テスト用画像を作成
     def setTestImage(self):
