@@ -187,9 +187,8 @@ class Widget(QWidget):
         # クリックされたときに実行
         self.reset_button.clicked.connect(self.resetClicked)
 
-        font = QFont()
-        font.setPointSize(20)
-        font.setFamily("Monotype Corsiva")
+        # フォントファミリー, サイズ, 太さ, 斜体かどうかを決定
+        font = QFont("Times New Roman", 20, 500, True)
         # スタートボタン
         # プレイヤーの決定等を先に行ない, これを押したらスタートするようにしたい
         self.start_button = QPushButton("START", self)
