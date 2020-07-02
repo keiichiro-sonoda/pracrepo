@@ -241,7 +241,10 @@ class Widget(QWidget):
     
     # ラジオボタンの設定
     def setRadioButtons(self):
-        pass
+        self.rbutton1 = QRadioButton("Choice 1", self)
+        self.rbutton2 = QRadioButton("Choice 2", self)
+        self.rbutton1.move(800, 500)
+        self.rbutton2.move(800, 550)
     
     # テスト用画像を作成
     def setTestImage(self):
