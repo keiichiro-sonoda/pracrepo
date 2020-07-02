@@ -258,8 +258,8 @@ class Widget(QWidget):
         # 初期値は人
         self.rbutton1.setChecked(True)
         # 無名関数?
-        self.rbutton1.toggled.connect(lambda : self.toggleRadio(self.rbutton1))
-        self.rbutton2.toggled.connect(lambda : self.toggleRadio(self.rbutton2))
+        self.rbutton1.toggled.connect(self.detSentePlayer)
+        self.rbutton2.toggled.connect(self.detSentePlayer)
 
         # 後手をAIにするか人間にするか決めるラジオボタン
         self.rgroup2 = QButtonGroup(self)
@@ -276,6 +276,13 @@ class Widget(QWidget):
         # 無名関数?
         self.rbutton3.toggled.connect(lambda : self.toggleRadio(self.rbutton3))
         self.rbutton4.toggled.connect(lambda : self.toggleRadio(self.rbutton4))
+    
+    def detSentePlayer(self):
+        if self.rbutton1.isChecked():
+            self.players[0] = False
+        else:
+            self.players[0] = True
+        print(self.players)
 
     # ラジオボタン選択時の動作
     def toggleRadio(self, b):
