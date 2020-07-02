@@ -245,22 +245,20 @@ class Widget(QWidget):
     
     # ラジオボタンの設定
     def setRadioButtons(self):
-        moji = "PyQtを勉強中\n園田継一郎 17T2088B"
-        self.label = QLabel(moji, self)
+        self.label = QLabel("black", self)
         # テキストの位置を指定
-        self.label.move(1000, 450)
+        self.label.move(800, 470)
         # テキストの詳細設定
         # CSSフォーマットとは何ぞや
         self.label.setStyleSheet("\
-            font-size:20pt;\
-            font-weight:bold;\
-            color:#ff00ff;\
-            background-color:#00ff00;\
+            font-size:15pt;\
+            font-weight:500;\
+            color:#000000;\
             ")
         # 箱の大きさ変更?
-        self.label.resize(400, 100)
-        # 中央揃え
-        self.label.setAlignment(Qt.AlignCenter)
+        self.label.resize(150, 30)
+        # 左揃え
+        self.label.setAlignment(Qt.AlignLeft)
         # 先手をAIにするか人間にするか決めるラジオボタン
         self.rgroup1 = QButtonGroup(self)
         self.rbutton1 = QRadioButton("human", self)
