@@ -663,6 +663,8 @@ class Widget(QWidget):
             QMessageBox.Ok,
             QMessageBox.Ok
         )
+        # タイマー停止
+        self.timer.stop()
     
     # 候補手からランダムに選択
     def randomAction(self):
