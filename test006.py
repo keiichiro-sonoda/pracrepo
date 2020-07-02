@@ -180,14 +180,21 @@ class Widget(QWidget):
         self.reset_button.move(100, 750)
         self.reset_button.setStyleSheet("\
             font-size:20pt;\
-            font-weight:bold;\
+            font-weight:thin;\
             font-family:Times New Roman;\
             background:#ffffff")
         self.reset_button.resize(140, 50)
         # クリックされたときに実行
         self.reset_button.clicked.connect(self.resetClicked)
 
+        font = QFont()
+        font.setPointSize(20)
+        font.setFamily("Monotype Corsiva")
+        # スタートボタン
+        # プレイヤーの決定等を先に行ない, これを押したらスタートするようにしたい
         self.start_button = QPushButton("START", self)
+        self.start_button.setFont(font)
+        self.start_button.resize(140, 50)
         self.start_button.move(250, 820)
     
     # グラフ作成
