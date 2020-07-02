@@ -504,6 +504,8 @@ class Widget(QWidget):
             self.rbutton2.setEnabled(True)
             self.rbutton3.setEnabled(True)
             self.rbutton4.setEnabled(True)
+            # スタートボタンも有効に
+            self.start_button.setEnabled(True)
             # 盤面を初期状態に
             self.setInitBoard(QPainter(self.img))
     
@@ -516,31 +518,11 @@ class Widget(QWidget):
         self.rbutton2.setEnabled(False)
         self.rbutton3.setEnabled(False)
         self.rbutton4.setEnabled(False)
-        # ボタンテキストも変更
-        self.start_button.setText("yeah")
+        # ゲーム中はボタン無効化
+        self.start_button.setEnabled(False)
         # 候補手色塗り
         self.coloringCandidates(QPainter(self.img))
         # 画像変更を適用
-        self.update()
-
-    # ボタンを押したときのスロット?
-    def onButtonClick(self):
-        print("yeah")
-        # 500 * 500 ピクセルの画像を作成
-        #self.img = QImage(500, 500, QImage.Format_ARGB32)
-        # 画像の QPainter を取得?
-        imgcanvas = QPainter(self.img)
-        # imgcanvasに対して色々な描画処理
-        # 黒玉を描いてみる?
-        # 色指定方法やっとわかった
-        a = QColor(0, 0, 255)
-        print(a)
-        imgcanvas.setPen(a)
-        # 塗りつぶす色
-        imgcanvas.setBrush(a)
-        imgcanvas.drawEllipse(QPoint(100, 100), 100, 100)
-        # 型を知りたい
-        # PyQt5.Qtcore.Qt.GlobalColor というものらしい
         self.update()
     
     # 置ける場所を探す
@@ -634,6 +616,7 @@ class Widget(QWidget):
 
     # 盤面更新
     # コマを置くタグを渡す
+    # 画像を既に読み込んでいる関数から呼び出してはいけない
     def updateBoard(self, tag):
         # キャンバス取り出し
         imgcanvas = QPainter(self.img)
