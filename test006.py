@@ -448,10 +448,13 @@ class Widget(QWidget):
         # 描画
         self.update()
         # AIのターンならランダムに打たせる
-        if self.players[1] and self.turn == 2:
+        if self.players[0] and self.turn == 1:
             self.timer.start(500)
-        elif self.players[0] and self.turn == 1:
+        elif self.players[1] and self.turn == 2:
             self.timer.start(500)
+        # 相手も人, もしくはパスでもう一度指せる場合はロック解除
+        else:
+            self.press_lock = False
     
     # マウスが動いた時の座標取得?
     def mouseMoveEvent(self, event):
@@ -683,6 +686,7 @@ class Widget(QWidget):
         # 候補手が存在しない
         if not cand_list:
             return
+        # ランダムで選んで盤面更新
         self.updateBoard(rd.choice(cand_list))
         # 次が人ならターンをロック解除
         if not self.players[0] and self.turn == 1:
