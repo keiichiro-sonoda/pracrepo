@@ -119,8 +119,8 @@ class Widget(QWidget):
         # グラフセット
         self.setGraphs()
         # テスト画像初期化
-        #self.setTestImage()
-        self.setEssImage()
+        self.setTestImage()
+        #self.setEssImage()
     
     # 初期盤面設定
     # リセットしたいキャンバスを与える
@@ -186,6 +186,9 @@ class Widget(QWidget):
         self.reset_button.resize(140, 50)
         # クリックされたときに実行
         self.reset_button.clicked.connect(self.resetClicked)
+
+        self.start_button = QPushButton("START", self)
+        self.start_button.move(250, 820)
     
     # グラフ作成
     def setGraphs(self):
