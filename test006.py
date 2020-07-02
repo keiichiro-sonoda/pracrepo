@@ -146,8 +146,10 @@ class Widget(QWidget):
         self.turn = 1
         # 候補手探し
         self.getCandidates()
-        # 色塗り
-        self.coloringCandidates(imgcanvas)
+        # 色塗り..はスタートしてから
+        #self.coloringCandidates(imgcanvas)
+        # リセット時はエンド状態にしておく
+        self.end_flag = True
 
     # 盤面情報を標準出力で確認する
     # 配列の先頭が右下になるように文字列を組み立てる
@@ -498,6 +500,10 @@ class Widget(QWidget):
         self.end_flag = False
         # ボタンテキストも変更
         self.start_button.setText("yeah")
+        # 候補手色塗り
+        self.coloringCandidates(QPainter(self.img))
+        # 画像変更を適用
+        self.update()
 
     # ボタンを押したときのスロット?
     def onButtonClick(self):
