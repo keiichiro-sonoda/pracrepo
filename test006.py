@@ -407,22 +407,23 @@ class Widget(QWidget):
         self.test_flag = True
         self.update()
     
-    # 関数をオーバーライド?
-    # print関数入れると, この関数の実行頻度半端ねぇ
-    # 重い処理をここでするのは不向きらしい
+    # ペイント時にはここを実行しなければならない
     def paintEvent(self, event):
+        # テスト時
         if self.test_flag:
             canvas = QPainter(self)
             canvas.drawImage(0, 0, self.test_img)
             return
-        # ここで休止を入れるとかくかくになる
         canvas = QPainter(self)
         canvas.drawImage(0, 0, self.img)
     
     # 押された座標取得
     def mousePressEvent(self, event):
         # ゲーム中以外もしくはロック中
-        if self.end_flag or self.press_lock:
+        if self.end_flag or self.test_flag:
+            return
+        if self.press_lock:
+            print("locked")
             return
         # 処理中は鍵をかける
         self.press_lock = True
