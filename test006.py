@@ -247,20 +247,19 @@ class Widget(QWidget):
     def setRadioButtons(self):
         # ラジオボタンのx座標
         x = 800
-        self.label = QLabel("black", self)
+        self.label1 = QLabel("black", self)
         # テキストの位置を指定
-        self.label.move(x, 470)
+        self.label1.move(x, 470)
         # テキストの詳細設定
-        # CSSフォーマットとは何ぞや
-        self.label.setStyleSheet("\
+        self.label1.setStyleSheet("\
             font-size:10pt;\
             font-weight:500;\
             color:#000000;\
             ")
         # 箱の大きさ変更?
-        self.label.resize(150, 30)
+        self.label1.resize(150, 30)
         # 左揃え
-        self.label.setAlignment(Qt.AlignLeft)
+        self.label1.setAlignment(Qt.AlignLeft)
         # 先手をAIにするか人間にするか決めるラジオボタン
         self.rgroup1 = QButtonGroup(self)
         self.rbutton1 = QRadioButton("human", self)
@@ -278,16 +277,18 @@ class Widget(QWidget):
         # それは後々考えよう
         self.rbutton1.toggled.connect(lambda : self.detPlayer(0))
 
+        self.label2 = QLabel("white", self)
+        self.label2.move(x, 600)
         # 後手をAIにするか人間にするか決めるラジオボタン
         self.rgroup2 = QButtonGroup(self)
         self.rbutton3 = QRadioButton("human", self)
         self.rgroup2.addButton(self.rbutton3)
         self.rbutton4 = QRadioButton("AI", self)
         self.rgroup2.addButton(self.rbutton4)
-        self.rbutton3.move(x, 600)
-        self.rbutton4.move(x, 650)
-        self.rbutton3.resize(150, 50)
-        self.rbutton4.resize(150, 50)
+        self.rbutton3.move(x, 630)
+        self.rbutton4.move(x, 660)
+        self.rbutton3.resize(150, 30)
+        self.rbutton4.resize(150, 30)
         # 初期値は人
         self.rbutton3.setChecked(True)
         # 無名関数?
