@@ -196,6 +196,7 @@ class Widget(QWidget):
         self.start_button.setFont(font)
         self.start_button.resize(140, 50)
         self.start_button.move(250, 820)
+        self.start_button.clicked.connect(self.startClicked)
     
     # グラフ作成
     def setGraphs(self):
@@ -489,6 +490,14 @@ class Widget(QWidget):
             print("reset!!")
             # 盤面を初期状態に
             self.setInitBoard(QPainter(self.img))
+    
+    # スタートボタンクリック時動作
+    def startClicked(self):
+        print("START!!")
+        # ゲーム開始!
+        self.end_flag = False
+        # ボタンテキストも変更
+        self.start_button.setText("yeah")
 
     # ボタンを押したときのスロット?
     def onButtonClick(self):
