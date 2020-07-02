@@ -532,8 +532,9 @@ class Widget(QWidget):
         self.update()
         # ゲーム開始!
         self.end_flag = False
-        # 両方AIの場合
-        if self.players[0] and self.players[1]:
+        # 先手がAIの場合
+        if self.players[0]:
+            # ロック
             self.press_lock = True
             # 1発だけ
             self.timer.setSingleShot(True)
@@ -648,6 +649,8 @@ class Widget(QWidget):
         self.getCandidates()
         # 次の候補手を色塗り
         self.coloringCandidates(imgcanvas)
+        # 描画適用
+        self.update()
     
     # 結果のポップアップ
     def resultPopup(self):
@@ -674,10 +677,11 @@ class Widget(QWidget):
         if not cand_list:
             return
         self.updateBoard(rd.choice(cand_list))
-        self.update()
         # お互いAIならすぐに次を実行
         if self.players[0] and self.players[1]:
             self.timer.start(1)
+        # 次が人ならロック解除
+        self.press_lock = False
 
 class Application(QApplication):
     def __init__(self):
