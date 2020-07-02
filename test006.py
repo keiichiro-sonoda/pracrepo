@@ -493,6 +493,11 @@ class Widget(QWidget):
         # Yesが押された場合
         if reply == QMessageBox.Yes:
             print("reset!!")
+            # ラジオボタンを有効に戻す
+            self.rbutton1.setEnabled(True)
+            self.rbutton2.setEnabled(True)
+            self.rbutton3.setEnabled(True)
+            self.rbutton4.setEnabled(True)
             # 盤面を初期状態に
             self.setInitBoard(QPainter(self.img))
     
