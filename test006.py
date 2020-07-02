@@ -245,6 +245,22 @@ class Widget(QWidget):
     
     # ラジオボタンの設定
     def setRadioButtons(self):
+        moji = "PyQtを勉強中\n園田継一郎 17T2088B"
+        self.label = QLabel(moji, self)
+        # テキストの位置を指定
+        self.label.move(1000, 450)
+        # テキストの詳細設定
+        # CSSフォーマットとは何ぞや
+        self.label.setStyleSheet("\
+            font-size:20pt;\
+            font-weight:bold;\
+            color:#ff00ff;\
+            background-color:#00ff00;\
+            ")
+        # 箱の大きさ変更?
+        self.label.resize(400, 100)
+        # 中央揃え
+        self.label.setAlignment(Qt.AlignCenter)
         # 先手をAIにするか人間にするか決めるラジオボタン
         self.rgroup1 = QButtonGroup(self)
         self.rbutton1 = QRadioButton("human", self)
@@ -252,9 +268,9 @@ class Widget(QWidget):
         self.rbutton2 = QRadioButton("AI", self)
         self.rgroup1.addButton(self.rbutton2)
         self.rbutton1.move(800, 500)
-        self.rbutton2.move(800, 550)
-        self.rbutton1.resize(150, 50)
-        self.rbutton2.resize(150, 50)
+        self.rbutton2.move(800, 530)
+        self.rbutton1.resize(150, 30)
+        self.rbutton2.resize(150, 40)
         # 初期値は人
         self.rbutton1.setChecked(True)
         # プレイヤー変更は片方のラジオボタンだけ見れば大丈夫
@@ -277,6 +293,7 @@ class Widget(QWidget):
         # 無名関数?
         self.rbutton3.toggled.connect(lambda : self.detPlayer(1))
     
+    # ラジオボタンが変更されたとき実行
     def detPlayer(self, index):
         # ブールそのまま代入すればいいのでは?
         if index == 0:
@@ -284,13 +301,6 @@ class Widget(QWidget):
         else:
             self.players[1] = self.rbutton4.isChecked()
         print(self.players)
-
-    # ラジオボタン選択時の動作
-    def toggleRadio(self, b):
-        if b.isChecked():
-            b.setText("Checked")
-        else:
-            b.setText("Unchecked")
     
     # テスト用画像を作成
     def setTestImage(self):
