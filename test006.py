@@ -254,6 +254,19 @@ class Widget(QWidget):
         self.rbutton1.toggled.connect(lambda : self.toggleRadio(self.rbutton1))
         self.rbutton2.toggled.connect(lambda : self.toggleRadio(self.rbutton2))
     
+        self.rgroup2 = QButtonGroup(self)
+        self.rbutton3 = QRadioButton("Choice 3", self)
+        self.rgroup2.addButton(self.rbutton3)
+        self.rbutton4 = QRadioButton("Choice 4", self)
+        self.rgroup2.addButton(self.rbutton4)
+        self.rbutton3.move(800, 600)
+        self.rbutton4.move(800, 650)
+        self.rbutton3.resize(150, 50)
+        self.rbutton4.resize(150, 50)
+        # 無名関数?
+        self.rbutton3.toggled.connect(lambda : self.toggleRadio(self.rbutton3))
+        self.rbutton4.toggled.connect(lambda : self.toggleRadio(self.rbutton4))
+
     # ラジオボタン選択時の動作
     def toggleRadio(self, b):
         if b.isChecked():
