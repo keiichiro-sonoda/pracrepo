@@ -228,7 +228,8 @@ class Widget(QWidget):
         self.x_range = [0, 0]
         self.y_range = [-10, 10]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
-        self.graph.setRange(xRange=self.x_range, yRange=self.y_range)
+        # オートスケールにした方が都合が良いかも
+        #self.graph.setRange(xRange=self.x_range, yRange=self.y_range)
         xaxis = self.graph.getAxis('bottom')
         # 横軸の目盛の場所とラベル (数値, ラベル) のタプルのリスト?
         # 数値 = ラベルとしておく
@@ -243,17 +244,27 @@ class Widget(QWidget):
         # 反例を表示
         #graph.addLegend()
         # どれだけターンが進行したか初期はターン0
-        self.progress = 0
-        self.progress_list = [self.progress]
-        # 初期盤面の評価値も0だろう
-        self.points = [0]
         # 10 マス分のデータの配列を用意
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
         # タプルのリストで試してみる?
         gpen = pg.mkPen((0, 0, 255), width=2)
         # 曲線オブジェクト?
         # これでデータ書き換える
-        self.curve = self.graph.plot(self.progress_list, self.points, pen=gpen, name="point")
+        # このときはデータ与えなくてもいいらしい
+        self.curve = self.graph.plot(pen=gpen, name="point")
+        # データ初期化
+        self.setInitGraph()
+    
+    # グラフ初期化
+    def setInitGraph(self):
+        # 進行ターン数
+        self.progress = 0
+        # 横軸リスト
+        self.progress_list = [0]
+        # 縦軸評価値
+        self.points = [0]
+        # グラフにデータセット
+        self.curve.setData(self.progress_list, self.points)
     
     # ラジオボタンの設定
     def setRadioButtons(self):
@@ -520,6 +531,8 @@ class Widget(QWidget):
             self.start_button.setEnabled(True)
             # 盤面を初期状態に
             self.setInitBoard(QPainter(self.img))
+            # グラフも初期状態に
+            self.setInitGraph()
             # 盤面クリックは有効にしておく
             self.press_lock = False
     
@@ -635,6 +648,7 @@ class Widget(QWidget):
             imgcanvas.drawRect(*self.tag2pos[tag][1], self.SQLEN, self.SQLEN)
 
     # 盤面更新
+    # かなり重要な関数だと思う
     # コマを置くタグを渡す
     # 画像を既に読み込んでいる関数から呼び出してはいけない
     def updateBoard(self, tag):
