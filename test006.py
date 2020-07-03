@@ -243,14 +243,17 @@ class Widget(QWidget):
         # 反例を表示
         #graph.addLegend()
         # どれだけターンが進行したか初期はターン0
-        self.progress = [0]
+        self.progress = 0
+        self.progress_list = [self.progress]
         # 初期盤面の評価値も0だろう
         self.points = [0]
         # 10 マス分のデータの配列を用意
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
         # タプルのリストで試してみる?
         gpen = pg.mkPen((0, 0, 255), width=2)
-        self.graph.plot(self.progress, self.points, pen=gpen, name="point")
+        # 曲線オブジェクト?
+        # これでデータ書き換える
+        self.curve = self.graph.plot(self.progress_list, self.points, pen=gpen, name="point")
     
     # ラジオボタンの設定
     def setRadioButtons(self):
@@ -653,6 +656,12 @@ class Widget(QWidget):
         self.getCandidates()
         # 次の候補手を色塗り
         self.coloringCandidates(imgcanvas)
+        # 進行度インクリメント
+        self.progress += 1
+        self.progress_list.append(self.progress)
+        # ランダムでテスト
+        self.points.append(rd.random())
+        self.curve.setData(self.progress_list, self.points)
         # 描画適用
         self.update()
     
