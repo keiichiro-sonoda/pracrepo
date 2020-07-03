@@ -208,6 +208,7 @@ class Widget(QWidget):
         self.start_button.clicked.connect(self.startClicked)
     
     # グラフ作成
+    # 試合経過と評価値の推移のグラフにしたい
     def setGraphs(self):
         pg.setConfigOptions(
             antialias=True, foreground='k', background=(255, 255, 255)
@@ -223,10 +224,11 @@ class Widget(QWidget):
         # 'units' は軸の単位
         graph.setLabel('left', "point")
         graph.setLabel('bottom', "generation")
-        x_range = [0, 10]
-        y_range = [0, 100]
+        # 幅
+        self.x_range = [0, 0]
+        self.y_range = [-10, 10]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
-        graph.setRange(xRange=x_range, yRange=y_range)
+        graph.setRange(xRange=self.x_range, yRange=self.y_range)
         xaxis = graph.getAxis('bottom')
         # 横軸の目盛の場所とラベル (数値, ラベル) のタプルのリスト?
         # 数値 = ラベルとしておく
@@ -240,13 +242,15 @@ class Widget(QWidget):
         graph.showGrid(x=True, y=True)
         # 反例を表示
         #graph.addLegend()
-        x = [i for i in range(10)]
+        # どれだけターンが進行したか初期はターン0
+        self.progress = [0]
+        # 初期盤面の評価値も0だろう
+        self.points = [0]
         # 10 マス分のデータの配列を用意
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
         # タプルのリストで試してみる?
-        y = [i ** 2 for i in x]
         gpen = pg.mkPen((0, 0, 255), width=2)
-        graph.plot(x, y, pen=gpen, name="point")
+        graph.plot(self.progress, self.points, pen=gpen, name="point")
     
     # ラジオボタンの設定
     def setRadioButtons(self):
