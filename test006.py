@@ -169,6 +169,8 @@ class Widget(QWidget):
             # 横が一通り終わったら改行
             moji = "\n" + moji
         print(moji)
+        # 評価値が計算できているか確認
+        print(self.evaluationBySprm(self.board_info))
     
     # ボタン作成
     def setButtons(self):
@@ -699,6 +701,32 @@ class Widget(QWidget):
         # 次もAIならすぐにこの関数を実行
         else:
             self.timer.start(1)
+    
+    # 盤面のシンプル評価
+    # 評価値が高い程黒が有利と考える
+    def evaluationBySprm(self, board):
+        # 使う重みの添え字
+        c = 0
+        pt = 0
+        # 番兵以外の添え字を繰り返す
+        # 重みリストの添え字と対応する順番で
+        for y in range(9, 81, 9):
+            for x in range(1, 9):
+                # コマ取得
+                koma = board[x + y]
+                # 黒なら評価値に重みを足す, 白なら引く
+                # 空白は何もしない
+                if koma == 1:
+                    pt += self.use_sprm[c]
+                elif koma == 2:
+                    pt -= self.use_sprm[c]
+                # 次の重みを参照
+                c += 1
+        return pt
+    
+    # パラメータから最善手を得たい
+    def getBestActBySprm(self, board):
+        pass
 
 class Application(QApplication):
     def __init__(self):
