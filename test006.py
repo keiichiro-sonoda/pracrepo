@@ -230,12 +230,12 @@ class Widget(QWidget):
         xaxis = graph.getAxis('bottom')
         # 横軸の目盛の場所とラベル (数値, ラベル) のタプルのリスト?
         # 数値 = ラベルとしておく
-        x_ticks = [(i, i) for i in range(x_range[0], x_range[1] + 1, 100)]
-        xaxis.setTicks([x_ticks])
+        #x_ticks = [(i, i) for i in range(x_range[0], x_range[1] + 1, 100)]
+        #xaxis.setTicks([x_ticks])
         yaxis = graph.getAxis('left')
         # 縦軸の目盛の場所とラベル
-        y_ticks = [(i, i) for i in [-0.5, -0.25, 0, 0.25, 0.5]]
-        yaxis.setTicks([y_ticks])
+        #y_ticks = [(i, i) for i in [-0.5, -0.25, 0, 0.25, 0.5]]
+        #yaxis.setTicks([y_ticks])
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
         # 反例を表示
@@ -258,8 +258,7 @@ class Widget(QWidget):
                 ys[j].append(tprm[k])
                 #print(ys)
 
-        gpen = pg.mkPen((0, 0, 0), width=2)
-        gpen.setColor(self.MYCOLORS[0])
+        gpen = pg.mkPen((0, 0, 255), width=2)
         graph.plot(x, ys[9], pen=gpen, name=i)
     
     # ラジオボタンの設定
