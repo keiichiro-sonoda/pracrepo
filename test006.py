@@ -219,27 +219,27 @@ class Widget(QWidget):
         self.win.move(800, 50)
         # ローカル変数でも維持されるっぽい?
         # グラフの追加とタイトルの設定
-        graph = self.win.addPlot(title="Data")
+        self.graph = self.win.addPlot(title="Data")
         # 'bottom' は縦軸, 'left' は横軸
         # 'units' は軸の単位
-        graph.setLabel('left', "point")
-        graph.setLabel('bottom', "generation")
+        self.graph.setLabel('left', "point")
+        self.graph.setLabel('bottom', "generation")
         # 幅
         self.x_range = [0, 0]
         self.y_range = [-10, 10]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
-        graph.setRange(xRange=self.x_range, yRange=self.y_range)
-        xaxis = graph.getAxis('bottom')
+        self.graph.setRange(xRange=self.x_range, yRange=self.y_range)
+        xaxis = self.graph.getAxis('bottom')
         # 横軸の目盛の場所とラベル (数値, ラベル) のタプルのリスト?
         # 数値 = ラベルとしておく
         #x_ticks = [(i, i) for i in range(x_range[0], x_range[1] + 1, 100)]
         #xaxis.setTicks([x_ticks])
-        yaxis = graph.getAxis('left')
+        yaxis = self.graph.getAxis('left')
         # 縦軸の目盛の場所とラベル
         #y_ticks = [(i, i) for i in [-0.5, -0.25, 0, 0.25, 0.5]]
         #yaxis.setTicks([y_ticks])
         # グリッド線の表示
-        graph.showGrid(x=True, y=True)
+        self.graph.showGrid(x=True, y=True)
         # 反例を表示
         #graph.addLegend()
         # どれだけターンが進行したか初期はターン0
@@ -250,7 +250,7 @@ class Widget(QWidget):
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
         # タプルのリストで試してみる?
         gpen = pg.mkPen((0, 0, 255), width=2)
-        graph.plot(self.progress, self.points, pen=gpen, name="point")
+        self.graph.plot(self.progress, self.points, pen=gpen, name="point")
     
     # ラジオボタンの設定
     def setRadioButtons(self):
