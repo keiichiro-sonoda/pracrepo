@@ -170,7 +170,7 @@ class Widget(QWidget):
             moji = "\n" + moji
         print(moji)
         # 評価値が計算できているか確認
-        print(self.evaluationBySprm(self.board_info))
+        #print(self.evaluationBySprm(self.board_info))
     
     # ボタン作成
     def setButtons(self):
@@ -223,7 +223,7 @@ class Widget(QWidget):
         # 'units' は軸の単位
         graph.setLabel('left', "point")
         graph.setLabel('bottom', "generation")
-        x_range = [0, 300]
+        x_range = [0, 600]
         y_range = [-0.5, 0.5]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
         graph.setRange(xRange=x_range, yRange=y_range)
@@ -259,9 +259,8 @@ class Widget(QWidget):
                 #print(ys)
 
         gpen = pg.mkPen((0, 0, 0), width=2)
-        for i in range(10):
-            gpen.setColor(self.MYCOLORS[i])
-            graph.plot(x, ys[i], pen=gpen, name=i)
+        gpen.setColor(self.MYCOLORS[0])
+        graph.plot(x, ys[0], pen=gpen, name=i)
     
     # ラジオボタンの設定
     def setRadioButtons(self):
