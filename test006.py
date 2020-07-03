@@ -223,19 +223,19 @@ class Widget(QWidget):
         # 'bottom' は縦軸, 'left' は横軸
         # 'units' は軸の単位
         self.graph.setLabel('left', "point")
-        self.graph.setLabel('bottom', "generation")
+        self.graph.setLabel('bottom', "progress")
         # 幅
         self.x_range = [0, 0]
         self.y_range = [-10, 10]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
         # オートスケールにした方が都合が良いかも
         #self.graph.setRange(xRange=self.x_range, yRange=self.y_range)
-        xaxis = self.graph.getAxis('bottom')
+        #xaxis = self.graph.getAxis('bottom')
         # 横軸の目盛の場所とラベル (数値, ラベル) のタプルのリスト?
         # 数値 = ラベルとしておく
         #x_ticks = [(i, i) for i in range(x_range[0], x_range[1] + 1, 100)]
         #xaxis.setTicks([x_ticks])
-        yaxis = self.graph.getAxis('left')
+        #yaxis = self.graph.getAxis('left')
         # 縦軸の目盛の場所とラベル
         #y_ticks = [(i, i) for i in [-0.5, -0.25, 0, 0.25, 0.5]]
         #yaxis.setTicks([y_ticks])
@@ -255,7 +255,7 @@ class Widget(QWidget):
         # データ初期化
         self.setInitGraph()
     
-    # グラフ初期化
+    # グラフ初期化関数
     def setInitGraph(self):
         # 進行ターン数
         self.progress = 0
@@ -673,8 +673,8 @@ class Widget(QWidget):
         # 進行度インクリメント
         self.progress += 1
         self.progress_list.append(self.progress)
-        # ランダムでテスト
-        self.points.append(rd.random())
+        # 今の盤面の評価値を追加
+        self.points.append(self.evaluationBySprm(self.board_info))
         self.curve.setData(self.progress_list, self.points)
         # 描画適用
         self.update()
