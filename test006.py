@@ -223,8 +223,8 @@ class Widget(QWidget):
         # 'units' は軸の単位
         graph.setLabel('left', "point")
         graph.setLabel('bottom', "generation")
-        x_range = [0, 600]
-        y_range = [-0.5, 0.5]
+        x_range = [0, 10]
+        y_range = [0, 100]
         # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
         graph.setRange(xRange=x_range, yRange=y_range)
         xaxis = graph.getAxis('bottom')
@@ -239,27 +239,14 @@ class Widget(QWidget):
         # グリッド線の表示
         graph.showGrid(x=True, y=True)
         # 反例を表示
-        graph.addLegend()
-        x = []
+        #graph.addLegend()
+        x = [i for i in range(10)]
         # 10 マス分のデータの配列を用意
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
         # タプルのリストで試してみる?
-        ys = [[] for i in range(10)]
-        essence = (0, 1, 2, 3, 9, 10, 11, 18, 19, 28)
-        #print(ys)
-        for i in range(x_range[0], x_range[1] + 1):
-            x.append(i)
-            # i 世代のパラメータを取り出す(等価マスも含む64個)
-            tprm = getSprmFileWrap(i)
-            #print(tprm[0], tprm[56])
-            #print(tprm)
-            # 主要な10個の要素だけ取り出す
-            for j, k in enumerate(essence):
-                ys[j].append(tprm[k])
-                #print(ys)
-
+        y = [i ** 2 for i in x]
         gpen = pg.mkPen((0, 0, 255), width=2)
-        graph.plot(x, ys[9], pen=gpen, name=i)
+        graph.plot(x, y, pen=gpen, name="point")
     
     # ラジオボタンの設定
     def setRadioButtons(self):
