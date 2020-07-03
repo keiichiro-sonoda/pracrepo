@@ -245,7 +245,7 @@ class Widget(QWidget):
         # 空リストの掛け算同じアドレスが10個コピーされてしまうみたい
         # タプルのリストで試してみる?
         ys = [[] for i in range(10)]
-        essence = (0, 1, 2, 3, 9, 10, 11, 18, 19, 23)
+        essence = (0, 1, 2, 3, 9, 10, 11, 18, 19, 28)
         #print(ys)
         for i in range(x_range[0], x_range[1] + 1):
             x.append(i)
@@ -260,7 +260,7 @@ class Widget(QWidget):
 
         gpen = pg.mkPen((0, 0, 0), width=2)
         gpen.setColor(self.MYCOLORS[0])
-        graph.plot(x, ys[0], pen=gpen, name=i)
+        graph.plot(x, ys[9], pen=gpen, name=i)
     
     # ラジオボタンの設定
     def setRadioButtons(self):
