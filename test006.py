@@ -735,6 +735,50 @@ class Widget(QWidget):
                 # 次の重みを参照
                 c += 1
         return pt
+
+    # クラス内変数の候補手ディクショナリは書き換えないように候補手を探索
+    # 引数には盤面情報リスト、手番(ターン)を与える
+    # パス処理はこの関数のラッパー関数で行なう予定
+    # やっぱり盤面情報の引継ぎとかめんどいから一関数でまとめてみよう
+    def getCandidatesLocal(self, board, teban):
+        # 候補初期化
+        cand_local = dict()
+        # 相手の手番(コマの値)を計算
+        opponent = teban ^ 3
+        # タグ座標辞書から全てのタグを取り出す
+        for tag in self.tag2pos.keys():
+            # 空マスじゃなければやり直し
+            if board[self.tag2sub(tag)] != 0:
+                continue
+            # 空マスの場合, タグを添え字に変換
+            sub = self.tag2sub(tag)
+            # 全方向のひっくり返す添え字候補
+            rev_tags = []
+            # 全方向探索
+            for d in self.DIRECTIONS:
+                # 一方向のひっくり返す添え字候補
+                tmp = []
+                # 隣のマスのコマをチェック
+                next_sub = sub + d
+                koma = board[next_sub]
+                # 相手のコマの場合, それ以外が出るまで対角マスを探索
+                while koma == opponent:
+                    # リストに追加
+                    tmp.append(next_sub)
+                    # 先のマスへ進みコマをチェック
+                    next_sub += d
+                    koma = board[next_sub]
+                # 自分のコマが出たら, これまでの添え字を候補に追加
+                # 探索マスの隣が自分のコマなら, 空リストを足すだけ
+                if koma == teban:
+                    rev_tags += tmp
+            # ひっくり返せるマスが存在する場合
+            # タグを辞書のキーとし, ひっくり返すマスの添え字リストを値にする
+            if rev_tags:
+                cand_local[tag] = rev_tags
+    
+        # 辞書を返す(空なら空のまま)
+        return cand_local
     
     # パラメータから最善手を得たい
     def getBestActBySprm(self, board):
