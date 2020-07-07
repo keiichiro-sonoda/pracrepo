@@ -114,7 +114,7 @@ class Widget(QWidget):
         # 評価値リストを入手
         # 確認するならここの値を変更
         # クラス内変数で所持
-        self.use_sprm = getSprmFileWrap(601)
+        self.use_sprm = getSprmFileWrap(600)
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
