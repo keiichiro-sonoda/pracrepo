@@ -766,6 +766,7 @@ class Widget(QWidget):
                 if mx < pt:
                     mx = pt
                     best_tag = tag
+            print(mx, best_tag)
         # 後手の場合
         else:
             mn = float("inf")
@@ -775,7 +776,9 @@ class Widget(QWidget):
                 if pt < mn:
                     mn = pt
                     best_tag = tag
-        return tag
+            print(mn, best_tag)
+        # 返り値を間違えていた
+        return best_tag
 
 class Application(QApplication):
     def __init__(self):
