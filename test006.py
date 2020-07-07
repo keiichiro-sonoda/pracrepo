@@ -424,11 +424,6 @@ class Widget(QWidget):
             return
         # テストモードにする
         self.test_flag = True
-        # 次の盤面チェック
-        next_boards = self.getNextBoards(self.board_info, self.turn)
-        for tag, b in next_boards.items():
-            print(tag)
-            self._printBoard(b)
         self.update()
     
     # ペイント時にはここを実行しなければならない
