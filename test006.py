@@ -649,7 +649,11 @@ class Widget(QWidget):
         if not cand_list:
             return
         # ランダムで選んで盤面更新
-        self.updateBoard(rd.choice(cand_list))
+        #self.updateBoard(rd.choice(cand_list))
+        # シンプルパラメータを用いた最善手
+        tag = self.getBestActBySprm(self.board_info, self.turn)
+        # 盤面更新
+        self.updateBoard(tag)
         # 次が人ならターンをロック解除
         if not self.players[0] and self.turn == 1:
             self.press_lock = False
@@ -746,8 +750,32 @@ class Widget(QWidget):
         return next_boards
     
     # パラメータから最善手を得たい
-    def getBestActBySprm(self, board):
-        pass
+    # 次の手で決着できる(勝てる)としても, 重みを使った評価だけで判断
+    def getBestActBySprm(self, board, teban):
+        # 次の盤面辞書を得る
+        next_boards = self.getNextBoards(board, teban)
+        # 返り値となるタグ(初期値は無効文字列)
+        best_tag = "z0"
+        # 先手の場合
+        if teban == 1:
+            mx = -float("inf")
+            # 指し手と盤面を取り出す
+            for tag, nb in next_boards.items():
+                pt = self.evaluationBySprm(nb)
+                # 暫定最大値なら更新
+                if mx < pt:
+                    mx = pt
+                    best_tag = tag
+        # 後手の場合
+        else:
+            mn = float("inf")
+            for tag, nb in next_boards.items():
+                pt = self.evaluationBySprm(nb)
+                # 暫定最小値なら更新
+                if pt < mn:
+                    mn = pt
+                    best_tag = tag
+        return tag
 
 class Application(QApplication):
     def __init__(self):
