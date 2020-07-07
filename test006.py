@@ -493,24 +493,18 @@ class Widget(QWidget):
     
     # 該当するタグのマスに円を描く
     # 色は数値で指定するように変更
-    # 呼び出し元で既に self.img が使われているとエラーになる
     # 引数にキャンバスを与えることにする
     # キャンバスだけでなく, 配列も同期するようにする
     def putKoma(self, tag, c_num, imgcanvas):
-        # 中心座標を得る
-        center = self.tag2pos[tag][0]
         # 色を得る
         color = self.NUM2COLOR[c_num]
         # 枠も中身も同じ色で統一
         imgcanvas.setPen(color)
         imgcanvas.setBrush(color)
         # 円を描く
-        imgcanvas.drawEllipse(center, self.radius, self.radius)
+        imgcanvas.drawEllipse(self.tag2pos[tag][0], self.radius, self.radius)
         # 配列も書き換え
-        sub = self.tag2sub(tag)
-        self.board_info[sub] = c_num
-        # 盤面表示(確認用)
-        #self.printBoard()
+        self.board_info[self.tag2sub(tag)] = c_num
     
     # リセットボタンクリック時動作
     def resetClicked(self):
