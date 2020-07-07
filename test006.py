@@ -159,18 +159,19 @@ class Widget(QWidget):
     # 盤面情報を標準出力で確認する
     # 配列の先頭が右下になるように文字列を組み立てる
     def printBoard(self):
+        self._printBoard(self.board_info)
+    
+    def _printBoard(self, board):
         moji = ""
         # 縦
         for y in range(9, 81, 9):
             # 横
             for x in range(1, 9):
                 # 文字列の先頭に加えてゆく
-                moji = "{:1d} ".format(self.board_info[x + y]) + moji
+                moji = "{:1d} ".format(board[x + y]) + moji
             # 横が一通り終わったら改行
             moji = "\n" + moji
         print(moji)
-        # 評価値が計算できているか確認
-        #print(self.evaluationBySprm(self.board_info))
     
     # ボタン作成
     def setButtons(self):
@@ -423,6 +424,10 @@ class Widget(QWidget):
             return
         # テストモードにする
         self.test_flag = True
+        next_boards = self.getNextBoards(self.board_info, self.turn)
+        for tag, b in next_boards.items():
+            print(tag)
+            self._printBoard(b)
         self.update()
     
     # ペイント時にはここを実行しなければならない
@@ -717,6 +722,27 @@ class Widget(QWidget):
                 cand_local[tag] = rev_tags
         # 辞書を返す(空なら空のまま)
         return cand_local
+    
+    # キーをタグとし, 次の盤面のリストを値とする辞書を作成
+    def getNextBoards(self, board, teban):
+        # 空辞書で初期化
+        next_boards = dict()
+        cand_local = self.getCandidatesLocal(board, teban)
+        # 候補タグとひっくり返すマスの添え字リストを繰り返し代入
+        for c_tag, c_subs in cand_local.items():
+            # 盤面コピーを作成
+            nb = board.copy()
+            # ひっくり返すマスを繰り返し代入
+            for sub in c_subs:
+                # 自分のコマに書き換え
+                nb[sub] = teban
+            # コマを置く
+            nb[self.tag2sub(c_tag)] = teban
+            # 辞書にキーと要素を追加
+            next_boards[c_tag] = nb
+        # 次の盤面の辞書を返す
+        # 候補手が無ければ空辞書
+        return next_boards
     
     # パラメータから最善手を得たい
     def getBestActBySprm(self, board):
