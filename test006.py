@@ -559,6 +559,7 @@ class Widget(QWidget):
             self.timer.start(1)
     
     # 新バージョン?
+    # 候補手辞書を作成する以外に, 終了処理も行なう
     def getCandidates(self):
         # 候補手辞書を取得
         cand_local = self.getCandidatesLocal(self.board_info, self.turn)
@@ -568,7 +569,7 @@ class Widget(QWidget):
             # ターン変更して探索し直す
             self.turn ^= 3
             cand_local = self.getCandidatesLocal(self.board_info, self.turn)
-            # さらに空辞書の場合
+            # さらに空辞書の場合, 終了処理
             if not cand_local:
                 self.end_flag = True
                 self.resultPopup()
