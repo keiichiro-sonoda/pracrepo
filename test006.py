@@ -165,12 +165,12 @@ class Widget(QWidget):
         moji = ""
         # 縦
         for y in range(9, 81, 9):
+            # 文字列の先頭を改行文字にする
+            moji = "\n" + moji
             # 横
             for x in range(1, 9):
                 # 文字列の先頭に加えてゆく
                 moji = "{:1d} ".format(board[x + y]) + moji
-            # 横が一通り終わったら改行
-            moji = "\n" + moji
         print(moji)
     
     # ボタン作成
@@ -424,6 +424,7 @@ class Widget(QWidget):
             return
         # テストモードにする
         self.test_flag = True
+        # 次の盤面チェック
         next_boards = self.getNextBoards(self.board_info, self.turn)
         for tag, b in next_boards.items():
             print(tag)
