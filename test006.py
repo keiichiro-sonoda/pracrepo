@@ -558,8 +558,25 @@ class Widget(QWidget):
             # 1発だけ
             self.timer.start(1)
     
-    # 置ける場所を探す
+    # 新バージョン?
     def getCandidates(self):
+        # 候補手辞書を取得
+        cand_local = self.getCandidatesLocal(self.board_info, self.turn)
+        # 空辞書の場合
+        if not cand_local:
+            print("パス")
+            # ターン変更して探索し直す
+            self.turn ^= 3
+            cand_local = self.getCandidatesLocal(self.board_info, self.turn)
+            # さらに空辞書の場合
+            if not cand_local:
+                self.end_flag = True
+                self.resultPopup()
+        # 候補手辞書をクラス内変数に代入
+        self.candidates = cand_local
+    
+    # 置ける場所を探す
+    def getCandidatesOld(self):
         # 候補初期化
         # 置ける場所のタグをキーとし, ひっくり返すマスの
         # 一次元配列の添え字をキーとする
@@ -747,11 +764,11 @@ class Widget(QWidget):
         opponent = teban ^ 3
         # タグ座標辞書から全てのタグを取り出す
         for tag in self.tag2pos.keys():
-            # 空マスじゃなければやり直し
-            if board[self.tag2sub(tag)] != 0:
-                continue
-            # 空マスの場合, タグを添え字に変換
+            # タグを添え字に変換
             sub = self.tag2sub(tag)
+            # 空マスじゃなければやり直し
+            if board[sub] != 0:
+                continue
             # 全方向のひっくり返す添え字候補
             rev_tags = []
             # 全方向探索
@@ -776,7 +793,6 @@ class Widget(QWidget):
             # タグを辞書のキーとし, ひっくり返すマスの添え字リストを値にする
             if rev_tags:
                 cand_local[tag] = rev_tags
-    
         # 辞書を返す(空なら空のまま)
         return cand_local
     
