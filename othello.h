@@ -30,10 +30,10 @@ extern Board START;
 // bin -> char
 // black: (0b01, o), white: (0b10, x), empty: (0b00, -)
 // can put sign: (0b11, !)
-extern const char B2C[5] = "-ox!";
+extern const char B2C[5];
 
 // 8 directions
-extern const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
+extern const int DIRECTION[8];
 
 // get a piece at a certain address
 int getKoma(Board b, int ad);
@@ -131,7 +131,5 @@ int nextBoardNormal(Board b, Board *next_boards);
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 // black: +1, empty: 0, white: -1
 void board2arraySymmetry(Board src, int *dst);
-// main
-int main2(void);
 
 #endif

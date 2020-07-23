@@ -4,28 +4,6 @@
 #include <unistd.h>
 #include "othello.h"
 
-// maximum number of next boards
-#define NEXT_MAX 32
-// 1 million
-#define MILLION 1000000
-// 1 billion
-#define BILLION 1000000000
-
-#define START_H 0x0000000000000180L
-#define START_L 0x0240000000000000L
-
-#define kugiri() printf("--------------------------\n")
-
-// 64bit
-typedef unsigned long int int8B;
-
-// othello board
-// 128 bits
-typedef struct {
-    // low bits, high bits
-    int8B board[2];
-} Board;
-
 // intial board
 Board START;
 
@@ -1001,7 +979,7 @@ void board2arraySymmetry(Board src, int *dst) {
 }
 
 // main
-int main2(void) {
+int main(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;
