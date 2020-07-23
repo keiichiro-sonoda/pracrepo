@@ -2,6 +2,7 @@
 #include <math.h>
 #include <time.h>
 #include <unistd.h>
+#include "othello.h"
 
 // maximum number of next boards
 #define NEXT_MAX 32
