@@ -725,13 +725,13 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            te = wrapNegaMaxAB(main_board, turn, 6);
+            //te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
-            //te = getValidActStdin(can_put, count);
+            te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
-            te = wrapNegaMaxAB(main_board, turn, 4);
+            te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
             index = getIndex(can_put, count, te);
         } // update board
@@ -990,9 +990,7 @@ int main(void) {
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    //play();
-    showBoard(sample2);
-    i = nextBoardNormal2(sample2, nbs, kc);
-    showBoardArray(nbs, i);
+    //showBoard(sample2);
+    play();
     return 0;
 }
