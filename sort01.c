@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "sort01.h"
 
-// for debug
-int main(void) {
+// for debugging
+void sortTest(void) {
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2};
     int n = arrayLength(sample1);
     int indexes[n];

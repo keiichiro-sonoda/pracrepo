@@ -5,12 +5,10 @@
 #include <math.h>
 #include "genetic02.h"
 #include "othello.h"
+#include "sort01.h"
 
 // global variables
 int INDEXES[MASU_NUM];
-
-// functions defined in sort.c
-void quicksortDD(int *A, int *B, int p, int r);
 
 // functions
 
@@ -449,7 +447,7 @@ int main(void) {
     // set initial board
     initBoard();
     // test
-    //showBoard(START);
-    play();
+    showBoard(START);
+    sortTest();
     return 0;
 }
