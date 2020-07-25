@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "sort01.h"
+// to use printDecimalArray
 #include "othello.h"
 
 // for debugging
