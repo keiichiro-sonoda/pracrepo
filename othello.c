@@ -979,7 +979,7 @@ void board2arraySymmetry(Board src, int *dst) {
 }
 
 // main
-int main(void) {
+int main2(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;

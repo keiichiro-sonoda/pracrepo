@@ -3,9 +3,8 @@
 #include <time.h>
 #include <float.h>
 #include <math.h>
+#include "othello.h"
 
-#define NEXT_MAX 32
-#define MASU_NUM 64
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
 #define GENE_NUM 100
@@ -14,34 +13,16 @@
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
 
-// types
-// environmental dependence
-typedef unsigned long int8B;
-
-// board information
-typedef struct {
-    int8B board[2];
-} Board;
-
 // simple parameter
 typedef struct {
     float weight[SPRM_LEN];
 } Sprm;
 
 // global variables
-Board START;
 int INDEXES[MASU_NUM];
 
-// functions defined in othello.c
-int rotL90DegAd(int src);
-void showDecimalArray(const int *ia, int ia_len);
-void initBoard(void);
-int showBoard(Board b);
-void board2arraySymmetry(Board src, int *dst);
-void swapNormalizeBoard(Board *bp);
-int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
+// functions defined in sort.c
 void quicksortDD(int *A, int *B, int p, int r);
-void zeros(int *ia, int n);
 
 // functions
 
@@ -465,8 +446,7 @@ int main(void) {
     setIndexes();
     // set initial board
     initBoard();
-    // go to 300!
-    //nextGenerationSprmLoop(300, 0);
-    checkSprmFile(400);
+    // test
+    play();
     return 0;
 }
