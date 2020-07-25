@@ -8,11 +8,18 @@
 #define MILLION 1000000
 // 1 billion
 #define BILLION 1000000000
-
+// initial board information
 #define START_H 0x0000000000000180L
 #define START_L 0x0240000000000000L
 
+// bin -> char
+// black: (0b01, o), white: (0b10, x), empty: (0b00, -)
+// can put sign: (0b11, !)
+#define B2C "-ox!"
+
+// macros
 #define kugiri() printf("--------------------------\n")
+#define printString(s) printf("%s\n", s)
 
 // 64bit
 typedef unsigned long int int8B;
@@ -26,11 +33,6 @@ typedef struct {
 
 // intial board
 extern Board START;
-
-// bin -> char
-// black: (0b01, o), white: (0b10, x), empty: (0b00, -)
-// can put sign: (0b11, !)
-extern const char B2C[5];
 
 // 8 directions
 extern const int DIRECTION[8];

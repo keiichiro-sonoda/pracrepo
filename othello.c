@@ -7,11 +7,6 @@
 // intial board
 Board START;
 
-// bin -> char
-// black: (0b01, o), white: (0b10, x), empty: (0b00, -)
-// can put sign: (0b11, !)
-const char B2C[5] = "-ox!";
-
 // 8 directions
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 

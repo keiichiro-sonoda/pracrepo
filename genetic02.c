@@ -449,9 +449,7 @@ int main(void) {
     // set initial board
     initBoard();
     // test
-    //play();
-    printf("%s\n", MOJI);
-    printSize(MOJI);
-    printf("%c\n", MOJI[1]);
+    printString(B2C);
+    printSize(B2C);
     return 0;
 }
