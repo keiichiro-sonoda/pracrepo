@@ -49,7 +49,9 @@ Board createEmptyBoard(void);
 int showBoard(Board b);
 // show board in 32 hexadecimal digits
 int showBoardHex(Board b);
-void showDecimalArray(const int *ia, int ia_len);
+// print an array of decimal numbers
+void printDecimalArray(const int *ia, int ia_len);
+// print an arrya of hexadecimal numbers
 int showHexArray(int *ia, int ia_len);
 // neighbor?
 int ifNeighbor(int src, int dst);

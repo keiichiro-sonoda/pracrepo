@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "sort01.h"
+#include "othello.h"
 
 // for debugging
 void sortTest(void) {
-    int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2};
+    int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     int n = arrayLength(sample1);
     int indexes[n];
     int i;
@@ -16,19 +17,6 @@ void sortTest(void) {
     printf("after\n");
     printDecimalArray(sample1, n);
     printDecimalArray(indexes, n);
-}
-
-// print an array of decimal numbers
-void printDecimalArray(const int *A, int n) {
-    int i;
-    putchar('{');
-    for (i = 0; i < n; i++) {
-        printf("%3d", A[i]);
-        if (i < n - 1) {
-            printf(", ");
-        }
-    }
-    printf("}\n");
 }
 
 // exchange A[i] and A[j]

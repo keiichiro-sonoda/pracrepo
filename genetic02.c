@@ -24,6 +24,7 @@ void showSprm(Sprm pr) {
     }
 }
 
+// print an array of floating point number
 void showFloatArray(float *fa, int n) {
     int i;
     putchar('{');
@@ -118,17 +119,6 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     for (i = 0; i < SPRM_LEN; i++) {
         // rate 5%
         child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.05);
-    }
-    return child;
-}
-
-// cross parameters (don't mutate)
-Sprm makeChildCrossNMSprm(Sprm mother, Sprm father) {
-    Sprm child;
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
-        // rate 0%
-        child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.0);
     }
     return child;
 }
