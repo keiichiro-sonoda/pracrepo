@@ -123,12 +123,27 @@ int nextGenerationSprmNM(int gene_num) {
     return 0;
 }
 
+// loop several times
+// for no mutant file
+void nextGenerationSprmNMLoop(int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        nextGenerationSprmNM(i);
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
 int main(void) {
     // initial configurations
     initBoard();
     setIndexes();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmNM(2);
+    nextGenerationSprmNMLoop(10, 10);
+
     return 0;
 }
