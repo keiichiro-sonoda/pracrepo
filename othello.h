@@ -54,6 +54,8 @@ int showBoard(Board b);
 int showBoardHex(Board b);
 // print an array of decimal numbers
 void printDecimalArray(const int *ia, int ia_len);
+// print an array
+void printFloatArray(float *fa, int n);
 // print an arrya of hexadecimal numbers
 int showHexArray(int *ia, int ia_len);
 // neighbor?

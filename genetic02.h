@@ -19,8 +19,6 @@ extern int INDEXES[MASU_NUM];
 
 // print a simple parameters
 void showSprm(Sprm pr);
-// print an array of floating point number
-void showFloatArray(float *fa, int n);
 // get the smaller number
 int getMin(int a, int b);
 // get the smallest value in an array

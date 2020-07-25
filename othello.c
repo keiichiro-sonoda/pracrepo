@@ -75,6 +75,18 @@ void printDecimalArray(const int *ia, int ia_len) {
     printf("}\n");
 }
 
+// print an array of floating point number
+void printFloatArray(float *fa, int n) {
+    putchar('{');
+    for (int i = 0; i < n; i++) {
+        printf("%5.2f", fa[i]);
+        if (i < n - 1) {
+            printf(", ");
+        }
+    }
+    printf("}\n");
+}
+
 int showHexArray(int *ia, int ia_len) {
     int i;
     for (i = 0; i < ia_len; i++) {

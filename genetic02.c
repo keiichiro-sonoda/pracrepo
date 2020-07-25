@@ -26,19 +26,6 @@ void showSprm(Sprm pr) {
     }
 }
 
-// print an array of floating point number
-void showFloatArray(float *fa, int n) {
-    int i;
-    putchar('{');
-    for (i = 0; i < n; i++) {
-        printf("%5.2f", fa[i]);
-        if (i < n - 1) {
-            printf(", ");
-        }
-    }
-    printf("}\n");
-}
-
 int getMin(int a, int b) {
     return (a < b ? a : b);
 }
@@ -262,7 +249,7 @@ void checkSprmFile(int gene_num) {
     fclose(fp);
     // check the top parameter
     showSprm(pa[0]);
-    showFloatArray(pa[0].weight, SPRM_LEN);
+    printFloatArray(pa[0].weight, SPRM_LEN);
 }
 
 // use Sprm[100]

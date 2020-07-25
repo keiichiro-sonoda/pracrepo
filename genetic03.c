@@ -15,6 +15,7 @@ Sprm makeChildCrossNMSprm(Sprm mother, Sprm father) {
     return child;
 }
 
+// copy the first generation
 void copyFirstGeneration(void) {
     FILE *fp;
     // file name for reading
@@ -30,7 +31,8 @@ void copyFirstGeneration(void) {
     fclose(fp);
     // check the top parameter
     showSprm(pa[0]);
-    showFloatArray(pa[0].weight, SPRM_LEN);
+    // check
+    printFloatArray(pa[0].weight, SPRM_LEN);
     // file name for writing
     char fnamew[] = "prm/sprm_not_mutate000.bin";
     int i;
@@ -63,5 +65,8 @@ int main(void) {
     showBoard(START);
     printDecimalArray(INDEXES, MASU_NUM);
     printDecimal(rand());
+
+    float sample1[3] = {0.1, 0.2, 0.3};
+    printFloatArray(sample1, 3);
     return 0;
 }
