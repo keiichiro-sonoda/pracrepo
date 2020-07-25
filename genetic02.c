@@ -429,6 +429,7 @@ void nextGenerationSprmLoop(int st, int loop) {
     }
 }
 
+// for debugging
 int main4(void) {
     // seed reset
     srand((unsigned)time(NULL));

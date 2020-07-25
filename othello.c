@@ -5,6 +5,7 @@
 #include "othello.h"
 
 // intial board
+// necessary
 Board START;
 
 // 8 directions

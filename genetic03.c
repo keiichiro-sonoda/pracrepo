@@ -55,7 +55,9 @@ void copyFirstGeneration(void) {
 
 int main(void) {
     initBoard();
-    sortTest();
+    //sortTest();
+    setIndexes();
     showBoard(START);
+    printDecimalArray(INDEXES, MASU_NUM);
     return 0;
 }
