@@ -3,20 +3,8 @@
 #include <time.h>
 #include <float.h>
 #include <math.h>
+#include "genetic02.h"
 #include "othello.h"
-
-#define SPRM_LEN 10
-#define SURVIVE_NUM 10
-#define GENE_NUM 100
-
-#define printDecimal(x) printf("%d\n", x)
-#define printFloat(x) printf("%f\n", x)
-#define printSize(x) printf("%ld\n", sizeof x)
-
-// simple parameter
-typedef struct {
-    float weight[SPRM_LEN];
-} Sprm;
 
 // global variables
 int INDEXES[MASU_NUM];
@@ -142,7 +130,7 @@ Sprm makeChildCrossNMSprm(Sprm mother, Sprm father) {
     int i;
     for (i = 0; i < SPRM_LEN; i++) {
         // rate 0%
-        child.weight[i] = fcrossMFlex(mother.weight[i], father.weght[i], 0.0);
+        child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.0);
     }
     return child;
 }
@@ -414,8 +402,10 @@ int nextGenerationSprm(int gene_num) {
     // 45 combinations, 2 children per couple
     for (i = 0; i < SURVIVE_NUM - 1; i++) {
         for (j = i + 1; j < SURVIVE_NUM; j++) {
+            // average
             generation[count] = makeChildAverageSprm(parents[i], parents[j]);
             count++;
+            // cross
             generation[count] = makeChildCrossMSprm(parents[i], parents[j]);
             count++;
         }
@@ -459,6 +449,9 @@ int main(void) {
     // set initial board
     initBoard();
     // test
-    play();
+    //play();
+    printf("%s\n", MOJI);
+    printSize(MOJI);
+    printf("%c\n", MOJI[1]);
     return 0;
 }
