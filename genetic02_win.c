@@ -15,7 +15,6 @@
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
 
-
 // simple parameter
 typedef struct {
     float weight[SPRM_LEN];
@@ -344,6 +343,46 @@ void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
     // 確認用
     //putchar('\n');
     //showFloatArray(weight_sum, SPRM_LEN);
+    // データ数だけ割って, 平均値にする
+    // ここで引数を登場させるの忘れてた
+    for (int i = 0; i < SPRM_LEN; i++)
+        f_pointer[i] = weight_sum[i] / 10;
+}
+
+
+// トップ10の平均値を取得(共有ライブラリ用)
+// 突然変異無しファイルを扱う
+// 世代番号, pythonに渡すためのポインタを与える
+void getTop10NMAvePy(int gene_num, float f_pointer[SPRM_LEN]) {
+    // 呼び出しチェッカー
+    printString("called!");
+    FILE *fp;
+    char fnamer[FILENAME_MAX];
+    // 突然変異無しのファイル名
+    snprintf(fnamer, FILENAME_MAX, "prm/sprm_not_mutate%03d.bin", gene_num);
+    // ファイルを読み込み用で開く
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // 失敗
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // ファイルに保存してあるSprm配列を格納
+    Sprm pa[SURVIVE_NUM];
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // Top10 の各マスの合計値を代入する配列
+    float weight_sum[SPRM_LEN];
+    // 0 で初期化
+    for (int i = 0; i < SPRM_LEN; i++)
+        weight_sum[i] = 0.0;
+    for (int i = 0; i < SURVIVE_NUM; i++) {
+        // 一応10個チェック
+        // 評価値の合計に足していく
+        for (int j = 0; j < SPRM_LEN; j++){
+            weight_sum[j] += pa[i].weight[j];
+        }
+    }
+    // 確認用
     // データ数だけ割って, 平均値にする
     // ここで引数を登場させるの忘れてた
     for (int i = 0; i < SPRM_LEN; i++)

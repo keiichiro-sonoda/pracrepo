@@ -13,7 +13,9 @@
 #define START_H 0x0000000000000180L
 #define START_L 0x0240000000000000L
 
+// マクロ
 #define kugiri() printf("--------------------------\n")
+#define printString(s) printf("%s\n", s)
 
 // 64bit
 // mingw64 long long int
