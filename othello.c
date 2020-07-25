@@ -67,7 +67,7 @@ int showBoardHex(Board b) {
 void printDecimalArray(const int *ia, int ia_len) {
     putchar('{');
     for (int i = 0; i < ia_len; i++) {
-        printf("%03d", ia[i]);
+        printf("%3d", ia[i]);
         if (i < ia_len - 1)
             printf(", ");
     }
