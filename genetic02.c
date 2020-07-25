@@ -439,7 +439,7 @@ void nextGenerationSprmLoop(int st, int loop) {
     }
 }
 
-int main(void) {
+int main4(void) {
     // seed reset
     srand((unsigned)time(NULL));
     // set global variable
