@@ -1,19 +1,26 @@
 #include <stdio.h>
+#include "sort01.h"
+// to use printDecimalArray
+#include "othello.h"
 
-#define arrayLength(A) sizeof(A) / sizeof(A[0])
-
-void printDecimalArray(const int *A, int n) {
+// for debugging
+void sortTest(void) {
+    int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
+    int n = arrayLength(sample1);
+    int indexes[n];
     int i;
-    putchar('{');
     for (i = 0; i < n; i++) {
-        printf("%3d", A[i]);
-        if (i < n - 1) {
-            printf(", ");
-        }
+        indexes[i] = i;
     }
-    printf("}\n");
+    printf("before\n");
+    printDecimalArray(sample1, n);
+    quicksortDD(sample1, indexes, 0, n - 1);
+    printf("after\n");
+    printDecimalArray(sample1, n);
+    printDecimalArray(indexes, n);
 }
 
+// exchange A[i] and A[j]
 int exchange(int *A, int i, int j) {
     int t = A[i];
     A[i] = A[j];
@@ -45,18 +52,3 @@ void quicksortDD(int *A, int *B, int p, int r) {
         quicksortDD(A, B, q + 1, r);
     }
 }
-
-/*
-int main3(void) {
-    int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2};
-    int n = arrayLength(sample1);
-    int indexes[n];
-    int i;
-    for (i = 0; i < n; i++) {
-        indexes[i] = i;
-    }
-    quicksortDD(sample1, indexes, 0, n - 1);
-    printDecimalArray(sample1, n);
-    printDecimalArray(indexes, n);
-}
-*/

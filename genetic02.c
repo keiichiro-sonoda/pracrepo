@@ -3,45 +3,14 @@
 #include <time.h>
 #include <float.h>
 #include <math.h>
-
-#define NEXT_MAX 32
-#define MASU_NUM 64
-#define SPRM_LEN 10
-#define SURVIVE_NUM 10
-#define GENE_NUM 100
-
-#define printDecimal(x) printf("%d\n", x)
-#define printFloat(x) printf("%f\n", x)
-#define printSize(x) printf("%ld\n", sizeof x)
-
-// types
-// environmental dependence
-typedef unsigned long int8B;
-
-// board information
-typedef struct {
-    int8B board[2];
-} Board;
-
-// simple parameter
-typedef struct {
-    float weight[SPRM_LEN];
-} Sprm;
+#include "genetic02.h"
+#include "sort01.h"
+// not necessary
+//#include "othello.h"
 
 // global variables
-Board START;
+// necessary
 int INDEXES[MASU_NUM];
-
-// functions defined in othello.c
-int rotL90DegAd(int src);
-void showDecimalArray(const int *ia, int ia_len);
-void initBoard(void);
-int showBoard(Board b);
-void board2arraySymmetry(Board src, int *dst);
-void swapNormalizeBoard(Board *bp);
-int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
-void quicksortDD(int *A, int *B, int p, int r);
-void zeros(int *ia, int n);
 
 // functions
 
@@ -55,18 +24,6 @@ void showSprm(Sprm pr) {
             putchar('\n');
         }
     }
-}
-
-void showFloatArray(float *fa, int n) {
-    int i;
-    putchar('{');
-    for (i = 0; i < n; i++) {
-        printf("%5.2f", fa[i]);
-        if (i < n - 1) {
-            printf(", ");
-        }
-    }
-    printf("}\n");
 }
 
 int getMin(int a, int b) {
@@ -267,6 +224,7 @@ void makeFirstSprmsFile(void) {
     // random parameters
     for (i = 0; i < 10; i++)
         randSprm(pra + i);
+    // check
     showSprm(pra[3]);
     // check size 800B?
     printSize(pra);
@@ -291,7 +249,7 @@ void checkSprmFile(int gene_num) {
     fclose(fp);
     // check the top parameter
     showSprm(pa[0]);
-    showFloatArray(pa[0].weight, SPRM_LEN);
+    printFloatArray(pa[0].weight, SPRM_LEN);
 }
 
 // use Sprm[100]
@@ -374,8 +332,8 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     // calculate the distance between the previous top and the current top
     dist = distSprm(survivors[0], generation[0]);
     printf("distance: %6.4f\n", dist);
-    printf("top parameters view:\n");
-    showSprm(survivors[0]);
+    //printf("top parameters view:\n");
+    //showSprm(survivors[0]);
 }
 
 // make next generation file
@@ -421,8 +379,10 @@ int nextGenerationSprm(int gene_num) {
     // 45 combinations, 2 children per couple
     for (i = 0; i < SURVIVE_NUM - 1; i++) {
         for (j = i + 1; j < SURVIVE_NUM; j++) {
+            // average
             generation[count] = makeChildAverageSprm(parents[i], parents[j]);
             count++;
+            // cross
             generation[count] = makeChildCrossMSprm(parents[i], parents[j]);
             count++;
         }
@@ -458,15 +418,16 @@ void nextGenerationSprmLoop(int st, int loop) {
     }
 }
 
-int main(void) {
+// for debugging
+int main4(void) {
     // seed reset
     srand((unsigned)time(NULL));
     // set global variable
     setIndexes();
     // set initial board
     initBoard();
-    // go to 300!
-    //nextGenerationSprmLoop(300, 0);
-    checkSprmFile(400);
+    // test
+    showBoard(START);
+    sortTest();
     return 0;
 }

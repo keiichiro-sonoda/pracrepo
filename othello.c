@@ -2,36 +2,11 @@
 #include <math.h>
 #include <time.h>
 #include <unistd.h>
-
-// maximum number of next boards
-#define NEXT_MAX 32
-// 1 million
-#define MILLION 1000000
-// 1 billion
-#define BILLION 1000000000
-
-#define START_H 0x0000000000000180L
-#define START_L 0x0240000000000000L
-
-#define kugiri() printf("--------------------------\n")
-
-// 64bit
-typedef unsigned long int int8B;
-
-// othello board
-// 128 bits
-typedef struct {
-    // low bits, high bits
-    int8B board[2];
-} Board;
+#include "othello.h"
 
 // intial board
+// necessary
 Board START;
-
-// bin -> char
-// black: (0b01, o), white: (0b10, x), empty: (0b00, -)
-// can put sign: (0b11, !)
-const char B2C[5] = "-ox!";
 
 // 8 directions
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
@@ -89,13 +64,25 @@ int showBoardHex(Board b) {
     return 0;
 }
 
-void showDecimalArray(const int *ia, int ia_len) {
-    int i;
+// print an array of decimal numbers
+void printDecimalArray(const int *ia, int ia_len) {
     putchar('{');
-    for (i = 0; i < ia_len; i++) {
-        printf("%03d", ia[i]);
+    for (int i = 0; i < ia_len; i++) {
+        printf("%3d", ia[i]);
         if (i < ia_len - 1)
             printf(", ");
+    }
+    printf("}\n");
+}
+
+// print an array of floating point number
+void printFloatArray(float *fa, int n) {
+    putchar('{');
+    for (int i = 0; i < n; i++) {
+        printf("%5.2f", fa[i]);
+        if (i < n - 1) {
+            printf(", ");
+        }
     }
     printf("}\n");
 }
@@ -746,13 +733,13 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            te = wrapNegaMaxAB(main_board, turn, 6);
+            //te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
-            //te = getValidActStdin(can_put, count);
+            te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
-            te = wrapNegaMaxAB(main_board, turn, 4);
+            te = wrapNegaMaxAB(main_board, turn, 6);
             //te = wrapNegaMax(main_board, turn);
             index = getIndex(can_put, count, te);
         } // update board
@@ -1011,9 +998,7 @@ int main2(void) {
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    //play();
-    showBoard(sample2);
-    i = nextBoardNormal2(sample2, nbs, kc);
-    showBoardArray(nbs, i);
+    //showBoard(sample2);
+    play();
     return 0;
 }
