@@ -54,6 +54,8 @@ void copyFirstGeneration(void) {
 }
 
 int main(void) {
+    initBoard();
     sortTest();
+    showBoard(START);
     return 0;
 }

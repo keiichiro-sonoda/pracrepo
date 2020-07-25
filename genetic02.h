@@ -1,16 +1,11 @@
 #ifndef GENETIC02_H
 #define GENETIC02_H
+// to use MASU_NUM
 #include "othello.h"
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
 #define GENE_NUM 100
-#define MOJI "abc"
-
-// macros
-#define printDecimal(x) printf("%d\n", x)
-#define printFloat(x) printf("%f\n", x)
-#define printSize(x) printf("%ld\n", sizeof x)
 
 // simple parameter
 typedef struct {
