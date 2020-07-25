@@ -104,6 +104,12 @@ int nextGenerationSprmNM(int gene_num) {
     Sprm survivors[SURVIVE_NUM];
     // battle!
     getSurvivorSprm(generation, survivors);
+    // print parameters
+    printString("top ten parameters:");
+    for (i = 0; i < SURVIVE_NUM; i++) {
+        printf("%2d: ", i + 1);
+        printFloatArray(survivors[i].weight, SPRM_LEN);
+    }
 
     // write current survivors
     if ((fp = fopen(fnamew, "wb")) == NULL) {
@@ -123,6 +129,6 @@ int main(void) {
     setIndexes();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmNM(0);
+    nextGenerationSprmNM(2);
     return 0;
 }

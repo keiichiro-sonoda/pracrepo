@@ -332,8 +332,8 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     // calculate the distance between the previous top and the current top
     dist = distSprm(survivors[0], generation[0]);
     printf("distance: %6.4f\n", dist);
-    printf("top parameters view:\n");
-    showSprm(survivors[0]);
+    //printf("top parameters view:\n");
+    //showSprm(survivors[0]);
 }
 
 // make next generation file
