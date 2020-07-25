@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "genetic02.h"
 #include "sort01.h"
 
@@ -16,22 +17,22 @@ Sprm makeChildCrossNMSprm(Sprm mother, Sprm father) {
 
 void copyFirstGeneration(void) {
     FILE *fp;
-    char format[] = "prm/simple_prm%03d.bin";
-    char fnamer[FILENAME_MAX];
-    int gene_num = 0;
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    // file name for reading
+    char fnamer[] = "prm/simple_prm000.bin";
     if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
         printf("%s can't be opened.\n", fnamer);
         return;
     }
     // opened!
     Sprm pa[SURVIVE_NUM];
-    fread(&pa, sizeof pa, 1, fp);
+    fread(pa, sizeof pa, 1, fp);
     fclose(fp);
     // check the top parameter
     showSprm(pa[0]);
     showFloatArray(pa[0].weight, SPRM_LEN);
-    char fnamew[] = "prm/simple_prm000.bin";
+    // file name for writing
+    char fnamew[] = "prm/sprm_not_mutate000.bin";
     int i;
     Sprm pra[10];
     // open a file to write (or make a file)
@@ -54,10 +55,13 @@ void copyFirstGeneration(void) {
 }
 
 int main(void) {
+    // initial configurations
     initBoard();
-    //sortTest();
     setIndexes();
+    srand((unsigned)time(NULL));
+    // test
     showBoard(START);
     printDecimalArray(INDEXES, MASU_NUM);
+    printDecimal(rand());
     return 0;
 }

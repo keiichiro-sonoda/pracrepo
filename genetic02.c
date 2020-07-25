@@ -4,10 +4,12 @@
 #include <float.h>
 #include <math.h>
 #include "genetic02.h"
-#include "othello.h"
 #include "sort01.h"
+// not necessary
+//#include "othello.h"
 
 // global variables
+// necessary
 int INDEXES[MASU_NUM];
 
 // functions
