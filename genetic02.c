@@ -136,6 +136,17 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     return child;
 }
 
+// cross parameters (don't mutate)
+Sprm makeChildCrossNMSprm(Sprm mother, Sprm father) {
+    Sprm child;
+    int i;
+    for (i = 0; i < SPRM_LEN; i++) {
+        // rate 0%
+        child.weight[i] = fcrossMFlex(mother.weight[i], father.weght[i], 0.0);
+    }
+    return child;
+}
+
 // convert from an address to the weight index?
 void setIndexes(void) {
     int i, ad;
@@ -248,6 +259,7 @@ void makeFirstSprmsFile(void) {
     // random parameters
     for (i = 0; i < 10; i++)
         randSprm(pra + i);
+    // check
     showSprm(pra[3]);
     // check size 800B?
     printSize(pra);
