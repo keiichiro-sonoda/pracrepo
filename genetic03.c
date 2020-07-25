@@ -35,8 +35,6 @@ void copyFirstGeneration(void) {
     printFloatArray(pa[0].weight, SPRM_LEN);
     // file name for writing
     char fnamew[] = "prm/sprm_not_mutate000.bin";
-    int i;
-    Sprm pra[10];
     // open a file to write (or make a file)
     if ((fp = fopen(fnamew, "wb")) == NULL) {
         // failed
@@ -44,14 +42,7 @@ void copyFirstGeneration(void) {
         return;
     }
     // opened!
-    // random parameters
-    for (i = 0; i < 10; i++)
-        randSprm(pra + i);
-    // check
-    showSprm(pra[3]);
-    // check size 800B?
-    printSize(pra);
-    fwrite(pra, sizeof pra, 1, fp);
+    fwrite(pa, sizeof pa, 1, fp);
     // close
     fclose(fp);
 }
@@ -61,12 +52,8 @@ int main(void) {
     initBoard();
     setIndexes();
     srand((unsigned)time(NULL));
-    // test
-    showBoard(START);
-    printDecimalArray(INDEXES, MASU_NUM);
-    printDecimal(rand());
 
-    float sample1[3] = {0.1, 0.2, 0.3};
-    printFloatArray(sample1, 3);
+    copyFirstGeneration();
+    
     return 0;
 }
