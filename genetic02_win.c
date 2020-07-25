@@ -349,13 +349,12 @@ void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
         f_pointer[i] = weight_sum[i] / 10;
 }
 
-
 // トップ10の平均値を取得(共有ライブラリ用)
 // 突然変異無しファイルを扱う
 // 世代番号, pythonに渡すためのポインタを与える
 void getTop10NMAvePy(int gene_num, float f_pointer[SPRM_LEN]) {
     // 呼び出しチェッカー
-    printString("called!");
+    //printString("called!");
     FILE *fp;
     char fnamer[FILENAME_MAX];
     // 突然変異無しのファイル名
