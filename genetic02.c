@@ -449,7 +449,7 @@ int main(void) {
     // set initial board
     initBoard();
     // test
-    printString(B2C);
-    printSize(B2C);
+    //showBoard(START);
+    play();
     return 0;
 }
