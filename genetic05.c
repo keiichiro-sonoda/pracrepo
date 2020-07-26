@@ -161,12 +161,16 @@ void getSurvivorSprmVSRandom(Sprm *generation, Sprm *survivors) {
     // calculate the distance between the previous top and the current top
     dist = distSprm(survivors[0], generation[0]);
     printf("distance: %6.4f\n", dist);
-    // print parameters
+    // print top 10 parameters
     printString("top ten parameters:");
     for (i = 0; i < SURVIVE_NUM; i++) {
-        printf("%2d: ", i + 1);
+        printf("%3d: ", i + 1);
         printFloatArray(survivors[i].weight, SPRM_LEN);
     }
+    // print worst parameter
+    printString("worst parameter:");
+    printf("%3d: ", GENE_NUM);
+    printFloatArray(generation[GENE_NUM - 1].weight, SPRM_LEN);
 }
 
 // make next generation file
@@ -258,6 +262,6 @@ int main(void) {
     setIndexes();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmVSRL(2, 8);
+    nextGenerationSprmVSRL(10, 10);
     return 0;
 }
