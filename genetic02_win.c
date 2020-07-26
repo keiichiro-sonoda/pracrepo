@@ -615,3 +615,8 @@ int main(void) {
     checkSprmFile(300);
     return 0;
 }
+
+// pythonから渡される文字列を表示してみたい
+void printStringPy(const char *s) {
+    printString(s);
+}
