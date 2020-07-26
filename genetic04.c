@@ -1,5 +1,7 @@
 // fix the corner evaluation
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 #include "genetic02.h"
 
 // define the corner evaluation
@@ -148,9 +150,11 @@ int nextGenerationSprmFC1(int gene_num) {
 }
 
 int main(void) {
+    // initial configurations
     setIndexes();
     initBoard();
-    showBoard(START);
-    showBoardHex(START);
+    srand((unsigned)time(NULL));
+
+    printDecimal(rand());
     return 0;
 }
