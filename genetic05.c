@@ -11,7 +11,7 @@ int sprmVSRandomNormal(const Sprm *prp, int my_turn) {
     int kc[3];
     int pass = 0;
     int n, dif;
-    // set turn
+    // set initial turn (black)
     int turn = 0b01;
     // set initial board
     Board main_board = START;
@@ -128,6 +128,75 @@ void getSurvivorSprmVSRandom(Sprm *generation, Sprm *survivors) {
     // calculate the distance between the previous top and the current top
     dist = distSprm(survivors[0], generation[0]);
     printf("distance: %6.4f\n", dist);
+}
+
+// make next generation file
+// use getSurvivorSprmVSRandom()
+int nextGenerationSprmVSRandom(int gene_num) {
+    int i, j, count;
+    char format[] = "prm/sprm_vsrand%03d.bin";
+    char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
+    // previous survivors
+    Sprm parents[SURVIVE_NUM];
+    FILE *fp;
+    // read file name
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    // write file name
+    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
+    // view
+    printf("read file : %s\n", fnamer);
+    printf("write file: %s\n", fnamew);
+    // read parents
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        printf("\a%s can't be opened\n", fnamer);
+        return -1;
+    }
+    // opened!
+    fread(parents, sizeof parents, 1, fp);
+    fclose(fp);
+    // check write file (can read?)
+    if ((fp = fopen(fnamew, "rb")) != NULL) {
+        printf("\a%s exists. Can I overwrite it? (y): ", fnamew);
+        fclose(fp);
+        // don't overwrite
+        if (getchar() != 'y') {
+            printf("terminated\n");
+            return -1;
+        }
+    }
+    // make children!
+    Sprm generation[GENE_NUM];
+    // 10 parents are copied
+    for (count = 0; count < SURVIVE_NUM; count++) {
+        generation[count] = parents[count];
+    }
+    // make children
+    // 45 combinations, 2 children per couple
+    for (i = 0; i < SURVIVE_NUM - 1; i++) {
+        for (j = i + 1; j < SURVIVE_NUM; j++) {
+            // average
+            generation[count] = makeChildAverageSprm(parents[i], parents[j]);
+            count++;
+            // cross (mutation rate is 5%)
+            generation[count] = makeChildCrossMSprm(parents[i], parents[j]);
+            count++;
+        }
+    }
+    // calcurate survivors
+    Sprm survivors[SURVIVE_NUM];
+    // battle! (vs random AI)
+    getSurvivorSprmVSRandom(generation, survivors);
+
+    // write current survivors
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        printf("\a%s cannot be opened\n", fnamew);
+        return -1;
+    }
+    // opened!
+    fwrite(survivors, sizeof survivors, 1, fp);
+    fclose(fp);
+
+    return 0;
 }
 
 int main(void) {
