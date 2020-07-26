@@ -27,60 +27,10 @@ LINE_COLORS = [
     "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
 ]
 
-# 平均値表示したい(ランダム対戦適応計算)
-def dataView04():
-    # ファイル名のフォーマット
-    fname_format = "prm/sprm_vsrand{:03d}.bin"
-    x_min = 0
-    x_max = 100
-    x = []
-    # 10 マス分のデータの配列を用意
-    ys = [[] for i in range(10)]
-    for i in range(x_min, x_max + 1):
-        # x は範囲内の整数全て
-        x.append(i)
-        # i 世代のトップ10の平均値を取り出す
-        tprm = getTop10AveFlexWrap(fname_format.format(i))
-        # それぞれのマスの評価値に代入!
-        for j in range(10):
-            ys[j].append(tprm[j])
-    
-    # 使い慣れたいからオブジェクト指向にしよう
-    fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(
-        111,
-        xlabel="generation",
-        ylabel="point",
-    )
-    # 各マスの変移をプロット
-    for i in range(10):
-        lw = 1
-        lc = LINE_COLORS[i]
-        if i in [0, 4]:
-            lw = 4
-        # ラベル付け
-        ax.plot(x, ys[i],
-            label="{:d}".format(i + 1),
-            color=lc,
-            linewidth=lw
-        )
-    #plt.legend(loc="best")
-    # 凡例調節
-    ax.legend(
-        bbox_to_anchor=(1.01, 1),
-        loc='upper left',
-        borderaxespad=0,
-        fontsize=10
-    )
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("point", fontsize=15)
-    plt.show()
-
 # 平均値表示したい(課題4で発表したグラフの世代縮小バージョン?)
 # ファイル名のフォーマットを引数で指定
-def dataView05(fname_format):
-    x_min = 0
-    x_max = 20
+# 世代幅も指定
+def dataView05(fname_format, x_min, x_max):
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
@@ -128,6 +78,6 @@ def dataView05(fname_format):
 
 if __name__ == "__main__":
     # 最初
-    #dataView05("prm//simple_prm{:03d}.bin")
+    dataView05("prm//simple_prm{:03d}.bin", 0, 100)
     # 突然変異無し
-    dataView05("prm//sprm_not_mutate{:03d}.bin")
+    #dataView05("prm//sprm_not_mutate{:03d}.bin", 0, 20)
