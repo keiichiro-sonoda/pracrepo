@@ -12,7 +12,7 @@ exe2_win.initPy()
 # 関数取り出し
 printString = exe2_win.printStringPy
 printString.rectype = None
-printString.argtypes = (c_char_p)
+printString.argtypes = (c_char_p, )
 
 if __name__ == "__main__":
     printString(b"abc")
