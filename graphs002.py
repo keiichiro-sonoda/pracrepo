@@ -235,9 +235,10 @@ def dataView03():
 
 # 平均値表示したい(ランダム対戦適応計算)
 def dataView04():
+    # ファイル名のフォーマット
     fname_format = "prm/sprm_vsrand{:03d}.bin"
     x_min = 0
-    x_max = 300
+    x_max = 100
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
