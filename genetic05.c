@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "genetic02.h"
+#include "sort01.h"
 
 // play against random
 // return winner
@@ -53,7 +54,7 @@ int sprmVSRandomNormal(const Sprm *prp, int my_turn) {
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 // play against random AI 100 times for each parameter
-void calcGoodness(Sprm *generation, int *result) {
+void calcGoodnessVSRandom(Sprm *generation, int *result) {
     int i, j;
     // reset result
     zeros(result, GENE_NUM);
@@ -88,6 +89,45 @@ void calcGoodness(Sprm *generation, int *result) {
             }
         }
     }
+}
+
+// choose survivors from Sprm[100]
+// and show match results
+// use calcGoodnessVSRandom()
+void getSurvivorSprmVSRandom(Sprm *generation, Sprm *survivors) {
+    int i, j;
+    int result[GENE_NUM];
+    int number[GENE_NUM];
+    float dist;
+    // number = {0, 1, 2, ..., 99}
+    for (i = 0; i < GENE_NUM; i++)
+        number[i] = i;
+    // game! (vs random AI)
+    calcGoodnessVSRandom(generation, result);
+    // sort (descending order)
+    quicksortDD(result, number, 0, GENE_NUM - 1);
+    // show ranking
+    printf("rank change\n");
+    for (i = 0; i < GENE_NUM; i++) {
+        // rank 11 .. 99 aren't displayed
+        if (10 <= i && i < GENE_NUM - 1) continue;
+        // worst!
+        if (i == GENE_NUM - 1)
+            printf("        ...\n");
+        // winner's index (or worst index)
+        j = number[i];
+        printf("%3d", j + 1);
+        if (j < 10) printf("(p)");
+        else printf("(c)");
+        printf(" -> ");
+        printf("%3d: %3dpt\n", i + 1, result[i]);
+        // record winners
+        if (i < 10)
+            survivors[i] = generation[j];
+    }
+    // calculate the distance between the previous top and the current top
+    dist = distSprm(survivors[0], generation[0]);
+    printf("distance: %6.4f\n", dist);
 }
 
 int main(void) {
