@@ -103,6 +103,7 @@ float fcrossMFlex(float a, float b, float rate) {
 }
 
 // cross parameters?
+// the mutation rate is 5%
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     Sprm child;
     int i;
