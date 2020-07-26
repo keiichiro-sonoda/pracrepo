@@ -223,4 +223,5 @@ def dataView03():
     plt.show()
 
 if __name__ == "__main__":
-    dataView02()
+    #dataView02()
+    dataView03()
