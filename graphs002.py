@@ -78,6 +78,8 @@ def dataView05(fname_format, x_min, x_max):
 
 if __name__ == "__main__":
     # 最初
-    dataView05("prm//simple_prm{:03d}.bin", 0, 100)
+    #dataView05("prm//simple_prm{:03d}.bin", 0, 100)
     # 突然変異無し
     #dataView05("prm//sprm_not_mutate{:03d}.bin", 0, 20)
+    # 角固定
+    dataView05("prm//sprm_corner0.5_{:03d}.bin", 0, 100)
