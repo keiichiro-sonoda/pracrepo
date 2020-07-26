@@ -238,12 +238,26 @@ int nextGenerationSprmVSRandom(int gene_num) {
     return 0;
 }
 
+// loop several times
+// for vs random files
+void nextGenerationSprmVSRL(int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        nextGenerationSprmVSRandom(i);
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
 int main(void) {
     // initial configurations
     initBoard();
     setIndexes();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmVSRandom(1);
+    nextGenerationSprmVSRL(2, 8);
     return 0;
 }
