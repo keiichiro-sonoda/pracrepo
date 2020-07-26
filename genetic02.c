@@ -26,6 +26,7 @@ void showSprm(Sprm pr) {
     }
 }
 
+// get the smaller number
 int getMin(int a, int b) {
     return (a < b ? a : b);
 }
