@@ -388,6 +388,42 @@ void getTop10NMAvePy(int gene_num, float f_pointer[SPRM_LEN]) {
         f_pointer[i] = weight_sum[i] / 10;
 }
 
+// トップ10の平均値を取得(共有ライブラリ用)
+// 角固定ファイルを扱う(0.5)
+// ファイル名フォーマットも引数に与えられるようにしようか?
+void getTop10FC1AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
+    FILE *fp;
+    char fnamer[FILENAME_MAX];
+    // 角固定ファイルを開く
+    snprintf(fnamer, FILENAME_MAX, "prm/sprm_corner0.5_%03d.bin", gene_num);
+    // ファイルを読み込み用で開く
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // 失敗
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // ファイルに保存してあるSprm配列を格納
+    Sprm pa[SURVIVE_NUM];
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // Top10 の各マスの合計値を代入する配列
+    float weight_sum[SPRM_LEN];
+    // 0 で初期化
+    for (int i = 0; i < SPRM_LEN; i++)
+        weight_sum[i] = 0.0;
+    for (int i = 0; i < SURVIVE_NUM; i++) {
+        // 評価値の合計に足していく
+        for (int j = 0; j < SPRM_LEN; j++){
+            weight_sum[j] += pa[i].weight[j];
+        }
+    }
+    // 確認用
+    // データ数だけ割って, 平均値にする
+    // ここで引数を登場させるの忘れてた
+    for (int i = 0; i < SPRM_LEN; i++)
+        f_pointer[i] = weight_sum[i] / 10;
+}
+
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {

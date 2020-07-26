@@ -28,6 +28,10 @@ getTop10NMAve = exe2_win.getTop10NMAvePy
 getTop10NMAve.rectype = None
 getTop10NMAve.argtypes = (c_int32, FloatArray10)
 
+getTop10FC1Ave = exe2_win.getTop10FC1AvePy
+getTop10FC1Ave.rectype = None
+getTop10FC1Ave.argtypes = (c_int32, FloatArray10)
+
 def getSprmFileWrap(n):
     f_arr_c = FloatArray64()
     getSprmFile(n, f_arr_c)
@@ -41,6 +45,11 @@ def getTop10AveWrap(n):
 def getTop10NMAveWrap(n):
     f_arr_c = FloatArray10()
     getTop10NMAve(n, f_arr_c)
+    return list(f_arr_c)
+
+def getTop10FC1AveWrap(n):
+    f_arr_c = FloatArray10()
+    getTop10FC1Ave(n, f_arr_c)
     return list(f_arr_c)
 
 # グラフ用の色
@@ -164,5 +173,52 @@ def dataView02():
     ax.set_ylabel("point", fontsize=15)
     plt.show()
 
+# 平均値表示したい(角固定)
+def dataView03():
+    x_min = 0
+    x_max = 100
+    x = []
+    # 10 マス分のデータの配列を用意
+    ys = [[] for i in range(10)]
+    for i in range(x_min, x_max + 1):
+        # x は範囲内の整数全て
+        x.append(i)
+        # i 世代のトップ10の平均値を取り出す
+        tprm = getTop10FC1AveWrap(i)
+        # それぞれのマスの評価値に代入!
+        for j in range(10):
+            ys[j].append(tprm[j])
+    
+    # 使い慣れたいからオブジェクト指向にしよう
+    fig = plt.figure(figsize=(8, 5))
+    ax = fig.add_subplot(
+        111,
+        xlabel="generation",
+        ylabel="point",
+    )
+    # 各マスの変移をプロット
+    for i in range(10):
+        lw = 1
+        lc = LINE_COLORS[i]
+        if i in [0, 4]:
+            lw = 4
+        # ラベル付け
+        ax.plot(x, ys[i],
+            label="{:d}".format(i + 1),
+            color=lc,
+            linewidth=lw
+        )
+    #plt.legend(loc="best")
+    # 凡例調節
+    ax.legend(
+        bbox_to_anchor=(1.01, 1),
+        loc='upper left',
+        borderaxespad=0,
+        fontsize=10
+    )
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("point", fontsize=15)
+    plt.show()
+
 if __name__ == "__main__":
-    dataView02()
+    dataView03()
