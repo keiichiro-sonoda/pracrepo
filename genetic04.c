@@ -149,12 +149,24 @@ int nextGenerationSprmFC1(int gene_num) {
     return 0;
 }
 
+// loop several times
+void nextGenerationSprmFC1L(int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        nextGenerationSprmFC1(i);
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
 int main(void) {
     // initial configurations
     setIndexes();
     initBoard();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmFC1(1);
+    nextGenerationSprmFC1L(2, 8);
     return 0;
 }
