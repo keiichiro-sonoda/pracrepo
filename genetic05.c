@@ -262,6 +262,6 @@ int main(void) {
     setIndexes();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmVSRL(20, 80);
+    nextGenerationSprmVSRL(100, 200);
     return 0;
 }
