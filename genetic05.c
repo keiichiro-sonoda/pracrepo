@@ -21,7 +21,6 @@ int sprmVSRandomNormal(const Sprm *prp, int my_turn) {
         if (n == 0) {
             // can't do anything one another
             if (pass) {
-                //printf("end\n");
                 break;
             }
             // pass
@@ -49,6 +48,46 @@ int sprmVSRandomNormal(const Sprm *prp, int my_turn) {
     if (dif < 0) return turn ^ 0b11;
     // draw
     return 0;
+}
+
+// use Sprm[100]
+// win: +2, draw: +1, lose: 0
+// play against random AI 100 times for each parameter
+void calcGoodness(Sprm *generation, int *result) {
+    int i, j;
+    // reset result
+    zeros(result, GENE_NUM);
+    // black index
+    for (i = 0; i < GENE_NUM; i++) {
+        for (j = 0; j < 50; j++) {
+            // parameter's turn is black (50 times)
+            switch(sprmVSRandomNormal(generation + i, 1)) {
+                // black won
+                case 1:
+                    result[i] += 2;
+                    break;
+                // draw
+                case 0:
+                    result[i]++;
+                // white won
+                default:
+                    ;
+            }
+            // parameter's turn is white (50 times)
+            switch(sprmVSRandomNormal(generation + i, 2)) {
+                // white won
+                case 2:
+                    result[i] += 2;
+                    break;
+                // draw
+                case 0:
+                    result[i]++;
+                // black won
+                default:
+                    ;
+            }
+        }
+    }
 }
 
 int main(void) {
