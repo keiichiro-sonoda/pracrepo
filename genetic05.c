@@ -1,8 +1,41 @@
+// calculate goodness by playing against random AI
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "genetic02.h"
 #include "sort01.h"
+
+// copy the first generation
+// for vs random AI
+void copyFirstGeneration2(void) {
+    FILE *fp;
+    // file name for reading
+    char fnamer[] = "prm/simple_prm000.bin";
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // opened!
+    Sprm pa[SURVIVE_NUM];
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // check the parameters
+    for (int i = 0; i < SURVIVE_NUM; i++)
+        printFloatArray(pa[i].weight, SPRM_LEN);
+    // file name for writing
+    char fnamew[] = "prm/sprm_vsrand000.bin";
+    // open a file to write (or make a file)
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamew);
+        return;
+    }
+    // opened!
+    fwrite(pa, sizeof pa, 1, fp);
+    // close
+    fclose(fp);
+}
 
 // play against random
 // return winner
@@ -205,6 +238,6 @@ int main(void) {
     setIndexes();
     srand((unsigned)time(NULL));
 
-    printString("test");
+    copyFirstGeneration2();
     return 0;
 }
