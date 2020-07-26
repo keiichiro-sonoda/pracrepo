@@ -171,6 +171,8 @@ def dataView02():
     )
     ax.set_xlabel("generation", fontsize=15)
     ax.set_ylabel("point", fontsize=15)
+    # 目盛ラベルを指定
+    ax.set_xticks(np.linspace(0, 20, 11))
     plt.show()
 
 # 平均値表示したい(角固定)
@@ -221,4 +223,4 @@ def dataView03():
     plt.show()
 
 if __name__ == "__main__":
-    dataView03()
+    dataView02()
