@@ -15,4 +15,5 @@ printString.rectype = None
 printString.argtypes = (c_char_p, )
 
 if __name__ == "__main__":
-    printString(b"sprm_corner0.5_000.bin")
+    byte_moji = "sprm_corner0.5_{:03d}.bin".format(50).encode()
+    printString(byte_moji)
