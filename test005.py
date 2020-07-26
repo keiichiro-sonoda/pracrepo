@@ -15,4 +15,4 @@ printString.rectype = None
 printString.argtypes = (c_char_p, )
 
 if __name__ == "__main__":
-    printString(b"abc")
+    printString(b"sprm_corner0.5_000.bin")
