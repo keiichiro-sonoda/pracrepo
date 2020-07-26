@@ -80,7 +80,7 @@ def dataView04():
 # ファイル名のフォーマットを引数で指定
 def dataView05(fname_format):
     x_min = 0
-    x_max = 100
+    x_max = 20
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
@@ -122,8 +122,12 @@ def dataView05(fname_format):
     )
     ax.set_xlabel("generation", fontsize=15)
     ax.set_ylabel("point", fontsize=15)
+    ax.set_xticks(np.linspace(x_min, x_max, 11))
     ax.set_yticks(np.linspace(-0.6, 0.6, 7))
     plt.show()
 
 if __name__ == "__main__":
-    dataView05("prm//simple_prm{:03d}.bin")
+    # 最初
+    #dataView05("prm//simple_prm{:03d}.bin")
+    # 突然変異無し
+    dataView05("prm//sprm_not_mutate{:03d}.bin")
