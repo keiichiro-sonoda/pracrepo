@@ -122,6 +122,7 @@ def dataView05(fname_format):
     )
     ax.set_xlabel("generation", fontsize=15)
     ax.set_ylabel("point", fontsize=15)
+    ax.set_yticks(np.linspace(-0.6, 0.6, 7))
     plt.show()
 
 if __name__ == "__main__":
