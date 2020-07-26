@@ -78,7 +78,7 @@ Sprm makeChildCrossMSprmFC1(Sprm mother, Sprm father) {
 int nextGenerationSprmFC1(int gene_num) {
     int i, j, count;
     // file name for fix the corner
-    char format[] = "prm/sprm_not_mutate%03d.bin";
+    char format[] = "prm/sprm_corner0.5_%03d.bin";
     char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
     // previous survivors
     Sprm parents[SURVIVE_NUM];
@@ -155,6 +155,6 @@ int main(void) {
     initBoard();
     srand((unsigned)time(NULL));
 
-    printDecimal(rand());
+    nextGenerationSprmFC1(1);
     return 0;
 }
