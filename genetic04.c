@@ -167,6 +167,6 @@ int main(void) {
     initBoard();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmFC1L(2, 8);
+    nextGenerationSprmFC1L(20, 80);
     return 0;
 }
