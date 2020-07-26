@@ -4,6 +4,8 @@ exe3: genetic03.c genetic02.c othello.c sort01.o
 	gcc genetic03.c genetic02.c othello.c sort01.o -o exe3 -lm
 exe4: genetic04.c genetic02.c othello.c sort01.o
 	gcc genetic04.c genetic02.c othello.c sort01.o -o exe4 -lm
+exe5: genetic05.c genetic02.c othello.c sort01.o
+	gcc genetic05.c genetic02.c othello.c sort01.o -o exe5 -lm
 exe2_win.exe: genetic02_win.c othello_win.c sort01_win.o
 	gcc genetic02_win.c othello_win.c sort01_win.o -o exe2_win.exe -lm
 exe2_win.so: genetic02_win.c othello_win.c sort01_win.o
