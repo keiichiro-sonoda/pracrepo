@@ -310,6 +310,25 @@ void getSprmFilePy(int gene_num, float f_pointer[MASU_NUM]) {
     }
 }
 
+// pythonでパラメータを読み取りたい
+// 書き換えるための float のポインタを与える(長さ64の配列)
+// ファイル名も指定する
+void getSprmFileFlexPy(const char *fnamer, float *f_pointer) {
+    FILE *fp;
+    // ファイルを開く. 開けなかったらメモリ開放してNULLを返す
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // 10個のパラメータを読み込むが, 使うのは1位だけ
+    Sprm pa[SURVIVE_NUM];
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // 適切な位置にパラメータを配置
+    for (int i = 0; i < MASU_NUM; i++)
+        f_pointer[i] = pa[0].weight[INDEXES[i]];
+}
+
 // トップだけを観察するとばらつきが大きいため, トップ10の平均値を取ってみる
 // 逆に0に近づいてしまうか?
 void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
@@ -446,7 +465,7 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
         weight_sum[i] = 0.0;
     for (int i = 0; i < SURVIVE_NUM; i++) {
         // 評価値の合計に足していく
-        for (int j = 0; j < SPRM_LEN; j++){
+        for (int j = 0; j < SPRM_LEN; j++) {
             weight_sum[j] += pa[i].weight[j];
         }
     }
