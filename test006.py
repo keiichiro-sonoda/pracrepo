@@ -128,7 +128,8 @@ class Widget(QWidget):
         #self.use_sprm = getSprmFileFlexWrap("prm//simple_prm100.bin")
         #self.use_sprm = getSprmFileFlexWrap("prm//sprm_not_mutate020.bin")
         #self.use_sprm = getSprmFileFlexWrap("prm//sprm_corner0.5_100.bin")
-        self.use_sprm = getSprmFileFlexWrap("prm//sprm_vsrand100.bin")
+        #self.use_sprm = getSprmFileFlexWrap("prm//sprm_vsrand100.bin")
+        self.use_sprm = getSprmFileFlexWrap("prm//sprm_corner0.5neg_100.bin")
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
