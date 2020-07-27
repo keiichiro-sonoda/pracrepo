@@ -326,6 +326,7 @@ void getSprmFileFlexPy(const char *fnamer, float *f_pointer) {
     fclose(fp);
     // 適切な位置にパラメータを配置
     for (int i = 0; i < MASU_NUM; i++)
+        // トップパラメータから
         f_pointer[i] = pa[0].weight[INDEXES[i]];
 }
 
