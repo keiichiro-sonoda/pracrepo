@@ -168,6 +168,6 @@ int main(void) {
     initBoard();
     srand((unsigned)time(NULL));
 
-    nextGenerationSprmFC2(0);
+    nextGenerationSprmFC2L(1, 9);
     return 0;
 }
