@@ -82,4 +82,8 @@ if __name__ == "__main__":
     # 突然変異無し
     #dataView05("prm//sprm_not_mutate{:03d}.bin", 0, 20)
     # 角固定
-    dataView05("prm//sprm_corner0.5_{:03d}.bin", 0, 100)
+    #dataView05("prm//sprm_corner0.5_{:03d}.bin", 0, 100)
+    # ランダム対戦
+    #dataView05("prm//sprm_vsrand{:03d}.bin", 0, 100)
+    # 角固定(-0.5)
+    dataView05("prm//sprm_corner0.5neg_{:03d}.bin", 0, 100)
