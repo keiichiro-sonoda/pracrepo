@@ -125,7 +125,10 @@ class Widget(QWidget):
         # 評価値リストを入手
         # ファイル名指定
         # クラス内変数で所持
-        self.use_sprm = getSprmFileFlexWrap("prm//simple_prm100.bin")
+        #self.use_sprm = getSprmFileFlexWrap("prm//simple_prm100.bin")
+        #self.use_sprm = getSprmFileFlexWrap("prm//sprm_not_mutate020.bin")
+        #self.use_sprm = getSprmFileFlexWrap("prm//sprm_corner0.5_100.bin")
+        self.use_sprm = getSprmFileFlexWrap("prm//sprm_vsrand100.bin")
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
