@@ -78,8 +78,8 @@ Sprm makeChildCrossMSprmFC2(Sprm mother, Sprm father) {
 // fix the evaluation value of corner to -0.5
 int nextGenerationSprmFC2(int gene_num) {
     int i, j, count;
-    // file name for fix the corner
-    char format[] = "prm/sprm_corner0.5_%03d.bin";
+    // file name for fix the corner (negative value)
+    char format[] = "prm/sprm_corner0.5neg_%03d.bin";
     char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
     // previous survivors
     Sprm parents[SURVIVE_NUM];
@@ -168,6 +168,6 @@ int main(void) {
     initBoard();
     srand((unsigned)time(NULL));
 
-    copyFGFixCorner2();
+    nextGenerationSprmFC2(0);
     return 0;
 }
