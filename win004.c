@@ -7,7 +7,7 @@
 // 配列の要素は非負の整数であること前提
 int roulette(int *A, int n) {
     // 0 以上合計値未満の乱数を生成
-    int r = rand() % sum(A, n);
+    int r = rand() % sum(A, n) + 1;
     int i = 0;
     while (i < n) {
         // 要素を引いていく
