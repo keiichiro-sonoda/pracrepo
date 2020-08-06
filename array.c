@@ -40,3 +40,12 @@ void randArray(int *A, int n) {
         A[i] = rand();
     }
 }
+
+// 配列の要素の合計を返す
+int sum(int *A, int n) {
+    int s = 0;
+    for (int i = 0; i < n; i++) {
+        s += A[i];
+    }
+    return s;
+}

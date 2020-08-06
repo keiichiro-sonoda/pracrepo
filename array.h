@@ -7,5 +7,6 @@ void range(int *A, int n, int start, int step);
 void init(int *A, int n, int num);
 void zeros(int *A, int n);
 void randArray(int *A, int n);
+int sum(int *A, int n);
 
 #endif
