@@ -32,6 +32,8 @@ int main(void) {
     range(A, n, 0, 1);
     printDecimalArray(A, n);
     printDecimal(roulette(A, n));
+    // 初期化を忘れていた
+    zeros(result, n);
     for (int i = 0; i < 45000; i++) {
         r = roulette(A, n);
         result[r]++;
