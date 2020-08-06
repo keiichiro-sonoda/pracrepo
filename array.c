@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "array.h" // ここで必ず"array.h"をincludeする
 
 // int型の配列を表示
@@ -31,4 +32,11 @@ void init(int *A, int n, int num) {
 // 全零配列特化(せっかくなのでinitを使う)
 void zeros(int *A, int n) {
     init(A, n, 0);
+}
+
+// 配列に乱数を代入
+void randArray(int *A, int n) {
+    for (int i = 0; i < n; i++) {
+        A[i] = rand();
+    }
 }
