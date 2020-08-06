@@ -6,11 +6,11 @@
 // ルーレット選択
 // 配列の要素は非負の整数であること前提
 int roulette(int *A, int n) {
-    // 0 以上合計値未満の乱数を生成
+    // 1以上合計値以下の乱数を生成
     int r = rand() % sum(A, n) + 1;
     int i;
-    // 0になったら終了
-    for (i = 0; i < n && r >= 0; i++) {
+    // 0以下になったら終了
+    for (i = 0; i < n && r > 0; i++) {
         // 要素を引いていく
         // 大きい値ほど選ばれやすい?
         r -= A[i];
@@ -30,7 +30,7 @@ int main(void) {
     printDecimal(roulette(A, n));
     // 初期化を忘れていた
     zeros(result, n);
-    for (int i = 0; i < 45000; i++) {
+    for (int i = 0; i < 450000; i++) {
         r = roulette(A, n);
         result[r]++;
     }
