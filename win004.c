@@ -6,9 +6,8 @@
 int main(void) {
     int n = 10;
     int A[n];
-    printDecimal(time(NULL));
     srand((unsigned)time(NULL));
-    randArray(A, n);
+    range(A, n, 0, 1);
     printDecimalArray(A, n);
     return 0;
 }
