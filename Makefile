@@ -27,4 +27,6 @@ sort01_win.o: sort01_win.c
 win002.so: win002.c
 	gcc win002.c -o win002.so -shared -fPIC
 win003.exe: win003.c array.c
-	gcc win003.c array.c -o win003
+	gcc win003.c array.c -o win003.exe
+win004.exe: win004.c array.c
+	gcc win004.c array.c -o win004.exe
