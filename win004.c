@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include "array.h"
 
 // ルーレット選択
@@ -17,6 +18,14 @@ int roulette(int *A, int n) {
     }
     // 0 以下にした値を返す
     return i - 1;
+}
+
+// ルーレット選択（負の値も考慮）
+// ネイピア数の累乗で正の値にする
+// 与えるのはfloat型の配列
+int rouletteExp(float *A, int n) {
+    printFloat(expf(1));
+    return 0;
 }
 
 int main(void) {
@@ -37,5 +46,6 @@ int main(void) {
         result[r]++;
     }
     printDecimalArray(result, n);
+    rouletteExp(B, n);
     return 0;
 }

@@ -29,4 +29,4 @@ win002.so: win002.c
 win003: win003.c array.c
 	gcc win003.c array.c -o win003
 win004: win004.c array.c
-	gcc win004.c array.c -o win004
+	gcc win004.c array.c -o win004 -lm

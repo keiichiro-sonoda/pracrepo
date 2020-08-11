@@ -1,6 +1,7 @@
 #ifndef ARRAY_H // 二重でincludeされることを防ぐ
 #define ARRAY_H
 #define printDecimal(x) printf("%d\n", x)
+#define printFloat(x) printf("%f\n", x)
 
 void printDecimalArray(const int *A, int n);
 void printFloatArray(const float *A, int n);
