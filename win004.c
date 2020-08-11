@@ -21,25 +21,27 @@ int roulette(int *A, int n) {
 }
 
 // 非負のfloat型前提
+// 毎回指数の配列を作るのは非効率
+// ただし和は毎回計算する
 int rouletteFloat(float *A, int n) {
-    return 0;
+    // 0以上合計値未満の乱数を生成
+    float r = (float)rand() / RAND_MAX * sumFloat(A, n);
+    int i;
+    // r < 0 でループ終了とすることで, 返り値が -1 になることを防ぐ
+    for (i = 0; i < n && r >= 0; i++) {
+        r -= A[i];
+    }
+    return i - 1;
 }
 
 // ルーレット選択（負の値も考慮）
 // ネイピア数の累乗で正の値にする
 // 与えるのはfloat型の配列
-int rouletteExp(float *A, int n) {
-    float r, EA[n];
+int rouletteFloatExp(float *A, int n) {
+    float EA[n];
     // 指数の配列を作る
     expArray(A, EA, n);
-    //printFloatArray(EA, n);
-    //printFloat(sumFloat(EA, n));
-    r = (float)rand() / RAND_MAX * sumFloat(EA, n);
-    int i;
-    for (i = 0; i < n && r > 0; i++) {
-        r -= EA[i];
-    }
-    return i - 1;
+    return rouletteFloat(EA, n);
 }
 
 int main(void) {
@@ -54,7 +56,7 @@ int main(void) {
     printFloatArray(B, n);
     zeros(result, n);
     for (int i = 0; i < 100000; i++) {
-        result[rouletteExp(B, n)]++;
+        result[rouletteFloatExp(B, n)]++;
     }
     printDecimalArray(result, n);
     return 0;
