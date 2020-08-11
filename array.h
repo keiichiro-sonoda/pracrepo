@@ -10,5 +10,6 @@ void init(int *A, int n, int num);
 void zeros(int *A, int n);
 void randArray(int *A, int n);
 int sum(int *A, int n);
+float sumFloat(float *A, int n);
 
 #endif

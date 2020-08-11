@@ -61,3 +61,12 @@ int sum(int *A, int n) {
     }
     return s;
 }
+
+// 配列の要素の合計（float版）
+float sumFloat(float *A, int n) {
+    float s = 0.0;
+    for (int i = 0; i < n; i++) {
+        s += A[i];
+    }
+    return s;
+}

@@ -46,6 +46,6 @@ int main(void) {
         result[r]++;
     }
     printDecimalArray(result, n);
-    rouletteExp(B, n);
+    printFloat(sumFloat(B, n));
     return 0;
 }
