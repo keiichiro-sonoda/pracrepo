@@ -32,7 +32,7 @@ int rouletteExp(float *A, int n) {
     r = (float)rand() / 35536 * sumFloat(EA, n);
     int i;
     for (i = 0; i < n && r > 0; i++) {
-        r -= A[i];
+        r -= EA[i];
     }
     return i - 1;
 }
@@ -48,6 +48,9 @@ int main(void) {
     range(A, n, 0, 1);
     printFloatArray(B, n);
     zeros(result, n);
+    for (int i = 0; i < 100000; i++) {
+        result[rouletteExp(B, n)]++;
+    }
     printDecimalArray(result, n);
     return 0;
 }
