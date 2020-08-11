@@ -22,11 +22,13 @@ int roulette(int *A, int n) {
 int main(void) {
     int n = 10;
     int A[n];
+    float B[] = {-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5};
     int result[n];
     int r;
     srand((unsigned)time(NULL));
     range(A, n, 0, 1);
     printDecimalArray(A, n);
+    printFloatArray(B, n);
     printDecimal(roulette(A, n));
     // 初期化を忘れていた
     zeros(result, n);

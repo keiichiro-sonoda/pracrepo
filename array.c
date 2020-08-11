@@ -16,6 +16,18 @@ void printDecimalArray(const int *A, int n) {
     printf("}\n");
 }
 
+// float型の配列を表示
+void printFloatArray(const float *A, int n) {
+    putchar('{');
+    for (int i = 0; i < n; i++) {
+        printf("%5.2f", A[i]);
+        if (i + 1 < n) {
+            printf(", ");
+        }
+    }
+    printf("}\n");
+}
+
 // 等差数列で初期化する関数
 void range(int *A, int n, int start, int step) {
     for (int i = 0; i < n; i++) {
