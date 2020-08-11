@@ -20,6 +20,11 @@ int roulette(int *A, int n) {
     return i - 1;
 }
 
+// 非負のfloat型前提
+int rouletteFloat(float *A, int n) {
+    return 0;
+}
+
 // ルーレット選択（負の値も考慮）
 // ネイピア数の累乗で正の値にする
 // 与えるのはfloat型の配列
@@ -29,7 +34,7 @@ int rouletteExp(float *A, int n) {
     expArray(A, EA, n);
     //printFloatArray(EA, n);
     //printFloat(sumFloat(EA, n));
-    r = (float)rand() / 35536 * sumFloat(EA, n);
+    r = (float)rand() / RAND_MAX * sumFloat(EA, n);
     int i;
     for (i = 0; i < n && r > 0; i++) {
         r -= EA[i];
