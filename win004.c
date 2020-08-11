@@ -13,7 +13,8 @@ int roulette(int *A, int n) {
     // 0以下になったら終了
     for (i = 0; i < n && r > 0; i++) {
         // 要素を引いていく
-        // 大きい値ほど選ばれやすい?        r -= A[i];
+        // 大きい値ほど選ばれやすい?
+        r -= A[i];
     }
     // 0 以下にした値を返す
     return i - 1;
@@ -23,10 +24,17 @@ int roulette(int *A, int n) {
 // ネイピア数の累乗で正の値にする
 // 与えるのはfloat型の配列
 int rouletteExp(float *A, int n) {
-    float B[n];
-    expArray(A, B, n);
-    printFloatArray(B, n);
-    return 0;
+    float r, EA[n];
+    // 指数の配列を作る
+    expArray(A, EA, n);
+    //printFloatArray(EA, n);
+    //printFloat(sumFloat(EA, n));
+    r = (float)rand() / 35536 * sumFloat(EA, n);
+    int i;
+    for (i = 0; i < n && r > 0; i++) {
+        r -= A[i];
+    }
+    return i - 1;
 }
 
 int main(void) {
@@ -47,6 +55,11 @@ int main(void) {
         result[r]++;
     }
     printDecimalArray(result, n);
-    rouletteExp(B, n);
+    // 再度0で初期化
+    zeros(result, n);
+    for (int i = 0; i < 100000; i++) {
+        result[rouletteExp(B, n)]++;
+    }
+    printDecimalArray(result, n);
     return 0;
 }
