@@ -48,6 +48,7 @@ int main(void) {
     int n = 10;
     int A[n];
     float B[] = {-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5};
+    float C[n];
     int result[n];
     int r;
     // 時刻でシード指定
@@ -55,8 +56,10 @@ int main(void) {
     range(A, n, 0, 1);
     printFloatArray(B, n);
     zeros(result, n);
-    for (int i = 0; i < 100000; i++) {
-        result[rouletteFloatExp(B, n)]++;
+    expArray(B, C, n);
+    printFloatArray(C, n);
+    for (int i = 0; i < 1000000; i++) {
+        result[rouletteFloat(C, n)]++;
     }
     printDecimalArray(result, n);
     return 0;
