@@ -43,23 +43,11 @@ int main(void) {
     float B[] = {-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5};
     int result[n];
     int r;
+    // 時刻でシード指定
     srand((unsigned)time(NULL));
     range(A, n, 0, 1);
-    printDecimalArray(A, n);
     printFloatArray(B, n);
-    printDecimal(roulette(A, n));
-    // 初期化を忘れていた
     zeros(result, n);
-    for (int i = 0; i < 450000; i++) {
-        r = roulette(A, n);
-        result[r]++;
-    }
-    printDecimalArray(result, n);
-    // 再度0で初期化
-    zeros(result, n);
-    for (int i = 0; i < 100000; i++) {
-        result[rouletteExp(B, n)]++;
-    }
     printDecimalArray(result, n);
     return 0;
 }
