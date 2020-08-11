@@ -9,6 +9,7 @@ void range(int *A, int n, int start, int step);
 void init(int *A, int n, int num);
 void zeros(int *A, int n);
 void randArray(int *A, int n);
+void expArray(float *X, float *Y, int n);
 int sum(int *A, int n);
 float sumFloat(float *A, int n);
 

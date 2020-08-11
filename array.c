@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "array.h" // ここで必ず"array.h"をincludeする
 
 // int型の配列を表示
@@ -50,6 +51,13 @@ void zeros(int *A, int n) {
 void randArray(int *A, int n) {
     for (int i = 0; i < n; i++) {
         A[i] = rand();
+    }
+}
+
+// Y = exp(X) となる配列 Y を作る
+void expArray(float *X, float *Y, int n) {
+    for (int i = 0; i < n; i++) {
+        Y[i] = expf(X[i]);
     }
 }
 
