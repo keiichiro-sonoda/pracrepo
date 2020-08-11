@@ -36,6 +36,15 @@ void range(int *A, int n, int start, int step) {
     }
 }
 
+// 等差数列（float）
+// 直前の要素に公差を足す方法を用いてみた
+void rangeFloat(float *A, int n, float start, float step) {
+    A[0] = start;
+    for (int i = 1; i < n; i++) {
+        A[i] = A[i - 1] + step;
+    }
+}
+
 // 全ての要素を特定の数字で初期化
 // 初項n, 交差0の等差数列で考える(気付かなかった)
 void init(int *A, int n, int num) {

@@ -6,6 +6,7 @@
 void printDecimalArray(const int *A, int n);
 void printFloatArray(const float *A, int n);
 void range(int *A, int n, int start, int step);
+void rangeFloat(float *A, int n, float start, float step);
 void init(int *A, int n, int num);
 void zeros(int *A, int n);
 void randArray(int *A, int n);
