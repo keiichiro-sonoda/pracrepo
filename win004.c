@@ -46,7 +46,7 @@ int rouletteFloatExp(float *A, int n) {
 
 int main(void) {
     int n = 10;
-    int loop = 1000000;
+    int loop = 1423986;
     int A[n];
     float s;
     float B[n], C[n];
@@ -56,10 +56,11 @@ int main(void) {
     // 時刻でシード指定
     srand((unsigned)time(NULL));
     range(A, n, 0, 1);
-    rangeFloat(B, n, -4.0, 1.0);
+    rangeFloat(B, n, 4.5, -1.0);
     zeros(result, n);
     expArray(B, C, n);
     s = sumFloat(C, n);
+    printFloat(s);
     printFloatArray(B, n);
     printFloatArray(C, n);
     for (int i = 0; i < n; i++) {
