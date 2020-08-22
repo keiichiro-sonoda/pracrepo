@@ -47,6 +47,8 @@ int main(void) {
     printDecimal(t);
     srand(t);
     printDecimalArray(sample1, n1);
+    for (int i = 0; i < 4500000; i++)
+        result[roulette(sample1, n1)]++;
     printDecimalArray(result, n1);
     return 0;
 }
