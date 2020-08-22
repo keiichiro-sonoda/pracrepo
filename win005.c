@@ -22,6 +22,8 @@ int sumInt(int *A, int n) {
 }
 
 int roulette(int *A, int n) {
+    int r = rand() % sumInt(A, n);
+    printDecimal(r);
     return 0;
 }
 
@@ -31,8 +33,10 @@ int main(void) {
     int sample1[] = {8, 4, 1, 2, 0, 3, 9, 6, 7, 5};
     t = (unsigned)time(NULL);
     srand(t);
+    // 最初の乱数が乱数っぽくないので一回作る
+    rand();
     printDecimal(t);
     printDecimalArray(sample1, n1);
-    printDecimal(sumInt(sample1, n1));
+    roulette(sample1, n1);
     return 0;
 }
