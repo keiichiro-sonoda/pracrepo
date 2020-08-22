@@ -30,3 +30,5 @@ win003: win003.c array.c
 	gcc win003.c array.c -o win003
 win004: win004.c array.c
 	gcc win004.c array.c -o win004 -lm
+win005: win005.c
+	gcc win005.c -o win005
