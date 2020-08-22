@@ -5,11 +5,12 @@
 #define printDecimal(x) printf("%d\n", x)
 
 int main(void) {
-    int t, r;
+    int t;
     t = (unsigned)time(NULL);
     srand(t);
-    r = rand();
     printDecimal(t);
-    printDecimal(r);
+    for (int i = 0; i < 3; i++) {
+        printDecimal(rand());
+    }
     return 0;
 }
