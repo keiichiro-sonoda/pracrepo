@@ -27,6 +27,8 @@ int sumInt(int *A, int n) {
     return s;
 }
 
+// ルーレット選択
+// 選択された要素がある添え字を返す
 int roulette(int *A, int n) {
     int r = rand() % sumInt(A, n);
     int i;
@@ -50,22 +52,31 @@ void delElementInt(int *src, int *dst, int src_len, int index) {
     }
 }
 
+// 親を選択する
+// parents には長さ2の整数型配列を与える
+void chooseParents(int *A, int n, int *parents) {
+    // 親1以外の要素を格納する配列
+    int B[n - 1];
+    // 親1を選択
+    parents[0] = roulette(A, n);
+    // 親1を配列から除外する
+    delElementInt(A, B, n, parents[0]);
+    // 親2を選択
+    parents[1] = roulette(B, n - 1);
+}
+
 int main(void) {
     int n1, t;
     int sample1[] = {8, 4, 1, 2, 0, 3, 9, 6, 7, 5};
     n1 = arrayLength(sample1);
-    // 削除後配列
-    int sample2[n1 - 1];
-    int result[n1];
-    zeros(result, n1);
+    int result1[n1], result2[n1], parents[2];
+    zeros(result1, n1);
+    zeros(result2, n1);
     t = (unsigned)time(NULL);
     printDecimal(t);
     srand(t);
     printDecimalArray(sample1, n1);
-    for (int i = 0; i < 4500000; i++)
-        result[roulette(sample1, n1)]++;
-    printDecimalArray(result, n1);
-    delElementInt(sample1, sample2, n1, 0);
-    printDecimalArray(sample2, n1 - 1);
+    chooseParents(sample1, n1, parents);
+    printDecimalArray(parents, 2);
     return 0;
 }
