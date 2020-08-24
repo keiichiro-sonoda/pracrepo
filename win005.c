@@ -59,32 +59,40 @@ void chooseParents(int *A, int n, int *parents) {
     int B[n - 1];
     // 親1を選択
     parents[0] = roulette(A, n);
-    printDecimalArray(A, n);
-    printDecimal(parents[0]);
     // 親1を配列から除外する
     // ここで次に選ばれる親の添え字がずれることに注意
     delElementInt(A, B, n, parents[0]);
-    printDecimalArray(B, n - 1);
     // 親2を選択
     parents[1] = roulette(B, n - 1);
     // 親1より後ろの要素は添え字が1つずつずれるので修正
     if (parents[1] >= parents[0])
         parents[1]++;
-    printDecimal(parents[1]);
 }
 
 int main(void) {
-    int n1, t;
-    int sample1[] = {8, 4, 1, 2, 0, 3, 9, 6, 7, 5};
+    int n1, t, loop;
+    int sample1[] = {1, 2, 3};
     n1 = arrayLength(sample1);
-    int result1[n1], result2[n1], parents[2];
+    // ループ数
+    loop = sumInt(sample1, n1) * 100000;
+    int result1[n1];
+    int result2[n1];
+    int parents[2];
     zeros(result1, n1);
     zeros(result2, n1);
     t = (unsigned)time(NULL);
     printDecimal(t);
     srand(t);
-    //printDecimalArray(sample1, n1);
     chooseParents(sample1, n1, parents);
     printDecimalArray(parents, 2);
+    for (int i = 0; i < loop; i++) {
+        // 親選択
+        chooseParents(sample1, n1, parents);
+        // 親1と親2に選ばれた回数をそれぞれカウント
+        result1[parents[0]]++;
+        result2[parents[1]]++;
+    }
+    printDecimalArray(result1, n1);
+    printDecimalArray(result2, n1);
     return 0;
 }
