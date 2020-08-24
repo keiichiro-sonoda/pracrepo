@@ -74,7 +74,7 @@ int main(void) {
     int sample1[] = {1, 2, 3};
     n1 = arrayLength(sample1);
     // ループ数
-    loop = sumInt(sample1, n1) * 100000;
+    loop = 200000;
     int result1[n1];
     int result2[n1];
     int parents[2];
