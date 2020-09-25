@@ -5,5 +5,6 @@
 
 int main(void) {
     printf("Hello GA!\nLong time no see!\n");
+    sortTest();
     return 0;
 }
