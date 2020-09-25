@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// get array length
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
 
 // for debug
