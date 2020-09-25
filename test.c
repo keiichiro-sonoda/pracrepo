@@ -4,6 +4,7 @@
 
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
 
+// for debug
 void printIntArray(const int *A, int n) {
     int i;
     for (i = 0; i < n; i++)
@@ -24,29 +25,37 @@ void insertionSort(int *A, int n) {
     return;
 }
 
-int *arrayRandom(int n);
+// global variable
+int *GLOBAL;
+
+void arrayRandom(int n);
 
 int main(void) {
     printf("Hello World!!\n");
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
     int l = arrayLength(sample1);
-    int *sample2 = arrayRandom(l);
+    arrayRandom(l);
+    // check arrays
     printIntArray(sample1, l);
     insertionSort(sample1, l);
     printIntArray(sample1, l);
-    printIntArray(sample2, l);
-    insertionSort(sample2, l);
-    printIntArray(sample2, l);
+    printIntArray(GLOBAL, l);
+    insertionSort(GLOBAL, l);
+    printIntArray(GLOBAL, l);
+    // free memory
+    free(GLOBAL);
+    if (GLOBAL == NULL) {
+        printf("GLOBAL is NULL\n");
+    }
     return 0;
 }
 
-int *arrayRandom(int n) {
-    int *A;
-    A = (int *)malloc(n * sizeof(int));
-    if (A == NULL) return NULL;
-    int i;
-    for (i = 0; i < n; i++)
-        A[i] = rand() % 100;
-    return A;
+void arrayRandom(int n) {
+    GLOBAL = (int *)malloc(n * sizeof(int));
+    // failed
+    if (GLOBAL == NULL) return;
+    for (int i = 0; i < n; i++)
+        // 0-100
+        GLOBAL[i] = rand() % 100;
 }
