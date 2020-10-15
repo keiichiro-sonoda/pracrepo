@@ -70,6 +70,14 @@ int sumInt(const int *A, int n) {
     return s;
 }
 
+// return the sum of a floating point array
+float sumFloat(const float *A, int n) {
+    float s = 0.0;
+    for (int i = 0; i < n; i++)
+        s += A[i];
+    return s;
+}
+
 // roulette selection
 // only supports non-negative integers
 // return an index
@@ -88,24 +96,27 @@ int main(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
     float sample2[] = {-0.2, -0.1, 0.0, 0.1, 0.3, 1.0};
-    int l = arrayLength(sample1);
+    int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     float sample3[l2];
     int s;
-    int result1[l];
+    int result1[l1];
+    float s2;
     // initialize
-    zeros(result1, l);
-    printf("length = %d\n", l);
-    arrayRandom(l);
-    printIntArray(GLOBAL, l);
-    s = sumInt(GLOBAL, l);
+    zeros(result1, l1);
+    printf("length = %d\n", l1);
+    arrayRandom(l1);
+    printIntArray(GLOBAL, l1);
+    s = sumInt(GLOBAL, l1);
     for (int i = 0; i < s * 100; i++) {
-        result1[rouletteInt(GLOBAL, l, s)]++;
+        result1[rouletteInt(GLOBAL, l1, s)]++;
     }
-    printIntArray(result1, l);
+    printIntArray(result1, l1);
     printFloatArray(sample2, l2);
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
+    s2 = sumFloat(sample3, l2);
+    printFloat(s2);
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
