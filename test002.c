@@ -69,7 +69,7 @@ int main(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
     int l = arrayLength(sample1);
-    int s = sumInt(sample1, l);
+    int s;
     int result1[l];
     // initialize
     zeros(result1, l);
@@ -79,18 +79,16 @@ int main(void) {
     insertionSort(sample1, l);
     printIntArray(sample1, l);
     printIntArray(GLOBAL, l);
-    insertionSort(GLOBAL, l);
-    printIntArray(GLOBAL, l);
+    s = sumInt(GLOBAL, l);
+    for (int i = 0; i < s * 1000; i++) {
+        result1[rouletteInt(GLOBAL, l, s)]++;
+    }
+    printIntArray(result1, l);
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
         printf("GLOBAL is NULL\n");
     }
-    printIntArray(result1, l);
-    for (int i = 0; i < 1150000; i++) {
-        result1[rouletteInt(sample1, l, s)]++;
-    }
-    printIntArray(result1, l);
     return 0;
 }
 
