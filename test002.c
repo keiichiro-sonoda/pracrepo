@@ -52,7 +52,13 @@ int rouletteInt(int *A, int n) {
     int s = sumInt(A, n);
     int r = rand() % s;
     printDecimal(r);
-    return 0;
+    int i;
+    for (i = 0; i < n - 1; i++) {
+        r -= A[i];
+        if (r < 0)
+            return i;
+    }
+    return i;
 }
 
 int main(void) {
@@ -74,7 +80,7 @@ int main(void) {
     if (GLOBAL == NULL) {
         printf("GLOBAL is NULL\n");
     }
-    rouletteInt(sample1, l);
+    printDecimal(rouletteInt(sample1, l));
     return 0;
 }
 
