@@ -5,10 +5,11 @@
 
 // get array length
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
+// macros for debugging
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%.6f\n", x)
 
-// for debugging
+// functions for debugging
 void printIntArray(const int *A, int n) {
     int i;
     putchar('{');
@@ -19,6 +20,18 @@ void printIntArray(const int *A, int n) {
     }
     printf("}\n");
 }
+
+void printFloatArray(const float *A, int n) {
+    int i;
+    putchar('{');
+    for (i = 0; i < n; i++) {
+        printf("%.2f", A[i]);
+        if (i < n - 1)
+            printf(", ");
+    }
+    printf("}\n");
+}
+
 
 // insertion sort
 void insertionSort(int *A, int n) {
@@ -45,7 +58,7 @@ void zeros(int *A, int n) {
 }
 
 // return the sum of an integer array
-int sumInt(int *A, int n) {
+int sumInt(const int *A, int n) {
     int s = 0;
     for (int i = 0; i < n; i++)
         s += A[i];
@@ -55,7 +68,7 @@ int sumInt(int *A, int n) {
 // roulette selection
 // only supports non-negative integers
 // return an index
-int rouletteInt(int *A, int n, int s) {
+int rouletteInt(const int *A, int n, int s) {
     int r = rand() % s;
     int i;
     for (i = 0; i < n - 1; i++) {
@@ -69,7 +82,9 @@ int rouletteInt(int *A, int n, int s) {
 int main(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
+    float sample2[] = {-0.2, -0.1, 0.0, 0.1, 0.3};
     int l = arrayLength(sample1);
+    int l2 = arrayLength(sample2);
     int s;
     int result1[l];
     // initialize
@@ -86,6 +101,7 @@ int main(void) {
     }
     printIntArray(result1, l);
     printFloat((float)exp(1.0));
+    printFloatArray(sample2, l2);
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
