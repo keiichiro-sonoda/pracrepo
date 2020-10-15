@@ -37,6 +37,12 @@ int *GLOBAL;
 // make an array of random numbers
 void arrayRandom(int n);
 
+// set all elements of an array to 0
+void zeros(int *A, int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = 0;
+}
+
 // return the sum of an integer array
 int sumInt(int *A, int n) {
     int s = 0;
@@ -62,14 +68,16 @@ int rouletteInt(int *A, int n, int s) {
 }
 
 int main(void) {
-    printf("Hello World!!\n");
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
     int l = arrayLength(sample1);
+    int s = sumInt(sample1, l);
+    int result1[l];
+    // initialize
+    zeros(result1, l);
     printf("length = %d\n", l);
     arrayRandom(l);
     // check arrays
-    printIntArray(sample1, l);
     insertionSort(sample1, l);
     printIntArray(sample1, l);
     printIntArray(GLOBAL, l);
@@ -80,8 +88,8 @@ int main(void) {
     if (GLOBAL == NULL) {
         printf("GLOBAL is NULL\n");
     }
-    int s = sumInt(sample1, l);
     printDecimal(rouletteInt(sample1, l, s));
+    printIntArray(result1, l);
     return 0;
 }
 
