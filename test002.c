@@ -48,9 +48,9 @@ int sumInt(int *A, int n) {
 // roulette selection
 // only supports non-negative integers
 // return an index
-int rouletteInt(int *A, int n) {
-    int s = sumInt(A, n);
+int rouletteInt(int *A, int n, int s) {
     int r = rand() % s;
+    printDecimal(s);
     printDecimal(r);
     int i;
     for (i = 0; i < n - 1; i++) {
@@ -80,7 +80,8 @@ int main(void) {
     if (GLOBAL == NULL) {
         printf("GLOBAL is NULL\n");
     }
-    printDecimal(rouletteInt(sample1, l));
+    int s = sumInt(sample1, l);
+    printDecimal(rouletteInt(sample1, l, s));
     return 0;
 }
 
