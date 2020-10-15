@@ -33,9 +33,9 @@ int *GLOBAL;
 // make an array of random numbers
 void arrayRandom(int n);
 
+// return the sum of an integer array
 int sumInt(int *A, int n) {
-    int s;
-    s = 0;
+    int s = 0;
     for (int i = 0; i < n; i++)
         s += A[i];
     return s;
