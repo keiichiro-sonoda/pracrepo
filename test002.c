@@ -51,6 +51,11 @@ int *GLOBAL;
 // make an array of random numbers
 void arrayRandom(int n);
 
+void expArray(const float *X, float *Y, int n) {
+    for (int i = 0; i < n; i++)
+        Y[i] = exp(X[i]);
+}
+
 // set all elements of an array to 0
 void zeros(int *A, int n) {
     for (int i = 0; i < n; i++)
@@ -82,18 +87,16 @@ int rouletteInt(const int *A, int n, int s) {
 int main(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
-    float sample2[] = {-0.2, -0.1, 0.0, 0.1, 0.3};
+    float sample2[] = {-0.2, -0.1, 0.0, 0.1, 0.3, 1.0};
     int l = arrayLength(sample1);
     int l2 = arrayLength(sample2);
+    float sample3[l2];
     int s;
     int result1[l];
     // initialize
     zeros(result1, l);
     printf("length = %d\n", l);
     arrayRandom(l);
-    // check arrays
-    insertionSort(sample1, l);
-    printIntArray(sample1, l);
     printIntArray(GLOBAL, l);
     s = sumInt(GLOBAL, l);
     for (int i = 0; i < s * 100; i++) {
@@ -102,6 +105,8 @@ int main(void) {
     printIntArray(result1, l);
     printFloat((float)exp(1.0));
     printFloatArray(sample2, l2);
+    expArray(sample2, sample3, l2);
+    printFloatArray(sample3, l2);
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
