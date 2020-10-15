@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
 
 // get array length
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
 #define printDecimal(x) printf("%d\n", x)
+#define printFloat(x) printf("%.6f\n", x)
 
 // for debugging
 void printIntArray(const int *A, int n) {
@@ -79,10 +81,11 @@ int main(void) {
     printIntArray(sample1, l);
     printIntArray(GLOBAL, l);
     s = sumInt(GLOBAL, l);
-    for (int i = 0; i < s * 1000; i++) {
+    for (int i = 0; i < s * 100; i++) {
         result1[rouletteInt(GLOBAL, l, s)]++;
     }
     printIntArray(result1, l);
+    printFloat((float)exp(1.0));
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
