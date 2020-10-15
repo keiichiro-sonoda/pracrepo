@@ -4,6 +4,7 @@
 
 // get array length
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
+#define printDecimal(x) printf("%d\n", x)
 
 // for debug
 void printIntArray(const int *A, int n) {
@@ -29,14 +30,24 @@ void insertionSort(int *A, int n) {
 // global variable
 int *GLOBAL;
 
+// make an array of random numbers
 void arrayRandom(int n);
+
+// roulette selection (Integer)
+// return an index
+int rouletteInt(int *A, int n) {
+    for (int i = 0; i < n; i++) {
+        printDecimal(i);
+    }
+    return 0;
+}
 
 int main(void) {
     printf("Hello World!!\n");
-    printf("yeah\n");
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
     int l = arrayLength(sample1);
+    printf("length = %d\n", l);
     arrayRandom(l);
     // check arrays
     printIntArray(sample1, l);
@@ -50,6 +61,7 @@ int main(void) {
     if (GLOBAL == NULL) {
         printf("GLOBAL is NULL\n");
     }
+    rouletteInt(sample1, l);
     return 0;
 }
 
