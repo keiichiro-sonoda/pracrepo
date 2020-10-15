@@ -33,6 +33,7 @@ void arrayRandom(int n);
 
 int main(void) {
     printf("Hello World!!\n");
+    printf("yeah\n");
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
     int l = arrayLength(sample1);
