@@ -96,8 +96,9 @@ int main(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
     float sample2[] = {-0.2, -0.1, 0.0, 0.1, 0.3, 1.0};
-    int l1 = arrayLength(sample1);
-    int l2 = arrayLength(sample2);
+    int l1, l2;
+    l1 = arrayLength(sample1);
+    l2 = arrayLength(sample2);
     float sample3[l2];
     int s;
     int result1[l1];
