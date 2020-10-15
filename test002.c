@@ -56,8 +56,6 @@ int sumInt(int *A, int n) {
 // return an index
 int rouletteInt(int *A, int n, int s) {
     int r = rand() % s;
-    printDecimal(s);
-    printDecimal(r);
     int i;
     for (i = 0; i < n - 1; i++) {
         r -= A[i];
@@ -88,7 +86,10 @@ int main(void) {
     if (GLOBAL == NULL) {
         printf("GLOBAL is NULL\n");
     }
-    printDecimal(rouletteInt(sample1, l, s));
+    printIntArray(result1, l);
+    for (int i = 0; i < 1150000; i++) {
+        result1[rouletteInt(sample1, l, s)]++;
+    }
     printIntArray(result1, l);
     return 0;
 }
