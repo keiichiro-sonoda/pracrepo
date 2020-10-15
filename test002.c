@@ -6,12 +6,16 @@
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
 #define printDecimal(x) printf("%d\n", x)
 
-// for debug
+// for debugging
 void printIntArray(const int *A, int n) {
     int i;
-    for (i = 0; i < n; i++)
-        printf("%d ", A[i]);
-    putchar('\n');
+    putchar('{');
+    for (i = 0; i < n; i++) {
+        printf("%d", A[i]);
+        if (i < n - 1)
+            printf(", ");
+    }
+    printf("}\n");
     return;
 }
 
@@ -45,7 +49,9 @@ int sumInt(int *A, int n) {
 // only supports non-negative integers
 // return an index
 int rouletteInt(int *A, int n) {
-    printDecimal(sumInt(A, n));
+    int s = sumInt(A, n);
+    int r = rand() % s;
+    printDecimal(r);
     return 0;
 }
 
