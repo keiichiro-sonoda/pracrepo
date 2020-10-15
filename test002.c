@@ -53,7 +53,7 @@ void arrayRandom(int n);
 
 void expArray(const float *X, float *Y, int n) {
     for (int i = 0; i < n; i++)
-        Y[i] = exp(X[i]);
+        Y[i] = (float)exp(X[i]);
 }
 
 // set all elements of an array to 0
@@ -103,7 +103,6 @@ int main(void) {
         result1[rouletteInt(GLOBAL, l, s)]++;
     }
     printIntArray(result1, l);
-    printFloat((float)exp(1.0));
     printFloatArray(sample2, l2);
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
