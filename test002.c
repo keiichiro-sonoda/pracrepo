@@ -16,9 +16,9 @@ void printIntArray(const int *A, int n) {
             printf(", ");
     }
     printf("}\n");
-    return;
 }
 
+// insertion sort
 void insertionSort(int *A, int n) {
     int i, j, key;
     for (j = 1; j < n; j++) {
@@ -28,7 +28,6 @@ void insertionSort(int *A, int n) {
             A[i + 1] = A[i];
         A[i + 1] = key;
     }
-    return;
 }
 
 // global variable
