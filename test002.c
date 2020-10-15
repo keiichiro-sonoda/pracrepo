@@ -33,12 +33,19 @@ int *GLOBAL;
 // make an array of random numbers
 void arrayRandom(int n);
 
-// roulette selection (Integer)
+int sumInt(int *A, int n) {
+    int s;
+    s = 0;
+    for (int i = 0; i < n; i++)
+        s += A[i];
+    return s;
+}
+
+// roulette selection
+// only supports non-negative integers
 // return an index
 int rouletteInt(int *A, int n) {
-    for (int i = 0; i < n; i++) {
-        printDecimal(i);
-    }
+    printDecimal(sumInt(A, n));
     return 0;
 }
 
