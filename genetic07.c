@@ -40,6 +40,6 @@ int main(void) {
     nc = nextBoardNormal2(START, nbs, kc);
     yeah = getBoardForBlackSimpleRoulette(nbs, nc, &sample_prm);
     showBoard(yeah);
-    showBoardHex(yeah);
+    showBoard(SAMPLE1);
     return 0;
 }

@@ -5,8 +5,10 @@
 #include "othello.h"
 
 // intial board
-// necessary
+// declarations are necessary
 Board START;
+
+Board SAMPLE1;
 
 // 8 directions
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
@@ -809,7 +811,8 @@ Board normalBoard(Board b1) {
 void initBoard(void) {
     START.board[1] = START_H;
     START.board[0] = START_L;
-    return;
+    SAMPLE1.board[1] = SAMPLE1_A;
+    SAMPLE1.board[0] = SAMPLE1_B;
 }
 
 void normalizeBoard(Board *bp) {
@@ -984,6 +987,7 @@ void board2arraySymmetry(Board src, int *dst) {
 }
 
 // main
+// not defined in othello.h
 int main2(void) {
     initBoard();
     // sample boards

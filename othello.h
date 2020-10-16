@@ -12,6 +12,10 @@
 #define START_H 0x0000000000000180L
 #define START_L 0x0240000000000000L
 
+// sample board information
+#define SAMPLE1_A 0x0000000000000180L
+#define SAMPLE1_B 0x0280008000000000L
+
 // bin -> char
 // black: (0b01, o), white: (0b10, x), empty: (0b00, -)
 // can put sign: (0b11, !)
@@ -37,6 +41,8 @@ typedef struct {
 
 // intial board
 extern Board START;
+// sample board
+extern Board SAMPLE1;
 
 // 8 directions
 extern const int DIRECTION[8];
