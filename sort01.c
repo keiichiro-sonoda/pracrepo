@@ -113,6 +113,9 @@ void rouletteFloatTest(const float *A, int n) {
     int loop;
     loop = s * 10000;
     printDecimal(loop);
+    int results[n];
+    zeros(results, n);
+    printDecimalArray(results, n);
 }
 
 // exchange A[i] and A[j]
