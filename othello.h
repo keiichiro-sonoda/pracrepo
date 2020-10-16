@@ -53,7 +53,7 @@ int showBoard(Board b);
 // show board in 32 hexadecimal digits
 int showBoardHex(Board b);
 // print an array of decimal numbers
-void printDecimalArray(const int *ia, int ia_len);
+void printDecimalArray(const int *A, int n);
 // print an array of floating point number
 void printFloatArray(const float *A, int n);
 // print an arrya of hexadecimal numbers

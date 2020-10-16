@@ -77,7 +77,7 @@ void printDecimalArray(const int *A, int n) {
 
 // print an array of floating point number
 void printFloatArray(const float *A, int n) {
-    putchar('{');
+    putchar(123);
     for (int i = 0; i < n; i++) {
         printf("%.2f", A[i]);
         if (i < n - 1)
