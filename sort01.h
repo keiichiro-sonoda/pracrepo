@@ -1,9 +1,6 @@
 #ifndef SORT01_H
 #define SORT01_H
 
-#define arrayLength(A) sizeof(A) / sizeof(A[0])
-#define printDecimal(x) printf("%d\n", x)
-
 // exchange A[i] and A[j]
 int exchange(int *A, int i, int j);
 

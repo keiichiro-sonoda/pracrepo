@@ -4,6 +4,7 @@
 #include "sort01.h"
 
 int main(void) {
+    // use time as seed
     srand((unsigned)time(NULL));
     sortTest();
     return 0;

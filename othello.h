@@ -23,6 +23,7 @@
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
+#define arrayLength(A) sizeof(A) / sizeof(A[0])
 
 // 64bit
 typedef unsigned long int int8B;
