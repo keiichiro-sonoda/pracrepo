@@ -96,8 +96,13 @@ int rouletteInt(const int *A, int n, int s) {
 // only supports non-negative floating point numbers
 int rouletteFloat(const float *A, int n, float s) {
     float r = (float)rand() / RAND_MAX * s;
-    printFloat(r);
-    return 0;
+    int i;
+    for (i = 0; i < n - 1; i++) {
+        r -= A[i];
+        if (r < 0)
+            return i;
+    }
+    return i;
 }
 
 int main(void) {
@@ -114,7 +119,6 @@ int main(void) {
     // initialize
     zeros(result1, l1);
     arrayRandom(l1);
-    printIntArray(GLOBAL, l1);
     s = sumInt(GLOBAL, l1);
     for (int i = 0; i < s * 100; i++) {
         result1[rouletteInt(GLOBAL, l1, s)]++;
@@ -125,7 +129,7 @@ int main(void) {
     printFloatArray(sample3, l2);
     s2 = sumFloat(sample3, l2);
     printFloat(s2);
-    rouletteFloat(sample3, l2, s2);
+    printDecimal(rouletteFloat(sample3, l2, s2));
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
