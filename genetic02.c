@@ -9,7 +9,7 @@
 //#include "othello.h"
 
 // global variables
-// necessary
+// declarations are required
 int INDEXES[MASU_NUM];
 
 // functions
@@ -421,7 +421,7 @@ void nextGenerationSprmLoop(int st, int loop) {
 }
 
 // for debugging
-int main4(void) {
+void test1(void) {
     // seed reset
     srand((unsigned)time(NULL));
     // set global variable
@@ -431,5 +431,4 @@ int main4(void) {
     // test
     showBoard(START);
     sortTest();
-    return 0;
 }

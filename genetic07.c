@@ -8,6 +8,6 @@
 int main(void) {
     srand(123U);
     printf("Hello GA!\nLong time no see!\n");
-    sortTest();
+    test1();
     return 0;
 }

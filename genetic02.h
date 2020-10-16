@@ -64,4 +64,7 @@ int nextGenerationSprm(int gene_num);
 // loop several times
 void nextGenerationSprmLoop(int st, int loop);
 
+// for debugging
+void test1(void);
+
 #endif
