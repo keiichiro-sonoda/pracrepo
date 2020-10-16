@@ -67,6 +67,9 @@ int nextGenerationSprm(int gene_num);
 // loop several times
 void nextGenerationSprmLoop(int st, int loop);
 
+// make a sample of parameters
+void makeSprmSample(Sprm *prp);
+
 // for debugging
 void test1(void);
 

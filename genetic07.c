@@ -27,7 +27,8 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
 }
 
 int main(void) {
-    float sa[] = {SPRM_SAMPLE};
-    printFloatArray(sa, SPRM_LEN);
+    Sprm sample;
+    makeSprmSample(&sample);
+    printFloatArray(sample.weight, SPRM_LEN);
     return 0;
 }

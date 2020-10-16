@@ -425,7 +425,9 @@ void nextGenerationSprmLoop(int st, int loop) {
 
 // make a sample of parameters
 void makeSprmSample(Sprm *prp) {
-    ;
+    float spr[] = {SPRM_SAMPLE};
+    for (int i = 0; i < SPRM_LEN; i++)
+        (prp->weight)[i] = spr[i];
 }
 
 // for debugging
