@@ -12,6 +12,7 @@ void sortTest(void) {
     float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0};
     int l2;
     l2 = arrayLength(sample2);
+    float sample3[l2];
     int n = arrayLength(sample1);
     int indexes[n];
     int i;
@@ -25,6 +26,8 @@ void sortTest(void) {
     printDecimalArray(sample1, n);
     printDecimalArray(indexes, n);
     printFloatArray(sample2, l2);
+    expArray(sample2, sample3, l2);
+    printFloatArray(sample3, l2);
 }
 
 // insertion sort
