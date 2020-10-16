@@ -113,23 +113,19 @@ int main(void) {
     l1 = arrayLength(sample1);
     l2 = arrayLength(sample2);
     float sample3[l2];
-    int s;
-    int result1[l1];
+    int result1[l2];
     float s2;
     // initialize
-    zeros(result1, l1);
+    zeros(result1, l2);
     arrayRandom(l1);
-    s = sumInt(GLOBAL, l1);
-    for (int i = 0; i < s * 100; i++) {
-        result1[rouletteInt(GLOBAL, l1, s)]++;
-    }
-    printIntArray(result1, l1);
     printFloatArray(sample2, l2);
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
     s2 = sumFloat(sample3, l2);
-    printFloat(s2);
-    printDecimal(rouletteFloat(sample3, l2, s2));
+    for (int i = 0; i < s2 * 10000; i++) {
+        result1[rouletteFloat(sample3, l2, s2)]++;
+    }
+    printIntArray(result1, l2);
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
