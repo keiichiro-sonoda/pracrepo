@@ -6,10 +6,13 @@
 #include "sort01.h"
 #include "othello.h"
 
+// global variable
+int *GLOBAL;
+
 // for debugging
 void sortTest(void) {
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
-    float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0};
+    float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
     int l2;
     l2 = arrayLength(sample2);
     float sample3[l2];
@@ -28,6 +31,14 @@ void sortTest(void) {
     printFloatArray(sample2, l2);
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
+    rouletteFloatTest(sample3, l2);
+}
+
+// check if rouletteFloat workes as expected
+void rouletteFloatTest(const float *A, int n) {
+    float s;
+    s = sumFloat(A, n);
+    printFloat(s);
 }
 
 // insertion sort
@@ -41,9 +52,6 @@ void insertionSort(int *A, int n) {
         A[i + 1] = key;
     }
 }
-
-// global variable
-int *GLOBAL;
 
 // make an array of random numbers
 void arrayRandom(int n) {

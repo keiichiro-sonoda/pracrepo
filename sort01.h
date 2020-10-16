@@ -30,6 +30,9 @@ int rouletteInt(const int *A, int n, int s);
 // only supports non-negative floating point numbers
 int rouletteFloat(const float *A, int n, float s);
 
+// check if rouletteFloat workes as expected
+void rouletteFloatTest(const float *A, int n);
+
 int partitionDD(int *A, int *B, int p, int r);
 // descending order
 void quicksortDD(int *A, int *B, int p, int r);
