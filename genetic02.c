@@ -133,7 +133,7 @@ float evaluationSimple(Board b, Sprm pr) {
     board2arraySymmetry(b, ba);
     //showDecimalArray(ba, MASU_NUM);
     for (i = 0; i < MASU_NUM; i++) {
-        // calculate inner product
+        // calculate the inner product
         pt += ba[i] * pr.weight[INDEXES[i]];
     }
     return pt;
