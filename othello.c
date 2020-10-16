@@ -76,13 +76,12 @@ void printDecimalArray(const int *ia, int ia_len) {
 }
 
 // print an array of floating point number
-void printFloatArray(float *fa, int n) {
+void printFloatArray(const float *A, int n) {
     putchar('{');
     for (int i = 0; i < n; i++) {
-        printf("%5.2f", fa[i]);
-        if (i < n - 1) {
+        printf("%.2f", A[i]);
+        if (i < n - 1)
             printf(", ");
-        }
     }
     printf("}\n");
 }

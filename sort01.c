@@ -8,7 +8,6 @@
 
 // for debugging
 void sortTest(void) {
-    printf("Hello World!!\n");
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0};
     int l2;
