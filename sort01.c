@@ -34,13 +34,6 @@ void sortTest(void) {
     rouletteFloatTest(sample3, l2);
 }
 
-// check if rouletteFloat workes as expected
-void rouletteFloatTest(const float *A, int n) {
-    float s;
-    s = sumFloat(A, n);
-    printFloat(s);
-}
-
 // insertion sort
 void insertionSort(int *A, int n) {
     int i, j, key;
@@ -109,6 +102,13 @@ int rouletteFloat(const float *A, int n, float s) {
             return i;
     }
     return i;
+}
+
+// check if rouletteFloat workes as expected
+void rouletteFloatTest(const float *A, int n) {
+    float s;
+    s = sumFloat(A, n);
+    printFloat(s);
 }
 
 // exchange A[i] and A[j]
