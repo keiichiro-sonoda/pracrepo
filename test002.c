@@ -3,7 +3,7 @@
 #include "sort01.h"
 
 int main(void) {
-    srand((unsigned)3849);
+    srand((unsigned)123);
     sortTest();
     return 0;
 }

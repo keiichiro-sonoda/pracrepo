@@ -108,10 +108,8 @@ int rouletteFloat(const float *A, int n, float s) {
 
 // check if rouletteFloat workes as expected
 void rouletteFloatTest(const float *A, int n) {
-    float s;
-    s = sumFloat(A, n);
-    int loop;
-    loop = s * 10000;
+    float s = sumFloat(A, n);
+    int loop = s * 10000;
     printDecimal(loop);
     int results[n];
     // initialize
