@@ -19,9 +19,7 @@ othello: othello.c
 othello_win.exe: othello_win.c
 	gcc othello_win.c -o othello_win.exe
 test002: test002.c
-	gcc test002.c -o test002 -lm
-sort01: sort01.c
-	gcc sort01.c -o sort01
+	gcc test002.c othello.c sort01.o -o test002 -lm
 sort01.o: sort01.c
 	gcc sort01.c -c
 sort01_win.o: sort01_win.c
