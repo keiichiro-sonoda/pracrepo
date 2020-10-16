@@ -127,6 +127,7 @@ void setIndexes(void) {
 float evaluationSimple(Board b, Sprm pr) {
     float pt = 0;
     int i;
+    // board array
     int ba[MASU_NUM];
     // Board -> int array
     board2arraySymmetry(b, ba);
@@ -429,5 +430,6 @@ void test1(void) {
     initBoard();
     // test
     showBoard(START);
-    sortTest();
+    //sortTest();
+    checkSprmFile(0);
 }

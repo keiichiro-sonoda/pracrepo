@@ -461,7 +461,6 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
     return length;
 }
 
-
 // all zero
 void zeros(int *ia, int ia_len) {
     int i;
