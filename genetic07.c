@@ -27,8 +27,19 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
 }
 
 int main(void) {
+    // initialize global variables
+    setIndexes();
+    initBoard();
+    Board nbs[NEXT_MAX];
+    Board yeah;
+    int kc[] = {0, 0, 0};
+    int nc;
     Sprm sample_prm;
     makeSprmSample(&sample_prm);
     printFloatArray(sample_prm.weight, SPRM_LEN);
+    nc = nextBoardNormal2(START, nbs, kc);
+    yeah = getBoardForBlackSimpleRoulette(nbs, nc, &sample_prm);
+    showBoard(yeah);
+    showBoardHex(yeah);
     return 0;
 }
