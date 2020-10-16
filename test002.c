@@ -113,7 +113,6 @@ int main(void) {
     float s2;
     // initialize
     zeros(result1, l1);
-    printf("length = %d\n", l1);
     arrayRandom(l1);
     printIntArray(GLOBAL, l1);
     s = sumInt(GLOBAL, l1);
@@ -126,6 +125,7 @@ int main(void) {
     printFloatArray(sample3, l2);
     s2 = sumFloat(sample3, l2);
     printFloat(s2);
+    rouletteFloat(sample3, l2, s2);
     // free memory
     free(GLOBAL);
     if (GLOBAL == NULL) {
