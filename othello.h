@@ -105,7 +105,9 @@ void zeros(int *ia, int ia_len);
 // int iaa[l1][l2]
 int zeros2D(int *iaa[], int l1, int l2);
 
-int indexes(int *ia, int ia_len);
+// 0, 1, 2, ..., n - 1
+void indices(int *A, int n);
+
 // 5 arguments
 // count the number of pieces
 int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_count);

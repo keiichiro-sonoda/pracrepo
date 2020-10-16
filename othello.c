@@ -479,11 +479,10 @@ int zeros2D(int *iaa[], int l1, int l2) {
     return 0;
 }
 
-int indexes(int *ia, int ia_len) {
-    int i;
-    for (i = 0; i < ia_len; i++)
-        ia[i] = i;
-    return 0;
+// 0, 1, 2, ..., n - 1
+void indices(int *A, int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = i;
 }
 
 // 5 arguments

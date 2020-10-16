@@ -17,17 +17,15 @@ void sortTest(void) {
     l2 = arrayLength(sample2);
     float sample3[l2];
     int n = arrayLength(sample1);
-    int indexes[n];
-    int i;
-    for (i = 0; i < n; i++) {
-        indexes[i] = i;
-    }
+    int B[n];
+    indices(B, n);
     printf("before\n");
     printDecimalArray(sample1, n);
-    quicksortDD(sample1, indexes, 0, n - 1);
+    printDecimalArray(B, n);
+    quicksortDD(sample1, B, 0, n - 1);
     printf("after\n");
     printDecimalArray(sample1, n);
-    printDecimalArray(indexes, n);
+    printDecimalArray(B, n);
     printFloatArray(sample2, l2);
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
