@@ -56,6 +56,8 @@ void arrayRandom(int n) {
         GLOBAL[i] = rand() % 100;
 }
 
+// make an array of exponents
+// to make the numbers positive
 void expArray(const float *X, float *Y, int n) {
     for (int i = 0; i < n; i++)
         Y[i] = (float)exp(X[i]);
@@ -108,7 +110,9 @@ int rouletteFloat(const float *A, int n, float s) {
 void rouletteFloatTest(const float *A, int n) {
     float s;
     s = sumFloat(A, n);
-    printFloat(s);
+    int loop;
+    loop = s * 10000;
+    printDecimal(loop);
 }
 
 // exchange A[i] and A[j]
@@ -136,6 +140,7 @@ int partitionDD(int *A, int *B, int p, int r) {
 }
 
 // descending order
+// also rearrange the indices
 void quicksortDD(int *A, int *B, int p, int r) {
     if (p < r) {
         int q = partitionDD(A, B, p, r);
