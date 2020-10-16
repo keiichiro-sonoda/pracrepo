@@ -422,10 +422,9 @@ void nextGenerationSprmLoop(int st, int loop) {
 
 // for debugging
 void test1(void) {
-    // seed reset
-    srand((unsigned)time(NULL));
     // set global variable
     setIndexes();
+    printDecimalArray(INDEXES, MASU_NUM);
     // set initial board
     initBoard();
     // test
