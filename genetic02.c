@@ -242,6 +242,7 @@ void checkSprmFile(int gene_num) {
     char format[] = "prm/simple_prm%03d.bin";
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    printString(fnamer);
     if ((fp = fopen(fnamer, "rb")) == NULL) {
         printf("%s can't be opened.\n", fnamer);
         return;
