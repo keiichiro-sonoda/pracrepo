@@ -92,6 +92,14 @@ int rouletteInt(const int *A, int n, int s) {
     return i;
 }
 
+// roulette selection
+// only supports non-negative floating point numbers
+int rouletteFloat(const float *A, int n, float s) {
+    float r = (float)rand() / RAND_MAX * s;
+    printFloat(r);
+    return 0;
+}
+
 int main(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {5, 7, 6, 8, 2, 1, 9, 3, 4, 0, 11, 6, 7, 12, 1, 14, 9, 10};
