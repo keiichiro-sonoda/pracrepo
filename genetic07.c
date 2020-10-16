@@ -85,7 +85,7 @@ int main(void) {
     // initialize global variables
     setIndexes();
     initBoard();
-    Board nbs[NEXT_MAX];
+    Board nba[NEXT_MAX];
     Board yeah;
     int kc[] = {0, 0, 0};
     int nc;
