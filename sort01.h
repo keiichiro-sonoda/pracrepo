@@ -10,6 +10,8 @@ void insertionSort(int *A, int n);
 // make an array of random numbers
 void arrayRandom(int n);
 
+void globalTest(void);
+
 void expArray(const float *X, float *Y, int n);
 
 // return the sum of an integer array

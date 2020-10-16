@@ -32,6 +32,7 @@ void sortTest(void) {
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
     rouletteFloatTest(sample3, l2);
+    globalTest();
 }
 
 // insertion sort
@@ -54,6 +55,15 @@ void arrayRandom(int n) {
     for (int i = 0; i < n; i++)
         // 0-100
         GLOBAL[i] = rand() % 100;
+}
+
+void globalTest(void) {
+    int n = 10;
+    arrayRandom(n);
+    printDecimalArray(GLOBAL, n);
+    insertionSort(GLOBAL, n);
+    printDecimalArray(GLOBAL, n);
+    free(GLOBAL);
 }
 
 // make an array of exponents
