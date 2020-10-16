@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <float.h>
 #include <math.h>
+#include <time.h>
 
 #include "genetic02.h"
 #include "sort01.h"
@@ -22,11 +23,15 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
     }
     printFloatArray(exp_points, n);
     s = sumFloat(exp_points, n);
+    printFloat(s);
     choosed = rouletteFloat(exp_points, n, s);
+    rouletteFloatTest(exp_points, n);
     return next_boards[choosed];
 }
 
 int main(void) {
+    // set seed
+    srand((unsigned)time(NULL));
     // initialize global variables
     setIndexes();
     initBoard();
@@ -37,9 +42,9 @@ int main(void) {
     Sprm sample_prm;
     makeSprmSample(&sample_prm);
     printFloatArray(sample_prm.weight, SPRM_LEN);
-    nc = nextBoardNormal2(START, nbs, kc);
+    nc = nextBoardNormal2(SAMPLE1, nbs, kc);
+    //showBoardArray(nbs, nc);
     yeah = getBoardForBlackSimpleRoulette(nbs, nc, &sample_prm);
     showBoard(yeah);
-    showBoard(SAMPLE1);
     return 0;
 }
