@@ -6,6 +6,23 @@
 #include "sort01.h"
 #include "othello.h"
 
+// for debugging
+void sortTest(void) {
+    int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
+    int n = arrayLength(sample1);
+    int indexes[n];
+    int i;
+    for (i = 0; i < n; i++) {
+        indexes[i] = i;
+    }
+    printf("before\n");
+    printDecimalArray(sample1, n);
+    quicksortDD(sample1, indexes, 0, n - 1);
+    printf("after\n");
+    printDecimalArray(sample1, n);
+    printDecimalArray(indexes, n);
+}
+
 // insertion sort
 void insertionSort(int *A, int n) {
     int i, j, key;
@@ -77,23 +94,6 @@ int rouletteFloat(const float *A, int n, float s) {
             return i;
     }
     return i;
-}
-
-// for debugging
-void sortTest(void) {
-    int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
-    int n = arrayLength(sample1);
-    int indexes[n];
-    int i;
-    for (i = 0; i < n; i++) {
-        indexes[i] = i;
-    }
-    printf("before\n");
-    printDecimalArray(sample1, n);
-    quicksortDD(sample1, indexes, 0, n - 1);
-    printf("after\n");
-    printDecimalArray(sample1, n);
-    printDecimalArray(indexes, n);
 }
 
 // exchange A[i] and A[j]
