@@ -11,8 +11,6 @@ int *GLOBAL;
 
 // for debugging
 void sortTest(void) {
-    // reset seed
-    srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
     int l2;
@@ -116,8 +114,8 @@ void rouletteFloatTest(const float *A, int n) {
     loop = s * 10000;
     printDecimal(loop);
     int results[n];
+    // initialize
     zeros(results, n);
-    printDecimalArray(results, n);
     for (int i = 0; i < loop; i++)
         results[rouletteFloat(A, n, s)]++;
     printDecimalArray(results, n);
