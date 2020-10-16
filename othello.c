@@ -65,11 +65,11 @@ int showBoardHex(Board b) {
 }
 
 // print an array of decimal numbers
-void printDecimalArray(const int *ia, int ia_len) {
-    putchar('{');
-    for (int i = 0; i < ia_len; i++) {
-        printf("%3d", ia[i]);
-        if (i < ia_len - 1)
+void printDecimalArray(const int *A, int n) {
+    putchar(123);
+    for (int i = 0; i < n; i++) {
+        printf("%3d", A[i]);
+        if (i < n - 1)
             printf(", ");
     }
     printf("}\n");
