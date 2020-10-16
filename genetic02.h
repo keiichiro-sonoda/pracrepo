@@ -7,6 +7,9 @@
 #define SURVIVE_NUM 10
 #define GENE_NUM 100
 
+// parameter sample
+#define SPRM_SAMPLE 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
+
 // simple parameter
 typedef struct {
     float weight[SPRM_LEN];

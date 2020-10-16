@@ -3,6 +3,7 @@
 #include <time.h>
 #include <float.h>
 #include <math.h>
+
 #include "genetic02.h"
 #include "sort01.h"
 // not necessary
@@ -420,6 +421,11 @@ void nextGenerationSprmLoop(int st, int loop) {
         time(&t1);
         printf("elapsed time: %lds\n", t1 - t0);
     }
+}
+
+// make a sample of parameters
+void makeSprmSample(Sprm *prp) {
+    ;
 }
 
 // for debugging
