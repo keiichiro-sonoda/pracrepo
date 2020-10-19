@@ -89,5 +89,6 @@ int main(void) {
     showSprm(SAMP_PRM);
     printFloatArray(SAMP_PRM.weight, SPRM_LEN);
     //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
+    printDecimal(getMin(7, 8));
     return 0;
 }

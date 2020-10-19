@@ -22,12 +22,16 @@
 #define B2C "-ox!"
 
 // macros
+// for debug
 #define kugiri() printf("--------------------------\n")
 #define printString(s) printf("%s\n", s)
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
+
+// get the smaller number
+#define getMin(a, b) (a < b ? a : b)
 
 // 64bit
 typedef unsigned long int int8B;

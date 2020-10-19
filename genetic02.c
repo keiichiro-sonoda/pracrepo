@@ -28,11 +28,6 @@ void showSprm(Sprm pr) {
     }
 }
 
-// get the smaller number
-int getMin(int a, int b) {
-    return (a < b ? a : b);
-}
-
 int getMinArray(const int *A, int n) {
     int i;
     int min = 0x7fffffff;

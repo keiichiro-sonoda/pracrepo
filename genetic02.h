@@ -23,8 +23,6 @@ extern Sprm SAMP_PRM;
 
 // print a simple parameter
 void showSprm(Sprm pr);
-// get the smaller number
-int getMin(int a, int b);
 // get the smallest value in an array
 int getMinArray(const int *A, int n);
 // flip horizontal
