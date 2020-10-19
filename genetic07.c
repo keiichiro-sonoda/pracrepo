@@ -24,7 +24,8 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
     for (int i = 0; i < n; i++) {
         // evaluate all next boards
         // and calculate the power of e (to make numbers positive)
-        exp_points[i] = expf(evaluationSimple(next_boards[i], *prp) * 10);
+        // sign inversion!
+        exp_points[i] = expf(-evaluationSimple(next_boards[i], *prp) * 10);
     }
     //printFloatArray(exp_points, n);
     s = sumFloat(exp_points, n);
