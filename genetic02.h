@@ -7,6 +7,9 @@
 #define SURVIVE_NUM 10
 #define GENE_NUM 100
 
+// parameter sample
+#define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
+
 // simple parameter
 typedef struct {
     float weight[SPRM_LEN];
@@ -14,17 +17,14 @@ typedef struct {
 
 // global variables
 extern int INDEXES[MASU_NUM];
+extern Sprm SAMP_PRM;
 
 // functions
 
-// print a simple parameters
+// print a simple parameter
 void showSprm(Sprm pr);
-// get the smaller number
-int getMin(int a, int b);
 // get the smallest value in an array
 int getMinArray(const int *A, int n);
-// flip horizontal
-int mirrorLRAd(int src);
 // normalize an address
 int normalAd(int ad);
 // ad: normalized address
@@ -63,5 +63,11 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors);
 int nextGenerationSprm(int gene_num);
 // loop several times
 void nextGenerationSprmLoop(int st, int loop);
+
+// make a sample of parameters
+void makeSprmSample(void);
+
+// for debugging
+void test1(void);
 
 #endif

@@ -5,8 +5,10 @@
 #include "othello.h"
 
 // intial board
-// necessary
+// declarations are necessary
 Board START;
+
+Board SAMPLE1;
 
 // 8 directions
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
@@ -65,24 +67,23 @@ int showBoardHex(Board b) {
 }
 
 // print an array of decimal numbers
-void printDecimalArray(const int *ia, int ia_len) {
-    putchar('{');
-    for (int i = 0; i < ia_len; i++) {
-        printf("%3d", ia[i]);
-        if (i < ia_len - 1)
+void printDecimalArray(const int *A, int n) {
+    putchar(123);
+    for (int i = 0; i < n; i++) {
+        printf("%3d", A[i]);
+        if (i < n - 1)
             printf(", ");
     }
     printf("}\n");
 }
 
 // print an array of floating point number
-void printFloatArray(float *fa, int n) {
-    putchar('{');
+void printFloatArray(const float *A, int n) {
+    putchar(123);
     for (int i = 0; i < n; i++) {
-        printf("%5.2f", fa[i]);
-        if (i < n - 1) {
+        printf("%.2f", A[i]);
+        if (i < n - 1)
             printf(", ");
-        }
     }
     printf("}\n");
 }
@@ -462,12 +463,10 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
     return length;
 }
 
-
 // all zero
-void zeros(int *ia, int ia_len) {
-    int i;
-    for (i = 0; i < ia_len; i++)
-        ia[i] = 0;
+void zeros(int *A, int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = 0;
 }
 
 // all zero 2D array
@@ -480,11 +479,10 @@ int zeros2D(int *iaa[], int l1, int l2) {
     return 0;
 }
 
-int indexes(int *ia, int ia_len) {
-    int i;
-    for (i = 0; i < ia_len; i++)
-        ia[i] = i;
-    return 0;
+// 0, 1, 2, ..., n - 1
+void indices(int *A, int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = i;
 }
 
 // 5 arguments
@@ -750,10 +748,6 @@ int play(void) {
     return 0;
 }
 
-int rotL90DegAd(int src) {
-    return (14 - src % 16) * 8 + (src / 16) * 2;
-}
-
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1) {
     Board b2 = createEmptyBoard();
@@ -812,7 +806,8 @@ Board normalBoard(Board b1) {
 void initBoard(void) {
     START.board[1] = START_H;
     START.board[0] = START_L;
-    return;
+    SAMPLE1.board[1] = SAMPLE1_A;
+    SAMPLE1.board[0] = SAMPLE1_B;
 }
 
 void normalizeBoard(Board *bp) {
@@ -826,6 +821,7 @@ void swapNormalizeBoard(Board *bp) {
     return;
 }
 
+// make sure the boards are the same
 int sameBoard(Board b1, Board b2) {
     if (b1.board[0] != b2.board[0]) return 0;
     if (b1.board[1] != b2.board[1]) return 0;
@@ -843,6 +839,7 @@ int knownBoard(const Board *ba, int n, Board b) {
 
 // give a normalized board
 // next turn is always black
+// an obsolete function
 int nextBoardNormal(Board b, Board *next_boards) {
     int index = 0;
     int i, j, ad, dif, cnt;
@@ -987,6 +984,7 @@ void board2arraySymmetry(Board src, int *dst) {
 }
 
 // main
+// not defined in othello.h
 int main2(void) {
     initBoard();
     // sample boards

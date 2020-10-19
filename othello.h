@@ -12,17 +12,34 @@
 #define START_H 0x0000000000000180L
 #define START_L 0x0240000000000000L
 
+// sample board information
+#define SAMPLE1_A 0x0000000000000180L
+#define SAMPLE1_B 0x0280008000000000L
+
 // bin -> char
 // black: (0b01, o), white: (0b10, x), empty: (0b00, -)
 // can put sign: (0b11, !)
 #define B2C "-ox!"
 
 // macros
+// for debug
 #define kugiri() printf("--------------------------\n")
 #define printString(s) printf("%s\n", s)
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
+#define arrayLength(A) sizeof(A) / sizeof(A[0])
+
+// get the smaller number
+#define getMin(a, b) ((a) < (b) ? (a) : (b))
+
+// flip horizontal
+// src: 0, 2, 4, ... , 126
+#define mirrorLRAd(src) ((src) / 16 * 16 + 14 - (src) % 16)
+
+// rotate 90 degrees to the left
+// src: 0, 2, 4, ... , 126
+#define rotL90DegAd(src) ((14 - (src) % 16) * 8 + (src) / 16 * 2)
 
 // 64bit
 typedef unsigned long int int8B;
@@ -36,6 +53,8 @@ typedef struct {
 
 // intial board
 extern Board START;
+// sample board
+extern Board SAMPLE1;
 
 // 8 directions
 extern const int DIRECTION[8];
@@ -53,9 +72,9 @@ int showBoard(Board b);
 // show board in 32 hexadecimal digits
 int showBoardHex(Board b);
 // print an array of decimal numbers
-void printDecimalArray(const int *ia, int ia_len);
-// print an array
-void printFloatArray(float *fa, int n);
+void printDecimalArray(const int *A, int n);
+// print an array of floating point number
+void printFloatArray(const float *A, int n);
 // print an arrya of hexadecimal numbers
 int showHexArray(int *ia, int ia_len);
 // neighbor?
@@ -98,13 +117,16 @@ int showCoordinates(const int *can_put, int length);
 int showCanPut(Board b, const int *can_put, int next_count);
 
 int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards);
+
 // all zero
-void zeros(int *ia, int ia_len);
+void zeros(int *A, int n);
 // all zero 2D array
 // int iaa[l1][l2]
 int zeros2D(int *iaa[], int l1, int l2);
 
-int indexes(int *ia, int ia_len);
+// 0, 1, 2, ..., n - 1
+void indices(int *A, int n);
+
 // 5 arguments
 // count the number of pieces
 int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_count);
@@ -116,7 +138,6 @@ int wrapNegaMax(Board b, int color);
 int negaMaxAB(Board b, int color, int depth, int pass, int alpha, int beta);
 int wrapNegaMaxAB(Board b, int color, int height);
 int play(void);
-int rotL90DegAd(int src);
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1);
 Board mirrorHLBoard(Board b1);

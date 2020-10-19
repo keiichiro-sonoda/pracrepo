@@ -3,45 +3,34 @@
 #include <time.h>
 #include <float.h>
 #include <math.h>
+
 #include "genetic02.h"
 #include "sort01.h"
 // not necessary
 //#include "othello.h"
 
 // global variables
-// necessary
+// declarations are required
 int INDEXES[MASU_NUM];
+Sprm SAMP_PRM;
 
 // functions
 
+// print a simple parameter
 void showSprm(Sprm pr) {
-    int i;
-    float p;
-    for (i = 0; i < MASU_NUM; i++) {
-        p = pr.weight[INDEXES[i]];
-        printf("%5.2f ", p);
-        if (i % 8 == 7) {
-            putchar('\n');
-        }
+    for (int i = 0; i < MASU_NUM; i++) {
+        printf("%5.2f ", pr.weight[INDEXES[i]]);
+        if (i % 8 == 7)
+            putchar(10);
     }
 }
 
-// get the smaller number
-int getMin(int a, int b) {
-    return (a < b ? a : b);
-}
-
+// get the smallest value in an array
 int getMinArray(const int *A, int n) {
-    int i;
     int min = 0x7fffffff;
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         min = getMin(A[i], min);
-    }
     return min;
-}
-
-int mirrorLRAd(int src) {
-    return (src / 16) * 16 + 14 - src % 16;
 }
 
 // normalize an address
@@ -127,12 +116,13 @@ void setIndexes(void) {
 float evaluationSimple(Board b, Sprm pr) {
     float pt = 0;
     int i;
+    // board array
     int ba[MASU_NUM];
     // Board -> int array
     board2arraySymmetry(b, ba);
     //showDecimalArray(ba, MASU_NUM);
     for (i = 0; i < MASU_NUM; i++) {
-        // calculate inner product
+        // calculate the inner product
         pt += ba[i] * pr.weight[INDEXES[i]];
     }
     return pt;
@@ -241,6 +231,7 @@ void checkSprmFile(int gene_num) {
     char format[] = "prm/simple_prm%03d.bin";
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    printString(fnamer);
     if ((fp = fopen(fnamer, "rb")) == NULL) {
         printf("%s can't be opened.\n", fnamer);
         return;
@@ -420,16 +411,24 @@ void nextGenerationSprmLoop(int st, int loop) {
     }
 }
 
+// make a sample of parameters
+// set global variable "SAMP_PRM"
+void makeSprmSample(void) {
+    // use macro
+    float spr[] = {SAMP_PRM_NUMS};
+    for (int i = 0; i < SPRM_LEN; i++)
+        SAMP_PRM.weight[i] = spr[i];
+}
+
 // for debugging
-int main4(void) {
-    // seed reset
-    srand((unsigned)time(NULL));
+void test1(void) {
     // set global variable
     setIndexes();
+    printDecimalArray(INDEXES, MASU_NUM);
     // set initial board
     initBoard();
     // test
     showBoard(START);
-    sortTest();
-    return 0;
+    //sortTest();
+    checkSprmFile(0);
 }
