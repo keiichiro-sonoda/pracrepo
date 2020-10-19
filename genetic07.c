@@ -94,10 +94,5 @@ int main(void) {
     int min1 = getMinArray(sample1, l1);
     printDecimal(l1);
     printDecimal(min1);
-    int x;
-    for (int i = 0; i < MASU_NUM; i += 2) {
-        x = mirrorLRAd(i);
-        printDecimal(x);
-    }
     return 0;
 }

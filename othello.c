@@ -826,6 +826,7 @@ void swapNormalizeBoard(Board *bp) {
     return;
 }
 
+// make sure the boards are the same
 int sameBoard(Board b1, Board b2) {
     if (b1.board[0] != b2.board[0]) return 0;
     if (b1.board[1] != b2.board[1]) return 0;
@@ -843,6 +844,7 @@ int knownBoard(const Board *ba, int n, Board b) {
 
 // give a normalized board
 // next turn is always black
+// an obsolete function
 int nextBoardNormal(Board b, Board *next_boards) {
     int index = 0;
     int i, j, ad, dif, cnt;
