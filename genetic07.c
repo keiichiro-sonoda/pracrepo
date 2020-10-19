@@ -286,6 +286,6 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    nextGenerationSprmRouletteLoop(9, 6);
+    nextGenerationSprmRouletteLoop(0, 100);
     return 0;
 }
