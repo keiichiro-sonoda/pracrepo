@@ -113,8 +113,9 @@ int showCoordinates(const int *can_put, int length);
 int showCanPut(Board b, const int *can_put, int next_count);
 
 int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards);
+
 // all zero
-void zeros(int *ia, int ia_len);
+void zeros(int *A, int n);
 // all zero 2D array
 // int iaa[l1][l2]
 int zeros2D(int *iaa[], int l1, int l2);

@@ -92,5 +92,8 @@ int main(void) {
     int sample1[] = {-11, 3, 1, -12, 4, -10};
     int l1 = arrayLength(sample1);
     int min1 = getMinArray(sample1, l1);
+    printDecimalArray(sample1, l1);
+    zeros(sample1, l1);
+    printDecimalArray(sample1, l1);
     return 0;
 }
