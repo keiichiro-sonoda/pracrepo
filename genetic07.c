@@ -89,6 +89,5 @@ int main(void) {
     showSprm(SAMP_PRM);
     printFloatArray(SAMP_PRM.weight, SPRM_LEN);
     //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
-    printf("%x\n", '\n');
     return 0;
 }

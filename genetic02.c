@@ -24,7 +24,7 @@ void showSprm(Sprm pr) {
         p = pr.weight[INDEXES[i]];
         printf("%5.2f ", p);
         if (i % 8 == 7)
-            putchar('\n');
+            putchar(10);
     }
 }
 
