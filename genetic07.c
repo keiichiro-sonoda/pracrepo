@@ -84,6 +84,35 @@ int oneToOneNormalSprmRoulette(const Sprm *spp, const Sprm *gpp) {
     return 0;
 }
 
+// use Sprm[100]
+// win: +2, draw: +1, lose: 0
+void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
+    // all zero
+    zeros(result, GENE_NUM);
+    // black index
+    for (int i = 0; i < GENE_NUM; i++) {
+        //printf("\ai = %d / %d", i, FAMILY_NUM);
+        // white index
+        for (int j = 0; j < GENE_NUM; j++) {
+            if (i == j) continue;
+            switch(oneToOneNormalSprmRoulette(generation + i, generation + j)) {
+                // black won
+                case 1:
+                    result[i] += 2;
+                    break;
+                // white won
+                case 2:
+                    result[j] += 2;
+                    break;
+                // draw
+                default:
+                    result[i]++;
+                    result[j]++;
+            }
+        }
+    }
+}
+
 // copy the first generation
 void copyFGRoulette(void) {
     FILE *fp;
@@ -125,15 +154,7 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    int j;
-    int R[3];
-    zeros(R, 3);
     //showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
-    for (int i = 0; i < 1000; i++) {
-        j = oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
-        R[j]++;
-    }
-    printDecimalArray(R, 3);
     return 0;
 }
