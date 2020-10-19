@@ -95,6 +95,7 @@ void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
         // white index
         for (int j = 0; j < GENE_NUM; j++) {
             if (i == j) continue;
+            // the next board is decided by roulette
             switch(oneToOneNormalSprmRoulette(generation + i, generation + j)) {
                 // black won
                 case 1:
@@ -111,6 +112,46 @@ void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
             }
         }
     }
+}
+
+// choose survivors[10] from generation[100]
+// and show match results
+void getSurvivorSprmRoulette(const Sprm *generation, Sprm *survivors) {
+    int i, j;
+    // the array to store points
+    int result[GENE_NUM];
+    int number[GENE_NUM];
+    // number = {0, 1, 2, ..., 99}
+    for (i = 0; i < GENE_NUM; i++)
+        number[i] = i;
+    // game (the next board is decided by roulette)
+    leagueMatchSprmRoulette(generation, result);
+    // sort (descending order)
+    quicksortDD(result, number, 0, GENE_NUM - 1);
+    // show ranking
+    printf("rank change\n");
+    for (i = 0; i < GENE_NUM; i++) {
+        // rank 11-99 aren't displayed
+        if (10 <= i && i < GENE_NUM - 1) continue;
+        // worst!
+        if (i == GENE_NUM - 1)
+            printf("        ...\n");
+        // winner's index (or worst index)
+        j = number[i];
+        printf("%3d", j + 1);
+        if (j < 10) printf("(p)");
+        else printf("(c)");
+        printf(" -> ");
+        printf("%3d: %3dpt\n", i + 1, result[i]);
+        // record winners
+        if (i < 10)
+            survivors[i] = generation[j];
+    }
+    // calculate the distance between the previous top and the current top
+    // this value may not make sense
+    printf("distance: %6.4f\n", distSprm(survivors[0], generation[0]));
+    //printf("top parameters view:\n");
+    //showSprm(survivors[0]);
 }
 
 // copy the first generation
@@ -154,14 +195,9 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    //showSprm(SAMP_PRM);
-    //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
-    Sprm samp_gene[GENE_NUM];
-    int result[GENE_NUM];
-    for (int i = 0; i < GENE_NUM; i++) {
+    Sprm samp_gene[100], samp_surv[10];
+    for (int i = 0; i < 100; i++)
         samp_gene[i] = SAMP_PRM;
-    }
-    leagueMatchSprmRoulette(samp_gene, result);
-    printDecimalArray(result, GENE_NUM);
+    getSurvivorSprmRoulette(samp_gene, samp_surv);
     return 0;
 }
