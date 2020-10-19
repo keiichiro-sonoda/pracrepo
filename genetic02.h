@@ -21,7 +21,7 @@ extern Sprm SAMP_PRM;
 
 // functions
 
-// print a simple parameters
+// print a simple parameter
 void showSprm(Sprm pr);
 // get the smaller number
 int getMin(int a, int b);
