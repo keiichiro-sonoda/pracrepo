@@ -232,14 +232,13 @@ int nextGenerationSprmRoulette(int gene_num, int safety) {
 }
 
 // loop several times
-// also give the seed value
-void nextGenerationSprmRouletteLoop(int st, int loop, unsigned int seed) {
+void nextGenerationSprmRouletteLoop(int st, int loop) {
     time_t t0, t1;
     // get start time
     time(&t0);
     for (int i = st; i < st + loop; i++) {
-        // set seed
-        srand(seed);
+        // set the generation number as the seed
+        srand((unsigned)i);
         if (nextGenerationSprmRoulette(i, 0) == -1)
             return;
         // get time
@@ -287,6 +286,6 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    nextGenerationSprmRouletteLoop(0, 10, 123U);
+    nextGenerationSprmRouletteLoop(0, 3);
     return 0;
 }
