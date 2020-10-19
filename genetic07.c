@@ -96,8 +96,8 @@ int main(void) {
     int min1 = getMinArray(sample1, l1);
     int x, y;
     for (int i = 0; i < 128; i += 2) {
-        x = rotL90DegAd(i);
-        y = macroTest(i);
+        x = rotL90DegAd(i) * 2;
+        y = macroTest(i) * 2;
         printf("%d %d\n", x, y);
         if (x != y)
             printf("error\n");
