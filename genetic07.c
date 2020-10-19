@@ -85,13 +85,9 @@ int main(void) {
     // initialize global variables
     setIndexes();
     initBoard();
-    Board nba[NEXT_MAX];
-    Board yeah;
-    int kc[] = {0, 0, 0};
-    int nc;
     Sprm sample_prm;
     makeSprmSample(&sample_prm);
-    //printFloatArray(sample_prm.weight, SPRM_LEN);
+    printFloatArray(sample_prm.weight, SPRM_LEN);
     oneToOneNormalSprmRoulette(&sample_prm, &sample_prm);
     return 0;
 }
