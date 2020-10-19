@@ -25,8 +25,6 @@ extern Sprm SAMP_PRM;
 void showSprm(Sprm pr);
 // get the smallest value in an array
 int getMinArray(const int *A, int n);
-// flip horizontal
-int mirrorLRAd(int src);
 // normalize an address
 int normalAd(int ad);
 // ad: normalized address

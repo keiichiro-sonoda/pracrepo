@@ -33,6 +33,9 @@
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
+// flip horizontal
+// src: 0, 2, 4, ... , 62
+#define mirrorLRAd(src) (src) / 16 * 16 + 14 - (src) % 16
 
 // 64bit
 typedef unsigned long int int8B;

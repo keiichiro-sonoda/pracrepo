@@ -33,10 +33,6 @@ int getMinArray(const int *A, int n) {
     return min;
 }
 
-int mirrorLRAd(int src) {
-    return (src / 16) * 16 + 14 - src % 16;
-}
-
 // normalize an address
 int normalAd(int ad) {
     int i, eq_ads[8], adm;

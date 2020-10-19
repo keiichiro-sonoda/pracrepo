@@ -8,8 +8,6 @@
 #include "genetic02.h"
 #include "sort01.h"
 
-#define macroTest(src) (src) / 16 * 16 + 14 - (src) % 16
-
 // assume that the next turn is black
 // n: the number of next boards
 // use simple parameter
@@ -91,18 +89,15 @@ int main(void) {
     showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
     //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
-    int sample1[] = {-11, 3, 1, 2, 4, -10};
+    int sample1[] = {-11, 3, 1, -12, 4, -10};
     int l1 = arrayLength(sample1);
     int min1 = getMinArray(sample1, l1);
     printDecimal(l1);
     printDecimal(min1);
-    int x, y;
+    int x;
     for (int i = 0; i < MASU_NUM; i += 2) {
         x = mirrorLRAd(i);
-        y = macroTest(i);
-        if (x != y) {
-            printf("error!!\n");
-        }
+        printDecimal(x);
     }
     return 0;
 }
