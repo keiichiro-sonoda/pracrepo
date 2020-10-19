@@ -221,6 +221,20 @@ int nextGenerationSprmRoulette(int gene_num) {
     return 0;
 }
 
+// loop several times
+void nextGenerationSprmRouletteLoop(int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        if (nextGenerationSprmRoulette(i) == -1)
+            return;
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
 // copy the first generation
 void copyFGRoulette(void) {
     FILE *fp;
@@ -262,9 +276,11 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    Sprm samp_gene[100], samp_surv[10];
-    for (int i = 0; i < 100; i++)
-        samp_gene[i] = SAMP_PRM;
-    nextGenerationSprmRoulette(0);
+    //nextGenerationSprmRouletteLoop(0, 3);
+    char i = getchar();
+    putchar(i);
+    while ((i = getchar())) {
+        putchar(i);
+    }
     return 0;
 }
