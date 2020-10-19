@@ -26,7 +26,7 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
         // and calculate the power of e (to make numbers positive)
         exp_points[i] = expf(evaluationSimple(next_boards[i], *prp) * 10);
     }
-    printFloatArray(exp_points, n);
+    //printFloatArray(exp_points, n);
     s = sumFloat(exp_points, n);
     choosed = rouletteFloat(exp_points, n, s);
     return next_boards[choosed];
@@ -46,7 +46,7 @@ int oneToOneNormalSprmRoulette(const Sprm *spp, const Sprm *gpp) {
     while (1) {
         // calculate next
         n = nextBoardNormal2(main_board, nba, kc);
-        showBoard(main_board);
+        //showBoard(main_board);
         // can't put a piece anywhere
         if (n == 0) {
             // can't do anything one another
@@ -65,11 +65,11 @@ int oneToOneNormalSprmRoulette(const Sprm *spp, const Sprm *gpp) {
         // determine a next board
         // black (first)
         if (turn == 0b01) {
-            printf("black\n");
+            //printf("black\n");
             main_board = getBoardForBlackSimpleRoulette(nba, n, spp);
         } // white (second)
         else {
-            printf("white\n");
+            //printf("white\n");
             main_board = getBoardForBlackSimpleRoulette(nba, n, gpp);
         }
         // switch the turn
@@ -125,9 +125,15 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
+    int j;
+    int R[3];
+    zeros(R, 3);
     //showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
-    //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
-    copyFGRoulette();
+    for (int i = 0; i < 1000; i++) {
+        j = oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
+        R[j]++;
+    }
+    printDecimalArray(R, 3);
     return 0;
 }
