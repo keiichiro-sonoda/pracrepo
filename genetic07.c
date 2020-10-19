@@ -90,7 +90,7 @@ int main(void) {
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
     //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
     int sample1[] = {1, 3, 0, 2, 4};
-    int l = arrayLength(sample1);
+    int l = arrayLength(sample1) + 1;
     printDecimal(l);
     return 0;
 }
