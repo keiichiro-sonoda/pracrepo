@@ -8,6 +8,9 @@
 #include "genetic02.h"
 #include "sort01.h"
 
+// the file name format
+#define FNAME_FORMAT "prm/sprm_roulette%03d.bin"
+
 #define macroTest(src) ((14 - (src) % 16) * 8 + (src) / 16 * 2)
 
 // assume that the next turn is black
@@ -81,6 +84,39 @@ int oneToOneNormalSprmRoulette(const Sprm *spp, const Sprm *gpp) {
     return 0;
 }
 
+// copy the first generation
+void copyFGRoulette(void) {
+    FILE *fp;
+    // file name for reading (source)
+    char fnamer[] = "prm/simple_prm000.bin";
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // opened!
+    Sprm pa[SURVIVE_NUM];
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // check the top parameter
+    showSprm(pa[0]);
+    // check
+    printFloatArray(pa[0].weight, SPRM_LEN);
+    // file name for writing (destination)
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, FNAME_FORMAT, 0);
+    // open a file to write (or make a file)
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamew);
+        return;
+    }
+    // opened!
+    fwrite(pa, sizeof pa, 1, fp);
+    // close
+    fclose(fp);
+}
+
 int main(void) {
     // set seed
     srand((unsigned)time(NULL));
@@ -90,9 +126,7 @@ int main(void) {
     makeSprmSample();
     showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
-    oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
-    int sample1[] = {-11, 3, 1, -12, 4, -10};
-    int l1 = arrayLength(sample1);
-    int min1 = getMinArray(sample1, l1);
+    //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
+    copyFGRoulette();
     return 0;
 }
