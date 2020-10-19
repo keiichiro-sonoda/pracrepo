@@ -96,6 +96,7 @@ void copyFGRoulette(void) {
     }
     // opened!
     Sprm pa[SURVIVE_NUM];
+    // temporary substitution
     fread(pa, sizeof pa, 1, fp);
     fclose(fp);
     // check the top parameter
@@ -124,7 +125,7 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    showSprm(SAMP_PRM);
+    //showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
     //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
     copyFGRoulette();
