@@ -88,11 +88,9 @@ int main(void) {
     makeSprmSample();
     showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
-    //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
+    oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
     int sample1[] = {-11, 3, 1, -12, 4, -10};
     int l1 = arrayLength(sample1);
     int min1 = getMinArray(sample1, l1);
-    printDecimal(l1);
-    printDecimal(min1);
     return 0;
 }
