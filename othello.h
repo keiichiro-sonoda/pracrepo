@@ -34,8 +34,12 @@
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
 // flip horizontal
-// src: 0, 2, 4, ... , 62
+// src: 0, 2, 4, ... , 126
 #define mirrorLRAd(src) ((src) / 16 * 16 + 14 - (src) % 16)
+
+// rotate 90 degrees to the left
+// src: 0, 2, 4, ... , 126
+#define rotL90DegAd(src) ((14 - (src) % 16) * 8 + (src) / 16 * 2)
 
 // 64bit
 typedef unsigned long int int8B;
@@ -134,7 +138,6 @@ int wrapNegaMax(Board b, int color);
 int negaMaxAB(Board b, int color, int depth, int pass, int alpha, int beta);
 int wrapNegaMaxAB(Board b, int color, int height);
 int play(void);
-int rotL90DegAd(int src);
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1);
 Board mirrorHLBoard(Board b1);

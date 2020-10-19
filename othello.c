@@ -748,10 +748,6 @@ int play(void) {
     return 0;
 }
 
-int rotL90DegAd(int src) {
-    return (14 - src % 16) * 8 + (src / 16) * 2;
-}
-
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1) {
     Board b2 = createEmptyBoard();
