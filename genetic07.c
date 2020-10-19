@@ -154,6 +154,73 @@ void getSurvivorSprmRoulette(const Sprm *generation, Sprm *survivors) {
     //showSprm(survivors[0]);
 }
 
+// make next generation file
+int nextGenerationSprmRoulette(int gene_num) {
+    int i, j, count;
+    char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
+    // previous survivors
+    Sprm parents[SURVIVE_NUM];
+    FILE *fp;
+    // the file name to be read
+    snprintf(fnamer, FILENAME_MAX, FNAME_FORMAT, gene_num);
+    // the file name to be written
+    snprintf(fnamew, FILENAME_MAX, FNAME_FORMAT, gene_num + 1);
+    // view the file names
+    printf("read file : %s\n", fnamer);
+    printf("write file: %s\n", fnamew);
+    // read parents
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        printf("\a%s can't be opened\n", fnamer);
+        return -1;
+    }
+    // opened!
+    fread(parents, sizeof parents, 1, fp);
+    fclose(fp);
+    // check the file to be written (can read?)
+    if ((fp = fopen(fnamew, "rb")) != NULL) {
+        printf("\a%s exists. Do you overwrite it? (y): ", fnamew);
+        fclose(fp);
+        // don't overwrite
+        if (getchar() != 'y') {
+            printf("terminated\n");
+            return -1;
+        }
+    }
+    // store a generation
+    Sprm generation[GENE_NUM];
+
+    // 10 parents copy (elite selection)
+    for (count = 0; count < SURVIVE_NUM; count++)
+        generation[count] = parents[count];
+
+    // crossing! (use elite genes)
+    // 45 combinations, 2 children per couple
+    for (i = 0; i < SURVIVE_NUM - 1; i++) {
+        for (j = i + 1; j < SURVIVE_NUM; j++) {
+            // average
+            generation[count] = makeChildAverageSprm(parents[i], parents[j]);
+            count++;
+            // cross (the mutation rate is 5%)
+            generation[count] = makeChildCrossMSprm(parents[i], parents[j]);
+            count++;
+        }
+    }
+    // calcurate survivors
+    Sprm survivors[SURVIVE_NUM];
+    // battle! (the next board is decided by roulette)
+    getSurvivorSprmRoulette(generation, survivors);
+
+    // write current survivors to the file
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        printf("\a%s cannot be opened\n", fnamew);
+        return -1;
+    }
+    // opened!
+    fwrite(survivors, sizeof survivors, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
 // copy the first generation
 void copyFGRoulette(void) {
     FILE *fp;
@@ -198,6 +265,6 @@ int main(void) {
     Sprm samp_gene[100], samp_surv[10];
     for (int i = 0; i < 100; i++)
         samp_gene[i] = SAMP_PRM;
-    getSurvivorSprmRoulette(samp_gene, samp_surv);
+    nextGenerationSprmRoulette(0);
     return 0;
 }
