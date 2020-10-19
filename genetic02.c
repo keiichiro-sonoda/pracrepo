@@ -28,6 +28,7 @@ void showSprm(Sprm pr) {
     }
 }
 
+// get the smallest value in an array
 int getMinArray(const int *A, int n) {
     int i;
     int min = 0x7fffffff;

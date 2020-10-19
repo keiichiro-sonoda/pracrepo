@@ -86,9 +86,9 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    showSprm(SAMP_PRM);
-    printFloatArray(SAMP_PRM.weight, SPRM_LEN);
+    //showSprm(SAMP_PRM);
+    //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
     //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
-    printDecimal(getMin(7, 8));
+    printDecimal(getMin(0, 2));
     return 0;
 }

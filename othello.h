@@ -31,7 +31,8 @@
 #define arrayLength(A) sizeof(A) / sizeof(A[0])
 
 // get the smaller number
-#define getMin(a, b) (a < b ? a : b)
+#define getMin(a, b) ((a) < (b) ? (a) : (b))
+
 
 // 64bit
 typedef unsigned long int int8B;
