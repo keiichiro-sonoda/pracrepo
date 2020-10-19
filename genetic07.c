@@ -178,10 +178,16 @@ int nextGenerationSprmRoulette(int gene_num) {
     fclose(fp);
     // check the file to be written (can read?)
     if ((fp = fopen(fnamew, "rb")) != NULL) {
-        printf("\a%s exists. Do you overwrite it? (y): ", fnamew);
+        printf("\a%s exists. Do you overwrite it? (y\\n): ", fnamew);
         fclose(fp);
         // don't overwrite
         if (getchar() != 'y') {
+            while (getchar() != 10);
+            printf("terminated\n");
+            return -1;
+        }
+        if (getchar() != 10) {
+            while (getchar() != 10);
             printf("terminated\n");
             return -1;
         }
@@ -276,11 +282,6 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    //nextGenerationSprmRouletteLoop(0, 3);
-    char i = getchar();
-    putchar(i);
-    while ((i = getchar())) {
-        putchar(i);
-    }
+    nextGenerationSprmRouletteLoop(0, 3);
     return 0;
 }
