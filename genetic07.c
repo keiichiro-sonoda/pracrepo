@@ -155,7 +155,7 @@ void getSurvivorSprmRoulette(const Sprm *generation, Sprm *survivors) {
 }
 
 // make next generation file
-int nextGenerationSprmRoulette(int gene_num) {
+int nextGenerationSprmRoulette(int gene_num, int safety) {
     int i, j, count;
     char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
     // previous survivors
@@ -176,12 +176,14 @@ int nextGenerationSprmRoulette(int gene_num) {
     // opened!
     fread(parents, sizeof parents, 1, fp);
     fclose(fp);
+    // allow overwriting
+    if (!safety);
     // check the file to be written (can read?)
-    if ((fp = fopen(fnamew, "rb")) != NULL) {
+    else if ((fp = fopen(fnamew, "rb")) != NULL) {
         printf("\a%s exists. Do you overwrite it? (y\\n): ", fnamew);
         fclose(fp);
         // don't overwrite
-        if (getchar() != 'y') {
+        if (getchar() != 121) {
             while (getchar() != 10);
             printf("terminated\n");
             return -1;
@@ -233,7 +235,7 @@ void nextGenerationSprmRouletteLoop(int st, int loop) {
     // get start time
     time(&t0);
     for (int i = st; i < st + loop; i++) {
-        if (nextGenerationSprmRoulette(i) == -1)
+        if (nextGenerationSprmRoulette(i, 0) == -1)
             return;
         // get time
         time(&t1);
@@ -277,11 +279,11 @@ void copyFGRoulette(void) {
 
 int main(void) {
     // set seed
-    srand((unsigned)time(NULL));
+    srand(123U);
     // initialize global variables
     setIndexes();
     initBoard();
     makeSprmSample();
-    nextGenerationSprmRouletteLoop(0, 3);
+    nextGenerationSprmRouletteLoop(0, 2);
     return 0;
 }
