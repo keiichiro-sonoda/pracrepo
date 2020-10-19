@@ -8,7 +8,7 @@
 #define GENE_NUM 100
 
 // parameter sample
-#define SPRM_SAMPLE 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
+#define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
 
 // simple parameter
 typedef struct {
@@ -17,6 +17,7 @@ typedef struct {
 
 // global variables
 extern int INDEXES[MASU_NUM];
+extern Sprm SAMP_PRM;
 
 // functions
 
@@ -68,7 +69,7 @@ int nextGenerationSprm(int gene_num);
 void nextGenerationSprmLoop(int st, int loop);
 
 // make a sample of parameters
-void makeSprmSample(Sprm *prp);
+void makeSprmSample(void);
 
 // for debugging
 void test1(void);

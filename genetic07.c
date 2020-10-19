@@ -85,9 +85,9 @@ int main(void) {
     // initialize global variables
     setIndexes();
     initBoard();
-    Sprm sample_prm;
-    makeSprmSample(&sample_prm);
-    printFloatArray(sample_prm.weight, SPRM_LEN);
-    oneToOneNormalSprmRoulette(&sample_prm, &sample_prm);
+    makeSprmSample();
+    showSprm(SAMP_PRM);
+    printFloatArray(SAMP_PRM.weight, SPRM_LEN);
+    //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
     return 0;
 }

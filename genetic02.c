@@ -12,6 +12,7 @@
 // global variables
 // declarations are required
 int INDEXES[MASU_NUM];
+Sprm SAMP_PRM;
 
 // functions
 
@@ -424,10 +425,12 @@ void nextGenerationSprmLoop(int st, int loop) {
 }
 
 // make a sample of parameters
-void makeSprmSample(Sprm *prp) {
-    float spr[] = {SPRM_SAMPLE};
+// set global variable "SAMP_PRM"
+void makeSprmSample(void) {
+    // use macro
+    float spr[] = {SAMP_PRM_NUMS};
     for (int i = 0; i < SPRM_LEN; i++)
-        (prp->weight)[i] = spr[i];
+        SAMP_PRM.weight[i] = spr[i];
 }
 
 // for debugging
