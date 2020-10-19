@@ -30,11 +30,9 @@ void showSprm(Sprm pr) {
 
 // get the smallest value in an array
 int getMinArray(const int *A, int n) {
-    int i;
     int min = 0x7fffffff;
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         min = getMin(A[i], min);
-    }
     return min;
 }
 
