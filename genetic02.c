@@ -18,11 +18,8 @@ Sprm SAMP_PRM;
 
 // print a simple parameter
 void showSprm(Sprm pr) {
-    int i;
-    float p;
-    for (i = 0; i < MASU_NUM; i++) {
-        p = pr.weight[INDEXES[i]];
-        printf("%5.2f ", p);
+    for (int i = 0; i < MASU_NUM; i++) {
+        printf("%5.2f ", pr.weight[INDEXES[i]]);
         if (i % 8 == 7)
             putchar(10);
     }

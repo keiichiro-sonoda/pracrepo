@@ -86,7 +86,7 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    //showSprm(SAMP_PRM);
+    showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
     //oneToOneNormalSprmRoulette(&SAMP_PRM, &SAMP_PRM);
     int sample1[] = {-11, 3, 1, 2, 4, -10};
