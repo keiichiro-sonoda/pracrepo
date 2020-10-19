@@ -150,8 +150,9 @@ void getSurvivorSprmRoulette(const Sprm *generation, Sprm *survivors) {
     // calculate the distance between the previous top and the current top
     // this value may not make sense
     printf("distance: %6.4f\n", distSprm(survivors[0], generation[0]));
-    //printf("top parameters view:\n");
-    //showSprm(survivors[0]);
+    // check the top parameter
+    printf("the top parameter view:\n");
+    printFloatArray(survivors[0].weight, SPRM_LEN);
 }
 
 // make next generation file
@@ -230,11 +231,14 @@ int nextGenerationSprmRoulette(int gene_num, int safety) {
 }
 
 // loop several times
-void nextGenerationSprmRouletteLoop(int st, int loop) {
+// also give the seed value
+void nextGenerationSprmRouletteLoop(int st, int loop, unsigned int seed) {
     time_t t0, t1;
     // get start time
     time(&t0);
     for (int i = st; i < st + loop; i++) {
+        // set seed
+        srand(seed);
         if (nextGenerationSprmRoulette(i, 0) == -1)
             return;
         // get time
@@ -278,12 +282,10 @@ void copyFGRoulette(void) {
 }
 
 int main(void) {
-    // set seed
-    srand(123U);
     // initialize global variables
     setIndexes();
     initBoard();
     makeSprmSample();
-    nextGenerationSprmRouletteLoop(0, 2);
+    nextGenerationSprmRouletteLoop(0, 10, 123U);
     return 0;
 }
