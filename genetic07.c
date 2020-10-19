@@ -87,7 +87,7 @@ int oneToOneNormalSprmRoulette(const Sprm *spp, const Sprm *gpp) {
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
-    // all zero
+    // set all elements to zero
     zeros(result, GENE_NUM);
     // black index
     for (int i = 0; i < GENE_NUM; i++) {
@@ -156,5 +156,12 @@ int main(void) {
     makeSprmSample();
     //showSprm(SAMP_PRM);
     //printFloatArray(SAMP_PRM.weight, SPRM_LEN);
+    Sprm samp_gene[GENE_NUM];
+    int result[GENE_NUM];
+    for (int i = 0; i < GENE_NUM; i++) {
+        samp_gene[i] = SAMP_PRM;
+    }
+    leagueMatchSprmRoulette(samp_gene, result);
+    printDecimalArray(result, GENE_NUM);
     return 0;
 }
