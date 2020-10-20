@@ -1,3 +1,4 @@
+// pythonのctypesから呼び出す共有ライブラリを作る
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
