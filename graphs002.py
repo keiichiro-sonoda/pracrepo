@@ -70,9 +70,12 @@ def dataView05(fname_format, x_min, x_max):
         borderaxespad=0,
         fontsize=10
     )
+    # ラベル指定
     ax.set_xlabel("generation", fontsize=15)
     ax.set_ylabel("point", fontsize=15)
+    # 横幅指定（世代幅）
     ax.set_xticks(np.linspace(x_min, x_max, 11))
+    # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.6, 0.6, 7))
     plt.show()
 
