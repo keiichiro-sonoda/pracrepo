@@ -28,7 +28,7 @@ LINE_COLORS = [
 ]
 
 # 平均値表示したい(課題4で発表したグラフの世代縮小バージョン?)
-# ファイル名のフォーマットを引数で指定
+# ファイル名のフォーマットを引数で指定してより柔軟にする
 # 世代幅も指定
 def dataView05(fname_format, x_min, x_max):
     x = []
@@ -86,4 +86,6 @@ if __name__ == "__main__":
     # ランダム対戦
     #dataView05("prm//sprm_vsrand{:03d}.bin", 0, 100)
     # 角固定(-0.5)
-    dataView05("prm//sprm_corner0.5neg_{:03d}.bin", 0, 100)
+    #dataView05("prm//sprm_corner0.5neg_{:03d}.bin", 0, 100)
+    # 指し手をルーレット選択
+    dataView05("prm//sprm_roulette{:03d}.bin", 0, 100)
