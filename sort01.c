@@ -12,15 +12,17 @@ int *GLOBAL;
 // for debugging
 void sortTest(void) {
     srand(123U);
+    srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
-    float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
-    int result1[3];
+    float sample2[] = {-1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
     int l2 = arrayLength(sample2);
     float sample3[l2];
+    int l3 = 4;
+    int result1[l3];
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
-    rouletteFloatMltDep(sample3, l2, result1, 3);
-    printDecimalArray(result1, 3);
+    rouletteFloatMltDep(sample3, l2, result1, l3);
+    printDecimalArray(result1, l3);
 }
 
 // insertion sort
@@ -134,6 +136,15 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
         delFloat(now, now_len, rslt[i]);
         printFloatArray(now, now_len - 1);
         printFloat(s);
+    }
+    printDecimalArray(rslt, rslt_len);
+    // fix the results
+    for (int i = rslt_len - 2; i >= 0; i--) {
+        for (int j = i + 1; j < rslt_len; j++) {
+            if (rslt[i] <= rslt[j]) {
+                rslt[j]++;
+            }
+        }
     }
 }
 
