@@ -5,21 +5,27 @@
 #include "sort01.h"
 
 /* pf の引数は，「戻り値void，int1個の引数をとる関数」へのポインタと，「整数」 */
-void call_func(void (*pf)(int), int x) {
+void call_func(int (*pf)(int), int x) {
     pf(x);    /* 関数ポインタ pf を使った関数呼び出し */
 }
 
-void func_A(int n) {
-    printf("by func_A, n^2 = %d\n", n*n);
+int func_A(int x) {
+    int y;
+    y = x * x;
+    printf("by func_A, n^2 = %d\n", y);
+    return y;
 }
 
-void func_B(int n) {
-    printf("by func_B, n^3 = %d\n", n*n*n);
+int func_B(int x) {
+    int y;
+    y = x * x * x;
+    printf("by func_B, n^3 = %d\n", y);
+    return y;
 }
 
 int main(void) {
     /* 例1：関数を指すポインタ変数 */
-    void (*p)(int);     /* ポインタ変数を宣言 */
+    int (*p)(int);     /* ポインタ変数を宣言 */
 
     p = func_A;
     printf("p = 0x%p, ", p);  /* pointer の指すアドレスを表示 */
