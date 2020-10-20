@@ -20,6 +20,10 @@ int sumInt(const int *A, int n);
 // return the sum of a floating point array
 float sumFloat(const float *A, int n);
 
+// delete the element of the specified index
+// the size of the array doesn't change
+void delFloat(float *A, int n, int index);
+
 // roulette selection
 // only supports non-negative integers
 // return an index

@@ -18,7 +18,7 @@ void sortTest(void) {
     int l2 = arrayLength(sample2);
     float sample3[l2];
     expArray(sample2, sample3, l2);
-    //printFloatArray(sample3, l2);
+    printFloatArray(sample3, l2);
     rouletteFloatMltDep(sample3, l2, result1, 3);
     printDecimalArray(result1, 3);
 }
@@ -77,6 +77,18 @@ float sumFloat(const float *A, int n) {
     return s;
 }
 
+// delete the element of the specified index
+// the size of the array doesn't change
+void delFloat(float *A, int n, int index) {
+    int c = 0;
+    for (int i = 0; i < n; i++) {
+        if (i != index) {
+            A[c] = A[i];
+            c++;
+        }
+    }
+}
+
 // roulette selection
 // only supports non-negative integers
 // return an index
@@ -111,11 +123,16 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
     zeros(rslt, rslt_len);
     float now[A_len], next[A_len];
     copyArray(A, now, A_len);
-    int s;
-    s = sumFloat(A, A_len);
-    rslt[0] = rouletteFloat(A, A_len, s);
-    printFloatArray(A, A_len);
-    printFloatArray(now, A_len);
+    int now_len;
+    int s = sumFloat(A, A_len);
+    for (int i = 0; i < rslt_len; i++) {
+        now_len = A_len - i;
+        rslt[i] = rouletteFloat(now, now_len, s);
+        // delete the selected element
+        delFloat(now, now_len, rslt[i]);
+        printFloatArray(now, A_len);
+        s -= rslt[i];
+    }
 }
 
 // check if rouletteFloat workes as expected
