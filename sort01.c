@@ -21,8 +21,8 @@ void sortTest(void) {
     int result1[l3];
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
-    rouletteFloatMltDep(sample3, l2, result1, l3);
-    printDecimalArray(result1, l3);
+    int sample4[] = {0, 0};
+    rouletteInt(sample4, 2, 0);
     globalTest();
 }
 
