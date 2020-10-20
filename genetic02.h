@@ -88,6 +88,10 @@ void nextGenerationSprmLoop(int st, int loop);
 // make a sample of parameters
 void makeSprmSample(void);
 
+// copy the first generation
+// give the destination file format
+void copyFGFlex(const char *dst_format);
+
 // for debugging
 void test1(void);
 

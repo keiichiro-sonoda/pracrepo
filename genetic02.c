@@ -523,6 +523,40 @@ void makeSprmSample(void) {
         SAMP_PRM.weight[i] = spr[i];
 }
 
+// copy the first generation
+// give the destination file format
+void copyFGFlex(const char *dst_format) {
+    FILE *fp;
+    // file name for reading (source)
+    char fnamer[] = "prm/simple_prm000.bin";
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // opened!
+    Sprm pa[SURVIVE_NUM];
+    // temporary substitution
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // check the parameters
+    for (int i = 0; i < SURVIVE_NUM; i++)
+        printFloatArray(pa[i].weight, SPRM_LEN);
+    // file name for writing (destination)
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, dst_format, 0);
+    // open a file to write (or make a file)
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamew);
+        return;
+    }
+    // opened!
+    fwrite(pa, sizeof pa, 1, fp);
+    // close
+    fclose(fp);
+}
+
 // for debugging
 void test1(void) {
     // set global variable

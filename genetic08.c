@@ -10,7 +10,7 @@
 #include "sort01.h"
 
 // the file name format
-#define FNAME_FORMAT "prm/sprm_roulette%03d.bin"
+#define FNAME_FORMAT "prm/sprm_rltrlt%03d.bin"
 
 // choose survivors[10] from generation[100]
 // and show match results
@@ -146,40 +146,6 @@ void nextGenerationSprmRouletteLoop(int st, int loop) {
     }
 }
 
-// copy the first generation
-void copyFGRoulette(void) {
-    FILE *fp;
-    // file name for reading (source)
-    char fnamer[] = "prm/simple_prm000.bin";
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        // failed
-        printf("%s can't be opened.\n", fnamer);
-        return;
-    }
-    // opened!
-    Sprm pa[SURVIVE_NUM];
-    // temporary substitution
-    fread(pa, sizeof pa, 1, fp);
-    fclose(fp);
-    // check the top parameter
-    showSprm(pa[0]);
-    // check
-    printFloatArray(pa[0].weight, SPRM_LEN);
-    // file name for writing (destination)
-    char fnamew[FILENAME_MAX];
-    snprintf(fnamew, FILENAME_MAX, FNAME_FORMAT, 0);
-    // open a file to write (or make a file)
-    if ((fp = fopen(fnamew, "wb")) == NULL) {
-        // failed
-        printf("%s can't be opened.\n", fnamew);
-        return;
-    }
-    // opened!
-    fwrite(pa, sizeof pa, 1, fp);
-    // close
-    fclose(fp);
-}
-
 int main(void) {
     // initialize global variables
     setIndexes();
@@ -187,6 +153,8 @@ int main(void) {
     makeSprmSample();
     //nextGenerationSprmRouletteLoop(100, 2);
     //checkSprmFile(FNAME_FORMAT, 100);
+    //copyFGFlex(FNAME_FORMAT);
+    checkSprmFile(FNAME_FORMAT, 0);
     printf("yeah\n");
     return 0;
 }
