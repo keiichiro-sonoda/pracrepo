@@ -23,10 +23,6 @@ void sortTest(void) {
     printFloatArray(sample3, l2);
     rouletteFloatMltDep(sample3, l2, result1, l3);
     printDecimalArray(result1, l3);
-    indices(result1, l3);
-    printDecimalArray(result1, l3);
-    fixIndices(result1, l3);
-    printDecimalArray(result1, l3);
 }
 
 // insertion sort
@@ -134,17 +130,13 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
     copyArray(A, now, A_len);
     int now_len;
     float s = sumFloat(A, A_len);
-    printFloat(s);
     for (int i = 0; i < rslt_len; i++) {
         now_len = A_len - i;
         rslt[i] = rouletteFloat(now, now_len, s);
         s -= now[rslt[i]];
         // delete the selected element
         delFloat(now, now_len, rslt[i]);
-        printFloatArray(now, now_len - 1);
-        printFloat(s);
     }
-    printDecimalArray(rslt, rslt_len);
     // fix the results
     fixIndices(rslt, rslt_len);
 }
