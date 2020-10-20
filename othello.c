@@ -81,7 +81,7 @@ void printDecimalArray(const int *A, int n) {
 void printFloatArray(const float *A, int n) {
     putchar(123);
     for (int i = 0; i < n; i++) {
-        printf("%.2f", A[i]);
+        printf("%5.2f", A[i]);
         if (i < n - 1)
             printf(", ");
     }
