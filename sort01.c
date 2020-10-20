@@ -86,9 +86,8 @@ float sumFloat(const float *A, int n) {
 // delete the element of the specified index
 // the size of the array doesn't change
 void delFloat(float *A, int n, int index) {
-    for (int i = 0; i < n - 1; i++)
-        if (i >= index)
-            A[i] = A[i + 1];
+    for (int i = index + 1; i < n; i++)
+        A[i - 1] = A[i];
 }
 
 // roulette selection
