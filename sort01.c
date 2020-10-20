@@ -21,8 +21,6 @@ void sortTest(void) {
     int result1[l3];
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
-    int sample4[] = {0, 0};
-    rouletteInt(sample4, 2, 0);
     globalTest();
 }
 
@@ -44,19 +42,19 @@ void arrayRandom(int n) {
     // failed
     if (GLOBAL == NULL) return;
     for (int i = 0; i < n; i++)
-        // 0-100
+        // 0-99
         GLOBAL[i] = rand() % 100;
 }
 
 void globalTest(void) {
     int n = 10;
-    int rl = 9;
+    int rl = 10;
     int result[rl];
     int result_all[n];
     zeros(result_all, n);
     arrayRandom(n);
     printDecimalArray(GLOBAL, n);
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 100; i++) {
         rouletteIntMltDep(GLOBAL, n, result, rl);
         for (int j = 0; j < rl; j++) {
             result_all[result[j]]++;
@@ -107,6 +105,8 @@ void delFloat(float *A, int n, int index) {
 // only supports non-negative integers
 // return an index
 int rouletteInt(const int *A, int n, int s) {
+    // avoid dividing by 0
+    if (s == 0) return 0;
     int r = rand() % s;
     int i;
     for (i = 0; i < n - 1; i++) {
@@ -120,6 +120,8 @@ int rouletteInt(const int *A, int n, int s) {
 // roulette selection
 // only supports non-negative floating point numbers
 int rouletteFloat(const float *A, int n, float s) {
+    // avoid dividing by 0
+    if (s == 0.0) return 0;
     float r = (float)rand() / RAND_MAX * s;
     int i;
     for (i = 0; i < n - 1; i++) {
