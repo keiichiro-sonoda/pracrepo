@@ -149,6 +149,26 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
     return best_board;
 }
 
+// assume that the next turn is black
+// n: the number of next boards
+// use simple parameter
+// decide next board by roulette
+Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp) {
+    float exp_points[n];
+    float s;
+    int choosed;
+    for (int i = 0; i < n; i++) {
+        // evaluate all next boards
+        // and calculate the power of e (to make numbers positive)
+        // sign inversion!
+        exp_points[i] = expf(-evaluationSimple(next_boards[i], *prp) * 10);
+    }
+    //printFloatArray(exp_points, n);
+    s = sumFloat(exp_points, n);
+    choosed = rouletteFloat(exp_points, n, s);
+    return next_boards[choosed];
+}
+
 // return winner
 int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     Board nba[NEXT_MAX];
@@ -200,6 +220,58 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     return 0;
 }
 
+// return winner
+// give a function pointer as an argument
+int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp) {
+    Board nba[NEXT_MAX];
+    int kc[3];
+    int pass = 0;
+    int n, dif;
+    // set turn
+    int turn = 0b01;
+    // set initial board
+    Board main_board = START;
+    while (1) {
+        // calculate next
+        n = nextBoardNormal2(main_board, nba, kc);
+        //showBoard(main_board);
+        // can't put a piece anywhere
+        if (n == 0) {
+            // can't do anything one another
+            if (pass) {
+                //printf("end\n");
+                break;
+            }
+            // pass
+            //printf("pass\n");
+            swapNormalizeBoard(&main_board);
+            turn ^= 0b11;
+            pass = 1;
+            continue;
+        }
+        pass = 0;
+        // determine a next board
+        // black (first)
+        if (turn == 0b01) {
+            //printf("black\n");
+            main_board = decNxt(nba, n, spp);
+        } // white (second)
+        else {
+            //printf("white\n");
+            main_board = decNxt(nba, n, gpp);
+        }
+        // switch turn
+        turn ^= 0b11;
+    }
+    // difference between black and white
+    dif = kc[1] - kc[2];
+    //printDecimal(dif);
+    if (dif > 0) return turn;
+    if (dif < 0) return turn ^ 0b11;
+    // draw
+    return 0;
+}
+
 // make first file
 void makeFirstSprmsFile(void) {
     FILE *fp;
@@ -226,9 +298,10 @@ void makeFirstSprmsFile(void) {
 }
 
 // check parameter in a file
-void checkSprmFile(int gene_num) {
+// give the file name format and generation number
+void checkSprmFile(const char *format, int gene_num) {
     FILE *fp;
-    char format[] = "prm/simple_prm%03d.bin";
+    // the file name to be read
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
     printString(fnamer);
@@ -241,8 +314,10 @@ void checkSprmFile(int gene_num) {
     fread(&pa, sizeof pa, 1, fp);
     fclose(fp);
     // check the top parameter
-    showSprm(pa[0]);
-    printFloatArray(pa[0].weight, SPRM_LEN);
+    //showSprm(pa[0]);
+    // check the all parameters
+    for (int i = 0; i < SURVIVE_NUM; i++)
+        printFloatArray(pa[i].weight, SPRM_LEN);
 }
 
 // use Sprm[100]
@@ -275,6 +350,36 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
     }
 }
 
+// use Sprm[100]
+// win: +2, draw: +1, lose: 0
+// give a function pointer to decide the next board
+void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result) {
+    // set all elements to zero
+    zeros(result, GENE_NUM);
+    // black index
+    for (int i = 0; i < GENE_NUM; i++) {
+        //printf("\ai = %d / %d", i, FAMILY_NUM);
+        // white index
+        for (int j = 0; j < GENE_NUM; j++) {
+            if (i == j) continue;
+            switch(oneToOneNormalSprmFlex(decNxt, generation + i, generation + j)) {
+                // black won
+                case 1:
+                    result[i] += 2;
+                    break;
+                // white won
+                case 2:
+                    result[j] += 2;
+                    break;
+                // draw
+                default:
+                    result[i]++;
+                    result[j]++;
+            }
+        }
+    }
+}
+
 // calculate distance
 float distSprm(Sprm p1, Sprm p2) {
     int i;
@@ -287,6 +392,34 @@ float distSprm(Sprm p1, Sprm p2) {
     d /= SPRM_LEN;
     // return the square root
     return (float)sqrt(d);
+}
+
+// calculate means and standard deviation from some parameters
+void checkSprmStatistics(const Sprm *pra, int pra_len) {
+    int i, j;
+    float mean[SPRM_LEN];
+    float sd[SPRM_LEN];
+    zerosFloat(mean, SPRM_LEN);
+    zerosFloat(sd, SPRM_LEN);
+    // calculate sum of each weight
+    for (i = 0; i < pra_len; i++)
+        for (j = 0; j < SPRM_LEN; j++)
+            mean[j] += pra[i].weight[j];
+    
+    for (i = 0; i < pra_len; i++)
+        mean[i] /= pra_len;
+    
+    for (i = 0; i < pra_len; i++)
+        for (j = 0; j < SPRM_LEN; j++)
+            sd[j] += powf(pra[i].weight[j] - mean[j], 2.0f);
+    
+    for (i = 0; i < pra_len; i++)
+        sd[i] = sqrtf(sd[i] / pra_len);
+
+    printf("mean: ");
+    printFloatArray(mean, SPRM_LEN);
+    printf("SD:   ");
+    printFloatArray(sd, SPRM_LEN);
 }
 
 // choose survivors from Sprm[100]
@@ -411,6 +544,22 @@ void nextGenerationSprmLoop(int st, int loop) {
     }
 }
 
+// give a function to loop
+void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        // set the generation number as the seed
+        srand((unsigned)i);
+        if (nGene(i, safety) == -1)
+            return;
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
 // make a sample of parameters
 // set global variable "SAMP_PRM"
 void makeSprmSample(void) {
@@ -418,6 +567,40 @@ void makeSprmSample(void) {
     float spr[] = {SAMP_PRM_NUMS};
     for (int i = 0; i < SPRM_LEN; i++)
         SAMP_PRM.weight[i] = spr[i];
+}
+
+// copy the first generation
+// give the destination file format
+void copyFGFlex(const char *dst_format) {
+    FILE *fp;
+    // file name for reading (source)
+    char fnamer[] = "prm/simple_prm000.bin";
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamer);
+        return;
+    }
+    // opened!
+    Sprm pa[SURVIVE_NUM];
+    // temporary substitution
+    fread(pa, sizeof pa, 1, fp);
+    fclose(fp);
+    // check the parameters
+    for (int i = 0; i < SURVIVE_NUM; i++)
+        printFloatArray(pa[i].weight, SPRM_LEN);
+    // file name for writing (destination)
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, dst_format, 0);
+    // open a file to write (or make a file)
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamew);
+        return;
+    }
+    // opened!
+    fwrite(pa, sizeof pa, 1, fp);
+    // close
+    fclose(fp);
 }
 
 // for debugging
@@ -430,5 +613,5 @@ void test1(void) {
     // test
     showBoard(START);
     //sortTest();
-    checkSprmFile(0);
+    checkSprmFile("prm/simple_prm%03d.bin", 0);
 }

@@ -11,25 +11,18 @@ int *GLOBAL;
 
 // for debugging
 void sortTest(void) {
+    srand(123U);
+    srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
-    float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
-    int l2;
-    l2 = arrayLength(sample2);
+    float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
+    int l2 = arrayLength(sample2);
     float sample3[l2];
-    int n = arrayLength(sample1);
-    int B[n];
-    indices(B, n);
-    printf("before\n");
-    printDecimalArray(sample1, n);
-    printDecimalArray(B, n);
-    quicksortDD(sample1, B, 0, n - 1);
-    printf("after\n");
-    printDecimalArray(sample1, n);
-    printDecimalArray(B, n);
-    printFloatArray(sample2, l2);
+    int l3 = 5;
+    int result1[l3];
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
-    rouletteFloatTest(sample3, l2);
+    rouletteFloatMltDep(sample3, l2, result1, l3);
+    printDecimalArray(result1, l3);
     globalTest();
 }
 
@@ -51,16 +44,25 @@ void arrayRandom(int n) {
     // failed
     if (GLOBAL == NULL) return;
     for (int i = 0; i < n; i++)
-        // 0-100
+        // 0-99
         GLOBAL[i] = rand() % 100;
 }
 
 void globalTest(void) {
     int n = 10;
+    int rl = 5;
+    int result[rl];
+    int result_all[n];
+    zeros(result_all, n);
     arrayRandom(n);
+    for (int i = 0; i < 10000; i++) {
+        rouletteIntMltDep(GLOBAL, n, result, rl);
+        for (int j = 0; j < rl; j++) {
+            result_all[result[j]]++;
+        }
+    }
     printDecimalArray(GLOBAL, n);
-    insertionSort(GLOBAL, n);
-    printDecimalArray(GLOBAL, n);
+    printDecimalArray(result_all, n);
     free(GLOBAL);
 }
 
@@ -87,10 +89,26 @@ float sumFloat(const float *A, int n) {
     return s;
 }
 
+// delete the element of the specified index
+// the size of the array doesn't change
+void delInt(int *A, int n, int index) {
+    for (int i = index + 1; i < n; i++)
+        A[i - 1] = A[i];
+}
+
+// delete the element of the specified index
+// the size of the array doesn't change
+void delFloat(float *A, int n, int index) {
+    for (int i = index + 1; i < n; i++)
+        A[i - 1] = A[i];
+}
+
 // roulette selection
 // only supports non-negative integers
 // return an index
 int rouletteInt(const int *A, int n, int s) {
+    // avoid dividing by 0
+    if (s == 0) return 0;
     int r = rand() % s;
     int i;
     for (i = 0; i < n - 1; i++) {
@@ -112,6 +130,56 @@ int rouletteFloat(const float *A, int n, float s) {
             return i;
     }
     return i;
+}
+
+// fix the indices misalignment
+void fixIndices(int *A, int n) {
+    for (int i = n - 2; i >= 0; i--)
+        for (int j = i + 1; j < n; j++)
+            if (A[i] <= A[j])
+                A[j]++;
+}
+
+// choose some elements with roulette
+// don't allow duplication
+// only supports non-negative integers
+void rouletteIntMltDep(const int *A, int A_len, int *rslt, int rslt_len) {
+    zeros(rslt, rslt_len);
+    int now[A_len];
+    copyArray(A, now, A_len);
+    int now_len;
+    int s = sumInt(A, A_len);
+    for (int i = 0; i < rslt_len; i++) {
+        now_len = A_len - i;
+        //printDecimalArray(now, now_len);
+        //printDecimal(s);
+        rslt[i] = rouletteInt(now, now_len, s);
+        s -= now[rslt[i]];
+        // delete the selected element
+        delInt(now, now_len, rslt[i]);
+    }
+    // fix the results
+    fixIndices(rslt, rslt_len);
+}
+
+// choose some elements with roulette
+// don't allow duplication
+void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
+    // initialize
+    zeros(rslt, rslt_len);
+    float now[A_len];
+    copyArray(A, now, A_len);
+    int now_len;
+    float s = sumFloat(A, A_len);
+    for (int i = 0; i < rslt_len; i++) {
+        now_len = A_len - i;
+        rslt[i] = rouletteFloat(now, now_len, s);
+        s -= now[rslt[i]];
+        // delete the selected element
+        delFloat(now, now_len, rslt[i]);
+    }
+    // fix the results
+    fixIndices(rslt, rslt_len);
 }
 
 // check if rouletteFloat workes as expected

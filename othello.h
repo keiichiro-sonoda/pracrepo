@@ -33,6 +33,9 @@
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
+// copy an array
+#define copyArray(src, dst, n) for (int i = 0; i < n; i++) dst[i] = src[i]
+
 // flip horizontal
 // src: 0, 2, 4, ... , 126
 #define mirrorLRAd(src) ((src) / 16 * 16 + 14 - (src) % 16)
@@ -46,7 +49,7 @@ typedef unsigned long int int8B;
 
 // othello board
 // 128 bits
-typedef struct {
+typedef struct board{
     // low bits, high bits
     int8B board[2];
 } Board;
@@ -120,6 +123,10 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards);
 
 // all zero
 void zeros(int *A, int n);
+
+// all zero (float)
+void zerosFloat(float *A, int n);
+
 // all zero 2D array
 // int iaa[l1][l2]
 int zeros2D(int *iaa[], int l1, int l2);

@@ -81,7 +81,7 @@ void printDecimalArray(const int *A, int n) {
 void printFloatArray(const float *A, int n) {
     putchar(123);
     for (int i = 0; i < n; i++) {
-        printf("%.2f", A[i]);
+        printf("%6.3f", A[i]);
         if (i < n - 1)
             printf(", ");
     }
@@ -467,6 +467,12 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
 void zeros(int *A, int n) {
     for (int i = 0; i < n; i++)
         A[i] = 0;
+}
+
+// all zero (float)
+void zerosFloat(float *A, int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = 0.0f;
 }
 
 // all zero 2D array
