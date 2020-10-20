@@ -49,7 +49,7 @@ typedef unsigned long int int8B;
 
 // othello board
 // 128 bits
-typedef struct {
+typedef struct board{
     // low bits, high bits
     int8B board[2];
 } Board;

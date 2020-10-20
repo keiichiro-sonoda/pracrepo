@@ -11,7 +11,7 @@
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
 
 // simple parameter
-typedef struct {
+typedef struct sprm{
     float weight[SPRM_LEN];
 } Sprm;
 
@@ -54,6 +54,11 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
 
 // return winner
 int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
+
+// return winner
+// give a function pointer as an argument
+int oneToOneNormalSprmFlex(Board (*pf)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
+
 // make first file
 void makeFirstSprmsFile(void);
 

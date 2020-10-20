@@ -264,7 +264,7 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    nextGenerationSprmRouletteLoop(100, 2);
+    //nextGenerationSprmRouletteLoop(100, 2);
     checkSprmFile(FNAME_FORMAT, 100);
     printf("yeah\n");
     return 0;

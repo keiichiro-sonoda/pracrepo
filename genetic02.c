@@ -220,6 +220,58 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     return 0;
 }
 
+// return winner
+// give a function pointer as an argument
+int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp) {
+    Board nba[NEXT_MAX];
+    int kc[3];
+    int pass = 0;
+    int n, dif;
+    // set turn
+    int turn = 0b01;
+    // set initial board
+    Board main_board = START;
+    while (1) {
+        // calculate next
+        n = nextBoardNormal2(main_board, nba, kc);
+        //showBoard(main_board);
+        // can't put a piece anywhere
+        if (n == 0) {
+            // can't do anything one another
+            if (pass) {
+                //printf("end\n");
+                break;
+            }
+            // pass
+            //printf("pass\n");
+            swapNormalizeBoard(&main_board);
+            turn ^= 0b11;
+            pass = 1;
+            continue;
+        }
+        pass = 0;
+        // determine a next board
+        // black (first)
+        if (turn == 0b01) {
+            //printf("black\n");
+            main_board = decNxt(nba, n, spp);
+        } // white (second)
+        else {
+            //printf("white\n");
+            main_board = decNxt(nba, n, gpp);
+        }
+        // switch turn
+        turn ^= 0b11;
+    }
+    // difference between black and white
+    dif = kc[1] - kc[2];
+    //printDecimal(dif);
+    if (dif > 0) return turn;
+    if (dif < 0) return turn ^ 0b11;
+    // draw
+    return 0;
+}
+
 // make first file
 void makeFirstSprmsFile(void) {
     FILE *fp;
