@@ -50,10 +50,12 @@ void arrayRandom(int n) {
 
 void globalTest(void) {
     int n = 10;
+    int rl = 3;
+    int result[rl];
     arrayRandom(n);
     printDecimalArray(GLOBAL, n);
-    insertionSort(GLOBAL, n);
-    printDecimalArray(GLOBAL, n);
+    rouletteIntMltDep(GLOBAL, n, result, rl);
+    printDecimalArray(result, rl);
     free(GLOBAL);
 }
 
