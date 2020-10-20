@@ -49,8 +49,11 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp);
 int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 // make first file
 void makeFirstSprmsFile(void);
+
 // check parameter in a file
-void checkSprmFile(int gene_num);
+// give the file name format and generation number
+void checkSprmFile(const char *format, int gene_num);
+
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result);

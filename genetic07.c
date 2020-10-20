@@ -14,7 +14,7 @@
 // assume that the next turn is black
 // n: the number of next boards
 // use simple parameter
-// use roulette selection
+// decide next board by roulette
 Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp) {
     float exp_points[n];
     float s;
@@ -285,6 +285,8 @@ int main(void) {
     initBoard();
     makeSprmSample();
     //nextGenerationSprmRouletteLoop(0, 100);
+    checkSprmFile(FNAME_FORMAT, 0);
+    test1();
     printf("yeah\n");
     return 0;
 }

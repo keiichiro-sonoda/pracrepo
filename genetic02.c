@@ -226,9 +226,10 @@ void makeFirstSprmsFile(void) {
 }
 
 // check parameter in a file
-void checkSprmFile(int gene_num) {
+// give the file name format and generation number
+void checkSprmFile(const char *format, int gene_num) {
     FILE *fp;
-    char format[] = "prm/simple_prm%03d.bin";
+    // the file name to be read
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
     printString(fnamer);
@@ -430,5 +431,5 @@ void test1(void) {
     // test
     showBoard(START);
     //sortTest();
-    checkSprmFile(0);
+    checkSprmFile("prm/simple_prm%03d.bin", 0);
 }
