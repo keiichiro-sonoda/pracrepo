@@ -14,13 +14,15 @@ void sortTest(void) {
     srand(123U);
     srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
-    float sample2[] = {-1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
+    float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l2 = arrayLength(sample2);
     float sample3[l2];
     int l3 = 5;
     int result1[l3];
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
+    rouletteFloatMltDep(sample3, l2, result1, l3);
+    printDecimalArray(result1, l3);
     globalTest();
 }
 
@@ -48,18 +50,18 @@ void arrayRandom(int n) {
 
 void globalTest(void) {
     int n = 10;
-    int rl = 10;
+    int rl = 5;
     int result[rl];
     int result_all[n];
     zeros(result_all, n);
     arrayRandom(n);
-    printDecimalArray(GLOBAL, n);
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1; i++) {
         rouletteIntMltDep(GLOBAL, n, result, rl);
         for (int j = 0; j < rl; j++) {
             result_all[result[j]]++;
         }
     }
+    printDecimalArray(GLOBAL, n);
     printDecimalArray(result_all, n);
     free(GLOBAL);
 }
@@ -120,8 +122,6 @@ int rouletteInt(const int *A, int n, int s) {
 // roulette selection
 // only supports non-negative floating point numbers
 int rouletteFloat(const float *A, int n, float s) {
-    // avoid dividing by 0
-    if (s == 0.0) return 0;
     float r = (float)rand() / RAND_MAX * s;
     int i;
     for (i = 0; i < n - 1; i++) {
@@ -148,9 +148,11 @@ void rouletteIntMltDep(const int *A, int A_len, int *rslt, int rslt_len) {
     int now[A_len];
     copyArray(A, now, A_len);
     int now_len;
-    float s = sumInt(A, A_len);
+    int s = sumInt(A, A_len);
     for (int i = 0; i < rslt_len; i++) {
         now_len = A_len - i;
+        printDecimalArray(now, now_len);
+        printDecimal(s);
         rslt[i] = rouletteInt(now, now_len, s);
         s -= now[rslt[i]];
         // delete the selected element
