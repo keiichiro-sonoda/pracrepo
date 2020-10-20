@@ -13,24 +13,13 @@ int *GLOBAL;
 void sortTest(void) {
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
-    int l2;
-    l2 = arrayLength(sample2);
+    int result1[3];
+    int l2 = arrayLength(sample2);
     float sample3[l2];
-    int n = arrayLength(sample1);
-    int B[n];
-    indices(B, n);
-    printf("before\n");
-    printDecimalArray(sample1, n);
-    printDecimalArray(B, n);
-    quicksortDD(sample1, B, 0, n - 1);
-    printf("after\n");
-    printDecimalArray(sample1, n);
-    printDecimalArray(B, n);
-    printFloatArray(sample2, l2);
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
-    rouletteFloatTest(sample3, l2);
-    globalTest();
+    rouletteFloatMltDep(sample3, l2, result1, 3);
+    printDecimalArray(result1, 3);
 }
 
 // insertion sort
@@ -112,6 +101,12 @@ int rouletteFloat(const float *A, int n, float s) {
             return i;
     }
     return i;
+}
+
+// choose some elements with roulette
+// don't allow duplication
+void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
+    zeros(rslt, rslt_len);
 }
 
 // check if rouletteFloat workes as expected
