@@ -33,6 +33,9 @@
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
+// copy an array
+#define copyArray(src, dst, n) for (int i = 0; i < n; i++) dst[i] = src[i]
+
 // flip horizontal
 // src: 0, 2, 4, ... , 126
 #define mirrorLRAd(src) ((src) / 16 * 16 + 14 - (src) % 16)

@@ -11,13 +11,14 @@ int *GLOBAL;
 
 // for debugging
 void sortTest(void) {
+    srand(123U);
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
     int result1[3];
     int l2 = arrayLength(sample2);
     float sample3[l2];
     expArray(sample2, sample3, l2);
-    printFloatArray(sample3, l2);
+    //printFloatArray(sample3, l2);
     rouletteFloatMltDep(sample3, l2, result1, 3);
     printDecimalArray(result1, 3);
 }
@@ -106,7 +107,15 @@ int rouletteFloat(const float *A, int n, float s) {
 // choose some elements with roulette
 // don't allow duplication
 void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
+    // initialize
     zeros(rslt, rslt_len);
+    float now[A_len], next[A_len];
+    copyArray(A, now, A_len);
+    int s;
+    s = sumFloat(A, A_len);
+    rslt[0] = rouletteFloat(A, A_len, s);
+    printFloatArray(A, A_len);
+    printFloatArray(now, A_len);
 }
 
 // check if rouletteFloat workes as expected
