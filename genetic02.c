@@ -418,7 +418,7 @@ void checkSprmStatistics(const Sprm *pra, int pra_len) {
 
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
-    printf("standard deviation: ");
+    printf("SD:   ");
     printFloatArray(sd, SPRM_LEN);
 }
 

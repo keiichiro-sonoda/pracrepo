@@ -130,6 +130,6 @@ int main(void) {
 
     int (*nGene)(int, int);
     nGene = nextGenerationSprmRltRlt;
-    nextGenerationSprmLoopFlex(nGene, 0, 0, 1);
+    nextGenerationSprmLoopFlex(nGene, 0, 0, 2);
     return 0;
 }
