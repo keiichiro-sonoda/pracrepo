@@ -124,14 +124,16 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
     float now[A_len], next[A_len];
     copyArray(A, now, A_len);
     int now_len;
-    int s = sumFloat(A, A_len);
+    float s = sumFloat(A, A_len);
+    printFloat(s);
     for (int i = 0; i < rslt_len; i++) {
         now_len = A_len - i;
         rslt[i] = rouletteFloat(now, now_len, s);
+        s -= now[rslt[i]];
         // delete the selected element
         delFloat(now, now_len, rslt[i]);
-        printFloatArray(now, A_len);
-        s -= rslt[i];
+        printFloatArray(now, now_len - 1);
+        printFloat(s);
     }
 }
 
