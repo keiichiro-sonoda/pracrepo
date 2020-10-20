@@ -14,16 +14,17 @@ void sortTest(void) {
     srand(123U);
     srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
-    float sample2[] = {-1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5};
+    float sample2[] = {-1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l2 = arrayLength(sample2);
     float sample3[l2];
-    int l3 = 4;
+    int l3 = 5;
     int result1[l3];
     expArray(sample2, sample3, l2);
     printFloatArray(sample3, l2);
     rouletteFloatMltDep(sample3, l2, result1, l3);
     printDecimalArray(result1, l3);
-    zeros(result1, l3);
+    indices(result1, l3);
+    printDecimalArray(result1, l3);
     fixIndices(result1, l3);
     printDecimalArray(result1, l3);
 }
@@ -85,13 +86,9 @@ float sumFloat(const float *A, int n) {
 // delete the element of the specified index
 // the size of the array doesn't change
 void delFloat(float *A, int n, int index) {
-    int c = 0;
-    for (int i = 0; i < n; i++) {
-        if (i != index) {
-            A[c] = A[i];
-            c++;
-        }
-    }
+    for (int i = 0; i < n - 1; i++)
+        if (i >= index)
+            A[i] = A[i + 1];
 }
 
 // roulette selection
