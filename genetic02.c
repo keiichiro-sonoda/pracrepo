@@ -314,8 +314,10 @@ void checkSprmFile(const char *format, int gene_num) {
     fread(&pa, sizeof pa, 1, fp);
     fclose(fp);
     // check the top parameter
-    showSprm(pa[0]);
-    printFloatArray(pa[0].weight, SPRM_LEN);
+    //showSprm(pa[0]);
+    // check the all parameters
+    for (int i = 0; i < SURVIVE_NUM; i++)
+        printFloatArray(pa[i].weight, SPRM_LEN);
 }
 
 // use Sprm[100]
