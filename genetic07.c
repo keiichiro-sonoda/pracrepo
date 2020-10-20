@@ -75,7 +75,7 @@ void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
         for (int j = 0; j < GENE_NUM; j++) {
             if (i == j) continue;
             // the next board is decided by roulette
-            switch(oneToOneNormalSprmRoulette(generation + i, generation + j)) {
+            switch(oneToOneNormalSprmFlex(getBoardForBlackSimpleRoulette, generation + i, generation + j)) {
                 // black won
                 case 1:
                     result[i] += 2;
@@ -264,7 +264,7 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    //nextGenerationSprmRouletteLoop(100, 2);
+    nextGenerationSprmRouletteLoop(100, 2);
     checkSprmFile(FNAME_FORMAT, 100);
     printf("yeah\n");
     return 0;
