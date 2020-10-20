@@ -66,6 +66,9 @@ int oneToOneNormalSprmRoulette(const Sprm *spp, const Sprm *gpp) {
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
+    // the function to decide the next board
+    Board (*decNxt)(Board*, int, const Sprm*);
+    decNxt = getBoardForBlackSimpleRoulette;
     // set all elements to zero
     zeros(result, GENE_NUM);
     // black index
@@ -75,7 +78,7 @@ void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
         for (int j = 0; j < GENE_NUM; j++) {
             if (i == j) continue;
             // the next board is decided by roulette
-            switch(oneToOneNormalSprmFlex(getBoardForBlackSimpleRoulette, generation + i, generation + j)) {
+            switch(oneToOneNormalSprmFlex(decNxt, generation + i, generation + j)) {
                 // black won
                 case 1:
                     result[i] += 2;
