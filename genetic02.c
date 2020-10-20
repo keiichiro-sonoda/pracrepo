@@ -348,6 +348,36 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
     }
 }
 
+// use Sprm[100]
+// win: +2, draw: +1, lose: 0
+// give a function pointer to decide the next board
+void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result) {
+    // set all elements to zero
+    zeros(result, GENE_NUM);
+    // black index
+    for (int i = 0; i < GENE_NUM; i++) {
+        //printf("\ai = %d / %d", i, FAMILY_NUM);
+        // white index
+        for (int j = 0; j < GENE_NUM; j++) {
+            if (i == j) continue;
+            switch(oneToOneNormalSprmFlex(decNxt, generation + i, generation + j)) {
+                // black won
+                case 1:
+                    result[i] += 2;
+                    break;
+                // white won
+                case 2:
+                    result[j] += 2;
+                    break;
+                // draw
+                default:
+                    result[i]++;
+                    result[j]++;
+            }
+        }
+    }
+}
+
 // calculate distance
 float distSprm(Sprm p1, Sprm p2) {
     int i;

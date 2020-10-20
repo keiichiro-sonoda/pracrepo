@@ -57,7 +57,7 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 
 // return winner
 // give a function pointer as an argument
-int oneToOneNormalSprmFlex(Board (*pf)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
+int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
 
 // make first file
 void makeFirstSprmsFile(void);
@@ -69,6 +69,12 @@ void checkSprmFile(const char *format, int gene_num);
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result);
+
+// use Sprm[100]
+// win: +2, draw: +1, lose: 0
+// give a function pointer to decide the next board
+void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result);
+
 // calculate distance
 float distSprm(Sprm p1, Sprm p2);
 // choose survivors from Sprm[100]

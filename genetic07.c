@@ -11,42 +11,11 @@
 // the file name format
 #define FNAME_FORMAT "prm/sprm_roulette%03d.bin"
 
-// use Sprm[100]
-// win: +2, draw: +1, lose: 0
-void leagueMatchSprmRoulette(const Sprm *generation, int *result) {
-    // the function to decide the next board
-    Board (*decNxt)(Board*, int, const Sprm*);
-    decNxt = getBoardForBlackSimpleRoulette;
-    // set all elements to zero
-    zeros(result, GENE_NUM);
-    // black index
-    for (int i = 0; i < GENE_NUM; i++) {
-        //printf("\ai = %d / %d", i, FAMILY_NUM);
-        // white index
-        for (int j = 0; j < GENE_NUM; j++) {
-            if (i == j) continue;
-            // the next board is decided by roulette
-            switch(oneToOneNormalSprmFlex(decNxt, generation + i, generation + j)) {
-                // black won
-                case 1:
-                    result[i] += 2;
-                    break;
-                // white won
-                case 2:
-                    result[j] += 2;
-                    break;
-                // draw
-                default:
-                    result[i]++;
-                    result[j]++;
-            }
-        }
-    }
-}
-
 // choose survivors[10] from generation[100]
 // and show match results
 void getSurvivorSprmRoulette(const Sprm *generation, Sprm *survivors) {
+    Board (*decNxt)(Board*, int, const Sprm*);
+    decNxt = getBoardForBlackSimpleRoulette;
     int i, j;
     // the array to store points
     int result[GENE_NUM];
@@ -55,7 +24,7 @@ void getSurvivorSprmRoulette(const Sprm *generation, Sprm *survivors) {
     for (i = 0; i < GENE_NUM; i++)
         number[i] = i;
     // game (the next board is decided by roulette)
-    leagueMatchSprmRoulette(generation, result);
+    leagueMatchSprmFlex(decNxt, generation, result);
     // sort (descending order)
     quicksortDD(result, number, 0, GENE_NUM - 1);
     // show ranking
