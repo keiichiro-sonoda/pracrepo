@@ -517,14 +517,14 @@ void nextGenerationSprmLoop(int st, int loop) {
 }
 
 // give a function to loop
-void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int st, int loop) {
+void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int loop) {
     time_t t0, t1;
     // get start time
     time(&t0);
     for (int i = st; i < st + loop; i++) {
         // set the generation number as the seed
         srand((unsigned)i);
-        if (nGene(i, 1) == -1)
+        if (nGene(i, safety) == -1)
             return;
         // get time
         time(&t1);

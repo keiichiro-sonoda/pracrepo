@@ -85,6 +85,9 @@ int nextGenerationSprm(int gene_num);
 // loop several times
 void nextGenerationSprmLoop(int st, int loop);
 
+// give a function to loop
+void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int loop);
+
 // make a sample of parameters
 void makeSprmSample(void);
 

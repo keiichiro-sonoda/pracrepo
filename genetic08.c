@@ -126,11 +126,9 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    //nextGenerationSprmRouletteLoop(100, 2);
-    //checkSprmFile(FNAME_FORMAT, 100);
-    //copyFGFlex(FNAME_FORMAT);
-    checkSprmFile(FNAME_FORMAT, 0);
-    nextGenerationSprmRltRlt(0, 1);
-    printf("yeah\n");
+
+    int (*nGene)(int, int);
+    nGene = nextGenerationSprmRltRlt;
+    nextGenerationSprmLoopFlex(nGene, 1, 0, 1);
     return 0;
 }
