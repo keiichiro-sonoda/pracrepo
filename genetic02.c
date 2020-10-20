@@ -394,6 +394,34 @@ float distSprm(Sprm p1, Sprm p2) {
     return (float)sqrt(d);
 }
 
+// calculate means and standard deviation from some parameters
+void checkSprmStatistics(const Sprm *pra, int pra_len) {
+    int i, j;
+    float mean[SPRM_LEN];
+    float sd[SPRM_LEN];
+    zerosFloat(mean, SPRM_LEN);
+    zerosFloat(sd, SPRM_LEN);
+    // calculate sum of each weight
+    for (i = 0; i < pra_len; i++)
+        for (j = 0; j < SPRM_LEN; j++)
+            mean[j] += pra[i].weight[j];
+    
+    for (i = 0; i < pra_len; i++)
+        mean[i] /= pra_len;
+    
+    for (i = 0; i < pra_len; i++)
+        for (j = 0; j < SPRM_LEN; j++)
+            sd[j] += powf(pra[i].weight[j] - mean[j], 2.0f);
+    
+    for (i = 0; i < pra_len; i++)
+        sd[i] = sqrtf(sd[i] / pra_len);
+
+    printf("mean: ");
+    printFloatArray(mean, SPRM_LEN);
+    printf("standard deviation: ");
+    printFloatArray(sd, SPRM_LEN);
+}
+
 // choose survivors from Sprm[100]
 // and show match results
 void getSurvivorSprm(Sprm *generation, Sprm *survivors) {

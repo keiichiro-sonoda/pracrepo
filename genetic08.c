@@ -43,6 +43,7 @@ void getSurvivorSprmRltRlt(const Sprm *generation, Sprm *survivors) {
         survivors[i] = generation[number[lucky[i]]];
         printFloatArray(survivors[i].weight, SPRM_LEN);
     }
+    checkSprmStatistics(survivors, SURVIVE_NUM);
 }
 
 // make next generation file
@@ -129,6 +130,6 @@ int main(void) {
 
     int (*nGene)(int, int);
     nGene = nextGenerationSprmRltRlt;
-    nextGenerationSprmLoopFlex(nGene, 0, 0, 2);
+    nextGenerationSprmLoopFlex(nGene, 0, 0, 1);
     return 0;
 }

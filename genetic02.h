@@ -77,6 +77,10 @@ void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *
 
 // calculate distance
 float distSprm(Sprm p1, Sprm p2);
+
+// calculate means and standard deviation from some parameters
+void checkSprmStatistics(const Sprm *pra, int pra_len);
+
 // choose survivors from Sprm[100]
 // and show match results
 void getSurvivorSprm(Sprm *generation, Sprm *survivors);

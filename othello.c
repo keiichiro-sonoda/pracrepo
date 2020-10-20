@@ -469,6 +469,12 @@ void zeros(int *A, int n) {
         A[i] = 0;
 }
 
+// all zero (float)
+void zerosFloat(float *A, int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = 0.0f;
+}
+
 // all zero 2D array
 // int iaa[l1][l2]
 int zeros2D(int *iaa[], int l1, int l2) {
