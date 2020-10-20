@@ -23,6 +23,7 @@ void sortTest(void) {
     printFloatArray(sample3, l2);
     rouletteFloatMltDep(sample3, l2, result1, l3);
     printDecimalArray(result1, l3);
+    globalTest();
 }
 
 // insertion sort
@@ -81,6 +82,13 @@ float sumFloat(const float *A, int n) {
 
 // delete the element of the specified index
 // the size of the array doesn't change
+void delInt(int *A, int n, int index) {
+    for (int i = index + 1; i < n; i++)
+        A[i - 1] = A[i];
+}
+
+// delete the element of the specified index
+// the size of the array doesn't change
 void delFloat(float *A, int n, int index) {
     for (int i = index + 1; i < n; i++)
         A[i - 1] = A[i];
@@ -123,10 +131,30 @@ void fixIndices(int *A, int n) {
 
 // choose some elements with roulette
 // don't allow duplication
+// only supports non-negative integers
+void rouletteIntMltDep(const int *A, int A_len, int *rslt, int rslt_len) {
+    zeros(rslt, rslt_len);
+    int now[A_len];
+    copyArray(A, now, A_len);
+    int now_len;
+    float s = sumInt(A, A_len);
+    for (int i = 0; i < rslt_len; i++) {
+        now_len = A_len - i;
+        rslt[i] = rouletteInt(now, now_len, s);
+        s -= now[rslt[i]];
+        // delete the selected element
+        delInt(now, now_len, rslt[i]);
+    }
+    // fix the results
+    fixIndices(rslt, rslt_len);
+}
+
+// choose some elements with roulette
+// don't allow duplication
 void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
     // initialize
     zeros(rslt, rslt_len);
-    float now[A_len], next[A_len];
+    float now[A_len];
     copyArray(A, now, A_len);
     int now_len;
     float s = sumFloat(A, A_len);

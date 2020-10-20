@@ -22,6 +22,10 @@ float sumFloat(const float *A, int n);
 
 // delete the element of the specified index
 // the size of the array doesn't change
+void delInt(int *A, int n, int index);
+
+// delete the element of the specified index
+// the size of the array doesn't change
 void delFloat(float *A, int n, int index);
 
 // roulette selection
@@ -35,6 +39,11 @@ int rouletteFloat(const float *A, int n, float s);
 
 // fix the indices misalignment
 void fixIndices(int *A, int n);
+
+// choose some elements with roulette
+// don't allow duplication
+// only supports non-negative integers
+void rouletteIntMltDep(const int *A, int A_len, int *rslt, int rslt_len);
 
 // choose some elements with roulette
 // don't allow duplication
