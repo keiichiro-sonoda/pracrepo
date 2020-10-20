@@ -11,8 +11,6 @@
 // the file name format
 #define FNAME_FORMAT "prm/sprm_roulette%03d.bin"
 
-#define macroTest(src) ((14 - (src) % 16) * 8 + (src) / 16 * 2)
-
 // assume that the next turn is black
 // n: the number of next boards
 // use simple parameter
@@ -286,6 +284,7 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    nextGenerationSprmRouletteLoop(0, 100);
+    //nextGenerationSprmRouletteLoop(0, 100);
+    printf("yeah\n");
     return 0;
 }
