@@ -55,7 +55,7 @@ void globalTest(void) {
     int result_all[n];
     zeros(result_all, n);
     arrayRandom(n);
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10000; i++) {
         rouletteIntMltDep(GLOBAL, n, result, rl);
         for (int j = 0; j < rl; j++) {
             result_all[result[j]]++;
@@ -151,8 +151,8 @@ void rouletteIntMltDep(const int *A, int A_len, int *rslt, int rslt_len) {
     int s = sumInt(A, A_len);
     for (int i = 0; i < rslt_len; i++) {
         now_len = A_len - i;
-        printDecimalArray(now, now_len);
-        printDecimal(s);
+        //printDecimalArray(now, now_len);
+        //printDecimal(s);
         rslt[i] = rouletteInt(now, now_len, s);
         s -= now[rslt[i]];
         // delete the selected element
