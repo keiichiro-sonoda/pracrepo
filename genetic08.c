@@ -14,49 +14,40 @@
 
 // choose survivors[10] from generation[100]
 // and show match results
-void getSurvivorSprmRoulette(const Sprm *generation, Sprm *survivors) {
+// select survivors by roulette
+// use the points directly
+void getSurvivorSprmRltRlt(const Sprm *generation, Sprm *survivors) {
     Board (*decNxt)(Board*, int, const Sprm*);
     decNxt = getBoardForBlackSimpleRoulette;
-    int i, j;
     // the array to store points
     int result[GENE_NUM];
     int number[GENE_NUM];
+    int lucky[SURVIVE_NUM];
     // number = {0, 1, 2, ..., 99}
-    for (i = 0; i < GENE_NUM; i++)
-        number[i] = i;
+    indices(number, GENE_NUM);
     // game (the next board is decided by roulette)
     leagueMatchSprmFlex(decNxt, generation, result);
     // sort (descending order)
+    // not always necessary
+    // make the results easy to understand
     quicksortDD(result, number, 0, GENE_NUM - 1);
-    // show ranking
-    printf("rank change\n");
-    for (i = 0; i < GENE_NUM; i++) {
-        // rank 11-99 aren't displayed
-        if (10 <= i && i < GENE_NUM - 1) continue;
-        // worst!
-        if (i == GENE_NUM - 1)
-            printf("        ...\n");
-        // winner's index (or worst index)
-        j = number[i];
-        printf("%3d", j + 1);
-        if (j < 10) printf("(p)");
-        else printf("(c)");
-        printf(" -> ");
-        printf("%3d: %3dpt\n", i + 1, result[i]);
-        // record winners
-        if (i < 10)
-            survivors[i] = generation[j];
+    // roulette selection!
+    // don't allow duplication
+    rouletteIntMltDep(result, GENE_NUM, lucky, SURVIVE_NUM);
+    // view result
+    printf("selected ranking:\n");
+    printDecimalArray(lucky, SURVIVE_NUM);
+    // save the survivors and view
+    printf("the survived parameters view:\n");
+    for (int i = 0; i < SURVIVE_NUM; i++) {
+        survivors[i] = generation[number[lucky[i]]];
+        printFloatArray(survivors[i].weight, SPRM_LEN);
     }
-    // calculate the distance between the previous top and the current top
-    // this value may not make sense
-    printf("distance: %6.4f\n", distSprm(survivors[0], generation[0]));
-    // check the top parameter
-    printf("the top parameter view:\n");
-    printFloatArray(survivors[0].weight, SPRM_LEN);
 }
 
 // make next generation file
-int nextGenerationSprmRoulette(int gene_num, int safety) {
+// select survivors by roulette
+int nextGenerationSprmRltRlt(int gene_num, int safety) {
     int i, j, count;
     char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
     // previous survivors
@@ -117,7 +108,7 @@ int nextGenerationSprmRoulette(int gene_num, int safety) {
     // calcurate survivors
     Sprm survivors[SURVIVE_NUM];
     // battle! (the next board is decided by roulette)
-    getSurvivorSprmRoulette(generation, survivors);
+    getSurvivorSprmRltRlt(generation, survivors);
 
     // write current survivors to the file
     if ((fp = fopen(fnamew, "wb")) == NULL) {
@@ -130,22 +121,6 @@ int nextGenerationSprmRoulette(int gene_num, int safety) {
     return 0;
 }
 
-// loop several times
-void nextGenerationSprmRouletteLoop(int st, int loop) {
-    time_t t0, t1;
-    // get start time
-    time(&t0);
-    for (int i = st; i < st + loop; i++) {
-        // set the generation number as the seed
-        srand((unsigned)i);
-        if (nextGenerationSprmRoulette(i, 0) == -1)
-            return;
-        // get time
-        time(&t1);
-        printf("elapsed time: %lds\n", t1 - t0);
-    }
-}
-
 int main(void) {
     // initialize global variables
     setIndexes();
@@ -155,6 +130,7 @@ int main(void) {
     //checkSprmFile(FNAME_FORMAT, 100);
     //copyFGFlex(FNAME_FORMAT);
     checkSprmFile(FNAME_FORMAT, 0);
+    nextGenerationSprmRltRlt(0, 1);
     printf("yeah\n");
     return 0;
 }

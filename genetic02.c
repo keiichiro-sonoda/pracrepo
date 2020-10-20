@@ -516,6 +516,22 @@ void nextGenerationSprmLoop(int st, int loop) {
     }
 }
 
+// give a function to loop
+void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        // set the generation number as the seed
+        srand((unsigned)i);
+        if (nGene(i, 1) == -1)
+            return;
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
 // make a sample of parameters
 // set global variable "SAMP_PRM"
 void makeSprmSample(void) {
