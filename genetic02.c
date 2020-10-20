@@ -149,6 +149,26 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
     return best_board;
 }
 
+// assume that the next turn is black
+// n: the number of next boards
+// use simple parameter
+// decide next board by roulette
+Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp) {
+    float exp_points[n];
+    float s;
+    int choosed;
+    for (int i = 0; i < n; i++) {
+        // evaluate all next boards
+        // and calculate the power of e (to make numbers positive)
+        // sign inversion!
+        exp_points[i] = expf(-evaluationSimple(next_boards[i], *prp) * 10);
+    }
+    //printFloatArray(exp_points, n);
+    s = sumFloat(exp_points, n);
+    choosed = rouletteFloat(exp_points, n, s);
+    return next_boards[choosed];
+}
+
 // return winner
 int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
     Board nba[NEXT_MAX];

@@ -11,26 +11,6 @@
 // the file name format
 #define FNAME_FORMAT "prm/sprm_roulette%03d.bin"
 
-// assume that the next turn is black
-// n: the number of next boards
-// use simple parameter
-// decide next board by roulette
-Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp) {
-    float exp_points[n];
-    float s;
-    int choosed;
-    for (int i = 0; i < n; i++) {
-        // evaluate all next boards
-        // and calculate the power of e (to make numbers positive)
-        // sign inversion!
-        exp_points[i] = expf(-evaluationSimple(next_boards[i], *prp) * 10);
-    }
-    //printFloatArray(exp_points, n);
-    s = sumFloat(exp_points, n);
-    choosed = rouletteFloat(exp_points, n, s);
-    return next_boards[choosed];
-}
-
 // return winner
 // the next board is decided by roulette
 int oneToOneNormalSprmRoulette(const Sprm *spp, const Sprm *gpp) {
@@ -284,9 +264,8 @@ int main(void) {
     setIndexes();
     initBoard();
     makeSprmSample();
-    //nextGenerationSprmRouletteLoop(0, 100);
-    checkSprmFile(FNAME_FORMAT, 0);
-    test1();
+    nextGenerationSprmRouletteLoop(100, 2);
+    checkSprmFile(FNAME_FORMAT, 100);
     printf("yeah\n");
     return 0;
 }

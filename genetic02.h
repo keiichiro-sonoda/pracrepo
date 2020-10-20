@@ -45,6 +45,13 @@ float evaluationSimple(Board b, Sprm pr);
 // n: the number of next boards
 // use simple parameter
 Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp);
+
+// assume that the next turn is black
+// n: the number of next boards
+// use simple parameter
+// decide next board by roulette
+Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp);
+
 // return winner
 int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 // make first file
