@@ -33,6 +33,9 @@ int rouletteInt(const int *A, int n, int s);
 // only supports non-negative floating point numbers
 int rouletteFloat(const float *A, int n, float s);
 
+// fix the indices misalignment
+void fixIndices(int *A, int n);
+
 // choose some elements with roulette
 // don't allow duplication
 void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);

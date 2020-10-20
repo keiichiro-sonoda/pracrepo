@@ -23,6 +23,9 @@ void sortTest(void) {
     printFloatArray(sample3, l2);
     rouletteFloatMltDep(sample3, l2, result1, l3);
     printDecimalArray(result1, l3);
+    zeros(result1, l3);
+    fixIndices(result1, l3);
+    printDecimalArray(result1, l3);
 }
 
 // insertion sort
@@ -118,6 +121,14 @@ int rouletteFloat(const float *A, int n, float s) {
     return i;
 }
 
+// fix the indices misalignment
+void fixIndices(int *A, int n) {
+    for (int i = n - 2; i >= 0; i--)
+        for (int j = i + 1; j < n; j++)
+            if (A[i] <= A[j])
+                A[j]++;
+}
+
 // choose some elements with roulette
 // don't allow duplication
 void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
@@ -139,13 +150,7 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
     }
     printDecimalArray(rslt, rslt_len);
     // fix the results
-    for (int i = rslt_len - 2; i >= 0; i--) {
-        for (int j = i + 1; j < rslt_len; j++) {
-            if (rslt[i] <= rslt[j]) {
-                rslt[j]++;
-            }
-        }
-    }
+    fixIndices(rslt, rslt_len);
 }
 
 // check if rouletteFloat workes as expected
