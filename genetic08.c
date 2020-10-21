@@ -170,6 +170,8 @@ int main(void) {
     nGeneF = nextGenerationSprmFlex;
     getSvr = getSurvivorSprmRltRlt;
     checkSprmFile(FNF_RLTRLT, 100);
-    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, 1, 99, 1);
+    // test
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, 1, 100, 2);
+    nextGenerationSprmLoopFlex(nextGenerationSprmRltRlt, 1, 100, 2);
     return 0;
 }
