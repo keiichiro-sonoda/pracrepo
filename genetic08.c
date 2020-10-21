@@ -66,8 +66,7 @@ void getSurvivorSprmRRSubMin(const Sprm *generation, Sprm *survivors) {
 
     printDecimalArrayPart(result, GENE_NUM);
     min_sub1 = result[GENE_NUM - 1] - 1;
-    for (int i = 0; i < GENE_NUM; i++)
-        result[i] -= min_sub1;
+    subConst(result, GENE_NUM, min_sub1);
     printDecimalArrayPart(result, GENE_NUM);
 
     // roulette selection!
@@ -95,6 +94,6 @@ int main(void) {
     void (*getSvr)(const Sprm*, Sprm*);
     nGeneF = nextGenerationSprmFlex;
     getSvr = getSurvivorSprmRRSubMin;
-    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 1, 0, 2);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 2);
     return 0;
 }

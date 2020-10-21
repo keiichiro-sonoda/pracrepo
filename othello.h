@@ -34,7 +34,10 @@
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
 // copy an array
-#define copyArray(src, dst, n) for (int i = 0; i < n; i++) dst[i] = src[i]
+#define copyArray(src, dst, n) for (int i = 0; i < n; i++) (dst)[i] = (src)[i]
+
+// subract constant value from all elements
+#define subConst(A, n, c) for (int i = 0; i < n; i++) (A)[i] -= (c)
 
 // flip horizontal
 // src: 0, 2, 4, ... , 126
