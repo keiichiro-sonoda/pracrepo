@@ -155,10 +155,10 @@ if __name__ == "__main__":
     #dataView05("prm//sprm_corner0.5neg_{:03d}.bin", 0, 100)
     # 指し手をルーレット選択
     #dataView05("prm//sprm_roulette{:03d}.bin", 0, 100)
-    #dataView06("prm//sprm_roulette{:03d}.bin", 0, 100)
+    dataView06("prm//sprm_roulette{:03d}.bin", 0, 100)
     # 指し手ルーレット, 勝ち点で直接ルーレット選択
     #dataView05("prm//sprm_rltrlt{:03d}.bin", 0, 100)
-    dataView06("prm//sprm_rltrlt{:03d}.bin", 0, 100)
+    #dataView06("prm//sprm_rltrlt{:03d}.bin", 0, 100)
     # 指し手ルーレット, 最低点を引いた点でルーレット選択
     #dataView05("prm//sprm_rr_submin{:03d}.bin", 0, 100)
     #dataView06("prm//sprm_rr_submin{:03d}.bin", 0, 100)

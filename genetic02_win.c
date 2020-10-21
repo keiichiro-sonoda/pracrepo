@@ -515,9 +515,9 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
         for (int j = 0; j < SPRM_LEN; j++)
             f_pointer[j] += powf(pa[i].weight[j] - weight_mean[j], 2.0f);
     
-    // 個体数-1 で割って標準偏差にする
+    // 個体数-1 で割り, 平方根を取って標準偏差にする
     for (int i = 0; i < SPRM_LEN; i++)
-        f_pointer[i] /= (SURVIVE_NUM - 1);
+        f_pointer[i] = sqrtf(f_pointer[i] / (SURVIVE_NUM - 1));
 }
 
 // use Sprm[100]
