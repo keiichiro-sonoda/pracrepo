@@ -139,6 +139,6 @@ int main(void) {
     //getSvr = getSurvivorSprmRRSubMin;
     getSvr = getSurvivorSprmRRank;
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
-    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 1);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 2);
     return 0;
 }
