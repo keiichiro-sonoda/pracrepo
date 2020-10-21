@@ -10,6 +10,9 @@
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
 
+// file name formats
+#define FNF_RLTRLT "prm/sprm_rltrlt%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];

@@ -9,9 +9,6 @@
 #include "genetic02.h"
 #include "sort01.h"
 
-// the file name format
-#define FNAME_FORMAT "prm/sprm_rltrlt%03d.bin"
-
 // choose survivors[10] from generation[100]
 // and show match results
 // select survivors by roulette
@@ -55,9 +52,9 @@ int nextGenerationSprmRltRlt(int gene_num, int safety) {
     Sprm parents[SURVIVE_NUM];
     FILE *fp;
     // the file name to be read
-    snprintf(fnamer, FILENAME_MAX, FNAME_FORMAT, gene_num);
+    snprintf(fnamer, FILENAME_MAX, FNF_RLTRLT, gene_num);
     // the file name to be written
-    snprintf(fnamew, FILENAME_MAX, FNAME_FORMAT, gene_num + 1);
+    snprintf(fnamew, FILENAME_MAX, FNF_RLTRLT, gene_num + 1);
     // view the file names
     printf("read file : %s\n", fnamer);
     printf("write file: %s\n", fnamew);
@@ -130,6 +127,7 @@ int main(void) {
 
     int (*nGene)(int, int);
     nGene = nextGenerationSprmRltRlt;
-    nextGenerationSprmLoopFlex(nGene, 0, 0, 100);
+    //nextGenerationSprmLoopFlex(nGene, 0, 0, 100);
+    checkSprmFile(FNF_RLTRLT, 100);
     return 0;
 }
