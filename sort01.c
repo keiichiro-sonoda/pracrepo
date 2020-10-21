@@ -25,6 +25,7 @@ void sortTest(void) {
     printDecimalArray(sample1, l1);
     expArrayIFFlex(sample1, sample3, l1, 0.5f);
     printFloatArray(sample3, l1);
+    printFloatArrayPart(sample3, l1);
 }
 
 // insertion sort

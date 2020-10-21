@@ -101,6 +101,19 @@ void printFloatArray(const float *A, int n) {
     printf("}\n");
 }
 
+// show the first three and the last one
+void printFloatArrayPart(const float *A, int n) {
+    // show all
+    if (n <= 4) {
+        printFloatArray(A, n);
+        return;
+    }
+    putchar(123);
+    for (int i = 0; i < 3; i++)
+        printf("%6.3f, ", A[i]);
+    printf("..., %6.3f}\n", A[n - 1]);
+}
+
 int showHexArray(int *ia, int ia_len) {
     int i;
     for (i = 0; i < ia_len; i++) {

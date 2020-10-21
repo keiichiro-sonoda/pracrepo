@@ -85,6 +85,10 @@ void printDecimalArrayPart(const int *A, int n);
 
 // print an array of floating point number
 void printFloatArray(const float *A, int n);
+
+// show the first three and the last one
+void printFloatArrayPart(const float *A, int n);
+
 // print an arrya of hexadecimal numbers
 int showHexArray(int *ia, int ia_len);
 // neighbor?
