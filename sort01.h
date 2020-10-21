@@ -14,6 +14,12 @@ void globalTest(void);
 
 void expArray(const float *X, float *Y, int n);
 
+// make an array of exponents
+// int -> float
+// give the base of exponents
+// the base is only support non-negative number
+void expArrayIFFlex(const int *X, float *Y, int n, float base);
+
 // return the sum of an integer array
 int sumInt(const int *A, int n);
 

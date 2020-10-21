@@ -15,15 +15,15 @@ void sortTest(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
+    int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
-    float sample3[l2];
+    float sample3[l1];
     int l3 = 5;
     int result1[l3];
-    expArray(sample2, sample3, l2);
-    printFloatArray(sample3, l2);
-    rouletteFloatMltDep(sample3, l2, result1, l3);
-    printDecimalArray(result1, l3);
-    globalTest();
+    //globalTest();
+    printDecimalArray(sample1, l1);
+    expArrayIFFlex(sample1, sample3, l1, 0.5f);
+    printFloatArray(sample3, l1);
 }
 
 // insertion sort
@@ -71,6 +71,15 @@ void globalTest(void) {
 void expArray(const float *X, float *Y, int n) {
     for (int i = 0; i < n; i++)
         Y[i] = (float)exp(X[i]);
+}
+
+// make an array of exponents
+// int -> float
+// give the base of exponents
+// the base is only support non-negative number
+void expArrayIFFlex(const int *X, float *Y, int n, float base) {
+    for (int i = 0; i < n; i++)
+        Y[i] = powf(base, (float)X[i]);
 }
 
 // return the sum of an integer array

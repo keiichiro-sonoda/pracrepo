@@ -102,8 +102,45 @@ void getSurvivorSprmRRank(const Sprm *generation, Sprm *survivors) {
     // game (the next board is decided by roulette)
     leagueMatchSprmFlex(decNxt, generation, result);
     // sort (descending order)
-    // not always necessary
-    // make the results easy to understand
+    quicksortDD(result, number, 0, GENE_NUM - 1);
+
+    printDecimalArrayPart(result, GENE_NUM);
+    // replace points with 100 minus ranks
+    for (int i = 0; i < GENE_NUM; i++)
+        result[i] = GENE_NUM - i;
+    printDecimalArrayPart(result, GENE_NUM);
+
+    // roulette selection!
+    // don't allow duplication
+    rouletteIntMltDep(result, GENE_NUM, lucky, SURVIVE_NUM);
+    // view result
+    printf("selected ranking:\n");
+    printDecimalArray(lucky, SURVIVE_NUM);
+    // save the survivors and view
+    printf("the survived parameters view:\n");
+    for (int i = 0; i < SURVIVE_NUM; i++) {
+        survivors[i] = generation[number[lucky[i]]];
+        printFloatArray(survivors[i].weight, SPRM_LEN);
+    }
+    checkSprmStatistics(survivors, SURVIVE_NUM);
+}
+
+// choose survivors[10] from generation[100]
+// and show match results
+// select survivors by ranking selection
+void getSurvivorSprmRRankExp(const Sprm *generation, Sprm *survivors) {
+    // a function that determine the next board
+    Board (*decNxt)(Board*, int, const Sprm*);
+    decNxt = getBoardForBlackSimpleRoulette;
+    // the array to store points
+    int result[GENE_NUM];
+    int number[GENE_NUM];
+    int lucky[SURVIVE_NUM];
+    // number = {0, 1, 2, ..., 99}
+    indices(number, GENE_NUM);
+    // game (the next board is decided by roulette)
+    leagueMatchSprmFlex(decNxt, generation, result);
+    // sort (descending order)
     quicksortDD(result, number, 0, GENE_NUM - 1);
 
     printDecimalArrayPart(result, GENE_NUM);
@@ -139,6 +176,7 @@ int main(void) {
     //getSvr = getSurvivorSprmRRSubMin;
     getSvr = getSurvivorSprmRRank;
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
-    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
+    //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
+    sortTest();
     return 0;
 }
