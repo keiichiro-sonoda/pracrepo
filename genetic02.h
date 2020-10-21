@@ -11,7 +11,15 @@
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
 
 // file name formats
+#define FNF_SPRM_BASE "prm/simple_prm%03d.bin"
+
+// determine the next board by roulette
+// roulette selection (use points directly)
 #define FNF_RLTRLT "prm/sprm_rltrlt%03d.bin"
+
+// roulette selection
+// subtract the minimum value from all points
+#define FNF_RR_SUBMIN "prm/sprm_rr_submin%03.bin"
 
 // simple parameter
 typedef struct sprm{

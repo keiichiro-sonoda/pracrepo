@@ -127,6 +127,9 @@ int main(void) {
 
     int (*nGene)(int, int);
     nGene = nextGenerationSprmRltRlt;
-    nextGenerationSprmLoopFlex(nGene, 0, 99, 1);
+    //nextGenerationSprmLoopFlex(nGene, 0, 99, 1);
+    checkSprmFile(FNF_SPRM_BASE, 0);
+    copyFGFlex(FNF_RR_SUBMIN);
+    checkSprmFile(FNF_RR_SUBMIN, 0);
     return 0;
 }
