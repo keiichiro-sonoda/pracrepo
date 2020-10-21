@@ -97,4 +97,8 @@ if __name__ == "__main__":
     # 指し手ルーレット, 最低点を引いた点でルーレット選択
     #dataView05("prm//sprm_rr_submin{:03d}.bin", 0, 100)
     # 指し手ルーレット, 100-順位を確率(相対)にしたランキング選択
-    dataView05("prm//sprm_rrank{:03d}.bin", 0, 100)
+    #dataView05("prm//sprm_rrank{:03d}.bin", 0, 100)
+    # 指し手ルーレット, 0.9 ^ 順位を確率(相対)にしたランキング選択
+    #dataView05("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
+    # 適応度評価を行なわない
+    dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
