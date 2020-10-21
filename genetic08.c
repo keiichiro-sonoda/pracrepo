@@ -212,7 +212,7 @@ int main(void) {
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK_EXP, 0, 0, 100);
-    nextGenerationSprmFlexLoopFlex(getSurvivorSprmTest, nGeneF, FNF_NOFIT, 1, 0, 3);
+    nextGenerationSprmFlexLoopFlex(getSurvivorSprmTest, nGeneF, FNF_NOFIT, 0, 0, 100);
     //sortTest();
     //printString(FNF_NOFIT);
     //copyFGFlex(FNF_NOFIT);
