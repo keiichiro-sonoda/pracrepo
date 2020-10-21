@@ -29,6 +29,10 @@
 // the probability is 2 ^ rank (relative)
 #define FNF_RRANK_EXP "prm/sprm_rrank_exp/sprm_rrank_exp%03d.bin"
 
+// don't evaluate fitness
+// use as a comparison target
+#define FNF_NOFIT "prm/sprm_nofit/sprm_nofit%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
