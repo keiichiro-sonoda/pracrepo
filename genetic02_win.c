@@ -481,6 +481,7 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // トップ10の標準偏差を取得(共有ライブラリ用)
 // 世代番号でなく, ファイル名で指定する
 // ファイル名を世代番号でしていするのはpythonで行なう
+// 標本標準偏差?を使うためにデータ数-1で割ることにする
 void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
     FILE *fp;
     // ファイルを読み込み用で開く
@@ -493,22 +494,30 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
     Sprm pa[SURVIVE_NUM];
     fread(pa, sizeof pa, 1, fp);
     fclose(fp);
-    // Top10 の各マスの合計値を代入する配列
-    float weight_sum[SPRM_LEN];
+    // Top10 の各マスの平均値を代入する配列
+    float weight_mean[SPRM_LEN];
     // 0 で初期化
+    zerosFloat(weight_mean, SPRM_LEN);
+    zerosFloat(f_pointer, SPRM_LEN);
+    // まずは合計値を計算
+    // 添え字の対応に注意
+    // i は個体番号, j はマス番号
+    for (int i = 0; i < SURVIVE_NUM; i++)
+        for (int j = 0; j < SPRM_LEN; j++)
+            weight_mean[j] += pa[i].weight[j];
+
+    // 個体数で割って平均値を計算
     for (int i = 0; i < SPRM_LEN; i++)
-        weight_sum[i] = 0.0;
-    for (int i = 0; i < SURVIVE_NUM; i++) {
-        // 評価値の合計に足していく
-        for (int j = 0; j < SPRM_LEN; j++) {
-            weight_sum[j] += pa[i].weight[j];
-        }
-    }
-    // 確認用
-    // データ数だけ割って, 平均値にする
-    // ここで引数を登場させるの忘れてた
+        weight_mean[i] /= SURVIVE_NUM;
+    
+    // 偏差の2乗の合計値を求める
+    for (int i = 0; i < SURVIVE_NUM; i++)
+        for (int j = 0; j < SPRM_LEN; j++)
+            f_pointer[j] += powf(pa[i].weight[j] - weight_mean[j], 2.0f);
+    
+    // 個体数-1 で割って標準偏差にする
     for (int i = 0; i < SPRM_LEN; i++)
-        f_pointer[i] = weight_sum[i] / 10;
+        f_pointer[i] /= (SURVIVE_NUM - 1);
 }
 
 // use Sprm[100]
