@@ -145,10 +145,12 @@ void getSurvivorSprmRRankExp(const Sprm *generation, Sprm *survivors) {
     quicksortDD(result, number, 0, GENE_NUM - 1);
 
     printDecimalArrayPart(result, GENE_NUM);
-    // replace points with 100 minus ranks
-    for (int i = 0; i < GENE_NUM; i++)
-        result[i] = GENE_NUM - i;
+    // delete the result
+    indices(result, GENE_NUM);
     printDecimalArrayPart(result, GENE_NUM);
+    // calculate the probability from the ranking
+    // 1.00, 0.50, 0.25, 0.13, ...
+    expArrayIFFlex(result, probability, GENE_NUM, 0.5);
 
     // roulette selection!
     // don't allow duplication
