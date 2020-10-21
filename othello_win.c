@@ -449,12 +449,17 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
     return length;
 }
 
-
 // all zero
 void zeros(int *ia, int ia_len) {
     int i;
     for (i = 0; i < ia_len; i++)
         ia[i] = 0;
+}
+
+// float型の配列の要素を全て0.0にする
+void zerosFloat(float *A, int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = 0.0f;
 }
 
 // all zero 2D array

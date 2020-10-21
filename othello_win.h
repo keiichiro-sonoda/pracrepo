@@ -99,6 +99,10 @@ int showCanPut(Board b, const int *can_put, int next_count);
 int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards);
 // all zero
 void zeros(int *ia, int ia_len);
+
+// float型の配列の要素を全て0.0にする
+void zerosFloat(float *A, int n);
+
 // all zero 2D array
 // int iaa[l1][l2]
 // 確かボツになっていたが一応定義しておこう
