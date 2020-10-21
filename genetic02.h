@@ -97,11 +97,19 @@ void checkSprmStatistics(const Sprm *pra, int pra_len);
 void getSurvivorSprm(Sprm *generation, Sprm *survivors);
 // make next generation file
 int nextGenerationSprm(int gene_num);
+
+// make next generation file
+// give a function to choose survivors
+int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*),int gene_num, int safety);
+
 // loop several times
 void nextGenerationSprmLoop(int st, int loop);
 
 // give a function to loop
 void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int loop);
+
+// give a function to loop
+void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), int, int), int safety, int st, int loop);
 
 // make a sample of parameters
 void makeSprmSample(void);

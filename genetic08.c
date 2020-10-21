@@ -43,6 +43,46 @@ void getSurvivorSprmRltRlt(const Sprm *generation, Sprm *survivors) {
     checkSprmStatistics(survivors, SURVIVE_NUM);
 }
 
+// choose survivors[10] from generation[100]
+// and show match results
+// select survivors by roulette
+// all points are subtract by the minimum point (and add 1 to all points)
+void getSurvivorSprmRRSubMin(const Sprm *generation, Sprm *survivors) {
+    Board (*decNxt)(Board*, int, const Sprm*);
+    decNxt = getBoardForBlackSimpleRoulette;
+    // the array to store points
+    int result[GENE_NUM];
+    int number[GENE_NUM];
+    int lucky[SURVIVE_NUM];
+    int min_sub1;
+    // number = {0, 1, 2, ..., 99}
+    indices(number, GENE_NUM);
+    // game (the next board is decided by roulette)
+    leagueMatchSprmFlex(decNxt, generation, result);
+    // sort (descending order)
+    // not always necessary
+    // make the results easy to understand
+    quicksortDD(result, number, 0, GENE_NUM - 1);
+    printDecimalArray(result, GENE_NUM);
+    min_sub1 = result[GENE_NUM - 1] - 1;
+    for (int i = 0; i < GENE_NUM; i++)
+        result[i] -= min_sub1;
+    printDecimalArray(result, GENE_NUM);
+    // roulette selection!
+    // don't allow duplication
+    rouletteIntMltDep(result, GENE_NUM, lucky, SURVIVE_NUM);
+    // view result
+    printf("selected ranking:\n");
+    printDecimalArray(lucky, SURVIVE_NUM);
+    // save the survivors and view
+    printf("the survived parameters view:\n");
+    for (int i = 0; i < SURVIVE_NUM; i++) {
+        survivors[i] = generation[number[lucky[i]]];
+        printFloatArray(survivors[i].weight, SPRM_LEN);
+    }
+    checkSprmStatistics(survivors, SURVIVE_NUM);
+}
+
 // make next generation file
 // select survivors by roulette
 int nextGenerationSprmRltRlt(int gene_num, int safety) {
@@ -125,11 +165,11 @@ int main(void) {
     initBoard();
     makeSprmSample();
 
-    int (*nGene)(int, int);
-    nGene = nextGenerationSprmRltRlt;
-    //nextGenerationSprmLoopFlex(nGene, 0, 99, 1);
-    checkSprmFile(FNF_SPRM_BASE, 0);
-    copyFGFlex(FNF_RR_SUBMIN);
-    checkSprmFile(FNF_RR_SUBMIN, 0);
+    int (*nGeneF)(void(), int, int);
+    void (*getSvr)(const Sprm*, Sprm*);
+    nGeneF = nextGenerationSprmFlex;
+    getSvr = getSurvivorSprmRltRlt;
+    checkSprmFile(FNF_RLTRLT, 100);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, 1, 99, 1);
     return 0;
 }
