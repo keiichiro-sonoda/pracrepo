@@ -139,7 +139,7 @@ def dataView06(fname_format, x_min, x_max):
     # 横幅指定（世代幅）
     ax.set_xticks(np.linspace(x_min, x_max, 11))
     # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(-0.05, 0.15, 5))
+    ax.set_yticks(np.linspace(-0.0, 0.40, 5))
     plt.show()
 
 if __name__ == "__main__":
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     #dataView05("prm//sprm_corner0.5neg_{:03d}.bin", 0, 100)
     # 指し手をルーレット選択
     #dataView05("prm//sprm_roulette{:03d}.bin", 0, 100)
-    dataView06("prm//sprm_roulette{:03d}.bin", 0, 100)
+    #dataView06("prm//sprm_roulette{:03d}.bin", 0, 100)
     # 指し手ルーレット, 勝ち点で直接ルーレット選択
     #dataView05("prm//sprm_rltrlt{:03d}.bin", 0, 100)
     #dataView06("prm//sprm_rltrlt{:03d}.bin", 0, 100)
@@ -170,4 +170,4 @@ if __name__ == "__main__":
     #dataView06("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
+    dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
