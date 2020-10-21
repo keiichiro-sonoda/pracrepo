@@ -76,6 +76,10 @@ int showBoard(Board b);
 int showBoardHex(Board b);
 // print an array of decimal numbers
 void printDecimalArray(const int *A, int n);
+
+// show the first three and the last one
+void printDecimalArrayPart(const int *A, int n);
+
 // print an array of floating point number
 void printFloatArray(const float *A, int n);
 // print an arrya of hexadecimal numbers

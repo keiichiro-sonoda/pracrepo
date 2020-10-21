@@ -63,11 +63,13 @@ void getSurvivorSprmRRSubMin(const Sprm *generation, Sprm *survivors) {
     // not always necessary
     // make the results easy to understand
     quicksortDD(result, number, 0, GENE_NUM - 1);
-    printDecimalArray(result, GENE_NUM);
+
+    printDecimalArrayPart(result, GENE_NUM);
     min_sub1 = result[GENE_NUM - 1] - 1;
     for (int i = 0; i < GENE_NUM; i++)
         result[i] -= min_sub1;
-    printDecimalArray(result, GENE_NUM);
+    printDecimalArrayPart(result, GENE_NUM);
+
     // roulette selection!
     // don't allow duplication
     rouletteIntMltDep(result, GENE_NUM, lucky, SURVIVE_NUM);

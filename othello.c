@@ -77,6 +77,19 @@ void printDecimalArray(const int *A, int n) {
     printf("}\n");
 }
 
+// show the first three and the last one
+void printDecimalArrayPart(const int *A, int n) {
+    // show all
+    if (n <= 4) {
+        printDecimalArray(A, n);
+        return;
+    }
+    putchar(123);
+    for (int i = 0; i < 3; i++)
+        printf("%3d, ", A[i]);
+    printf("..., %3d}\n", A[n - 1]);
+}
+
 // print an array of floating point number
 void printFloatArray(const float *A, int n) {
     putchar(123);
