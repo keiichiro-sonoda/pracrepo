@@ -21,6 +21,10 @@
 // subtract the minimum value from all points
 #define FNF_RR_SUBMIN "prm/sprm_rr_submin%03d.bin"
 
+// ranking selection
+// the probability is 100 - rank
+#define FNF_RRANK "prm/sprm_rrank%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
