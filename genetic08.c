@@ -86,7 +86,6 @@ void getSurvivorSprmRRSubMin(const Sprm *generation, Sprm *survivors) {
     checkSprmStatistics(survivors, SURVIVE_NUM);
 }
 
-
 // choose survivors[10] from generation[100]
 // and show match results
 // select survivors by ranking selection
@@ -98,7 +97,6 @@ void getSurvivorSprmRRank(const Sprm *generation, Sprm *survivors) {
     int result[GENE_NUM];
     int number[GENE_NUM];
     int lucky[SURVIVE_NUM];
-    int min_sub1;
     // number = {0, 1, 2, ..., 99}
     indices(number, GENE_NUM);
     // game (the next board is decided by roulette)
@@ -109,8 +107,9 @@ void getSurvivorSprmRRank(const Sprm *generation, Sprm *survivors) {
     quicksortDD(result, number, 0, GENE_NUM - 1);
 
     printDecimalArrayPart(result, GENE_NUM);
-    min_sub1 = result[GENE_NUM - 1] - 1;
-    subConst(result, GENE_NUM, min_sub1);
+    // replace points with 100 minus ranks
+    for (int i = 0; i < GENE_NUM; i++)
+        result[i] = GENE_NUM - i;
     printDecimalArrayPart(result, GENE_NUM);
 
     // roulette selection!
@@ -137,9 +136,9 @@ int main(void) {
     int (*nGeneF)(void(), const char*, int, int);
     void (*getSvr)(const Sprm*, Sprm*);
     nGeneF = nextGenerationSprmFlex;
-    getSvr = getSurvivorSprmRRSubMin;
+    //getSvr = getSurvivorSprmRRSubMin;
+    getSvr = getSurvivorSprmRRank;
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
-    copyFGFlex(FNF_RRANK);
-    checkSprmFile(FNF_RRANK, 0);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 1);
     return 0;
 }
