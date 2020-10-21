@@ -149,8 +149,8 @@ void getSurvivorSprmRRankExp(const Sprm *generation, Sprm *survivors) {
     indices(result, GENE_NUM);
     printDecimalArrayPart(result, GENE_NUM);
     // calculate the probability from the ranking
-    // 1.00, 0.50, 0.25, 0.13, ...
-    expArrayIFFlex(result, probability, GENE_NUM, 0.5);
+    // give a proper base?
+    expArrayIFFlex(result, probability, GENE_NUM, 0.9f);
     printFloatArrayPart(probability, GENE_NUM);
 
     // roulette selection!
@@ -182,7 +182,7 @@ int main(void) {
     getSvr = getSurvivorSprmRRankExp;
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
-    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK_EXP, 1, 0, 1);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK_EXP, 1, 0, 2);
     //sortTest();
     //printString(FNF_RRANK_EXP);
     //copyFGFlex(FNF_RRANK_EXP);
