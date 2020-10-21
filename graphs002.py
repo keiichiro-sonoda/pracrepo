@@ -137,7 +137,7 @@ def dataView06(fname_format, x_min, x_max):
     # 横幅指定（世代幅）
     ax.set_xticks(np.linspace(x_min, x_max, 11))
     # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(-0.3, 0.3, 7))
+    ax.set_yticks(np.linspace(-0.15, 0.15, 7))
     plt.show()
 
 if __name__ == "__main__":
@@ -159,9 +159,10 @@ if __name__ == "__main__":
     #dataView05("prm//sprm_rr_submin{:03d}.bin", 0, 100)
     # 指し手ルーレット, 100-順位を確率(相対)にしたランキング選択
     #dataView05("prm//sprm_rrank{:03d}.bin", 0, 100)
+    dataView06("prm//sprm_rrank{:03d}.bin", 0, 100)
     # 指し手ルーレット, 0.9 ^ 順位を確率(相対)にしたランキング選択
     #dataView05("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
+    #dataView06("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    # 標準偏差は得られるのか
-    dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
+    #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
