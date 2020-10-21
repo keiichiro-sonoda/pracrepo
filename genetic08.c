@@ -181,6 +181,7 @@ int main(void) {
     getSvr = getSurvivorSprmRRank;
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
-    sortTest();
+    //sortTest();
+    printString(FNF_RRANK_EXP);
     return 0;
 }

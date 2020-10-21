@@ -22,8 +22,12 @@
 #define FNF_RR_SUBMIN "prm/sprm_rr_submin%03d.bin"
 
 // ranking selection
-// the probability is 100 - rank
+// the probability is 100 - rank (relative)
 #define FNF_RRANK "prm/sprm_rrank%03d.bin"
+
+// ranking selection
+// the probability is 2 ^ rank (relative)
+#define FNF_RRANK_EXP "prm/sprm_rrank_exp/sprm_rrank_exp%03d.bin"
 
 // simple parameter
 typedef struct sprm{
