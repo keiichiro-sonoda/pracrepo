@@ -168,6 +168,35 @@ void getSurvivorSprmRRankExp(const Sprm *generation, Sprm *survivors) {
     checkSprmStatistics(survivors, SURVIVE_NUM);
 }
 
+
+// choose survivors[10] from generation[100]
+// and show match results
+// select survivors by ranking selection (all one)
+// all fitness are the same
+void getSurvivorSprmTest(const Sprm *generation, Sprm *survivors) {
+    // the array to store points
+    int result[GENE_NUM];
+    int lucky[SURVIVE_NUM];
+    // all one
+    // result = {1, 1, 1, ..., 1}
+    ones(result, GENE_NUM);
+    printDecimalArrayPart(result, GENE_NUM);
+
+    // roulette selection!
+    // don't allow duplication
+    rouletteIntMltDep(result, GENE_NUM, lucky, SURVIVE_NUM);
+    // view result
+    printf("selected ranking:\n");
+    printDecimalArray(lucky, SURVIVE_NUM);
+    // save the survivors and view
+    printf("the survived parameters view:\n");
+    for (int i = 0; i < SURVIVE_NUM; i++) {
+        survivors[i] = generation[lucky[i]];
+        printFloatArray(survivors[i].weight, SPRM_LEN);
+    }
+    checkSprmStatistics(survivors, SURVIVE_NUM);
+}
+
 int main(void) {
     // initialize global variables
     setIndexes();
@@ -183,9 +212,10 @@ int main(void) {
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK_EXP, 0, 0, 100);
+    nextGenerationSprmFlexLoopFlex(getSurvivorSprmTest, nGeneF, FNF_NOFIT, 1, 0, 3);
     //sortTest();
-    printString(FNF_NOFIT);
-    //copyFGFlex(FNF_RRANK_EXP);
-    checkSprmFile(FNF_RRANK_EXP, 1);
+    //printString(FNF_NOFIT);
+    //copyFGFlex(FNF_NOFIT);
+    //checkSprmFile(FNF_NOFIT, 0);
     return 0;
 }

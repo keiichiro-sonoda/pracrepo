@@ -33,6 +33,9 @@
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
+// set all elements to one
+#define ones(A, n) for (int i = 0; i < n; i++) (A)[i] = 1
+
 // copy an array
 #define copyArray(src, dst, n) for (int i = 0; i < n; i++) (dst)[i] = (src)[i]
 
