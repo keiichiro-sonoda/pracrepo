@@ -183,5 +183,7 @@ int main(void) {
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
     //sortTest();
     printString(FNF_RRANK_EXP);
+    copyFGFlex(FNF_RRANK_EXP);
+    checkSprmFile(FNF_RRANK_EXP, 0);
     return 0;
 }
