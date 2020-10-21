@@ -178,12 +178,14 @@ int main(void) {
     void (*getSvr)(const Sprm*, Sprm*);
     nGeneF = nextGenerationSprmFlex;
     //getSvr = getSurvivorSprmRRSubMin;
-    getSvr = getSurvivorSprmRRank;
+    //getSvr = getSurvivorSprmRRank;
+    getSvr = getSurvivorSprmRRankExp;
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK_EXP, 1, 0, 1);
     //sortTest();
-    printString(FNF_RRANK_EXP);
-    copyFGFlex(FNF_RRANK_EXP);
-    checkSprmFile(FNF_RRANK_EXP, 0);
+    //printString(FNF_RRANK_EXP);
+    //copyFGFlex(FNF_RRANK_EXP);
+    //checkSprmFile(FNF_RRANK_EXP, 0);
     return 0;
 }
