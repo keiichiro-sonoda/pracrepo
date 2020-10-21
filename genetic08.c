@@ -93,7 +93,6 @@ int main(void) {
     void (*getSvr)(const Sprm*, Sprm*);
     nGeneF = nextGenerationSprmFlex;
     getSvr = getSurvivorSprmRRSubMin;
-    copyFGFlex(FNF_RR_SUBMIN);
-    //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 1, 100, 1);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 1, 0, 2);
     return 0;
 }
