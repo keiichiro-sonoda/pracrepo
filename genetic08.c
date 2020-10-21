@@ -135,6 +135,7 @@ void getSurvivorSprmRRankExp(const Sprm *generation, Sprm *survivors) {
     // the array to store points
     int result[GENE_NUM];
     int number[GENE_NUM];
+    float probability[GENE_NUM];
     int lucky[SURVIVE_NUM];
     // number = {0, 1, 2, ..., 99}
     indices(number, GENE_NUM);
