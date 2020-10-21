@@ -532,16 +532,16 @@ int nextGenerationSprm(int gene_num) {
 
 // make next generation file
 // give a function to choose survivors
-int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*),int gene_num, int safety) {
+int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *format, int gene_num, int safety) {
     int i, j, count;
     char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
     // previous survivors
     Sprm parents[SURVIVE_NUM];
     FILE *fp;
     // the file name to be read
-    snprintf(fnamer, FILENAME_MAX, FNF_RLTRLT, gene_num);
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
     // the file name to be written
-    snprintf(fnamew, FILENAME_MAX, FNF_RLTRLT, gene_num + 1);
+    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
     // view the file names
     printf("read file : %s\n", fnamer);
     printf("write file: %s\n", fnamew);
@@ -637,14 +637,14 @@ void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int 
 }
 
 // give a function to loop
-void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), int, int), int safety, int st, int loop) {
+void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop) {
     time_t t0, t1;
     // get start time
     time(&t0);
     for (int i = st; i < st + loop; i++) {
         // set the generation number as the seed
         srand((unsigned)i);
-        if (nGeneF(getSvr, i, safety) == -1)
+        if (nGeneF(getSvr, format, i, safety) == -1)
             return;
         // get time
         time(&t1);

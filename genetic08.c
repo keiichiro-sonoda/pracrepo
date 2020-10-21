@@ -89,12 +89,11 @@ int main(void) {
     initBoard();
     makeSprmSample();
 
-    int (*nGeneF)(void(), int, int);
+    int (*nGeneF)(void(), const char*, int, int);
     void (*getSvr)(const Sprm*, Sprm*);
     nGeneF = nextGenerationSprmFlex;
-    getSvr = getSurvivorSprmRltRlt;
-    checkSprmFile(FNF_RLTRLT, 100);
-    // test
-    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, 1, 100, 2);
+    getSvr = getSurvivorSprmRRSubMin;
+    copyFGFlex(FNF_RR_SUBMIN);
+    //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 1, 100, 1);
     return 0;
 }

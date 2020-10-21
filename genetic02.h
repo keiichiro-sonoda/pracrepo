@@ -19,7 +19,7 @@
 
 // roulette selection
 // subtract the minimum value from all points
-#define FNF_RR_SUBMIN "prm/sprm_rr_submin%03.bin"
+#define FNF_RR_SUBMIN "prm/sprm_rr_submin%03d.bin"
 
 // simple parameter
 typedef struct sprm{
@@ -100,7 +100,7 @@ int nextGenerationSprm(int gene_num);
 
 // make next generation file
 // give a function to choose survivors
-int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*),int gene_num, int safety);
+int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *format, int gene_num, int safety);
 
 // loop several times
 void nextGenerationSprmLoop(int st, int loop);
@@ -109,7 +109,7 @@ void nextGenerationSprmLoop(int st, int loop);
 void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int loop);
 
 // give a function to loop
-void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), int, int), int safety, int st, int loop);
+void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop);
 
 // make a sample of parameters
 void makeSprmSample(void);
