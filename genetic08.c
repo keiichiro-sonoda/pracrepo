@@ -182,7 +182,7 @@ int main(void) {
     getSvr = getSurvivorSprmRRankExp;
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RR_SUBMIN, 0, 0, 100);
     //nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK, 1, 0, 100);
-    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK_EXP, 1, 0, 2);
+    nextGenerationSprmFlexLoopFlex(getSvr, nGeneF, FNF_RRANK_EXP, 0, 0, 100);
     //sortTest();
     //printString(FNF_RRANK_EXP);
     //copyFGFlex(FNF_RRANK_EXP);
