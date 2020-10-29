@@ -30,8 +30,10 @@ class TSP():
         self.makeFirstGene()
         # 適応度評価
         self.evalFitness()
-        #print(self.fitness)
+        # 距離が短い経路が先頭に来るように並び替え
         self.sortByFitness()
+        print(self.fitness)
+        self.viewPath(self.generation[-1])
 
     # 循環交叉
     # 親を2つ与える
@@ -74,10 +76,9 @@ class TSP():
         # 昇順ソート
         # 適応度が低い方が先頭に来るようにする
         pairs.sort()
-        print(pairs)
-        # 経路を見てみよう
-        #self.viewPath(pairs[0][1])
-        self.viewPath(pairs[-1][1])
+        # 各リストをソートしたものに置き換える
+        self.generation = [p[1] for p in pairs]
+        self.fitness = [p[0] for p in pairs]
     
     # ランダムな経路を作成する関数
     def makeRandomPath(self):
