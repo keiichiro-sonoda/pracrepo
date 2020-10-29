@@ -9,11 +9,11 @@ np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 6
+LENGTH = 7
 
-# サイトと同じサンプル個体
-FATHER = [2, 4, 1, 3, 6, 5]
-MOTHER = [3, 2, 5, 4, 1, 6]
+# サンプル個体(0オリジンとした)
+FATHER = [2, 4, 1, 3, 6, 5, 0]
+MOTHER = [3, 2, 5, 4, 1, 0, 6]
 
 # なんとなくクラスにしてみる
 # Traveling Salesman Problem
@@ -52,6 +52,17 @@ class TSP():
             c1[i] = p2[i]
             c2[i] = p1[i]
         return c1, c2
+    
+    # 経路を確認する関数を目指したい
+    def viewPath(self, path):
+        x = self.coordinates[:, 0]
+        y = self.coordinates[:, 1]
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.scatter(x, y)
+        for i in range(LENGTH):
+            ax.plot([x[path[i - 1]], x[path[i]]], [y[path[i - 1]], y[path[i]]], "k-")
+        plt.show()
 
 def main():
     arr = np.random.rand(LENGTH, 2)
@@ -60,15 +71,8 @@ def main():
     #print(c)
     #print(arr[0])
     # 縦要素の抽出(列?)
-    x = arr[:, 0]
-    y = arr[:, 1]
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.scatter(x, y)
-    for i in range(LENGTH):
-        for j in range(i + 1, LENGTH):
-            ax.plot([arr[i, 0], arr[j, 0]], [arr[i, 1], arr[j, 1]], "k-")
-    plt.show()
+    tsp.viewPath(MOTHER)
+
 
 if __name__ == "__main__":
     main()
