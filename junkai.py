@@ -1,13 +1,16 @@
 # 巡回セールスマン問題を解きたい
 # 並び替えの交叉は01のときと異なるのでその練習をしたい
 import random as rd
+import numpy as np
+import matplotlib.pyplot as plt
 
-#rd.seed(1)
+rd.seed(1)
 
 # 遺伝子長
 # つまり拠点の数
 LENGTH = 6
 
+# サイトと同じサンプル個体
 FATHER = [2, 4, 1, 3, 6, 5]
 MOTHER = [3, 2, 5, 4, 1, 6]
 
@@ -17,6 +20,7 @@ class TSP():
 
     def __init__(self):
         pass
+
     # 循環交叉
     # 親を2つ与える
     # 子も2つタプルで返す予定
@@ -48,9 +52,13 @@ class TSP():
 
 def main():
     tsp = TSP()
-    c1, c2 = tsp.circularCrossing(FATHER, MOTHER)
-    print(c1)
-    print(c2)
+    #c = tsp.circularCrossing(FATHER, MOTHER)
+    #print(c)
+    arr = np.random.rand(LENGTH, 2)
+    print(arr)
+    print(arr[0])
+    # 縦要素の抽出(列?)
+    print(arr[:, 1])
 
 if __name__ == "__main__":
     main()
