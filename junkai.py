@@ -11,7 +11,7 @@ np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 3
+LENGTH = 4
 
 # Traveling Salesman Problem
 class TSP():
@@ -68,10 +68,10 @@ class TSP():
         # 全て0で初期化
         self.dist_table = np.zeros((LENGTH, LENGTH))
         for i in range(LENGTH):
-            for j in range(LENGTH):
-                # 同じ拠点同士は除く
-                if i != j:
-                    self.dist_table[i, j] = self.calcDist(i, j)
+            # j は必ず i より大きくする
+            for j in range(i + 1, LENGTH):
+                self.dist_table[i, j] = self.calcDist(i, j)
+        self.dist_table += self.dist_table.T
         print(self.dist_table)
     
     # ただ座標を確認する関数
