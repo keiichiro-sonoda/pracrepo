@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
-rd.seed(126)
+rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
@@ -18,11 +18,11 @@ class TSP():
     # 世代ごとの個体数
     POPULATION = 50
     # トーナメントサイズ
-    TOURN_SIZE = 2
+    TOURN_SIZE = 4
     # 突然変異率
-    MTN_RATE = 0.05
+    MTN_RATE = 0.5
     # 何世代進めるか
-    LOOP = 50
+    LOOP = 1000
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -89,10 +89,10 @@ class TSP():
     # 突然変異に使いたい
     def swapTwo(self, path):
         # 2つの添え字をランダムに選ぶ
-        indices = rd.sample(range(LENGTH), 2)
-        tmp = path[indices[0]]
-        path[indices[0]] = path[indices[1]]
-        path[indices[1]] = tmp
+        a, b = rd.sample(range(LENGTH), 2)
+        tmp = path[a]
+        path[a] = path[b]
+        path[b] = tmp
     
     # 世代を進める
     def advGene(self):
