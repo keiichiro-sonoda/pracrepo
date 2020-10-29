@@ -13,9 +13,11 @@ mother = [3, 2, 5, 4, 1, 6]
 
 # 循環交叉
 # 親を2つ与える
+# 子も2つタプルで返す予定
 def circularCrossing(p1, p2):
-    c1 = p1.copy
-    c2 = p2.copy
+    # まず子供をコピーしておく
+    c1 = p1.copy()
+    c2 = p2.copy()
     # ランダムな添え字を一つ選ぶ
     i = rd.randint(0, LENGTH - 1)
     # 最初の値
@@ -32,7 +34,12 @@ def circularCrossing(p1, p2):
         fixed.append(i)
         # 次の値を代入
         now = p2[i]
-    print(fixed)
+    # 相互の親から引継ぎ
+    for i in fixed:
+        c1[i] = p2[i]
+        c2[i] = p1[i]
+    print(c1)
+    print(c2)
 
 def main():
     circularCrossing(father, mother)
