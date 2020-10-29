@@ -60,7 +60,9 @@ def main():
     # 縦要素の抽出(列?)
     x = arr[:, 0]
     y = arr[:, 1]
-    plt.plot(x, y)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(x, y)
     plt.show()
 
 if __name__ == "__main__":
