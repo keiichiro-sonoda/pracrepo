@@ -5,8 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
-rd.seed(12)
-np.random.seed(12)
+rd.seed(123)
+np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
