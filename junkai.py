@@ -69,6 +69,10 @@ class TSP():
         s_arr = np.random.rand(LENGTH, 2)
         s_list = s_arr.tolist()
         print(s_list)
+        fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
+        f = open(fname, "w")
+        json.dump(s_list, f)
+        f.close()
 
 def main():
     arr = np.random.rand(LENGTH, 2)
