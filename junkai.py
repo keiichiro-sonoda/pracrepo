@@ -67,7 +67,7 @@ def main():
     ax.scatter(x, y)
     for i in range(LENGTH):
         for j in range(i + 1, LENGTH):
-            ax.plot([arr[i, 0], arr[j, 0]], [arr[i, 1], arr[j, 1]])
+            ax.plot([arr[i, 0], arr[j, 0]], [arr[i, 1], arr[j, 1]], "k-")
     plt.show()
 
 if __name__ == "__main__":
