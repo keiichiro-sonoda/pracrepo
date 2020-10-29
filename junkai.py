@@ -18,7 +18,7 @@ class TSP():
     # 世代ごとの個体数
     POPULATION = 50
     # トーナメントサイズ
-    TOURN_SIZE = 4
+    TOURN_SIZE = 5
     # 突然変異率
     MTN_RATE = 0.5
     # 何世代進めるか
