@@ -2,7 +2,7 @@
 # 並び替えの交叉は01のときと異なるのでその練習をしたい
 import random as rd
 
-rd.seed(1)
+#rd.seed(1)
 
 # 遺伝子長
 # つまり拠点の数
@@ -17,13 +17,18 @@ def circularCrossing(p1, p2):
     c1 = p1.copy
     c2 = p2.copy
     # ランダムな添え字を一つ選ぶ
-    r = rd.randint(0, LENGTH - 1)
-    # 添え字とそれぞれの値を確認
-    print(r, p1[r], p2[r])
-    # p1のrにある要素がp2のどこにあるか確認
-    # 逆も同様
-    print(p1.index(p2[r]))
-    print(p2.index(p1[r]))
+    i = rd.randint(0, LENGTH - 1)
+    # 最初の値
+    st = p1[i]
+    # 固定する添え字のリスト
+    fixed = [i]
+    # 最初の値に戻るまでくり返し
+    while p2[i] != st:
+        # 親2と同じ値がある親1の添え字を入手
+        i = p1.index(p2[i])
+        # リストに追加
+        fixed.append(i)
+    print(fixed)
 
 def main():
     circularCrossing(father, mother)
