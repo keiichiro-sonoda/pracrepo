@@ -4,7 +4,8 @@ import random as rd
 import numpy as np
 import matplotlib.pyplot as plt
 
-rd.seed(1)
+rd.seed(123)
+np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
@@ -63,6 +64,9 @@ def main():
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.scatter(x, y)
+    for i in range(LENGTH):
+        for j in range(i + 1, LENGTH):
+            plt.plot([arr[i, 0], arr[j, 0]], [arr[i, 1], arr[j, 1]])
     plt.show()
 
 if __name__ == "__main__":
