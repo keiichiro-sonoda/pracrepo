@@ -54,12 +54,7 @@ class TSP():
     
     # ランダムな経路を作りたい
     def makeRandomPath(self):
-        # 全ての要素
-        al = [i for i in range(LENGTH)]
-        # 空リストから開始
-        path = rd.sample(al, LENGTH )
-        print(path)
-        return
+        return rd.sample(range(LENGTH), LENGTH)
     
     # ただ座標を確認する関数
     def viewCoordinates(self):
@@ -103,7 +98,7 @@ def main():
     arr = np.array(l)
     tsp = TSP(arr)
     #tsp.viewCoordinates()
-    tsp.makeRandomPath()
+    print(tsp.makeRandomPath())
 
 if __name__ == "__main__":
     main()
