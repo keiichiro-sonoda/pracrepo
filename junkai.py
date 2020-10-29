@@ -16,7 +16,7 @@ LENGTH = 100
 # Traveling Salesman Problem
 class TSP():
     # 世代ごとの個体数
-    GENE_NUM = 50
+    POPULATION = 50
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -26,7 +26,7 @@ class TSP():
         self.makeDistTable()
         # 初期の個体リスト作成
         self.makeFirstGene()
-        #print(self.generation)
+        print(self.generation)
 
     # 循環交叉
     # 親を2つ与える
@@ -63,7 +63,7 @@ class TSP():
     
     # 最初の世代を作る
     def makeFirstGene(self):
-        self.generation = [self.makeRandomPath() for i in range(self.GENE_NUM)]
+        self.generation = [self.makeRandomPath() for i in range(self.POPULATION)]
 
     # 経路の総距離を計算する
     # 個体の適応度計算で用いられると思う
