@@ -59,18 +59,21 @@ class TSP():
         return rd.sample(range(LENGTH), LENGTH)
     
     # 2点間の距離を計算する
+    # makeDistTable() 呼び出し用
     def calcDist(self, a, b):
         return np.sqrt(sum((self.coordinates[a] - self.coordinates[b]) ** 2))
     
-    # 各拠点間の距離を保存する表を作りたい
+    # 各拠点間の距離を保存する表を作る関数
     # 拠点数 × 拠点数の2次元配列
     def makeDistTable(self):
         # 全て0で初期化
         self.dist_table = np.zeros((LENGTH, LENGTH))
         for i in range(LENGTH):
-            # j は必ず i より大きくする
+            # j は必ず i より大きくする（同じ計算回避）
             for j in range(i + 1, LENGTH):
                 self.dist_table[i, j] = self.calcDist(i, j)
+        # 転置して足す
+        # 添え字を入れ替えても同じ値になる
         self.dist_table += self.dist_table.T
         print(self.dist_table)
     
