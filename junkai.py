@@ -22,6 +22,8 @@ class TSP():
     def __init__(self, coordinates):
         self.coordinates = coordinates
         #print(self.coordinates)
+        path = self.makeRandomPath()
+        self.viewPath(path)
 
     # 循環交叉
     # 親を2つ与える
@@ -52,7 +54,7 @@ class TSP():
             c2[i] = p1[i]
         return c1, c2
     
-    # ランダムな経路を作りたい
+    # ランダムな経路を作成する関数
     def makeRandomPath(self):
         return rd.sample(range(LENGTH), LENGTH)
     
@@ -78,7 +80,7 @@ class TSP():
         plt.show()
     
     # 経路情報を記録したファイルを作りたい
-    # json形式がいいかな
+    # json形式
     def makeSampleFile(self):
         # シード固定
         np.random.seed(123)
@@ -98,7 +100,6 @@ def main():
     arr = np.array(l)
     tsp = TSP(arr)
     #tsp.viewCoordinates()
-    print(tsp.makeRandomPath())
 
 if __name__ == "__main__":
     main()
