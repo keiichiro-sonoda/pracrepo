@@ -51,7 +51,16 @@ class TSP():
             c2[i] = p1[i]
         return c1, c2
     
-    # 経路を確認する関数を目指したい
+    # ただ座標を確認する関数
+    def viewCoordinates(self):
+        x = self.coordinates[:, 0]
+        y = self.coordinates[:, 1]
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.scatter(x, y)
+        plt.show()
+    
+    # 経路を確認する関数
     def viewPath(self, path):
         x = self.coordinates[:, 0]
         y = self.coordinates[:, 1]
@@ -83,6 +92,7 @@ def main():
     f.close()
     arr = np.array(l)
     tsp = TSP(arr)
+    #tsp.viewCoordinates()
 
 if __name__ == "__main__":
     main()
