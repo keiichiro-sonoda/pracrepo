@@ -1,5 +1,6 @@
 # 巡回セールスマン問題を解きたい
 # 並び替えの交叉は01のときと異なるのでその練習をしたい
+# 円順列, じゅず順列等は考えずに等価な個体も別物として扱う
 import random as rd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,7 +21,7 @@ class TSP():
     # numpy 配列を与える
     def __init__(self, coordinates):
         self.coordinates = coordinates
-        print(self.coordinates)
+        #print(self.coordinates)
 
     # 循環交叉
     # 親を2つ与える
@@ -50,6 +51,15 @@ class TSP():
             c1[i] = p2[i]
             c2[i] = p1[i]
         return c1, c2
+    
+    # ランダムな経路を作りたい
+    def makeRandomPath(self):
+        # 全ての要素
+        al = [i for i in range(LENGTH)]
+        # 空リストから開始
+        path = rd.sample(al, LENGTH )
+        print(path)
+        return
     
     # ただ座標を確認する関数
     def viewCoordinates(self):
@@ -93,6 +103,7 @@ def main():
     arr = np.array(l)
     tsp = TSP(arr)
     #tsp.viewCoordinates()
+    tsp.makeRandomPath()
 
 if __name__ == "__main__":
     main()
