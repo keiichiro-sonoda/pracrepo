@@ -17,6 +17,8 @@ LENGTH = 10
 class TSP():
     # 世代ごとの個体数
     POPULATION = 10
+    # トーナメントサイズ
+    TOURN_SIZE = 3
     # 何世代進めるか
     LOOP = 1
 
@@ -32,8 +34,7 @@ class TSP():
         self.evalFitness()
         # 距離が短い経路が先頭に来るように並び替え
         self.sortByFitness()
-        print(self.fitness)
-        self.viewPath(self.generation[-1])
+        self.advGene()
 
     # 循環交叉
     # 親を2つ与える
@@ -63,6 +64,30 @@ class TSP():
             c1[i] = p2[i]
             c2[i] = p1[i]
         return c1, c2
+    
+    # トーナメント選択
+    def tournament(self):
+        # 順位からランダムに一定数選択し, 最も順位が高いものを選ぶ
+        return min(rd.sample(range(self.POPULATION), self.TOURN_SIZE))
+    
+    # 世代を進める
+    def advGene(self):
+        # 後に置き換える一時変数
+        next_gene = []
+        # 人数分くり返し
+        for i in range(self.POPULATION):
+            m_index = self.tournament()
+            f_index = self.tournament()
+            print(m_index, f_index)
+            mother = self.generation[m_index]
+            father = self.generation[f_index]
+            # 親が重複しても構わない
+            # 子は片方だけ使う
+            child, scrap = self.circularCrossing(mother, father)
+            # リストに追加
+            next_gene.append(child)
+        print(self.generation)
+        print(next_gene)
     
     # 適応度評価(ただの距離計算)
     # 低いほど良いのであまり適応度と呼びたくない
