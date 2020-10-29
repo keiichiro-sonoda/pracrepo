@@ -11,10 +11,12 @@ np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 5
+LENGTH = 100
 
 # Traveling Salesman Problem
 class TSP():
+    # 世代ごとの個体数
+    GENE_NUM = 50
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -22,11 +24,9 @@ class TSP():
         self.coordinates = coordinates
         # 距離テーブルを作る (numpy配列)
         self.makeDistTable()
-        #print(self.coordinates)
-        path = self.makeRandomPath()
-        print(path)
-        print(self.calcPathDist(path))
-        self.viewPath(path)
+        # 初期の個体リスト作成
+        self.makeFirstGene()
+        #print(self.generation)
 
     # 循環交叉
     # 親を2つ与える
@@ -60,6 +60,10 @@ class TSP():
     # ランダムな経路を作成する関数
     def makeRandomPath(self):
         return rd.sample(range(LENGTH), LENGTH)
+    
+    # 最初の世代を作る
+    def makeFirstGene(self):
+        self.generation = [self.makeRandomPath() for i in range(self.GENE_NUM)]
 
     # 経路の総距離を計算する
     # 個体の適応度計算で用いられると思う
@@ -84,7 +88,6 @@ class TSP():
         # 転置して足す
         # 添え字を入れ替えても同じ値になる
         self.dist_table += self.dist_table.T
-        print(self.dist_table)
     
     # ただ座標を確認する関数
     def viewCoordinates(self):
@@ -126,9 +129,9 @@ def main():
     l = json.load(f)
     f.close()
     #arr = np.array(l)
-    arr = np.random.randint(0, 100, (LENGTH, 2))
-    #arr = np.random.rand(LENGTH, 2)
-    print(arr)
+    #arr = np.random.randint(0, 100, (LENGTH, 2))
+    arr = np.random.rand(LENGTH, 2)
+    #print(arr)
     tsp = TSP(arr)
     #tsp.viewCoordinates()
 
