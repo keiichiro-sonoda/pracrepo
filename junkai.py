@@ -18,7 +18,7 @@ class TSP():
     # 世代ごとの個体数
     POPULATION = 50
     # トーナメントサイズ
-    TOURN_SIZE = 3
+    TOURN_SIZE = 2
     # 何世代進めるか
     LOOP = 30
 
