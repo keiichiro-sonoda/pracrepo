@@ -11,7 +11,7 @@ np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 100
+LENGTH = 3
 
 # Traveling Salesman Problem
 class TSP():
@@ -72,8 +72,6 @@ class TSP():
                 # 同じ拠点同士は除く
                 if i != j:
                     self.dist_table[i, j] = self.calcDist(i, j)
-        a = np.sqrt([2, 3])
-        print(a)
         print(self.dist_table)
     
     # ただ座標を確認する関数
@@ -115,7 +113,8 @@ def main():
     f = open(fname, "r")
     l = json.load(f)
     f.close()
-    arr = np.array(l)
+    #arr = np.array(l)
+    arr = np.random.rand(LENGTH, 2)
     tsp = TSP(arr)
     #tsp.viewCoordinates()
 
