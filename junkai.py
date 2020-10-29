@@ -67,8 +67,8 @@ class TSP():
     def makeSampleFile(self):
         np.random.seed(123)
         s_arr = np.random.rand(LENGTH, 2)
-        print(s_arr)
-        print(s_arr == self.coordinates)
+        s_list = s_arr.tolist()
+        print(s_list)
 
 def main():
     arr = np.random.rand(LENGTH, 2)
