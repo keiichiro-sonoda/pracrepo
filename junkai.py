@@ -3,17 +3,14 @@
 import random as rd
 import numpy as np
 import matplotlib.pyplot as plt
+import json
 
-rd.seed(123)
-np.random.seed(123)
+rd.seed(12)
+np.random.seed(12)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 7
-
-# サンプル個体(0オリジンとした)
-FATHER = [2, 4, 1, 3, 6, 5, 0]
-MOTHER = [3, 2, 5, 4, 1, 0, 6]
+LENGTH = 100
 
 # なんとなくクラスにしてみる
 # Traveling Salesman Problem
@@ -60,9 +57,18 @@ class TSP():
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.scatter(x, y)
+        # 添え字-1が末尾を示す性質を利用
         for i in range(LENGTH):
             ax.plot([x[path[i - 1]], x[path[i]]], [y[path[i - 1]], y[path[i]]], "k-")
         plt.show()
+    
+    # 経路情報を記録したファイルを作りたい
+    # json形式がいいかな
+    def makeSampleFile(self):
+        np.random.seed(123)
+        s_arr = np.random.rand(LENGTH, 2)
+        print(s_arr)
+        print(s_arr == self.coordinates)
 
 def main():
     arr = np.random.rand(LENGTH, 2)
@@ -71,8 +77,8 @@ def main():
     #print(c)
     #print(arr[0])
     # 縦要素の抽出(列?)
-    tsp.viewPath(MOTHER)
-
+    #tsp.viewPath(MOTHER)
+    tsp.makeSampleFile()
 
 if __name__ == "__main__":
     main()
