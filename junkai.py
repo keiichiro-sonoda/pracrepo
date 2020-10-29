@@ -11,16 +11,16 @@ np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 10
+LENGTH = 100
 
 # Traveling Salesman Problem
 class TSP():
     # 世代ごとの個体数
-    POPULATION = 10
+    POPULATION = 50
     # トーナメントサイズ
     TOURN_SIZE = 3
     # 何世代進めるか
-    LOOP = 1
+    LOOP = 30
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -30,11 +30,15 @@ class TSP():
         self.makeDistTable()
         # 初期の個体リスト作成
         self.makeFirstGene()
-        # 適応度評価
-        self.evalFitness()
-        # 距離が短い経路が先頭に来るように並び替え
-        self.sortByFitness()
-        self.advGene()
+        for i in range(self.LOOP):
+            # 適応度評価
+            self.evalFitness()
+            # 距離が短い経路が先頭に来るように並び替え
+            self.sortByFitness()
+            # 現世代で最も短い経路
+            print(self.fitness[0])
+            # 次の世代へ
+            self.advGene()
 
     # 循環交叉
     # 親を2つ与える
@@ -78,7 +82,6 @@ class TSP():
         for i in range(self.POPULATION):
             m_index = self.tournament()
             f_index = self.tournament()
-            print(m_index, f_index)
             mother = self.generation[m_index]
             father = self.generation[f_index]
             # 親が重複しても構わない
@@ -86,8 +89,8 @@ class TSP():
             child, scrap = self.circularCrossing(mother, father)
             # リストに追加
             next_gene.append(child)
-        print(self.generation)
-        print(next_gene)
+        # 世代交代
+        self.generation = next_gene
     
     # 適応度評価(ただの距離計算)
     # 低いほど良いのであまり適応度と呼びたくない
