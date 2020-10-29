@@ -17,6 +17,7 @@ LENGTH = 100
 class TSP():
 
     # 経路を求めるための座標を与える
+    # numpy 配列を与える
     def __init__(self, coordinates):
         self.coordinates = coordinates
         print(self.coordinates)
@@ -65,24 +66,23 @@ class TSP():
     # 経路情報を記録したファイルを作りたい
     # json形式がいいかな
     def makeSampleFile(self):
+        # シード固定
         np.random.seed(123)
         s_arr = np.random.rand(LENGTH, 2)
         s_list = s_arr.tolist()
         print(s_list)
-        fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
-        f = open(fname, "w")
+        s_fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
+        f = open(s_fname, "w")
         json.dump(s_list, f)
         f.close()
 
 def main():
-    arr = np.random.rand(LENGTH, 2)
+    fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
+    f = open(fname, "r")
+    l = json.load(f)
+    f.close()
+    arr = np.array(l)
     tsp = TSP(arr)
-    #c = tsp.circularCrossing(FATHER, MOTHER)
-    #print(c)
-    #print(arr[0])
-    # 縦要素の抽出(列?)
-    #tsp.viewPath(MOTHER)
-    tsp.makeSampleFile()
 
 if __name__ == "__main__":
     main()
