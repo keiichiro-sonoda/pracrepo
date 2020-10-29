@@ -19,8 +19,10 @@ MOTHER = [3, 2, 5, 4, 1, 6]
 # Traveling Salesman Problem
 class TSP():
 
-    def __init__(self):
-        pass
+    # 経路を求めるための座標を与える
+    def __init__(self, coordinates):
+        self.coordinates = coordinates
+        print(self.coordinates)
 
     # 循環交叉
     # 親を2つ与える
@@ -52,11 +54,10 @@ class TSP():
         return c1, c2
 
 def main():
-    tsp = TSP()
+    arr = np.random.rand(LENGTH, 2)
+    tsp = TSP(arr)
     #c = tsp.circularCrossing(FATHER, MOTHER)
     #print(c)
-    arr = np.random.rand(LENGTH, 2)
-    print(arr)
     #print(arr[0])
     # 縦要素の抽出(列?)
     x = arr[:, 0]
