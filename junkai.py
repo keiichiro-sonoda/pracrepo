@@ -11,12 +11,12 @@ np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 100
+LENGTH = 10
 
 # Traveling Salesman Problem
 class TSP():
     # 世代ごとの個体数
-    POPULATION = 50
+    POPULATION = 10
     # 何世代進めるか
     LOOP = 1
 
@@ -30,7 +30,8 @@ class TSP():
         self.makeFirstGene()
         # 適応度評価
         self.evalFitness()
-        print(self.fitness)
+        #print(self.fitness)
+        self.sortByFitness()
 
     # 循環交叉
     # 親を2つ与える
@@ -64,6 +65,14 @@ class TSP():
     # 適応度評価(ただの距離計算)
     def evalFitness(self):
         self.fitness = [self.calcPathDist(p) for p in self.generation]
+    
+    # 適応度順に並び替える
+    def sortByFitness(self):
+        # (適応度, 経路) のリストを作成
+        pairs = [(self.fitness[i], p) for i, p in enumerate(self.generation)]
+        print(pairs)
+        pairs.sort()
+        print(pairs)
     
     # ランダムな経路を作成する関数
     def makeRandomPath(self):
