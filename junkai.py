@@ -11,7 +11,7 @@ np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
-LENGTH = 4
+LENGTH = 5
 
 # Traveling Salesman Problem
 class TSP():
@@ -20,10 +20,13 @@ class TSP():
     # numpy 配列を与える
     def __init__(self, coordinates):
         self.coordinates = coordinates
+        # 距離テーブルを作る (numpy配列)
+        self.makeDistTable()
         #print(self.coordinates)
         path = self.makeRandomPath()
-        #self.viewPath(path)
-        self.makeDistTable()
+        print(path)
+        print(self.calcPathDist(path))
+        self.viewPath(path)
 
     # 循環交叉
     # 親を2つ与える
@@ -57,6 +60,12 @@ class TSP():
     # ランダムな経路を作成する関数
     def makeRandomPath(self):
         return rd.sample(range(LENGTH), LENGTH)
+
+    # 経路の総距離を計算する
+    # 個体の適応度計算で用いられると思う
+    def calcPathDist(self, path):
+        # 隣り合う拠点の距離の総和を計算
+        return sum(self.dist_table[path[i - 1], path[i]] for i in range(LENGTH))
     
     # 2点間の距離を計算する
     # makeDistTable() 呼び出し用
@@ -118,6 +127,7 @@ def main():
     f.close()
     #arr = np.array(l)
     arr = np.random.randint(0, 100, (LENGTH, 2))
+    #arr = np.random.rand(LENGTH, 2)
     print(arr)
     tsp = TSP(arr)
     #tsp.viewCoordinates()
