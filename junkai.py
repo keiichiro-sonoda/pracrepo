@@ -13,7 +13,6 @@ np.random.seed(123)
 # つまり拠点の数
 LENGTH = 100
 
-# なんとなくクラスにしてみる
 # Traveling Salesman Problem
 class TSP():
 
@@ -23,7 +22,8 @@ class TSP():
         self.coordinates = coordinates
         #print(self.coordinates)
         path = self.makeRandomPath()
-        self.viewPath(path)
+        #self.viewPath(path)
+        self.makeDistTable()
 
     # 循環交叉
     # 親を2つ与える
@@ -57,6 +57,22 @@ class TSP():
     # ランダムな経路を作成する関数
     def makeRandomPath(self):
         return rd.sample(range(LENGTH), LENGTH)
+    
+    # 2点間の距離を計算する
+    def calcDist(self, a, b):
+        return 0.1
+    
+    # 各拠点間の距離を保存する表を作りたい
+    # 拠点数 × 拠点数の2次元配列
+    def makeDistTable(self):
+        # 全て0で初期化
+        self.dist_table = np.zeros((LENGTH, LENGTH))
+        for i in range(LENGTH):
+            for j in range(LENGTH):
+                # 同じ拠点同士は除く
+                if i != j:
+                    self.dist_table[i, j] = self.calcDist(i, j)
+        print(self.dist_table)
     
     # ただ座標を確認する関数
     def viewCoordinates(self):
