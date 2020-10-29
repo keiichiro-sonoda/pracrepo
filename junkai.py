@@ -63,6 +63,7 @@ class TSP():
         return c1, c2
     
     # 適応度評価(ただの距離計算)
+    # 低いほど良いのであまり適応度と呼びたくない
     def evalFitness(self):
         self.fitness = [self.calcPathDist(p) for p in self.generation]
     
@@ -70,9 +71,13 @@ class TSP():
     def sortByFitness(self):
         # (適応度, 経路) のリストを作成
         pairs = [(self.fitness[i], p) for i, p in enumerate(self.generation)]
-        print(pairs)
+        # 昇順ソート
+        # 適応度が低い方が先頭に来るようにする
         pairs.sort()
         print(pairs)
+        # 経路を見てみよう
+        #self.viewPath(pairs[0][1])
+        self.viewPath(pairs[-1][1])
     
     # ランダムな経路を作成する関数
     def makeRandomPath(self):
