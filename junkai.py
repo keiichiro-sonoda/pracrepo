@@ -60,7 +60,7 @@ class TSP():
     
     # 2点間の距離を計算する
     def calcDist(self, a, b):
-        return np.sqrt(2)
+        return np.sqrt(sum((self.coordinates[a] - self.coordinates[b]) ** 2))
     
     # 各拠点間の距離を保存する表を作りたい
     # 拠点数 × 拠点数の2次元配列
@@ -114,7 +114,8 @@ def main():
     l = json.load(f)
     f.close()
     #arr = np.array(l)
-    arr = np.random.rand(LENGTH, 2)
+    arr = np.random.randint(0, 100, (LENGTH, 2))
+    print(arr)
     tsp = TSP(arr)
     #tsp.viewCoordinates()
 
