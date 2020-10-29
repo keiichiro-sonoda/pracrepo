@@ -56,9 +56,12 @@ def main():
     #print(c)
     arr = np.random.rand(LENGTH, 2)
     print(arr)
-    print(arr[0])
+    #print(arr[0])
     # 縦要素の抽出(列?)
-    print(arr[:, 1])
+    x = arr[:, 0]
+    y = arr[:, 1]
+    plt.plot(x, y)
+    plt.show()
 
 if __name__ == "__main__":
     main()
