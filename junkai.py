@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
-rd.seed(123)
+rd.seed(126)
 np.random.seed(123)
 
 # 遺伝子長
@@ -19,6 +19,8 @@ class TSP():
     POPULATION = 50
     # トーナメントサイズ
     TOURN_SIZE = 2
+    # 突然変異率
+    MTN_RATE = 0.05
     # 何世代進めるか
     LOOP = 50
 
@@ -82,6 +84,15 @@ class TSP():
     def tournament(self):
         # 順位からランダムに一定数選択し, 最も順位が高いものを選ぶ
         return min(rd.sample(range(self.POPULATION), self.TOURN_SIZE))
+
+    # 2点を入れ替える
+    # 突然変異に使いたい
+    def swapTwo(self, path):
+        # 2つの添え字をランダムに選ぶ
+        indices = rd.sample(range(LENGTH), 2)
+        tmp = path[indices[0]]
+        path[indices[0]] = path[indices[1]]
+        path[indices[1]] = tmp
     
     # 世代を進める
     def advGene(self):
@@ -96,6 +107,9 @@ class TSP():
             # 親が重複しても構わない
             # 子は片方だけ使う
             child, scrap = self.circularCrossing(mother, father)
+            # 一定確率で2点を入れ替え
+            if (rd.random() < self.MTN_RATE):
+                self.swapTwo(child)
             # リストに追加
             next_gene.append(child)
         # 世代交代
@@ -188,9 +202,9 @@ def main():
     f = open(fname, "r")
     l = json.load(f)
     f.close()
-    #arr = np.array(l)
+    arr = np.array(l)
     #arr = np.random.randint(0, 100, (LENGTH, 2))
-    arr = np.random.rand(LENGTH, 2)
+    #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
 
