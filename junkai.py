@@ -60,7 +60,7 @@ class TSP():
     
     # 2点間の距離を計算する
     def calcDist(self, a, b):
-        return 0.1
+        return np.sqrt(2)
     
     # 各拠点間の距離を保存する表を作りたい
     # 拠点数 × 拠点数の2次元配列
@@ -72,6 +72,8 @@ class TSP():
                 # 同じ拠点同士は除く
                 if i != j:
                     self.dist_table[i, j] = self.calcDist(i, j)
+        a = np.sqrt([2, 3])
+        print(a)
         print(self.dist_table)
     
     # ただ座標を確認する関数
