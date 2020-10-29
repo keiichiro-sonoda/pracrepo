@@ -17,6 +17,8 @@ LENGTH = 100
 class TSP():
     # 世代ごとの個体数
     POPULATION = 50
+    # 何世代進めるか
+    LOOP = 1
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -26,7 +28,9 @@ class TSP():
         self.makeDistTable()
         # 初期の個体リスト作成
         self.makeFirstGene()
-        print(self.generation)
+        # 適応度評価
+        self.evalFitness()
+        print(self.fitness)
 
     # 循環交叉
     # 親を2つ与える
@@ -56,6 +60,10 @@ class TSP():
             c1[i] = p2[i]
             c2[i] = p1[i]
         return c1, c2
+    
+    # 適応度評価(ただの距離計算)
+    def evalFitness(self):
+        self.fitness = [self.calcPathDist(p) for p in self.generation]
     
     # ランダムな経路を作成する関数
     def makeRandomPath(self):
@@ -133,7 +141,6 @@ def main():
     arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    #tsp.viewCoordinates()
 
 if __name__ == "__main__":
     main()
