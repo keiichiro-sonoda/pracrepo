@@ -179,20 +179,22 @@ class TSP():
         next_gene = []
         # 上限に達するまで交叉
         while len(next_gene) < self.CHILD_NUM:
-            # 親を重複無しで選択
-            m_index, f_index = self.tournamentMult(2)
-            mother = self.generation[m_index]
-            father = self.generation[f_index]
-            # 親が重複しても構わない
-            # 子は片方だけ使う
-            child, scrap = self.cyclicCrossover(mother, father)
+            # 親の添え字(ランク)を重複無しで選択
+            p_indices = self.tournamentMult(2)
+            mother = self.generation[p_indices[0]]
+            father = self.generation[p_indices[1]]
+            # 循環交叉
+            child1, child2 = self.cyclicCrossover(mother, father)
             # 部分写像交叉
             #child, scrap = self.partMapCrossover(mother, father)
             # 一定確率で2点を入れ替え
             if (rd.random() < self.MTN_RATE):
-                self.swapTwo(child)
+                self.swapTwo(child1)
+            if (rd.random() < self.MTN_RATE):
+                self.swapTwo(child2)
             # リストに追加
-            next_gene.append(child)
+            next_gene.append(child1)
+            next_gene.append(child2)
         # 世代交代 (先頭のエリート数分は残す)
         self.generation[self.ELITE_NUM:] = next_gene
 
@@ -328,7 +330,7 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    tsp.advGeneLoop(300)
+    tsp.advGeneLoop(1000)
     tsp.viewBestPath()
 
 if __name__ == "__main__":
