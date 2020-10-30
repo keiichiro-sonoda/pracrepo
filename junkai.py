@@ -21,7 +21,7 @@ class TSP():
     # トーナメントサイズ
     TOURN_SIZE = 5
     # 突然変異率
-    MTN_RATE = 0.5
+    MTN_RATE = 0.6
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -33,7 +33,7 @@ class TSP():
     # 循環交叉
     # 親を2つ与える
     # 子も2つタプルで返す
-    def circularCrossing(self, p1, p2):
+    def cyclicCrossover(self, p1, p2):
         # まず子供をコピーしておく
         c1 = p1.copy()
         c2 = p2.copy()
@@ -85,7 +85,7 @@ class TSP():
             father = self.generation[f_index]
             # 親が重複しても構わない
             # 子は片方だけ使う
-            child, scrap = self.circularCrossing(mother, father)
+            child, scrap = self.cyclicCrossover(mother, father)
             # 一定確率で2点を入れ替え
             if (rd.random() < self.MTN_RATE):
                 self.swapTwo(child)
@@ -214,8 +214,10 @@ class TSP():
 
 def main():
     # ファイル読み込み
-    #fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
-    fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\circle_num100.json"
+    # ランダムな点
+    fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
+    # 円上の点
+    #fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\circle_num100.json"
     f = open(fname, "r")
     l = json.load(f)
     f.close()
@@ -225,9 +227,7 @@ def main():
     #print(arr)
     tsp = TSP(arr)
     # 尤もらしい解を得る
-    #plausible = tsp.advGeneLoop(1000)
-    plausible = [i for i in range(100)]
-    print(tsp.calcPathDist(plausible))
+    plausible = tsp.advGeneLoop(100)
     tsp.viewPath(plausible)
 
 if __name__ == "__main__":
