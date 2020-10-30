@@ -22,8 +22,6 @@ class TSP():
     TOURN_SIZE = 5
     # 突然変異率
     MTN_RATE = 0.5
-    # 何世代進めるか
-    LOOP = 300
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -31,26 +29,6 @@ class TSP():
         self.coordinates = coordinates
         # 距離テーブルを作る (numpy配列)
         self.makeDistTable()
-        # 初期の個体リスト作成
-        self.makeFirstGene()
-        for i in range(self.LOOP):
-            # 適応度評価
-            self.evalFitness()
-            # 距離が短い経路が先頭に来るように並び替え
-            self.sortByFitness()
-            # 現世代で最も短い経路
-            print(self.fitness[0])
-            # 次の世代へ
-            self.advGene()
-        # 最後の処理
-        # 適応度評価
-        self.evalFitness()
-        # 距離が短い経路が先頭に来るように並び替え
-        self.sortByFitness()
-        # 現世代で最も短い経路
-        print(self.fitness[0])
-        # 経路確認
-        self.viewPath(self.generation[0])
 
     # 循環交叉
     # 親を2つ与える
@@ -119,7 +97,25 @@ class TSP():
     # 一定数世代を進める
     # 返り値は最終世代のトップ
     def advGeneLoop(self, loop):
-        pass
+        # 初期の個体リスト作成
+        self.makeFirstGene()
+        for i in range(loop):
+            # 適応度評価
+            self.evalFitness()
+            # 距離が短い経路が先頭に来るように並び替え
+            self.sortByFitness()
+            # 現世代で最も短い経路距離
+            print(self.fitness[0])
+            # 次の世代へ
+            self.advGene()
+        # 適応度評価
+        self.evalFitness()
+        # 距離が短い経路が先頭に来るように並び替え
+        self.sortByFitness()
+        # 最終世代で最も短い経路距離
+        print(self.fitness[0])
+        # 最終世代で最も短い経路を返す
+        return self.generation[0]
     
     # 適応度評価(ただの距離計算)
     # 低いほど良いのであまり適応度と呼びたくない
@@ -204,6 +200,7 @@ class TSP():
         f.close()
 
 def main():
+    # ファイル読み込み
     fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
     f = open(fname, "r")
     l = json.load(f)
@@ -213,6 +210,9 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
+    # 尤もらしい解を得る
+    plausible = tsp.advGeneLoop(500)
+    tsp.viewPath(plausible)
 
 if __name__ == "__main__":
     main()
