@@ -24,7 +24,7 @@ class TSP():
     # 突然変異率
     MTN_RATE = 0.5
     # エリート選択する数
-    ELITE_NUM = 6
+    ELITE_NUM = 5
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -195,6 +195,9 @@ class TSP():
             # リストに追加
             next_gene.append(child1)
             next_gene.append(child2)
+        # 子供の数をオーバーしたら, 末尾を削除
+        if len(next_gene) > self.CHILD_NUM:
+            del next_gene[-1]
         # 世代交代 (先頭のエリート数分は残す)
         self.generation[self.ELITE_NUM:] = next_gene
 
@@ -330,7 +333,7 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    tsp.advGeneLoop(1000)
+    tsp.advGeneLoop(100)
     tsp.viewBestPath()
 
 if __name__ == "__main__":
