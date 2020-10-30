@@ -69,12 +69,16 @@ class TSP():
         c2 = c1.copy()
         # 切断点を決定
         cut1, cut2 = self.getTwoCutPoint()
-        if cut2 < cut1:
-            cut2 += LENGTH
-        print(cut1, cut2)
+        if cut1 <= cut2:
+            stop1 = cut1 + LENGTH
+            stop2 = cut2
+        else:
+            stop1 = cut1
+            stop2 = cut2 + LENGTH
+        print(cut1, cut2, stop1, stop2)
         # 入れ替えリスト
         swap_list = []
-        for i in range(cut1, cut2):
+        for i in range(cut1, stop2):
             ind = i % LENGTH
             c2[ind] = p1[ind]
             c1[ind] = p2[ind]
