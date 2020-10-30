@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-#rd.seed(123)
+rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
@@ -193,7 +193,7 @@ class TSP():
     # 突然変異
     # 幾つか手法があるため, 確率的に選択する
     def mutation(self, path):
-        if False:
+        if rd.randint(0, 1):
             self.swapTwoMut(path)
         else:
             self.shiftMut(path)
