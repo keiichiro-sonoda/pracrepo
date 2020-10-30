@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
+# シード設定
 rd.seed(123)
 np.random.seed(123)
 
@@ -22,7 +23,7 @@ class TSP():
     # 突然変異率
     MTN_RATE = 0.5
     # 何世代進めるか
-    LOOP = 1000
+    LOOP = 300
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -53,7 +54,7 @@ class TSP():
 
     # 循環交叉
     # 親を2つ与える
-    # 子も2つタプルで返す予定
+    # 子も2つタプルで返す
     def circularCrossing(self, p1, p2):
         # まず子供をコピーしておく
         c1 = p1.copy()
@@ -114,6 +115,11 @@ class TSP():
             next_gene.append(child)
         # 世代交代
         self.generation = next_gene
+
+    # 一定数世代を進める
+    # 返り値は最終世代のトップ
+    def advGeneLoop(self, loop):
+        pass
     
     # 適応度評価(ただの距離計算)
     # 低いほど良いのであまり適応度と呼びたくない
