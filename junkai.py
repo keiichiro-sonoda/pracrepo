@@ -214,7 +214,8 @@ class TSP():
 
 def main():
     # ファイル読み込み
-    fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
+    #fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\coord100_samp01.json"
+    fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\circle_num100.json"
     f = open(fname, "r")
     l = json.load(f)
     f.close()
@@ -224,9 +225,10 @@ def main():
     #print(arr)
     tsp = TSP(arr)
     # 尤もらしい解を得る
-    #plausible = tsp.advGeneLoop(500)
-    #tsp.viewPath(plausible)
-    tsp.makeCircle(LENGTH)
+    #plausible = tsp.advGeneLoop(1000)
+    plausible = [i for i in range(100)]
+    print(tsp.calcPathDist(plausible))
+    tsp.viewPath(plausible)
 
 if __name__ == "__main__":
     main()
