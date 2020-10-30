@@ -13,7 +13,7 @@ np.random.seed(123)
 # 遺伝子長
 # つまり拠点の数
 # 4以上
-LENGTH = 10
+LENGTH = 9
 
 # Traveling Salesman Problem
 class TSP():
@@ -69,6 +69,7 @@ class TSP():
         c2 = c1.copy()
         # 切断点を決定
         cut1, cut2 = self.getTwoCutPoint()
+        cut1, cut2 = 3, 7
         if cut1 <= cut2:
             stop1 = cut1 + LENGTH
             stop2 = cut2
@@ -78,17 +79,15 @@ class TSP():
         print(cut1, cut2, stop1, stop2)
         # 入れ替え辞書
         swap_dict1 = {}
-        swap_dict2= {}
         # 切り取った部分を入れ替え
         for i in range(cut1, stop2):
             ind = i % LENGTH
             c2[ind] = p1[ind]
             c1[ind] = p2[ind]
             swap_dict1[p2[ind]] = p1[ind]
-            swap_dict2[p1[ind]] = p2[ind]
         # 辞書の作り直し
         self.remakeSwapDict(swap_dict1)
-        self.remakeSwapDict(swap_dict2)
+        swap_dict2 = self.inverseDict(swap_dict1)
         print(swap_dict1)
         print(swap_dict2)
         print(c1, c2)
@@ -99,6 +98,13 @@ class TSP():
                 c1[ind] = p1[ind]
             if p2[ind] not in c2:
                 c2[ind] = p2[ind]
+        print(c1, c2)
+        for i in range(cut2, stop1):
+            ind = i % LENGTH
+            if c1[ind] < 0:
+                c1[ind] = swap_dict1[p1[ind]]
+            if c2[ind] < 0:
+                c2[ind] = swap_dict2[p2[ind]]
         print(c1, c2)
     
     # 2つの切断点を返す関数
@@ -122,7 +128,8 @@ class TSP():
         rem_val = []
         for k, v in dic.items():
             # 値が辞書のキーになっている間くり返し
-            while v in dic:
+            # 交換した数字で閉じている場合は抜ける
+            while (v in dic) and (v not in rem_val):
                 rem_val.append(v)
                 v = dic[v]
             # 辞書になければその値のままか, 更新
@@ -130,6 +137,12 @@ class TSP():
         # 消去
         for v in rem_val:
             dic.pop(v)
+    
+    # 要素とキーが逆になった辞書を返す
+    # 1対1であることを前提とする
+    def inverseDict(self, dic):
+        # 辞書内包表記は初めてかも
+        return {v: k for k, v in dic.items()}
     
     # トーナメント選択
     def tournament(self):
@@ -300,6 +313,8 @@ def main():
     tsp = TSP(arr)
     p1 = tsp.makeRandomPath()
     p2 = tsp.makeRandomPath()
+    p1 = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    p2 = [3, 4, 1, 0, 7, 6, 5, 8, 2]
     tsp.partMapCrossover(p1, p2)
 
 if __name__ == "__main__":
