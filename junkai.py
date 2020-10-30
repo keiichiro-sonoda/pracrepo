@@ -13,7 +13,7 @@ np.random.seed(123)
 # 遺伝子長
 # つまり拠点の数
 # 4以上
-LENGTH = 100
+LENGTH = 10
 LOOP = 1000
 
 # Traveling Salesman Problem
@@ -21,7 +21,7 @@ class TSP():
     # 世代ごとの個体数
     POPULATION = 50
     # トーナメントサイズ
-    TOURN_SIZE = 1
+    TOURN_SIZE = 3
     # 突然変異率
     MTN_RATE = 0.5
     # エリート選択する数
@@ -165,15 +165,32 @@ class TSP():
             selected.append(winner)
         return selected
         
-    # 2点を入れ替える
-    # 突然変異に使いたい
-    def swapTwo(self, path):
+    # 任意の2点を入れ替える突然変異
+    def swapTwoMut(self, path):
         # 2つの添え字をランダムに選ぶ
         a, b = rd.sample(range(LENGTH), 2)
         tmp = path[a]
         path[a] = path[b]
         path[b] = tmp
     
+    # ずらす突然変異
+    # 隣どうしの交換ならswapと変わらない
+    def shiftMut(self, path):
+        # 2点選択
+        a, b = self.getTwoCutPoint()
+        print(a, b)
+        # ループのために b を大きくする
+        if b < a:
+            b += LENGTH
+        # 移動させる点
+        tmp = path[a]
+        for i in range(a + 1, b + 1):
+            ind = i % LENGTH
+            # 左にずらす
+            # -1が末尾を示す性質を利用
+            path[ind - 1] = path[ind]
+        path[b] = tmp
+
     # 世代を進める
     def advGene(self):
         # 空リストスタート
@@ -193,9 +210,9 @@ class TSP():
                 child1, child2 = self.partMapCrossover(mother, father)
             # 一定確率で2点を入れ替え
             if (rd.random() < self.MTN_RATE):
-                self.swapTwo(child1)
+                self.swapTwoMut(child1)
             if (rd.random() < self.MTN_RATE):
-                self.swapTwo(child2)
+                self.swapTwoMut(child2)
             # リストに追加
             next_gene.append(child1)
             next_gene.append(child2)
@@ -337,8 +354,11 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    tsp.advGeneLoop(LOOP)
-    tsp.viewBestPath()
+    #tsp.advGeneLoop(LOOP)
+    #tsp.viewBestPath()
+    path = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    tsp.shiftMut(path)
+    print(path)
 
 if __name__ == "__main__":
     main()
