@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-rd.seed(123)
+#rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
 # 4以上
-LENGTH = 10
+LENGTH = 20
 
 # Traveling Salesman Problem
 class TSP():
