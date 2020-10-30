@@ -14,14 +14,14 @@ np.random.seed(123)
 # つまり拠点の数
 # 4以上
 LENGTH = 100
-LOOP = 300
+LOOP = 1000
 
 # Traveling Salesman Problem
 class TSP():
     # 世代ごとの個体数
     POPULATION = 50
     # トーナメントサイズ
-    TOURN_SIZE = 5
+    TOURN_SIZE = 1
     # 突然変異率
     MTN_RATE = 0.5
     # エリート選択する数
