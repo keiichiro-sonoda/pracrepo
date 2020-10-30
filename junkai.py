@@ -199,12 +199,15 @@ class TSP():
         json.dump(s_list, f)
         f.close()
     
-    def makeCircle(self):
-        t = np.arange(LENGTH) / LENGTH * 2 * np.pi
+    # 引数にサンプル数を与える(LENGTHと同じ意味)
+    # the number of samples
+    def makeCircle(self, nos):
+        t = np.arange(nos) / nos * 2 * np.pi
         x = np.cos(t)
         y = np.sin(t)
-        print(t)
-        plt.plot(x, y)
+        s_fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\circle_num{:03d}.json".format(nos)
+        print(s_fname)
+        plt.scatter(x, y)
         plt.show()
 
 def main():
@@ -221,7 +224,7 @@ def main():
     # 尤もらしい解を得る
     #plausible = tsp.advGeneLoop(500)
     #tsp.viewPath(plausible)
-    tsp.makeCircle()
+    tsp.makeCircle(27)
 
 if __name__ == "__main__":
     main()
