@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-rd.seed(124)
+#rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
@@ -63,6 +63,7 @@ class TSP():
     # 部分写像交叉
     # PMX: Partially-mapped crossover
     def partMapCrossover(self, p1, p2):
+        print(p1, p2)
         # リストを初期化
         c1 = [-1] * LENGTH
         c2 = c1.copy()
@@ -73,8 +74,10 @@ class TSP():
             c1[cut1:cut2] = p1[cut1:cut2]
             c2[cut1:cut2] = p2[cut1:cut2]
         else:
-            c1[cut1:cut2:-1] = p1[cut1:cut2:-1]
-            c2[cut1:cut2:-1] = p2[cut1:cut2:-1]
+            c1[:cut2] = p1[:cut2]
+            c2[:cut2] = p2[:cut2]
+            c1[cut1:] = p1[cut1:]
+            c2[cut1:] = p2[cut1:]
         print(c1, c2)
     
     # 2つの切断点を返す関数
