@@ -13,7 +13,7 @@ np.random.seed(123)
 # 遺伝子長
 # つまり拠点の数
 # 4以上
-LENGTH = 10
+LENGTH = 100
 
 # Traveling Salesman Problem
 class TSP():
@@ -159,11 +159,17 @@ class TSP():
         for i in range(self.POPULATION):
             m_index = self.tournament()
             f_index = self.tournament()
-            mother = self.generation[m_index]
-            father = self.generation[f_index]
-            # 親が重複しても構わない
-            # 子は片方だけ使う
-            child, scrap = self.cyclicCrossover(mother, father)
+            # 親が一致したら交叉はしない
+            if m_index == f_index:
+                child = self.generation[m_index]
+            else:
+                mother = self.generation[m_index]
+                father = self.generation[f_index]
+                # 親が重複しても構わない
+                # 子は片方だけ使う
+                #child, scrap = self.cyclicCrossover(mother, father)
+                # 部分写像交叉
+                child, scrap = self.partMapCrossover(mother, father)
             # 一定確率で2点を入れ替え
             if (rd.random() < self.MTN_RATE):
                 self.swapTwo(child)
@@ -304,10 +310,8 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    p1 = tsp.makeRandomPath()
-    p2 = tsp.makeRandomPath()
-    c1, c2 = tsp.partMapCrossover(p1, p2)
-    print(c1, c2)
+    path = tsp.advGeneLoop(100)
+    tsp.viewPath(path)
 
 if __name__ == "__main__":
     main()
