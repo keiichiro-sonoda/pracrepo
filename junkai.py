@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-rd.seed(123)
+#rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
@@ -189,7 +189,7 @@ class TSP():
             # 左にずらす
             # -1が末尾を示す性質を利用
             path[ind - 1] = path[ind]
-        path[b] = tmp
+        path[b % LENGTH] = tmp
 
     # 世代を進める
     def advGene(self):
