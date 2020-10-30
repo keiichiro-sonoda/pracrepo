@@ -20,9 +20,11 @@ class TSP():
     # 世代ごとの個体数
     POPULATION = 50
     # トーナメントサイズ
-    TOURN_SIZE = 5
+    TOURN_SIZE = 3
     # 突然変異率
-    MTN_RATE = 0.6
+    MTN_RATE = 0.3
+    # エリート選択する数
+    ELITE_NUM = 6
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -32,6 +34,8 @@ class TSP():
         self.makeDistTable()
         # 最初の世代を作る
         self.makeFirstGene()
+        # エリートを除いた子供の数を計算しておく
+        self.CHILD_NUM = self.POPULATION - self.ELITE_NUM
 
     # 循環交叉
     # 親を2つ与える
@@ -143,7 +147,23 @@ class TSP():
     def tournament(self):
         # 順位からランダムに一定数選択し, 最も順位が高いものを選ぶ
         return min(rd.sample(range(self.POPULATION), self.TOURN_SIZE))
-
+    
+    # 複数要素をトーナメント選択(非独立)
+    # トーナメントサイズは維持
+    # トーナメントサイズ + 選択数が個体数を超えないように注意
+    def tournamentMult(self, num):
+        selected = []
+        ranks = [i for i in range(self.POPULATION)]
+        # 選択数だけくり返し
+        for i in range(num):
+            # 各抽選
+            winner = min(rd.sample(ranks, self.TOURN_SIZE))
+            # 選ばれたランクは除去
+            ranks.remove(winner)
+            # 返り値のリストに追加
+            selected.append(winner)
+        return selected
+        
     # 2点を入れ替える
     # 突然変異に使いたい
     def swapTwo(self, path):
@@ -155,30 +175,26 @@ class TSP():
     
     # 世代を進める
     def advGene(self):
-        # 後に置き換える一時変数
+        # 空リストスタート
         next_gene = []
-        # 人数分くり返し
-        for i in range(self.POPULATION):
-            m_index = self.tournament()
-            f_index = self.tournament()
-            # 親が一致したら交叉はしない
-            if m_index == f_index:
-                child = self.generation[m_index]
-            else:
-                mother = self.generation[m_index]
-                father = self.generation[f_index]
-                # 親が重複しても構わない
-                # 子は片方だけ使う
-                #child, scrap = self.cyclicCrossover(mother, father)
-                # 部分写像交叉
-                child, scrap = self.partMapCrossover(mother, father)
+        # 上限に達するまで交叉
+        while len(next_gene) < self.CHILD_NUM:
+            # 親を重複無しで選択
+            m_index, f_index = self.tournamentMult(2)
+            mother = self.generation[m_index]
+            father = self.generation[f_index]
+            # 親が重複しても構わない
+            # 子は片方だけ使う
+            child, scrap = self.cyclicCrossover(mother, father)
+            # 部分写像交叉
+            #child, scrap = self.partMapCrossover(mother, father)
             # 一定確率で2点を入れ替え
             if (rd.random() < self.MTN_RATE):
                 self.swapTwo(child)
             # リストに追加
             next_gene.append(child)
-        # 世代交代
-        self.generation = next_gene
+        # 世代交代 (先頭のエリート数分は残す)
+        self.generation[self.ELITE_NUM:] = next_gene
 
     # 一定数世代を進める
     def advGeneLoop(self, loop):
@@ -312,7 +328,7 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    tsp.advGeneLoop(1000)
+    tsp.advGeneLoop(300)
     tsp.viewBestPath()
 
 if __name__ == "__main__":
