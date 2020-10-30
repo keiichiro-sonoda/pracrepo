@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-rd.seed(125)
+rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
@@ -63,24 +63,20 @@ class TSP():
     # 部分写像交叉
     # PMX: Partially-mapped crossover
     def partMapCrossover(self, p1, p2):
+        cut1, cut2 = self.getTwoCutPoint
+    
+    # 切断点を返す関数
+    def getTwoCutPoint(self):
+        # 全ての選択肢
+        points = [i for i in range(LENGTH)]
         # 切断点1
-        cut1 = rd.randint(0, LENGTH - 1)
-        # 切断点2 (切断点1からは2以上間隔を空ける)
-        # 末尾の処理は別途行う
-        if cut1 == 0:
-            cut2 = rd.randint(2, LENGTH - 2)
-        elif cut1 == LENGTH - 1:
-            cut2 = rd.randint(1, LENGTH - 3)
-        else:
-            cut2 = rd.randint(0, LENGTH - 4)
-            if cut2 >= cut1 - 1:
-                cut2 += 3
-        d1 = abs(cut1 - cut2)
-        d2 = LENGTH - abs(cut1 - cut2)
-        if d1 <= 1 or d2 <= 1:
-            print("だめ")
-        elif d1 == 2 or d2 == 2:
-            print(cut1, cut2)
+        cut1 = rd.choice(points)
+        # 選択肢から切断点とその隣を除去
+        for i in range(cut1 - 1, cut1 + 2):
+            points.remove(i % LENGTH)
+        # 切断点2
+        cut2 = rd.choice(points)
+        return cut1, cut2
     
     # トーナメント選択
     def tournament(self):
@@ -252,7 +248,13 @@ def main():
     p1 = tsp.makeRandomPath()
     p2 = tsp.makeRandomPath()
     for i in range(10000):
-        tsp.partMapCrossover(p1, p2)
+        cut1, cut2 = tsp.getTwoCutPoint()
+        d1 = abs(cut1 - cut2)
+        d2 = LENGTH - d1
+        if d1 <= 1 or d2 <= 1:
+            print("だめ")
+        elif d1 == 2 or d2 == 2:
+            print(cut1, cut2)
 
 if __name__ == "__main__":
     main()
