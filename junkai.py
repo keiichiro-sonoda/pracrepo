@@ -14,18 +14,18 @@ np.random.seed(123)
 # つまり拠点の数
 # 4以上
 LENGTH = 100
-LOOP = 1000
+LOOP = 300
 
 # Traveling Salesman Problem
 class TSP():
     # 世代ごとの個体数
     POPULATION = 50
     # トーナメントサイズ
-    TOURN_SIZE = 3
+    TOURN_SIZE = 5
     # 突然変異率
     MTN_RATE = 0.5
     # エリート選択する数
-    ELITE_NUM = 4
+    ELITE_NUM = 6
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -154,7 +154,7 @@ class TSP():
     # トーナメントサイズ + 選択数が個体数を超えないように注意
     def tournamentMult(self, num):
         selected = []
-        ranks = [i for i in range(self.POPULATION)]
+        ranks = list(range(self.POPULATION))
         # 選択数だけくり返し
         for i in range(num):
             # 各抽選
@@ -184,6 +184,7 @@ class TSP():
             p_indices = self.tournamentMult(2)
             mother = self.generation[p_indices[0]]
             father = self.generation[p_indices[1]]
+            # 交叉方法も等確率で選ぶ
             if rd.random() < 0.5:
                 # 循環交叉
                 child1, child2 = self.cyclicCrossover(mother, father)
