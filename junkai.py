@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-#rd.seed(123)
+rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
 # 4以上
-LENGTH = 20
+LENGTH = 10
 
 # Traveling Salesman Problem
 class TSP():
@@ -63,7 +63,6 @@ class TSP():
     # 部分写像交叉
     # PMX: Partially-mapped crossover
     def partMapCrossover(self, p1, p2):
-        print(p1, p2)
         # リストを初期化
         c1 = [-1] * LENGTH
         c2 = c1.copy()
@@ -75,7 +74,6 @@ class TSP():
         else:
             stop1 = cut1
             stop2 = cut2 + LENGTH
-        print(cut1, cut2, stop1, stop2)
         # 入れ替え辞書
         swap_dict1 = {}
         # 切り取った部分を入れ替え
@@ -88,11 +86,8 @@ class TSP():
         self.remakeSwapDict(swap_dict1)
         # キーと要素の入れ替え
         swap_dict2 = self.inverseDict(swap_dict1)
-        print(swap_dict1)
-        print(swap_dict2)
-        print(c1, c2)
         # 衝突しない部分はそのまま
-        # 衝突する場合は辞書を見て交換
+        # 衝突する場合は辞書を見て入れ替え
         for i in range(cut2, stop1):
             ind = i % LENGTH
             if p1[ind] in c1:
@@ -103,7 +98,7 @@ class TSP():
                 c2[ind] = swap_dict2[p2[ind]]
             else:
                 c2[ind] = p2[ind]
-        print(c1, c2)
+        return c1, c2
     
     # 2つの切断点を返す関数
     # 必ず切断点どうしは2以上離れるようにする
@@ -311,7 +306,8 @@ def main():
     tsp = TSP(arr)
     p1 = tsp.makeRandomPath()
     p2 = tsp.makeRandomPath()
-    tsp.partMapCrossover(p1, p2)
+    c1, c2 = tsp.partMapCrossover(p1, p2)
+    print(c1, c2)
 
 if __name__ == "__main__":
     main()
