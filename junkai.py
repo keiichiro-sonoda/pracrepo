@@ -202,13 +202,15 @@ class TSP():
     # 引数にサンプル数を与える(LENGTHと同じ意味)
     # the number of samples
     def makeCircle(self, nos):
+        # 媒介変数 t
         t = np.arange(nos) / nos * 2 * np.pi
         x = np.cos(t)
         y = np.sin(t)
         s_fname = "C:\\Users\\17T2088B\\GitHub\\pracrepo\\dat\\circle_num{:03d}.json".format(nos)
-        print(s_fname)
-        plt.scatter(x, y)
-        plt.show()
+        s_list = np.stack([x, y], 1).tolist()
+        f = open(s_fname, "w")
+        json.dump(s_list, f)
+        f.close()
 
 def main():
     # ファイル読み込み
@@ -224,7 +226,7 @@ def main():
     # 尤もらしい解を得る
     #plausible = tsp.advGeneLoop(500)
     #tsp.viewPath(plausible)
-    tsp.makeCircle(27)
+    tsp.makeCircle(LENGTH)
 
 if __name__ == "__main__":
     main()
