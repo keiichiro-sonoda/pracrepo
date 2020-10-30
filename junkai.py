@@ -59,6 +59,26 @@ class TSP():
             c2[i] = p1[i]
         return c1, c2
     
+    # 部分写像交叉
+    # PMX: Partially-mapped crossover
+    def partMapCrossover(self, p1, p2):
+        # 切断点1
+        cut1 = rd.randint(0, LENGTH - 1)
+        # 切断点2 (切断点1からは2以上間隔を空ける)
+        # 末尾の処理は別途行う
+        if cut1 == 0:
+            cut2 = rd.randint(2, LENGTH - 2)
+        elif cut1 == LENGTH - 1:
+            cut2 = rd.randint(1, LENGTH - 3)
+        else:
+            cut2 = rd.randint(0, LENGTH - 4)
+            if cut2 >= cut1 - 1:
+                cut2 += 3
+        if abs(cut1 - cut2) <= 1:
+            print("だめ")
+        elif abs(cut1 - cut2) == 2:
+            print(cut1, cut2)
+    
     # トーナメント選択
     def tournament(self):
         # 順位からランダムに一定数選択し, 最も順位が高いものを選ぶ
@@ -226,9 +246,10 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    # 尤もらしい解を得る
-    plausible = tsp.advGeneLoop(100)
-    tsp.viewPath(plausible)
+    p1 = tsp.makeRandomPath()
+    p2 = tsp.makeRandomPath()
+    for i in range(10000):
+        tsp.partMapCrossover(p1, p2)
 
 if __name__ == "__main__":
     main()
