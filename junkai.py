@@ -13,7 +13,7 @@ np.random.seed(123)
 # 遺伝子長
 # つまり拠点の数
 # 4以上
-LENGTH = 9
+LENGTH = 10
 
 # Traveling Salesman Problem
 class TSP():
@@ -69,7 +69,6 @@ class TSP():
         c2 = c1.copy()
         # 切断点を決定
         cut1, cut2 = self.getTwoCutPoint()
-        cut1, cut2 = 3, 7
         if cut1 <= cut2:
             stop1 = cut1 + LENGTH
             stop2 = cut2
@@ -87,24 +86,23 @@ class TSP():
             swap_dict1[p2[ind]] = p1[ind]
         # 辞書の作り直し
         self.remakeSwapDict(swap_dict1)
+        # キーと要素の入れ替え
         swap_dict2 = self.inverseDict(swap_dict1)
         print(swap_dict1)
         print(swap_dict2)
         print(c1, c2)
         # 衝突しない部分はそのまま
+        # 衝突する場合は辞書を見て交換
         for i in range(cut2, stop1):
             ind = i % LENGTH
-            if p1[ind] not in c1:
-                c1[ind] = p1[ind]
-            if p2[ind] not in c2:
-                c2[ind] = p2[ind]
-        print(c1, c2)
-        for i in range(cut2, stop1):
-            ind = i % LENGTH
-            if c1[ind] < 0:
+            if p1[ind] in c1:
                 c1[ind] = swap_dict1[p1[ind]]
-            if c2[ind] < 0:
+            else:
+                c1[ind] = p1[ind]
+            if p2[ind] in c2:
                 c2[ind] = swap_dict2[p2[ind]]
+            else:
+                c2[ind] = p2[ind]
         print(c1, c2)
     
     # 2つの切断点を返す関数
@@ -313,8 +311,6 @@ def main():
     tsp = TSP(arr)
     p1 = tsp.makeRandomPath()
     p2 = tsp.makeRandomPath()
-    p1 = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    p2 = [3, 4, 1, 0, 7, 6, 5, 8, 2]
     tsp.partMapCrossover(p1, p2)
 
 if __name__ == "__main__":
