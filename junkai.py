@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-rd.seed(123)
+#rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
@@ -79,6 +79,7 @@ class TSP():
         # 入れ替えリスト
         swap_list1 = []
         swap_list2 = []
+        # 切り取った部分を入れ替え
         for i in range(cut1, stop2):
             ind = i % LENGTH
             c2[ind] = p1[ind]
@@ -86,8 +87,14 @@ class TSP():
             swap_list1.append(p1[ind])
             swap_list2.append(p2[ind])
         print(c1, c2)
-        print(swap_list1)
-        print(swap_list2)
+        # 衝突しない部分はそのまま
+        for i in range(cut2, stop1):
+            ind = i % LENGTH
+            if p1[ind] not in c1:
+                c1[ind] = p1[ind]
+            if p2[ind] not in c2:
+                c2[ind] = p2[ind]
+        print(c1, c2)
     
     # 2つの切断点を返す関数
     # 必ず切断点どうしは2以上離れるようにする
