@@ -25,7 +25,7 @@ class TSP():
     # 突然変異率
     MTN_RATE = 0.5
     # エリート選択する数
-    ELITE_NUM = 5
+    ELITE_NUM = 4
 
     # 経路を求めるための座標を与える
     # numpy 配列を与える
@@ -184,10 +184,12 @@ class TSP():
             p_indices = self.tournamentMult(2)
             mother = self.generation[p_indices[0]]
             father = self.generation[p_indices[1]]
-            # 循環交叉
-            child1, child2 = self.cyclicCrossover(mother, father)
-            # 部分写像交叉
-            #child, scrap = self.partMapCrossover(mother, father)
+            if rd.random() < 0.5:
+                # 循環交叉
+                child1, child2 = self.cyclicCrossover(mother, father)
+            else:
+                # 部分写像交叉
+                child1, child2 = self.partMapCrossover(mother, father)
             # 一定確率で2点を入れ替え
             if (rd.random() < self.MTN_RATE):
                 self.swapTwo(child1)
