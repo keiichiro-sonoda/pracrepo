@@ -198,6 +198,14 @@ class TSP():
         f = open(s_fname, "w")
         json.dump(s_list, f)
         f.close()
+    
+    def makeCircle(self):
+        t = np.arange(LENGTH) / LENGTH * 2 * np.pi
+        x = np.cos(t)
+        y = np.sin(t)
+        print(t)
+        plt.plot(x, y)
+        plt.show()
 
 def main():
     # ファイル読み込み
@@ -211,8 +219,9 @@ def main():
     #print(arr)
     tsp = TSP(arr)
     # 尤もらしい解を得る
-    plausible = tsp.advGeneLoop(500)
-    tsp.viewPath(plausible)
+    #plausible = tsp.advGeneLoop(500)
+    #tsp.viewPath(plausible)
+    tsp.makeCircle()
 
 if __name__ == "__main__":
     main()
