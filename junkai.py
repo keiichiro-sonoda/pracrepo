@@ -7,11 +7,12 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-rd.seed(123)
+rd.seed(125)
 np.random.seed(123)
 
 # 遺伝子長
 # つまり拠点の数
+# 4以上
 LENGTH = 100
 
 # Traveling Salesman Problem
@@ -74,9 +75,11 @@ class TSP():
             cut2 = rd.randint(0, LENGTH - 4)
             if cut2 >= cut1 - 1:
                 cut2 += 3
-        if abs(cut1 - cut2) <= 1:
+        d1 = abs(cut1 - cut2)
+        d2 = LENGTH - abs(cut1 - cut2)
+        if d1 <= 1 or d2 <= 1:
             print("だめ")
-        elif abs(cut1 - cut2) == 2:
+        elif d1 == 2 or d2 == 2:
             print(cut1, cut2)
     
     # トーナメント選択
