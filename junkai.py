@@ -227,7 +227,7 @@ class TSP():
     # 適応度順に並び替える
     def sortByFitness(self):
         # (適応度, 経路) のリストを作成
-        pairs = [(self.fitness[i], p) for i, p in enumerate(self.generation)]
+        pairs = list(zip(self.fitness, self.generation))
         # 昇順ソート
         # 適応度が低い方が先頭に来るようにする
         pairs.sort()
@@ -333,7 +333,7 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    tsp.advGeneLoop(100)
+    tsp.advGeneLoop(10)
     tsp.viewBestPath()
 
 if __name__ == "__main__":
