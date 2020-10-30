@@ -30,6 +30,8 @@ class TSP():
         self.coordinates = coordinates
         # 距離テーブルを作る (numpy配列)
         self.makeDistTable()
+        # 最初の世代を作る
+        self.makeFirstGene()
 
     # 循環交叉
     # 親を2つ与える
@@ -179,10 +181,7 @@ class TSP():
         self.generation = next_gene
 
     # 一定数世代を進める
-    # 返り値は最終世代のトップ
     def advGeneLoop(self, loop):
-        # 初期の個体リスト作成
-        self.makeFirstGene()
         for i in range(loop):
             # 適応度評価
             self.evalFitness()
@@ -198,8 +197,6 @@ class TSP():
         self.sortByFitness()
         # 最終世代で最も短い経路距離
         print(self.fitness[0])
-        # 最終世代で最も短い経路を返す
-        return self.generation[0]
     
     # 適応度評価(ただの距離計算)
     # 低いほど良いのであまり適応度と呼びたくない
@@ -270,6 +267,11 @@ class TSP():
             ax.plot([x[path[i - 1]], x[path[i]]], [y[path[i - 1]], y[path[i]]], "k-")
         plt.show()
     
+    # 現世代で最も短い経路を表示
+    # 既にソート済みであること前提
+    def viewBestPath(self):
+        self.viewPath(self.generation[0])
+    
     # 経路情報を記録したファイルを作りたい
     # json形式
     def makeSampleFile(self):
@@ -310,8 +312,8 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    path = tsp.advGeneLoop(100)
-    tsp.viewPath(path)
+    tsp.advGeneLoop(1000)
+    tsp.viewBestPath()
 
 if __name__ == "__main__":
     main()
