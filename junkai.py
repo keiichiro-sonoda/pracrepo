@@ -72,11 +72,15 @@ class TSP():
         if cut2 < cut1:
             cut2 += LENGTH
         print(cut1, cut2)
+        # 入れ替えリスト
+        swap_list = []
         for i in range(cut1, cut2):
             ind = i % LENGTH
-            c1[ind] = p1[ind]
-            c2[ind] = p2[ind]
+            c2[ind] = p1[ind]
+            c1[ind] = p2[ind]
+            swap_list.append((p1[ind], p2[ind]))
         print(c1, c2)
+        print(swap_list)
     
     # 2つの切断点を返す関数
     # 必ず切断点どうしは2以上離れるようにする
