@@ -13,7 +13,7 @@ np.random.seed(123)
 # 遺伝子長
 # つまり拠点の数
 # 4以上
-LENGTH = 10
+LENGTH = 100
 LOOP = 1000
 
 # Traveling Salesman Problem
@@ -178,7 +178,6 @@ class TSP():
     def shiftMut(self, path):
         # 2点選択
         a, b = self.getTwoCutPoint()
-        print(a, b)
         # ループのために b を大きくする
         if b < a:
             b += LENGTH
@@ -190,6 +189,14 @@ class TSP():
             # -1が末尾を示す性質を利用
             path[ind - 1] = path[ind]
         path[b % LENGTH] = tmp
+    
+    # 突然変異
+    # 幾つか手法があるため, 確率的に選択する
+    def mutation(self, path):
+        if False:
+            self.swapTwoMut(path)
+        else:
+            self.shiftMut(path)
 
     # 世代を進める
     def advGene(self):
@@ -208,11 +215,11 @@ class TSP():
             else:
                 # 部分写像交叉
                 child1, child2 = self.partMapCrossover(mother, father)
-            # 一定確率で2点を入れ替え
+            # 一定確率で突然変異
             if (rd.random() < self.MTN_RATE):
-                self.swapTwoMut(child1)
+                self.mutation(child1)
             if (rd.random() < self.MTN_RATE):
-                self.swapTwoMut(child2)
+                self.mutation(child2)
             # リストに追加
             next_gene.append(child1)
             next_gene.append(child2)
@@ -354,11 +361,8 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    #tsp.advGeneLoop(LOOP)
-    #tsp.viewBestPath()
-    path = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    tsp.shiftMut(path)
-    print(path)
+    tsp.advGeneLoop(LOOP)
+    tsp.viewBestPath()
 
 if __name__ == "__main__":
     main()
