@@ -363,6 +363,9 @@ def main():
     tsp = TSP(arr)
     tsp.advGeneLoop(LOOP)
     tsp.viewBestPath()
+    while input("もう一回? y\n") == "y":
+        tsp.advGeneLoop(LOOP)
+        tsp.viewBestPath()
 
 if __name__ == "__main__":
     main()
