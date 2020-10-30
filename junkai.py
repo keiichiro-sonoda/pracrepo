@@ -22,7 +22,7 @@ class TSP():
     # トーナメントサイズ
     TOURN_SIZE = 3
     # 突然変異率
-    MTN_RATE = 0.3
+    MTN_RATE = 0.5
     # エリート選択する数
     ELITE_NUM = 6
 
