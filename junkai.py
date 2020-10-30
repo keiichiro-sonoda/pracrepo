@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import json
 
 # シード設定
-#rd.seed(123)
+rd.seed(123)
 np.random.seed(123)
 
 # 遺伝子長
@@ -76,16 +76,21 @@ class TSP():
             stop1 = cut1
             stop2 = cut2 + LENGTH
         print(cut1, cut2, stop1, stop2)
-        # 入れ替えリスト
-        swap_list1 = []
-        swap_list2 = []
+        # 入れ替え辞書
+        swap_dict1 = {}
+        swap_dict2= {}
         # 切り取った部分を入れ替え
         for i in range(cut1, stop2):
             ind = i % LENGTH
             c2[ind] = p1[ind]
             c1[ind] = p2[ind]
-            swap_list1.append(p1[ind])
-            swap_list2.append(p2[ind])
+            swap_dict1[p2[ind]] = p1[ind]
+            swap_dict2[p1[ind]] = p2[ind]
+        # 辞書の作り直し
+        self.remakeSwapDict(swap_dict1)
+        self.remakeSwapDict(swap_dict2)
+        print(swap_dict1)
+        print(swap_dict2)
         print(c1, c2)
         # 衝突しない部分はそのまま
         for i in range(cut2, stop1):
@@ -109,6 +114,22 @@ class TSP():
         # 切断点2
         cut2 = rd.choice(points)
         return cut1, cut2
+    
+    # 入れ替え用辞書を作り直す
+    # 入れ替えた数値が更に入れ替えられていたら, その値に更新する
+    def remakeSwapDict(self, dic):
+        # 消去するキー
+        rem_val = []
+        for k, v in dic.items():
+            # 値が辞書のキーになっている間くり返し
+            while v in dic:
+                rem_val.append(v)
+                v = dic[v]
+            # 辞書になければその値のままか, 更新
+            dic[k] = v
+        # 消去
+        for v in rem_val:
+            dic.pop(v)
     
     # トーナメント選択
     def tournament(self):
