@@ -14,6 +14,7 @@ np.random.seed(123)
 # つまり拠点の数
 # 4以上
 LENGTH = 100
+LOOP = 1000
 
 # Traveling Salesman Problem
 class TSP():
@@ -333,7 +334,7 @@ def main():
     #arr = np.random.rand(LENGTH, 2)
     #print(arr)
     tsp = TSP(arr)
-    tsp.advGeneLoop(10)
+    tsp.advGeneLoop(LOOP)
     tsp.viewBestPath()
 
 if __name__ == "__main__":
