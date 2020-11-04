@@ -18,7 +18,9 @@ int main(void) {
     for (int i = 0; i < SPRM_LEN; i++)
         samp2.weight[i] = i * 0.01;
     singlePointCrossover(SAMP_PRM, samp2, children, mut_rate);
-    printFloatArray(children[0].weight, SPRM_LEN);
-    printFloatArray(children[1].weight, SPRM_LEN);
+    showSprmOneLine(SAMP_PRM);
+    showSprmOneLine(samp2);
+    showSprmOneLine(children[0]);
+    showSprmOneLine(children[1]);
     return 0;
 }

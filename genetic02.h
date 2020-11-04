@@ -46,6 +46,8 @@ extern Sprm SAMP_PRM;
 
 // print a simple parameter
 void showSprm(Sprm pr);
+// print a simple parameter on one line
+void showSprmOneLine(Sprm pr);
 // get the smallest value in an array
 int getMinArray(const int *A, int n);
 // normalize an address

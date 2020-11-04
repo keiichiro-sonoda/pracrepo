@@ -25,6 +25,11 @@ void showSprm(Sprm pr) {
     }
 }
 
+// print a simple parameter on one line
+void showSprmOneLine(Sprm pr) {
+    printFloatArray(pr.weight, SPRM_LEN);
+}
+
 // get the smallest value in an array
 int getMinArray(const int *A, int n) {
     int min = 0x7fffffff;
