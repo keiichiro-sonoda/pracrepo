@@ -601,6 +601,13 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
     return 0;
 }
 
+// make next generation file
+// write all individuals to the file
+int nGeneSprmSaveAll(const char *format, int gene_num) {
+    printf("debugging\n");
+    return 0;
+}
+
 // give a function to loop
 void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int loop) {
     time_t t0, t1;
