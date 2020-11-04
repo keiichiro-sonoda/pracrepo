@@ -46,8 +46,10 @@ extern Sprm SAMP_PRM;
 
 // print a simple parameter
 void showSprm(Sprm pr);
+
 // print a simple parameter on one line
 void showSprmOneLine(Sprm pr);
+
 // get the smallest value in an array
 int getMinArray(const int *A, int n);
 // normalize an address
@@ -64,7 +66,8 @@ float fcrossMFlex(float a, float b, float rate);
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
 
 // single point crossover
-// give two parents
+// give 2 parameters, children's array, and mutation rate
+// the number of children is 2
 void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_rate);
 
 // convert from an address to the weight index?

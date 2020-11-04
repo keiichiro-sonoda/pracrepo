@@ -108,6 +108,16 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     return child;
 }
 
+// mutate with a given probability
+// otherwise copy
+float copyOrMutation(float x, float mut_rate) {
+    // equal is not necessary
+    if ((float)rand() / RAND_MAX <= mut_rate)
+        // from -0.5 to 0.5
+        return (float)rand() / RAND_MAX - 0.5;
+    return x;
+}
+
 // single point crossover
 // give 2 parameters, children's array, and mutation rate
 // the number of children is 2
@@ -118,13 +128,13 @@ void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_ra
     printDecimal(p);
     // from 0 to p
     for (int i = 0; i <= p; i++) {
-        children[0].weight[i] = mother.weight[i];
-        children[1].weight[i] = father.weight[i];
+        children[0].weight[i] = copyOrMutation(mother.weight[i], mut_rate);
+        children[1].weight[i] = copyOrMutation(father.weight[i], mut_rate);
     }
     // from p + 1 to 9
     for (int i = p + 1; i < SPRM_LEN; i++) {
-        children[0].weight[i] = father.weight[i];
-        children[1].weight[i] = mother.weight[i];
+        children[0].weight[i] = copyOrMutation(father.weight[i], mut_rate);
+        children[1].weight[i] = copyOrMutation(mother.weight[i], mut_rate);
     }
 }
 
