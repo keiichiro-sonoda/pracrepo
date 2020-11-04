@@ -60,6 +60,11 @@ Sprm makeChildAverageSprm(Sprm mother, Sprm father);
 float fcrossMFlex(float a, float b, float rate);
 // cross parameters?
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
+
+// single point crossover
+// give two parents
+void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_rate);
+
 // convert from an address to the weight index?
 void setIndexes(void);
 // caluculate point

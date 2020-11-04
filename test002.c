@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "sort01.h"
+#include "genetic02.h"
 
 /* pf の引数は，「戻り値void，int1個の引数をとる関数」へのポインタと，「整数」 */
 void call_func(int (*pf)(int), int x) {
@@ -41,6 +42,7 @@ int main(void) {
     call_func(func_A, n);   /* 関数名 func_A を引数として呼び出し． */
     call_func(func_B, n);   /* 関数名 func_B を引数として呼び出し． */
 
-    sortTest();
+    makeSprmSample();
+    showSprm(SAMP_PRM);
     return 0;
 }

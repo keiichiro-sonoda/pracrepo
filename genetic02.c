@@ -104,9 +104,9 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
 }
 
 // single point crossover
-// give two parents, 
+// give two parents
 void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_rate) {
-    ;
+    printf("debugging\n");
 }
 
 // convert from an address to the weight index?
