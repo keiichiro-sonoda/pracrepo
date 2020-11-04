@@ -621,10 +621,7 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
 // write all individuals to the file
 int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     printf("debugging\n");
-    int i, j, count;
     char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
-    // current family
-    Sprm current[POPULATION];
     FILE *fp;
     // the file name to be read
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
@@ -638,6 +635,8 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
         printf("\a%s can't be opened\n", fnamer);
         return -1;
     }
+    // current family
+    Sprm current[POPULATION];
     // opened!
     fread(current, sizeof current, 1, fp);
     fclose(fp);
@@ -646,6 +645,29 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     if (safety && warnOverwriting(fnamew) < 0) {
         return -1;
     }
+    // a function that determine the next board
+    Board (*decNxt)(Board*, int, const Sprm*);
+    decNxt = getBoardForBlackSimpleRoulette;
+    // the array to store points
+    int fitness[POPULATION];
+    // individual numbers
+    int numbers[POPULATION];
+    // indices of parents
+    int lucky[2];
+    // numbers = {0, 1, 2, ...}
+    indices(numbers, POPULATION);
+    // game (the next board is decided by roulette)
+    leagueMatchSprmFlex(decNxt, current, fitness);
+    // sort (descending order)
+    quicksortDD(fitness, numbers, 0, POPULATION);
+    // show the part of fitness
+    printDecimalArrayPart(fitness, POPULATION);
+    // choose parents roulette
+    // don't allow duplication
+    rouletteIntMltDep(fitness, POPULATION, lucky, 2);
+    // view result
+    printf("selected ranking:\n");
+    printDecimalArray(lucky, 2);
     return 0;
 }
 

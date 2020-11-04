@@ -10,6 +10,7 @@ int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     setIndexes();
+    initBoard();
     makeSprmSample();
     Sprm children[2];
     Sprm samp2;
@@ -17,7 +18,7 @@ int main(void) {
     for (int i = 0; i < SPRM_LEN; i++)
         samp2.weight[i] = 0.111f;
     //makeFirstGeneFileFlex(FNF_TEST);
-    checkSprmFile(FNF_TEST, 0);
+    //checkSprmFile(FNF_TEST, 0);
     printDecimal(nGeneSprmSaveAll(FNF_TEST, 0, 1));
     return 0;
 }
