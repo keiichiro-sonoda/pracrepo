@@ -105,11 +105,21 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
 
 // single point crossover
 // give 2 parameters, children's array, and mutation rate
+// the number of children is 2
 void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_rate) {
     printf("debugging\n");
     // a random number from 0 to 8
     int p = rand() % SPRM_LEN - 1;
-    printDecimal(p);
+    // from 0 to p
+    for (int i = 0; i <= p; i++) {
+        children[0].weight[i] = mother.weight[i];
+        children[1].weight[i] = father.weight[i];
+    }
+    // from p + 1 to 9
+    for (int i = p + 1; i < SPRM_LEN; i++) {
+        children[0].weight[i] = father.weight[i];
+        children[1].weight[i] = mother.weight[i];
+    }
 }
 
 // convert from an address to the weight index?
