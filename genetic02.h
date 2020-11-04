@@ -65,6 +65,10 @@ float fcrossMFlex(float a, float b, float rate);
 // cross parameters?
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
 
+// mutate with a given probability
+// otherwise copy
+float copyOrMutation(float x, float mut_rate);
+
 // single point crossover
 // give 2 parameters, children's array, and mutation rate
 // the number of children is 2

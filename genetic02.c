@@ -112,9 +112,11 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
 // otherwise copy
 float copyOrMutation(float x, float mut_rate) {
     // equal is not necessary
-    if ((float)rand() / RAND_MAX <= mut_rate)
+    if ((float)rand() / RAND_MAX <= mut_rate) {
         // from -0.5 to 0.5
+        printf("mutanted!\n");
         return (float)rand() / RAND_MAX - 0.5;
+    }
     return x;
 }
 
@@ -124,7 +126,7 @@ float copyOrMutation(float x, float mut_rate) {
 void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_rate) {
     printf("debugging\n");
     // a random number from 0 to 8
-    int p = rand() % SPRM_LEN - 1;
+    int p = rand() % (SPRM_LEN - 1);
     printDecimal(p);
     // from 0 to p
     for (int i = 0; i <= p; i++) {

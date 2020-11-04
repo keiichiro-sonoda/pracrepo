@@ -7,7 +7,7 @@
 #include "genetic02.h"
 
 int main(void) {
-    srand(123U);
+    srand(129U);
     //srand((unsigned)time(NULL));
     setIndexes();
     makeSprmSample();
@@ -16,7 +16,7 @@ int main(void) {
     Sprm samp2;
     int mut_rate = 0.05;
     for (int i = 0; i < SPRM_LEN; i++)
-        samp2.weight[i] = 0.111;
+        samp2.weight[i] = 0.111f;
     singlePointCrossover(SAMP_PRM, samp2, children, mut_rate);
     showSprmOneLine(SAMP_PRM);
     showSprmOneLine(samp2);
