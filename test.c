@@ -8,7 +8,7 @@
 
 int main(void) {
     srand(127U);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     setIndexes();
     makeSprmSample();
     showSprmOneLine(SAMP_PRM);

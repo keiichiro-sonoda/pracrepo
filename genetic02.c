@@ -360,7 +360,7 @@ void checkSprmFile(const char *format, int gene_num) {
         return;
     }
     // opened!
-    Sprm pa[SURVIVE_NUM];
+    Sprm pa[POPULATION];
     fread(&pa, sizeof pa, 1, fp);
     fclose(fp);
     // check the all parameters
