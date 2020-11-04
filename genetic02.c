@@ -114,7 +114,7 @@ float copyOrMutation(float x, float mut_rate) {
     // equal is not necessary
     if ((float)rand() / RAND_MAX <= mut_rate) {
         // from -0.5 to 0.5
-        printf("mutanted!\n");
+        printf("mutated!\n");
         return (float)rand() / RAND_MAX - 0.5;
     }
     return x;
