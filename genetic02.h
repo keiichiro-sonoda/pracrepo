@@ -5,7 +5,7 @@
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
-#define GENE_NUM 50
+#define POPULATION 50
 
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02

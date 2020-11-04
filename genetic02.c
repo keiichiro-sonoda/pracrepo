@@ -338,8 +338,8 @@ int makeFirstGeneFileFlex(const char *format) {
         return -1;
     }
     // can write
-    Sprm pra[GENE_NUM];
-    for (int i = 0; i < GENE_NUM; i++)
+    Sprm pra[POPULATION];
+    for (int i = 0; i < POPULATION; i++)
         randSprm(pra + i);
     printSize(pra);
     fwrite(pra, sizeof pra, 1, fp);
@@ -375,12 +375,12 @@ void checkSprmFile(const char *format, int gene_num) {
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {
     int i, j, k;
     // all zero
-    zeros(result, GENE_NUM);
+    zeros(result, POPULATION);
     // black index
-    for (i = 0; i < GENE_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         //printf("\ai = %d / %d", i, FAMILY_NUM);
         // white index
-        for (j = 0; j < GENE_NUM; j++) {
+        for (j = 0; j < POPULATION; j++) {
             if (i == j) continue;
             switch(oneToOneNormalSprm(generation + i, generation + j)) {
                 // black won
@@ -405,12 +405,12 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
 // give a function pointer to decide the next board
 void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result) {
     // set all elements to zero
-    zeros(result, GENE_NUM);
+    zeros(result, POPULATION);
     // black index
-    for (int i = 0; i < GENE_NUM; i++) {
+    for (int i = 0; i < POPULATION; i++) {
         //printf("\ai = %d / %d", i, FAMILY_NUM);
         // white index
-        for (int j = 0; j < GENE_NUM; j++) {
+        for (int j = 0; j < POPULATION; j++) {
             if (i == j) continue;
             switch(oneToOneNormalSprmFlex(decNxt, generation + i, generation + j)) {
                 // black won
@@ -476,23 +476,23 @@ void checkSprmStatistics(const Sprm *pra, int pra_len) {
 // and show match results
 void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     int i, j;
-    int result[GENE_NUM];
-    int number[GENE_NUM];
+    int result[POPULATION];
+    int number[POPULATION];
     float dist;
     // number = {0, 1, 2, ..., 99}
-    for (i = 0; i < GENE_NUM; i++)
+    for (i = 0; i < POPULATION; i++)
         number[i] = i;
     // game!
     leagueMatchSimpleSprm(generation, result);
     // sort (descending order)
-    quicksortDD(result, number, 0, GENE_NUM - 1);
+    quicksortDD(result, number, 0, POPULATION - 1);
     // show ranking
     printf("rank change\n");
-    for (i = 0; i < GENE_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         // rank 11 .. 99 aren't displayed
-        if (10 <= i && i < GENE_NUM - 1) continue;
+        if (10 <= i && i < POPULATION - 1) continue;
         // worst!
-        if (i == GENE_NUM - 1)
+        if (i == POPULATION - 1)
             printf("        ...\n");
         // winner's index (or worst index)
         j = number[i];
@@ -554,7 +554,7 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
         }
     }
     // store a generation
-    Sprm generation[GENE_NUM];
+    Sprm generation[POPULATION];
 
     // 10 parents copy (elite selection)
     for (count = 0; count < SURVIVE_NUM; count++)
