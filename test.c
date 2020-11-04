@@ -7,7 +7,7 @@
 #include "genetic02.h"
 
 int main(void) {
-    srand(127U);
+    srand(123U);
     //srand((unsigned)time(NULL));
     setIndexes();
     makeSprmSample();
