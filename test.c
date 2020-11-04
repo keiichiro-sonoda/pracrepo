@@ -16,6 +16,7 @@ int main(void) {
     float mut_rate = 0.05f;
     for (int i = 0; i < SPRM_LEN; i++)
         samp2.weight[i] = 0.111f;
+    makeFirstGeneFileFlex(FNF_TEST);
     checkSprmFile(FNF_TEST, 0);
     nGeneSprmSaveAll(FNF_TEST, 0);
     return 0;
