@@ -19,7 +19,6 @@ int main(void) {
         samp2.weight[i] = 0.111f;
     //makeFirstGeneFileFlex(FNF_TEST);
     //checkSprmFile(FNF_TEST, 0);
-    nGeneSprmSaveAll(FNF_TEST, 0, 1);
-    checkSprmFile(FNF_TEST, 1);
+    nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_TEST, 1, 0, 3);
     return 0;
 }

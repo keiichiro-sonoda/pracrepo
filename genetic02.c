@@ -708,6 +708,23 @@ void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int 
     }
 }
 
+// give a function to loop and file name format
+void nGeneSSALoopFlex(int (*nGeneSSA)(const char*, int, int), const char *format, int safety, int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        // set the generation number as the seed
+        srand((unsigned)i);
+        if (nGeneSSA(format, i, safety) < 0)
+            // error
+            return;
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
 // give a function to loop
 void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop) {
     time_t t0, t1;
