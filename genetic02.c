@@ -640,7 +640,7 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     // opened!
     fread(current, sizeof current, 1, fp);
     fclose(fp);
-    showFamilyPart(current);
+    //showFamilyPart(current);
     // don't allow overwriting
     if (safety && warnOverwriting(fnamew) < 0) {
         return -1;
@@ -665,6 +665,7 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     // sort (descending order)
     quicksortDD(fitness, numbers, 0, POPULATION);
     // show the part of fitness
+    //printDecimalArrayPart(numbers, POPULATION);
     printDecimalArrayPart(fitness, POPULATION);
     // elite selection
     for (count = 0; count < ELITE_NUM; count++)
@@ -673,14 +674,21 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
         // choose parents by roulette
         // don't allow duplication
         rouletteIntMltDep(fitness, POPULATION, lucky, 2);
-        // view result
-        printf("selected ranking:\n");
-        printDecimalArray(lucky, 2);
-        // make a child
+        // make a child (uniform crossover)
         next[count] = makeChildCrossMSprm(current[numbers[lucky[0]]], current[numbers[lucky[1]]]);
         count++;
     }
     showFamilyPart(next);
+
+    // write next family to the file
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("\a%s cannot be opened\n", fnamew);
+        return -1;
+    }
+    // opened!
+    fwrite(next, sizeof next, 1, fp);
+    fclose(fp);
     return 0;
 }
 

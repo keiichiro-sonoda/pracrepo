@@ -19,6 +19,6 @@ int main(void) {
         samp2.weight[i] = 0.111f;
     //makeFirstGeneFileFlex(FNF_TEST);
     //checkSprmFile(FNF_TEST, 0);
-    printDecimal(nGeneSprmSaveAll(FNF_TEST, 0, 1));
+    nGeneSprmSaveAll(FNF_TEST, 0, 1);
     return 0;
 }
