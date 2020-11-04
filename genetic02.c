@@ -115,6 +115,7 @@ void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_ra
     printf("debugging\n");
     // a random number from 0 to 8
     int p = rand() % SPRM_LEN - 1;
+    printDecimal(p);
     // from 0 to p
     for (int i = 0; i <= p; i++) {
         children[0].weight[i] = mother.weight[i];
