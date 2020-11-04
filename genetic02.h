@@ -99,9 +99,6 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 // give a function pointer as an argument
 int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
 
-// make first file
-void makeFirstSprmsFile(void);
-
 // make first generation file
 // give a file name format
 // record all individuals!!

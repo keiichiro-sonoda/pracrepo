@@ -308,31 +308,6 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
     return 0;
 }
 
-// make first file
-void makeFirstSprmsFile(void) {
-    FILE *fp;
-    char fnamew[] = "prm/simple_prm000.bin";
-    int i;
-    Sprm pra[10];
-    // open a file to write (or make a file)
-    if ((fp = fopen(fnamew, "wb")) == NULL) {
-        // failed
-        printf("%s can't be opened.\n", fnamew);
-        return;
-    }
-    // opened!
-    // random parameters
-    for (i = 0; i < 10; i++)
-        randSprm(pra + i);
-    // check
-    showSprm(pra[3]);
-    // check size 800B?
-    printSize(pra);
-    fwrite(pra, sizeof pra, 1, fp);
-    // close
-    fclose(fp);
-}
-
 // make first generation file
 // give a file name format
 // record all individuals!!
