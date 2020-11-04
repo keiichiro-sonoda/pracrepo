@@ -341,7 +341,7 @@ int warnOverwriting(const char *fname) {
     if (c != 121) {
         if (c != 10)
             while (getchar() != 10);
-        printf("terminated");
+        printf("terminated\n");
         return -1;
     }
     if (getchar() != 10) {
@@ -361,21 +361,8 @@ int makeFirstGeneFileFlex(const char *format) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     // check existence
-    if ((fp = fopen(fnamew, "rb")) != NULL) {
-        printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fnamew);
-        fclose(fp);
-        // don't overwrite
-        if (getchar() != 121) {
-            while (getchar() != 10);
-            printf("terminated\n");
-            return -1;
-        }
-        if (getchar() != 10) {
-            while (getchar() != 10);
-            printf("terminated\n");
-            return -1;
-        }
-    }
+    if (warnOverwriting(fnamew) < 0)
+        return -1;
     // open a file to write (or make a file)
     if ((fp = fopen(fnamew, "wb")) == NULL) {
         // failed
@@ -386,9 +373,9 @@ int makeFirstGeneFileFlex(const char *format) {
     Sprm pra[POPULATION];
     for (int i = 0; i < POPULATION; i++)
         randSprm(pra + i);
-    printSize(pra);
     fwrite(pra, sizeof pra, 1, fp);
     fclose(fp);
+    printf("%ld bytes written\n", sizeof pra);
     return 0;
 }
 
