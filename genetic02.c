@@ -513,74 +513,6 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
 }
 
 // make next generation file
-int nextGenerationSprm(int gene_num) {
-    int i, j, count;
-    char format[] = "prm/simple_prm%03d.bin";
-    char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
-    // previous survivors
-    Sprm parents[SURVIVE_NUM];
-    FILE *fp;
-    // read file name
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    // write file name
-    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
-    // view
-    printf("read file : %s\n", fnamer);
-    printf("write file: %s\n", fnamew);
-    // read parents
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("\a%s can't be opened\n", fnamer);
-        return -1;
-    }
-    // opened!
-    fread(parents, sizeof parents, 1, fp);
-    fclose(fp);
-    // check write file (can read?)
-    if ((fp = fopen(fnamew, "rb")) != NULL) {
-        printf("\a%s exists. Can I overwrite it? (y): ", fnamew);
-        fclose(fp);
-        // don't overwrite
-        if (getchar() != 'y') {
-            printf("terminated\n");
-            return -1;
-        }
-    }
-    // make children!
-    Sprm generation[GENE_NUM];
-    // 10 parents copy
-    for (count = 0; count < SURVIVE_NUM; count++) {
-        generation[count] = parents[count];
-    }
-    // make children
-    // 45 combinations, 2 children per couple
-    for (i = 0; i < SURVIVE_NUM - 1; i++) {
-        for (j = i + 1; j < SURVIVE_NUM; j++) {
-            // average
-            generation[count] = makeChildAverageSprm(parents[i], parents[j]);
-            count++;
-            // cross
-            generation[count] = makeChildCrossMSprm(parents[i], parents[j]);
-            count++;
-        }
-    }
-    // calcurate survivors
-    Sprm survivors[SURVIVE_NUM];
-    // battle!
-    getSurvivorSprm(generation, survivors);
-
-    // write current survivors
-    if ((fp = fopen(fnamew, "wb")) == NULL) {
-        printf("\a%s cannot be opened\n", fnamew);
-        return -1;
-    }
-    // opened!
-    fwrite(survivors, sizeof survivors, 1, fp);
-    fclose(fp);
-
-    return 0;
-}
-
-// make next generation file
 // give a function to choose survivors
 int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *format, int gene_num, int safety) {
     int i, j, count;
@@ -654,20 +586,6 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
     fwrite(survivors, sizeof survivors, 1, fp);
     fclose(fp);
     return 0;
-}
-
-// loop several times
-void nextGenerationSprmLoop(int st, int loop) {
-    time_t t0, t1;
-    // get start time
-    time(&t0);
-    int i;
-    for (i = st; i < st + loop; i++) {
-        nextGenerationSprm(i);
-        // get time
-        time(&t1);
-        printf("elapsed time: %lds\n", t1 - t0);
-    }
 }
 
 // give a function to loop
