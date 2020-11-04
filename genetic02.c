@@ -80,10 +80,9 @@ int ad2index(int ad) {
     return -1;
 }
 
-// -0.5 ~ 0.5
+// set a parameter to a floating point random number from -0.5 to 0.5
 void randSprm(Sprm *prp) {
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
+    for (int i = 0; i < SPRM_LEN; i++) {
         prp->weight[i] = (float)rand() / RAND_MAX - 0.5;
     }
 }

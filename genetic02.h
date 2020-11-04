@@ -62,8 +62,10 @@ int getMinArray(const int *A, int n);
 int normalAd(int ad);
 // ad: normalized address
 int ad2index(int ad);
-// -0.5 ~ 0.5
+
+// set a parameter to a floating point random number from -0.5 to 0.5
 void randSprm(Sprm *prp);
+
 // calculate average
 Sprm makeChildAverageSprm(Sprm mother, Sprm father);
 // give mutant rate
