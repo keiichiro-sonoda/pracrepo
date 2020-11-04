@@ -20,5 +20,6 @@ int main(void) {
     //makeFirstGeneFileFlex(FNF_TEST);
     //checkSprmFile(FNF_TEST, 0);
     nGeneSprmSaveAll(FNF_TEST, 0, 1);
+    checkSprmFile(FNF_TEST, 1);
     return 0;
 }
