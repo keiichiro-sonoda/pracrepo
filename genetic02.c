@@ -619,8 +619,33 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
 
 // make next generation file
 // write all individuals to the file
-int nGeneSprmSaveAll(const char *format, int gene_num) {
+int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     printf("debugging\n");
+    int i, j, count;
+    char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
+    // current family
+    Sprm current[POPULATION];
+    FILE *fp;
+    // the file name to be read
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    // the file name to be written
+    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
+    // view the file names
+    printf("read file : %s\n", fnamer);
+    printf("write file: %s\n", fnamew);
+    // read parents
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        printf("\a%s can't be opened\n", fnamer);
+        return -1;
+    }
+    // opened!
+    fread(current, sizeof current, 1, fp);
+    fclose(fp);
+    showFamilyPart(current);
+    // don't allow overwriting
+    if (safety && warnOverwriting(fnamew) < 0) {
+        return -1;
+    }
     return 0;
 }
 
