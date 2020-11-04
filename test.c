@@ -8,7 +8,7 @@
 
 int main(void) {
     srand(127U);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     setIndexes();
     makeSprmSample();
     showSprm(SAMP_PRM);
@@ -22,5 +22,7 @@ int main(void) {
     showSprmOneLine(samp2);
     showSprmOneLine(children[0]);
     showSprmOneLine(children[1]);
+    printString(FNF_TEST);
+    printf(FNF_TEST, 0);
     return 0;
 }

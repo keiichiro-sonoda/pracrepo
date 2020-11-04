@@ -33,6 +33,9 @@
 // use as a comparison target
 #define FNF_NOFIT "prm/sprm_nofit/sprm_nofit%03d.bin"
 
+// test file format
+#define FNF_TEST "prm/test/test%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
