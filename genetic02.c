@@ -650,6 +650,8 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     decNxt = getBoardForBlackSimpleRoulette;
     // next family
     Sprm next[POPULATION];
+    // count the number of children
+    int count;
     // the array to store points
     int fitness[POPULATION];
     // individual numbers
@@ -660,21 +662,25 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     indices(numbers, POPULATION);
     // game (the next board is decided by roulette)
     leagueMatchSprmFlex(decNxt, current, fitness);
-    printDecimalArray(fitness, POPULATION);
     // sort (descending order)
     quicksortDD(fitness, numbers, 0, POPULATION);
     // show the part of fitness
-    //printDecimalArrayPart(fitness, POPULATION);
-    printDecimalArray(numbers, POPULATION);
+    printDecimalArrayPart(fitness, POPULATION);
     // elite selection
-    for (int i = 0; i < ELITE_NUM; i++)
-        next[i] = current[numbers[i]];
-    // choose parents roulette
-    // don't allow duplication
-    rouletteIntMltDep(fitness, POPULATION, lucky, 2);
-    // view result
-    printf("selected ranking:\n");
-    printDecimalArray(lucky, 2);
+    for (count = 0; count < ELITE_NUM; count++)
+        next[count] = current[numbers[count]];
+    while (count < POPULATION) {
+        // choose parents by roulette
+        // don't allow duplication
+        rouletteIntMltDep(fitness, POPULATION, lucky, 2);
+        // view result
+        printf("selected ranking:\n");
+        printDecimalArray(lucky, 2);
+        // make a child
+        next[count] = makeChildCrossMSprm(current[numbers[lucky[0]]], current[numbers[lucky[1]]]);
+        count++;
+    }
+    showFamilyPart(next);
     return 0;
 }
 
