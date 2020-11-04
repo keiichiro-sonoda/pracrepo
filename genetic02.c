@@ -333,6 +333,45 @@ void makeFirstSprmsFile(void) {
     fclose(fp);
 }
 
+// make first generation file
+// give a file name format
+// record all individuals!!
+int makeFirstGeneFileFlex(const char *format) {
+    FILE *fp;
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, 0);
+    // check existence
+    if ((fp = fopen(fnamew, "rb")) != NULL) {
+        printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fnamew);
+        fclose(fp);
+        // don't overwrite
+        if (getchar() != 121) {
+            while (getchar() != 10);
+            printf("terminated\n");
+            return -1;
+        }
+        if (getchar() != 10) {
+            while (getchar() != 10);
+            printf("terminated\n");
+            return -1;
+        }
+    }
+    // open a file to write (or make a file)
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamew);
+        return -1;
+    }
+    // can write
+    Sprm pra[GENE_NUM];
+    for (int i = 0; i < GENE_NUM; i++)
+        randSprm(pra + i);
+    printSize(pra);
+    fwrite(pra, sizeof pra, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num) {

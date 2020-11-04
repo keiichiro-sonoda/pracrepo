@@ -102,6 +102,11 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
 // make first file
 void makeFirstSprmsFile(void);
 
+// make first generation file
+// give a file name format
+// record all individuals!!
+int makeFirstGeneFileFlex(const char *format);
+
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num);
