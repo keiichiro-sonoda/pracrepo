@@ -53,6 +53,9 @@ void showSprm(Sprm pr);
 // print a simple parameter on one line
 void showSprmOneLine(Sprm pr);
 
+// show a part of parameter array
+void showFamilyPart(Sprm *pra);
+
 // get the smallest value in an array
 int getMinArray(const int *A, int n);
 // normalize an address

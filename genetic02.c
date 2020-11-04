@@ -30,6 +30,23 @@ void showSprmOneLine(Sprm pr) {
     printFloatArray(pr.weight, SPRM_LEN);
 }
 
+// show a part of parameter array
+void showFamilyPart(Sprm *pra) {
+    // population is 5 or less
+    if (POPULATION <= 5) {
+        // show all
+        for (int i = 0; i < POPULATION; i++)
+            showSprmOneLine(pra[i]);
+        return;
+    }
+    // population is greater than 5
+    for (int i = 0; i < 3; i++)
+        showSprmOneLine(pra[i]);
+    printf("                                      ...\n");
+    showSprmOneLine(pra[POPULATION - 1]);
+    return;
+}
+
 // get the smallest value in an array
 int getMinArray(const int *A, int n) {
     int min = 0x7fffffff;
@@ -363,10 +380,8 @@ void checkSprmFile(const char *format, int gene_num) {
     Sprm pa[POPULATION];
     fread(&pa, sizeof pa, 1, fp);
     fclose(fp);
-    // check the all parameters
-    for (int i = 0; i < POPULATION; i++) {
-        showSprmOneLine(pa[i]);
-    }
+    // check some parameters
+    showFamilyPart(pa);
 }
 
 // use Sprm[100]
