@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "sort01.h"
 #include "genetic02.h"
 
@@ -42,6 +43,7 @@ int main(void) {
     call_func(func_A, n);   /* 関数名 func_A を引数として呼び出し． */
     call_func(func_B, n);   /* 関数名 func_B を引数として呼び出し． */
 
+    setIndexes();
     makeSprmSample();
     showSprm(SAMP_PRM);
     return 0;
