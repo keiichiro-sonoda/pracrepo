@@ -18,5 +18,6 @@ int main(void) {
     for (int i = 0; i < SPRM_LEN; i++)
         samp2.weight[i] = 0.111f;
     makeFirstGeneFileFlex(FNF_TEST);
+    checkSprmFile(FNF_TEST, 0);
     return 0;
 }
