@@ -43,6 +43,8 @@ int main(void) {
     call_func(func_A, n);   /* 関数名 func_A を引数として呼び出し． */
     call_func(func_B, n);   /* 関数名 func_B を引数として呼び出し． */
 
+    srand(123U);
+    srand((unsigned)time(NULL));
     setIndexes();
     makeSprmSample();
     showSprm(SAMP_PRM);
