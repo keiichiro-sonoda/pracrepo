@@ -5,6 +5,7 @@
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
+#define ELITE_NUM 6
 #define POPULATION 50
 
 // parameter sample

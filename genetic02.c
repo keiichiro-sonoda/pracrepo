@@ -648,6 +648,8 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     // a function that determine the next board
     Board (*decNxt)(Board*, int, const Sprm*);
     decNxt = getBoardForBlackSimpleRoulette;
+    // next family
+    Sprm next[POPULATION];
     // the array to store points
     int fitness[POPULATION];
     // individual numbers
@@ -658,10 +660,15 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     indices(numbers, POPULATION);
     // game (the next board is decided by roulette)
     leagueMatchSprmFlex(decNxt, current, fitness);
+    printDecimalArray(fitness, POPULATION);
     // sort (descending order)
     quicksortDD(fitness, numbers, 0, POPULATION);
     // show the part of fitness
-    printDecimalArrayPart(fitness, POPULATION);
+    //printDecimalArrayPart(fitness, POPULATION);
+    printDecimalArray(numbers, POPULATION);
+    // elite selection
+    for (int i = 0; i < ELITE_NUM; i++)
+        next[i] = current[numbers[i]];
     // choose parents roulette
     // don't allow duplication
     rouletteIntMltDep(fitness, POPULATION, lucky, 2);
