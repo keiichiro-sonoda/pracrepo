@@ -14,7 +14,7 @@ int main(void) {
     showSprm(SAMP_PRM);
     Sprm children[2];
     Sprm samp2;
-    float mut_rate = 0.05f;
+    float mut_rate = 0.5f;
     for (int i = 0; i < SPRM_LEN; i++)
         samp2.weight[i] = 0.111f;
     singlePointCrossover(SAMP_PRM, samp2, children, mut_rate);
