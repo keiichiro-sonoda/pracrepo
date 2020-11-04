@@ -46,5 +46,8 @@ int main(void) {
     setIndexes();
     makeSprmSample();
     showSprm(SAMP_PRM);
+    Sprm children[2];
+    int mut_rate = 0.01;
+    singlePointCrossover(SAMP_PRM, SAMP_PRM, children, mut_rate);
     return 0;
 }
