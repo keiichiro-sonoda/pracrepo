@@ -495,7 +495,7 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
             mean[j] += pra[i].weight[j];
     
     // divide by the number of samples
-    for (j = 0; j < nos; j++)
+    for (j = 0; j < SPRM_LEN; j++)
         mean[j] /= nos;
     
     // calculate deviation squared of each weight
