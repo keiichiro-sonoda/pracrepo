@@ -1,9 +1,6 @@
 #ifndef SORT01_H
 #define SORT01_H
 
-// exchange A[i] and A[j]
-int exchange(int *A, int i, int j);
-
 // insertion sort
 void insertionSort(int *A, int n);
 
@@ -57,6 +54,18 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);
 
 // check if rouletteFloat workes as expected
 void rouletteFloatTest(const float *A, int n);
+
+// exchange A[i] and A[j]
+int exchange(int *A, int i, int j);
+
+// exchange A[i] and A[j]
+// also exchange B[i] and B[j]
+void exchangeD(int *A, int *B, int i, int j);
+
+// randomized partition
+// A: array to compare
+// B: sorted by A
+int randomizedPartitionDD(int *A, int *B, int p, int r);
 
 int partitionDD(int *A, int *B, int p, int r);
 // descending order

@@ -12,20 +12,17 @@ int *GLOBAL;
 // for debugging
 void sortTest(void) {
     srand(123U);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
-    float sample3[l1];
-    int l3 = 5;
-    int result1[l3];
-    //globalTest();
-    insertionSort(sample1, l1);
+    int sample3[l1];
+    indices(sample3, l1);
     printDecimalArray(sample1, l1);
-    expArrayIFFlex(sample1, sample3, l1, 0.5f);
-    printFloatArray(sample3, l1);
-    printFloatArrayPart(sample3, l1);
+    //globalTest();
+    randomizedPartitionDD(sample1, sample3, 0, l1 - 1);
+    printDecimalArray(sample1, l1);
 }
 
 // insertion sort
@@ -214,6 +211,17 @@ int exchange(int *A, int i, int j) {
     return 0;
 }
 
+// exchange A[i] and A[j]
+// also exchange B[i] and B[j]
+void exchangeD(int *A, int *B, int i, int j) {
+    int t = A[i];
+    A[i] = A[j];
+    A[j] = t;
+    t = B[i];
+    B[i] = B[j];
+    B[j] = t;
+}
+
 int partitionDD(int *A, int *B, int p, int r) {
     int i, j;
     int x = A[r];
@@ -230,6 +238,32 @@ int partitionDD(int *A, int *B, int p, int r) {
     return i;
 }
 
+// return an integer random number from min to max
+// positive range only
+int randInt(int min, int max) {
+    return rand() % (max - min + 1) + min;
+}
+
+// randomized partition
+// A: array to compare
+// B: sorted by A
+int randomizedPartitionDD(int *A, int *B, int p, int r) {
+    int t = randInt(p, r);
+    printDecimal(t);
+    // randomized!
+    exchangeD(A, B, t, r);
+    int x = A[r];
+    int i = p;
+    for (int j = p; j < r; j++) {
+        if (A[j] > x) {
+            exchangeD(A, B, i, j);
+            i++;
+        }
+    }
+    exchangeD(A, B, i, r);
+    return i;
+}
+
 // descending order
 // also rearrange the indices
 void quicksortDD(int *A, int *B, int p, int r) {
@@ -237,5 +271,14 @@ void quicksortDD(int *A, int *B, int p, int r) {
         int q = partitionDD(A, B, p, r);
         quicksortDD(A, B, p, q - 1);
         quicksortDD(A, B, q + 1, r);
+    }
+}
+
+// randomized quicksort
+void randomizedQuicksortDD(int *A, int *B, int p, int r) {
+    if (p < r) {
+        int q = randomizedPartitionDD(A, B, p, r);
+        randomizedQuicksortDD(A, B, p, q - 1);
+        randomizedQuicksortDD(A, B, q + 1, r);
     }
 }
