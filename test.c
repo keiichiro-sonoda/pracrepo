@@ -16,9 +16,11 @@ int main(void) {
     checkSprmFile(FNF_05006000000005, 0);
     //checkSprmFile(FNF_TEST, 0);
     //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 3);
+
     Sprm ptest[POPULATION];
     if (getSprmFile(FNF_05006000000005, 3, ptest, sizeof ptest) < 0)
         return -1;
-    checkSprmStatistics(ptest, POPULATION);
+    //checkSprmStatistics(ptest, POPULATION);
+    printf("ha?\n");
     return 0;
 }

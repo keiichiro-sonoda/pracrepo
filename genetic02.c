@@ -495,8 +495,8 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
             mean[j] += pra[i].weight[j];
     
     // divide by the number of samples
-    for (i = 0; i < nos; i++)
-        mean[i] /= nos;
+    for (j = 0; j < nos; j++)
+        mean[j] /= nos;
     
     // calculate deviation squared of each weight
     for (i = 0; i < nos; i++)
@@ -504,13 +504,14 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
             sd[j] += powf(pra[i].weight[j] - mean[j], 2.0f);
     
     // divide by the number of samples
-    for (i = 0; i < nos; i++)
-        sd[i] = sqrtf(sd[i] / nos);
+    for (j = 0; j < SPRM_LEN; j++)
+        sd[j] = sqrtf(sd[j] / nos);
 
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
     printf("SD:   ");
     printFloatArray(sd, SPRM_LEN);
+    printf("debugging\n");
 }
 
 // choose survivors from Sprm[100]
