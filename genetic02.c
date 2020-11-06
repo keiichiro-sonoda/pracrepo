@@ -683,6 +683,8 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
         count++;
     }
     showFamilyPart(next);
+    // view statistics
+    checkSprmStatistics(next, POPULATION);
 
     // write next family to the file
     if ((fp = fopen(fnamew, "wb")) == NULL) {
