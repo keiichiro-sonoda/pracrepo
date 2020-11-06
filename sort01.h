@@ -1,8 +1,8 @@
 #ifndef SORT01_H
 #define SORT01_H
 
-// exchange A[i] and A[j]
-int exchange(int *A, int i, int j);
+// debugging function
+void sortTest(void);
 
 // insertion sort
 void insertionSort(int *A, int n);
@@ -58,10 +58,26 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);
 // check if rouletteFloat workes as expected
 void rouletteFloatTest(const float *A, int n);
 
+// exchange A[i] and A[j]
+int exchange(int *A, int i, int j);
+
+// exchange A[i] and A[j]
+// also exchange B[i] and B[j]
+void exchangeD(int *A, int *B, int i, int j);
+
+// randomized partition
+// A: array to compare
+// B: sorted by A
+int randomizedPartitionDD(int *A, int *B, int p, int r);
+
 int partitionDD(int *A, int *B, int p, int r);
 // descending order
 void quicksortDD(int *A, int *B, int p, int r);
-// debugging function
-void sortTest(void);
+
+// randomized quicksort
+void randomizedQuicksortDD(int *A, int *B, int p, int r);
+
+// wrapper function for randomizedQuicksortDD
+void randomizedQuicksortDDAll(int *A, int *B, int n);
 
 #endif

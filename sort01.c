@@ -17,15 +17,13 @@ void sortTest(void) {
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
-    float sample3[l1];
-    int l3 = 5;
-    int result1[l3];
-    //globalTest();
-    insertionSort(sample1, l1);
+    int sample3[l1];
+    indices(sample3, l1);
     printDecimalArray(sample1, l1);
-    expArrayIFFlex(sample1, sample3, l1, 0.5f);
-    printFloatArray(sample3, l1);
-    printFloatArrayPart(sample3, l1);
+    printDecimalArray(sample3, l1);
+    quicksortDD(sample1, sample3, 0, l1 - 1);
+    printDecimalArray(sample1, l1);
+    printDecimalArray(sample3, l1);
 }
 
 // insertion sort
@@ -214,6 +212,17 @@ int exchange(int *A, int i, int j) {
     return 0;
 }
 
+// exchange A[i] and A[j]
+// also exchange B[i] and B[j]
+void exchangeD(int *A, int *B, int i, int j) {
+    int t = A[i];
+    A[i] = A[j];
+    A[j] = t;
+    t = B[i];
+    B[i] = B[j];
+    B[j] = t;
+}
+
 int partitionDD(int *A, int *B, int p, int r) {
     int i, j;
     int x = A[r];
@@ -230,6 +239,25 @@ int partitionDD(int *A, int *B, int p, int r) {
     return i;
 }
 
+// randomized partition
+// A: array to compare
+// B: sorted by A
+int randomizedPartitionDD(int *A, int *B, int p, int r) {
+    int i = randInt(p, r);
+    // randomized!
+    exchangeD(A, B, i, r);
+    int x = A[r];
+    i = p;
+    for (int j = p; j < r; j++) {
+        if (A[j] > x) {
+            exchangeD(A, B, i, j);
+            i++;
+        }
+    }
+    exchangeD(A, B, i, r);
+    return i;
+}
+
 // descending order
 // also rearrange the indices
 void quicksortDD(int *A, int *B, int p, int r) {
@@ -238,4 +266,18 @@ void quicksortDD(int *A, int *B, int p, int r) {
         quicksortDD(A, B, p, q - 1);
         quicksortDD(A, B, q + 1, r);
     }
+}
+
+// randomized quicksort
+void randomizedQuicksortDD(int *A, int *B, int p, int r) {
+    if (p < r) {
+        int q = randomizedPartitionDD(A, B, p, r);
+        randomizedQuicksortDD(A, B, p, q - 1);
+        randomizedQuicksortDD(A, B, q + 1, r);
+    }
+}
+
+// wrapper function for randomizedQuicksortDD
+void randomizedQuicksortDDAll(int *A, int *B, int n) {
+    randomizedQuicksortDD(A, B, 0, n - 1);
 }

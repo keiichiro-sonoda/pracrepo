@@ -25,6 +25,28 @@ void showSprm(Sprm pr) {
     }
 }
 
+// print a simple parameter on one line
+void showSprmOneLine(Sprm pr) {
+    printFloatArray(pr.weight, SPRM_LEN);
+}
+
+// show a part of parameter array
+void showFamilyPart(Sprm *pra) {
+    // population is 5 or less
+    if (POPULATION <= 5) {
+        // show all
+        for (int i = 0; i < POPULATION; i++)
+            showSprmOneLine(pra[i]);
+        return;
+    }
+    // population is greater than 5
+    for (int i = 0; i < 3; i++)
+        showSprmOneLine(pra[i]);
+    printf("                                      ...\n");
+    showSprmOneLine(pra[POPULATION - 1]);
+    return;
+}
+
 // get the smallest value in an array
 int getMinArray(const int *A, int n) {
     int min = 0x7fffffff;
@@ -58,10 +80,9 @@ int ad2index(int ad) {
     return -1;
 }
 
-// -0.5 ~ 0.5
+// set a parameter to a floating point random number from -0.5 to 0.5
 void randSprm(Sprm *prp) {
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
+    for (int i = 0; i < SPRM_LEN; i++) {
         prp->weight[i] = (float)rand() / RAND_MAX - 0.5;
     }
 }
@@ -101,6 +122,37 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
         child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.05);
     }
     return child;
+}
+
+// mutate with a given probability
+// otherwise copy
+float copyOrMutation(float x, float mut_rate) {
+    // equal is not necessary
+    if ((float)rand() / RAND_MAX <= mut_rate) {
+        // from -0.5 to 0.5
+        //printf("mutated!\n");
+        return (float)rand() / RAND_MAX - 0.5;
+    }
+    return x;
+}
+
+// single point crossover
+// give 2 parameters, children's array, and mutation rate
+// the number of children is 2
+void singlePointCrossover(Sprm mother, Sprm father, Sprm *children, float mut_rate) {
+    // a random number from 0 to 8
+    int p = rand() % (SPRM_LEN - 1);
+    //printDecimal(p);
+    // from 0 to p
+    for (int i = 0; i <= p; i++) {
+        children[0].weight[i] = copyOrMutation(mother.weight[i], mut_rate);
+        children[1].weight[i] = copyOrMutation(father.weight[i], mut_rate);
+    }
+    // from p + 1 to 9
+    for (int i = p + 1; i < SPRM_LEN; i++) {
+        children[0].weight[i] = copyOrMutation(father.weight[i], mut_rate);
+        children[1].weight[i] = copyOrMutation(mother.weight[i], mut_rate);
+    }
 }
 
 // convert from an address to the weight index?
@@ -272,52 +324,88 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
     return 0;
 }
 
-// make first file
-void makeFirstSprmsFile(void) {
+// warning before overwriting
+int warnOverwriting(const char *fname) {
     FILE *fp;
-    char fnamew[] = "prm/simple_prm000.bin";
-    int i;
-    Sprm pra[10];
+    // open to read
+    fp = fopen(fname, "rb");
+    if (fp == NULL) {
+        // not exist
+        return 0;
+    }
+    // exist
+    fclose(fp);
+    printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);
+    char c;
+    c = getchar();
+    if (c != 121) {
+        if (c != 10)
+            while (getchar() != 10);
+        printf("terminated\n");
+        return -1;
+    }
+    if (getchar() != 10) {
+        while (getchar() != 10);
+        printf("terminated\n");
+        return -1;
+    }
+    // allowed
+    return 0;
+}
+
+// make first generation file
+// give a file name format
+// record all individuals!!
+int makeFirstGeneFileFlex(const char *format) {
+    FILE *fp;
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, 0);
+    // check existence
+    if (warnOverwriting(fnamew) < 0)
+        return -1;
     // open a file to write (or make a file)
     if ((fp = fopen(fnamew, "wb")) == NULL) {
         // failed
         printf("%s can't be opened.\n", fnamew);
-        return;
+        return -1;
     }
-    // opened!
-    // random parameters
-    for (i = 0; i < 10; i++)
+    // can write
+    Sprm pra[POPULATION];
+    for (int i = 0; i < POPULATION; i++)
         randSprm(pra + i);
-    // check
-    showSprm(pra[3]);
-    // check size 800B?
-    printSize(pra);
     fwrite(pra, sizeof pra, 1, fp);
-    // close
     fclose(fp);
+    printf("%ld bytes written\n", sizeof pra);
+    return 0;
+}
+
+// read parameters from a file
+int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
+    FILE *fp;
+    // the file name to be read
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    printf("read file : %s\n", fnamer);
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamer);
+        return -1;
+    }
+    fread(pra, pra_size, 1, fp);
+    fclose(fp);
+    return 0;
 }
 
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num) {
-    FILE *fp;
-    // the file name to be read
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    printString(fnamer);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fnamer);
+    Sprm pra[POPULATION];
+    if (loadSprmFile(format, gene_num, pra, sizeof pra) < 0) {
+        // failed
         return;
     }
-    // opened!
-    Sprm pa[SURVIVE_NUM];
-    fread(&pa, sizeof pa, 1, fp);
-    fclose(fp);
-    // check the top parameter
-    //showSprm(pa[0]);
-    // check the all parameters
-    for (int i = 0; i < SURVIVE_NUM; i++)
-        printFloatArray(pa[i].weight, SPRM_LEN);
+    // check some parameters
+    showFamilyPart(pra);
 }
 
 // use Sprm[100]
@@ -325,12 +413,12 @@ void checkSprmFile(const char *format, int gene_num) {
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {
     int i, j, k;
     // all zero
-    zeros(result, GENE_NUM);
+    zeros(result, POPULATION);
     // black index
-    for (i = 0; i < GENE_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         //printf("\ai = %d / %d", i, FAMILY_NUM);
         // white index
-        for (j = 0; j < GENE_NUM; j++) {
+        for (j = 0; j < POPULATION; j++) {
             if (i == j) continue;
             switch(oneToOneNormalSprm(generation + i, generation + j)) {
                 // black won
@@ -355,12 +443,12 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
 // give a function pointer to decide the next board
 void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result) {
     // set all elements to zero
-    zeros(result, GENE_NUM);
+    zeros(result, POPULATION);
     // black index
-    for (int i = 0; i < GENE_NUM; i++) {
+    for (int i = 0; i < POPULATION; i++) {
         //printf("\ai = %d / %d", i, FAMILY_NUM);
         // white index
-        for (int j = 0; j < GENE_NUM; j++) {
+        for (int j = 0; j < POPULATION; j++) {
             if (i == j) continue;
             switch(oneToOneNormalSprmFlex(decNxt, generation + i, generation + j)) {
                 // black won
@@ -395,27 +483,30 @@ float distSprm(Sprm p1, Sprm p2) {
 }
 
 // calculate means and standard deviation from some parameters
-void checkSprmStatistics(const Sprm *pra, int pra_len) {
+void checkSprmStatistics(const Sprm *pra, int nos) {
     int i, j;
     float mean[SPRM_LEN];
     float sd[SPRM_LEN];
     zerosFloat(mean, SPRM_LEN);
     zerosFloat(sd, SPRM_LEN);
     // calculate sum of each weight
-    for (i = 0; i < pra_len; i++)
+    for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
             mean[j] += pra[i].weight[j];
     
-    for (i = 0; i < pra_len; i++)
-        mean[i] /= pra_len;
+    // divide by the number of samples
+    for (j = 0; j < SPRM_LEN; j++)
+        mean[j] /= nos;
     
-    for (i = 0; i < pra_len; i++)
+    // calculate sum of the square of each weight
+    for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
-            sd[j] += powf(pra[i].weight[j] - mean[j], 2.0f);
+            sd[j] += square(pra[i].weight[j]);
     
-    for (i = 0; i < pra_len; i++)
-        sd[i] = sqrtf(sd[i] / pra_len);
-
+    // calculate standard deviation
+    for (j = 0; j < SPRM_LEN; j++)
+        sd[j] = sqrtf(sd[j] / nos - square(mean[j]));
+    
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
     printf("SD:   ");
@@ -426,23 +517,23 @@ void checkSprmStatistics(const Sprm *pra, int pra_len) {
 // and show match results
 void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     int i, j;
-    int result[GENE_NUM];
-    int number[GENE_NUM];
+    int result[POPULATION];
+    int number[POPULATION];
     float dist;
     // number = {0, 1, 2, ..., 99}
-    for (i = 0; i < GENE_NUM; i++)
+    for (i = 0; i < POPULATION; i++)
         number[i] = i;
     // game!
     leagueMatchSimpleSprm(generation, result);
     // sort (descending order)
-    quicksortDD(result, number, 0, GENE_NUM - 1);
+    quicksortDD(result, number, 0, POPULATION - 1);
     // show ranking
     printf("rank change\n");
-    for (i = 0; i < GENE_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         // rank 11 .. 99 aren't displayed
-        if (10 <= i && i < GENE_NUM - 1) continue;
+        if (10 <= i && i < POPULATION - 1) continue;
         // worst!
-        if (i == GENE_NUM - 1)
+        if (i == POPULATION - 1)
             printf("        ...\n");
         // winner's index (or worst index)
         j = number[i];
@@ -460,74 +551,6 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     printf("distance: %6.4f\n", dist);
     //printf("top parameters view:\n");
     //showSprm(survivors[0]);
-}
-
-// make next generation file
-int nextGenerationSprm(int gene_num) {
-    int i, j, count;
-    char format[] = "prm/simple_prm%03d.bin";
-    char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
-    // previous survivors
-    Sprm parents[SURVIVE_NUM];
-    FILE *fp;
-    // read file name
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    // write file name
-    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
-    // view
-    printf("read file : %s\n", fnamer);
-    printf("write file: %s\n", fnamew);
-    // read parents
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("\a%s can't be opened\n", fnamer);
-        return -1;
-    }
-    // opened!
-    fread(parents, sizeof parents, 1, fp);
-    fclose(fp);
-    // check write file (can read?)
-    if ((fp = fopen(fnamew, "rb")) != NULL) {
-        printf("\a%s exists. Can I overwrite it? (y): ", fnamew);
-        fclose(fp);
-        // don't overwrite
-        if (getchar() != 'y') {
-            printf("terminated\n");
-            return -1;
-        }
-    }
-    // make children!
-    Sprm generation[GENE_NUM];
-    // 10 parents copy
-    for (count = 0; count < SURVIVE_NUM; count++) {
-        generation[count] = parents[count];
-    }
-    // make children
-    // 45 combinations, 2 children per couple
-    for (i = 0; i < SURVIVE_NUM - 1; i++) {
-        for (j = i + 1; j < SURVIVE_NUM; j++) {
-            // average
-            generation[count] = makeChildAverageSprm(parents[i], parents[j]);
-            count++;
-            // cross
-            generation[count] = makeChildCrossMSprm(parents[i], parents[j]);
-            count++;
-        }
-    }
-    // calcurate survivors
-    Sprm survivors[SURVIVE_NUM];
-    // battle!
-    getSurvivorSprm(generation, survivors);
-
-    // write current survivors
-    if ((fp = fopen(fnamew, "wb")) == NULL) {
-        printf("\a%s cannot be opened\n", fnamew);
-        return -1;
-    }
-    // opened!
-    fwrite(survivors, sizeof survivors, 1, fp);
-    fclose(fp);
-
-    return 0;
 }
 
 // make next generation file
@@ -572,7 +595,7 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
         }
     }
     // store a generation
-    Sprm generation[GENE_NUM];
+    Sprm generation[POPULATION];
 
     // 10 parents copy (elite selection)
     for (count = 0; count < SURVIVE_NUM; count++)
@@ -606,18 +629,73 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
     return 0;
 }
 
-// loop several times
-void nextGenerationSprmLoop(int st, int loop) {
-    time_t t0, t1;
-    // get start time
-    time(&t0);
-    int i;
-    for (i = st; i < st + loop; i++) {
-        nextGenerationSprm(i);
-        // get time
-        time(&t1);
-        printf("elapsed time: %lds\n", t1 - t0);
+// make next generation file
+// write all individuals to the file
+int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
+    printf("debugging\n");
+    char fnamew[FILENAME_MAX];
+    FILE *fp;
+    // the file name to be written
+    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
+    // current family
+    Sprm current[POPULATION];
+    // load data
+    if (loadSprmFile(format, gene_num, current, sizeof current) < 0) {
+        return -1;
     }
+    // view the file name
+    printf("write file: %s\n", fnamew);
+    // don't allow overwriting
+    if (safety && warnOverwriting(fnamew) < 0) {
+        return -1;
+    }
+    // a function that determine the next board
+    Board (*decNxt)(Board*, int, const Sprm*);
+    decNxt = getBoardForBlackSimpleRoulette;
+    // next family
+    Sprm next[POPULATION];
+    // count the number of children
+    int count;
+    // the array to store points
+    int fitness[POPULATION];
+    // individual numbers
+    int numbers[POPULATION];
+    // indices of parents
+    int lucky[2];
+    // numbers = {0, 1, 2, ...}
+    indices(numbers, POPULATION);
+    // game (the next board is decided by roulette)
+    leagueMatchSprmFlex(decNxt, current, fitness);
+    // sort (descending order)
+    randomizedQuicksortDDAll(fitness, numbers, POPULATION);
+    // show the part of fitness
+    //printDecimalArrayPart(numbers, POPULATION);
+    printDecimalArrayPart(fitness, POPULATION);
+    // elite selection
+    for (count = 0; count < ELITE_NUM; count++)
+        next[count] = current[numbers[count]];
+    while (count < POPULATION) {
+        // choose parents by roulette
+        // don't allow duplication
+        rouletteIntMltDep(fitness, POPULATION, lucky, 2);
+        // make a child (uniform crossover)
+        next[count] = makeChildCrossMSprm(current[numbers[lucky[0]]], current[numbers[lucky[1]]]);
+        count++;
+    }
+    showFamilyPart(next);
+    // view statistics
+    checkSprmStatistics(next, POPULATION);
+
+    // write next family to the file
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // failed
+        printf("\a%s cannot be opened\n", fnamew);
+        return -1;
+    }
+    // opened!
+    fwrite(next, sizeof next, 1, fp);
+    fclose(fp);
+    return 0;
 }
 
 // give a function to loop
@@ -629,6 +707,23 @@ void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int 
         // set the generation number as the seed
         srand((unsigned)i);
         if (nGene(i, safety) == -1)
+            return;
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
+}
+
+// give a function to loop and file name format
+void nGeneSSALoopFlex(int (*nGeneSSA)(const char*, int, int), const char *format, int safety, int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        // set the generation number as the seed
+        srand((unsigned)i);
+        if (nGeneSSA(format, i, safety) < 0)
+            // error
             return;
         // get time
         time(&t1);
