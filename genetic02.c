@@ -379,6 +379,25 @@ int makeFirstGeneFileFlex(const char *format) {
     return 0;
 }
 
+// read parameters from a file
+int getSprmFile(const char *format, int gene_num, Sprm *pra) {
+    FILE *fp;
+    // the file name to be read
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    printString(fnamer);
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamer);
+        return -1;
+    }
+    fread(pra, sizeof pra, 1, fp);
+    fclose(fp);
+    // check some parameters
+    showFamilyPart(pra);
+    return 0;
+}
+
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num) {
@@ -474,26 +493,29 @@ float distSprm(Sprm p1, Sprm p2) {
 }
 
 // calculate means and standard deviation from some parameters
-void checkSprmStatistics(const Sprm *pra, int pra_len) {
+void checkSprmStatistics(const Sprm *pra, int nos) {
     int i, j;
     float mean[SPRM_LEN];
     float sd[SPRM_LEN];
     zerosFloat(mean, SPRM_LEN);
     zerosFloat(sd, SPRM_LEN);
     // calculate sum of each weight
-    for (i = 0; i < pra_len; i++)
+    for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
             mean[j] += pra[i].weight[j];
     
-    for (i = 0; i < pra_len; i++)
-        mean[i] /= pra_len;
+    // divide by the number of samples
+    for (i = 0; i < nos; i++)
+        mean[i] /= nos;
     
-    for (i = 0; i < pra_len; i++)
+    // calculate deviation squared of each weight
+    for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
             sd[j] += powf(pra[i].weight[j] - mean[j], 2.0f);
     
-    for (i = 0; i < pra_len; i++)
-        sd[i] = sqrtf(sd[i] / pra_len);
+    // divide by the number of samples
+    for (i = 0; i < nos; i++)
+        sd[i] = sqrtf(sd[i] / nos);
 
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);

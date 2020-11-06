@@ -15,6 +15,9 @@ int main(void) {
     //makeFirstGeneFileFlex(FNF_05006000000005);
     //checkSprmFile(FNF_05006000000005, 0);
     //checkSprmFile(FNF_TEST, 0);
-    nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 3);
+    //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 3);
+    Sprm ptest[POPULATION];
+    getSprmFile(FNF_05006000000005, 0, ptest);
+    showFamilyPart(ptest);
     return 0;
 }

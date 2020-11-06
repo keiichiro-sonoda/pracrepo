@@ -121,6 +121,9 @@ int warnOverwriting(const char *fname);
 // record all individuals!!
 int makeFirstGeneFileFlex(const char *format);
 
+// read parameters from a file
+int getSprmFile(const char *format, int gene_num, Sprm *pra);
+
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num);
@@ -138,7 +141,7 @@ void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *
 float distSprm(Sprm p1, Sprm p2);
 
 // calculate means and standard deviation from some parameters
-void checkSprmStatistics(const Sprm *pra, int pra_len);
+void checkSprmStatistics(const Sprm *pra, int nos);
 
 // choose survivors from Sprm[100]
 // and show match results
