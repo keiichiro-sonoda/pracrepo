@@ -22,7 +22,7 @@ void sortTest(void) {
     int sample4[100];
     zeros(sample4, 100);
     for (int i = 0; i < 10000; i++) {
-        sample4[randInt(1, 5)]++;
+        sample4[randInt(0, 99)]++;
     }
     printDecimalArray(sample4, 100);
 }
