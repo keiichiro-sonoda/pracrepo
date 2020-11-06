@@ -93,6 +93,9 @@ void printDecimalArray(const int *A, int n);
 // show the first three and the last one
 void printDecimalArrayPart(const int *A, int n);
 
+// show [a, b)
+void printDecimalArrayRange(const int *A, int a, int b);
+
 // print an array of floating point number
 void printFloatArray(const float *A, int n);
 

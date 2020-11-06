@@ -24,6 +24,7 @@ void sortTest(void) {
     randomizedQuicksortDDAll(sample1, sample3, l1);
     printDecimalArray(sample1, l1);
     printDecimalArray(sample3, l1);
+    printDecimalArrayRange(sample1, 2, 15);
 }
 
 // insertion sort

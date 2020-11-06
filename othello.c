@@ -90,6 +90,11 @@ void printDecimalArrayPart(const int *A, int n) {
     printf("..., %3d}\n", A[n - 1]);
 }
 
+// show [a, b)
+void printDecimalArrayRange(const int *A, int a, int b) {
+    printDecimalArray(A + a, b - a);
+}
+
 // print an array of floating point number
 void printFloatArray(const float *A, int n) {
     putchar(123);
