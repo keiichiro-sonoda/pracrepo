@@ -53,6 +53,10 @@
 // calculate the square
 #define square(x) ((x) * (x))
 
+// return an integer random number from min to max
+// positive range only
+#define randInt(min, max) (rand() % ((max) - (min) + 1) + (min))
+
 // 64bit
 typedef unsigned long int int8B;
 

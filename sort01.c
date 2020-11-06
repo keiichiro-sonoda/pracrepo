@@ -240,12 +240,6 @@ int partitionDD(int *A, int *B, int p, int r) {
     return i;
 }
 
-// return an integer random number from min to max
-// positive range only
-int randInt(int min, int max) {
-    return rand() % (max - min + 1) + min;
-}
-
 // randomized partition
 // A: array to compare
 // B: sorted by A

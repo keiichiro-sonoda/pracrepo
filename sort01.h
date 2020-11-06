@@ -62,10 +62,6 @@ int exchange(int *A, int i, int j);
 // also exchange B[i] and B[j]
 void exchangeD(int *A, int *B, int i, int j);
 
-// return an integer random number from min to max
-// positive range only
-int randInt(int min, int max);
-
 // randomized partition
 // A: array to compare
 // B: sorted by A
