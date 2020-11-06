@@ -251,12 +251,11 @@ int randInt(int min, int max) {
 // A: array to compare
 // B: sorted by A
 int randomizedPartitionDD(int *A, int *B, int p, int r) {
-    int t = randInt(p, r);
-    printDecimal(t);
+    int i = randInt(p, r);
     // randomized!
-    exchangeD(A, B, t, r);
+    exchangeD(A, B, i, r);
     int x = A[r];
-    int i = p;
+    i = p;
     for (int j = p; j < r; j++) {
         if (A[j] > x) {
             exchangeD(A, B, i, j);
