@@ -37,6 +37,14 @@
 // test file format
 #define FNF_TEST "prm/test/test%03d.bin"
 
+// 050: population
+// 06: the number of elite
+// 00: roulette selection
+// 00: uniform crossover
+// 00: random mutation
+// 005: mutation rate
+#define FNF_05006000000005 "prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];

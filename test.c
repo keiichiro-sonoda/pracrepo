@@ -11,14 +11,10 @@ int main(void) {
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    makeSprmSample();
-    Sprm children[2];
-    Sprm samp2;
-    float mut_rate = 0.05f;
-    for (int i = 0; i < SPRM_LEN; i++)
-        samp2.weight[i] = 0.111f;
-    //makeFirstGeneFileFlex(FNF_TEST);
+
+    makeFirstGeneFileFlex(FNF_05006000000005);
+    checkSprmFile(FNF_05006000000005, 0);
     //checkSprmFile(FNF_TEST, 0);
-    nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_TEST, 1, 0, 3);
+    //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 3);
     return 0;
 }
