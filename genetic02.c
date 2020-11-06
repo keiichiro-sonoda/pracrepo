@@ -667,7 +667,7 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     // game (the next board is decided by roulette)
     leagueMatchSprmFlex(decNxt, current, fitness);
     // sort (descending order)
-    quicksortDD(fitness, numbers, 0, POPULATION);
+    randomizedQuicksortDDAll(fitness, numbers, POPULATION);
     // show the part of fitness
     //printDecimalArrayPart(numbers, POPULATION);
     printDecimalArrayPart(fitness, POPULATION);

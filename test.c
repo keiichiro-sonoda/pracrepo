@@ -12,10 +12,9 @@ int main(void) {
     setIndexes();
     initBoard();
 
+    checkSprmFile(FNF_05006000000005, 1);
     //makeFirstGeneFileFlex(FNF_05006000000005);
-    //checkSprmFile(FNF_05006000000005, 1);
-    //checkSprmFile(FNF_TEST, 0);
-    //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 1);
-    sortTest();
+    nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 1);
+    //sortTest();
     return 0;
 }

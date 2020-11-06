@@ -21,7 +21,7 @@ void sortTest(void) {
     indices(sample3, l1);
     printDecimalArray(sample1, l1);
     printDecimalArray(sample3, l1);
-    randomizedQuicksortDDAll(sample1, sample3, l1);
+    quicksortDD(sample1, sample3, 0, l1 - 1);
     printDecimalArray(sample1, l1);
     printDecimalArray(sample3, l1);
 }
@@ -272,8 +272,6 @@ void quicksortDD(int *A, int *B, int p, int r) {
 void randomizedQuicksortDD(int *A, int *B, int p, int r) {
     if (p < r) {
         int q = randomizedPartitionDD(A, B, p, r);
-        printDecimalArrayRange(A, p, r + 1);
-        printDecimal(q - p);
         randomizedQuicksortDD(A, B, p, q - 1);
         randomizedQuicksortDD(A, B, q + 1, r);
     }
