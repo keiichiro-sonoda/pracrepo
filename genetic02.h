@@ -122,7 +122,7 @@ int warnOverwriting(const char *fname);
 int makeFirstGeneFileFlex(const char *format);
 
 // read parameters from a file
-int getSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size);
+int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size);
 
 // check parameter in a file
 // give the file name format and generation number

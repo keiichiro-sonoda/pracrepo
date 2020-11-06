@@ -380,7 +380,7 @@ int makeFirstGeneFileFlex(const char *format) {
 }
 
 // read parameters from a file
-int getSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
+int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     FILE *fp;
     // the file name to be read
     char fnamer[FILENAME_MAX];
@@ -400,7 +400,7 @@ int getSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num) {
     Sprm pra[POPULATION];
-    if (getSprmFile(format, gene_num, pra, sizeof pra) < 0) {
+    if (loadSprmFile(format, gene_num, pra, sizeof pra) < 0) {
         // failed
         return;
     }
@@ -641,10 +641,9 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     printf("write file: %s\n", fnamew);
     // current family
     Sprm current[POPULATION];
-    if (getSprmFile(format, gene_num, current, sizeof current) < 0) {
+    if (loadSprmFile(format, gene_num, current, sizeof current) < 0) {
         return -1;
     }
-    //showFamilyPart(current);
     // don't allow overwriting
     if (safety && warnOverwriting(fnamew) < 0) {
         return -1;

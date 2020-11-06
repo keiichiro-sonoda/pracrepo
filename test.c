@@ -13,9 +13,9 @@ int main(void) {
     initBoard();
 
     //makeFirstGeneFileFlex(FNF_05006000000005);
-    checkSprmFile(FNF_05006000000005, 2);
+    checkSprmFile(FNF_05006000000005, 1);
     //checkSprmFile(FNF_TEST, 0);
-    nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 1, 1);
+    nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 1);
 
     return 0;
 }
