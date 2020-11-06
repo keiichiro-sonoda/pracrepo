@@ -19,12 +19,11 @@ void sortTest(void) {
     int l2 = arrayLength(sample2);
     int sample3[l1];
     indices(sample3, l1);
-    int sample4[100];
-    zeros(sample4, 100);
-    for (int i = 0; i < 10000; i++) {
-        sample4[randInt(0, 99)]++;
-    }
-    printDecimalArray(sample4, 100);
+    printDecimalArray(sample1, l1);
+    printDecimalArray(sample3, l1);
+    randomizedQuicksortDD(sample1, sample3, 0, l1 - 1);
+    printDecimalArray(sample1, l1);
+    printDecimalArray(sample3, l1);
 }
 
 // insertion sort

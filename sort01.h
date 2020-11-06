@@ -1,6 +1,9 @@
 #ifndef SORT01_H
 #define SORT01_H
 
+// debugging function
+void sortTest(void);
+
 // insertion sort
 void insertionSort(int *A, int n);
 
@@ -70,7 +73,8 @@ int randomizedPartitionDD(int *A, int *B, int p, int r);
 int partitionDD(int *A, int *B, int p, int r);
 // descending order
 void quicksortDD(int *A, int *B, int p, int r);
-// debugging function
-void sortTest(void);
+
+// randomized quicksort
+void randomizedQuicksortDD(int *A, int *B, int p, int r);
 
 #endif
