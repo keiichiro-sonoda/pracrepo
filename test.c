@@ -18,7 +18,7 @@ int main(void) {
     //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 1, 0, 3);
 
     Sprm ptest[POPULATION];
-    if (getSprmFile(FNF_05006000000005, 1, ptest, sizeof ptest) < 0)
+    if (getSprmFile(FNF_05006000000005, 2, ptest, sizeof ptest) < 0)
         return -1;
     checkSprmStatistics(ptest, POPULATION);
     return 0;

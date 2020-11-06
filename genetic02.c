@@ -498,22 +498,6 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     for (j = 0; j < SPRM_LEN; j++)
         mean[j] /= nos;
     
-    // calculate deviation squared of each weight
-    for (i = 0; i < nos; i++)
-        for (j = 0; j < SPRM_LEN; j++)
-            sd[j] += powf(pra[i].weight[j] - mean[j], 2.0f);
-    
-    // divide by the number of samples
-    for (j = 0; j < SPRM_LEN; j++)
-        sd[j] = sqrtf(sd[j] / nos);
-
-    printf("mean: ");
-    printFloatArray(mean, SPRM_LEN);
-    printf("SD:   ");
-    printFloatArray(sd, SPRM_LEN);
-    printf("debugging\n");
-
-    zerosFloat(sd, SPRM_LEN);
     for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
             sd[j] += powf(pra[i].weight[j], 2.0f);
@@ -521,6 +505,8 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     for (j = 0; j < SPRM_LEN; j++)
         sd[j] = sqrtf(sd[j] / nos - powf(mean[j], 2.0f));
     
+    printf("mean: ");
+    printFloatArray(mean, SPRM_LEN);
     printf("SD:   ");
     printFloatArray(sd, SPRM_LEN);
 }
