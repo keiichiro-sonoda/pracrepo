@@ -512,6 +512,17 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     printf("SD:   ");
     printFloatArray(sd, SPRM_LEN);
     printf("debugging\n");
+
+    zerosFloat(sd, SPRM_LEN);
+    for (i = 0; i < nos; i++)
+        for (j = 0; j < SPRM_LEN; j++)
+            sd[j] += powf(pra[i].weight[j], 2.0f);
+    
+    for (j = 0; j < SPRM_LEN; j++)
+        sd[j] = sqrtf(sd[j] / nos - powf(mean[j], 2.0f));
+    
+    printf("SD:   ");
+    printFloatArray(sd, SPRM_LEN);
 }
 
 // choose survivors from Sprm[100]
