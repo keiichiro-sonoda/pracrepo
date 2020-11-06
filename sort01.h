@@ -77,4 +77,7 @@ void quicksortDD(int *A, int *B, int p, int r);
 // randomized quicksort
 void randomizedQuicksortDD(int *A, int *B, int p, int r);
 
+// wrapper function for randomizedQuicksortDD
+void randomizedQuicksortDDAll(int *A, int *B, int n);
+
 #endif
