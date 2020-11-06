@@ -385,7 +385,7 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     // the file name to be read
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    printString(fnamer);
+    printf("read file : %s\n", fnamer);
     if ((fp = fopen(fnamer, "rb")) == NULL) {
         // failed
         printf("%s can't be opened.\n", fnamer);
@@ -637,13 +637,14 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
     FILE *fp;
     // the file name to be written
     snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
-    // view the file names
-    printf("write file: %s\n", fnamew);
     // current family
     Sprm current[POPULATION];
+    // load data
     if (loadSprmFile(format, gene_num, current, sizeof current) < 0) {
         return -1;
     }
+    // view the file name
+    printf("write file: %s\n", fnamew);
     // don't allow overwriting
     if (safety && warnOverwriting(fnamew) < 0) {
         return -1;
