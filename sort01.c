@@ -12,7 +12,7 @@ int *GLOBAL;
 // for debugging
 void sortTest(void) {
     srand(123U);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
@@ -20,9 +20,12 @@ void sortTest(void) {
     int sample3[l1];
     indices(sample3, l1);
     printDecimalArray(sample1, l1);
+    printDecimalArray(sample3, l1);
+
     //globalTest();
     randomizedPartitionDD(sample1, sample3, 0, l1 - 1);
     printDecimalArray(sample1, l1);
+    printDecimalArray(sample3, l1);
 }
 
 // insertion sort
