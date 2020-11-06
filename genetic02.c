@@ -498,12 +498,14 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     for (j = 0; j < SPRM_LEN; j++)
         mean[j] /= nos;
     
+    // calculate sum of the square of each weight
     for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
-            sd[j] += pra[i].weight[j] * pra[i].weight[j];
+            sd[j] += square(pra[i].weight[j]);
     
+    // calculate standard deviation
     for (j = 0; j < SPRM_LEN; j++)
-        sd[j] = sqrtf(sd[j] / nos - mean[j] * mean[j]);
+        sd[j] = sqrtf(sd[j] / nos - square(mean[j]));
     
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);

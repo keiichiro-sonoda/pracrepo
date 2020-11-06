@@ -50,6 +50,9 @@
 // src: 0, 2, 4, ... , 126
 #define rotL90DegAd(src) ((14 - (src) % 16) * 8 + (src) / 16 * 2)
 
+// calculate the square
+#define square(x) ((x) * (x))
+
 // 64bit
 typedef unsigned long int int8B;
 
