@@ -380,7 +380,7 @@ int makeFirstGeneFileFlex(const char *format) {
 }
 
 // read parameters from a file
-int getSprmFile(const char *format, int gene_num, Sprm *pra) {
+int getSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     FILE *fp;
     // the file name to be read
     char fnamer[FILENAME_MAX];
@@ -391,7 +391,7 @@ int getSprmFile(const char *format, int gene_num, Sprm *pra) {
         printf("%s can't be opened.\n", fnamer);
         return -1;
     }
-    fread(pra, sizeof pra, 1, fp);
+    fread(pra, pra_size, 1, fp);
     fclose(fp);
     // check some parameters
     showFamilyPart(pra);
