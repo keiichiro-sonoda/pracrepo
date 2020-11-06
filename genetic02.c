@@ -393,29 +393,19 @@ int getSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     }
     fread(pra, pra_size, 1, fp);
     fclose(fp);
-    // check some parameters
-    showFamilyPart(pra);
     return 0;
 }
 
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num) {
-    FILE *fp;
-    // the file name to be read
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    printString(fnamer);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fnamer);
+    Sprm pra[POPULATION];
+    if (getSprmFile(format, gene_num, pra, sizeof pra) < 0) {
+        // failed
         return;
     }
-    // opened!
-    Sprm pa[POPULATION];
-    fread(&pa, sizeof pa, 1, fp);
-    fclose(fp);
     // check some parameters
-    showFamilyPart(pa);
+    showFamilyPart(pra);
 }
 
 // use Sprm[100]
