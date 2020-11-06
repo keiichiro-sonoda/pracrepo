@@ -500,10 +500,10 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     
     for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
-            sd[j] += powf(pra[i].weight[j], 2.0f);
+            sd[j] += pra[i].weight[j] * pra[i].weight[j];
     
     for (j = 0; j < SPRM_LEN; j++)
-        sd[j] = sqrtf(sd[j] / nos - powf(mean[j], 2.0f));
+        sd[j] = sqrtf(sd[j] / nos - mean[j] * mean[j]);
     
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
