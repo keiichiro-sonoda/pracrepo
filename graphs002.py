@@ -7,12 +7,18 @@ from matplotlib import pyplot as plt
 exe2_win = cdll.LoadLibrary("exe2_win.so")
 # 配列型定義
 FloatArray10 = c_float * 10
+# 最大サイズは100と決めておく
+FloatArray100 = c_float * 100
 # 初期化関数
 exe2_win.initPy()
 
 getTop10AveFlex = exe2_win.getTop10AveFlexPy
 getTop10AveFlex.rectype = None
 getTop10AveFlex.argtypes = (c_char_p, FloatArray10)
+
+getFamilyAve = exe2_win.getFamilyAvePy
+getFamilyAve.rectype = None
+getFamilyAve.argtypes = (c_char_p, FloatArray100, c_int32)
 
 # 標準偏差の配列を計算する関数を共有ライブラリから取得
 getTop10SDFlex = exe2_win.getTop10SDFlexPy
@@ -30,6 +36,12 @@ def getTop10SDFlexWrap(fnamer):
     f_arr_c = FloatArray10()
     getTop10SDFlex(fnamer.encode(), f_arr_c)
     return list(f_arr_c)
+
+def getFamilyAveWrap(fnamer, n):
+    f_arr_c = FloatArray100()
+    getFamilyAve(fnamer.encode(), f_arr_c, n)
+    lis = list(f_arr_c)
+    return lis[:n]
 
 # グラフ用の色
 LINE_COLORS = [
@@ -155,7 +167,7 @@ if __name__ == "__main__":
     #dataView05("prm//sprm_corner0.5neg_{:03d}.bin", 0, 100)
     # 指し手をルーレット選択
     #dataView05("prm//sprm_roulette{:03d}.bin", 0, 100)
-    dataView06("prm//sprm_roulette{:03d}.bin", 0, 100)
+    #dataView06("prm//sprm_roulette{:03d}.bin", 0, 100)
     # 指し手ルーレット, 勝ち点で直接ルーレット選択
     #dataView05("prm//sprm_rltrlt{:03d}.bin", 0, 100)
     #dataView06("prm//sprm_rltrlt{:03d}.bin", 0, 100)
@@ -171,3 +183,4 @@ if __name__ == "__main__":
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
+    getFamilyAveWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50)
