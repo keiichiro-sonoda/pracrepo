@@ -25,6 +25,7 @@ getTop10SDFlex = exe2_win.getTop10SDFlexPy
 getTop10SDFlex.rectype = None
 getTop10SDFlex.argtypes = (c_char_p, FloatArray10)
 
+# 各種ラッパー関数
 # 文字列を渡す
 def getTop10AveFlexWrap(fnamer):
     f_arr_c = FloatArray10()

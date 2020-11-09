@@ -492,10 +492,14 @@ void calcSprmMeans(const Sprm *family, float *means, int n) {
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 void getFamilyAvePy(const char *fnamer, float *f_pointer, int n) {
-    printString("debugging");
     Sprm family[n];
+    // ファイル読み込み
     loadSprmFileDirect(fnamer, family, sizeof family);
+    // 平均値計算
     calcSprmMeans(family, f_pointer, n);
+    //zeros(f_pointer, n);
+    // 試しにトップだけ表示してみる
+    //for (int i = 0; i < SPRM_LEN; i++) f_pointer[i] = family[0].weight[i];
 }
 
 // トップ10の標準偏差を取得(共有ライブラリ用)
