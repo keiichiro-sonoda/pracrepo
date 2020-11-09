@@ -378,6 +378,23 @@ void calcSprmMeans(const Sprm *family, float *means, int n) {
         means[j] /= n;
 }
 
+// パラメータ毎に標準偏差を計算する関数
+// 世代の全てのデータを使うことを想定して, 個体数で割ることにする
+void calcSprmSD(const Sprm *family, float *SD, int n) {
+    float means[SPRM_LEN];
+    // まずは平均値を計算
+    calcSprmMeans(family, means, n);
+    // 初期化
+    zeros(SD, n);
+    // 偏差の2乗の和を計算
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < SPRM_LEN; j++)
+            SD[j] += powf(family[i].weight[j] - means[j], 2.0);
+    // 個体数で割って平方根を計算
+    for (int j = 0; j < SPRM_LEN; j++)
+        SD[j] = sqrtf(SD[j] / n);
+}
+
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 // 無効なファイル名が渡されたときの処理も追加
@@ -433,6 +450,15 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
     // 個体数-1 で割り, 平方根を取って標準偏差にする
     for (int i = 0; i < SPRM_LEN; i++)
         f_pointer[i] = sqrtf(f_pointer[i] / (SURVIVE_NUM - 1));
+}
+
+// ある世代全個体の標準偏差を取得
+// 個体数以下の数をnに指定することも可能
+int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
+    Sprm family[n];
+    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
+        return -1;
+    calcSprmSD(family, f_pointer, n);
 }
 
 // use Sprm[100]
