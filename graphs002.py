@@ -287,8 +287,11 @@ def makeSDGraph(fname_format, population, x_min, x_max):
 if __name__ == "__main__":
     # 最初
     #dataView05("prm//simple_prm{:03d}.bin", 0, 100)
+    #makeSDGraph("prm//simple_prm{:03d}.bin", 10, 0, 100)
+    #makeMeansGraph("prm//simple_prm{:03d}.bin", 10, 0, 100)
     # 突然変異無し
     #dataView05("prm//sprm_not_mutate{:03d}.bin", 0, 20)
+    #makeSDGraph("prm//sprm_not_mutate{:03d}.bin", 10, 0, 20)
     # 角固定
     #dataView05("prm//sprm_corner0.5_{:03d}.bin", 0, 100)
     # ランダム対戦
@@ -311,7 +314,7 @@ if __name__ == "__main__":
     #dataView05("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
     #dataView06("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
     #makeMeansGraph("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 10, 0, 100)
-    makeSDGraph("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 10, 0, 100)
+    #makeSDGraph("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 10, 0, 100)
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
