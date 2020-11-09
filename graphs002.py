@@ -310,9 +310,11 @@ if __name__ == "__main__":
     # 指し手ルーレット, 0.9 ^ 順位を確率(相対)にしたランキング選択
     #dataView05("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
     #dataView06("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
+    #makeMeansGraph("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 10, 0, 100)
+    makeSDGraph("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 10, 0, 100)
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #getFamilyMeansWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
-    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, -1, 102)
+    #makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, -1, 102)
     #makeSDGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 104, 110)
