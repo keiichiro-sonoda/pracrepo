@@ -174,6 +174,10 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
         # それぞれのマスの評価値に代入!
         for j in range(10):
             ys[j].append(tprm[j])
+
+    # 読み込めたデータが無ければ終了
+    if not x:
+        return
     
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(
@@ -240,4 +244,4 @@ if __name__ == "__main__":
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #getFamilyMeansWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
-    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, -10, 110)
+    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
