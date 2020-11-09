@@ -14,8 +14,8 @@ exe8: genetic08.c genetic02.c othello.c sort01.o
 	gcc genetic08.c genetic02.c othello.c sort01.o -o exe8 -lm
 exe2_win.exe: genetic02_win.c genetic02_win.h othello_win.c othello_win.h sort01_win.o
 	gcc genetic02_win.c othello_win.c sort01_win.o -o exe2_win.exe -lm
-exe2_win.so: genetic02_win.c genetic02_win.h othello_win.c othello_win.h sort01_win.o
-	gcc genetic02_win.c othello_win.c sort01_win.o -o exe2_win.so -shared -fPIC -lm
+exe2_win.so: genetic02_win.o  othello_win.o  sort01_win.o
+	gcc genetic02_win.o othello_win.o sort01_win.o -o exe2_win.so -shared -fPIC -lm
 othello: othello.c
 	gcc othello.c -o othello
 othello_win.exe: othello_win.c
