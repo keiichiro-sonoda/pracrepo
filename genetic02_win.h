@@ -11,7 +11,13 @@
 // 旧GENE_NUM
 #define POPULATION 100
 
-// マクロは othello_win.h に移動
+// 050: population
+// 06: the number of elite
+// 00: roulette selection
+// 00: uniform crossover
+// 00: random mutation
+// 005: mutation rate
+#define FNF_05006000000005 "prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g%03d.bin"
 
 // simple parameter
 // パレメータの構造体を定義
@@ -79,6 +85,9 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 
 // make first file
 void makeFirstSprmsFile(void);
+
+// ファイルを読み込んで配列に代入
+int loadSprmFileFlex(char *format, int gene_num, Sprm *pra, size_t pra_size);
 
 // check parameter in a file
 void checkSprmFile(int gene_num);

@@ -250,6 +250,20 @@ void makeFirstSprmsFile(void) {
     fclose(fp);
 }
 
+// ファイルを読み込んで配列に代入
+int loadSprmFileFlex(char *format, int gene_num, Sprm *pra, size_t pra_size) {
+    FILE *fp;
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        printf("%s can't be opened.\n", fnamer);
+        return -1;
+    }
+    fread(pra, pra_size, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
 // check parameter in a file
 void checkSprmFile(int gene_num) {
     FILE *fp;

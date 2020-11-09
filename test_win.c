@@ -14,6 +14,9 @@ int main(int argc, char **argv) {
     initBoard();
     showBoard(START);
     checkSprmFile(0);
-    sortTest();
+    //sortTest();
+    Sprm ptest[50];
+    if (loadSprmFileFlex(FNF_05006000000005, 0, ptest, sizeof ptest) >= 0)
+        showSprm(ptest[0]);
     return 0;
 }
