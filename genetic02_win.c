@@ -366,7 +366,7 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 }
 
 // パラメータ毎に平均値を計算する関数
-void calcSprmMeans(const Sprm *family, float *means, int n) {
+void calcSprmMeans(const Sprm *family, float means[SPRM_LEN], int n) {
     // 0 で初期化
     zeros(means, SPRM_LEN);
     // 和を計算
@@ -380,7 +380,7 @@ void calcSprmMeans(const Sprm *family, float *means, int n) {
 
 // パラメータ毎に標準偏差を計算する関数
 // 世代の全てのデータを使うことを想定して, 個体数で割ることにする
-void calcSprmSD(const Sprm *family, float *SD, int n) {
+void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n) {
     float means[SPRM_LEN];
     // まずは平均値を計算
     calcSprmMeans(family, means, n);
@@ -398,7 +398,7 @@ void calcSprmSD(const Sprm *family, float *SD, int n) {
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 // 無効なファイル名が渡されたときの処理も追加
-int getFamilyMeansPy(const char *fnamer, float *f_pointer, int n) {
+int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
     Sprm family[n];
     // ファイル読み込み
     if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
@@ -455,8 +455,6 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // ある世代全個体の標準偏差を取得
 // 個体数以下の数をnに指定することも可能
 int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
-    printString("debugging");
-    printString(fnamer);
     Sprm family[n];
     if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
         return -1;
