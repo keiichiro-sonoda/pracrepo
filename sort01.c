@@ -18,12 +18,11 @@ void sortTest(void) {
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     int sample3[l1];
-    indices(sample3, l1);
-    printDecimalArray(sample1, l1);
+    int result1[l1];
+    ones(sample3, l1);
+    zeros(result1, l1);
     printDecimalArray(sample3, l1);
-    quicksortDD(sample1, sample3, 0, l1 - 1);
-    printDecimalArray(sample1, l1);
-    printDecimalArray(sample3, l1);
+    printDecimalArray(result1, l1);
 }
 
 // insertion sort
