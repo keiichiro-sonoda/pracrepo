@@ -40,7 +40,7 @@ def getFamilyMeansWrap(fnamer, n):
     flag = getFamilyMeans(fnamer.encode(), f_arr_c, n)
     # 読み込み失敗
     if flag < 0:
-        return None
+        return []
     return list(f_arr_c)
 
 def getTop10SDFlexWrap(fnamer):
@@ -177,7 +177,7 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
         # i 世代全個体の平均値を取り出す
         tprm = getFamilyMeansWrap(fname_format.format(i), population)
         # 読み込みエラー
-        if tprm == None:
+        if not tprm:
             continue
         # 読み込めたらデータを追加
         # x は範囲内の整数全て
@@ -314,5 +314,5 @@ if __name__ == "__main__":
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #getFamilyMeansWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
-    #makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
-    makeSDGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 104, 110)
+    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, -1, 102)
+    #makeSDGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 104, 110)
