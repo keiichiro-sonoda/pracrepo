@@ -368,7 +368,7 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // パラメータ毎に平均値を計算する関数
 void calcSprmMeans(const Sprm *family, float *means, int n) {
     // 0 で初期化
-    zeros(means, n);
+    zeros(means, SPRM_LEN);
     // 和を計算
     for (int i = 0; i < n; i++)
         for (int j = 0; j < SPRM_LEN; j++)
@@ -385,7 +385,7 @@ void calcSprmSD(const Sprm *family, float *SD, int n) {
     // まずは平均値を計算
     calcSprmMeans(family, means, n);
     // 初期化
-    zeros(SD, n);
+    zeros(SD, SPRM_LEN);
     // 偏差の2乗の和を計算
     for (int i = 0; i < n; i++)
         for (int j = 0; j < SPRM_LEN; j++)
@@ -455,10 +455,13 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // ある世代全個体の標準偏差を取得
 // 個体数以下の数をnに指定することも可能
 int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
+    printString("debugging");
+    printString(fnamer);
     Sprm family[n];
     if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
         return -1;
     calcSprmSD(family, f_pointer, n);
+    return 0;
 }
 
 // use Sprm[100]

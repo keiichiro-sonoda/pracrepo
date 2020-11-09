@@ -23,6 +23,10 @@ getTop10SDFlex = exe2_win.getTop10SDFlexPy
 getTop10SDFlex.rectype = None
 getTop10SDFlex.argtypes = (c_char_p, FloatArray10)
 
+getFamilySD = exe2_win.getFamilySDPy
+getFamilySD.rectype = c_int32
+getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
+
 # 各種ラッパー関数
 # 文字列を渡す
 def getTop10AveFlexWrap(fnamer):
@@ -42,6 +46,13 @@ def getFamilyMeansWrap(fnamer, n):
 def getTop10SDFlexWrap(fnamer):
     f_arr_c = FloatArray10()
     getTop10SDFlex(fnamer.encode(), f_arr_c)
+    return list(f_arr_c)
+
+def getFamilySDWrap(fnamer, n):
+    f_arr_c = FloatArray10()
+    flag = getFamilySD(fnamer.encode(), f_arr_c, n)
+    if flag < 0:
+        return []
     return list(f_arr_c)
 
 # グラフ用の色
@@ -214,6 +225,58 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
     ax.set_yticks(np.linspace(-0.6, 0.6, 7))
     plt.show()
 
+# 標準偏差表示
+def makeSDGraph(fname_format, population, x_min, x_max):
+    x = []
+    # 10 マス分のデータの配列を用意
+    ys = [[] for i in range(10)]
+    for i in range(x_min, x_max + 1):
+        # x は範囲内の整数全て
+        x.append(i)
+        # i 世代全個体の標準偏差を取り出す
+        tprm = getFamilySDWrap(fname_format.format(i), population)
+        # それぞれのマスの評価値に代入!
+        for j in range(10):
+            ys[j].append(tprm[j])
+    
+    # 使い慣れたいからオブジェクト指向にしよう
+    fig = plt.figure(figsize=(8, 5))
+    ax = fig.add_subplot(
+        111,
+        xlabel="generation",
+        ylabel="point",
+    )
+    # 各マスの変移をプロット
+    for i in range(10):
+        lw = 1
+        lc = LINE_COLORS[i]
+        # 注目マス
+        # 標準偏差はいらないかも
+        #if i in [0, 4]:
+        #    lw = 4
+        # ラベル付け
+        ax.plot(x, ys[i],
+            label="{:d}".format(i + 1),
+            color=lc,
+            linewidth=lw
+        )
+    #plt.legend(loc="best")
+    # 凡例調節
+    ax.legend(
+        bbox_to_anchor=(1.01, 1),
+        loc='upper left',
+        borderaxespad=0,
+        fontsize=10
+    )
+    # ラベル指定
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("standard deviation", fontsize=15)
+    # 横幅指定（世代幅）
+    ax.set_xticks(np.linspace(x_min, x_max, 11))
+    # 縦幅指定（固定）
+    ax.set_yticks(np.linspace(-0.0, 0.40, 5))
+    plt.show()
+
 if __name__ == "__main__":
     # 最初
     #dataView05("prm//simple_prm{:03d}.bin", 0, 100)
@@ -244,4 +307,5 @@ if __name__ == "__main__":
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #getFamilyMeansWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
-    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
+    #makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
+    makeSDGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
