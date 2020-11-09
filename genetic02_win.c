@@ -19,21 +19,7 @@ int CORR_TABLE[MASU_NUM];
 // これはまた他のファイルから輸入
 void quicksortDD(int *A, int *B, int p, int r);
 
-int main(void) {
-    // seed reset
-    srand((unsigned)time(NULL));
-    // set global variable
-    setCORR_TABLE();
-    // set initial board
-    initBoard();
-    //nextGenerationSprmLoop(7, 293);
-    showBoard(START);
-    checkSprmFile(300);
-    return 0;
-}
-
 // functions
-
 // パラメータをマスに対応するように表示
 void showSprm(Sprm pr) {
     int i;
