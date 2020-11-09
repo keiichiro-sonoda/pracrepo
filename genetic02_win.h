@@ -86,6 +86,9 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 // make first file
 void makeFirstSprmsFile(void);
 
+// ファイル名をフォーマットと世代番号から構築せず, そのまま指定する
+int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
+
 // ファイルを読み込んで配列に代入
 int loadSprmFileFlex(char *format, int gene_num, Sprm *pra, size_t pra_size);
 

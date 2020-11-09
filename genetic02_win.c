@@ -250,6 +250,18 @@ void makeFirstSprmsFile(void) {
     fclose(fp);
 }
 
+// ファイル名をフォーマットと世代番号から構築せず, そのまま指定する
+int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
+    FILE *fp;
+    if ((fp = fopen(fname, "rb")) == NULL) {
+        printf("%s can't be opened.\n", fname);
+        return -1;
+    }
+    fread(pra, pra_size, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
 // ファイルを読み込んで配列に代入
 int loadSprmFileFlex(char *format, int gene_num, Sprm *pra, size_t pra_size) {
     FILE *fp;
@@ -490,7 +502,9 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // 個体数は可変にしたいので長さも引数として与える
 void getFamilyAvePy(const char *fnamer, float *f_pointer, int n) {
     printString("debugging");
-    printString(fnamer);
+    Sprm family[n];
+    loadSprmFileDirect(fnamer, family, sizeof family);
+    showSprm(family[0]);
 }
 
 // トップ10の標準偏差を取得(共有ライブラリ用)
