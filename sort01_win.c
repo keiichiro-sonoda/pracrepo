@@ -45,18 +45,3 @@ void quicksortDD(int *A, int *B, int p, int r) {
         quicksortDD(A, B, q + 1, r);
     }
 }
-
-/*
-int main3(void) {
-    int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2};
-    int n = arrayLength(sample1);
-    int indexes[n];
-    int i;
-    for (i = 0; i < n; i++) {
-        indexes[i] = i;
-    }
-    quicksortDD(sample1, indexes, 0, n - 1);
-    printDecimalArray(sample1, n);
-    printDecimalArray(indexes, n);
-}
-*/
