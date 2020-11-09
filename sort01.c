@@ -12,16 +12,24 @@ int *GLOBAL;
 // for debugging
 void sortTest(void) {
     srand(123U);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     int parents[2];
-    for (int i = 0; i < 10; i++) {
-        randIntDoubleDep(parents, 0, 99);
-        printDecimalArray(parents, 2);
+    int result1[l1];
+    zeros(result1, l1);
+    for (int i = 0; i < l1 * 5000; i++) {
+        randIntDoubleDep(parents, 0, l1 - 1);
+        if (parents[0] == parents[1]) {
+            printString("error");
+            return;
+        }
+        //result1[parents[0]]++;
+        result1[parents[1]]++;
     }
+    printDecimalArray(result1, l1);
 }
 
 // insertion sort
