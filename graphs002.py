@@ -7,8 +7,6 @@ from matplotlib import pyplot as plt
 exe2_win = cdll.LoadLibrary("exe2_win.so")
 # 配列型定義
 FloatArray10 = c_float * 10
-# 最大サイズは100と決めておく
-FloatArray100 = c_float * 100
 # 初期化関数
 exe2_win.initPy()
 
@@ -18,7 +16,7 @@ getTop10AveFlex.argtypes = (c_char_p, FloatArray10)
 
 getFamilyMeans = exe2_win.getFamilyMeansPy
 getFamilyMeans.rectype = None
-getFamilyMeans.argtypes = (c_char_p, FloatArray100, c_int32)
+getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # 標準偏差の配列を計算する関数を共有ライブラリから取得
 getTop10SDFlex = exe2_win.getTop10SDFlexPy
@@ -39,10 +37,9 @@ def getTop10SDFlexWrap(fnamer):
     return list(f_arr_c)
 
 def getFamilyMeansWrap(fnamer, n):
-    f_arr_c = FloatArray100()
+    f_arr_c = FloatArray10()
     getFamilyMeans(fnamer.encode(), f_arr_c, n)
-    lis = list(f_arr_c)
-    return lis[:n]
+    return list(f_arr_c)
 
 # グラフ用の色
 LINE_COLORS = [
