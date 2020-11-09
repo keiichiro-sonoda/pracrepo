@@ -14,6 +14,6 @@ int main(int argc, char **argv) {
     initBoard();
     showBoard(START);
     //sortTest();
-    checkSprmFileFlex(FNF_05006000000005, 100, 50);
+    checkSprmFileFlex(FNF_05006000000005, 50, 50);
     return 0;
 }

@@ -263,17 +263,12 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 }
 
 // ファイルを読み込んで配列に代入
+// ファイル名を構築して, loadSprmFileDirect を実行するだけ
 int loadSprmFileFlex(char *format, int gene_num, Sprm *pra, size_t pra_size) {
     FILE *fp;
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fnamer);
-        return -1;
-    }
-    fread(pra, pra_size, 1, fp);
-    fclose(fp);
-    return 0;
+    return loadSprmFileDirect(fnamer, pra, pra_size);
 }
 
 // check parameter in a file
@@ -299,7 +294,9 @@ void checkSprmFile(int gene_num) {
 // マクロのPOPULATIONは使わずに可変とする
 void checkSprmFileFlex(char *format, int gene_num, int n) {
     Sprm pra[n];
-    if (loadSprmFileFlex(format, gene_num, pra, sizeof pra) < -1)
+    int t = loadSprmFileFlex(format, gene_num, pra, sizeof pra);
+    printDecimal(t);
+    if (t < 0)
         return;
     // 読み込めたら表示
     showSprm(pra[0]);
