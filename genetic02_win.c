@@ -264,38 +264,19 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 
 // ファイルを読み込んで配列に代入
 // ファイル名を構築して, loadSprmFileDirect を実行するだけ
-int loadSprmFileFlex(char *format, int gene_num, Sprm *pra, size_t pra_size) {
+int loadSprmFileFlex(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     FILE *fp;
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
     return loadSprmFileDirect(fnamer, pra, pra_size);
 }
 
-// check parameter in a file
-void checkSprmFile(int gene_num) {
-    FILE *fp;
-    char format[] = "prm/simple_prm%03d.bin";
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fnamer);
-        return;
-    }
-    // opened!
-    Sprm pa[SURVIVE_NUM];
-    fread(&pa, sizeof pa, 1, fp);
-    fclose(fp);
-    // check the top parameter
-    showSprm(pa[0]);
-    showFloatArray(pa[0].weight, SPRM_LEN);
-}
-
 // n は個体数
 // マクロのPOPULATIONは使わずに可変とする
-void checkSprmFileFlex(char *format, int gene_num, int n) {
+void checkSprmFileFlex(const char *format, int gene_num, int n) {
     Sprm pra[n];
     int t = loadSprmFileFlex(format, gene_num, pra, sizeof pra);
-    printDecimal(t);
+    //printDecimal(t);
     if (t < 0)
         return;
     // 読み込めたら表示
