@@ -332,117 +332,6 @@ void getSprmFileFlexPy(const char *fnamer, float *f_pointer) {
         f_pointer[i] = pa[0].weight[CORR_TABLE[i]];
 }
 
-// トップだけを観察するとばらつきが大きいため, トップ10の平均値を取ってみる
-// 逆に0に近づいてしまうか?
-void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
-    // 一応呼び出された関数が分かるようにする
-    //printf("getTop10AvePy called!\n");
-    FILE *fp;
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, "prm/simple_prm%03d.bin", gene_num);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fnamer);
-        return;
-    }
-    // ファイルに保存してあるSprm配列を格納
-    Sprm pa[SURVIVE_NUM];
-    fread(pa, sizeof pa, 1, fp);
-    fclose(fp);
-    // Top10 の各マスの合計を計算
-    float weight_sum[SPRM_LEN];
-    // 0 で初期化
-    for (int i = 0; i < SPRM_LEN; i++)
-        weight_sum[i] = 0.0;
-    // この i は for 文の中だけ有効らしい
-    for (int i = 0; i < SURVIVE_NUM; i++) {
-        // 一応10個チェック
-        //showFloatArray(pa[i].weight, SPRM_LEN);
-        // 評価値の合計に足していく
-        for (int j = 0; j < SPRM_LEN; j++){
-            weight_sum[j] += pa[i].weight[j];
-        }
-    }
-    // 確認用
-    // データ数で割, 平均値にして引数のポインタに格納
-    for (int i = 0; i < SPRM_LEN; i++)
-        f_pointer[i] = weight_sum[i] / 10;
-}
-
-// トップ10の平均値を取得(共有ライブラリ用)
-// 突然変異無しファイルを扱う
-// 世代番号, pythonに渡すためのポインタを与える
-void getTop10NMAvePy(int gene_num, float f_pointer[SPRM_LEN]) {
-    // 呼び出しチェッカー
-    //printString("called!");
-    FILE *fp;
-    char fnamer[FILENAME_MAX];
-    // 突然変異無しのファイル名
-    snprintf(fnamer, FILENAME_MAX, "prm/sprm_not_mutate%03d.bin", gene_num);
-    // ファイルを読み込み用で開く
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        // 失敗
-        printf("%s can't be opened.\n", fnamer);
-        return;
-    }
-    // ファイルに保存してあるSprm配列を格納
-    Sprm pa[SURVIVE_NUM];
-    fread(pa, sizeof pa, 1, fp);
-    fclose(fp);
-    // Top10 の各マスの合計値を代入する配列
-    float weight_sum[SPRM_LEN];
-    // 0 で初期化
-    for (int i = 0; i < SPRM_LEN; i++)
-        weight_sum[i] = 0.0;
-    for (int i = 0; i < SURVIVE_NUM; i++) {
-        // 一応10個チェック
-        // 評価値の合計に足していく
-        for (int j = 0; j < SPRM_LEN; j++){
-            weight_sum[j] += pa[i].weight[j];
-        }
-    }
-    // 確認用
-    // データ数だけ割って, 平均値にする
-    // ここで引数を登場させるの忘れてた
-    for (int i = 0; i < SPRM_LEN; i++)
-        f_pointer[i] = weight_sum[i] / 10;
-}
-
-// トップ10の平均値を取得(共有ライブラリ用)
-// 角固定ファイルを扱う(0.5)
-// ファイル名フォーマットも引数に与えられるようにしようか?
-void getTop10FC1AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
-    FILE *fp;
-    char fnamer[FILENAME_MAX];
-    // 角固定ファイルを開く
-    snprintf(fnamer, FILENAME_MAX, "prm/sprm_corner0.5_%03d.bin", gene_num);
-    // ファイルを読み込み用で開く
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        // 失敗
-        printf("%s can't be opened.\n", fnamer);
-        return;
-    }
-    // ファイルに保存してあるSprm配列を格納
-    Sprm pa[SURVIVE_NUM];
-    fread(pa, sizeof pa, 1, fp);
-    fclose(fp);
-    // Top10 の各マスの合計値を代入する配列
-    float weight_sum[SPRM_LEN];
-    // 0 で初期化
-    for (int i = 0; i < SPRM_LEN; i++)
-        weight_sum[i] = 0.0;
-    for (int i = 0; i < SURVIVE_NUM; i++) {
-        // 評価値の合計に足していく
-        for (int j = 0; j < SPRM_LEN; j++){
-            weight_sum[j] += pa[i].weight[j];
-        }
-    }
-    // 確認用
-    // データ数だけ割って, 平均値にする
-    // ここで引数を登場させるの忘れてた
-    for (int i = 0; i < SPRM_LEN; i++)
-        f_pointer[i] = weight_sum[i] / 10;
-}
-
 // トップ10の平均値を取得(共有ライブラリ用)
 // 世代番号でなく, ファイル名で指定する
 // ファイル名の世代番号指定はpythonで行う
@@ -497,9 +386,6 @@ void getFamilyMeansPy(const char *fnamer, float *f_pointer, int n) {
     loadSprmFileDirect(fnamer, family, sizeof family);
     // 平均値計算
     calcSprmMeans(family, f_pointer, n);
-    //zeros(f_pointer, n);
-    // 試しにトップだけ表示してみる
-    //for (int i = 0; i < SPRM_LEN; i++) f_pointer[i] = family[0].weight[i];
 }
 
 // トップ10の標準偏差を取得(共有ライブラリ用)

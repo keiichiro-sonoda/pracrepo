@@ -108,20 +108,6 @@ void getSprmFilePy(int gene_num, float f_pointer[MASU_NUM]);
 // ファイル名も指定する
 void getSprmFileFlexPy(const char *fnamer, float *f_pointer);
 
-// トップだけを観察するとばらつきが大きいため, トップ10の平均値を取ってみる
-// 逆に0に近づいてしまうか?
-void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]);
-
-// トップ10の平均値を取得(共有ライブラリ用)
-// 突然変異無しファイルを扱う
-// 世代番号, pythonに渡すためのポインタを与える
-void getTop10NMAvePy(int gene_num, float f_pointer[SPRM_LEN]);
-
-// トップ10の平均値を取得(共有ライブラリ用)
-// 角固定ファイルを扱う(0.5)
-// ファイル名フォーマットも引数に与えられるようにしようか?
-void getTop10FC1AvePy(int gene_num, float f_pointer[SPRM_LEN]);
-
 // トップ10の平均値を取得(共有ライブラリ用)
 // 世代番号でなく, ファイル名で指定する
 // ファイル名を世代番号でしていするのはpythonで行なう
