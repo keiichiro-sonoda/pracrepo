@@ -63,12 +63,12 @@ int showBoardHex(Board b) {
     return 0;
 }
 
-void showDecimalArray(const int *ia, int ia_len) {
-    int i;
+// int型の配列を10進表記で表示
+void printDecimalArray(const int *A, int n) {
     putchar('{');
-    for (i = 0; i < ia_len; i++) {
-        printf("%03d", ia[i]);
-        if (i < ia_len - 1)
+    for (int i = 0; i < n; i++) {
+        printf("%03d", A[i]);
+        if (i < n - 1)
             printf(", ");
     }
     printf("}\n");

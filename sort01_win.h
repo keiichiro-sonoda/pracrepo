@@ -3,8 +3,6 @@
 
 void sortTest(void);
 
-void printDecimalArray(const int *A, int n);
-
 int exchange(int *A, int i, int j);
 
 int partitionDD(int *A, int *B, int p, int r);

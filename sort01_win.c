@@ -3,18 +3,9 @@
 
 void sortTest(void) {
     printString("debugging\n");
-}
-
-void printDecimalArray(const int *A, int n) {
-    int i;
-    putchar('{');
-    for (i = 0; i < n; i++) {
-        printf("%3d", A[i]);
-        if (i < n - 1) {
-            printf(", ");
-        }
-    }
-    printf("}\n");
+    int sample1[] = {5, 1, 3, 6, 8, 2, 9, 0, 4, 7};
+    int l1 = arrayLength(sample1);
+    printDecimalArray(sample1, l1);
 }
 
 int exchange(int *A, int i, int j) {

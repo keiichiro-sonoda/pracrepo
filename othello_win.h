@@ -19,7 +19,7 @@
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
-#define arrayLength(A) sizeof(A) / sizeof(A[0])
+#define arrayLength(A) (sizeof(A) / sizeof(A[0]))
 
 // 64bit
 // mingw64 long long int
@@ -57,8 +57,11 @@ Board createEmptyBoard(void);
 int showBoard(Board b);
 // show board in 32 hexadecimal digits
 int showBoardHex(Board b);
+
 // display int array (decimal)
-void showDecimalArray(const int *ia, int ia_len);
+// int型の配列を10進表記で表示
+void printDecimalArray(const int *A, int n);
+
 // display int array (hexadecimal)
 int showHexArray(int *ia, int ia_len);
 // neighbor?
