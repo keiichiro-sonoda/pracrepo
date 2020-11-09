@@ -491,7 +491,7 @@ void calcSprmMeans(const Sprm *family, float *means, int n) {
 
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
-void getFamilyAvePy(const char *fnamer, float *f_pointer, int n) {
+void getFamilyMeansPy(const char *fnamer, float *f_pointer, int n) {
     Sprm family[n];
     // ファイル読み込み
     loadSprmFileDirect(fnamer, family, sizeof family);

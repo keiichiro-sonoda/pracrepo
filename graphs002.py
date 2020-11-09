@@ -16,9 +16,9 @@ getTop10AveFlex = exe2_win.getTop10AveFlexPy
 getTop10AveFlex.rectype = None
 getTop10AveFlex.argtypes = (c_char_p, FloatArray10)
 
-getFamilyAve = exe2_win.getFamilyAvePy
-getFamilyAve.rectype = None
-getFamilyAve.argtypes = (c_char_p, FloatArray100, c_int32)
+getFamilyMeans = exe2_win.getFamilyMeansPy
+getFamilyMeans.rectype = None
+getFamilyMeans.argtypes = (c_char_p, FloatArray100, c_int32)
 
 # 標準偏差の配列を計算する関数を共有ライブラリから取得
 getTop10SDFlex = exe2_win.getTop10SDFlexPy
@@ -38,9 +38,9 @@ def getTop10SDFlexWrap(fnamer):
     getTop10SDFlex(fnamer.encode(), f_arr_c)
     return list(f_arr_c)
 
-def getFamilyAveWrap(fnamer, n):
+def getFamilyMeansWrap(fnamer, n):
     f_arr_c = FloatArray100()
-    getFamilyAve(fnamer.encode(), f_arr_c, n)
+    getFamilyMeans(fnamer.encode(), f_arr_c, n)
     lis = list(f_arr_c)
     return lis[:n]
 
@@ -166,7 +166,7 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
         # x は範囲内の整数全て
         x.append(i)
         # i 世代全個体の平均値を取り出す
-        tprm = getFamilyAveWrap(fname_format.format(i), population)
+        tprm = getFamilyMeansWrap(fname_format.format(i), population)
         # それぞれのマスの評価値に代入!
         for j in range(10):
             ys[j].append(tprm[j])
@@ -235,5 +235,5 @@ if __name__ == "__main__":
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    #getFamilyAveWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
+    #getFamilyMeansWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
     makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
