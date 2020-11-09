@@ -92,6 +92,10 @@ int loadSprmFileFlex(char *format, int gene_num, Sprm *pra, size_t pra_size);
 // check parameter in a file
 void checkSprmFile(int gene_num);
 
+// n は個体数
+// マクロのPOPULATIONは使わずに可変とする
+void checkSprmFileFlex(char *format, int gene_num, int n);
+
 // pythonでパラメータを読み取りたい
 // 書き換えるための float のポインタを与える
 // 引数に配列の個数も指定できちゃうの??

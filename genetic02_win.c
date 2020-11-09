@@ -283,6 +283,16 @@ void checkSprmFile(int gene_num) {
     showFloatArray(pa[0].weight, SPRM_LEN);
 }
 
+// n は個体数
+// マクロのPOPULATIONは使わずに可変とする
+void checkSprmFileFlex(char *format, int gene_num, int n) {
+    Sprm pra[n];
+    if (loadSprmFileFlex(format, gene_num, pra, sizeof pra) < -1)
+        return;
+    // 読み込めたら表示
+    showSprm(pra[0]);
+}
+
 // pythonでパラメータを読み取りたい
 // 書き換えるための float のポインタを与える
 // 引数に配列の個数も指定できちゃうの??
