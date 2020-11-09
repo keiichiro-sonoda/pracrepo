@@ -183,4 +183,4 @@ if __name__ == "__main__":
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    getFamilyAveWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50)
+    getFamilyAveWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g000.bin", 50)

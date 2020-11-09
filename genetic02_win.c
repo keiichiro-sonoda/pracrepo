@@ -490,6 +490,7 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // 個体数は可変にしたいので長さも引数として与える
 void getFamilyAvePy(const char *fnamer, float *f_pointer, int n) {
     printString("debugging");
+    printString(fnamer);
 }
 
 // トップ10の標準偏差を取得(共有ライブラリ用)
