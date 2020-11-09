@@ -7,6 +7,9 @@ void sortTest(void);
 // insertion sort
 void insertionSort(int *A, int n);
 
+// randomly select 2 integers without duplication
+void randIntDoubleDep(int pair[2], int min, int max);
+
 // make an array of random numbers
 void arrayRandom(int n);
 
