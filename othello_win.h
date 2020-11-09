@@ -19,6 +19,7 @@
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
+#define arrayLength(A) sizeof(A) / sizeof(A[0])
 
 // 64bit
 // mingw64 long long int

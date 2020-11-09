@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include "othello_win.h"
 
-#define arrayLength(A) sizeof(A) / sizeof(A[0])
+void sortTest(void) {
+    printString("debugging\n");
+}
 
 void printDecimalArray(const int *A, int n) {
     int i;

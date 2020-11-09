@@ -5,6 +5,7 @@
 #include <float.h>
 #include <math.h>
 #include "genetic02_win.h"
+#include "sort01_win.h"
 
 // global variables
 Board START;
@@ -15,9 +16,6 @@ int CORR_TABLE[MASU_NUM];
 
 // functions defined in othello.c
 // 全てヘッダファイルから輸入
-
-// これはまた他のファイルから輸入
-void quicksortDD(int *A, int *B, int p, int r);
 
 // functions
 // パラメータをマスに対応するように表示
