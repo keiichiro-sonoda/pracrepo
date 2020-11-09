@@ -16,6 +16,9 @@
 // マクロ
 #define kugiri() printf("--------------------------\n")
 #define printString(s) printf("%s\n", s)
+#define printDecimal(x) printf("%d\n", x)
+#define printFloat(x) printf("%f\n", x)
+#define printSize(x) printf("%ld\n", sizeof x)
 
 // 64bit
 // mingw64 long long int

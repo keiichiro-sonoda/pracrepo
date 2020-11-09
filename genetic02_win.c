@@ -4,26 +4,14 @@
 #include <time.h>
 #include <float.h>
 #include <math.h>
-#include "othello_win.h" // ヘッダファイル導入!
-
-// よく使う数値
-#define SPRM_LEN 10
-#define SURVIVE_NUM 10
-#define GENE_NUM 100
-
-// マクロ
-#define printDecimal(x) printf("%d\n", x)
-#define printFloat(x) printf("%f\n", x)
-#define printSize(x) printf("%ld\n", sizeof x)
-
-// simple parameter
-typedef struct {
-    float weight[SPRM_LEN];
-} Sprm;
+#include "genetic02_win.h"
 
 // global variables
 Board START;
-int INDEXES[MASU_NUM];
+// correspondence table
+// 対応表??
+// シンプルパラメータに対応するように添え字を設定する
+int CORR_TABLE[MASU_NUM];
 
 // functions defined in othello.c
 // 全てヘッダファイルから輸入
@@ -31,13 +19,27 @@ int INDEXES[MASU_NUM];
 // これはまた他のファイルから輸入
 void quicksortDD(int *A, int *B, int p, int r);
 
+int main(void) {
+    // seed reset
+    srand((unsigned)time(NULL));
+    // set global variable
+    setCORR_TABLE();
+    // set initial board
+    initBoard();
+    //nextGenerationSprmLoop(7, 293);
+    showBoard(START);
+    checkSprmFile(300);
+    return 0;
+}
+
 // functions
 
+// パラメータをマスに対応するように表示
 void showSprm(Sprm pr) {
     int i;
     float p;
     for (i = 0; i < MASU_NUM; i++) {
-        p = pr.weight[INDEXES[i]];
+        p = pr.weight[CORR_TABLE[i]];
         printf("%5.2f ", p);
         if (i % 8 == 7) {
             putchar('\n');
@@ -143,12 +145,13 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     return child;
 }
 
+// グローバル変数を設定
 // convert from an address to the weight index?
-void setIndexes(void) {
+void setCORR_TABLE(void) {
     int i, ad;
     for (i = 0; i < MASU_NUM; i++) {
         ad = i * 2;
-        INDEXES[i] = ad2index(normalAd(ad));
+        CORR_TABLE[i] = ad2index(normalAd(ad));
     }
 }
 
@@ -162,7 +165,7 @@ float evaluationSimple(Board b, Sprm pr) {
     //showDecimalArray(ba, MASU_NUM);
     for (i = 0; i < MASU_NUM; i++) {
         // calculate inner product
-        pt += ba[i] * pr.weight[INDEXES[i]];
+        pt += ba[i] * pr.weight[CORR_TABLE[i]];
     }
     return pt;
 }
@@ -286,7 +289,7 @@ void checkSprmFile(int gene_num) {
 // 書き換えるための float のポインタを与える
 // 引数に配列の個数も指定できちゃうの??
 // main関数実行前提で考えてた
-// 何もしないと INDEXES は設定されない!
+// 何もしないと CORR_TABLE は設定されない!
 void getSprmFilePy(int gene_num, float f_pointer[MASU_NUM]) {
     //printf("called!\n");
     FILE *fp;
@@ -304,10 +307,10 @@ void getSprmFilePy(int gene_num, float f_pointer[MASU_NUM]) {
     fclose(fp);
     // チェック
     //showFloatArray(pa[0].weight, SPRM_LEN);
-    //showDecimalArray(INDEXES, MASU_NUM);
+    //showDecimalArray(CORR_TABLE, MASU_NUM);
     // 適切な位置にパラメータを配置
     for (i = 0; i < MASU_NUM; i++) {
-        f_pointer[i] = pa[0].weight[INDEXES[i]];
+        f_pointer[i] = pa[0].weight[CORR_TABLE[i]];
     }
 }
 
@@ -328,7 +331,7 @@ void getSprmFileFlexPy(const char *fnamer, float *f_pointer) {
     // 適切な位置にパラメータを配置
     for (int i = 0; i < MASU_NUM; i++)
         // トップパラメータから
-        f_pointer[i] = pa[0].weight[INDEXES[i]];
+        f_pointer[i] = pa[0].weight[CORR_TABLE[i]];
 }
 
 // トップだけを観察するとばらつきが大きいため, トップ10の平均値を取ってみる
@@ -362,10 +365,7 @@ void getTop10AvePy(int gene_num, float f_pointer[SPRM_LEN]) {
         }
     }
     // 確認用
-    //putchar('\n');
-    //showFloatArray(weight_sum, SPRM_LEN);
-    // データ数だけ割って, 平均値にする
-    // ここで引数を登場させるの忘れてた
+    // データ数で割, 平均値にして引数のポインタに格納
     for (int i = 0; i < SPRM_LEN; i++)
         f_pointer[i] = weight_sum[i] / 10;
 }
@@ -525,12 +525,12 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {
     int i, j, k;
     // all zero
-    zeros(result, GENE_NUM);
+    zeros(result, POPULATION);
     // black index
-    for (i = 0; i < GENE_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         //printf("\ai = %d / %d", i, FAMILY_NUM);
         // white index
-        for (j = 0; j < GENE_NUM; j++) {
+        for (j = 0; j < POPULATION; j++) {
             if (i == j) continue;
             switch(oneToOneNormalSprm(generation + i, generation + j)) {
                 // black won
@@ -568,23 +568,23 @@ float distSprm(Sprm p1, Sprm p2) {
 // and show match results
 void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     int i, j;
-    int result[GENE_NUM];
-    int number[GENE_NUM];
+    int result[POPULATION];
+    int number[POPULATION];
     float dist;
     // number = {0, 1, 2, ..., 99}
-    for (i = 0; i < GENE_NUM; i++)
+    for (i = 0; i < POPULATION; i++)
         number[i] = i;
     // game!
     leagueMatchSimpleSprm(generation, result);
     // sort (descending order)
-    quicksortDD(result, number, 0, GENE_NUM - 1);
+    quicksortDD(result, number, 0, POPULATION - 1);
     // show ranking
     printf("rank change\n");
-    for (i = 0; i < GENE_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         // rank 11 .. 99 aren't displayed
-        if (10 <= i && i < GENE_NUM - 1) continue;
+        if (10 <= i && i < POPULATION - 1) continue;
         // worst!
-        if (i == GENE_NUM - 1)
+        if (i == POPULATION - 1)
             printf("        ...\n");
         // winner's index (or worst index)
         j = number[i];
@@ -638,7 +638,7 @@ int nextGenerationSprm(int gene_num) {
         }
     }
     // make children!
-    Sprm generation[GENE_NUM];
+    Sprm generation[POPULATION];
     // 10 parents copy
     for (count = 0; count < SURVIVE_NUM; count++) {
         generation[count] = parents[count];
@@ -689,7 +689,7 @@ void initPy(void) {
     // これは不要かも
     srand((unsigned)time(NULL));
     // これはまじで必須
-    setIndexes();
+    setCORR_TABLE();
     // 念のため
     initBoard();
 }
@@ -697,25 +697,6 @@ void initPy(void) {
 // 初期化できているか確認
 void showStartPy(void) {
     showBoard(START);
-}
-
-int main(void) {
-    // seed reset
-    srand((unsigned)time(NULL));
-    // set global variable
-    setIndexes();
-    // set initial board
-    initBoard();
-    //nextGenerationSprmLoop(7, 293);
-    showBoard(START);
-    checkSprmFile(300);
-    int l1 = 10;
-    float sample1[l1];
-    zerosFloat(sample1, l1);
-    for (int i = 0; i < l1; i++)
-        printf("%5.2f ", sample1[i]);
-    putchar(10);
-    return 0;
 }
 
 // pythonから渡される文字列を表示してみたい
