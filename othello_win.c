@@ -7,7 +7,6 @@
 // ヘッダファイル関数の中身を書くファイル
 // ヘッダファイルのおかげで型定義もしなくて済む
 // やっぱグローバル変数は厄介かも
-const char B2C[5] = "-ox!";
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 
 // get a piece at a certain address

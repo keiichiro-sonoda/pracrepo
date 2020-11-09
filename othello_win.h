@@ -13,6 +13,12 @@
 #define START_H 0x0000000000000180L
 #define START_L 0x0240000000000000L
 
+// グローバル変数をマクロに変更
+// bin -> char
+// black: (0b01, o), white: (0b10, x), empty: (0b00, -)
+// can put sign: (0b11, !)
+#define B2C "-ox!"
+
 // マクロ
 #define kugiri() printf("--------------------------\n")
 #define printString(s) printf("%s\n", s)
@@ -36,11 +42,6 @@ typedef struct {
 // 複数ファイルで共有するときは extern を付けるらしい
 // const は諦めよう
 extern Board START;
-
-// bin -> char
-// black: (0b01, o), white: (0b10, x), empty: (0b00, -)
-// can put sign: (0b11, !)
-extern const char B2C[5];
 
 // 8 directions
 extern const int DIRECTION[8];
