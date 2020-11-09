@@ -1,4 +1,4 @@
-# 突然変異除いたバージョンのパラメータのグラフを作りたい
+# グラフ作成ファイル
 from ctypes import *
 import numpy as np
 from matplotlib import pyplot as plt
@@ -15,7 +15,7 @@ getTop10AveFlex.rectype = None
 getTop10AveFlex.argtypes = (c_char_p, FloatArray10)
 
 getFamilyMeans = exe2_win.getFamilyMeansPy
-getFamilyMeans.rectype = None
+getFamilyMeans.rectype = c_int32
 getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # 標準偏差の配列を計算する関数を共有ライブラリから取得
@@ -31,14 +31,17 @@ def getTop10AveFlexWrap(fnamer):
     getTop10AveFlex(fnamer.encode(), f_arr_c)
     return list(f_arr_c)
 
+def getFamilyMeansWrap(fnamer, n):
+    f_arr_c = FloatArray10()
+    flag = getFamilyMeans(fnamer.encode(), f_arr_c, n)
+    # 読み込み失敗
+    if flag < 0:
+        return None
+    return list(f_arr_c)
+
 def getTop10SDFlexWrap(fnamer):
     f_arr_c = FloatArray10()
     getTop10SDFlex(fnamer.encode(), f_arr_c)
-    return list(f_arr_c)
-
-def getFamilyMeansWrap(fnamer, n):
-    f_arr_c = FloatArray10()
-    getFamilyMeans(fnamer.encode(), f_arr_c, n)
     return list(f_arr_c)
 
 # グラフ用の色
@@ -160,10 +163,14 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
     for i in range(x_min, x_max + 1):
-        # x は範囲内の整数全て
-        x.append(i)
         # i 世代全個体の平均値を取り出す
         tprm = getFamilyMeansWrap(fname_format.format(i), population)
+        # 読み込みエラー
+        if tprm == None:
+            continue
+        # 読み込めたらデータを追加
+        # x は範囲内の整数全て
+        x.append(i)
         # それぞれのマスの評価値に代入!
         for j in range(10):
             ys[j].append(tprm[j])
@@ -197,8 +204,8 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
     # ラベル指定
     ax.set_xlabel("generation", fontsize=15)
     ax.set_ylabel("point", fontsize=15)
-    # 横幅指定（世代幅）
-    ax.set_xticks(np.linspace(x_min, x_max, 11))
+    # 横幅指定（読み込みに成功したデータだけ）
+    ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.6, 0.6, 7))
     plt.show()
@@ -233,4 +240,4 @@ if __name__ == "__main__":
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #getFamilyMeansWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
-    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
+    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, -10, 110)

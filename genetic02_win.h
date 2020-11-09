@@ -118,7 +118,7 @@ void calcSprmMeans(const Sprm *family, float *means, int n);
 
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
-void getFamilyMeansPy(const char *fnamer, float *f_pointer, int n);
+int getFamilyMeansPy(const char *fnamer, float *f_pointer, int n);
 
 // トップ10の標準偏差を取得(共有ライブラリ用)
 // 世代番号でなく, ファイル名で指定する

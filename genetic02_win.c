@@ -380,12 +380,17 @@ void calcSprmMeans(const Sprm *family, float *means, int n) {
 
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
-void getFamilyMeansPy(const char *fnamer, float *f_pointer, int n) {
+// 無効なファイル名が渡されたときの処理も追加
+int getFamilyMeansPy(const char *fnamer, float *f_pointer, int n) {
     Sprm family[n];
     // ファイル読み込み
-    loadSprmFileDirect(fnamer, family, sizeof family);
+    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
+        // 失敗
+        return -1;
+    // 成功
     // 平均値計算
     calcSprmMeans(family, f_pointer, n);
+    return 0;
 }
 
 // トップ10の標準偏差を取得(共有ライブラリ用)
