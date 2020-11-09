@@ -127,6 +127,9 @@ void getTop10FC1AvePy(int gene_num, float f_pointer[SPRM_LEN]);
 // ファイル名を世代番号でしていするのはpythonで行なう
 void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]);
 
+// パラメータ毎に平均値を計算する関数
+void calcSprmMeans(const Sprm *family, float *means, int n);
+
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 void getFamilyAvePy(const char *fnamer, float *f_pointer, int n);

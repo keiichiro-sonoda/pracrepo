@@ -154,6 +154,57 @@ def dataView06(fname_format, x_min, x_max):
     ax.set_yticks(np.linspace(-0.0, 0.40, 5))
     plt.show()
 
+# 平均値表示(各世代全個体)
+# ファイル名のフォーマットと個体数を渡す
+# 世代幅も指定
+def makeMeansGraph(fname_format, population, x_min, x_max):
+    x = []
+    # 10 マス分のデータの配列を用意
+    ys = [[] for i in range(10)]
+    for i in range(x_min, x_max + 1):
+        # x は範囲内の整数全て
+        x.append(i)
+        # i 世代全個体の平均値を取り出す
+        tprm = getFamilyAveWrap(fname_format.format(i), population)
+        # それぞれのマスの評価値に代入!
+        for j in range(10):
+            ys[j].append(tprm[j])
+    
+    fig = plt.figure(figsize=(8, 5))
+    ax = fig.add_subplot(
+        111,
+        xlabel="generation",
+        ylabel="point",
+    )
+    # 各マスの変移をプロット
+    for i in range(10):
+        lw = 1
+        lc = LINE_COLORS[i]
+        if i in [0, 4]:
+            lw = 4
+        # ラベル付け
+        ax.plot(x, ys[i],
+            label="{:d}".format(i + 1),
+            color=lc,
+            linewidth=lw
+        )
+    #plt.legend(loc="best")
+    # 凡例調節
+    ax.legend(
+        bbox_to_anchor=(1.01, 1),
+        loc='upper left',
+        borderaxespad=0,
+        fontsize=10
+    )
+    # ラベル指定
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("point", fontsize=15)
+    # 横幅指定（世代幅）
+    ax.set_xticks(np.linspace(x_min, x_max, 11))
+    # 縦幅指定（固定）
+    ax.set_yticks(np.linspace(-0.6, 0.6, 7))
+    plt.show()
+
 if __name__ == "__main__":
     # 最初
     #dataView05("prm//simple_prm{:03d}.bin", 0, 100)
@@ -183,4 +234,5 @@ if __name__ == "__main__":
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    getFamilyAveWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
+    #getFamilyAveWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
+    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)

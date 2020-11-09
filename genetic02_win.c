@@ -476,18 +476,26 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
         f_pointer[i] = weight_sum[i] / 10;
 }
 
+// パラメータ毎に平均値を計算する関数
+void calcSprmMeans(const Sprm *family, float *means, int n) {
+    // 0 で初期化
+    zeros(means, n);
+    // 和を計算
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < SPRM_LEN; j++)
+            means[j] += family[i].weight[j];
+    // 個体数で割る
+    for (int j = 0; j < SPRM_LEN; j++)
+        means[j] /= n;
+}
+
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 void getFamilyAvePy(const char *fnamer, float *f_pointer, int n) {
     printString("debugging");
     Sprm family[n];
     loadSprmFileDirect(fnamer, family, sizeof family);
-    float sample1[SPRM_LEN];
-    zeros(sample1, SPRM_LEN);
-    for (int i = 0; i < SPRM_LEN; i++) {
-        printf("%f ", sample1[i]);
-    }
-    putchar(10);
+    calcSprmMeans(family, f_pointer, n);
 }
 
 // トップ10の標準偏差を取得(共有ライブラリ用)
