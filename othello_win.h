@@ -25,7 +25,12 @@
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
-#define arrayLength(A) (sizeof(A) / sizeof(A[0]))
+#define arrayLength(A) (sizeof(A) / sizeof((A)[0]))
+
+// 配列を全て0にする
+// 配列の型に依存しないから便利かもしれないが
+// 予期せぬバグが起きるかもしれない
+#define zeros(A, n) for (int _ = 0; _ < (n); _++) (A)[_] = 0
 
 // 64bit
 // mingw64 long long int
@@ -105,8 +110,6 @@ int showCoordinates(const int *can_put, int length);
 int showCanPut(Board b, const int *can_put, int next_count);
 // 指せる手を計算しつつ表示もする
 int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards);
-// all zero
-void zeros(int *ia, int ia_len);
 
 // float型の配列の要素を全て0.0にする
 void zerosFloat(float *A, int n);

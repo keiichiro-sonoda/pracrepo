@@ -482,8 +482,12 @@ void getFamilyAvePy(const char *fnamer, float *f_pointer, int n) {
     printString("debugging");
     Sprm family[n];
     loadSprmFileDirect(fnamer, family, sizeof family);
-    int _ = 1;
-    printDecimal(_);
+    float sample1[SPRM_LEN];
+    zeros(sample1, SPRM_LEN);
+    for (int i = 0; i < SPRM_LEN; i++) {
+        printf("%f ", sample1[i]);
+    }
+    putchar(10);
 }
 
 // トップ10の標準偏差を取得(共有ライブラリ用)
