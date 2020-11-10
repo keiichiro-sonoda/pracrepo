@@ -5,8 +5,8 @@
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
-#define ELITE_NUM 10
-#define POPULATION 100
+#define ELITE_NUM 6
+#define POPULATION 50
 
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
@@ -48,6 +48,7 @@
 // 01: random selection
 // 10: average and uniform crossover (once for each parents)
 #define FNF_10010011000005 "prm/sprm100_10_rd_au_rd005/sprm100_10_rd_au_rd005_g%03d.bin"
+#define FNF_05006011000005 "prm/sprm050_06_rd_au_rd005/sprm050_06_rd_au_rd005_g%03d.bin"
 
 // simple parameter
 typedef struct sprm{
