@@ -133,7 +133,6 @@ def makeSDGraph(ax, x, ys):
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.0, 0.40, 5))
-    
 
 # 標準偏差表示
 def viewSDGraph(fname_format, population, x_min, x_max):
@@ -158,16 +157,12 @@ def viewSDGraph(fname_format, population, x_min, x_max):
     
     # 使い慣れたいからオブジェクト指向にしよう
     fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(
-        111,
-        xlabel="generation",
-        ylabel="point",
-    )
+    ax = fig.add_subplot(111)
     makeSDGraph(ax, x, ys)
     plt.show()
 
 # 2つのグラフを同時描画したい
-def makeStatGraphs(fname_format, population, x_min, x_max):
+def viewStatGraphs(fname_format, population, x_min, x_max):
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
@@ -189,12 +184,8 @@ def makeStatGraphs(fname_format, population, x_min, x_max):
     
     # 使い慣れたいからオブジェクト指向にしよう
     fig = plt.figure(figsize=(16, 5))
-    ax1 = fig.add_subplot(
-        121,
-        xlabel="generation",
-        ylabel="point",
-    )
-    funcTest(ax1, x, ys)
+    ax1 = fig.add_subplot(121)
+    makeSDGraph(ax, x, ys)
     plt.show()
 
 # ファイルフォーマットのリスト
@@ -236,5 +227,4 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 
 if __name__ == "__main__":
     ind = 13
-    #makeStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     viewSDGraph(FILE_FORMATS[ind], 50, 0, 100)
