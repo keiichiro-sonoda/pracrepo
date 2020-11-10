@@ -54,6 +54,9 @@
 
 #define FNF_05006010000005 "prm/sprm050_06_rd_uni_rd005/sprm050_06_rd_uni_rd005_g%03d.bin"
 
+// 02: single point crossover
+#define FNF_05006000200005 "prm/sprm050_06_rlt_1p_rd005/sprm050_06_rlt_1p_rd005_g%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
