@@ -799,16 +799,3 @@ void copyFGFlex(const char *dst_format) {
     // close
     fclose(fp);
 }
-
-// for debugging
-void test1(void) {
-    // set global variable
-    setIndexes();
-    printDecimalArray(INDEXES, MASU_NUM);
-    // set initial board
-    initBoard();
-    // test
-    showBoard(START);
-    //sortTest();
-    checkSprmFile("prm/simple_prm%03d.bin", 0);
-}

@@ -178,7 +178,4 @@ void makeSprmSample(void);
 // give the destination file format
 void copyFGFlex(const char *dst_format);
 
-// for debugging
-void test1(void);
-
 #endif
