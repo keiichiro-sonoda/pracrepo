@@ -162,30 +162,31 @@ def viewSDGraph(fname_format, population, x_min, x_max):
     plt.show()
 
 # 2つのグラフを同時描画したい
-def viewStatGraphs(fname_format, population, x_min, x_max):
-    x = []
+def viewStatGraphs(fname_format, population, g_min, g_max):
+    g = []
     # 10 マス分のデータの配列を用意
-    ys = [[] for i in range(10)]
-    for i in range(x_min, x_max + 1):
+    means = [[] for i in range(10)]
+    SD = [[]] * 10
+    for i in range(g_min, g_max + 1):
         # i 世代全個体の平均値
         tprm = getFamilyMeansWrap(fname_format.format(i), population)
         # 空リストがの場合（読み込み失敗）
         if not tprm:
             continue
         # x は読み込めた整数全て
-        x.append(i)
+        g.append(i)
         # それぞれのマスの評価値に代入!
         for j in range(10):
-            ys[j].append(tprm[j])
+            means[j].append(tprm[j])
     
     # 読み込めたデータがひとつもない
-    if not x:
+    if not g:
         return
     
     # 使い慣れたいからオブジェクト指向にしよう
     fig = plt.figure(figsize=(16, 5))
     ax1 = fig.add_subplot(121)
-    makeSDGraph(ax, x, ys)
+    makeSDGraph(ax1, g, means)
     plt.show()
 
 # ファイルフォーマットのリスト
@@ -227,4 +228,5 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 
 if __name__ == "__main__":
     ind = 13
-    viewSDGraph(FILE_FORMATS[ind], 50, 0, 100)
+    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    #viewSDGraph(FILE_FORMATS[ind], 50, 0, 100)
