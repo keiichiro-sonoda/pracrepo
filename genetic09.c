@@ -49,14 +49,40 @@ void randUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *
     }
 }
 
+// roulette selection
+// single point crossover
+void rouletteSP(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
+    int count;
+    int parents[2];
+    Sprm children[2];
+    // elite selection
+    for (count = 0; count < ELITE_NUM; count++)
+        next[count] = current[numbers[count]];
+    // selection and crossover
+    while (count < POPULATION) {
+        // choose parents by roulette selection
+        // con't allow duplication
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        // make 2 children (single point crossover)
+        // the mutation rate is 5%
+        singlePointCrossover(current[numbers[parents[0]]], current[numbers[parents[1]]], children, 0.05f);
+        next[count] = children[0];
+        count++;
+        // overflow
+        if (count >= POPULATION) break;
+        next[count] = children[1];
+        count++;
+    }
+}
+
 int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_05006010000005;
-    //makeFirstGeneFileFlex(format);
-    //checkSprmFile(format, 2);
-    nGeneSSAFlexLoop(randUni, format, 1, 0, 100);
+    char format[] = FNF_TEST;
+    makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 0);
+    nGeneSSAFlexLoop(rouletteSP, format, 1, 0, 2);
     return 0;
 }
