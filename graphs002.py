@@ -43,36 +43,7 @@ LINE_COLORS = [
     "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
 ]
 
-# 平均値表示(各世代全個体)
-# ファイル名のフォーマットと個体数を渡す
-# 世代幅も指定
-def makeMeansGraph(fname_format, population, x_min, x_max):
-    x = []
-    # 10 マス分のデータの配列を用意
-    ys = [[] for i in range(10)]
-    for i in range(x_min, x_max + 1):
-        # i 世代全個体の平均値を取り出す
-        tprm = getFamilyMeansWrap(fname_format.format(i), population)
-        # 読み込みエラー
-        if not tprm:
-            continue
-        # 読み込めたらデータを追加
-        # x は範囲内の整数全て
-        x.append(i)
-        # それぞれのマスの評価値に代入!
-        for j in range(10):
-            ys[j].append(tprm[j])
-
-    # 読み込めたデータが無ければ終了
-    if not x:
-        return
-    
-    fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(
-        111,
-        xlabel="generation",
-        ylabel="point",
-    )
+def makeMeansGraph(ax, x, ys):
     # 各マスの変移をプロット
     for i in range(10):
         lw = 1
@@ -95,11 +66,39 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
     )
     # ラベル指定
     ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("point", fontsize=15)
+    ax.set_ylabel("means", fontsize=15)
     # 横幅指定（読み込みに成功したデータだけ）
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.6, 0.6, 7))
+
+# 平均値表示(各世代全個体)
+# ファイル名のフォーマットと個体数を渡す
+# 世代幅も指定
+def viewMeansGraph(fname_format, population, x_min, x_max):
+    x = []
+    # 10 マス分のデータの配列を用意
+    ys = [[] for i in range(10)]
+    for i in range(x_min, x_max + 1):
+        # i 世代全個体の平均値を取り出す
+        tprm = getFamilyMeansWrap(fname_format.format(i), population)
+        # 読み込みエラー
+        if not tprm:
+            continue
+        # 読み込めたらデータを追加
+        # x は範囲内の整数全て
+        x.append(i)
+        # それぞれのマスの評価値に代入!
+        for j in range(10):
+            ys[j].append(tprm[j])
+
+    # 読み込めたデータが無ければ終了
+    if not x:
+        return
+    
+    fig = plt.figure(figsize=(8, 5))
+    ax = fig.add_subplot(111)
+    makeMeansGraph(ax, x, ys)
     plt.show()
 
 # 標準偏差のグラフを作成
@@ -167,6 +166,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     # 10 マス分のデータの配列を用意
     means = [[] for i in range(10)]
     SD = [[]] * 10
+    print(SD)
     for i in range(g_min, g_max + 1):
         # i 世代全個体の平均値
         tprm = getFamilyMeansWrap(fname_format.format(i), population)
@@ -227,6 +227,6 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rd005//sprm050_06_rd_uni_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 13
-    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
-    #viewSDGraph(FILE_FORMATS[ind], 50, 0, 100)
+    ind = 11
+    #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
