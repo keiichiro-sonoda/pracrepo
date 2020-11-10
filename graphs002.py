@@ -161,6 +161,68 @@ def makeSDGraph(fname_format, population, x_min, x_max):
     ax.set_yticks(np.linspace(-0.0, 0.40, 5))
     plt.show()
 
+def funcTest(ax, x, ys):
+    # 各マスの変移をプロット
+    for i in range(10):
+        lw = 1
+        lc = LINE_COLORS[i]
+        # 注目マス
+        # 標準偏差はいらないかも
+        #if i in [0, 4]:
+        #    lw = 4
+        # ラベル付け
+        ax.plot(x, ys[i],
+            label="{:d}".format(i + 1),
+            color=lc,
+            linewidth=lw
+        )
+    #plt.legend(loc="best")
+    # 凡例調節
+    ax.legend(
+        bbox_to_anchor=(1.01, 1),
+        loc='upper left',
+        borderaxespad=0,
+        fontsize=10
+    )
+    # ラベル指定
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("standard deviation", fontsize=15)
+    # 横幅指定（読み込めたデータだけ）
+    ax.set_xticks(np.linspace(x[0], x[-1], 11))
+    # 縦幅指定（固定）
+    ax.set_yticks(np.linspace(-0.0, 0.40, 5))
+
+# 2つのグラフを同時描画したい
+def makeStatGraphs(fname_format, population, x_min, x_max):
+    x = []
+    # 10 マス分のデータの配列を用意
+    ys = [[] for i in range(10)]
+    for i in range(x_min, x_max + 1):
+        # i 世代全個体の平均値
+        tprm = getFamilyMeansWrap(fname_format.format(i), population)
+        # 空リストがの場合（読み込み失敗）
+        if not tprm:
+            continue
+        # x は読み込めた整数全て
+        x.append(i)
+        # それぞれのマスの評価値に代入!
+        for j in range(10):
+            ys[j].append(tprm[j])
+    
+    # 読み込めたデータがひとつもない
+    if not x:
+        return
+    
+    # 使い慣れたいからオブジェクト指向にしよう
+    fig = plt.figure(figsize=(16, 5))
+    ax1 = fig.add_subplot(
+        121,
+        xlabel="generation",
+        ylabel="point",
+    )
+    funcTest(ax1, x, ys)
+    plt.show()
+
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初（指し手固定）
@@ -194,9 +256,12 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 13. 個体数50, エリート6, 非独立ランダム選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
                 "prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin",
                 # 14. 個体数50, エリート6, 非独立ルーレット選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
-                "prm//sprm050_06_rlt_au_rd005//sprm050_06_rlt_au_rd005_g{:03d}.bin"]
+                "prm//sprm050_06_rlt_au_rd005//sprm050_06_rlt_au_rd005_g{:03d}.bin",
+                # 15. 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突然変異5%
+                "prm//sprm050_06_rd_uni_rd005//sprm050_06_rd_uni_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 14
-    makeMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
+    ind = 15
+    #makeMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #makeSDGraph(FILE_FORMATS[ind], 50, 0, 100)
+    makeStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
