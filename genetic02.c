@@ -112,7 +112,7 @@ float fcrossMFlex(float a, float b, float rate) {
     return b;
 }
 
-// cross parameters?
+// uniform crossing
 // the mutation rate is 5%
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     Sprm child;
@@ -632,7 +632,6 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
 // make next generation file
 // write all individuals to the file
 int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
-    printf("debugging\n");
     char fnamew[FILENAME_MAX];
     FILE *fp;
     // the file name to be written

@@ -5,8 +5,8 @@
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
-#define ELITE_NUM 6
-#define POPULATION 50
+#define ELITE_NUM 10
+#define POPULATION 100
 
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
@@ -79,7 +79,9 @@ void randSprm(Sprm *prp);
 Sprm makeChildAverageSprm(Sprm mother, Sprm father);
 // give mutant rate
 float fcrossMFlex(float a, float b, float rate);
-// cross parameters?
+
+// uniform crossing
+// the mutation rate is 5%
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
 
 // mutate with a given probability
