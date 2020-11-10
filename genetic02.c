@@ -357,24 +357,18 @@ int warnOverwriting(const char *fname) {
 // give a file name format
 // record all individuals!!
 int makeFirstGeneFileFlex(const char *format) {
-    FILE *fp;
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     // check existence
     if (warnOverwriting(fnamew) < 0)
         return -1;
-    // open a file to write (or make a file)
-    if ((fp = fopen(fnamew, "wb")) == NULL) {
-        // failed
-        printf("%s can't be opened.\n", fnamew);
-        return -1;
-    }
-    // can write
+    // make new family randomly
     Sprm pra[POPULATION];
     for (int i = 0; i < POPULATION; i++)
         randSprm(pra + i);
-    fwrite(pra, sizeof pra, 1, fp);
-    fclose(fp);
+    // write
+    if (dumpSprmFileDirect(fnamew, pra, sizeof pra) < 0)
+        return -1;
     printf("%ld bytes written\n", sizeof pra);
     return 0;
 }
