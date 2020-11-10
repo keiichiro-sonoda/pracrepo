@@ -16,6 +16,8 @@ int main(void) {
     //checkSprmFile(FNF_TEST, 0);
     //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 0, 0, 100);
     //sortTest();
-    nGeneSSAFlexLoop(randAveUni, FNF_TEST, 1, 0, 2);
+    makeFirstGeneFileFlex(FNF_10010011000005);
+    checkSprmFile(FNF_10010011000005, 0);
+    nGeneSSAFlexLoop(randAveUni, FNF_10010011000005, 1, 0, 1);
     return 0;
 }

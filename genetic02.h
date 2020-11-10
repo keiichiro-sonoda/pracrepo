@@ -45,6 +45,10 @@
 // 005: mutation rate
 #define FNF_05006000000005 "prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g%03d.bin"
 
+// 01: random selection
+// 10: average and uniform crossover (once for each parents)
+#define FNF_10010011000005 "prm/sprm100_10_rd_au_rd005/sprm100_10_rd_au_rd005_g%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
