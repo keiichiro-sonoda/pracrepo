@@ -195,5 +195,5 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    makeMeansGraph(FILE_FORMATS[11], 50, 0, 100)
+    makeMeansGraph(FILE_FORMATS[12], 50, 0, 100)
     #makeSDGraph(FILE_FORMATS[11], 50, 0, 100)
