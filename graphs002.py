@@ -165,28 +165,34 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     g = []
     # 10 マス分のデータの配列を用意
     means = [[] for i in range(10)]
-    SD = [[]] * 10
-    print(SD)
+    SD = [[] for i in range(10)]
     for i in range(g_min, g_max + 1):
+        fname = fname_format.format(i)
         # i 世代全個体の平均値
-        tprm = getFamilyMeansWrap(fname_format.format(i), population)
+        tmp1 = getFamilyMeansWrap(fname, population)
         # 空リストがの場合（読み込み失敗）
-        if not tprm:
+        # 平均値が読み込める=標準偏差も読み込めると考える
+        if not tmp1:
             continue
+        # 標準偏差も読み込む
+        tmp2 = getFamilySDWrap(fname, population)
         # x は読み込めた整数全て
         g.append(i)
         # それぞれのマスの評価値に代入!
         for j in range(10):
-            means[j].append(tprm[j])
+            means[j].append(tmp1[j])
+            SD[j].append(tmp2[j])
     
     # 読み込めたデータがひとつもない
     if not g:
         return
     
     # 使い慣れたいからオブジェクト指向にしよう
-    fig = plt.figure(figsize=(16, 5))
-    ax1 = fig.add_subplot(121)
-    makeSDGraph(ax1, g, means)
+    fig = plt.figure(figsize=(8, 10))
+    ax1 = fig.add_subplot(211)
+    ax2 = fig.add_subplot(212)
+    makeMeansGraph(ax1, g, means)
+    makeSDGraph(ax2, g, SD)
     plt.show()
 
 # ファイルフォーマットのリスト
@@ -228,5 +234,5 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 
 if __name__ == "__main__":
     ind = 11
-    #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
-    viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
+    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
