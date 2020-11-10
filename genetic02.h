@@ -50,6 +50,8 @@
 #define FNF_10010011000005 "prm/sprm100_10_rd_au_rd005/sprm100_10_rd_au_rd005_g%03d.bin"
 #define FNF_05006011000005 "prm/sprm050_06_rd_au_rd005/sprm050_06_rd_au_rd005_g%03d.bin"
 
+#define FNF_05006001000005 "prm/sprm050_06_rlt_au_rd005/sprm050_06_rlt_au_rd005_g%03d.bin"
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];

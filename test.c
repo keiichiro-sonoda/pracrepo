@@ -11,9 +11,6 @@ int main(void) {
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-
-    //makeFirstGeneFileFlex(FNF_05006011000005);
-    //checkSprmFile(FNF_05006011000005, 0);
-    nGeneSSAFlexLoop(randAveUni, FNF_05006011000005, 1, 0, 100);
+    printString("debugging");
     return 0;
 }
