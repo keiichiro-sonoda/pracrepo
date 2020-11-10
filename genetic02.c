@@ -396,6 +396,21 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     return 0;
 }
 
+// write parameters to a file
+// give a file name for writing
+// be careful of overwriting
+int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
+    FILE *fp;
+    if ((fp = fopen(fname, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fname);
+        return -1;
+    }
+    fwrite(pra, pra_size, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num) {

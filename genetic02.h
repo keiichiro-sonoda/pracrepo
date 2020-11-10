@@ -126,6 +126,11 @@ int makeFirstGeneFileFlex(const char *format);
 // read parameters from a file
 int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size);
 
+// write parameters to a file
+// give a file name for writing
+// be careful of overwriting
+int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
+
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num);
