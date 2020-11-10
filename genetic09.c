@@ -1,4 +1,4 @@
-// this is a source file for debugging
+// define some functions for selection and crossing
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -30,14 +30,33 @@ void rouletteAveUni(const int *fitness, const int *numbers, const Sprm *current,
     }
 }
 
+// random selection
+// only use uniform crossing
+void randUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
+    int count;
+    int parents[2];
+    // elite selection
+    for (count = 0; count < ELITE_NUM; count++)
+        next[count] = current[numbers[count]];
+    // selection and crossover
+    while (count < POPULATION) {
+        // choose parents randomly
+        // don't allow duplication
+        randIntDoubleDep(parents, 0, POPULATION - 1);
+        // make a child (uniform crossover)
+        next[count] = makeChildCrossMSprm(current[parents[0]], current[parents[1]]);
+        count++;
+    }
+}
+
 int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_05006001000005;
-    //makeFirstGeneFileFlex(format);
-    //checkSprmFile(format, 2);
-    nGeneSSAFlexLoop(rouletteAveUni, format, 1, 0, 100);
+    char format[] = FNF_TEST;
+    makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 0);
+    //nGeneSSAFlexLoop(rouletteAveUni, format, 1, 0, 100);
     return 0;
 }
