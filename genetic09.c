@@ -81,8 +81,8 @@ int main(void) {
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
-    makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 0);
+    //makeFirstGeneFileFlex(format);
+    //checkSprmFile(format, 0);
     nGeneSSAFlexLoop(rouletteSP, format, 1, 0, 2);
     return 0;
 }

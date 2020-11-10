@@ -763,6 +763,9 @@ int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*)
     // show the part of fitness
     printString("results:");
     printDecimalArrayPart(fitness, POPULATION);
+    // elite selection
+    for (int i = 0; i < ELITE_NUM; i++)
+        next[i] = current[numbers[i]];
     // selection and crossing
     selAndCross(fitness, numbers, current, next);
     // view some individuals
