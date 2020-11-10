@@ -165,8 +165,20 @@ int nGeneSprmSaveAll(const char *format, int gene_num, int safety);
 // give a function to loop
 void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int loop);
 
+// select randomly except for elite selection
+// perform averaging and uniform crossing once for each parents
+void randAveUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *next);
+
+// make next generation file
+// write all individuals to the file
+// give a function pointer for selection and crossing
+int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*), const char *format, int gene_num, int safety);
+
 // give a function to loop and file name format
 void nGeneSSALoopFlex(int (*nGeneSSA)(const char*, int, int), const char *format, int safety, int st, int loop);
+
+// give a function pointer for selection and crossover
+void nGeneSSAFlexLoop(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*), const char *format, int safety, int st, int loop);
 
 // give a function to loop
 void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop);
