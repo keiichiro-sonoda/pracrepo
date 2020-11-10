@@ -827,7 +827,7 @@ void nGeneSSAFlexLoop(void (*selAndCross)(const int*, const int*, const Sprm*, S
         // get time
         time(&t1);
         printf("elapsed time: %lds\n", t1 - t0);
-        kugiri();
+        kugiri(100);
     }
 }
 

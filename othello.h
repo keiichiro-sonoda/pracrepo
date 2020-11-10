@@ -23,7 +23,7 @@
 
 // macros
 // for debug
-#define kugiri() printf("--------------------------\n")
+#define kugiri(length) for (int _ = 0; _ < length; _++) putchar('-'); putchar('\n')
 #define printString(s) printf("%s\n", s)
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
