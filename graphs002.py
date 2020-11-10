@@ -318,6 +318,10 @@ if __name__ == "__main__":
     # 適応度評価を行なわない
     #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
     #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    #getFamilyMeansWrap("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g100.bin", 50)
-    makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
+    # 全個体保存バージョン
+    # 個体数50, エリート6, ルーレット選択, 一様交叉, ランダム突然変異5%
+    #makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
     #makeSDGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 104, 110)
+    # 個体数100, エリート10, ランダム選択, 平均一様一回ずつ, 一様交叉のみランダム突然変異5%
+    makeMeansGraph("prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin", 100, 0, 100)
+    #makeSDGraph("prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin", 100, 0, 100)
