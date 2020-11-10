@@ -10,30 +10,17 @@ FloatArray10 = c_float * 10
 # 初期化関数
 exe2_win.initPy()
 
-getTop10AveFlex = exe2_win.getTop10AveFlexPy
-getTop10AveFlex.rectype = None
-getTop10AveFlex.argtypes = (c_char_p, FloatArray10)
 # 全個体の平均値
 getFamilyMeans = exe2_win.getFamilyMeansPy
 getFamilyMeans.rectype = c_int32
 getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
 
-# 標準偏差の配列を計算する関数を共有ライブラリから取得
-getTop10SDFlex = exe2_win.getTop10SDFlexPy
-getTop10SDFlex.rectype = None
-getTop10SDFlex.argtypes = (c_char_p, FloatArray10)
 # 全個体の標準偏差
 getFamilySD = exe2_win.getFamilySDPy
 getFamilySD.rectype = c_int32
 getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # 各種ラッパー関数
-# 文字列を渡す
-def getTop10AveFlexWrap(fnamer):
-    f_arr_c = FloatArray10()
-    # バイト型に直して与える
-    getTop10AveFlex(fnamer.encode(), f_arr_c)
-    return list(f_arr_c)
 
 def getFamilyMeansWrap(fnamer, n):
     f_arr_c = FloatArray10()
@@ -41,11 +28,6 @@ def getFamilyMeansWrap(fnamer, n):
     # 読み込み失敗
     if flag < 0:
         return []
-    return list(f_arr_c)
-
-def getTop10SDFlexWrap(fnamer):
-    f_arr_c = FloatArray10()
-    getTop10SDFlex(fnamer.encode(), f_arr_c)
     return list(f_arr_c)
 
 def getFamilySDWrap(fnamer, n):
@@ -60,111 +42,6 @@ LINE_COLORS = [
     "#00ff00", "#1f77b4", "#ff7f0e", "#9467bd", "#ff0000",
     "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
 ]
-
-# 平均値表示したい(課題4で発表したグラフの世代縮小バージョン?)
-# ファイル名のフォーマットを引数で指定してより柔軟にする
-# 世代幅も指定
-def dataView05(fname_format, x_min, x_max):
-    x = []
-    # 10 マス分のデータの配列を用意
-    ys = [[] for i in range(10)]
-    for i in range(x_min, x_max + 1):
-        # x は範囲内の整数全て
-        x.append(i)
-        # i 世代のトップ10の平均値を取り出す
-        tprm = getTop10AveFlexWrap(fname_format.format(i))
-        # それぞれのマスの評価値に代入!
-        for j in range(10):
-            ys[j].append(tprm[j])
-    
-    # 使い慣れたいからオブジェクト指向にしよう
-    fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(
-        111,
-        xlabel="generation",
-        ylabel="point",
-    )
-    # 各マスの変移をプロット
-    for i in range(10):
-        lw = 1
-        lc = LINE_COLORS[i]
-        if i in [0, 4]:
-            lw = 4
-        # ラベル付け
-        ax.plot(x, ys[i],
-            label="{:d}".format(i + 1),
-            color=lc,
-            linewidth=lw
-        )
-    #plt.legend(loc="best")
-    # 凡例調節
-    ax.legend(
-        bbox_to_anchor=(1.01, 1),
-        loc='upper left',
-        borderaxespad=0,
-        fontsize=10
-    )
-    # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("point", fontsize=15)
-    # 横幅指定（世代幅）
-    ax.set_xticks(np.linspace(x_min, x_max, 11))
-    # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(-0.6, 0.6, 7))
-    plt.show()
-
-# 標準偏差表示したい
-# 平均値のときと呼び出す関数が変わるだけ
-def dataView06(fname_format, x_min, x_max):
-    x = []
-    # 10 マス分のデータの配列を用意
-    ys = [[] for i in range(10)]
-    for i in range(x_min, x_max + 1):
-        # x は範囲内の整数全て
-        x.append(i)
-        # i 世代のトップ10の標準偏差を取り出す
-        tprm = getTop10SDFlexWrap(fname_format.format(i))
-        # それぞれのマスの評価値に代入!
-        for j in range(10):
-            ys[j].append(tprm[j])
-    
-    # 使い慣れたいからオブジェクト指向にしよう
-    fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(
-        111,
-        xlabel="generation",
-        ylabel="point",
-    )
-    # 各マスの変移をプロット
-    for i in range(10):
-        lw = 1
-        lc = LINE_COLORS[i]
-        # 注目マス
-        # 標準偏差はいらないかも
-        #if i in [0, 4]:
-        #    lw = 4
-        # ラベル付け
-        ax.plot(x, ys[i],
-            label="{:d}".format(i + 1),
-            color=lc,
-            linewidth=lw
-        )
-    #plt.legend(loc="best")
-    # 凡例調節
-    ax.legend(
-        bbox_to_anchor=(1.01, 1),
-        loc='upper left',
-        borderaxespad=0,
-        fontsize=10
-    )
-    # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("standard deviation", fontsize=15)
-    # 横幅指定（世代幅）
-    ax.set_xticks(np.linspace(x_min, x_max, 11))
-    # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(-0.0, 0.40, 5))
-    plt.show()
 
 # 平均値表示(各世代全個体)
 # ファイル名のフォーマットと個体数を渡す
@@ -285,7 +162,7 @@ def makeSDGraph(fname_format, population, x_min, x_max):
     plt.show()
 
 # ファイルフォーマットのリスト
-FILE_FORMATS = [# 00から10は選ばれた10個体のみファイルに保存
+FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初（指し手固定）
                 "prm//simple_prm{:03d}.bin",
                 # 01. 突然変異無し
@@ -312,10 +189,11 @@ FILE_FORMATS = [# 00から10は選ばれた10個体のみファイルに保存
                 # 以下, 全個体ファイルに保存
                 # 11. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
                 "prm//sprm050_06_rlt_uni_rd005//sprm050_06_rlt_uni_rd005_g{:03d}.bin",
-                # 12. 個体数100, エリート10, ランダム選択, 平均一様一回ずつ, 一様のみランダム突然変異5%
-                "prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin"]
+                # 12. 個体数100, エリート10, 非独立ランダム選択, 平均一様一回ずつ, 一様のみランダム突然変異5%
+                "prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin",
+                # 13. 個体数50, エリート6, 他は12. と同様
+                "prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    #makeMeansGraph("prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin", 50, 0, 100)
-    #makeSDGraph("prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin", 50, 0, 100)
     makeMeansGraph(FILE_FORMATS[11], 50, 0, 100)
+    #makeSDGraph(FILE_FORMATS[11], 50, 0, 100)
