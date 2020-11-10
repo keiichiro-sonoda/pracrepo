@@ -52,12 +52,9 @@ void randUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *
 // roulette selection
 // single point crossover
 void rouletteSP(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
-    int count;
+    int count = ELITE_NUM;
     int parents[2];
     Sprm children[2];
-    // elite selection
-    for (count = 0; count < ELITE_NUM; count++)
-        next[count] = current[numbers[count]];
     // selection and crossover
     while (count < POPULATION) {
         // choose parents by roulette selection
