@@ -102,8 +102,41 @@ def makeMeansGraph(fname_format, population, x_min, x_max):
     ax.set_yticks(np.linspace(-0.6, 0.6, 7))
     plt.show()
 
+# 標準偏差のグラフを作成
+def makeSDGraph(ax, x, ys):
+    # 各マスの変移をプロット
+    for i in range(10):
+        lw = 1
+        lc = LINE_COLORS[i]
+        # 注目マス
+        # 標準偏差はいらないかも
+        #if i in [0, 4]:
+        #    lw = 4
+        # ラベル付け
+        ax.plot(x, ys[i],
+            label="{:d}".format(i + 1),
+            color=lc,
+            linewidth=lw
+        )
+    #plt.legend(loc="best")
+    # 凡例調節
+    ax.legend(
+        bbox_to_anchor=(1.01, 1),
+        loc='upper left',
+        borderaxespad=0,
+        fontsize=10
+    )
+    # ラベル指定
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("standard deviation", fontsize=15)
+    # 横幅指定（読み込めたデータだけ）
+    ax.set_xticks(np.linspace(x[0], x[-1], 11))
+    # 縦幅指定（固定）
+    ax.set_yticks(np.linspace(-0.0, 0.40, 5))
+    
+
 # 標準偏差表示
-def makeSDGraph(fname_format, population, x_min, x_max):
+def viewSDGraph(fname_format, population, x_min, x_max):
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
@@ -130,67 +163,8 @@ def makeSDGraph(fname_format, population, x_min, x_max):
         xlabel="generation",
         ylabel="point",
     )
-    # 各マスの変移をプロット
-    for i in range(10):
-        lw = 1
-        lc = LINE_COLORS[i]
-        # 注目マス
-        # 標準偏差はいらないかも
-        #if i in [0, 4]:
-        #    lw = 4
-        # ラベル付け
-        ax.plot(x, ys[i],
-            label="{:d}".format(i + 1),
-            color=lc,
-            linewidth=lw
-        )
-    #plt.legend(loc="best")
-    # 凡例調節
-    ax.legend(
-        bbox_to_anchor=(1.01, 1),
-        loc='upper left',
-        borderaxespad=0,
-        fontsize=10
-    )
-    # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("standard deviation", fontsize=15)
-    # 横幅指定（読み込めたデータだけ）
-    ax.set_xticks(np.linspace(x[0], x[-1], 11))
-    # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(-0.0, 0.40, 5))
+    makeSDGraph(ax, x, ys)
     plt.show()
-
-def funcTest(ax, x, ys):
-    # 各マスの変移をプロット
-    for i in range(10):
-        lw = 1
-        lc = LINE_COLORS[i]
-        # 注目マス
-        # 標準偏差はいらないかも
-        #if i in [0, 4]:
-        #    lw = 4
-        # ラベル付け
-        ax.plot(x, ys[i],
-            label="{:d}".format(i + 1),
-            color=lc,
-            linewidth=lw
-        )
-    #plt.legend(loc="best")
-    # 凡例調節
-    ax.legend(
-        bbox_to_anchor=(1.01, 1),
-        loc='upper left',
-        borderaxespad=0,
-        fontsize=10
-    )
-    # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("standard deviation", fontsize=15)
-    # 横幅指定（読み込めたデータだけ）
-    ax.set_xticks(np.linspace(x[0], x[-1], 11))
-    # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(-0.0, 0.40, 5))
 
 # 2つのグラフを同時描画したい
 def makeStatGraphs(fname_format, population, x_min, x_max):
@@ -261,7 +235,6 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rd005//sprm050_06_rd_uni_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 15
-    #makeMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
-    #makeSDGraph(FILE_FORMATS[ind], 50, 0, 100)
-    makeStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    ind = 13
+    #makeStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    viewSDGraph(FILE_FORMATS[ind], 50, 0, 100)
