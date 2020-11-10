@@ -71,8 +71,27 @@ int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*)
     // view statistics
     checkSprmStatistics(next, POPULATION);
     // write next family to the file
-    dumpSprmFileDirect(fnamew, next, sizeof next);
-    return 0;
+    // and return error flag
+    return dumpSprmFileDirect(fnamew, next, sizeof next);
+}
+
+// give a function pointer for selection and crossover
+void nGeneSSAFlexLoop(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*), const char *format, int safety, int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        // set the generation number as the seed
+        srand((unsigned)i);
+        if (nGeneSSAFlex(selAndCross, format, i, safety) < 0) {
+            // error
+            printString("error");
+            return;
+        }
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+    }
 }
 
 int main(void) {
@@ -85,6 +104,6 @@ int main(void) {
     //checkSprmFile(FNF_TEST, 0);
     //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 0, 0, 100);
     //sortTest();
-    nGeneSSAFlex(randAveUni, FNF_TEST, 0, 1);
+    nGeneSSAFlexLoop(randAveUni, FNF_TEST, 1, 0, 2);
     return 0;
 }
