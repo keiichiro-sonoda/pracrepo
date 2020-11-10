@@ -189,11 +189,14 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 以下, 全個体ファイルに保存
                 # 11. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
                 "prm//sprm050_06_rlt_uni_rd005//sprm050_06_rlt_uni_rd005_g{:03d}.bin",
-                # 12. 個体数100, エリート10, 非独立ランダム選択, 平均一様一回ずつ, 一様のみランダム突然変異5%
+                # 12. 個体数100, エリート10, 非独立ランダム選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
                 "prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin",
-                # 13. 個体数50, エリート6, 他は12. と同様
-                "prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin"]
+                # 13. 個体数50, エリート6, 非独立ランダム選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
+                "prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin",
+                # 14. 個体数50, エリート6, 非独立ルーレット選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
+                "prm//sprm050_06_rlt_au_rd005//sprm050_06_rlt_au_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    makeMeansGraph(FILE_FORMATS[12], 50, 0, 100)
-    #makeSDGraph(FILE_FORMATS[11], 50, 0, 100)
+    ind = 14
+    makeMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
+    #makeSDGraph(FILE_FORMATS[ind], 50, 0, 100)
