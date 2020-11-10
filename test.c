@@ -26,7 +26,6 @@ void randAveUni(const int *fitness, const int *numbers, const Sprm *current, Spr
         // make a child (uniform crossover)
         next[count] = makeChildCrossMSprm(current[parents[0]], current[parents[1]]);
         count++;
-        if (count >= POPULATION) break;
     }
 }
 
@@ -42,15 +41,13 @@ int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*)
     // current family
     Sprm current[POPULATION];
     // load data
-    if (loadSprmFile(format, gene_num, current, sizeof current) < 0) {
+    if (loadSprmFile(format, gene_num, current, sizeof current) < 0)
         return -1;
-    }
     // view the file name
     printf("write file: %s\n", fnamew);
     // don't allow overwriting
-    if (safety && warnOverwriting(fnamew) < 0) {
+    if (safety && warnOverwriting(fnamew) < 0)
         return -1;
-    }
     // next family
     Sprm next[POPULATION];
     // the array to store points
@@ -64,23 +61,17 @@ int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*)
     // sort (descending order)
     randomizedQuicksortDDAll(fitness, numbers, POPULATION);
     // show the part of fitness
+    printString("results:");
     printDecimalArrayPart(fitness, POPULATION);
     // selection and crossing
     selAndCross(fitness, numbers, current, next);
     // view some individuals
+    printString("next family:");
     showFamilyPart(next);
     // view statistics
     checkSprmStatistics(next, POPULATION);
-
     // write next family to the file
-    if ((fp = fopen(fnamew, "wb")) == NULL) {
-        // failed
-        printf("\a%s cannot be opened\n", fnamew);
-        return -1;
-    }
-    // opened!
-    fwrite(next, sizeof next, 1, fp);
-    fclose(fp);
+    dumpSprmFileDirect(fnamew, next, sizeof next);
     return 0;
 }
 
@@ -90,9 +81,10 @@ int main(void) {
     setIndexes();
     initBoard();
 
-    makeFirstGeneFileFlex(FNF_TEST);
-    checkSprmFile(FNF_TEST, 0);
+    //makeFirstGeneFileFlex(FNF_TEST);
+    //checkSprmFile(FNF_TEST, 0);
     //nGeneSSALoopFlex(nGeneSprmSaveAll, FNF_05006000000005, 0, 0, 100);
     //sortTest();
+    nGeneSSAFlex(randAveUni, FNF_TEST, 0, 1);
     return 0;
 }

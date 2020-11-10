@@ -516,6 +516,8 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     for (j = 0; j < SPRM_LEN; j++)
         sd[j] = sqrtf(sd[j] / nos - square(mean[j]));
     
+    // display
+    printString("statistics:");
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
     printf("SD:   ");
