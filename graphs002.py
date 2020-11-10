@@ -13,7 +13,7 @@ exe2_win.initPy()
 getTop10AveFlex = exe2_win.getTop10AveFlexPy
 getTop10AveFlex.rectype = None
 getTop10AveFlex.argtypes = (c_char_p, FloatArray10)
-
+# 全個体の平均値
 getFamilyMeans = exe2_win.getFamilyMeansPy
 getFamilyMeans.rectype = c_int32
 getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
@@ -22,7 +22,7 @@ getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
 getTop10SDFlex = exe2_win.getTop10SDFlexPy
 getTop10SDFlex.rectype = None
 getTop10SDFlex.argtypes = (c_char_p, FloatArray10)
-
+# 全個体の標準偏差
 getFamilySD = exe2_win.getFamilySDPy
 getFamilySD.rectype = c_int32
 getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
@@ -284,44 +284,38 @@ def makeSDGraph(fname_format, population, x_min, x_max):
     ax.set_yticks(np.linspace(-0.0, 0.40, 5))
     plt.show()
 
+# ファイルフォーマットのリスト
+FILE_FORMATS = [# 00から10は選ばれた10個体のみファイルに保存
+                # 00. 最初（指し手固定）
+                "prm//simple_prm{:03d}.bin",
+                # 01. 突然変異無し
+                "prm//sprm_not_mutate{:03d}.bin",
+                # 02. 角固定
+                "prm//sprm_corner0.5_{:03d}.bin",
+                # 03. ランダム対戦
+                "prm//sprm_vsrand{:03d}.bin",
+                # 04. 角固定-0.5
+                "prm//sprm_corner0.5neg_{:03d}.bin",
+                # 以下, 指し手をルーレット選択
+                # 05. 最初
+                "prm//sprm_roulette{:03d}.bin",
+                # 06.  勝ち点で直接ルーレット
+                "prm//sprm_rltrlt{:03d}.bin",
+                # 07. 最低点を引いて+1した値でルーレット
+                "prm//sprm_rr_submin{:03d}.bin",
+                # 08. 100引く順位（線形）に比例した確率でランキング選択
+                "prm//sprm_rrank{:03d}.bin",
+                # 09. 0.9 ^ 順位（指数）に比例した確率でランキング選択
+                "prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin",
+                # 10. 適応度評価を行わない（比較用）
+                "prm/sprm_nofit/sprm_nofit{:03d}.bin",
+                # 以下, 全個体ファイルに保存
+                # 11. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
+                "prm//sprm050_06_rlt_uni_rd005//sprm050_06_rlt_uni_rd005_g{:03d}.bin",
+                # 12. 個体数100, エリート10, ランダム選択, 平均一様一回ずつ, 一様のみランダム突然変異5%
+                "prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin"]
+
 if __name__ == "__main__":
-    # 最初
-    #dataView05("prm//simple_prm{:03d}.bin", 0, 100)
-    #makeSDGraph("prm//simple_prm{:03d}.bin", 10, 0, 100)
-    #makeMeansGraph("prm//simple_prm{:03d}.bin", 10, 0, 100)
-    # 突然変異無し
-    #dataView05("prm//sprm_not_mutate{:03d}.bin", 0, 20)
-    #makeSDGraph("prm//sprm_not_mutate{:03d}.bin", 10, 0, 20)
-    # 角固定
-    #dataView05("prm//sprm_corner0.5_{:03d}.bin", 0, 100)
-    # ランダム対戦
-    #dataView05("prm//sprm_vsrand{:03d}.bin", 0, 100)
-    # 角固定(-0.5)
-    #dataView05("prm//sprm_corner0.5neg_{:03d}.bin", 0, 100)
-    # 指し手をルーレット選択
-    #dataView05("prm//sprm_roulette{:03d}.bin", 0, 100)
-    #dataView06("prm//sprm_roulette{:03d}.bin", 0, 100)
-    # 指し手ルーレット, 勝ち点で直接ルーレット選択
-    #dataView05("prm//sprm_rltrlt{:03d}.bin", 0, 100)
-    #dataView06("prm//sprm_rltrlt{:03d}.bin", 0, 100)
-    # 指し手ルーレット, 最低点を引いた点でルーレット選択
-    #dataView05("prm//sprm_rr_submin{:03d}.bin", 0, 100)
-    #dataView06("prm//sprm_rr_submin{:03d}.bin", 0, 100)
-    # 指し手ルーレット, 100-順位を確率(相対)にしたランキング選択
-    #dataView05("prm//sprm_rrank{:03d}.bin", 0, 100)
-    #dataView06("prm//sprm_rrank{:03d}.bin", 0, 100)
-    # 指し手ルーレット, 0.9 ^ 順位を確率(相対)にしたランキング選択
-    #dataView05("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
-    #dataView06("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 0, 100)
-    #makeMeansGraph("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 10, 0, 100)
-    #makeSDGraph("prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin", 10, 0, 100)
-    # 適応度評価を行なわない
-    #dataView05("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    #dataView06("prm/sprm_nofit/sprm_nofit{:03d}.bin", 0, 100)
-    # 全個体保存バージョン
-    # 個体数50, エリート6, ルーレット選択, 一様交叉, ランダム突然変異5%
-    #makeMeansGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 0, 100)
-    #makeSDGraph("prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g{:03d}.bin", 50, 104, 110)
-    # 個体数100, エリート10, ランダム選択, 平均一様一回ずつ, 一様交叉のみランダム突然変異5%
-    makeMeansGraph("prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin", 100, 0, 100)
-    #makeSDGraph("prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin", 100, 0, 100)
+    #makeMeansGraph("prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin", 50, 0, 100)
+    #makeSDGraph("prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin", 50, 0, 100)
+    makeMeansGraph(FILE_FORMATS[11], 50, 0, 100)
