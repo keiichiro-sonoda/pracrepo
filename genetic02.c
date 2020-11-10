@@ -369,7 +369,7 @@ int makeFirstGeneFileFlex(const char *format) {
     // write
     if (dumpSprmFileDirect(fnamew, pra, sizeof pra) < 0)
         return -1;
-    printf("%ld bytes written\n", sizeof pra);
+    printf("%ld bytes were written\n", sizeof pra);
     return 0;
 }
 

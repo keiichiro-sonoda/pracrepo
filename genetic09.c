@@ -54,7 +54,7 @@ int main(void) {
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_TEST;
+    char format[] = FNF_05006010000005;
     makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteAveUni, format, 1, 0, 100);
