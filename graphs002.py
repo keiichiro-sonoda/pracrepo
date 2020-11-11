@@ -254,7 +254,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 16
+    ind = 15
     #viewStatGraphs(FILE_FORMATS[ind], 10, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
-    funcTest(FILE_FORMATS[ind], 100)
+    funcTest(FILE_FORMATS[ind], 0)
