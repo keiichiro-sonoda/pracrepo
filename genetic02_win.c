@@ -284,23 +284,18 @@ void checkSprmFileFlex(const char *format, int gene_num, int n) {
 }
 
 // pythonでパラメータを読み取りたい
-// 書き換えるための float のポインタを与える(長さ64の配列)
+// 値を代入するための float のポインタを与える(長さ64の配列)
 // ファイル名も指定する
-void getSprmFileFlexPy(const char *fnamer, float *f_pointer) {
-    FILE *fp;
-    // ファイルを開く. 開けなかったらメモリ開放してNULLを返す
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fnamer);
-        return;
-    }
+int getSprmFileFlexPy(const char *fnamer, float f_pointer[MASU_NUM]) {
     // 10個のパラメータを読み込むが, 使うのは1位だけ
-    Sprm pa[SURVIVE_NUM];
-    fread(pa, sizeof pa, 1, fp);
-    fclose(fp);
+    Sprm pra[SURVIVE_NUM];
+    if (loadSprmFileDirect(fnamer, pra, sizeof pra) < 0)
+        return -1;
     // 適切な位置にパラメータを配置
     for (int i = 0; i < MASU_NUM; i++)
-        // トップパラメータから
-        f_pointer[i] = pa[0].weight[CORR_TABLE[i]];
+        // 先頭のパラメータから
+        f_pointer[i] = pra[0].weight[CORR_TABLE[i]];
+    return 0;
 }
 
 // トップ10の平均値を取得(共有ライブラリ用)

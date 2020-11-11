@@ -97,9 +97,9 @@ int loadSprmFileFlex(const char *format, int gene_num, Sprm *pra, size_t pra_siz
 void checkSprmFileFlex(const char *format, int gene_num, int n);
 
 // pythonでパラメータを読み取りたい
-// 書き換えるための float のポインタを与える(長さ64の配列)
+// 値を代入するための float のポインタを与える(長さ64の配列)
 // ファイル名も指定する
-void getSprmFileFlexPy(const char *fnamer, float *f_pointer);
+int getSprmFileFlexPy(const char *fnamer, float f_pointer[MASU_NUM]);
 
 // トップ10の平均値を取得(共有ライブラリ用)
 // 世代番号でなく, ファイル名で指定する
