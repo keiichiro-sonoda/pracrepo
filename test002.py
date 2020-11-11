@@ -10,7 +10,8 @@ def view2DArrSamp1():
 
     # 等高線図の生成. cmapで色付けの規定を指定する.
     #plt.pcolormesh(X, Y, Z, cmap='hsv')
-    plt.pcolor(X, Y, Z, cmap='hsv')
+    #plt.pcolor(X, Y, Z, cmap='hsv')
+    plt.pcolor(X, Y, Z, cmap='plasma')
 
     pp = plt.colorbar(orientation="vertical")
     pp.set_label("Label", fontname="Arial", fontsize=24)
@@ -36,5 +37,4 @@ def view2DArrSamp2():
     plt.show()
 
 if __name__ == "__main__":
-    view2DArrSamp2()
-    print(np.sin(np.pi / 2))
+    view2DArrSamp1()
