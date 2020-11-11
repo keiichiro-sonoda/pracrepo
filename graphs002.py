@@ -20,6 +20,8 @@ getFamilySD = exe2_win.getFamilySDPy
 getFamilySD.rectype = c_int32
 getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
 
+# あるファイルの先頭の要素
+
 # 各種ラッパー関数
 
 def getFamilyMeansWrap(fnamer, n):

@@ -286,7 +286,7 @@ void checkSprmFileFlex(const char *format, int gene_num, int n) {
 // pythonでパラメータを読み取りたい
 // 値を代入するための float のポインタを与える(長さ64の配列)
 // ファイル名も指定する
-int getSprmFileFlexPy(const char *fnamer, float f_pointer[MASU_NUM]) {
+int getTopSprmPy(const char *fnamer, float f_pointer[MASU_NUM]) {
     // 10個のパラメータを読み込むが, 使うのは1位だけ
     Sprm pra[SURVIVE_NUM];
     if (loadSprmFileDirect(fnamer, pra, sizeof pra) < 0)
