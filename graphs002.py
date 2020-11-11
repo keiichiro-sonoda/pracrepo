@@ -212,7 +212,13 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
 def funcTest(fname_format, generation):
     fname = fname_format.format(generation)
     l = getTopSprmWrap(fname)
-    print(l)
+    z = np.zeros((8, 8))
+    for i in range(8):
+        for j in range(8):
+            z[i, j] = l[i + j * 8]
+    plt.imshow(z, cmap='viridis')
+    plt.colorbar()
+    plt.show()
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -254,7 +260,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 15
+    ind = 16
     #viewStatGraphs(FILE_FORMATS[ind], 10, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
-    funcTest(FILE_FORMATS[ind], 0)
+    funcTest(FILE_FORMATS[ind], 100)
