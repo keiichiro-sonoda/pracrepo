@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 exe2_win = cdll.LoadLibrary("exe2_win.so")
 # 配列型定義
 FloatArray10 = c_float * 10
+FloatArray64 = c_float * 64
 # 初期化関数
 exe2_win.initPy()
 
@@ -21,9 +22,13 @@ getFamilySD.rectype = c_int32
 getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # あるファイルの先頭の要素
+getTopSprm = exe2_win.getTopSprmPy
+getTopSprm.rectype = c_int32
+getTopSprm.argtypes = (c_char_p, FloatArray64)
 
 # 各種ラッパー関数
-
+# n は個体数を指定
+# オーバーに注意
 def getFamilyMeansWrap(fnamer, n):
     f_arr_c = FloatArray10()
     flag = getFamilyMeans(fnamer.encode(), f_arr_c, n)
@@ -36,6 +41,12 @@ def getFamilySDWrap(fnamer, n):
     f_arr_c = FloatArray10()
     flag = getFamilySD(fnamer.encode(), f_arr_c, n)
     if flag < 0:
+        return []
+    return list(f_arr_c)
+
+def getTopSprmWrap(fnamer):
+    f_arr_c = FloatArray64()
+    if getTopSprm(fnamer.encode(), f_arr_c) < 0:
         return []
     return list(f_arr_c)
 
@@ -197,6 +208,12 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     makeSDGraph(ax2, g, SD)
     plt.show()
 
+# 関数テスト
+def funcTest(fname_format, generation):
+    fname = fname_format.format(generation)
+    l = getTopSprmWrap(fname)
+    print(l)
+
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初（指し手固定）
@@ -237,6 +254,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 3
-    viewStatGraphs(FILE_FORMATS[ind], 10, 0, 100)
+    ind = 16
+    #viewStatGraphs(FILE_FORMATS[ind], 10, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
+    funcTest(FILE_FORMATS[ind], 100)
