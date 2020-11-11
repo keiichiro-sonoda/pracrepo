@@ -97,13 +97,6 @@ int loadSprmFileFlex(const char *format, int gene_num, Sprm *pra, size_t pra_siz
 void checkSprmFileFlex(const char *format, int gene_num, int n);
 
 // pythonでパラメータを読み取りたい
-// 書き換えるための float のポインタを与える
-// 引数に配列の個数も指定できちゃうの??
-// main関数実行前提で考えてた
-// 何もしないと CORR_TABLE は設定されない!
-void getSprmFilePy(int gene_num, float f_pointer[MASU_NUM]);
-
-// pythonでパラメータを読み取りたい
 // 書き換えるための float のポインタを与える(長さ64の配列)
 // ファイル名も指定する
 void getSprmFileFlexPy(const char *fnamer, float *f_pointer);
