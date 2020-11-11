@@ -21,10 +21,12 @@ def view2DArrSamp1():
     plt.show()
 
 def view2DArrSamp2():
-    z = np.zeros([100, 100])
-    for i in range(100):
-        for j in range(100):
-            z[i, j] = i + j
+    n = 100
+    z = np.zeros([n, n])
+    for i in range(n):
+        for j in range(n):
+            rate = np.pi / n * 4
+            z[i, j] = np.sin(j * rate) + np.sin(i * rate)
     
     plt.imshow(z)
     # カラーバーの表示
@@ -35,3 +37,4 @@ def view2DArrSamp2():
 
 if __name__ == "__main__":
     view2DArrSamp2()
+    print(np.sin(np.pi / 2))
