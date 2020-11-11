@@ -20,5 +20,18 @@ def view2DArrSamp1():
 
     plt.show()
 
+def view2DArrSamp2():
+    z = np.zeros([100, 100])
+    for i in range(100):
+        for j in range(100):
+            z[i, j] = i + j
+    
+    plt.imshow(z)
+    # カラーバーの表示
+    plt.colorbar()
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.show()
+
 if __name__ == "__main__":
-    view2DArrSamp1()
+    view2DArrSamp2()
