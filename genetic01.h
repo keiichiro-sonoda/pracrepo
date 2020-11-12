@@ -54,7 +54,7 @@ typedef struct family{
 
 // functions
 
-int sigmoid_pt(float *xp);
+void sigmoidFloatP(float *xp);
 
 // float -0.5 ~ 0.5
 float frand(void);
@@ -88,6 +88,10 @@ int familyRand(Family *fmp);
 // calculate point
 // the more advantageous to black, the higher the score
 float evaluation(Board b, Param pr);
+
+// calculate point (by Prm1L)
+// the more advantageous to black, the higher the score
+float evalByPrm1L(Board b, Prm1L pr);
 
 Board getBestBoard(Board *next_boards, int next_count, int color, Param prm);
 

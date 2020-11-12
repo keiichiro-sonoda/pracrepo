@@ -11,9 +11,8 @@
 
 // functions
 
-int sigmoid_pt(float *xp) {
+void sigmoidFloatP(float *xp) {
     (*xp) = sigmoidFloat(*xp);
-    return 0;
 }
 
 // float -0.5 ~ 0.5
@@ -65,7 +64,6 @@ void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]) {
         dst[c] = src->weight2[i];
         c++;
     }
-    printDecimal(c);
 }
 
 int checkParam(Param pr) {
@@ -197,36 +195,61 @@ float evaluation(Board b, Param pr) {
         pa1[i] = pr.bias1[i];
         for (j = 0; j < 64; j++)
             pa1[i] += pa0[j] * pr.weight1[i][j];
-        sigmoid_pt(pa1 + i);
+        sigmoidFloatP(pa1 + i);
     } // second layer
     for (i = 0; i < 16; i++) {
         pa2[i] = pr.bias2[i];
         for (j = 0; j < 32; j++)
             pa2[i] += pa1[j] * pr.weight2[i][j];
-        sigmoid_pt(pa2 + i);
+        sigmoidFloatP(pa2 + i);
     } // third layer
     for (i = 0; i < 8; i++) {
         pa3[i] = pr.bias3[i];
         for (j = 0; j < 16; j++)
             pa3[i] += pa2[j] * pr.weight3[i][j];
-        sigmoid_pt(pa3 + i);
+        sigmoidFloatP(pa3 + i);
     } // fourth layer
     for (i = 0; i < 4; i++) {
         pa4[i] = pr.bias4[i];
         for (j = 0; j < 8; j++)
             pa4[i] += pa3[j] * pr.weight4[i][j];
-        sigmoid_pt(pa4 + i);
+        sigmoidFloatP(pa4 + i);
     } // fifth layer
     for (i = 0; i < 2; i++) {
         pa5[i] = pr.bias5[i];
         for (j = 0; j < 4; j++)
             pa5[i] += pa4[j] * pr.weight5[i][j];
-        sigmoid_pt(pa5 + i);
+        sigmoidFloatP(pa5 + i);
     } // sixth layer
     pa6 = 0;
     for (j = 0; j < 2; j++)
         pa6 += pa5[j] * pr.weight6[j];
     return pa6;
+}
+
+// calculate point (by Prm1L)
+// the more advantageous to black, the higher the score
+float evalByPrm1L(Board b, Prm1L pr) {
+    int input[MASU_NUM + 1];
+    // middle points
+    float pa1[8];
+    // output point
+    float pa2 = 0.0f;
+    // convert board to array
+    board2arraySymmetryPlus(b, input);
+    // initialization
+    zerosFloat(pa1, 8);
+    // first layer
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j <= MASU_NUM; j++) {
+            pa1[i] += input[j] * pr.weight1[i][j];
+        }
+        sigmoidFloatP(pa1 + i);
+    }
+    // output layer
+    for (int i = 0; i < 8; i++)
+        pa2 += pa1[i] * pr.weight2[i];
+    return pa2;
 }
 
 Board getBestBoard(Board *next_boards, int next_count, int color, Param prm) {
