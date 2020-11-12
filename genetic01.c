@@ -152,11 +152,9 @@ int paramRand(Param *prp) {
 
 // create random parameters (for Prm1L)
 void randPrm1L(Prm1L *prp) {
-    for (int i = 0; i < 8; i++)
-        for (int j = 0; j <= MASU_NUM; j++)
-            prp->weight1[i][j] = randWeight();
-    for (int i = 0; i < 8; i++)
-        prp->weight2[i] = randWeight();
+    float tmp[PRM1L_LEN];
+    randWeightArray(tmp, PRM1L_LEN);
+    array2Prm1L(tmp, prp);
 }
 
 // generation initialization
