@@ -39,7 +39,7 @@ typedef struct param {
 // 1 middle layer
 // including bias
 typedef struct prm1L {
-    float weight1[8][65];
+    float weight1[8][MASU_NUM + 1];
     float weight2[8];
 } Prm1L;
 
@@ -69,6 +69,9 @@ int checkParam(Param pr);
 
 // randomly determine parameter
 int paramRand(Param *prp);
+
+// create random parameter (for Prm1L)
+void randPrm1L(Prm1L *prp);
 
 // generation initialization
 int familyRand(Family *fmp);

@@ -9,8 +9,7 @@ int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     initBoard();
-    int ta[MASU_NUM + 1];
-    board2arraySymmetryPlus(START, ta);
-    printDecimalArray(ta, MASU_NUM + 1);
+    Prm1L pt;
+    randPrm1L(&pt);
     return 0;
 }
