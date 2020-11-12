@@ -13,8 +13,6 @@ int main(void) {
     float at[PRM1L_LEN];
     randPrm1L(&pt);
     showPrm1L(pt);
-    Prm1L2array(&pt, at);
-    printFloatArrayPart(at, PRM1L_LEN);
     printFloat(evalByPrm1L(START, pt));
     return 0;
 }
