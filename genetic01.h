@@ -61,8 +61,9 @@ float frand(void);
 
 int board2array(Board src, int *dst);
 
+// black: +1, empty: 0, white: -1
 // add an element for bias
-void board2arrayPlus(Board src, int dst[MASU_NUM + 1]);
+void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]);
 
 int checkParam(Param pr);
 

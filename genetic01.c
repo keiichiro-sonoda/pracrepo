@@ -34,10 +34,10 @@ int board2array(Board src, int *dst) {
     return 0;
 }
 
+// black: +1, empty: 0, white: -1
 // add an element for bias
-void board2arrayPlus(Board src, int dst[MASU_NUM + 1]) {
-    for (int i = 0; i < MASU_NUM; i++)
-        dst[i] = getKoma(src, i * 2);
+void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]) {
+    board2arraySymmetry(src, dst);
     // for bias
     dst[MASU_NUM] = 1;
 }
