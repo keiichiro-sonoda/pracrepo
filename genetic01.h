@@ -21,7 +21,7 @@
 #define randWeight() ((float)rand() / RAND_MAX - 0.5)
 
 // create an array of random weights
-#define randWeightArray(A, n) for (int _; _ < n; _++) A[_] = randWeight()
+#define randWeightArray(A, n) for (int _; _ < n; _++) (A)[_] = randWeight()
 
 // types
 
@@ -64,6 +64,9 @@ int board2array(Board src, int *dst);
 // black: +1, empty: 0, white: -1
 // add an element for bias
 void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]);
+
+// convert weight array to Prm1L
+void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst);
 
 int checkParam(Param pr);
 

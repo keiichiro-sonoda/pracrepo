@@ -37,6 +37,22 @@ void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]) {
     dst[MASU_NUM] = 1;
 }
 
+// convert weight array to Prm1L
+void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst) {
+    int c = 0;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j <= MASU_NUM; j++) {
+            dst->weight1[i][j] = src[c];
+            c++;
+        }
+    }
+    for (int i = 0; i < 8; i++) {
+        dst->weight2[i] = src[c];
+        c++;
+    }
+    printDecimal(c);
+}
+
 int checkParam(Param pr) {
     int i, j;
     // first layer
