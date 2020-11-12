@@ -271,6 +271,21 @@ Board getBestBoard(Board *next_boards, int next_count, int color, Param prm) {
     return best_board;
 }
 
+// assume that the next turn is black
+// n: the number of next boards
+// use Prm1L
+// decide next board by roulette
+Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
+    float exp_points[n];
+    for (int i = 0; i < n; i++) {
+        // evaluate all next boards
+        // and calculate the power of e (to make numbers positive)
+        // sign inversion!
+        exp_points[i] = expf(-evalByPrm1L(next_boards[i], pr) * 10);
+    }
+    return next_boards[rouletteFloat(exp_points, n, sumFloat(exp_points, n))];
+}
+
 // return winnter
 // draw: 0, black: 1, white: 2
 int oneToOne(Param sente, Param gote) {

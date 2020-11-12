@@ -95,6 +95,12 @@ float evalByPrm1L(Board b, Prm1L pr);
 
 Board getBestBoard(Board *next_boards, int next_count, int color, Param prm);
 
+// assume that the next turn is black
+// n: the number of next boards
+// use Prm1L
+// decide next board by roulette
+Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
+
 // return winnter
 // draw: 0, black: 1, white: 2
 int oneToOne(Param sente, Param gote);
