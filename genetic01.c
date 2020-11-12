@@ -50,6 +50,21 @@ void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst) {
         dst->weight2[i] = src[c];
         c++;
     }
+}
+
+// convert Prm1L to a weight array
+void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]) {
+    int c = 0;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j <= MASU_NUM; j++) {
+            dst[c] = src->weight1[i][j];
+            c++;
+        }
+    }
+    for (int i = 0; i < 8; i++) {
+        dst[c] = src->weight2[i];
+        c++;
+    }
     printDecimal(c);
 }
 

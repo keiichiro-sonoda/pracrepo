@@ -10,7 +10,10 @@ int main(void) {
     //srand((unsigned)time(NULL));
     initBoard();
     Prm1L pt;
+    float at[PRM1L_LEN];
     randPrm1L(&pt);
     showPrm1L(pt);
+    Prm1L2array(&pt, at);
+    printFloatArray(at, PRM1L_LEN);
     return 0;
 }

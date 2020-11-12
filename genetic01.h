@@ -68,6 +68,9 @@ void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]);
 // convert weight array to Prm1L
 void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst);
 
+// convert Prm1L to a weight array
+void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]);
+
 int checkParam(Param pr);
 
 // show parameters (for Prm1L)
