@@ -16,11 +16,6 @@ int sigmoid_pt(float *xp) {
     return 0;
 }
 
-// double 0 ~ 1
-double drand(void) {
-    return (double)rand() / RAND_MAX;
-}
-
 // float -0.5 ~ 0.5
 float frand(void) {
     return (float)rand() / RAND_MAX - 0.5;

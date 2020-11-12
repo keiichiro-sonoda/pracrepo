@@ -53,9 +53,6 @@ typedef struct family{
 
 int sigmoid_pt(float *xp);
 
-// double 0 ~ 1
-double drand(void);
-
 // float -0.5 ~ 0.5
 float frand(void);
 
