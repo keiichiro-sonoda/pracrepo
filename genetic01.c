@@ -11,12 +11,8 @@
 
 // functions
 
-float sigmoid(float x) {
-    return (float)1 / (1 + exp(-5 * x));
-}
-
 int sigmoid_pt(float *xp) {
-    (*xp) = sigmoid(*xp);
+    (*xp) = sigmoidFloat(*xp);
     return 0;
 }
 
