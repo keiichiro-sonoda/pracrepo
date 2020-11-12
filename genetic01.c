@@ -297,65 +297,6 @@ int leagueMatch(Family fml) {
     return 0;
 }
 
-int exchange(int *A, int i, int j) {
-    int t = A[i];
-    A[i] = A[j];
-    A[j] = t;
-    return 0;
-}
-
-int partitionDouble(int *A, int *B, int p, int r) {
-    int i, j;
-    int x = A[r];
-    i = p;
-    for (j = p; j < r; j++) {
-        if (A[j] <= x) {
-            exchange(A, i, j);
-            exchange(B, i, j);
-            i++;
-        }
-    }
-    exchange(A, i, r);
-    exchange(B, i, r);
-    return i;
-}
-
-int partitionDD(int *A, int *B, int p, int r) {
-    int i, j;
-    int x = A[r];
-    i = p;
-    for (j = p; j < r; j++) {
-        if (A[j] > x) {
-            exchange(A, i, j);
-            exchange(B, i, j);
-            i++;
-        }
-    }
-    exchange(A, i, r);
-    exchange(B, i, r);
-    return i;
-}
-
-// ascending order
-int quicksortDouble(int *A, int *B, int p, int r) {
-    if (p < r) {
-        int q = partitionDouble(A, B, p, r);
-        quicksortDouble(A, B, p, q - 1);
-        quicksortDouble(A, B, q + 1, r);
-    }
-    return 0;
-}
-
-// descending order
-int quicksortDD(int *A, int *B, int p, int r) {
-    if (p < r) {
-        int q = partitionDD(A, B, p, r);
-        quicksortDD(A, B, p, q - 1);
-        quicksortDD(A, B, q + 1, r);
-    }
-    return 0;
-}
-
 // win: +2, draw: +1, lose: 0
 int leagueMatchSimple(Family fml, int *result) {
     int i, j, k;
@@ -411,8 +352,8 @@ int getSurvivor(Family *fmlp, Param *survivors) {
     int result[POPULATION];
     int number[POPULATION];
     float dist;
-    // number = {0, 1, 2, ..., 99}
-    indexes(number, POPULATION);
+    // number = {0, 1, 2, ...}
+    indices(number, POPULATION);
     // game!
     leagueMatchSimple(*fmlp, result);
     // use data (for test)
@@ -534,29 +475,6 @@ Param makeChildCrossM(Param mother, Param father) {
     return child;
 }
 
-int sortTest(void) {
-    FILE *fp;
-    int i;
-    int result[POPULATION];
-    int number[POPULATION];
-    char fnamel[] = "temporary_storage000.bin";
-    indexes(number, POPULATION);
-    // read file
-    if ((fp = fopen(fnamel, "rb")) == NULL)
-        printf("\a%s cannot be opened\n", fnamel);
-    else {
-        fread(result, sizeof result, 1, fp);
-        fclose(fp);
-    }
-    printf("%d\n", result[43]);
-    // quicksort (descending order)
-    quicksortDD(result, number, 0, POPULATION - 1);
-    // show sorted results
-    for (i = 0; i < POPULATION; i++)
-        printf("no.%02d: %3d\n", number[i], result[i]);
-    return 0;
-}
-
 // square distance
 float sqDist(float f1, float f2) {
     return (float)pow(f1 - f2, 2.0);
@@ -657,7 +575,6 @@ int nextGeneration(int gene_num) {
         fwrite(&cgene, sizeof cgene, 1, fp);
         fclose(fp);
     }
-
     return 0;
 }
 
