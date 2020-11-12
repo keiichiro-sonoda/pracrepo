@@ -11,5 +11,6 @@ int main(void) {
     initBoard();
     Prm1L pt;
     randPrm1L(&pt);
+    showPrm1L(pt);
     return 0;
 }

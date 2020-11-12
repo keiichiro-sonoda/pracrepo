@@ -67,6 +67,9 @@ void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]);
 
 int checkParam(Param pr);
 
+// show parameters (for Prm1L)
+void showPrm1L(Prm1L pr);
+
 // randomly determine parameter
 int paramRand(Param *prp);
 

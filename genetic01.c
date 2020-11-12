@@ -88,6 +88,17 @@ int checkParam(Param pr) {
     return 0;
 }
 
+// show parameters (for Prm1L)
+void showPrm1L(Prm1L pr) {
+    printString("weight1:");
+    for (int i = 0; i < 8; i++) {
+        //printFloatArray(pr.weight1[i], MASU_NUM + 1);
+        printFloatArrayPart(pr.weight1[i], MASU_NUM + 1);
+    }
+    printString("weight2:");
+    printFloatArray(pr.weight2, 8);
+}
+
 // randomly determine parameter
 int paramRand(Param *prp) {
     int i, j;
@@ -128,7 +139,7 @@ int paramRand(Param *prp) {
     return 0;
 }
 
-// create random parameter (for Prm1L)
+// create random parameters (for Prm1L)
 void randPrm1L(Prm1L *prp) {
     for (int i = 0; i < 8; i++)
         for (int j = 0; j <= MASU_NUM; j++)
