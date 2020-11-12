@@ -34,6 +34,14 @@ int board2array(Board src, int *dst) {
     return 0;
 }
 
+// add an element for bias
+void board2arrayPlus(Board src, int dst[MASU_NUM + 1]) {
+    for (int i = 0; i < MASU_NUM; i++)
+        dst[i] = getKoma(src, i * 2);
+    // for bias
+    dst[MASU_NUM] = 1;
+}
+
 int checkParam(Param pr) {
     int i, j;
     // first layer

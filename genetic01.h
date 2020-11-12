@@ -61,6 +61,9 @@ float frand(void);
 
 int board2array(Board src, int *dst);
 
+// add an element for bias
+void board2arrayPlus(Board src, int dst[MASU_NUM + 1]);
+
 int checkParam(Param pr);
 
 // randomly determine parameter
