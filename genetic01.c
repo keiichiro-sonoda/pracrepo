@@ -4,65 +4,12 @@
 #include <time.h>
 #include <float.h>
 
-#define PI 3.14159265358979323846264338
-#define printFloat(x) printf("%f\n", x)
-#define printSize(x) printf("%ld\n", sizeof x)
-#define printIntDec(x) printf("%d\n", x);
-
-// maximum number of next boards
-#define NEXT_MAX 32
-// number of parameters per generation
-#define FAMILY_NUM 100
-// 1 billion
-#define BILLION 1000000000
-
-#define PARAM_NUM 2792
-
-#define SURVIVE_NUM 10
-
-#define START_H 0x0000000000000180L
-#define START_L 0x0240000000000000L
-
-// types
-
-typedef long int8B;
-
-typedef struct {
-    int8B board[2];
-} Board;
-
-typedef struct {
-    float weight1[32][64];
-    float weight2[16][32];
-    float weight3[8][16];
-    float weight4[4][8];
-    float weight5[2][4];
-    float weight6[2];
-    float bias1[32];
-    float bias2[16];
-    float bias3[8];
-    float bias4[4];
-    float bias5[2];
-} Param;
-
-typedef struct {
-    Param prms [FAMILY_NUM];
-} Family;
+#include "genetic01.h"
+#include "sort01.h"
 
 // global variables
 
-Board START;
-
-// functions from othello027.c
-int getKoma(Board b, int ad);
-int showBoard(Board b);
-int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_count);
-int zeros(int *ia, int ia_len);
-int indexes(int *ia, int ia_len);
-
 // functions
-
-float paramDistance(Param p1, Param p2);
 
 float sigmoid(float x) {
     return (float)1 / (1 + exp(-5 * x));
@@ -180,7 +127,7 @@ int paramRand(Param *prp) {
 // generation initialization
 int familyRand(Family *fmp) {
     int i;
-    for (i = 0; i < FAMILY_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         paramRand((*fmp).prms + i);
     }
     return 0;
@@ -304,18 +251,18 @@ int oneToOne(Param sente, Param gote) {
 int leagueMatch(Family fml) {
     int i, j, k;
     // index, color, (d, w, l)
-    int result[FAMILY_NUM][2][3];
+    int result[POPULATION][2][3];
     // all zero
-    for (i = 0; i < FAMILY_NUM; i++)
+    for (i = 0; i < POPULATION; i++)
         for (j = 0; j < 2; j++)
             for (k = 0; k < 3; k++)
                 result[i][j][k] = 0;
     // black index
-    for (i = 0; i < FAMILY_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
     //for (i = 0; i < 10; i++) {
-        //printf("\ai = %d / %d\n", i, FAMILY_NUM);
+        //printf("\ai = %d / %d\n", i, POPULATION);
         // white index
-        for (j = 0; j < FAMILY_NUM; j++) {
+        for (j = 0; j < POPULATION; j++) {
         //for (j = 0; j < 10; j++) {
             switch(oneToOne(fml.prms[i], fml.prms[j])) {
                 // black won
@@ -336,7 +283,7 @@ int leagueMatch(Family fml) {
         }
     }
     // show result
-    for (i = 0; i < FAMILY_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         printf("no.%02d: ", i);
         for (j = 0; j < 2; j++) {
             if (j) printf("w: ");
@@ -413,12 +360,12 @@ int quicksortDD(int *A, int *B, int p, int r) {
 int leagueMatchSimple(Family fml, int *result) {
     int i, j, k;
     // all zero
-    zeros(result, FAMILY_NUM);
+    zeros(result, POPULATION);
     // black index
-    for (i = 0; i < FAMILY_NUM; i++) {
-        //printf("\ai = %d / %d", i, FAMILY_NUM);
+    for (i = 0; i < POPULATION; i++) {
+        //printf("\ai = %d / %d", i, POPULATION);
         // white index
-        for (j = 0; j < FAMILY_NUM; j++) {
+        for (j = 0; j < POPULATION; j++) {
             if (i == j) continue;
             switch(oneToOne(fml.prms[i], fml.prms[j])) {
                 // black won
@@ -438,7 +385,7 @@ int leagueMatchSimple(Family fml, int *result) {
     }
     // show results
     /*
-    for (i = 0; i < FAMILY_NUM; i++) {
+    for (i = 0; i < POPULATION; i++) {
         printf("no.%02d: %3d\n", i, result[i]);
     }
     */
@@ -461,17 +408,17 @@ int readResultFile(int *result, int r_size, char *fnamel) {
 // shallow copy?
 int getSurvivor(Family *fmlp, Param *survivors) {
     int i, j;
-    int result[FAMILY_NUM];
-    int number[FAMILY_NUM];
+    int result[POPULATION];
+    int number[POPULATION];
     float dist;
     // number = {0, 1, 2, ..., 99}
-    indexes(number, FAMILY_NUM);
+    indexes(number, POPULATION);
     // game!
     leagueMatchSimple(*fmlp, result);
     // use data (for test)
     //readResultFile(result, sizeof result, "temporary_storage000.bin");
     // sort
-    quicksortDD(result, number, 0, FAMILY_NUM - 1);
+    quicksortDD(result, number, 0, POPULATION - 1);
     // show ranking
     printf("rank change\n");
     for (i = 0; i < SURVIVE_NUM; i++) {
@@ -590,10 +537,10 @@ Param makeChildCrossM(Param mother, Param father) {
 int sortTest(void) {
     FILE *fp;
     int i;
-    int result[FAMILY_NUM];
-    int number[FAMILY_NUM];
+    int result[POPULATION];
+    int number[POPULATION];
     char fnamel[] = "temporary_storage000.bin";
-    indexes(number, FAMILY_NUM);
+    indexes(number, POPULATION);
     // read file
     if ((fp = fopen(fnamel, "rb")) == NULL)
         printf("\a%s cannot be opened\n", fnamel);
@@ -603,9 +550,9 @@ int sortTest(void) {
     }
     printf("%d\n", result[43]);
     // quicksort (descending order)
-    quicksortDD(result, number, 0, FAMILY_NUM - 1);
+    quicksortDD(result, number, 0, POPULATION - 1);
     // show sorted results
-    for (i = 0; i < FAMILY_NUM; i++)
+    for (i = 0; i < POPULATION; i++)
         printf("no.%02d: %3d\n", number[i], result[i]);
     return 0;
 }
@@ -714,7 +661,7 @@ int nextGeneration(int gene_num) {
     return 0;
 }
 
-int main(int argc, char *argv[]) {
+int testFunc(int argc, char *argv[]) {
     int i;
     int st = 57;
     int loop = 100;
