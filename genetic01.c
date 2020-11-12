@@ -230,25 +230,25 @@ float evaluation(Board b, Param pr) {
 // calculate point (by Prm1L)
 // the more advantageous to black, the higher the score
 float evalByPrm1L(Board b, Prm1L pr) {
-    int input[MASU_NUM + 1];
+    int inputs[MASU_NUM + 1];
     // middle points
     float pa1[8];
     // output point
-    float pa2 = 0.0f;
+    float output = 0.0f;
     // convert board to array
-    board2arraySymmetryPlus(b, input);
+    board2arraySymmetryPlus(b, inputs);
     // initialization
     zerosFloat(pa1, 8);
     // first layer
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j <= MASU_NUM; j++) {
-            pa1[i] += input[j] * pr.weight1[i][j];
+            pa1[i] += inputs[j] * pr.weight1[i][j];
         }
     }
     // output layer
     for (int i = 0; i < 8; i++)
-        pa2 += pa1[i] * pr.weight2[i];
-    return pa2;
+        output += pa1[i] * pr.weight2[i];
+    return output;
 }
 
 Board getBestBoard(Board *next_boards, int next_count, int color, Param prm) {
