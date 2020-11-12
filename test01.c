@@ -15,5 +15,6 @@ int main(void) {
     showPrm1L(pt);
     Prm1L2array(&pt, at);
     printFloatArrayPart(at, PRM1L_LEN);
+    printFloat(evalByPrm1L(START, pt));
     return 0;
 }

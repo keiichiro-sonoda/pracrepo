@@ -244,7 +244,6 @@ float evalByPrm1L(Board b, Prm1L pr) {
         for (int j = 0; j <= MASU_NUM; j++) {
             pa1[i] += input[j] * pr.weight1[i][j];
         }
-        sigmoidFloatP(pa1 + i);
     }
     // output layer
     for (int i = 0; i < 8; i++)
