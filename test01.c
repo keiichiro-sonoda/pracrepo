@@ -12,5 +12,8 @@ int main(void) {
     Prm1L pt;
     randPrm1L(&pt);
     showPrm1L(pt);
+    float at[PRM1L_LEN];
+    randWeightArray(at, PRM1L_LEN);
+    printFloatArray(at, PRM1L_LEN);
     return 0;
 }

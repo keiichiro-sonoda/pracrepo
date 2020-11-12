@@ -20,6 +20,9 @@
 // return an floating point random number from -0.5 to 0.5
 #define randWeight() ((float)rand() / RAND_MAX - 0.5)
 
+// create an array of random weights
+#define randWeightArray(A, n) for (int _; _ < n; _++) A[_] = randWeight()
+
 // types
 
 typedef struct param {
