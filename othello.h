@@ -53,15 +53,9 @@
 // calculate the square
 #define square(x) ((x) * (x))
 
-// sigmoid function (return float)
-#define sigmoidFloat(x) (1.0f / (1 + expf(-10 * (x))))
-
 // return an integer random number from min to max
 // positive range only
 #define randInt(min, max) (rand() % ((max) - (min) + 1) + (min))
-
-// return an floating point random number from -0.5 to 0.5
-#define randWeight() (float)rand() / RAND_MAX - 0.5
 
 // 64bit
 typedef unsigned long int int8B;

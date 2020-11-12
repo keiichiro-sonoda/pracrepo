@@ -10,6 +10,8 @@ int main(void) {
     srand((unsigned)time(NULL));
     Prm1L prm;
     printSize(prm);
-    printFloat(randWeight());
+    float r = randWeight();
+    printFloat(r);
+    printFloat(sigmoidFloat(r));
     return 0;
 }
