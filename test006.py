@@ -115,10 +115,11 @@ class Widget(QWidget):
         # ファイル名指定
         # クラス内変数で所持
         #self.use_sprm = getTopSprmWrap("prm//simple_prm100.bin")
-        self.use_sprm = getTopSprmWrap("prm//sprm_not_mutate020.bin")
+        #self.use_sprm = getTopSprmWrap("prm//sprm_not_mutate020.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5_100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_vsrand100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5neg_100.bin")
+        self.use_sprm = getTopSprmWrap("prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g100.bin")
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
@@ -640,6 +641,7 @@ class Widget(QWidget):
         )
     
     # 候補手からランダムに選択
+    # ランダムとか言いつつそれ以外も担当している
     def randomAction(self):
         cand_list = list(self.candidates.keys())
         # 候補手が存在しない
@@ -715,6 +717,7 @@ class Widget(QWidget):
                     next_sub += d
                     koma = board[next_sub]
                 # 自分のコマが出たら, これまでの添え字を候補に追加
+                # 空のマスか番兵が出たら, その方向のリストは無効化
                 # 探索マスの隣が自分のコマなら, 空リストを足すだけ
                 if koma == teban:
                     rev_tags += tmp
@@ -725,7 +728,7 @@ class Widget(QWidget):
         # 辞書を返す(空なら空のまま)
         return cand_local
     
-    # キーをタグとし, 次の盤面のリストを値とする辞書を作成
+    # タグをキーとし, 次の盤面のリストを値とする辞書を作成
     def getNextBoards(self, board, teban):
         # 空辞書で初期化
         next_boards = dict()
@@ -776,6 +779,10 @@ class Widget(QWidget):
             print(mn, best_tag)
         # 返り値を間違えていた
         return best_tag
+    
+    # C言語の共有ライブラリで定義された関数で指し手を決定する
+    def getActWithCFunc(self):
+        pass
 
 class Application(QApplication):
     def __init__(self):
