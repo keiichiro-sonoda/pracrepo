@@ -222,9 +222,9 @@ float evaluation(Board b, Param pr) {
     return pa6;
 }
 
-// calculate point (by Prm1L)
+// calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
-float evalByPrm1L(Board b, Prm1L pr) {
+float evalWithPrm1L(Board b, Prm1L pr) {
     int inputs[MASU_NUM + 1];
     // middle points
     float pa1[8];
@@ -276,7 +276,7 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
         // evaluate all next boards
         // and calculate the power of e (to make numbers positive)
         // sign inversion!
-        exp_points[i] = expf(-evalByPrm1L(next_boards[i], pr) * 10);
+        exp_points[i] = expf(-evalWithPrm1L(next_boards[i], pr) * 10);
     }
     return next_boards[rouletteFloat(exp_points, n, sumFloat(exp_points, n))];
 }

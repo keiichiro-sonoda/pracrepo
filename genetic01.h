@@ -86,9 +86,9 @@ int familyRand(Family *fmp);
 // the more advantageous to black, the higher the score
 float evaluation(Board b, Param pr);
 
-// calculate point (by Prm1L)
+// calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
-float evalByPrm1L(Board b, Prm1L pr);
+float evalWithPrm1L(Board b, Prm1L pr);
 
 Board getBestBoard(Board *next_boards, int next_count, int color, Param prm);
 
