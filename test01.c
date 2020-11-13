@@ -6,10 +6,10 @@
 #include "sort01.h"
 
 int main(void) {
-    srand(123U);
+    srand(125U);
     //srand((unsigned)time(NULL));
     initBoard();
-    makeFGFilePrm1L(FNF_TEST);
+    //makeFGFilePrm1L(FNF_TEST);
     Prm1L pra[POPULATION];
     int fitness[POPULATION];
     loadPrm1L(FNF_TEST, 0, pra, sizeof pra);
