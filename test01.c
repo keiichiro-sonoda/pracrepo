@@ -7,7 +7,7 @@
 
 int main(void) {
     srand(123U);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     initBoard();
     makeFGFilePrm1L(FNF_TEST);
     Prm1L pra[POPULATION];

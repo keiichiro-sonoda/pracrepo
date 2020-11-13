@@ -9,7 +9,7 @@
 #define POPULATION 50
 #define PARAM_NUM 2792
 #define PRM1L_LEN 528
-#define SURVIVE_NUM 10
+#define ELITE_NUM 6
 #define MUT_RATE 0.01f
 
 // test file format

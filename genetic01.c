@@ -618,7 +618,7 @@ int getSurvivor(Family *fmlp, Param *survivors) {
     quicksortDD(result, number, 0, POPULATION - 1);
     // show ranking
     printf("rank change\n");
-    for (i = 0; i < SURVIVE_NUM; i++) {
+    for (i = 0; i < ELITE_NUM; i++) {
         j = number[i];
         printf("%3d", j + 1);
         if (j < 10) printf("(p)");
@@ -795,7 +795,7 @@ int nextGeneration(int gene_num) {
     int i, j, count;
     char format[] = "generation%03d.bin";
     char fnamer[FILENAME_MAX], fnamew[FILENAME_MAX];
-    Param parents[SURVIVE_NUM];
+    Param parents[ELITE_NUM];
     FILE *fp;
     Family pgene, cgene;
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
@@ -823,12 +823,12 @@ int nextGeneration(int gene_num) {
     // ranking
     getSurvivor(&pgene, parents);
     // take over the top 10 directly
-    for (count = 0; count < SURVIVE_NUM; count++)
+    for (count = 0; count < ELITE_NUM; count++)
         cgene.prms[count] = parents[count];
     // make children
     // 45 combinations, 2 children per couple
-    for (i = 0; i < SURVIVE_NUM - 1; i++) {
-        for (j = i + 1; j < SURVIVE_NUM; j++) {
+    for (i = 0; i < ELITE_NUM - 1; i++) {
+        for (j = i + 1; j < ELITE_NUM; j++) {
             cgene.prms[count] = makeChildAverage(parents[i], parents[j]);
             count++;
             cgene.prms[count] = makeChildCrossM(parents[i], parents[j]);
@@ -846,6 +846,54 @@ int nextGeneration(int gene_num) {
         fclose(fp);
     }
     return 0;
+}
+
+// make next generation file
+// give a function pointer for selection, crossover and mutation
+int nGenePrm1L(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int gene_num, int safety) {
+    char fname[FILENAME_MAX];
+    // the file name to be read
+    snprintf(fname, FILENAME_MAX, format, gene_num);
+    printf("read file : %s\n", fname);
+    // current family
+    Prm1L current[POPULATION];
+    // load data
+    if (loadPrm1LDirect(fname, current, sizeof current) < 0)
+        return -1;
+    // the file name to be written
+    snprintf(fname, FILENAME_MAX, format, gene_num + 1);
+    printf("write file: %s\n", fname);
+    // don't allow overwriting
+    if (safety && warnOverwriting(fname) < 0)
+        return -1;
+    // next family
+    Prm1L next[POPULATION];
+    // the array to store points
+    int fitness[POPULATION];
+    // individual numbers
+    int numbers[POPULATION];
+    // numbers = {0, 1, 2, ...}
+    indices(numbers, POPULATION);
+    // evaluate fitness (with Prm1L)
+    // the next board is decided by roulette
+    leagueMatchPrm1LFlex(getBoardForBlackPrm1LRlt, current, fitness);
+    // sort (descending order)
+    randomizedQuicksortDDAll(fitness, numbers, POPULATION);
+    // show the all or part of results
+    printString("results:");
+    printDecimalArray(fitness, POPULATION);
+    //printDecimalArrayPart(fitness, POPULATION);
+    // elite selection
+    for (int i = 0; i < ELITE_NUM; i++)
+        next[i] = current[numbers[i]];
+    // selection and crossing
+    scm(fitness, numbers, current, next);
+    // view the part of top parameter
+    printString("the top of this generation:");
+    showPrm1L(next[0]);
+    // write next family to the file
+    // and return error flag
+    return dumpPrm1LDirect(fname, next, sizeof next);
 }
 
 int testFunc(int argc, char *argv[]) {
