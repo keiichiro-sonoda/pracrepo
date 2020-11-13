@@ -15,11 +15,6 @@ void sigmoidFloatP(float *xp) {
     (*xp) = sigmoidFloat(*xp);
 }
 
-// float -0.5 ~ 0.5
-float frand(void) {
-    return (float)rand() / RAND_MAX - 0.5;
-}
-
 int board2array(Board src, int *dst) {
     int i;
     for (i = 0; i < 64; i++) {
@@ -129,36 +124,36 @@ int paramRand(Param *prp) {
     // first layer
     for (i = 0; i < 32; i++) {
         for (j = 0; j < 64; j++) {
-            (*prp).weight1[i][j] = frand();
+            (*prp).weight1[i][j] = randWeight();
         }
-        (*prp).bias1[i] = frand();
+        (*prp).bias1[i] = randWeight();
     } // second layer
     for (i = 0; i < 16; i++) {
         for (j = 0; j < 32; j++) {
-            (*prp).weight2[i][j] = frand();
+            (*prp).weight2[i][j] = randWeight();
         }
-        (*prp).bias2[i] = frand();
+        (*prp).bias2[i] = randWeight();
     } // third layer
     for (i = 0; i < 8; i++) {
         for (j = 0; j < 16; j++) {
-            (*prp).weight3[i][j] = frand();
+            (*prp).weight3[i][j] = randWeight();
         }
-        (*prp).bias3[i] = frand();
+        (*prp).bias3[i] = randWeight();
     } // fourth layer
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 8; j++) {
-            (*prp).weight4[i][j] = frand();
+            (*prp).weight4[i][j] = randWeight();
         }
-        (*prp).bias4[i] = frand();
+        (*prp).bias4[i] = randWeight();
     } // fifth layer
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            (*prp).weight5[i][j] = frand();
+            (*prp).weight5[i][j] = randWeight();
         }
-        (*prp).bias5[i] = frand();
+        (*prp).bias5[i] = randWeight();
     } // sixth layer
     for (j = 0; j < 2; j++) {
-        (*prp).weight6[j] = frand();
+        (*prp).weight6[j] = randWeight();
     }
     return 0;
 }
@@ -517,7 +512,7 @@ float fcrossM(float f1, float f2) {
     if (r < 198) return f2;
     // mutation!!
     // 198 or 199 (1%)
-    return frand();
+    return randWeight();
 }
 
 Param makeChildCrossM(Param mother, Param father) {

@@ -56,9 +56,6 @@ typedef struct family{
 
 void sigmoidFloatP(float *xp);
 
-// float -0.5 ~ 0.5
-float frand(void);
-
 int board2array(Board src, int *dst);
 
 // black: +1, empty: 0, white: -1
