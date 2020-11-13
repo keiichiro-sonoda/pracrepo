@@ -9,10 +9,12 @@ int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     initBoard();
-    Prm1L pr1, pr2;
-    randPrm1L(&pr1);
-    randPrm1L(&pr2);
     makeFGFilePrm1L(FNF_TEST);
-    checkPrm1LFile(FNF_TEST, 0);
+    Prm1L pra[POPULATION];
+    int fitness[POPULATION];
+    loadPrm1L(FNF_TEST, 0, pra, sizeof pra);
+    //showPrm1L(pra[2]);
+    leagueMatchPrm1LFlex(getBoardForBlackPrm1LRlt, pra, fitness);
+    printDecimalArray(fitness, POPULATION);
     return 0;
 }

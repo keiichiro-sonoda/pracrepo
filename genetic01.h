@@ -6,7 +6,7 @@
 #define PI 3.14159265358979323846264338
 
 // number of parameters per generation
-#define POPULATION 2
+#define POPULATION 50
 #define PARAM_NUM 2792
 #define PRM1L_LEN 528
 #define SURVIVE_NUM 10
