@@ -12,6 +12,6 @@ int main(void) {
     makeFGFilePrm1L(FNF_TEST);
     //showPrm1L(pra[2]);
     //leagueMatchPrm1LFlex(getBoardForBlackPrm1LRlt, pra, fitness);
-    nGenePrm1L(rltUni, FNF_TEST, 0, 1);
+    nGenePrm1L(rltUniRd, FNF_TEST, 0, 1);
     return 0;
 }

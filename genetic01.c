@@ -745,6 +745,27 @@ Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father) {
     return child;
 }
 
+// uniform crossover (Prm1L)
+// including random mutation
+Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father) {
+    float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN], c_arr[PRM1L_LEN];
+    Prm1L child;
+    // convert to array
+    Prm1L2array(&mother, m_arr);
+    Prm1L2array(&father, f_arr);
+    // uniform cross over
+    uniCrossArray(m_arr, f_arr, c_arr, PRM1L_LEN);
+    // random mutation
+    for (int i = 0; i < PRM1L_LEN; i++) {
+        if ((float)rand() / RAND_MAX < MUT_RATE) {
+            c_arr[i] = randWeight();
+        }
+    }
+    // convert to Prm1L
+    array2Prm1L(c_arr, &child);
+    return child;
+}
+
 // square distance
 float sqDist(float f1, float f2) {
     return (float)pow(f1 - f2, 2.0);
@@ -850,12 +871,13 @@ int nextGeneration(int gene_num) {
 
 // roulette selection
 // uniform crossover
-void rltUni(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next) {
+// random mutation
+void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next) {
     int count = ELITE_NUM;
     int parents[2];
     while (count < POPULATION) {
         rouletteIntMltDep(fitness, POPULATION, parents, 2);
-        next[count] = uniCrossPrm1L(current[numbers[parents[0]]], current[numbers[parents[1]]]);
+        next[count] = uniCrossRMPrm1L(current[numbers[parents[0]]], current[numbers[parents[1]]]);
         count++;
     }
 }

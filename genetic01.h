@@ -19,7 +19,7 @@
 #define sigmoidFloat(x) (1.0f / (1 + expf(-10 * (x))))
 
 // return an floating point random number from -0.5 to 0.5
-#define randWeight() ((float)rand() / RAND_MAX - 0.5)
+#define randWeight() ((float)rand() / RAND_MAX - 0.5f)
 
 // create an array of random weights
 #define randWeightArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeight()
@@ -165,6 +165,10 @@ Param makeChildCrossM(Param mother, Param father);
 // uniform crossover (Prm1L)
 Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father);
 
+// uniform crossover (Prm1L)
+// including random mutation
+Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father);
+
 // square distance
 float sqDist(float f1, float f2);
 
@@ -174,7 +178,7 @@ int nextGeneration(int gene_num);
 
 // roulette selection
 // uniform crossover
-void rltUni(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next);
+void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next);
 
 // make next generation file
 // give a function pointer for selection, crossover and mutation
