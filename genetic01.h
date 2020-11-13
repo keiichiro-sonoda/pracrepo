@@ -102,6 +102,11 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
 // draw: 0, black: 1, white: 2
 int oneToOne(Param sente, Param gote);
 
+// return winner
+// give a function pointer to determine the next board (with Prm1L)
+// boards are normalized
+int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr);
+
 int leagueMatch(Family fml);
 
 // win: +2, draw: +1, lose: 0
