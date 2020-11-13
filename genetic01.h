@@ -162,6 +162,9 @@ float fcrossM(float f1, float f2);
 
 Param makeChildCrossM(Param mother, Param father);
 
+// uniform crossover (Prm1L)
+Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father);
+
 // square distance
 float sqDist(float f1, float f2);
 

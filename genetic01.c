@@ -731,6 +731,20 @@ Param makeChildCrossM(Param mother, Param father) {
     return child;
 }
 
+// uniform crossover (Prm1L)
+Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father) {
+    float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN], c_arr[PRM1L_LEN];
+    Prm1L child;
+    // convert to array
+    Prm1L2array(&mother, m_arr);
+    Prm1L2array(&father, f_arr);
+    // uniform cross over
+    uniCrossArray(m_arr, f_arr, c_arr, PRM1L_LEN);
+    // convert to Prm1L
+    array2Prm1L(c_arr, &child);
+    return child;
+}
+
 // square distance
 float sqDist(float f1, float f2) {
     return (float)pow(f1 - f2, 2.0);
