@@ -172,4 +172,12 @@ float paramDistance(Param p1, Param p2);
 
 int nextGeneration(int gene_num);
 
+// roulette selection
+// uniform crossover
+void rltUni(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next);
+
+// make next generation file
+// give a function pointer for selection, crossover and mutation
+int nGenePrm1L(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int gene_num, int safety);
+
 #endif

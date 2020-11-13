@@ -848,6 +848,18 @@ int nextGeneration(int gene_num) {
     return 0;
 }
 
+// roulette selection
+// uniform crossover
+void rltUni(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next) {
+    int count = ELITE_NUM;
+    int parents[2];
+    while (count < POPULATION) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        next[count] = uniCrossPrm1L(current[numbers[parents[0]]], current[numbers[parents[1]]]);
+        count++;
+    }
+}
+
 // make next generation file
 // give a function pointer for selection, crossover and mutation
 int nGenePrm1L(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int gene_num, int safety) {
