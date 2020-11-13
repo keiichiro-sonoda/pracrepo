@@ -112,6 +112,11 @@ int leagueMatch(Family fml);
 // win: +2, draw: +1, lose: 0
 int leagueMatchSimple(Family fml, int *result);
 
+// with Prm1L[POPULATION]
+// win: +2, draw: +1, lose: 0
+// give a function pointer to decide the next board
+void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *family, int *result);
+
 int readResultFile(int *result, int r_size, char *fnamel);
 
 // choose survivors

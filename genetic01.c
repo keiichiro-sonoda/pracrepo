@@ -465,6 +465,36 @@ int leagueMatchSimple(Family fml, int *result) {
     return 0;
 }
 
+// with Prm1L[POPULATION]
+// win: +2, draw: +1, lose: 0
+// give a function pointer to decide the next board
+void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *family, int *result) {
+    // set all elements to zero
+    zeros(result, POPULATION);
+    // black index
+    for (int i = 0; i < POPULATION; i++) {
+        //printf("\ai = %d / %d", i, FAMILY_NUM);
+        // white index
+        for (int j = 0; j < POPULATION; j++) {
+            if (i == j) continue;
+            switch(oneToOneNPrm1LFlex(decNxt, family[i], family[j])) {
+                // black won
+                case 1:
+                    result[i] += 2;
+                    break;
+                // white won
+                case 2:
+                    result[j] += 2;
+                    break;
+                // draw
+                default:
+                    result[i]++;
+                    result[j]++;
+            }
+        }
+    }
+}
+
 int readResultFile(int *result, int r_size, char *fnamel) {
     FILE *fp;
     // read file
