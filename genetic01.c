@@ -756,11 +756,7 @@ Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father) {
     // uniform cross over
     uniCrossArray(m_arr, f_arr, c_arr, PRM1L_LEN);
     // random mutation
-    for (int i = 0; i < PRM1L_LEN; i++) {
-        if ((float)rand() / RAND_MAX < MUT_RATE) {
-            c_arr[i] = randWeight();
-        }
-    }
+    randMutArray(c_arr, PRM1L_LEN);
     // convert to Prm1L
     array2Prm1L(c_arr, &child);
     return child;

@@ -30,6 +30,9 @@
 // uniform crossover (array)
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
 
+// MUT_RATE chance to replace with random value
+#define randMutArray(C, n) for (int _ = 0; _ < n; _++) if ((float)rand() / RAND_MAX < MUT_RATE) (C)[_] = randWeight()
+
 // types
 
 typedef struct param {
