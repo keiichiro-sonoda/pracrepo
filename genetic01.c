@@ -278,6 +278,7 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
         // sign inversion!
         exp_points[i] = expf(-evalWithPrm1L(next_boards[i], pr) * 10);
     }
+    printFloatArray(exp_points, n);
     return next_boards[rouletteFloat(exp_points, n, sumFloat(exp_points, n))];
 }
 
@@ -343,7 +344,7 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
     while (1) {
         // calculate next
         n = nextBoardNormal2(main_board, nba, kc);
-        //showBoard(main_board);
+        showBoard(main_board);
         // can't put a piece anywhere
         if (n == 0) {
             // can't do anything one another
@@ -362,11 +363,11 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
         // determine a next board
         // black (first)
         if (turn == 0b01) {
-            //printf("black\n");
+            printf("black\n");
             main_board = decNxt(nba, n, spr);
         } // white (second)
         else {
-            //printf("white\n");
+            printf("white\n");
             main_board = decNxt(nba, n, gpr);
         }
         // switch turn

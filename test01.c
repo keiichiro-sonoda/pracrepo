@@ -6,13 +6,12 @@
 #include "sort01.h"
 
 int main(void) {
-    srand(123U);
+    srand(124U);
     //srand((unsigned)time(NULL));
     initBoard();
-    Prm1L pt;
-    float at[PRM1L_LEN];
-    randPrm1L(&pt);
-    showPrm1L(pt);
-    printFloat(evalWithPrm1L(START, pt));
+    Prm1L pr1, pr2;
+    randPrm1L(&pr1);
+    randPrm1L(&pr2);
+    oneToOneNPrm1LFlex(getBoardForBlackPrm1LRlt, pr1, pr2);
     return 0;
 }
