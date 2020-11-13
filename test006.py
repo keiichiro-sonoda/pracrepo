@@ -784,8 +784,13 @@ class Widget(QWidget):
     
     # C言語の共有ライブラリで定義された関数で指し手を決定する
     def getActWithCFunc(self):
-        print(self.board_info)
-        pass
+        # Cに渡すための盤面リスト
+        board_list = []
+        # 番兵を除いてリストを作る
+        for i in range(9, 81, 9):
+            for j in range(1, 9, 1):
+                board_list.append(self.board_info[i + j])
+        print(board_list)
 
 class Application(QApplication):
     def __init__(self):
