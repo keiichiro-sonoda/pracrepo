@@ -272,6 +272,7 @@ Board getBestBoard(Board *next_boards, int next_count, int color, Param prm) {
 // decide next board by roulette
 Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
     float exp_points[n];
+    int lucky;
     for (int i = 0; i < n; i++) {
         // evaluate all next boards
         // and calculate the power of e (to make numbers positive)
@@ -279,7 +280,9 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
         exp_points[i] = expf(-evalWithPrm1L(next_boards[i], pr) * 10);
     }
     printFloatArray(exp_points, n);
-    return next_boards[rouletteFloat(exp_points, n, sumFloat(exp_points, n))];
+    lucky = rouletteFloat(exp_points, n, sumFloat(exp_points, n));
+    printDecimal(lucky);
+    return next_boards[lucky];
 }
 
 // return winnter

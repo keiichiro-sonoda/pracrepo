@@ -6,7 +6,7 @@
 #include "sort01.h"
 
 int main(void) {
-    srand(124U);
+    srand(123U);
     //srand((unsigned)time(NULL));
     initBoard();
     Prm1L pr1, pr2;
