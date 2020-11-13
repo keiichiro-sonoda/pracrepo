@@ -18,29 +18,18 @@ FloatArray64 = ctypes.c_float * 64
 # 共有ライブラリを使う際の初期化
 # これが無いと不具合の可能性大
 exe2_win.initPy()
-# 初期盤面確認
-#exe2_win.showStartPy()
-# 関数取得 & 返り値, 引数指定
-getSprmFile = exe2_win.getSprmFilePy
-getSprmFile.rectype = None
-getSprmFile.argtypes = (ctypes.c_int32, FloatArray64)
 
-getSprmFileFlex = exe2_win.getSprmFileFlexPy
-getSprmFileFlex.rectype = None
-getSprmFileFlex.argtypes = (ctypes.c_char_p, FloatArray64)
+# 関数取得 & 返り値, 引数指定
+getTopSprm = exe2_win.getTopSprmPy
+getTopSprm.rectype = None
+getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
 
 # ライブラリの関数を使いやすく包みたい
 # 引数には欲しい世代番号を与える
-def getSprmFileWrap(n):
-    f_arr_c = FloatArray64()
-    getSprmFile(n, f_arr_c)
-    # リストに戻して返す
-    return list(f_arr_c)
-
 # ファイル名で取り出す
-def getSprmFileFlexWrap(fname):
+def getTopSprmWrap(fname):
     f_arr_c = FloatArray64()
-    getSprmFileFlex(fname.encode(), f_arr_c)
+    getTopSprm(fname.encode(), f_arr_c)
     return list(f_arr_c)
 
 class Widget(QWidget):
@@ -125,11 +114,11 @@ class Widget(QWidget):
         # 評価値リストを入手
         # ファイル名指定
         # クラス内変数で所持
-        #self.use_sprm = getSprmFileFlexWrap("prm//simple_prm100.bin")
-        self.use_sprm = getSprmFileFlexWrap("prm//sprm_not_mutate020.bin")
-        #self.use_sprm = getSprmFileFlexWrap("prm//sprm_corner0.5_100.bin")
-        #self.use_sprm = getSprmFileFlexWrap("prm//sprm_vsrand100.bin")
-        #self.use_sprm = getSprmFileFlexWrap("prm//sprm_corner0.5neg_100.bin")
+        #self.use_sprm = getTopSprmWrap("prm//simple_prm100.bin")
+        self.use_sprm = getTopSprmWrap("prm//sprm_not_mutate020.bin")
+        #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5_100.bin")
+        #self.use_sprm = getTopSprmWrap("prm//sprm_vsrand100.bin")
+        #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5neg_100.bin")
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
