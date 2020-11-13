@@ -926,6 +926,26 @@ int nGenePrm1L(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const 
     return dumpPrm1LDirect(fname, next, sizeof next);
 }
 
+// with Prm1L
+void nGenePrm1LLoop(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int safety, int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    for (int i = st; i < st + loop; i++) {
+        // set the generation number as the seed
+        srand((unsigned)i);
+        if (nGenePrm1L(scm, format, i, safety) < 0) {
+            // error
+            printString("error");
+            return;
+        }
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+        kugiri(100);
+    }
+}
+
 int testFunc(int argc, char *argv[]) {
     int i;
     int st = 57;

@@ -187,4 +187,7 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
 // give a function pointer for selection, crossover and mutation
 int nGenePrm1L(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int gene_num, int safety);
 
+// with Prm1L
+void nGenePrm1LLoop(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int safety, int st, int loop);
+
 #endif
