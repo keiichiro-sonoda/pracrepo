@@ -580,11 +580,13 @@ int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size) {
 }
 
 // view parematers in a file (Prm1L)
-int checkPrm1LFile(const char *format, int gene_num) {
+void checkPrm1LFile(const char *format, int gene_num) {
     Prm1L pra[POPULATION];
-    loadPrm1L(format, gene_num, pra, sizeof pra);
-    for (int i = 0; i < POPULATION; i++)
-        showPrm1L(pra[i]);
+    if (loadPrm1L(format, gene_num, pra, sizeof pra) < 0)
+        return;
+    // show only beggining and end
+    showPrm1L(pra[0]);
+    showPrm1L(pra[POPULATION - 1]);
 }
 
 int readResultFile(int *result, int r_size, char *fnamel) {
