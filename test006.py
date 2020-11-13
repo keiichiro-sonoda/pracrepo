@@ -649,6 +649,8 @@ class Widget(QWidget):
             return
         # ランダムで選んで盤面更新
         #self.updateBoard(rd.choice(cand_list))
+        # 試しに呼び出してみる
+        self.getActWithCFunc()
         # シンプルパラメータを用いた最善手
         tag = self.getBestActBySprm(self.board_info, self.turn)
         # 盤面更新
@@ -782,6 +784,7 @@ class Widget(QWidget):
     
     # C言語の共有ライブラリで定義された関数で指し手を決定する
     def getActWithCFunc(self):
+        print(self.board_info)
         pass
 
 class Application(QApplication):
