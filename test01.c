@@ -12,6 +12,6 @@ int main(void) {
     Prm1L pr1, pr2;
     randPrm1L(&pr1);
     randPrm1L(&pr2);
-    oneToOneNPrm1LFlex(getBoardForBlackPrm1LRlt, pr1, pr2);
+    makeFGFilePrm1L(FNF_TEST);
     return 0;
 }
