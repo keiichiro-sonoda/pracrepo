@@ -7,12 +7,12 @@
 
 // number of parameters per generation
 #define POPULATION 100
-
 #define PARAM_NUM 2792
-
 #define PRM1L_LEN 528
-
 #define SURVIVE_NUM 10
+
+// test file format
+#define FNF_TEST "prm/test/test%03d.bin"
 
 // sigmoid function (return float)
 #define sigmoidFloat(x) (1.0f / (1 + expf(-10 * (x))))
@@ -116,6 +116,20 @@ int leagueMatchSimple(Family fml, int *result);
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
 void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *family, int *result);
+
+// warning before overwriting
+// importet from genetic02.c
+int warnOverwriting(const char *fname);
+
+// write parameters to a file
+// give a file name for writing
+// be careful of overwriting
+int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
+
+// make first generation file (Prm1L)
+// give a file name format
+// record all individuals
+int makeFGFilePrm1L(const char *format);
 
 int readResultFile(int *result, int r_size, char *fnamel);
 

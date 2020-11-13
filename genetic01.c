@@ -495,6 +495,69 @@ void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *fami
     }
 }
 
+// warning before overwriting
+// importet from genetic02.c
+int warnOverwriting(const char *fname) {
+    FILE *fp;
+    // open to read
+    if ((fp = fopen(fname, "rb")) == NULL) {
+        // not exist
+        return 0;
+    }
+    // exist
+    fclose(fp);
+    printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);
+    char c = getchar();
+    if (c != 121) {
+        if (c != 10)
+            while (getchar() != 10);
+        printf("terminated\n");
+        return -1;
+    }
+    if (getchar() != 10) {
+        while (getchar() != 10);
+        printf("terminated\n");
+        return -1;
+    }
+    // allowed
+    return 0;
+}
+
+// write parameters to a file
+// give a file name for writing
+// be careful of overwriting
+int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size) {
+    FILE *fp;
+    if ((fp = fopen(fname, "wb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fname);
+        return -1;
+    }
+    fwrite(pra, pra_size, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
+// make first generation file (Prm1L)
+// give a file name format
+// record all individuals
+int makeFGFilePrm1L(const char *format) {
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, 0);
+    // check existence
+    if (warnOverwriting(fnamew) < 0)
+        return -1;
+    // make new family randomly
+    Prm1L pra[POPULATION];
+    for (int i = 0; i < POPULATION; i++)
+        randPrm1L(pra + i);
+    // write
+    if (dumpPrm1LDirect(fnamew, pra, sizeof pra) < 0)
+        return -1;
+    printf("%ld bytes were written\n", sizeof pra);
+    return 0;
+}
+
 int readResultFile(int *result, int r_size, char *fnamel) {
     FILE *fp;
     // read file
