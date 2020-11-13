@@ -10,6 +10,7 @@
 #define PARAM_NUM 2792
 #define PRM1L_LEN 528
 #define SURVIVE_NUM 10
+#define MUT_RATE 0.01f
 
 // test file format
 #define FNF_TEST "prm/test/test%03d.bin"
@@ -22,6 +23,9 @@
 
 // create an array of random weights
 #define randWeightArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeight()
+
+// choose randomly either a or b
+#define alternative(a, b) (rand() % 2 ? (a) : (b))
 
 // types
 
