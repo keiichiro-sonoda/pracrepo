@@ -27,6 +27,9 @@
 // choose randomly either a or b
 #define alternative(a, b) (rand() % 2 ? (a) : (b))
 
+// uniform crossover (array)
+#define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
+
 // types
 
 typedef struct param {
