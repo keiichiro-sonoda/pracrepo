@@ -6,7 +6,7 @@
 #define PI 3.14159265358979323846264338
 
 // number of parameters per generation
-#define POPULATION 50
+#define POPULATION 1
 #define PARAM_NUM 2792
 #define PRM1L_LEN 528
 #define SURVIVE_NUM 10
@@ -130,6 +130,16 @@ int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
 // give a file name format
 // record all individuals
 int makeFGFilePrm1L(const char *format);
+
+// read parameters from a file (Prm1L)
+// give a file name directly
+int loadPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
+
+// read parameters from a file (Prm1L)
+int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size);
+
+// view parematers in a file (Prm1L)
+int checkPrm1LFile(const char *format, int gene_num);
 
 int readResultFile(int *result, int r_size, char *fnamel);
 

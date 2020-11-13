@@ -13,5 +13,6 @@ int main(void) {
     randPrm1L(&pr1);
     randPrm1L(&pr2);
     makeFGFilePrm1L(FNF_TEST);
+    checkPrm1LFile(FNF_TEST, 0);
     return 0;
 }

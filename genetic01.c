@@ -558,6 +558,35 @@ int makeFGFilePrm1L(const char *format) {
     return 0;
 }
 
+// read parameters from a file (Prm1L)
+// give a file name directly
+int loadPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size) {
+    FILE *fp;
+    if ((fp = fopen(fname, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fname);
+        return -1;
+    }
+    fread(pra, pra_size, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
+// read parameters from a file (Prm1L)
+int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size) {
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    return loadPrm1LDirect(fnamer, pra, pra_size);
+}
+
+// view parematers in a file (Prm1L)
+int checkPrm1LFile(const char *format, int gene_num) {
+    Prm1L pra[POPULATION];
+    loadPrm1L(format, gene_num, pra, sizeof pra);
+    for (int i = 0; i < POPULATION; i++)
+        showPrm1L(pra[i]);
+}
+
 int readResultFile(int *result, int r_size, char *fnamel) {
     FILE *fp;
     // read file
