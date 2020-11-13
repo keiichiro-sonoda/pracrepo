@@ -13,7 +13,18 @@
 #define MUT_RATE 0.01f
 
 // test file format
+// common with genetic02
 #define FNF_TEST "prm/test/test%03d.bin"
+
+// L1 : the number of middle layer is 1
+// R  : decide next board by roulette
+// 050: population
+// 06 : the number of elite
+// 00 : roulette selection
+// 00 : uniform crossover (or none)
+// 00 : random mutation
+// 001: mutation rate
+#define FNF_L1R05006000000001 "prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
 // sigmoid function (return float)
 #define sigmoidFloat(x) (1.0f / (1 + expf(-10 * (x))))

@@ -9,8 +9,8 @@ int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     initBoard();
-    //makeFGFilePrm1L(FNF_TEST);
-    //nGenePrm1L(rltUniRd, FNF_TEST, 0, 1);
-    nGenePrm1LLoop(rltUniRd, FNF_TEST, 1, 0, 2);
+    makeFGFilePrm1L(FNF_L1R05006000000001);
+    checkPrm1LFile(FNF_L1R05006000000001, 0);
+    nGenePrm1LLoop(rltUniRd, FNF_L1R05006000000001, 1, 0, 2);
     return 0;
 }
