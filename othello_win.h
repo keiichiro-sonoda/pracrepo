@@ -179,6 +179,17 @@ int nextBoardNormal(Board b, Board *next_boards);
 // count the number of pieces
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 
+// 盤面と対応する指し手の配列を更新する
+// 盤面は正規化したものを与える
+// ここまでの盤面の数はindexに保存してあるものとし, 参照渡しで更新する
+void updateBoardActArray(BoardAct *board_act_arr, Board n_board, int ad, int *index);
+
+// 指し手の候補を作成する関数 (空マスベース探索)
+// 与える盤面は正規化していないものとする (正規化しても問題ないが, 実用的でない?)
+// 正規化した次の盤面の配列も作成する (評価用)
+// 正規化して一致する手の場合, 最初に見つかったものだけ採用する
+int canPutNet(Board b, int color, BoardAct *board_act_arr);
+
 // Board 型を配列に変換
 void board2array(Board src, int *dst);
 

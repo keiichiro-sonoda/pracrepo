@@ -126,6 +126,8 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     int n;
     n = canPutPP(b, turn, cand_acts, cand_boards, kc);
     showBoardArray(cand_boards, n);
+    BoardAct baa[NEXT_MAX];
+    canPutNet(b, turn, baa);
     return 0;
 }
 
