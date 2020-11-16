@@ -43,10 +43,15 @@ typedef struct board {
     int8B board[2];
 } Board;
 
-// 盤面とそれに対応する手の配列を保存する構造体
-typedef struct boardact{
-    Board brd;
+// 正規化された盤面と, 対応する手の配列を保存する構造体
+// 手を指す前の盤面の情報は含まない
+// 異なる手で等価な盤面になることは少ないと思うが
+// 等価なマスの数だけ用意しておくことにする
+// nは手の数
+typedef struct boardact {
+    Board nbd;
     int acts[8];
+    int n;
 } BoardAct;
 
 // intial board

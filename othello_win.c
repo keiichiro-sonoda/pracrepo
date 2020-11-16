@@ -959,11 +959,42 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
     return index;
 }
 
-// 指し手の候補を作成する関数 (空マスベース)
-// 与える盤面は正規化していないものとする
+// 盤面と対応する指し手の配列を更新する
+// 盤面は正規化したものを与える
+// ここまでの盤面の数はindexに保存してあるものとし, 参照渡しで更新する
+void updateBoardActArray(BoardAct *board_act_arr, Board n_board, int ad, int *index) {
+    int i;
+    for (i = 0; i < (*index); i++) {
+        // 既知の盤面 (稀だと思う)
+        if (sameBoard(board_act_arr[i].nbd, n_board)) {
+            // そこに至る指し手カウントをインクリメント
+            board_act_arr[i].n++;
+            // 念のためオーバーフロー対策
+            if (board_act_arr[i].n >= 8)
+                printString("Overflowed.");
+            // 指し手配列に追加
+            else
+                board_act_arr[i].acts[board_act_arr[i].n] = ad;
+            // 関数を抜ける
+            return;
+        }
+    }
+    // 初めての盤面 (一般的にはこっちだと思う)
+    // 新盤面として追加
+    board_act_arr[i].nbd = n_board;
+    // 指し手配列の先頭に代入
+    board_act_arr[i].acts[0] = ad;
+    // 現在の添え字 (要素数-1になることに注意)
+    board_act_arr[i].n = 0;
+    // 盤面数更新
+    (*index)++;
+}
+
+// 指し手の候補を作成する関数 (空マスベース探索)
+// 与える盤面は正規化していないものとする (正規化しても問題ないが, 実用的でない?)
 // 正規化した次の盤面の配列も作成する (評価用)
 // 正規化して一致する手の場合, 最初に見つかったものだけ採用する
-int canPutNet(Board b, int color, int *can_put, Board *next_boards) {
+int canPutNet(Board b, int color, BoardAct *board_act_arr) {
     int i, j, ad, dir, koma;
     // 次の盤面を数える役割
     int index = 0;
@@ -973,6 +1004,8 @@ int canPutNet(Board b, int color, int *can_put, Board *next_boards) {
     int ads[8];
     // 相手の色を予め用意しておく
     int opc = color ^ 0b11;
+    // 一時保存用の盤面
+    Board next_board;
     // 全てのアドレスを探索
     for (ad = 0; ad < 128; ad += 2) {
         // 空マスでなければ次へ
@@ -991,29 +1024,35 @@ int canPutNet(Board b, int color, int *can_put, Board *next_boards) {
                 if (koma == color) {
                     // 初めて返せる方向が見つかった
                     if (!flag) {
-                        // 手と盤面を一時的に保存
-                        can_put[index] = ad;
-                        next_boards[index] = b;
+                        // 盤面をコピーしてフラグを立てる
+                        next_board = b;
                         flag = 1;
                     }
-                    // reverse
-                    reRange(next_boards + index, ads, j);
+                    // 保存していたアドレスを反転
+                    reRange(&next_board, ads, j);
                     break;
-                } // empty
+                } // 空マスを発見したらこの方向は無効
                 else if (koma == 0b00) break;
-                // opponent's color
+                // 相手のコマならさらにその先を探索
                 ads[j + 1] = ads[j] + dir;
             }
         }
-        // all directions were checked and reversed
-        // put the piece!
+        // 全ての方向を探索し, ad にコマを置ける場合
         if (flag) {
-            putKoma(next_boards + index, ad, color);
-            index++;
+            // ad にコマを置く
+            putKoma(&next_board, ad, color);
+            // 黒の場合, 反転して正規化
+            if (color == 0b01)
+                swapNormalizeBoard(&next_board);
+            // 白の場合, そのまま正規化
+            else
+                normalizeBoard(&next_board);
+            // 盤面と指し手の配列を更新
+            updateBoardActArray(board_act_arr, next_board, ad, &index);
             flag = 0;
         }
     }
-    // return array length
+    // 正味の次の盤面の数を返す
     return index;
 }
 
