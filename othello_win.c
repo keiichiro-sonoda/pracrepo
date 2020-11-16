@@ -958,6 +958,15 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
     return index;
 }
 
+// Board 型を配列に変換
+int board2array(Board src, int *dst) {
+    int i;
+    for (i = 0; i < 64; i++) {
+        dst[i] = getKoma(src, i * 2);
+    }
+    return 0;
+}
+
 // black: +1, empty: 0, white: -1
 void board2arraySymmetry(Board src, int *dst) {
     int i;

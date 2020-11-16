@@ -163,6 +163,10 @@ int knownBoard(const Board *ba, int n, Board b);
 int nextBoardNormal(Board b, Board *next_boards);
 // count the number of pieces
 int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
+
+// Board 型を配列に変換
+int board2array(Board src, int *dst);
+
 // black: +1, empty: 0, white: -1
 void board2arraySymmetry(Board src, int *dst);
 // まさか関数の定義だけでここまで長くなるとは

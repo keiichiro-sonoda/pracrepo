@@ -16,14 +16,6 @@ void sigmoidFloatP(float *xp) {
     (*xp) = sigmoidFloat(*xp);
 }
 
-int board2array(Board src, int *dst) {
-    int i;
-    for (i = 0; i < 64; i++) {
-        dst[i] = getKoma(src, i * 2);
-    }
-    return 0;
-}
-
 // black: +1, empty: 0, white: -1
 // add an element for bias
 void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]) {
