@@ -15,6 +15,7 @@ import pyqtgraph as pg
 exe2_win = ctypes.cdll.LoadLibrary("exe2_win.so")
 # c_float が64個の配列型を定義
 FloatArray64 = ctypes.c_float * 64
+IntArray64 = ctypes.c_int32 * 64
 # 共有ライブラリを使う際の初期化
 # これが無いと不具合の可能性大
 exe2_win.initPy()
@@ -791,6 +792,8 @@ class Widget(QWidget):
             for j in range(1, 9, 1):
                 board_list.append(self.board_info[i + j])
         print(board_list)
+        i_arr_c = IntArray64(*board_list)
+        print(i_arr_c)
 
 class Application(QApplication):
     def __init__(self):
