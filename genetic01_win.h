@@ -7,7 +7,6 @@
 
 // number of parameters per generation
 #define POPULATION 50
-#define PARAM_NUM 2792
 #define PRM1L_LEN 528
 #define ELITE_NUM 6
 #define MUT_RATE 0.01f
@@ -84,6 +83,10 @@ float evalWithPrm1L(Board b, Prm1L pr);
 // use Prm1L
 // decide next board by roulette
 Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
+
+// pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
+// 今のところルーレット選択を考えている
+int getActPy(int b_info[MASU_NUM]);
 
 // return winner
 // give a function pointer to determine the next board (with Prm1L)

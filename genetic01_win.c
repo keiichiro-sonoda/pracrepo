@@ -118,6 +118,14 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
     return next_boards[rouletteFloat(exp_points, n, sumFloat(exp_points, n))];
 }
 
+// pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
+// 今のところルーレット選択を考えている
+int getActPy(int b_info[MASU_NUM]) {
+    printString("debugging");
+    printDecimalArray(b_info, MASU_NUM);
+    return 0;
+}
+
 // return winner
 // give a function pointer to determine the next board (with Prm1L)
 // boards are normalized

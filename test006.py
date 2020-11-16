@@ -22,7 +22,7 @@ IntArray64 = ctypes.c_int32 * 64
 exe2_win.initPy()
 
 # デバッグ関数
-share01.sortTest()
+#share01.sortTest()
 
 # 関数取得 & 返り値, 引数指定
 getTopSprm = exe2_win.getTopSprmPy
@@ -795,9 +795,11 @@ class Widget(QWidget):
         for i in range(9, 81, 9):
             for j in range(1, 9, 1):
                 board_list.append(self.board_info[i + j])
-        print(board_list)
+        #print(board_list)
+        # スターを付けて渡し, cのint型配列にする
         i_arr_c = IntArray64(*board_list)
-        print(i_arr_c)
+        #print(i_arr_c)
+        share01.getActPy(i_arr_c)
 
 class Application(QApplication):
     def __init__(self):
@@ -891,7 +893,7 @@ class Application(QApplication):
 
 def main():
     app = Application()
-    #app.run()
+    app.run()
 
 if __name__ == "__main__":
     main()
