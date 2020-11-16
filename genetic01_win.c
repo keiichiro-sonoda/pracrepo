@@ -8,7 +8,6 @@
 #include "sort01_win.h"
 
 // global variables
-Board START;
 
 // functions
 
