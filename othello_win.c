@@ -59,10 +59,10 @@ int showBoard(Board b) {
     return 0;
 }
 
+// 32桁の16進数で盤面を表示
 // show board in 32 hexadecimal digits
-int showBoardHex(Board b) {
-    printf("%016lx%016lx\n", b.board[1], b.board[0]);
-    return 0;
+void showBoardHex(Board b) {
+    printf("0x%016llx%016llx\n", b.board[1], b.board[0]);
 }
 
 // int型の配列を10進表記で表示
@@ -344,12 +344,10 @@ int canPutWhitePlus(Board b, int *cpw, Board *nbs) {
 
 // show some boards
 void showBoardArray(const Board *ba, int ba_len) {
-    int i;
-    for (i = 0; i < ba_len; i++) {
+    for (int i = 0; i < ba_len; i++) {
         showBoardHex(ba[i]);
         showBoard(ba[i]);
     }
-    return;
 }
 
 // swap white and black

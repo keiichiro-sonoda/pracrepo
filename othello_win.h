@@ -61,8 +61,10 @@ void emptyBoard(Board *bp);
 Board createEmptyBoard(void);
 // show a board
 int showBoard(Board b);
+
+// 32桁の16進数で盤面を表示
 // show board in 32 hexadecimal digits
-int showBoardHex(Board b);
+void showBoardHex(Board b);
 
 // display int array (decimal)
 // int型の配列を10進表記で表示
