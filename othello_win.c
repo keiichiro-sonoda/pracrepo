@@ -969,6 +969,9 @@ void board2array(Board src, int *dst) {
 
 // 配列をBoard型に変換
 void array2board(int *src, Board *dst) {
+    // まずは空盤面を作る
+    emptyBoard(dst);
+    // 要素をひとつずつ加える
     for (int i = 0; i < MASU_NUM; i++)
         putKoma(dst, i * 2, src[i]);
 }
