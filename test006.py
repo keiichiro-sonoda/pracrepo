@@ -13,12 +13,16 @@ import pyqtgraph as pg
 # 共有ライブラリ読み込み
 # このライブラリがある場所に移動して実行する
 exe2_win = ctypes.cdll.LoadLibrary("exe2_win.so")
+share01 = ctypes.cdll.LoadLibrary("share01.so")
 # c_float が64個の配列型を定義
 FloatArray64 = ctypes.c_float * 64
 IntArray64 = ctypes.c_int32 * 64
 # 共有ライブラリを使う際の初期化
 # これが無いと不具合の可能性大
 exe2_win.initPy()
+
+# デバッグ関数
+share01.sortTest()
 
 # 関数取得 & 返り値, 引数指定
 getTopSprm = exe2_win.getTopSprmPy
@@ -887,7 +891,7 @@ class Application(QApplication):
 
 def main():
     app = Application()
-    app.run()
+    #app.run()
 
 if __name__ == "__main__":
     main()
