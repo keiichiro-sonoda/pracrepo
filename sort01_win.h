@@ -1,6 +1,8 @@
 #ifndef SORT01_WIN_H
 #define SORT01_WIN_h
 
+#define expfArray(X, Y, n) for (int _ = 0; _ < n; _++) (Y)[_] = expf((X)[_])
+
 void sortTest(void);
 
 int exchange(int *A, int i, int j);

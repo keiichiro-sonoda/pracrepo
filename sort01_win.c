@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "othello_win.h"
+#include "sort01_win.h"
 
 void sortTest(void) {
     printString("debugging");
     int sample1[] = {5, 1, 3, 6, 8, 2, 9, 0, 4, 7};
     int l1 = arrayLength(sample1);
+    float sample2[l1];
     printDecimalArray(sample1, l1);
+    expfArray(sample1, sample2, l1);
+    printFloatArray(sample2, l1);
 }
 
 int exchange(int *A, int i, int j) {
