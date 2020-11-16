@@ -65,6 +65,18 @@ void showBoardHex(Board b) {
     printf("0x%016llx%016llx\n", b.board[1], b.board[0]);
 }
 
+// 正規化された盤面と対応する指し手を確認する
+void showBoardAct(BoardAct board_act) {
+    showBoard(board_act.nbd);
+    printDecimalArray(board_act.acts, board_act.n);
+}
+
+// 盤面と指し手のペアの配列を確認
+void showBoardActArray(const BoardAct *board_act_arr, int n) {
+    for (int i = 0; i < n; i++)
+        showBoardAct(board_act_arr[i]);
+}
+
 // int型の配列を10進表記で表示
 void printDecimalArray(const int *A, int n) {
     printf("{%3d", A[0]);

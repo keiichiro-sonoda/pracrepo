@@ -77,6 +77,12 @@ int showBoard(Board b);
 // show board in 32 hexadecimal digits
 void showBoardHex(Board b);
 
+// 正規化された盤面と対応する指し手を確認する
+void showBoardAct(BoardAct board_act);
+
+// 盤面と指し手のペアの配列を確認
+void showBoardActArray(const BoardAct *board_act_arr, int n);
+
 // display int array (decimal)
 // int型の配列を10進表記で表示
 void printDecimalArray(const int *A, int n);
