@@ -128,6 +128,11 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     n = canPutNet(b, turn, baa);
     showBoardActArray(baa, n);
     printDecimal(n);
+    // 盤面の数だけ評価値配列を作る
+    float exp_points[n];
+    for (int i = 0; i < n; i++)
+        exp_points[i] = expf(i);
+    printFloatArray(exp_points, n);
     return 0;
 }
 
