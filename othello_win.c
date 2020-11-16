@@ -91,7 +91,7 @@ int showHexArray(int *ia, int ia_len) {
 }
 
 // neighbor?
-int ifNeighbor(int src, int dst) {
+int areNeighbors(int src, int dst) {
     // range over
     if (dst < 0 || 126 < dst) return 0;
     int c1, c2;
@@ -165,13 +165,13 @@ int canPutBlackPlus(Board b, int *cpb, Board *nbs) {
             dir = DIRECTION[i];
             ads[0] = ad + dir;
             // neighbor!
-            if (ifNeighbor(ad, ads[0])) {
+            if (areNeighbors(ad, ads[0])) {
                 // not white
                 if (getKoma(b, ads[0]) ^ 0b10) continue;
                 // white
                 ads[1] = ads[0] + dir;
                 // while -> for
-                for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+                for (j = 1; areNeighbors(ads[j - 1], ads[j]); j++) {
                 // check the diagonal
                     koma = getKoma(b, ads[j]);
                     // black
@@ -225,14 +225,14 @@ Board nextBoardBlack(Board b, int te) {
         dir = DIRECTION[i];
         ads[0] = te + dir;
         // not neighbor
-        if (!ifNeighbor(te, ads[0])) continue;
+        if (!areNeighbors(te, ads[0])) continue;
         // not white
         if (getKoma(b, ads[0]) ^ 0b10) continue;
         ads[1] = ads[0] + dir;
         // continue flag
         con = 1;
         // check diagonal
-        for (j = 1; con && ifNeighbor(ads[j - 1], ads[j]); j++) {
+        for (j = 1; con && areNeighbors(ads[j - 1], ads[j]); j++) {
             switch (getKoma(b, ads[j])) {
                 // white
                 case 0b10:
@@ -268,10 +268,10 @@ Board nextBoardWhite(Board b, int te) {
         dir = DIRECTION[i];
         ads[0] = te + dir;
         // not neighbor or neighbor is not black
-        if (!ifNeighbor(te, ads[0]) || (getKoma(b, ads[0]) ^ 0b01)) continue;
+        if (!areNeighbors(te, ads[0]) || (getKoma(b, ads[0]) ^ 0b01)) continue;
         ads[1] = ads[0] + dir;
         // check the diagonal
-        for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+        for (j = 1; areNeighbors(ads[j - 1], ads[j]); j++) {
             koma = getKoma(b, ads[j]);
             // black
             if (koma == 0b01) {
@@ -311,13 +311,13 @@ int canPutWhitePlus(Board b, int *cpw, Board *nbs) {
             // check the opposite
             oad = ad - dir;
             // not neighbor or neighbor is not empty
-            if (!ifNeighbor(ad, oad) || getKoma(b, oad)) continue;
+            if (!areNeighbors(ad, oad) || getKoma(b, oad)) continue;
             // already known
             if (inArray(cpw, index, oad)) continue;
             ads[0] = ad;
             ads[1] = ad + dir;
             // check the diagonal
-            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; areNeighbors(ads[j - 1], ads[j]); j++) {
                 koma = getKoma(b, ads[j]);
                 // black
                 if (koma == 0b01) {
@@ -501,11 +501,11 @@ int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_cou
             dir = DIRECTION[i];
             ads[0] = ad + dir;
             // not neighbor or the neighbor is not opponent
-            if (!ifNeighbor(ad, ads[0]) || (getKoma(b, ads[0]) ^ opc)) continue;
+            if (!areNeighbors(ad, ads[0]) || (getKoma(b, ads[0]) ^ opc)) continue;
             // white
             ads[1] = ads[0] + dir;
             // check the diagonal
-            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; areNeighbors(ads[j - 1], ads[j]); j++) {
                 koma = getKoma(b, ads[j]);
                 // my color
                 // can put!!
@@ -848,11 +848,11 @@ int nextBoardNormal(Board b, Board *next_boards) {
             dif = DIRECTION[i];
             ads[0] = ad + dif;
             // not neighbor or neighbor is not white
-            if (!ifNeighbor(ad, ads[0]) || getKoma(b, ads[0]) ^ 0b10) continue;
+            if (!areNeighbors(ad, ads[0]) || getKoma(b, ads[0]) ^ 0b10) continue;
             ads[1] = ads[0] + dif;
             cnt = 1;
             // search the diagonal
-            for (j = 1; cnt && ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; cnt && areNeighbors(ads[j - 1], ads[j]); j++) {
                 switch(getKoma(b, ads[j])) {
                     // white
                     case 0b10:
@@ -920,11 +920,11 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
             dir = DIRECTION[i];
             ads[0] = ad + dir;
             // not neighbor or the neighbor is not black
-            if (!ifNeighbor(ad, ads[0]) || (getKoma(sb, ads[0]) ^ 0b01)) continue;
+            if (!areNeighbors(ad, ads[0]) || (getKoma(sb, ads[0]) ^ 0b01)) continue;
             // white
             ads[1] = ads[0] + dir;
             // check the diagonal
-            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; areNeighbors(ads[j - 1], ads[j]); j++) {
                 koma = getKoma(sb, ads[j]);
                 // white
                 // can put!!
@@ -952,6 +952,64 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
             // new board
             if (!knownBoard(next_boards, index, next_boards[index]))
                 index++;
+            flag = 0;
+        }
+    }
+    // return array length
+    return index;
+}
+
+// 指し手の候補を作成する関数 (空マスベース)
+// 与える盤面は正規化していないものとする
+// 正規化した次の盤面の配列も作成する (評価用)
+// 正規化して一致する手の場合, 最初に見つかったものだけ採用する
+int canPutNet(Board b, int color, int *can_put, Board *next_boards) {
+    int i, j, ad, dir, koma;
+    // 次の盤面を数える役割
+    int index = 0;
+    // 指し手として有効かどうか
+    int flag = 0;
+    // 反転する候補のマスを格納
+    int ads[8];
+    // 相手の色を予め用意しておく
+    int opc = color ^ 0b11;
+    // 全てのアドレスを探索
+    for (ad = 0; ad < 128; ad += 2) {
+        // 空マスでなければ次へ
+        if (getKoma(b, ad)) continue;
+        // 空マスなら全方向探索 (無効な方向も含む)
+        for (i = 0; i < 8; i++) {
+            dir = DIRECTION[i];
+            ads[0] = ad + dir;
+            // 無効な方向, もしくは隣が相手のコマでない場合別の方向を見る
+            if (!areNeighbors(ad, ads[0]) || (getKoma(b, ads[0]) ^ opc)) continue;
+            // 隣が相手なら, さらに先の座標を見る
+            ads[1] = ads[0] + dir;
+            for (j = 1; areNeighbors(ads[j - 1], ads[j]); j++) {
+                koma = getKoma(b, ads[j]);
+                // 自分のコマを発見
+                if (koma == color) {
+                    // 初めて返せる方向が見つかった
+                    if (!flag) {
+                        // 手と盤面を一時的に保存
+                        can_put[index] = ad;
+                        next_boards[index] = b;
+                        flag = 1;
+                    }
+                    // reverse
+                    reRange(next_boards + index, ads, j);
+                    break;
+                } // empty
+                else if (koma == 0b00) break;
+                // opponent's color
+                ads[j + 1] = ads[j] + dir;
+            }
+        }
+        // all directions were checked and reversed
+        // put the piece!
+        if (flag) {
+            putKoma(next_boards + index, ad, color);
+            index++;
             flag = 0;
         }
     }

@@ -38,10 +38,16 @@ typedef unsigned long long int8B;
 
 // othello board
 // 128 bits
-typedef struct {
+typedef struct board {
     // low bits, high bits
     int8B board[2];
 } Board;
+
+// 盤面とそれに対応する手の配列を保存する構造体
+typedef struct boardact{
+    Board brd;
+    int acts[8];
+} BoardAct;
 
 // intial board
 // 複数ファイルで共有するときは extern を付けるらしい
@@ -75,8 +81,10 @@ void printFloatArray(const float *A, int n);
 
 // display int array (hexadecimal)
 int showHexArray(int *ia, int ia_len);
+
 // neighbor?
-int ifNeighbor(int src, int dst);
+int areNeighbors(int src, int dst);
+
 // check if the element is in the array
 int inArray(int *ar, int ar_len, int el);
 // 添え字を取得(英語使うの面倒になった)
