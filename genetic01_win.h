@@ -84,7 +84,8 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
 
 // pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
 // 今のところルーレット選択を考えている
-int getActPy(int b_info[MASU_NUM]);
+// 引数にターンを追加
+int getActPrm1LPy(int b_info[MASU_NUM], int turn);
 
 // return winner
 // give a function pointer to determine the next board (with Prm1L)

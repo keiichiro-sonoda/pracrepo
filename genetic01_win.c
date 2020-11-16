@@ -111,12 +111,21 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
 
 // pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
 // 今のところルーレット選択を考えている
-int getActPy(int b_info[MASU_NUM]) {
+// 引数にターンを追加
+int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     printString("debugging");
     printDecimalArray(b_info, MASU_NUM);
     Board b;
     array2board(b_info, &b);
     showBoard(b);
+    // 候補となる指し手と, それに対応する次の盤面
+    int cand_acts[NEXT_MAX];
+    Board cand_boards[NEXT_MAX];
+    // コマ数カウント (多分不要だが引数で必要なので定義)
+    int kc[3];
+    int n;
+    n = canPutPP(b, turn, cand_acts, cand_boards, kc);
+    showBoardArray(cand_boards, n);
     return 0;
 }
 
