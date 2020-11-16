@@ -167,6 +167,9 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 // Board 型を配列に変換
 void board2array(Board src, int *dst);
 
+// 配列をBoard型に変換
+void array2board(int *src, Board *dst);
+
 // black: +1, empty: 0, white: -1
 void board2arraySymmetry(Board src, int *dst);
 // まさか関数の定義だけでここまで長くなるとは

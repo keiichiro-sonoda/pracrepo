@@ -961,10 +961,16 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
     return index;
 }
 
-// Board 型を配列に変換
+// Board型を配列に変換
 void board2array(Board src, int *dst) {
     for (int i = 0; i < MASU_NUM; i++)
         dst[i] = getKoma(src, i * 2);
+}
+
+// 配列をBoard型に変換
+void array2board(int *src, Board *dst) {
+    for (int i = 0; i < MASU_NUM; i++)
+        putKoma(dst, i * 2, src[i]);
 }
 
 // black: +1, empty: 0, white: -1

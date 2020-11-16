@@ -114,6 +114,9 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
 int getActPy(int b_info[MASU_NUM]) {
     printString("debugging");
     printDecimalArray(b_info, MASU_NUM);
+    Board b;
+    array2board(b_info, &b);
+    showBoard(b);
     return 0;
 }
 
