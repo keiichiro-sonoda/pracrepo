@@ -125,11 +125,12 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     int kc[3];
     int n;
     n = canPutPP(b, turn, cand_acts, cand_boards, kc);
-    showBoardArray(cand_boards, n);
+    //showBoardArray(cand_boards, n);
     BoardAct baa[NEXT_MAX];
     // 正味の盤面の数を求める
     n = canPutNet(b, turn, baa);
     showBoardActArray(baa, n);
+    printDecimal(n);
     return 0;
 }
 

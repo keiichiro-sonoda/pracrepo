@@ -66,9 +66,11 @@ void showBoardHex(Board b) {
 }
 
 // 正規化された盤面と対応する指し手を確認する
+// 指し手は読みやすいように座標文字列に変換する
 void showBoardAct(BoardAct board_act) {
     showBoard(board_act.nbd);
-    printDecimalArray(board_act.acts, board_act.n);
+    //printDecimalArray(board_act.acts, board_act.n);
+    showCoordinates(board_act.acts, board_act.n);
 }
 
 // 盤面と指し手のペアの配列を確認
@@ -79,9 +81,9 @@ void showBoardActArray(const BoardAct *board_act_arr, int n) {
 
 // int型の配列を10進表記で表示
 void printDecimalArray(const int *A, int n) {
-    printf("{%3d", A[0]);
+    printf("{%d", A[0]);
     for (int i = 1; i < n; i++)
-        printf(", %3d", A[i]);
+        printf(", %d", A[i]);
     printf("}\n");
 }
 
@@ -410,6 +412,7 @@ int getValidActStdin(int *can_put, int length) {
     return te;
 }
 
+// 座標文字列に変換
 int ad2coo(int ad, char *dst) {
     if (ad < 0 || 126 < ad) return -1;
     dst[0] = 'H' - (ad & 0xf) / 2;
@@ -418,6 +421,7 @@ int ad2coo(int ad, char *dst) {
     return 0;
 }
 
+// 整数のアドレス配列を座標文字列に変換して表示
 int showCoordinates(const int *can_put, int length) {
     if (length == 0) {
         printf("pass\n");
@@ -979,14 +983,16 @@ void updateBoardActArray(BoardAct *board_act_arr, Board n_board, int ad, int *in
     for (i = 0; i < (*index); i++) {
         // 既知の盤面 (稀だと思う)
         if (sameBoard(board_act_arr[i].nbd, n_board)) {
-            // そこに至る指し手カウントをインクリメント
-            board_act_arr[i].n++;
             // 念のためオーバーフロー対策
-            if (board_act_arr[i].n >= 8)
+            if (board_act_arr[i].n >= 8) {
                 printString("Overflowed.");
-            // 指し手配列に追加
-            else
+            } // 指し手に追加
+            else {
                 board_act_arr[i].acts[board_act_arr[i].n] = ad;
+            }
+            // 指し手カウントをインクリメント
+            // オーバーフローしても行う
+            board_act_arr[i].n++;
             // 関数を抜ける
             return;
         }
@@ -996,8 +1002,8 @@ void updateBoardActArray(BoardAct *board_act_arr, Board n_board, int ad, int *in
     board_act_arr[i].nbd = n_board;
     // 指し手配列の先頭に代入
     board_act_arr[i].acts[0] = ad;
-    // 現在の添え字 (要素数-1になることに注意)
-    board_act_arr[i].n = 0;
+    // 指し手カウント
+    board_act_arr[i].n = 1;
     // 盤面数更新
     (*index)++;
 }
