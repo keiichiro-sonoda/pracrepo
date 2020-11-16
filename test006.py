@@ -29,6 +29,10 @@ getTopSprm = exe2_win.getTopSprmPy
 getTopSprm.rectype = None
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
 
+getActPrm1L = share01.getActPrm1LPy
+getActPrm1L.rectype = ctypes.c_int32
+getActPrm1L.argtypes = (IntArray64, ctypes.c_int32)
+
 # ライブラリの関数を使いやすく包みたい
 # 引数には欲しい世代番号を与える
 # ファイル名で取り出す
@@ -795,11 +799,9 @@ class Widget(QWidget):
         for i in range(9, 81, 9):
             for j in range(1, 9, 1):
                 board_list.append(self.board_info[i + j])
-        #print(board_list)
         # スターを付けて渡し, cのint型配列にする
         i_arr_c = IntArray64(*board_list)
-        #print(i_arr_c)
-        share01.getActPy(i_arr_c)
+        getActPrm1L(i_arr_c, self.turn)
 
 class Application(QApplication):
     def __init__(self):
