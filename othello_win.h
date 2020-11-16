@@ -20,7 +20,7 @@
 #define B2C "-ox!"
 
 // マクロ
-#define kugiri() printf("--------------------------\n")
+#define kugiri(l) for (int _ = 0; _ < l; _++) putchar('-'); putchar(10)
 #define printString(s) printf("%s\n", s)
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
@@ -67,6 +67,9 @@ int showBoardHex(Board b);
 // display int array (decimal)
 // int型の配列を10進表記で表示
 void printDecimalArray(const int *A, int n);
+
+// float型の配列を表示
+void printFloatArray(const float *A, int n);
 
 // display int array (hexadecimal)
 int showHexArray(int *ia, int ia_len);

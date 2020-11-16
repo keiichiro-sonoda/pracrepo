@@ -73,6 +73,14 @@ void printDecimalArray(const int *A, int n) {
     printf("}\n");
 }
 
+// float型の配列を表示
+void printFloatArray(const float *A, int n) {
+    putchar('{');
+    for (int i = 0; i < n - 1; i++)
+        printf("%.2f, ", A[i]);
+    printf("%.2f}\n", A[n - 1]);
+}
+
 int showHexArray(int *ia, int ia_len) {
     int i;
     for (i = 0; i < ia_len; i++) {
