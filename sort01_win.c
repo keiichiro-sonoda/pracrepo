@@ -12,6 +12,14 @@ void sortTest(void) {
     printDecimalArray(sample1, l1);
     expfArray(sample1, sample2, l1);
     printFloatArray(sample2, l1);
+    float s = sumFloat(sample2, l1);
+    int loop = s * 1000;
+    int result[l1];
+    zeros(result, l1);
+    for (int i = 0; i < loop; i++) {
+        result[rouletteFloat(sample2, l1, s)]++;
+    }
+    printDecimalArray(result, l1);
 }
 
 int exchange(int *A, int i, int j) {
