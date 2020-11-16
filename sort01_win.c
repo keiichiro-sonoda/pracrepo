@@ -5,6 +5,7 @@
 #include "sort01_win.h"
 
 void sortTest(void) {
+    srand(123U);
     printString("debugging");
     int sample1[] = {5, 1, 3, 6, 8, 2, 9, 0, 4, 7};
     int l1 = arrayLength(sample1);
