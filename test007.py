@@ -153,9 +153,9 @@ class Widget(QWidget):
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5_100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_vsrand100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5neg_100.bin")
-        self.use_sprm = getTopSprmWrap("prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g100.bin")
+        #self.use_sprm = getTopSprmWrap("prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g100.bin")
         # ベクトルを得ようとしたが範囲をオーバーしていたため中止
-        #self.use_sprm = getVectorWrap()
+        self.use_sprm = getVectorWrap()
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
@@ -391,7 +391,6 @@ class Widget(QWidget):
         # 絶対値の最大値を取得
         # これと比較した相対評価で色を決める
         val_max = max(abs(v) for v in self.use_sprm)
-        print(val_max)
         # 評価値によって色を変えた正方形を描きたい
         for i in range(8):
             for j in range(8):
