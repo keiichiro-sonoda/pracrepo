@@ -822,9 +822,9 @@ class Application(QApplication):
 
 
 def main():
-    app = Application()
-    #app.run()
     setUsePrm1L("prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g100.bin".encode(), 100)
+    app = Application()
+    app.run()
 
 if __name__ == "__main__":
     main()

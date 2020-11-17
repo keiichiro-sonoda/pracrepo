@@ -110,6 +110,18 @@ float evalWithPrm1L(Board b, Prm1L pr) {
     return output;
 }
 
+// ベクトルで評価
+// evalWithPrm1L と結果が一致するかどうかを確認したい
+float evalWithVector(Board b, float vector[MASU_NUM + 1]) {
+    int inputs[MASU_NUM + 1];
+    float output = 0.0f;
+    board2arraySymmetryPlus(b, inputs);
+    // 単純に内積を取る
+    for (int i = 0; i <= MASU_NUM; i++)
+        output += inputs[i] * vector[i];
+    return output;
+}
+
 // assume that the next turn is black
 // n: the number of next boards
 // use Prm1L
@@ -165,7 +177,9 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     float exp_points[n];
     for (int i = 0; i < n; i++)
         exp_points[i] = expf(i);
-    printFloatArray(exp_points, n);
+    // 評価値比較
+    printFloat(evalWithPrm1L(b, USE_PRM1L));
+    printFloat(evalWithVector(b, USE_VECTOR));
     return 0;
 }
 

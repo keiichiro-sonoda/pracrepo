@@ -85,6 +85,10 @@ void Prm1L2vector(Prm1L src, float dst[MASU_NUM + 1]);
 // the more advantageous to black, the higher the score
 float evalWithPrm1L(Board b, Prm1L pr);
 
+// ベクトルで評価
+// evalWithPrm1L と結果が一致するかどうかを確認したい
+float evalWithVector(Board b, float vector[MASU_NUM + 1]);
+
 // assume that the next turn is black
 // n: the number of next boards
 // use Prm1L
