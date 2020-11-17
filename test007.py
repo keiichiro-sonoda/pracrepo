@@ -687,7 +687,7 @@ class Widget(QWidget):
     def _evaluationByPrm1L(self, board, turn):
         # Cで扱える配列に変換
         i_arr_c = self.board2IntArray64(board)
-        pt = getPointPrm1L(i_arr_c, turn)
+        pt = float(getPointPrm1L(i_arr_c, turn))
         # pythonの型に自動変換してくれているのか確認
         print(pt, type(pt))
         return 0
