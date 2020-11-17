@@ -212,11 +212,12 @@ class Widget(QWidget):
         # フォントファミリー, サイズ, 太さ, 斜体かどうかを決定
         font = QFont("Times New Roman", 20, 500, True)
         # スタートボタン
-        # プレイヤーの決定等を先に行ない, これを押したらスタートするようにしたい
+        # プレイヤーの決定等をで行い, これを押したらスタートする
         self.start_button = QPushButton("START", self)
         self.start_button.setFont(font)
         self.start_button.resize(140, 50)
         self.start_button.move(250, 820)
+        # クリック時実行関数
         self.start_button.clicked.connect(self.startClicked)
     
     # グラフ作成
@@ -764,16 +765,11 @@ class Application(QApplication):
         super(Application, self).__init__(sys.argv)
         # QWidgetの自作子クラス
         self.gui = Widget()
-        # ウィンドウの大きさと表示位置を指定する
-        # left, top, width, height
-        # topは50以下くらいになると画面からはみ出る
-        # 自作クラスの初期関数で設定した
-        #self.gui.setGeometry(20, 50, 800, 800)
-        # ウィンドウの設定
-        #self.gui.setStyleSheet("background:#eeeeee")
         # 様々なボタン定義
         self.setButtons()
 
+    # ボタン定義
+    # これは Widget 内に移動しても問題ないのか?
     def setButtons(self):
         y = 750
         # 終了ボタン
@@ -815,13 +811,6 @@ class Application(QApplication):
         if reply == QMessageBox.Yes:
             print("end")
             sys.exit()
-
-    # テキスト変更
-    def changeText(self):
-        self.label.setText("Text Changes!")
-    
-    def changeButtonText(self):
-        self.button.setText("Changed")
 
     def run(self):
         self.gui.show()
