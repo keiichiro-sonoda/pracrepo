@@ -29,6 +29,10 @@ getTopSprm = exe2_win.getTopSprmPy
 getTopSprm.rectype = None
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
 
+setSeed = share01.setSeedPy
+setSeed.rectype = None
+setSeed.argtypes = (ctypes.c_uint32,)
+
 setUsePrm1L = share01.setUsePrm1LPy
 setUsePrm1L.rectype = ctypes.c_int32
 setUsePrm1L.argtypes = (ctypes.c_char_p, ctypes.c_int32)
@@ -95,6 +99,9 @@ class Widget(QWidget):
         # キャンバスのマウスクリック動作のロックフラグ
         # AIのターンで勝手に操作出来ないようにする予定
         self.press_lock = False
+        # 指し手を決定する際のシード値
+        # いつかGUIで設定できるようにする?
+        self.seed = 123
         # プレイヤーがAIか人か判別するための変数
         # players[0] が先手, [1]が後手
         # False が人, True がAI
@@ -144,6 +151,8 @@ class Widget(QWidget):
         self.setGraphs()
         # テスト画像初期化
         self.setTestImage()
+        # シード値設定
+        setSeed(self.seed)
     
     # 初期盤面設定
     # リセットしたいキャンバスを与える
@@ -490,6 +499,8 @@ class Widget(QWidget):
         # Yesが押された場合
         if reply == QMessageBox.Yes:
             print("reset!!")
+            # シード値設定
+            setSeed(self.seed)
             # ラジオボタンを有効に戻す
             self.rbutton1.setEnabled(True)
             self.rbutton2.setEnabled(True)
