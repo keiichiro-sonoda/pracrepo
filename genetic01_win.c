@@ -119,6 +119,8 @@ float evalWithVector(Board b, float vector[MASU_NUM + 1]) {
     // 単純に内積を取る
     for (int i = 0; i <= MASU_NUM; i++)
         output += inputs[i] * vector[i];
+    // 敢えて誤差を付けてみる
+    output += 0.01f;
     return output;
 }
 
