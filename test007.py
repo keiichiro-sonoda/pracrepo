@@ -26,23 +26,23 @@ exe2_win.initPy()
 
 # 関数取得 & 返り値, 引数指定
 getTopSprm = exe2_win.getTopSprmPy
-getTopSprm.rectype = None
+getTopSprm.restype = None
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
 
 setSeed = share01.setSeedPy
-setSeed.rectype = None
+setSeed.restype = None
 setSeed.argtypes = (ctypes.c_uint32,)
 
 setUsePrm1L = share01.setUsePrm1LPy
-setUsePrm1L.rectype = ctypes.c_int32
+setUsePrm1L.restype = ctypes.c_int32
 setUsePrm1L.argtypes = (ctypes.c_char_p, ctypes.c_int32)
 
 getPointPrm1L = share01.getPointPrm1LPy
-getPointPrm1L.rectype = ctypes.c_float
+getPointPrm1L.restype = ctypes.c_float
 getPointPrm1L.argtypes = (IntArray64, ctypes.c_int32)
 
 getActPrm1L = share01.getActPrm1LPy
-getActPrm1L.rectype = ctypes.c_int32
+getActPrm1L.restype = ctypes.c_int32
 getActPrm1L.argtypes = (IntArray64, ctypes.c_int32)
 
 # ライブラリの関数を使いやすく包みたい
@@ -687,10 +687,10 @@ class Widget(QWidget):
     def _evaluationByPrm1L(self, board, turn):
         # Cで扱える配列に変換
         i_arr_c = self.board2IntArray64(board)
-        pt = float(getPointPrm1L(i_arr_c, turn))
-        # pythonの型に自動変換してくれているのか確認
-        print(pt, type(pt))
-        return 0
+        # 評価値取得
+        pt = getPointPrm1L(i_arr_c, turn)
+        print(pt)
+        return pt
     
     # クラス内変数で固定するバージョン
     def evaluationByPrm1L(self):
