@@ -239,7 +239,10 @@ float evalWithPrm1L(Board b, Prm1L pr) {
         for (int j = 0; j <= MASU_NUM; j++) {
             pa1[i] += inputs[j] * pr.weight1[i][j];
         }
+        // activate (step)
+        pa1[i] = (pa1[i] > 0);
     }
+    printFloatArray(pa1, 8);
     // output layer
     for (int i = 0; i < 8; i++)
         output += pa1[i] * pr.weight2[i];
@@ -343,7 +346,7 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
     while (1) {
         // calculate next
         n = nextBoardNormal2(main_board, nba, kc);
-        //showBoard(main_board);
+        showBoard(main_board);
         // can't put a piece anywhere
         if (n == 0) {
             // can't do anything one another
