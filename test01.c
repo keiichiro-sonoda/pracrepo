@@ -10,7 +10,7 @@ int main(void) {
     //srand((unsigned)time(NULL));
     initBoard();
     //makeFGFilePrm1L(FNF_L1R05006000000001);
-    checkPrm1LFile(FNF_L1R05006000000001, 2);
-    nGenePrm1LLoop(rltUniRd, FNF_L1R05006000000001, 1, 0, 2);
+    //checkPrm1LFile(FNF_L1R05006000000001, 2);
+    nGenePrm1LLoop(rltUniRd, FNF_L1R05006000000001, 1, 0, 100);
     return 0;
 }
