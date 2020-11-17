@@ -95,6 +95,21 @@ void printFloatArray(const float *A, int n) {
     printf("%.2f}\n", A[n - 1]);
 }
 
+// float型の配列の一部を表示
+void printFloatArrayPart(const float *A, int n) {
+    // 要素数が5以下なら全て表示
+    if (n < 5) {
+        printFloatArray(A, n);
+        return;
+    }
+    // 先頭3つと末尾1つを表示
+    putchar('{');
+    for (int i = 0; i < 3; i++) {
+        printf("%.2f, ", A[i]);
+    }
+    printf("..., %.2f}", A[n - 1]);
+}
+
 int showHexArray(int *ia, int ia_len) {
     int i;
     for (i = 0; i < ia_len; i++) {

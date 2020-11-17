@@ -90,6 +90,9 @@ void printDecimalArray(const int *A, int n);
 // float型の配列を表示
 void printFloatArray(const float *A, int n);
 
+// float型の配列の一部を表示
+void printFloatArrayPart(const float *A, int n);
+
 // display int array (hexadecimal)
 int showHexArray(int *ia, int ia_len);
 

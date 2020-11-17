@@ -58,7 +58,8 @@ void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]) {
 void showPrm1L(Prm1L pr) {
     printString("weight1:");
     for (int i = 0; i < 8; i++) {
-        printFloatArray(pr.weight1[i], MASU_NUM + 1);
+        //printFloatArray(pr.weight1[i], MASU_NUM + 1);
+        printFloatArrayPart(pr.weight1[i], MASU_NUM + 1);
     }
     printString("weight2:");
     printFloatArray(pr.weight2, 8);
