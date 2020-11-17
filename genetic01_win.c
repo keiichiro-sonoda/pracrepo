@@ -182,8 +182,8 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     lucky = rouletteFloat(exp_points, n, sumFloat(exp_points, n));
     // 選ばれた評価値表示
     printFloat(exp_points[lucky]);
-    // 選ばれた手を返す (ここでは先頭要素)
-    return baa[lucky].acts[0];
+    // 選ばれた盤面に至るための手を返す (その中からランダムに選ぶ)
+    return baa[lucky].acts[randInt(baa[lucky].n)];
 }
 
 // return winner

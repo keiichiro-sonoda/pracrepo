@@ -32,6 +32,10 @@
 // 予期せぬバグが起きるかもしれない
 #define zeros(A, n) for (int _ = 0; _ < (n); _++) (A)[_] = 0
 
+// 0以上n未満の整数の乱数を返す
+// ubuntuのrandIntで範囲を指定したが, ここでは異なる
+#define randInt(n) rand() % n
+
 // 64bit
 // mingw64 long long int
 typedef unsigned long long int8B;
