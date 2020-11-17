@@ -102,8 +102,9 @@ float evalWithPrm1L(Board b, Prm1L pr) {
         for (int j = 0; j <= MASU_NUM; j++) {
             pa1[i] += inputs[j] * pr.weight1[i][j];
         }
+        // ステップ関数で活性化
+        pa1[i] = (pa1[i] > 0);
     }
-    // ここにシグモイドやステップを挟むべきだった
     // output layer
     for (int i = 0; i < 8; i++)
         output += pa1[i] * pr.weight2[i];
@@ -170,15 +171,15 @@ float getPointPrm1LPy(int b_info[MASU_NUM], int turn) {
     // 次に指すのが黒なら, そのまま正規化
     if (turn == 0b01) {
         normalizeBoard(&b);
-        //p = evalWithPrm1L(b, USE_PRM1L);
-        p = evalWithVector(b, USE_VECTOR);
+        p = evalWithPrm1L(b, USE_PRM1L);
+        //p = evalWithVector(b, USE_VECTOR);
     }
     // 白なら, 反転して正規化
     // 白目線の評価の符号を入れ替えると黒目線の評価と考える
     else {
         swapNormalizeBoard(&b);
-        //p = -evalWithPrm1L(b, USE_PRM1L);
-        p = -evalWithVector(b, USE_VECTOR);
+        p = -evalWithPrm1L(b, USE_PRM1L);
+        //p = -evalWithVector(b, USE_VECTOR);
     }
     showBoard(b);
     printf("point: ");
@@ -206,8 +207,8 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     // 盤面の数だけ評価値配列を作る
     float exp_points[n];
     for (int i = 0; i < n; i++) {
-        //exp_points[i] = expf(-evalWithPrm1L(baa[i].nbd, USE_PRM1L) * 10);
-        exp_points[i] = expf(-evalWithVector(baa[i].nbd, USE_VECTOR) * 10);
+        exp_points[i] = expf(-evalWithPrm1L(baa[i].nbd, USE_PRM1L) * 10);
+        //exp_points[i] = expf(-evalWithVector(baa[i].nbd, USE_VECTOR) * 10);
     }
     // ルーレット選択で盤面決定
     lucky = rouletteFloat(exp_points, n, sumFloat(exp_points, n));

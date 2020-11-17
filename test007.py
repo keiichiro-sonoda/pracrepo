@@ -151,11 +151,11 @@ class Widget(QWidget):
         #self.use_sprm = getTopSprmWrap("prm//simple_prm100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_not_mutate020.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5_100.bin")
-        self.use_sprm = getTopSprmWrap("prm//sprm_vsrand100.bin")
+        #self.use_sprm = getTopSprmWrap("prm//sprm_vsrand//sprm_vsrand100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5neg_100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g100.bin")
         # 色設定方法を変更したのでエラーは起きなくなった
-        #self.use_sprm = getVectorWrap()
+        self.use_sprm = getVectorWrap()
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()
