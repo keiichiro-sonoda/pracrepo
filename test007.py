@@ -30,6 +30,8 @@ getTopSprm.rectype = None
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
 
 setUsePrm1L = share01.setUsePrm1LPy
+setUsePrm1L.rectype = ctypes.c_int32
+setUsePrm1L.argtypes = (ctypes.c_char_p, ctypes.c_int32)
 
 getActPrm1L = share01.getActPrm1LPy
 getActPrm1L.rectype = ctypes.c_int32
@@ -821,7 +823,8 @@ class Application(QApplication):
 
 def main():
     app = Application()
-    app.run()
+    #app.run()
+    setUsePrm1L("prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g100.bin".encode(), 100)
 
 if __name__ == "__main__":
     main()
