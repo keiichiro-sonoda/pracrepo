@@ -760,10 +760,14 @@ class Widget(QWidget):
         for i in range(9, 81, 9):
             for j in range(1, 9, 1):
                 board_list.append(self.board_info[i + j])
-        # スターを付けて渡し, cのint型配列にする
+        # スターを付けて渡し, Cのint型配列にする
         i_arr_c = IntArray64(*board_list)
-        te = getActPrm1L(i_arr_c, self.turn)
-        print(te)
+        # Cで定義しているアドレスで指し手取得
+        c_sub = getActPrm1L(i_arr_c, self.turn)
+        # 文字列に変換
+        # ord("h") = 104, ord("8") = 56
+        tag = chr(104 - c_sub % 16 // 2) + chr(56 - c_sub // 16)
+        print(tag)
 
 class Application(QApplication):
     def __init__(self):
