@@ -9,10 +9,8 @@ int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     initBoard();
-    checkPrm1LFile(FNF_NON_AF, 100);
-    //nGenePrm1LLoop(rltUniRd, FNF_L1R05006000000001, 0, 0, 100);
-    Prm1L pra[POPULATION];
-    loadPrm1L(FNF_NON_AF, 100, pra, sizeof pra);
-    oneToOneNPrm1LFlex(getBoardForBlackPrm1LRlt, pra[0], pra[1]);
+    //makeFGFilePrm1L(FNF_L1R05006000000001);
+    checkPrm1LFile(FNF_L1R05006000000001, 2);
+    nGenePrm1LLoop(rltUniRd, FNF_L1R05006000000001, 1, 0, 2);
     return 0;
 }
