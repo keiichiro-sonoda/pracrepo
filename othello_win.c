@@ -105,9 +105,9 @@ void printFloatArrayPart(const float *A, int n) {
     // 先頭3つと末尾1つを表示
     putchar('{');
     for (int i = 0; i < 3; i++) {
-        printf("%.2f, ", A[i]);
+        printf("%5.2f, ", A[i]);
     }
-    printf("..., %.2f}", A[n - 1]);
+    printf("..., %5.2f}\n", A[n - 1]);
 }
 
 int showHexArray(int *ia, int ia_len) {
