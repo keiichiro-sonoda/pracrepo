@@ -140,7 +140,6 @@ class Widget(QWidget):
         self.setGraphs()
         # テスト画像初期化
         self.setTestImage()
-        #self.setEssImage()
     
     # 初期盤面設定
     # リセットしたいキャンバスを与える
@@ -240,18 +239,6 @@ class Widget(QWidget):
         # 幅
         self.x_range = [0, 0]
         self.y_range = [-10, 10]
-        # 横軸の最小値, 最大値, 縦軸の最小値, 最大値
-        # オートスケールにした方が都合が良いかも
-        #self.graph.setRange(xRange=self.x_range, yRange=self.y_range)
-        #xaxis = self.graph.getAxis('bottom')
-        # 横軸の目盛の場所とラベル (数値, ラベル) のタプルのリスト?
-        # 数値 = ラベルとしておく
-        #x_ticks = [(i, i) for i in range(x_range[0], x_range[1] + 1, 100)]
-        #xaxis.setTicks([x_ticks])
-        #yaxis = self.graph.getAxis('left')
-        # 縦軸の目盛の場所とラベル
-        #y_ticks = [(i, i) for i in [-0.5, -0.25, 0, 0.25, 0.5]]
-        #yaxis.setTicks([y_ticks])
         # グリッド線の表示
         self.graph.showGrid(x=True, y=True)
         # 反例を表示
@@ -394,37 +381,6 @@ class Widget(QWidget):
                 imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
                 # 数値も表示
                 imgcanvas.drawText(x + 18, y + 45, "{:5.2f}".format(value))
-    
-    # 主要マスのみ強調した画像を作りたい
-    def setEssImage(self):
-        self.test_img = QImage(self.SQLEN * 10, self.SQLEN * 10, QImage.Format_ARGB32)
-        imgcanvas = QPainter(self.test_img)
-        # ペン設定
-        pen = QPen()
-        pen.setColor(Qt.black)
-        pen.setWidth(4)
-        imgcanvas.setPen(pen)
-        # フォント設定
-        font = QFont()
-        font.setPointSize(25)
-        imgcanvas.setFont(font)
-        # 左上の主要マス
-        essence = {
-            "a1": " 1", "b1": " 2", "b2": " 5", "c1": " 3", "c2": " 6",
-            "c3": " 8", "d1": " 4", "d2": " 7", "d3": " 9", "d4": "10"
-        }
-        for tag, pos in self.tag2pos.items():
-            # アンパック代入?
-            x, y = pos[1]
-            # 主要マスかどうかで色分け
-            if tag in essence:
-                imgcanvas.setBrush(self.MYGREEN)
-                moji = essence[tag]
-            else:
-                imgcanvas.setBrush(self.BYAKUROKU)
-                moji = ""
-            imgcanvas.drawRect(x, y, self.SQLEN, self.SQLEN)
-            imgcanvas.drawText(x + 15, y + 60, moji)
 
     # テストボタンが押された
     # 状態の切り替えのみ行なう
@@ -815,30 +771,9 @@ class Application(QApplication):
         #self.gui.setGeometry(20, 50, 800, 800)
         # ウィンドウの設定
         #self.gui.setStyleSheet("background:#eeeeee")
-        # ラベル
-        #self.labelTest()
         # 様々なボタン定義
         self.setButtons()
 
-    # テキスト表示
-    def labelTest(self):
-        moji = "PyQtを勉強中\n園田継一郎 17T2088B"
-        self.label = QLabel(moji, self.gui)
-        # テキストの位置を指定
-        self.label.move(100, 100)
-        # テキストの詳細設定
-        # CSSフォーマットとは何ぞや
-        self.label.setStyleSheet("\
-            font-size:20pt;\
-            font-weight:bold;\
-            color:#ff00ff;\
-            background-color:#00ff00;\
-            ")
-        # 箱の大きさ変更?
-        self.label.resize(400, 100)
-        # 中央揃え
-        self.label.setAlignment(Qt.AlignCenter)
-    
     def setButtons(self):
         y = 750
         # 終了ボタン
