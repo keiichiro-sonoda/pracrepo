@@ -602,6 +602,7 @@ class Widget(QWidget):
         self.progress += 1
         self.progress_list.append(self.progress)
         # 今の盤面の評価値を追加
+        self.evaluationByPrm1L()
         self.points.append(self.evaluationBySprm(self.board_info))
         self.curve.setData(self.progress_list, self.points)
         # 描画適用
@@ -682,8 +683,18 @@ class Widget(QWidget):
         return IntArray64(*board_list)
     
     # Prm1Lを使った評価
-    def _evaluationByPrm1L(self, board):
-        pass
+    # 盤面とターンを引数で与えるバージョン
+    def _evaluationByPrm1L(self, board, turn):
+        # Cで扱える配列に変換
+        i_arr_c = self.board2IntArray64(board)
+        pt = getPointPrm1L(i_arr_c, turn)
+        # pythonの型に自動変換してくれているのか確認
+        print(pt, type(pt))
+        return 0
+    
+    # クラス内変数で固定するバージョン
+    def evaluationByPrm1L(self):
+        return self._evaluationByPrm1L(self.board_info, self.turn)
 
     # クラス内変数の候補手ディクショナリは書き換えないように候補手を探索
     # 引数には盤面情報リスト、手番(ターン)を与える
