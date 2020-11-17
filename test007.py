@@ -25,6 +25,7 @@ exe2_win.initPy()
 #share01.sortTest()
 
 # 関数取得 & 返り値, 引数指定
+# 返り値指定は restype 属性!
 getTopSprm = exe2_win.getTopSprmPy
 getTopSprm.restype = None
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
@@ -105,7 +106,7 @@ class Widget(QWidget):
         self.press_lock = False
         # 指し手を決定する際のシード値
         # いつかGUIで設定できるようにする?
-        self.seed = 124
+        self.seed = 123
         # プレイヤーがAIか人か判別するための変数
         # players[0] が先手, [1]が後手
         # False が人, True がAI
@@ -151,7 +152,7 @@ class Widget(QWidget):
         self.setTimers()
         # 画面切り替えフラグ?
         self.test_flag = False
-        # グラフセット
+        # グラフ設定 (必ず盤面初期化の後に行う)
         self.setGraphs()
         # テスト画像初期化
         self.setTestImage()
@@ -280,7 +281,8 @@ class Widget(QWidget):
         # 横軸リスト
         self.progress_list = [0]
         # 縦軸評価値
-        self.points = [0]
+        # ここで初期盤面の評価を行う
+        self.points = [self.evaluationByPrm1L()]
         # グラフにデータセット
         self.curve.setData(self.progress_list, self.points)
     
@@ -515,6 +517,7 @@ class Widget(QWidget):
             # 盤面を初期状態に
             self.setInitBoard(QPainter(self.img))
             # グラフも初期状態に
+            # 必ず盤面の初期化を先に行う
             self.setInitGraph()
             # 盤面クリックは有効にしておく
             self.press_lock = False
@@ -602,8 +605,8 @@ class Widget(QWidget):
         self.progress += 1
         self.progress_list.append(self.progress)
         # 今の盤面の評価値を追加
-        self.evaluationByPrm1L()
-        self.points.append(self.evaluationBySprm(self.board_info))
+        #self.points.append(self.evaluationBySprm(self.board_info))
+        self.points.append(self.evaluationByPrm1L())
         self.curve.setData(self.progress_list, self.points)
         # 描画適用
         self.update()
@@ -688,9 +691,7 @@ class Widget(QWidget):
         # Cで扱える配列に変換
         i_arr_c = self.board2IntArray64(board)
         # 評価値取得
-        pt = getPointPrm1L(i_arr_c, turn)
-        print(pt)
-        return pt
+        return getPointPrm1L(i_arr_c, turn)
     
     # クラス内変数で固定するバージョン
     def evaluationByPrm1L(self):
