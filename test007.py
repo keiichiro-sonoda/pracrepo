@@ -101,7 +101,7 @@ class Widget(QWidget):
         self.press_lock = False
         # 指し手を決定する際のシード値
         # いつかGUIで設定できるようにする?
-        self.seed = 123
+        self.seed = 124
         # プレイヤーがAIか人か判別するための変数
         # players[0] が先手, [1]が後手
         # False が人, True がAI
