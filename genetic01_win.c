@@ -165,25 +165,27 @@ int setUsePrm1LPy(const char *fname, int n) {
 float getPointPrm1LPy(int b_info[MASU_NUM], int turn) {
     printString("debugging");
     Board b;
-    float p;
+    float p, vp;
     array2board(b_info, &b);
     showBoard(b);
     // 次に指すのが黒なら, そのまま正規化
     if (turn == 0b01) {
         normalizeBoard(&b);
         p = evalWithPrm1L(b, USE_PRM1L);
-        //p = evalWithVector(b, USE_VECTOR);
+        vp = evalWithVector(b, USE_VECTOR);
     }
     // 白なら, 反転して正規化
     // 白目線の評価の符号を入れ替えると黒目線の評価と考える
     else {
         swapNormalizeBoard(&b);
         p = -evalWithPrm1L(b, USE_PRM1L);
-        //p = -evalWithVector(b, USE_VECTOR);
+        vp = -evalWithVector(b, USE_VECTOR);
     }
     showBoard(b);
     printf("point: ");
     printFloat(p);
+    printf("vector: ");
+    printFloat(vp);
     return p;
 }
 
