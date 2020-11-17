@@ -29,6 +29,8 @@ getTopSprm = exe2_win.getTopSprmPy
 getTopSprm.rectype = None
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
 
+setUsePrm1L = share01.setUsePrm1LPy
+
 getActPrm1L = share01.getActPrm1LPy
 getActPrm1L.rectype = ctypes.c_int32
 getActPrm1L.argtypes = (IntArray64, ctypes.c_int32)

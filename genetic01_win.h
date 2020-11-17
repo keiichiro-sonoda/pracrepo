@@ -51,6 +51,9 @@ typedef struct prm1L {
 } Prm1L;
 
 // global variables
+// 大域変数
+// pythonで用いるパラメータ (中間層1)
+extern Prm1L USE_PRM1L;
 
 // functions
 
@@ -81,6 +84,11 @@ float evalWithPrm1L(Board b, Prm1L pr);
 // use Prm1L
 // decide next board by roulette
 Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
+
+// python で使うパラメータを設定する
+// 読み込みたいファイル名を指定, その中の先頭要素を用いる
+// 人数 n はpythonから渡し, 変更可能とする
+int setUsePrm1LPy(const char *fname, int n);
 
 // pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
 // 今のところルーレット選択を考えている

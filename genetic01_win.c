@@ -8,6 +8,7 @@
 #include "sort01_win.h"
 
 // global variables
+Prm1L USE_PRM1L;
 
 // functions
 
@@ -110,6 +111,22 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
         exp_points[i] = expf(-evalWithPrm1L(next_boards[i], pr) * 10);
     }
     return next_boards[rouletteFloat(exp_points, n, sumFloat(exp_points, n))];
+}
+
+// python で使うパラメータを設定する
+// 読み込みたいファイル名を指定, その中の先頭要素を用いる
+// 人数 n はpythonから渡し, 変更可能とする
+int setUsePrm1LPy(const char *fname, int n) {
+    Prm1L pra[n];
+    // 読み込みとエラー処理
+    if (loadPrm1LDirect(fname, pra, sizeof pra) < 0) {
+        return -1;
+    } 
+    // 先頭要素を代入
+    USE_PRM1L = pra[0];
+    // 確認
+    showPrm1L(USE_PRM1L);
+    return 0;
 }
 
 // pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
