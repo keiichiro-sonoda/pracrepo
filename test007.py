@@ -619,10 +619,10 @@ class Widget(QWidget):
             return
         # ランダムで選んで盤面更新
         #self.updateBoard(rd.choice(cand_list))
-        # 試しに呼び出してみる
-        self.getActWithCFunc()
         # シンプルパラメータを用いた最善手
-        tag = self.getBestActBySprm(self.board_info, self.turn)
+        #tag = self.getBestActBySprm(self.board_info, self.turn)
+        # Prm1L による手の決定
+        tag = self.getActWithCFunc()
         # 盤面更新
         self.updateBoard(tag)
         # 次が人ならターンをロック解除
@@ -767,7 +767,7 @@ class Widget(QWidget):
         # 文字列に変換
         # ord("h") = 104, ord("8") = 56
         tag = chr(104 - c_sub % 16 // 2) + chr(56 - c_sub // 16)
-        print(tag)
+        return tag
 
 class Application(QApplication):
     def __init__(self):
