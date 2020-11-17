@@ -9,6 +9,7 @@
 
 // global variables
 Prm1L USE_PRM1L;
+float USE_VECTOR[MASU_NUM + 1];
 
 // functions
 
@@ -72,6 +73,15 @@ void randPrm1L(Prm1L *prp) {
     array2Prm1L(tmp, prp);
 }
 
+// シグモイドを忘れたPrm1Lを等価と予想されるベクトルに変換
+void Prm1L2vector(Prm1L src, float dst[MASU_NUM + 1]) {
+    // 0 で初期化
+    zeros(dst, MASU_NUM + 1);
+    for (int i = 0; i < 8; i++)
+        for (int j = 0; j <= MASU_NUM; j++)
+            dst[j] += src.weight1[i][j] * src.weight2[i];
+}
+
 // Prm1L を使った盤面評価
 // シグモイドを使うのを忘れていた!
 // これではただの線形変換と変わらない
@@ -93,6 +103,7 @@ float evalWithPrm1L(Board b, Prm1L pr) {
             pa1[i] += inputs[j] * pr.weight1[i][j];
         }
     }
+    // ここにシグモイドやステップを挟むべきだった
     // output layer
     for (int i = 0; i < 8; i++)
         output += pa1[i] * pr.weight2[i];
@@ -127,6 +138,10 @@ int setUsePrm1LPy(const char *fname, int n) {
     USE_PRM1L = pra[0];
     // 確認
     showPrm1L(USE_PRM1L);
+    // ベクトルに変換
+    Prm1L2vector(USE_PRM1L, USE_VECTOR);
+    // 確認
+    printFloatArray(USE_VECTOR, MASU_NUM + 1);
     return 0;
 }
 

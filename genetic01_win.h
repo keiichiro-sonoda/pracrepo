@@ -54,6 +54,9 @@ typedef struct prm1L {
 // 大域変数
 // pythonで用いるパラメータ (中間層1)
 extern Prm1L USE_PRM1L;
+// シグモイドを忘れていたため, 長さ65のベクトルと等価になっていると予想される
+// それを確かめるための変数
+extern float USE_VECTOR[MASU_NUM + 1];
 
 // functions
 
@@ -74,6 +77,9 @@ void showPrm1L(Prm1L pr);
 
 // create random parameter (for Prm1L)
 void randPrm1L(Prm1L *prp);
+
+// シグモイドを忘れたPrm1Lを等価と予想されるベクトルに変換
+void Prm1L2vector(Prm1L src, float dst[MASU_NUM + 1]);
 
 // calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
