@@ -119,8 +119,6 @@ float evalWithVector(Board b, float vector[MASU_NUM + 1]) {
     // 単純に内積を取る
     for (int i = 0; i <= MASU_NUM; i++)
         output += inputs[i] * vector[i];
-    // 敢えて誤差を付けてみる
-    output += 0.01f;
     return output;
 }
 
@@ -150,12 +148,8 @@ int setUsePrm1LPy(const char *fname, int n) {
     } 
     // 先頭要素を代入
     USE_PRM1L = pra[0];
-    // 確認
-    showPrm1L(USE_PRM1L);
     // ベクトルに変換
     Prm1L2vector(USE_PRM1L, USE_VECTOR);
-    // 確認
-    printFloatArray(USE_VECTOR, MASU_NUM + 1);
     return 0;
 }
 
@@ -166,6 +160,7 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     printString("debugging");
     Board b;
     int n;
+    int lucky;
     // 正規化された盤面と指し手の対応表
     BoardAct baa[NEXT_MAX];
     // 配列を盤面に変換
@@ -177,12 +172,18 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     printDecimal(n);
     // 盤面の数だけ評価値配列を作る
     float exp_points[n];
-    for (int i = 0; i < n; i++)
-        exp_points[i] = expf(i);
-    // 評価値比較
-    printFloat(evalWithPrm1L(b, USE_PRM1L));
-    printFloat(evalWithVector(b, USE_VECTOR));
-    return 0;
+    for (int i = 0; i < n; i++) {
+        exp_points[i] = expf(-evalWithPrm1L(baa[i].nbd, USE_PRM1L) * 10);
+        //exp_points[i] = expf(-evalWithVector(baa[i].nbd, USE_VECTOR) * 10);
+    }
+    // 評価値表示
+    printFloatArray(exp_points, n);
+    // ルーレット選択で盤面決定
+    lucky = rouletteFloat(exp_points, n, sumFloat(exp_points, n));
+    // 選ばれた評価値表示
+    printFloat(exp_points[lucky]);
+    // 選ばれた手を返す (ここでは先頭要素)
+    return baa[lucky].acts[0];
 }
 
 // return winner

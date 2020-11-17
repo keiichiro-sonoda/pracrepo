@@ -762,7 +762,8 @@ class Widget(QWidget):
                 board_list.append(self.board_info[i + j])
         # スターを付けて渡し, cのint型配列にする
         i_arr_c = IntArray64(*board_list)
-        getActPrm1L(i_arr_c, self.turn)
+        te = getActPrm1L(i_arr_c, self.turn)
+        print(te)
 
 class Application(QApplication):
     def __init__(self):
@@ -821,7 +822,7 @@ class Application(QApplication):
         sys.exit(self.exec_())
 
 def main():
-    setUsePrm1L("prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g100.bin".encode(), 100)
+    setUsePrm1L("prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g100.bin".encode(), 50)
     app = Application()
     app.run()
 
