@@ -95,10 +95,16 @@ float evalWithVector(Board b, float vector[MASU_NUM + 1]);
 // decide next board by roulette
 Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
 
+// pythonで呼び出してシード値をセットする関数
+void setSeedPy(unsigned int seed);
+
 // python で使うパラメータを設定する
 // 読み込みたいファイル名を指定, その中の先頭要素を用いる
 // 人数 n はpythonから渡し, 変更可能とする
 int setUsePrm1LPy(const char *fname, int n);
+
+// pythonで呼び出して盤面の評価値を返す関数
+float getPointPrm1LPy(int b_info[MASU_NUM], int turn);
 
 // pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
 // 今のところルーレット選択を考えている

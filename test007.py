@@ -37,6 +37,10 @@ setUsePrm1L = share01.setUsePrm1LPy
 setUsePrm1L.rectype = ctypes.c_int32
 setUsePrm1L.argtypes = (ctypes.c_char_p, ctypes.c_int32)
 
+getPointPrm1L = share01.getPointPrm1LPy
+getPointPrm1L.rectype = ctypes.c_float
+getPointPrm1L.argtypes = (IntArray64, ctypes.c_int32)
+
 getActPrm1L = share01.getActPrm1LPy
 getActPrm1L.rectype = ctypes.c_int32
 getActPrm1L.argtypes = (IntArray64, ctypes.c_int32)
@@ -666,6 +670,20 @@ class Widget(QWidget):
                 # 次の重みを参照
                 c += 1
         return pt
+    
+    # 盤面をC言語の長さ64のint型配列に変換する
+    def board2IntArray64(self, board):
+        board_list = []
+        # 番兵を排除
+        for i in range(9, 81, 9):
+            for j in range(1, 9):
+                board_list.append(board[i + j])
+        # スターで分解
+        return IntArray64(*board_list)
+    
+    # Prm1Lを使った評価
+    def _evaluationByPrm1L(self, board):
+        pass
 
     # クラス内変数の候補手ディクショナリは書き換えないように候補手を探索
     # 引数には盤面情報リスト、手番(ターン)を与える
@@ -765,14 +783,7 @@ class Widget(QWidget):
     
     # C言語の共有ライブラリで定義された関数で指し手を決定する
     def getActWithCFunc(self):
-        # Cに渡すための盤面リスト
-        board_list = []
-        # 番兵を除いてリストを作る
-        for i in range(9, 81, 9):
-            for j in range(1, 9, 1):
-                board_list.append(self.board_info[i + j])
-        # スターを付けて渡し, Cのint型配列にする
-        i_arr_c = IntArray64(*board_list)
+        i_arr_c = self.board2IntArray64(self.board_info)
         # Cで定義しているアドレスで指し手取得
         c_sub = getActPrm1L(i_arr_c, self.turn)
         # 文字列に変換

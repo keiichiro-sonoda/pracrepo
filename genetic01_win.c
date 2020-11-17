@@ -159,6 +159,22 @@ int setUsePrm1LPy(const char *fname, int n) {
     return 0;
 }
 
+// pythonで呼び出して盤面の評価値を返す関数
+float getPointPrm1LPy(int b_info[MASU_NUM], int turn) {
+    Board b;
+    float p;
+    array2board(b_info, &b);
+    // 次に指すのが黒なら, そのまま正規化
+    if (turn == 0b01)
+        normalizeBoard(&b);
+    // 白なら, 反転して正規化
+    else
+        swapNormalizeBoard(&b);
+    // 評価値を計算
+    p = evalWithPrm1L(b, USE_PRM1L);
+    return p;
+}
+
 // pythonから与えられた盤面に対し, Prm1Lを使って手を選択する
 // 今のところルーレット選択を考えている
 // 引数にターンを追加
