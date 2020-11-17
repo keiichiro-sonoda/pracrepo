@@ -141,6 +141,8 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
 // 読み込みたいファイル名を指定, その中の先頭要素を用いる
 // 人数 n はpythonから渡し, 変更可能とする
 int setUsePrm1LPy(const char *fname, int n) {
+    // めんどいのでここでシード設定してしまう
+    srand(123U);
     Prm1L pra[n];
     // 読み込みとエラー処理
     if (loadPrm1LDirect(fname, pra, sizeof pra) < 0) {
@@ -150,6 +152,7 @@ int setUsePrm1LPy(const char *fname, int n) {
     USE_PRM1L = pra[0];
     // ベクトルに変換
     Prm1L2vector(USE_PRM1L, USE_VECTOR);
+    printFloatArray(USE_VECTOR, MASU_NUM + 1);
     return 0;
 }
 
@@ -165,23 +168,21 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     BoardAct baa[NEXT_MAX];
     // 配列を盤面に変換
     array2board(b_info, &b);
-    showBoard(b);
+    //showBoard(b);
     // 正味の盤面の数を求める
     n = canPutNet(b, turn, baa);
-    showBoardActArray(baa, n);
-    printDecimal(n);
+    //showBoardActArray(baa, n);
+    //printDecimal(n);
     // 盤面の数だけ評価値配列を作る
     float exp_points[n];
     for (int i = 0; i < n; i++) {
         exp_points[i] = expf(-evalWithPrm1L(baa[i].nbd, USE_PRM1L) * 10);
         //exp_points[i] = expf(-evalWithVector(baa[i].nbd, USE_VECTOR) * 10);
     }
-    // 評価値表示
-    printFloatArray(exp_points, n);
     // ルーレット選択で盤面決定
     lucky = rouletteFloat(exp_points, n, sumFloat(exp_points, n));
     // 選ばれた評価値表示
-    printFloat(exp_points[lucky]);
+    //printFloat(exp_points[lucky]);
     // 選ばれた盤面に至るための手を返す (その中からランダムに選ぶ)
     return baa[lucky].acts[randInt(baa[lucky].n)];
 }
