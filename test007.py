@@ -874,7 +874,7 @@ class Application(QApplication):
         sys.exit(self.exec_())
 
 def main():
-    setUsePrm1L("prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g100.bin".encode(), 50)
+    setUsePrm1L(b"prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g100.bin", 50)
     app = Application()
     app.run()
 
