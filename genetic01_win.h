@@ -111,6 +111,10 @@ float getPointPrm1LPy(int b_info[MASU_NUM], int turn);
 // 引数にターンを追加
 int getActPrm1LPy(int b_info[MASU_NUM], int turn);
 
+// ベクトルをpythonに渡して表示してみたい
+// 引数にポインタを渡して書き換える
+void getVectorPy(float vector[MASU_NUM]);
+
 // return winner
 // give a function pointer to determine the next board (with Prm1L)
 // boards are normalized

@@ -46,12 +46,21 @@ getActPrm1L = share01.getActPrm1LPy
 getActPrm1L.restype = ctypes.c_int32
 getActPrm1L.argtypes = (IntArray64, ctypes.c_int32)
 
+getVector = share01.getVectorPy
+getVector.restype = None
+getVector.argtypes = (FloatArray64,)
+
 # ライブラリの関数を使いやすく包みたい
 # 引数には欲しい世代番号を与える
 # ファイル名で取り出す
 def getTopSprmWrap(fname):
     f_arr_c = FloatArray64()
     getTopSprm(fname.encode(), f_arr_c)
+    return list(f_arr_c)
+
+def getVectorWrap():
+    f_arr_c = FloatArray64()
+    getVector(f_arr_c)
     return list(f_arr_c)
 
 class Widget(QWidget):
@@ -144,7 +153,8 @@ class Widget(QWidget):
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5_100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_vsrand100.bin")
         #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5neg_100.bin")
-        self.use_sprm = getTopSprmWrap("prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g100.bin")
+        #self.use_sprm = getTopSprmWrap("prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g100.bin")
+        self.use_sprm = getVectorWrap()
         # ボタン等設定
         self.setButtons()
         self.setRadioButtons()

@@ -32,6 +32,9 @@
 // 予期せぬバグが起きるかもしれない
 #define zeros(A, n) for (int _ = 0; _ < (n); _++) (A)[_] = 0
 
+// 配列複製
+#define copyArray(src, dst, n)  for (int _ = 0; _ < n; _++) (dst)[_] = (src)[_]
+
 // 0以上n未満の整数の乱数を返す
 // ubuntuのrandIntで範囲を指定したが, ここでは異なる
 #define randInt(n) rand() % n

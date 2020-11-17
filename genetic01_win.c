@@ -145,6 +145,7 @@ void setSeedPy(unsigned int seed) {
 // python で使うパラメータを設定する
 // 読み込みたいファイル名を指定, その中の先頭要素を用いる
 // 人数 n はpythonから渡し, 変更可能とする
+// この関数を実行しないと大抵の関数は動かないと思っていいかも?
 int setUsePrm1LPy(const char *fname, int n) {
     Prm1L pra[n];
     // 読み込みとエラー処理
@@ -214,6 +215,14 @@ int getActPrm1LPy(int b_info[MASU_NUM], int turn) {
     //printFloat(exp_points[lucky]);
     // 選ばれた盤面に至るための手を返す (その中からランダムに選ぶ)
     return baa[lucky].acts[randInt(baa[lucky].n)];
+}
+
+// ベクトルをpythonに渡して表示してみたい
+// 引数にポインタを渡して書き換える
+void getVectorPy(float vector[MASU_NUM]) {
+    // 65番目の要素はどうでもいいので省略
+    copyArray(USE_VECTOR, vector, MASU_NUM);
+    printFloatArray(vector, MASU_NUM);
 }
 
 // return winner
