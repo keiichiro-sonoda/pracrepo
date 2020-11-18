@@ -101,7 +101,7 @@ void rouletteUniSft(const int *fitness, const int *numbers, const Sprm *current,
 }
 
 int main(void) {
-    srand(123U);
+    srand(SEED);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
@@ -109,7 +109,7 @@ int main(void) {
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    nGeneSSAFlexLoopSeed(rouletteUniSft, format, 0, 0, 3);
+    nGeneSSAFlexLoopSeed(rouletteUniSft, format, 1, 2, 1);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
     printString("yeah");
