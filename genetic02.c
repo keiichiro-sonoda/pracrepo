@@ -6,8 +6,6 @@
 
 #include "genetic02.h"
 #include "sort01.h"
-// not necessary
-//#include "othello.h"
 
 // global variables
 // declarations are required

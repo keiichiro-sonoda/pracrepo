@@ -24,10 +24,10 @@ othello: othello.c
 	gcc othello.c -o othello
 othello_win.exe: othello_win.c
 	gcc othello_win.c -o othello_win.exe
-test: test.c genetic02.o othello.c sort01.o sort01.h
-	gcc test.c genetic02.o othello.c sort01.o -o test -lm
 test01: test01.c genetic01.o othello.o sort01.o
 	gcc test01.c genetic01.o othello.o sort01.o -o test01 -lm
+test02: test02.c genetic02.o othello.o sort01.o
+	gcc test02.c genetic02.o othello.o sort01.o -o test02 -lm
 test_win.exe: test_win.c genetic02_win.o othello_win.o sort01_win.o
 	gcc test_win.c genetic02_win.o othello_win.o sort01_win.o -o test_win.exe
 othello.o: othello.c othello.h
