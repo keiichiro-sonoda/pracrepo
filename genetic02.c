@@ -866,11 +866,11 @@ void nGeneSSAFlexLoopSeed(scmFunc selAndCross, const char *format, int safety, i
     unsigned int s2;
     for (int i = st; i < st + loop; i++) {
         // set seed
-        srand((unsigned)i);
-        s2 = (unsigned)rand();
-        printf("%d\n", s2);
+        srand((unsigned)i + SEED);
+        s2 = (unsigned)rand() + SEED;
+        printf("seed: %d\n", s2);
         // set seed
-        srand(s2 + SEED);
+        srand(s2);
         if (nGeneSSAFlex(selAndCross, format, i, safety) < 0) {
             // error
             printString("error");

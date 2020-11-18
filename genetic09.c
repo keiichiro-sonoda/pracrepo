@@ -106,9 +106,10 @@ int main(void) {
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
-    makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 0);
-    nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
+    //makeFirstGeneFileFlex(format);
+    //checkSprmFile(format, 0);
+    //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
+    nGeneSSAFlexLoopSeed(rouletteUniSft, format, 0, 0, 3);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
     printString("yeah");
