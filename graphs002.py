@@ -222,19 +222,19 @@ def funcTest(fname_format, generation):
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
-                # 00. 最初（指し手固定）
-                "prm//simple_prm{:03d}.bin",
-                # 01. 突然変異無し
-                "prm//sprm_not_mutate{:03d}.bin",
+                # 00. 最初 (指し手固定)
+                "prm//simple_prm//simple_prm{:03d}.bin",
+                # 01. 突然変異無し (20世代まで)
+                "prm//sprm_not_mutate//sprm_not_mutate{:03d}.bin",
                 # 02. 角固定
-                "prm//sprm_corner0.5_{:03d}.bin",
+                "prm//sprm_corner0.5//sprm_corner0.5_{:03d}.bin",
                 # 03. ランダム対戦
-                "prm//sprm_vsrand{:03d}.bin",
+                "prm//sprm_vsrand//sprm_vsrand{:03d}.bin",
                 # 04. 角固定-0.5
-                "prm//sprm_corner0.5neg_{:03d}.bin",
+                "prm//sprm_corner0.5neg//sprm_corner0.5neg_{:03d}.bin",
                 # 以下, 指し手をルーレット選択
                 # 05. 最初
-                "prm//sprm_roulette{:03d}.bin",
+                "prm//sprm_roulette//sprm_roulette{:03d}.bin",
                 # 06.  勝ち点で直接ルーレット
                 "prm//sprm_rltrlt{:03d}.bin",
                 # 07. 最低点を引いて+1した値でルーレット
@@ -262,7 +262,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprmdef050_06_rlt_uni_rd005//sprmdef050_06_rlt_uni_rd005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 17
-    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    ind = 5
+    viewStatGraphs(FILE_FORMATS[ind], 10, -1, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
