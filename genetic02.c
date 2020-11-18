@@ -110,7 +110,7 @@ float fcrossMFlex(float a, float b, float rate) {
     return b;
 }
 
-// uniform crossing
+// uniform crossover
 // the mutation rate is 5%
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     Sprm child;
@@ -120,6 +120,35 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
         child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.05);
     }
     return child;
+}
+
+// uniform crossover
+// no mutation
+Sprm uniCrossSprm(Sprm mother, Sprm father) {
+    Sprm child;
+    uniCrossArray(mother.weight, father.weight, child.weight, SPRM_LEN);
+    return child;
+}
+
+// shift the value from 0.05 to 0.10
+// no limit
+void shiftMutNoLim(Sprm *pr) {
+    float shift;
+    for (int i = 0; i < SPRM_LEN; i++) {
+        // mutation?
+        if (randFloat() < MUT_RATE) {
+            // from 0.05 to 0.10
+            shift = randFloat() / 20 + 0.05f;
+            //printFloat(shift);
+            // positive
+            if (rand() & 1) {
+                pr->weight[i] += shift;
+            } // negative
+            else {
+                pr->weight[i] -= shift;
+            }
+        }
+    }
 }
 
 // mutate with a given probability

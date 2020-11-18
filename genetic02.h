@@ -5,12 +5,25 @@
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
+
+#ifndef ELITE_NUM
 #define ELITE_NUM 6
+#endif
+
+#ifndef POPULATION
 #define POPULATION 50
+#endif
+
+#ifndef MUT_RATE
+#define MUT_RATE 0.05
+#endif
 
 // function to determine the nextboard
-#define DET_FUNC getBestBoardForBlackSimple
-//#define DET_FUNC getBoardForBlackSimpleRoulette
+//#define DET_FUNC getBestBoardForBlackSimple
+
+#ifndef DET_FUNC
+#define DET_FUNC getBoardForBlackSimpleRoulette
+#endif
 
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
@@ -64,6 +77,24 @@
 // 02: single point crossover
 #define FNF_05006000200005 "prm/sprm050_06_rlt_1p_rd005/sprm050_06_rlt_1p_rd005_g%03d.bin"
 
+// 01: shift mutation
+#define FNF_05006000001005 "prm/sprm050_06_rlt_uni_sft005/sprm050_06_rlt_uni_sft005_g%03d.bin"
+
+// choose randomly either a or b
+#ifndef alternative
+#define alternative(a, b) (rand() & 1 ? (a) : (b))
+#endif
+
+// uniform crossover (array)
+#ifndef uniCrossArray
+#define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
+#endif
+
+// from 0.0 to 1.0
+#ifndef randFloat
+#define randFloat() ((float)rand() / RAND_MAX)
+#endif
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
@@ -102,6 +133,14 @@ float fcrossMFlex(float a, float b, float rate);
 // uniform crossing
 // the mutation rate is 5%
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
+
+// uniform crossover
+// no mutation
+Sprm uniCrossSprm(Sprm mother, Sprm father);
+
+// shift the value from 0.05 to 0.1
+// no limit
+void shiftMutNoLim(Sprm *pr);
 
 // mutate with a given probability
 // otherwise copy
