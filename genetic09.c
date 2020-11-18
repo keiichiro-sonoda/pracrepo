@@ -123,7 +123,7 @@ int main(void) {
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    nGeneSSAFlexLoopSeed(rouletteUniSftLim, format, 1, 0, 100);
+    //nGeneSSAFlexLoopSeed(rouletteUniSftLim, format, 1, 0, 100);
     printString("yeah");
     return 0;
 }
