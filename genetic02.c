@@ -130,6 +130,26 @@ Sprm uniCrossSprm(Sprm mother, Sprm father) {
     return child;
 }
 
+// shift the value from 0.05 to 0.1
+// no limit
+void shiftMutNoLim(Sprm *pr) {
+    float shift;
+    for (int i = 0; i < SPRM_LEN; i++) {
+        // mutation?
+        if (randFloat() < MUT_RATE) {
+            shift = randFloat() / 20 + 0.05f;
+            printFloat(shift);
+            // positive
+            if (rand() & 1) {
+                pr->weight[i] += shift;
+            } // negative
+            else {
+                pr->weight[i] -= shift;
+            }
+        }
+    }
+}
+
 // mutate with a given probability
 // otherwise copy
 float copyOrMutation(float x, float mut_rate) {

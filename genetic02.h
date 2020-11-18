@@ -84,6 +84,11 @@
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
 #endif
 
+// from 0.0 to 1.0
+#ifndef randFloat
+#define randFloat() ((float)rand() / RAND_MAX)
+#endif
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
@@ -126,6 +131,10 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
 // uniform crossover
 // no mutation
 Sprm uniCrossSprm(Sprm mother, Sprm father);
+
+// shift the value from 0.05 to 0.1
+// no limit
+void shiftMutNoLim(Sprm *pr);
 
 // mutate with a given probability
 // otherwise copy

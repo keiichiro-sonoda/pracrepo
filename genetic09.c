@@ -86,7 +86,7 @@ void rouletteUni(const int *fitness, const int *numbers, const Sprm *current, Sp
 }
 
 int main(void) {
-    srand(123U);
+    srand(126U);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
@@ -102,6 +102,8 @@ int main(void) {
     Sprm pr3 = uniCrossSprm(pr1, pr2);
     showSprmOneLine(pr1);
     showSprmOneLine(pr2);
+    showSprmOneLine(pr3);
+    shiftMutNoLim(&pr3);
     showSprmOneLine(pr3);
     return 0;
 }
