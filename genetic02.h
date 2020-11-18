@@ -77,6 +77,9 @@
 // 02: single point crossover
 #define FNF_05006000200005 "prm/sprm050_06_rlt_1p_rd005/sprm050_06_rlt_1p_rd005_g%03d.bin"
 
+// 01: shift mutation
+#define FNF_05006000001005 "prm/sprm050_06_rlt_uni_sft005/sprm050_06_rlt_uni_sft005_g%03d.bin"
+
 // choose randomly either a or b
 #ifndef alternative
 #define alternative(a, b) (rand() & 1 ? (a) : (b))
