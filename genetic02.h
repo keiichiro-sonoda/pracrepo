@@ -100,6 +100,9 @@ typedef struct sprm{
     float weight[SPRM_LEN];
 } Sprm;
 
+// the type of function pointer to select, crossover and mutation
+typedef void (*scmFunc)(const int*, const int*, const Sprm*, Sprm*);
+
 // global variables
 extern int INDEXES[MASU_NUM];
 extern Sprm SAMP_PRM;
@@ -236,7 +239,7 @@ int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*)
 void nGeneSSALoopFlex(int (*nGeneSSA)(const char*, int, int), const char *format, int safety, int st, int loop);
 
 // give a function pointer for selection and crossover
-void nGeneSSAFlexLoop(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*), const char *format, int safety, int st, int loop);
+void nGeneSSAFlexLoop(scmFunc selAndCross, const char *format, int safety, int st, int loop);
 
 // give a function to loop
 void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop);

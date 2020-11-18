@@ -106,13 +106,11 @@ int main(void) {
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
-    //makeFirstGeneFileFlex(format);
-    //checkSprmFile(format, 200);
-    //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 99, 101);
+    makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 0);
+    nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
-    int a = 0x7fffffff;
-    printDecimal(a);
     printString("yeah");
     return 0;
 }

@@ -838,7 +838,7 @@ void nGeneSSALoopFlex(int (*nGeneSSA)(const char*, int, int), const char *format
 }
 
 // give a function pointer for selection and crossover
-void nGeneSSAFlexLoop(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*), const char *format, int safety, int st, int loop) {
+void nGeneSSAFlexLoop(scmFunc selAndCross, const char *format, int safety, int st, int loop) {
     time_t t0, t1;
     // get start time
     time(&t0);
