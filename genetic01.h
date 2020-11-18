@@ -1,5 +1,5 @@
-#ifndef GENETIC01_h
-#define GENETIC01_h
+#ifndef GENETIC01_H
+#define GENETIC01_H
 
 #include "othello.h"
 
