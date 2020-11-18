@@ -102,16 +102,21 @@ void rouletteUniSft(const int *fitness, const int *numbers, const Sprm *current,
 
 int main(void) {
     srand(SEED);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    nGeneSSAFlexLoopSeed(rouletteUniSft, format, 1, 2, 1);
+    //nGeneSSAFlexLoopSeed(rouletteUniSft, format, 1, 2, 1);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
+    Sprm pr1;
+    randSprm(&pr1);
+    showSprmOneLine(pr1);
+    shiftMutLimited(&pr1);
+    showSprmOneLine(pr1);
     printString("yeah");
     return 0;
 }

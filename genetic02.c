@@ -132,7 +132,7 @@ Sprm uniCrossSprm(Sprm mother, Sprm father) {
 
 // shift the value from 0.05 to 0.10
 // no limit
-void shiftMutNoLim(Sprm *pr) {
+void shiftMutNoLim(Sprm *prp) {
     float shift;
     for (int i = 0; i < SPRM_LEN; i++) {
         // mutation?
@@ -142,10 +142,39 @@ void shiftMutNoLim(Sprm *pr) {
             //printFloat(shift);
             // positive
             if (rand() & 1) {
-                pr->weight[i] += shift;
+                prp->weight[i] += shift;
             } // negative
             else {
-                pr->weight[i] -= shift;
+                prp->weight[i] -= shift;
+            }
+        }
+    }
+}
+
+// shift the value from 0.05 to 0.10
+// limit the value between -0.5 and 0.5
+void shiftMutLimited(Sprm *prp) {
+    float shift;
+    for (int i = 0; i < SPRM_LEN; i++) {
+        // mutation?
+        if (randFloat() < MUT_RATE) {
+            // from 0.05 to 0.10
+            shift = randFloat() / 20 + 0.05f;
+            //printFloat(shift);
+            // positive
+            if (rand() & 1) {
+                prp->weight[i] += shift;
+                // rounding
+                if (prp->weight[i] > 0.5f) {
+                    prp->weight[i] = 0.5f;
+                }
+            } // negative
+            else {
+                prp->weight[i] -= shift;
+                // rounding
+                if (prp->weight[i] < -0.5f) {
+                    prp->weight[i] = -0.5f;
+                }
             }
         }
     }

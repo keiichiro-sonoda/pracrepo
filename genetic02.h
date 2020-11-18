@@ -16,7 +16,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.05
+#define MUT_RATE 0.5
 #endif
 
 // function to determine the nextboard
@@ -144,7 +144,11 @@ Sprm uniCrossSprm(Sprm mother, Sprm father);
 
 // shift the value from 0.05 to 0.1
 // no limit
-void shiftMutNoLim(Sprm *pr);
+void shiftMutNoLim(Sprm *prp);
+
+// shift the value from 0.05 to 0.10
+// limit the value between -0.5 and 0.5
+void shiftMutLimited(Sprm *prp);
 
 // mutate with a given probability
 // otherwise copy
