@@ -86,7 +86,7 @@ void rouletteUni(const int *fitness, const int *numbers, const Sprm *current, Sp
 }
 
 int main(void) {
-    srand(125U);
+    srand(123U);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();

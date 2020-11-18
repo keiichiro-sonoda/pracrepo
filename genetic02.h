@@ -5,8 +5,18 @@
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
+
+#ifndef ELITE_NUM
 #define ELITE_NUM 6
+#endif
+
+#ifndef POPULATION
 #define POPULATION 50
+#endif
+
+#ifndef MUT_RATE
+#define MUT_RATE 0.05
+#endif
 
 // function to determine the nextboard
 #define DET_FUNC getBestBoardForBlackSimple
