@@ -77,9 +77,9 @@ int main(void) {
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_05006000200005;
-    //makeFirstGeneFileFlex(format);
-    //checkSprmFile(format, 0);
-    nGeneSSAFlexLoop(rouletteSP, format, 1, 0, 100);
+    char format[] = FNF_D05006000000005;
+    makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 0);
+    //nGeneSSAFlexLoop(rouletteSP, format, 1, 0, 100);
     return 0;
 }

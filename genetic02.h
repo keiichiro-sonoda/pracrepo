@@ -45,6 +45,9 @@
 // 005: mutation rate
 #define FNF_05006000000005 "prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g%03d.bin"
 
+// select the board with the highest evaluation value
+#define FNF_D05006000000005 "prm/sprmdef050_06_rlt_uni_rd005/sprmdef050_06_rlt_uni_rd005_g%03d.bin"
+
 // 01: random selection
 // 10: average and uniform crossover (once for each parents)
 #define FNF_10010011000005 "prm/sprm100_10_rd_au_rd005/sprm100_10_rd_au_rd005_g%03d.bin"
