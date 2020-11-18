@@ -130,15 +130,16 @@ Sprm uniCrossSprm(Sprm mother, Sprm father) {
     return child;
 }
 
-// shift the value from 0.05 to 0.1
+// shift the value from 0.05 to 0.10
 // no limit
 void shiftMutNoLim(Sprm *pr) {
     float shift;
     for (int i = 0; i < SPRM_LEN; i++) {
         // mutation?
         if (randFloat() < MUT_RATE) {
+            // from 0.05 to 0.10
             shift = randFloat() / 20 + 0.05f;
-            printFloat(shift);
+            //printFloat(shift);
             // positive
             if (rand() & 1) {
                 pr->weight[i] += shift;

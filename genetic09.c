@@ -86,8 +86,8 @@ void rouletteUni(const int *fitness, const int *numbers, const Sprm *current, Sp
 }
 
 int main(void) {
-    srand(126U);
-    //srand((unsigned)time(NULL));
+    srand(123U);
+    srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
@@ -96,14 +96,10 @@ int main(void) {
     //nGeneSSAFlexLoop(rouletteUni, format, 1, 0, 100);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
-    Sprm pr1, pr2;
-    randSprm(&pr1);
-    randSprm(&pr2);
-    Sprm pr3 = uniCrossSprm(pr1, pr2);
-    showSprmOneLine(pr1);
-    showSprmOneLine(pr2);
-    showSprmOneLine(pr3);
-    shiftMutNoLim(&pr3);
-    showSprmOneLine(pr3);
+    int count = 0;
+    for (int i = 0; i < 10000; i++) {
+        count += (randFloat() > MUT_RATE);
+    }
+    printDecimal(count);
     return 0;
 }
