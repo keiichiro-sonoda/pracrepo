@@ -108,8 +108,9 @@ int main(void) {
     char format[] = FNF_05006000001005;
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 1);
-    nGeneSSAFlexLoop(rouletteUniSft, format, 1, 1, 99);
+    //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 1, 99);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
+    printString("yeah");
     return 0;
 }
