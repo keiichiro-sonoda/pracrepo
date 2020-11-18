@@ -857,6 +857,32 @@ void nGeneSSAFlexLoop(scmFunc selAndCross, const char *format, int safety, int s
     }
 }
 
+// give a function pointer for selection and crossover
+// use SEED
+void nGeneSSAFlexLoopSeed(scmFunc selAndCross, const char *format, int safety, int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    unsigned int s2;
+    for (int i = st; i < st + loop; i++) {
+        // set seed
+        srand((unsigned)i);
+        s2 = (unsigned)rand();
+        printf("%d\n", s2);
+        // set seed
+        srand(s2 + SEED);
+        if (nGeneSSAFlex(selAndCross, format, i, safety) < 0) {
+            // error
+            printString("error");
+            return;
+        }
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+        kugiri(100);
+    }
+}
+
 // give a function to loop
 void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop) {
     time_t t0, t1;

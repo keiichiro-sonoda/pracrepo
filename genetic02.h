@@ -3,6 +3,7 @@
 // to use MASU_NUM
 #include "othello.h"
 
+#define SEED 123U
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
 
@@ -240,6 +241,10 @@ void nGeneSSALoopFlex(int (*nGeneSSA)(const char*, int, int), const char *format
 
 // give a function pointer for selection and crossover
 void nGeneSSAFlexLoop(scmFunc selAndCross, const char *format, int safety, int st, int loop);
+
+// give a function pointer for selection and crossover
+// use SEED
+void nGeneSSAFlexLoopSeed(scmFunc selAndCross, const char *format, int safety, int st, int loop);
 
 // give a function to loop
 void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop);
