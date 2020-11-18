@@ -16,7 +16,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.05
+#define MUT_RATE 0.05f
 #endif
 
 // function to determine the nextboard
@@ -137,8 +137,8 @@ Sprm makeChildAverageSprm(Sprm mother, Sprm father);
 // give mutant rate
 float fcrossMFlex(float a, float b, float rate);
 
-// uniform crossing
-// the mutation rate is 5%
+// uniform crossover
+// include mutation
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
 
 // uniform crossover

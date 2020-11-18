@@ -98,26 +98,23 @@ Sprm makeChildAverageSprm(Sprm mother, Sprm father) {
 // give mutant rate
 float fcrossMFlex(float a, float b, float rate) {
     // 0.0 ~ 1.0
-    float r = (float)rand() / RAND_MAX;
-    // mutant!
+    float r = randFloat();
+    // mutated!
     if (r <= rate) {
-        //printf("m!\n");
-        return (float)rand() / RAND_MAX - 0.5;
+        return randFloat() - 0.5;
     }
-    r = (float)rand() / RAND_MAX;
+    r = randFloat();
     // 50 : 50
     if (r < 0.5) return a;
     return b;
 }
 
 // uniform crossover
-// the mutation rate is 5%
+// include random mutation
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
     Sprm child;
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
-        // rate 5%
-        child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.05);
+    for (int i = 0; i < SPRM_LEN; i++) {
+        child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], MUT_RATE);
     }
     return child;
 }
