@@ -125,7 +125,9 @@ Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
 // uniform crossover
 // no mutation
 Sprm uniCrossSprm(Sprm mother, Sprm father) {
-    ;
+    Sprm child;
+    uniCrossArray(mother.weight, father.weight, child.weight, SPRM_LEN);
+    return child;
 }
 
 // mutate with a given probability

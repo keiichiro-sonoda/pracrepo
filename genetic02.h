@@ -64,6 +64,16 @@
 // 02: single point crossover
 #define FNF_05006000200005 "prm/sprm050_06_rlt_1p_rd005/sprm050_06_rlt_1p_rd005_g%03d.bin"
 
+// choose randomly either a or b
+#ifndef alternative
+#define alternative(a, b) (rand() & 1 ? (a) : (b))
+#endif
+
+// uniform crossover (array)
+#ifndef uniCrossArray
+#define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
+#endif
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
@@ -102,6 +112,10 @@ float fcrossMFlex(float a, float b, float rate);
 // uniform crossing
 // the mutation rate is 5%
 Sprm makeChildCrossMSprm(Sprm mother, Sprm father);
+
+// uniform crossover
+// no mutation
+Sprm uniCrossSprm(Sprm mother, Sprm father);
 
 // mutate with a given probability
 // otherwise copy

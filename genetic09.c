@@ -86,15 +86,22 @@ void rouletteUni(const int *fitness, const int *numbers, const Sprm *current, Sp
 }
 
 int main(void) {
-    srand(123U);
+    srand(125U);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_D05006000000005;
+    char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
-    nGeneSSAFlexLoop(rouletteUni, format, 1, 0, 100);
+    //nGeneSSAFlexLoop(rouletteUni, format, 1, 0, 100);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
+    Sprm pr1, pr2;
+    randSprm(&pr1);
+    randSprm(&pr2);
+    Sprm pr3 = uniCrossSprm(pr1, pr2);
+    showSprmOneLine(pr1);
+    showSprmOneLine(pr2);
+    showSprmOneLine(pr3);
     return 0;
 }
