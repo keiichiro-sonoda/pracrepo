@@ -1,6 +1,7 @@
 # グラフ作成ファイル
 from ctypes import *
 import numpy as np
+import math
 from matplotlib import pyplot as plt
 
 # 共有ライブラリ読み込み(同じディレクトリで実行)
@@ -58,6 +59,7 @@ LINE_COLORS = [
 
 # 平均値のグラフを作成
 def makeMeansGraph(ax, x, ys):
+    step = 0.2
     # 各マスの変移をプロット
     for i in range(10):
         lw = 1
@@ -78,16 +80,18 @@ def makeMeansGraph(ax, x, ys):
         borderaxespad=0,
         fontsize=10
     )
+    #ax.grid()
     # ラベル指定
     ax.set_xlabel("generation", fontsize=15)
     ax.set_ylabel("means", fontsize=15)
     # 横幅指定（読み込みに成功したデータだけ）
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 最大値と最小値を取得
-    y_max = max(max(i) for i in ys)
-    y_min = min(min(i) for i in ys)
+    y_max = math.ceil(max(max(i) for i in ys) / step) * step
+    y_min = math.floor(min(min(i) for i in ys) / step) * step
+    print(y_max, y_min)
     # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(y_min, y_max, 7))
+    ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
 
 # 平均値表示(各世代全個体)
 # ファイル名のフォーマットと個体数を渡す
@@ -269,6 +273,6 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 
 if __name__ == "__main__":
     ind = 18
-    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 200)
+    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
