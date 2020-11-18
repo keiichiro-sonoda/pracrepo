@@ -59,6 +59,7 @@ LINE_COLORS = [
 
 # 平均値のグラフを作成
 def makeMeansGraph(ax, x, ys):
+    # 縦軸の値の間隔
     step = 0.2
     # 各マスの変移をプロット
     for i in range(10):
@@ -90,7 +91,7 @@ def makeMeansGraph(ax, x, ys):
     y_max = math.ceil(max(max(i) for i in ys) / step) * step
     y_min = math.floor(min(min(i) for i in ys) / step) * step
     print(y_max, y_min)
-    # 縦幅指定（固定）
+    # 縦幅指定 (間隔は固定)
     ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
 
 # 平均値表示(各世代全個体)
@@ -273,6 +274,6 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 
 if __name__ == "__main__":
     ind = 18
-    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 200)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
