@@ -90,8 +90,8 @@ int main(void) {
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_TEST;
-    makeFirstGeneFileFlex(format);
+    char format[] = FNF_D05006000000005;
+    //makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
     nGeneSSAFlexLoop(rouletteUni, format, 1, 0, 2);
     // old
