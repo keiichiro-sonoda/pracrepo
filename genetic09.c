@@ -78,8 +78,12 @@ int main(void) {
     setIndexes();
     initBoard();
     char format[] = FNF_D05006000000005;
-    makeFirstGeneFileFlex(format);
+    //makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteSP, format, 1, 0, 100);
+    Sprm pra[POPULATION];
+    if (loadSprmFile(FNF_D05006000000005, 0, pra, sizeof pra) < 0)
+        return -1;
+    oneToOneNormalSprmFlex(DET_FUNC, pra, pra + 1);
     return 0;
 }

@@ -195,7 +195,7 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
             best_board = next_boards[i];
         }
     }
-    //printf("%5.2f\n", mx_point);
+    printf("%5.2f\n", mx_point);
     return best_board;
 }
 
