@@ -105,12 +105,14 @@ int main(void) {
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_05006000001005;
+    char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 200);
+    //checkSprmFile(format, 200);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 99, 101);
     // old
     //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
+    int a = 0x7fffffff;
+    printDecimal(a);
     printString("yeah");
     return 0;
 }
