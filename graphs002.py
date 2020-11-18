@@ -222,29 +222,29 @@ def funcTest(fname_format, generation):
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
-                # 00. 最初（指し手固定）
-                "prm//simple_prm{:03d}.bin",
-                # 01. 突然変異無し
-                "prm//sprm_not_mutate{:03d}.bin",
+                # 00. 最初 (指し手固定)
+                "prm//simple_prm//simple_prm{:03d}.bin",
+                # 01. 突然変異無し (20世代まで)
+                "prm//sprm_not_mutate//sprm_not_mutate{:03d}.bin",
                 # 02. 角固定
-                "prm//sprm_corner0.5_{:03d}.bin",
+                "prm//sprm_corner0.5//sprm_corner0.5_{:03d}.bin",
                 # 03. ランダム対戦
-                "prm//sprm_vsrand{:03d}.bin",
+                "prm//sprm_vsrand//sprm_vsrand{:03d}.bin",
                 # 04. 角固定-0.5
-                "prm//sprm_corner0.5neg_{:03d}.bin",
+                "prm//sprm_corner0.5neg//sprm_corner0.5neg_{:03d}.bin",
                 # 以下, 指し手をルーレット選択
                 # 05. 最初
-                "prm//sprm_roulette{:03d}.bin",
+                "prm//sprm_roulette//sprm_roulette{:03d}.bin",
                 # 06.  勝ち点で直接ルーレット
-                "prm//sprm_rltrlt{:03d}.bin",
+                "prm//sprm_rltrlt//sprm_rltrlt{:03d}.bin",
                 # 07. 最低点を引いて+1した値でルーレット
-                "prm//sprm_rr_submin{:03d}.bin",
+                "prm//sprm_rr_submin//sprm_rr_submin{:03d}.bin",
                 # 08. 100引く順位（線形）に比例した確率でランキング選択
-                "prm//sprm_rrank{:03d}.bin",
+                "prm//sprm_rrank//sprm_rrank{:03d}.bin",
                 # 09. 0.9 ^ 順位（指数）に比例した確率でランキング選択
                 "prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin",
                 # 10. 適応度評価を行わない（比較用）
-                "prm/sprm_nofit/sprm_nofit{:03d}.bin",
+                "prm//sprm_nofit//sprm_nofit{:03d}.bin",
                 # 以下, 全個体ファイルに保存
                 # 11. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
                 "prm//sprm050_06_rlt_uni_rd005//sprm050_06_rlt_uni_rd005_g{:03d}.bin",
@@ -257,10 +257,14 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 15. 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突然変異5%
                 "prm//sprm050_06_rd_uni_rd005//sprm050_06_rd_uni_rd005_g{:03d}.bin",
                 # 16. 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
-                "prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g{:03d}.bin"]
+                "prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g{:03d}.bin",
+                # 17. 指し手固定再び, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
+                "prm//sprmdef050_06_rlt_uni_rd005//sprmdef050_06_rlt_uni_rd005_g{:03d}.bin",
+                # 18. 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, シフト突然変異5%
+                "prm//sprm050_06_rlt_uni_sft005//sprm050_06_rlt_uni_sft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 11
+    ind = 18
     viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
