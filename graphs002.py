@@ -259,10 +259,12 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 16. 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
                 "prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g{:03d}.bin",
                 # 17. 指し手固定再び, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
-                "prm//sprmdef050_06_rlt_uni_rd005//sprmdef050_06_rlt_uni_rd005_g{:03d}.bin"]
+                "prm//sprmdef050_06_rlt_uni_rd005//sprmdef050_06_rlt_uni_rd005_g{:03d}.bin",
+                # 18. 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, シフト突然変異5%
+                "prm//sprm050_06_rlt_uni_sft005//sprm050_06_rlt_uni_sft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 17
-    viewStatGraphs(FILE_FORMATS[ind], 10, -1, 105)
+    ind = 18
+    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
