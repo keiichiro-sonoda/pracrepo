@@ -19,7 +19,7 @@
 #endif
 
 // function to determine the nextboard
-#define DET_FUNC getBestBoardForBlackSimple
+//#define DET_FUNC getBestBoardForBlackSimple
 
 #ifndef DET_FUNC
 #define DET_FUNC getBoardForBlackSimpleRoulette
