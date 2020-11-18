@@ -216,6 +216,7 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
     //printFloatArray(exp_points, n);
     s = sumFloat(exp_points, n);
     choosed = rouletteFloat(exp_points, n, s);
+    showBoard(next_boards[choosed]);
     return next_boards[choosed];
 }
 
