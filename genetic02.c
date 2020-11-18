@@ -195,7 +195,6 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
             best_board = next_boards[i];
         }
     }
-    printf("%5.2f\n", mx_point);
     return best_board;
 }
 
@@ -213,10 +212,8 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
         // sign inversion!
         exp_points[i] = expf(-evaluationSimple(next_boards[i], *prp) * 10);
     }
-    //printFloatArray(exp_points, n);
     s = sumFloat(exp_points, n);
     choosed = rouletteFloat(exp_points, n, s);
-    showBoard(next_boards[choosed]);
     return next_boards[choosed];
 }
 
@@ -755,8 +752,9 @@ int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*)
     int numbers[POPULATION];
     // numbers = {0, 1, 2, ...}
     indices(numbers, POPULATION);
-    // evaluate fitness (the next board is decided by roulette)
-    leagueMatchSprmFlex(getBoardForBlackSimpleRoulette, current, fitness);
+    // evaluate fitness
+    // the function to determine the next board is defined in "DET_FUNC"
+    leagueMatchSprmFlex(DET_FUNC, current, fitness);
     // sort (descending order)
     randomizedQuicksortDDAll(fitness, numbers, POPULATION);
     // show the part of fitness

@@ -72,18 +72,29 @@ void rouletteSP(const int *fitness, const int *numbers, const Sprm *current, Spr
     }
 }
 
+// roulette selection
+// uniform crossover
+void rouletteUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
+    int parents[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        // choose parents by roulette selection
+        // con't allow duplication
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        // make a child (uniform crossover)
+        next[count] = makeChildCrossMSprm(current[numbers[parents[0]]], current[numbers[parents[1]]]);
+    }
+}
+
 int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_D05006000000005;
-    //makeFirstGeneFileFlex(format);
+    char format[] = FNF_TEST;
+    makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
-    //nGeneSSAFlexLoop(rouletteSP, format, 1, 0, 100);
-    Sprm pra[POPULATION];
-    if (loadSprmFile(FNF_D05006000000005, 0, pra, sizeof pra) < 0)
-        return -1;
-    oneToOneNormalSprmFlex(DET_FUNC, pra, pra + 1);
+    nGeneSSAFlexLoop(rouletteUni, format, 1, 0, 2);
+    // old
+    //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
     return 0;
 }
