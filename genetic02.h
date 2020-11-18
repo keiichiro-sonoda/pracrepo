@@ -16,7 +16,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.5
+#define MUT_RATE 0.05
 #endif
 
 // function to determine the nextboard

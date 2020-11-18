@@ -100,23 +100,30 @@ void rouletteUniSft(const int *fitness, const int *numbers, const Sprm *current,
     }
 }
 
+// roulette selection
+// uniform crossover
+// shift mutation (limited)
+void rouletteUniSftLim(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
+    int parents[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        // uniform crossover (no mutation)
+        next[count] = uniCrossSprm(current[numbers[parents[0]]], current[numbers[parents[1]]]);
+        // shift mutation (limited)
+        shiftMutLimited(next + count);
+    }
+}
+
 int main(void) {
     srand(SEED);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    //nGeneSSAFlexLoopSeed(rouletteUniSft, format, 1, 2, 1);
-    // old
-    //nGeneSSALoopFlex(nGeneSprmSaveAll, format, 1, 0, 2);
-    Sprm pr1;
-    randSprm(&pr1);
-    showSprmOneLine(pr1);
-    shiftMutLimited(&pr1);
-    showSprmOneLine(pr1);
+    nGeneSSAFlexLoopSeed(rouletteUniSftLim, format, 1, 1, 1);
     printString("yeah");
     return 0;
 }
