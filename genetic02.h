@@ -84,6 +84,10 @@
 // 02: shift mutation (limited)
 #define FNF_05006000002005 "prm/sprm050_06_rlt_uni_sftl005/sprm050_06_rlt_uni_sftl005_g%03d.bin"
 
+// 20: shift mutation after random mutation
+// each mutation has a 5% chanse of occurring
+#define FNF_05006000020005 "prm/sprm050_06_rlt_uni_rdsftl005/sprm050_06_rlt_uni_rdsftl005_g%03d.bin"
+
 // choose randomly either a or b
 #ifndef alternative
 #define alternative(a, b) (rand() & 1 ? (a) : (b))
