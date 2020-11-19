@@ -63,7 +63,8 @@ int main(void) {
     initBoard();
     Sprm spr1;
     Prm1L pr1l1;
-    spr1 = loadRepSprm(FNF_05006000010005, 200, 50);
+    //spr1 = loadRepSprm(FNF_05006000010005, 200, 50);
+    randSprm(&spr1);
     showSprmOneLine(spr1);
     pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
     showPrm1L(pr1l1);
@@ -71,8 +72,8 @@ int main(void) {
     int winner;
     for (int i = 0; i < 1000; i++) {
         // Sprm is black
-        winner = SprmVSPrm1LNormal(spr1, pr1l1, 0b01);
-        if (winner == 0b01)
+        winner = SprmVSPrm1LNormal(spr1, pr1l1, 0b10);
+        if (winner == 0b10)
             count++;
     }
     printDecimal(count);
