@@ -134,8 +134,8 @@ int main(void) {
     setIndexes();
     initBoard();
     char format[] = FNF_05006000020005;
-    makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 0);
+    //makeFirstGeneFileFlex(format);
+    //checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
     nGeneSSAFlexLoopSeed(rouletteUniRdSftLim, format, 1, 0, 2);
     printString("end");
