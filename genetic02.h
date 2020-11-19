@@ -84,8 +84,11 @@
 // 02: shift mutation (limited)
 #define FNF_05006000002005 "prm/sprm050_06_rlt_uni_sftl005/sprm050_06_rlt_uni_sftl005_g%03d.bin"
 
-// 20: shift mutation after random mutation
-// each mutation has a 5% chanse of occurring
+// 10: shift mutation (no limit) afte random mutation
+// each mutation has a 5% chance of occuring
+#define FNF_05006000010005 "prm/sprm050_06_rlt_uni_rdsft005/sprm050_06_rlt_uni_rdsft005_g%03d.bin"
+
+// 20: shift mutation (limited) after random mutation
 #define FNF_05006000020005 "prm/sprm050_06_rlt_uni_rdsftl005/sprm050_06_rlt_uni_rdsftl005_g%03d.bin"
 
 // choose randomly either a or b
