@@ -62,7 +62,7 @@ int main(void) {
     Prm1L pr1l1;
     spr1 = loadRepSprm(FNF_05006000020005, 100, 50);
     showSprmOneLine(spr1);
-    pr1l1 = loadRepPrm1L("yeah", 100, 50);
+    pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 0, 50);
     showPrm1L(pr1l1);
     return 0;
 }

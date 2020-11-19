@@ -559,7 +559,7 @@ Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop) {
     Prm1L pra[loc_pop];
     if (loadPrm1L(format, gene_num, pra, sizeof pra) < 0) {
         // failed
-        // return random parameters
+        // set random parameters
         randPrm1L(pra);
     }
     return *pra;
