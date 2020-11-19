@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "genetic01.h"
 #include "genetic02.h"
 #include "sort01.h"
@@ -37,11 +38,11 @@ int SprmVSPrm1LNormal(Sprm p1, Prm1L p2, int p1_color) {
         // determine a next board
         // Sprm
         if (turn == p1_color) {
-            printf("p1's turn\n");
+            //printf("p1's turn\n");
             main_board = getBoardForBlackSimpleRoulette(nba, n, &p1);
         } // Prm1L
         else {
-            printf("p2's turn\n");
+            //printf("p2's turn\n");
             main_board = getBoardForBlackPrm1LRlt(nba, n, p2);
         }
         // switch turn
@@ -49,6 +50,7 @@ int SprmVSPrm1LNormal(Sprm p1, Prm1L p2, int p1_color) {
     }
     // difference between black and white
     dif = kc[1] - kc[2];
+    //printDecimal(dif);
     if (dif > 0) return turn;
     if (dif < 0) return turn ^ 0b11;
     // draw
@@ -57,12 +59,22 @@ int SprmVSPrm1LNormal(Sprm p1, Prm1L p2, int p1_color) {
 
 int main(void) {
     srand(SEED);
-    printf("Hello\n");
+    srand((unsigned)time(NULL));
+    initBoard();
     Sprm spr1;
     Prm1L pr1l1;
     spr1 = loadRepSprm(FNF_05006000010005, 200, 50);
     showSprmOneLine(spr1);
     pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
     showPrm1L(pr1l1);
+    int count = 0;
+    int winner;
+    for (int i = 0; i < 1000; i++) {
+        // Sprm is black
+        winner = SprmVSPrm1LNormal(spr1, pr1l1, 0b01);
+        if (winner == 0b01)
+            count++;
+    }
+    printDecimal(count);
     return 0;
 }
