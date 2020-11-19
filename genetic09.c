@@ -151,7 +151,7 @@ int main(void) {
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    nGeneSSAFlexLoopSeed(rouletteUniRdSftNoLim, format, 1, 1, 2);
+    nGeneSSAFlexLoopSeed(rouletteUniRdSftNoLim, format, 1, 1, 199);
     printString("end");
     return 0;
 }
