@@ -414,20 +414,12 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
 
 // load a representative of Sprm
 Sprm loadRepSprm(const char *format, int gene_num, int loc_pop) {
-    FILE *fp;
-    char fnamer[FILENAME_MAX];
     Sprm pra[loc_pop];
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
+    if (loadSprmFile(format, gene_num, pra, sizeof pra) < 0) {
         // failed
-        printf("%s can't be opened.\n", fnamer);
-        // return random parameter
+        // set random parameters
         randSprm(pra);
-        return *pra;
     }
-    // succeeded
-    fread(pra, sizeof pra, 1, fp);
-    fclose(fp);
     // return the top parameter
     return *pra;
 }
