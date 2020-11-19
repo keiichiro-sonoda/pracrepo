@@ -147,11 +147,11 @@ int main(void) {
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_05006000010005;
+    char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    nGeneSSAFlexLoopSeed(rouletteUniRdSftNoLim, format, 1, 1, 199);
+    //nGeneSSAFlexLoopSeed(rouletteUniRdSftNoLim, format, 1, 1, 199);
     printString("end");
     return 0;
 }
