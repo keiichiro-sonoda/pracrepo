@@ -199,6 +199,9 @@ int makeFirstGeneFileFlex(const char *format);
 // read parameters from a file
 int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size);
 
+// load representative of Sprm
+Sprm loadRepSprm(const char *format, int gene_num, int loc_pop);
+
 // write parameters to a file
 // give a file name for writing
 // be careful of overwriting

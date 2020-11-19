@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "genetic01.h"
 #include "genetic02.h"
 #include "sort01.h"
@@ -55,7 +56,10 @@ int SprmVSPrm1LNormal(Sprm p1, Prm1L p2, int p1_color) {
 }
 
 int main(void) {
+    srand(SEED);
     printf("Hello\n");
-    printDecimal(warnOverwriting("prm/test/test000.bin"));
+    Sprm spr1;
+    spr1 = loadRepSprm(FNF_05006000010005, 99, 1);
+    showSprmOneLine(spr1);
     return 0;
 }

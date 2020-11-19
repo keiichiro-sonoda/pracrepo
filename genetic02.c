@@ -412,6 +412,26 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     return 0;
 }
 
+// load representative of Sprm
+Sprm loadRepSprm(const char *format, int gene_num, int loc_pop) {
+    FILE *fp;
+    char fnamer[FILENAME_MAX];
+    Sprm pra[loc_pop];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // failed
+        printf("%s can't be opened.\n", fnamer);
+        // return random parameter
+        randSprm(pra);
+        return *pra;
+    }
+    // succeeded
+    fread(pra, sizeof pra, 1, fp);
+    fclose(fp);
+    // return the top parameter
+    return *pra;
+}
+
 // write parameters to a file
 // give a file name for writing
 // be careful of overwriting
