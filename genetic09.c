@@ -128,16 +128,30 @@ void rouletteUniRdSftLim(const int *fitness, const int *numbers, const Sprm *cur
     }
 }
 
+// roulette selection
+// uniform crossover
+// perform shift mutation (no limit) after random mutation
+void rouletteUniRdSftNoLim(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
+    int parents[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        // uniform crossover (include radom mutation)
+        next[count] = makeChildCrossMSprm(current[numbers[parents[0]]], current[numbers[parents[1]]]);
+        // shift mutation (no limit)
+        shiftMutNoLim(next + count);
+    }
+}
+
 int main(void) {
     srand(SEED);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_05006000020005;
-    //makeFirstGeneFileFlex(format);
-    //checkSprmFile(format, 0);
+    char format[] = FNF_TEST;
+    makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    //nGeneSSAFlexLoopSeed(rouletteUniRdSftLim, format, 1, 0, 100);
+    nGeneSSAFlexLoopSeed(rouletteUniRdSftNoLim, format, 1, 0, 3);
     printString("end");
     return 0;
 }
