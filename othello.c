@@ -1020,6 +1020,35 @@ void board2arraySymmetry(Board src, int *dst) {
     }
 }
 
+// warning before overwriting
+int warnOverwriting(const char *fname) {
+    FILE *fp;
+    // open to read
+    fp = fopen(fname, "rb");
+    if (fp == NULL) {
+        // not exist
+        return 0;
+    }
+    // exist
+    fclose(fp);
+    printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);
+    char c;
+    c = getchar();
+    if (c != 121) {
+        if (c != 10)
+            while (getchar() != 10);
+        printf("terminated\n");
+        return -1;
+    }
+    if (getchar() != 10) {
+        while (getchar() != 10);
+        printf("terminated\n");
+        return -1;
+    }
+    // allowed
+    return 0;
+}
+
 // main
 // not defined in othello.h
 int main2(void) {

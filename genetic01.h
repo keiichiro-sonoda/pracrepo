@@ -141,10 +141,6 @@ int leagueMatchSimple(Family fml, int *result);
 // give a function pointer to decide the next board
 void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *family, int *result);
 
-// warning before overwriting
-// importet from genetic02.c
-int warnOverwriting(const char *fname);
-
 // write parameters to a file
 // give a file name for writing
 // be careful of overwriting

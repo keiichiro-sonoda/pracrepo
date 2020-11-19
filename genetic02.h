@@ -191,9 +191,6 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 // give a function pointer as an argument
 int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
 
-// warning before overwriting
-int warnOverwriting(const char *fname);
-
 // make first generation file
 // give a file name format
 // record all individuals!!

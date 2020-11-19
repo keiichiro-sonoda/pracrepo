@@ -498,34 +498,6 @@ void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *fami
     }
 }
 
-// warning before overwriting
-// importet from genetic02.c
-int warnOverwriting(const char *fname) {
-    FILE *fp;
-    // open to read
-    if ((fp = fopen(fname, "rb")) == NULL) {
-        // not exist
-        return 0;
-    }
-    // exist
-    fclose(fp);
-    printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);
-    char c = getchar();
-    if (c != 121) {
-        if (c != 10)
-            while (getchar() != 10);
-        printf("terminated\n");
-        return -1;
-    }
-    if (getchar() != 10) {
-        while (getchar() != 10);
-        printf("terminated\n");
-        return -1;
-    }
-    // allowed
-    return 0;
-}
-
 // write parameters to a file
 // give a file name for writing
 // be careful of overwriting
