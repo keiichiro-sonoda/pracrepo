@@ -554,6 +554,17 @@ int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size) {
     return loadPrm1LDirect(fnamer, pra, pra_size);
 }
 
+// load a representative of Prm1L
+Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop) {
+    Prm1L pra[loc_pop];
+    if (loadPrm1L(format, gene_num, pra, sizeof pra) < 0) {
+        // failed
+        // return random parameters
+        randPrm1L(pra);
+    }
+    return *pra;
+}
+
 // view parematers in a file (Prm1L)
 void checkPrm1LFile(const char *format, int gene_num) {
     Prm1L pra[POPULATION];

@@ -412,7 +412,7 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     return 0;
 }
 
-// load representative of Sprm
+// load a representative of Sprm
 Sprm loadRepSprm(const char *format, int gene_num, int loc_pop) {
     FILE *fp;
     char fnamer[FILENAME_MAX];

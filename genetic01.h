@@ -158,6 +158,9 @@ int loadPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
 // read parameters from a file (Prm1L)
 int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size);
 
+// load a representative of Prm1L
+Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);
+
 // view parematers in a file (Prm1L)
 void checkPrm1LFile(const char *format, int gene_num);
 
