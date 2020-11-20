@@ -17,6 +17,11 @@
 #define ACT_FUNC ReLU
 #endif
 
+// specify the seed value here
+#ifndef SEED
+#define SEED 123u
+#endif
+
 // test file format
 // common with genetic02
 #define FNF_TEST "prm/test/test%03d.bin"
@@ -228,5 +233,9 @@ int nGenePrm1L(scmFunc scm, const char *format, int gene_num, int safety);
 
 // with Prm1L
 void nGenePrm1LLoop(scmFunc scm, const char *format, int safety, int st, int loop);
+
+// with Prm1L
+// use SEED
+void nGenePrm1LLoopSeed(scmFunc scm, const char *format, int safety, int st, int loop);
 
 #endif

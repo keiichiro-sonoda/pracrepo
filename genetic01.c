@@ -976,13 +976,38 @@ int nGenePrm1L(scmFunc scm, const char *format, int gene_num, int safety) {
 }
 
 // with Prm1L
-void nGenePrm1LLoop(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int safety, int st, int loop) {
+void nGenePrm1LLoop(scmFunc scm, const char *format, int safety, int st, int loop) {
     time_t t0, t1;
     // get start time
     time(&t0);
     for (int i = st; i < st + loop; i++) {
         // set the generation number as the seed
         srand((unsigned)i);
+        if (nGenePrm1L(scm, format, i, safety) < 0) {
+            // error
+            printString("error");
+            return;
+        }
+        // get time
+        time(&t1);
+        printf("elapsed time: %lds\n", t1 - t0);
+        kugiri(100);
+    }
+}
+
+// with Prm1L
+// use SEED
+void nGenePrm1LLoopSeed(scmFunc scm, const char *format, int safety, int st, int loop) {
+    time_t t0, t1;
+    // get start time
+    time(&t0);
+    unsigned int s1;
+    for (int i = st; i < st + loop; i++) {
+        // use the number of generation as a part of seed
+        s1 = i * SEED;
+        // set seed
+        printf("seed: %d\n", s1);
+        srand((unsigned)s1);
         if (nGenePrm1L(scm, format, i, safety) < 0) {
             // error
             printString("error");
