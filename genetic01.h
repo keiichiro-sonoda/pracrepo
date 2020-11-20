@@ -30,7 +30,7 @@
 
 // specify activation function
 #ifndef ACT_FUNC
-#define ACT_FUNC step
+#define ACT_FUNC ReLU
 #endif
 
 // sigmoid function (return float)
@@ -52,7 +52,10 @@
 #define randMutArray(C, n) for (int _ = 0; _ < n; _++) if ((float)rand() / RAND_MAX < MUT_RATE) (C)[_] = randWeight()
 
 // step function
-#define step(x) ((x) > 0);
+#define step(x) ((x) > 0)
+
+// rectified linear function
+#define ReLU(x) (step(x) * (x))
 
 // types
 
