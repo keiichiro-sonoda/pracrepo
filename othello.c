@@ -161,13 +161,12 @@ int getIndex(const int *ar, int ar_len, int el) {
     return -1;
 }
 
-// get maximum value of array
-int getMaxArray(int *ar, int ar_len) {
-    int i;
-    int mx = -BILLION;
-    for (i = 0; i < ar_len; i++) {
-        mx = (mx < ar[i] ? ar[i] : mx);
-    }
+// get maximum value of int array
+int getMaxIntArray(int *A, int n) {
+    // start with the minimum of int
+    int mx = 0x80000000;
+    for (int i = 0; i < n; i++)
+        mx = getMax(mx, A[i]);
     return mx;
 }
 

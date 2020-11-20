@@ -113,8 +113,10 @@ int ifNeighbor(int src, int dst);
 int inArray(int *ar, int ar_len, int el);
 // get index of el?
 int getIndex(const int *ar, int ar_len, int el);
-// get maximum value of array
-int getMaxArray(int *ar, int ar_len);
+
+// get maximum value of int array
+int getMaxIntArray(int *A, int n);
+
 // reverse a piece at a certain address
 // give a Board pointer to rewrite it
 void reOneAd(Board *bp, int ad);
