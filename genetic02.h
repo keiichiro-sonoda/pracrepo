@@ -191,6 +191,10 @@ int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
 // give a function pointer as an argument
 int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
 
+// play against random
+// return winner
+int SprmVSRandomNormal(const Sprm *prp, int my_color);
+
 // make first generation file
 // give a file name format
 // record all individuals!!
