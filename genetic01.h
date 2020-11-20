@@ -47,6 +47,9 @@
 // MUT_RATE chance to replace with random value
 #define randMutArray(C, n) for (int _ = 0; _ < n; _++) if ((float)rand() / RAND_MAX < MUT_RATE) (C)[_] = randWeight()
 
+// step function
+#define step(x) ((x) > 0);
+
 // types
 
 typedef struct param {
