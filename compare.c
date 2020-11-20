@@ -74,10 +74,13 @@ int main(void) {
     //calcWinRateSprmVSRandTotal(spr1, 500);
     //printFloat(calcWinRatePrm1LVSRand(pr1l1, 0b01, 1000));
     int count = 0;
-    int s_color = 0b10;
-    for (int i = 0; i < 1000; i++)
-        if (SprmVSPrm1LNormal(spr1, pr1l1, s_color) != s_color)
-            count++;
-    printDecimal(count);
+    int result[3];
+    zeros(result, 3);
+    int winner;
+    for (int i = 0; i < 1000; i++) {
+        winner = SprmVSPrm1LNormal(spr1, pr1l1, 0b10);
+        result[winner]++;
+    }
+    printDecimalArray(result, 3);
     return 0;
 }
