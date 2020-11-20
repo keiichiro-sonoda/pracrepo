@@ -28,6 +28,10 @@
 // don't use activation function
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
+// specify activation function
+#ifndef ACT_FUNC
+#define ACT_FUNC step
+#endif
 
 // sigmoid function (return float)
 #define sigmoidFloat(x) (1.0f / (1 + expf(-10 * (x))))

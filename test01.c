@@ -16,7 +16,7 @@ int main(void) {
     int l1 = arrayLength(sample1);
     float sample2[l1];
     for (int i = 0; i < l1; i++)
-        sample2[i] = step(sample1[i]);
+        sample2[i] = ACT_FUNC(sample1[i]);
     printFloatArray(sample1, l1);
     printFloatArray(sample2, l1);
     printString("yeah");
