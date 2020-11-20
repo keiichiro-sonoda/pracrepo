@@ -85,6 +85,9 @@ typedef struct family{
     Param prms [POPULATION];
 } Family;
 
+// type of function for selection, crossover and mutation
+typedef void (*scmFunc)(const int*, const int*, const Prm1L*, Prm1L*);
+
 // global variables
 
 // functions
@@ -218,9 +221,9 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
 
 // make next generation file
 // give a function pointer for selection, crossover and mutation
-int nGenePrm1L(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int gene_num, int safety);
+int nGenePrm1L(scmFunc scm, const char *format, int gene_num, int safety);
 
 // with Prm1L
-void nGenePrm1LLoop(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int safety, int st, int loop);
+void nGenePrm1LLoop(scmFunc scm, const char *format, int safety, int st, int loop);
 
 #endif

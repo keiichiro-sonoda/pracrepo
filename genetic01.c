@@ -929,7 +929,7 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
 
 // make next generation file
 // give a function pointer for selection, crossover and mutation
-int nGenePrm1L(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), const char *format, int gene_num, int safety) {
+int nGenePrm1L(scmFunc scm, const char *format, int gene_num, int safety) {
     char fname[FILENAME_MAX];
     // the file name to be read
     snprintf(fname, FILENAME_MAX, format, gene_num);
