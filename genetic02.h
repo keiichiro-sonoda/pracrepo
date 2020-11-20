@@ -196,8 +196,8 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
 int SprmVSRandomNormal(const Sprm *prp, int my_color);
 
 // calculate win rate when playing against random AI
-// n: number of games in each color??
-float calcWinRateSprmVSRand(Sprm pr, int n);
+// n: number of games
+float calcWinRateSprmVSRand(Sprm pr, int pr_color, int n);
 
 // make first generation file
 // give a file name format

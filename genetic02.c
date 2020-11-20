@@ -423,17 +423,13 @@ int SprmVSRandomNormal(const Sprm *prp, int my_color) {
 }
 
 // calculate win rate when playing against random AI
-// n: number of games in each color??
-float calcWinRateSprmVSRand(Sprm pr, int n) {
+// n: number of games
+float calcWinRateSprmVSRand(Sprm pr, int pr_color, int n) {
     int count = 0;
-    // Sprm is black
-    for (int i = 0; i < n; i++) {
-        if (SprmVSRandomNormal(&pr, 0b01) == 0b01) {
+    for (int i = 0; i < n; i++)
+        if (SprmVSRandomNormal(&pr, pr_color) == pr_color)
             count++;
-        }
-    }
-    printf("win rate (black): %.2f\n", (float)count / n);
-    return 0.0f;
+    return (float)count / n;
 }
 
 // make first generation file

@@ -69,6 +69,6 @@ int main(void) {
     pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
     randPrm1L(&pr1l1);
     showPrm1L(pr1l1);
-    calcWinRateSprmVSRand(spr1, 1000);
+    printFloat(calcWinRateSprmVSRand(spr1, 0b01, 1000));
     return 0;
 }
