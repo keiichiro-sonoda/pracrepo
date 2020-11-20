@@ -941,7 +941,7 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
 
 // make next generation file
 // give a function pointer for selection, crossover and mutation
-int nGenePrm1L(scmFunc scm, const char *format, int gene_num, int safety) {
+int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     char fname[FILENAME_MAX];
     // the file name to be read
     snprintf(fname, FILENAME_MAX, format, gene_num);
@@ -990,7 +990,7 @@ int nGenePrm1L(scmFunc scm, const char *format, int gene_num, int safety) {
 }
 
 // with Prm1L
-void nGenePrm1LLoop(scmFunc scm, const char *format, int safety, int st, int loop) {
+void nGenePrm1LLoop(scmFuncPrm1L scm, const char *format, int safety, int st, int loop) {
     time_t t0, t1;
     // get start time
     time(&t0);
@@ -1011,7 +1011,7 @@ void nGenePrm1LLoop(scmFunc scm, const char *format, int safety, int st, int loo
 
 // with Prm1L
 // use SEED
-void nGenePrm1LLoopSeed(scmFunc scm, const char *format, int safety, int st, int loop) {
+void nGenePrm1LLoopSeed(scmFuncPrm1L scm, const char *format, int safety, int st, int loop) {
     time_t t0, t1;
     // get start time
     time(&t0);

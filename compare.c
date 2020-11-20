@@ -63,13 +63,21 @@ int main(void) {
     initBoard();
     Sprm spr1;
     Prm1L pr1l1;
-    spr1 = loadRepSprm("prm/sprm_vsrand/sprm_vsrand100.bin", 300, 10);
+    //spr1 = loadRepSprm("prm/sprm_vsrand/sprm_vsrand100.bin", 300, 10);
+    spr1 = loadRepSprm(FNF_05006000000005, 100, 50);
     //randSprm(&spr1);
     showSprmOneLine(spr1);
-    pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
+    //pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
+    pr1l1 = loadRepPrm1L(FNF_L1RR05006000000001, 100, 50);
     //randPrm1L(&pr1l1);
     showPrm1L(pr1l1);
     //calcWinRateSprmVSRandTotal(spr1, 500);
-    printFloat(calcWinRatePrm1LVSRand(pr1l1, 0b01, 1000));
+    //printFloat(calcWinRatePrm1LVSRand(pr1l1, 0b01, 1000));
+    int count = 0;
+    int s_color = 0b10;
+    for (int i = 0; i < 1000; i++)
+        if (SprmVSPrm1LNormal(spr1, pr1l1, s_color) != s_color)
+            count++;
+    printDecimal(count);
     return 0;
 }

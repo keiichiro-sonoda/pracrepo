@@ -3,7 +3,10 @@
 // to use MASU_NUM
 #include "othello.h"
 
+#ifndef SEED
 #define SEED 123U
+#endif
+
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
 
