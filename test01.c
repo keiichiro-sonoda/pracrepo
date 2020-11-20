@@ -14,7 +14,7 @@ int main(void) {
     checkPrm1LFile(format, 2);
     //nGenePrm1LLoop(rltUniRd, format, 1, 0, 0);
     nGenePrm1LLoopSeed(rltUniRd, format, 1, 0, 2);
-    // debug
+    // for debugging
     float sample1[] = {-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3};
     int l1 = arrayLength(sample1);
     float sample2[l1];

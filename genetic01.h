@@ -162,6 +162,10 @@ int Prm1LVSRandomNormal(Prm1L pr, int my_color);
 // n: number of games
 float calcWinRatePrm1LVSRand(Prm1L pr, int pr_color, int n);
 
+// check win rate when playing against random AI
+// n: number of games in each color??
+void checkWinRatePrm1LVSRand(Prm1L pr, int n);
+
 int leagueMatch(Family fml);
 
 // win: +2, draw: +1, lose: 0

@@ -446,6 +446,18 @@ float calcWinRatePrm1LVSRand(Prm1L pr, int pr_color, int n) {
     return (float)count / n;
 }
 
+// check win rate when playing against random AI
+// n: number of games in each color??
+void checkWinRatePrm1LVSRand(Prm1L pr, int n) {
+    float rb, rw;
+    rb = calcWinRatePrm1LVSRand(pr, 0b01, n);
+    rw = calcWinRatePrm1LVSRand(pr, 0b10, n);
+    printf("the number of games: %d x 2\n", n);
+    printf("win rate (black): %4.1f%%\n", rb * 100);
+    printf("win rate (white): %4.1f%%\n", rw * 100);
+    printf("win rate (total): %4.1f%%\n", (rb + rw) * 50);
+}
+
 int leagueMatch(Family fml) {
     int i, j, k;
     // index, color, (d, w, l)
@@ -970,6 +982,8 @@ int nGenePrm1L(scmFunc scm, const char *format, int gene_num, int safety) {
     // view the part of top parameter
     printString("the top of this generation:");
     showPrm1L(next[0]);
+    // check win rate
+    checkWinRatePrm1LVSRand(next[0], 500);
     // write next family to the file
     // and return error flag
     return dumpPrm1LDirect(fname, next, sizeof next);
