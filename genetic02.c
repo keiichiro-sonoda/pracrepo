@@ -405,7 +405,7 @@ int SprmVSRandomNormal(const Sprm *prp, int my_color) {
         // determine a next board
         // parameter's turn
         if (turn == my_color) {
-            main_board = getBestBoardForBlackSimple(nba, n, prp);
+            main_board = DET_FUNC(nba, n, prp);
         } // random turn
         else {
             // randomly choose a next board
