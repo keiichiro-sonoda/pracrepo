@@ -383,6 +383,59 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
     return 0;
 }
 
+// play against random
+// return winner
+// boards are normalized
+int Prm1LVSRandomNormal(Prm1L pr, int my_color) {
+    Board nba[NEXT_MAX];
+    int kc[3];
+    int pass = 0;
+    int n, dif;
+    // set turn
+    int turn = 0b01;
+    // set initial board
+    Board main_board = START;
+    while (1) {
+        // calculate next
+        n = nextBoardNormal2(main_board, nba, kc);
+        //showBoard(main_board);
+        // can't put a piece anywhere
+        if (n == 0) {
+            // can't do anything one another
+            if (pass) {
+                //printf("end\n");
+                break;
+            }
+            // pass
+            //printf("pass\n");
+            swapNormalizeBoard(&main_board);
+            turn ^= 0b11;
+            pass = 1;
+            continue;
+        }
+        pass = 0;
+        // determine a next board
+        // Prm1L's turn
+        if (turn == my_color) {
+            // determine the next board by roulette
+            //printf("black\n");
+            main_board = getBoardForBlackPrm1LRlt(nba, n, pr);
+        } // random
+        else {
+            //printf("white\n");
+            main_board = nba[rand() % n];
+        }
+        // switch turn
+        turn ^= 0b11;
+    }
+    // difference between black and white
+    dif = kc[1] - kc[2];
+    if (dif > 0) return turn;
+    if (dif < 0) return turn ^ 0b11;
+    // draw
+    return 0;
+}
+
 int leagueMatch(Family fml) {
     int i, j, k;
     // index, color, (d, w, l)

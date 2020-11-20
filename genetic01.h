@@ -131,6 +131,11 @@ int oneToOne(Param sente, Param gote);
 // boards are normalized
 int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr);
 
+// play against random
+// return winner
+// boards are normalized
+int Prm1LVSRandomNormal(Prm1L pr, int my_color);
+
 int leagueMatch(Family fml);
 
 // win: +2, draw: +1, lose: 0

@@ -63,15 +63,17 @@ int main(void) {
     initBoard();
     Sprm spr1;
     Prm1L pr1l1;
-    spr1 = loadRepSprm(FNF_05006000010005, 200, 50);
+    spr1 = loadRepSprm("prm/sprm_vsrand/sprm_vsrand100.bin", 200, 50);
     //randSprm(&spr1);
     showSprmOneLine(spr1);
     pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
+    randPrm1L(&pr1l1);
     showPrm1L(pr1l1);
     int count = 0;
     int winner;
     for (int i = 0; i < 1000; i++) {
         winner = SprmVSRandomNormal(&spr1, 0b01);
+        //winner = Prm1LVSRandomNormal(pr1l1, 0b10);
         if (winner == 0b01)
             count++;
     }
