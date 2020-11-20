@@ -9,9 +9,10 @@ int main(void) {
     srand(123U);
     //srand((unsigned)time(NULL));
     initBoard();
-    makeFGFilePrm1L(FNF_TEST);
-    //checkPrm1LFile(FNF_L1R05006000000001, 2);
-    //nGenePrm1LLoop(rltUniRd, FNF_L1R05006000000001, 1, 0, 100);
+    char format[] = FNF_TEST;
+    makeFGFilePrm1L(format);
+    checkPrm1LFile(format, 0);
+    nGenePrm1LLoop(rltUniRd, format, 1, 0, 2);
     float sample1[] = {-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3};
     int l1 = arrayLength(sample1);
     float sample2[l1];
