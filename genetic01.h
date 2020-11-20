@@ -12,6 +12,11 @@
 #define ELITE_NUM 6
 #define MUT_RATE 0.01f
 
+// specify the activation function here
+#ifndef ACT_FUNC
+#define ACT_FUNC ReLU
+#endif
+
 // test file format
 // common with genetic02
 #define FNF_TEST "prm/test/test%03d.bin"
@@ -28,14 +33,6 @@
 // don't use activation function
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
-// specify activation function
-#ifndef ACT_FUNC
-#define ACT_FUNC ReLU
-#endif
-
-// sigmoid function (return float)
-#define sigmoidFloat(x) (1.0f / (1 + expf(-10 * (x))))
-
 // return an floating point random number from -0.5 to 0.5
 #define randWeight() ((float)rand() / RAND_MAX - 0.5f)
 
@@ -51,10 +48,14 @@
 // MUT_RATE chance to replace with random value
 #define randMutArray(C, n) for (int _ = 0; _ < n; _++) if ((float)rand() / RAND_MAX < MUT_RATE) (C)[_] = randWeight()
 
+// activation functions
+// sigmoid function (return float)
+#define sigmoidFloat(x) (1.0f / (1 + expf(-10 * (x))))
+
 // step function
 #define step(x) ((x) > 0)
 
-// rectified linear function
+// rectified linear function (ramp function)
 #define ReLU(x) (step(x) * (x))
 
 // types

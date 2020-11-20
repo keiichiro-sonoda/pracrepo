@@ -239,8 +239,8 @@ float evalWithPrm1L(Board b, Prm1L pr) {
         for (int j = 0; j <= MASU_NUM; j++) {
             pa1[i] += inputs[j] * pr.weight1[i][j];
         }
-        // activate (step)
-        pa1[i] = (pa1[i] > 0);
+        // activate
+        pa1[i] = ACT_FUNC(pa1[i]);
     }
     //printFloatArray(pa1, 8);
     // output layer
