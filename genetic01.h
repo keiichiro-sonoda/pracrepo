@@ -29,7 +29,10 @@
 // 00 : uniform crossover (or none)
 // 00 : random mutation
 // 001: mutation rate
+// default is the step function
 #define FNF_L1R05006000000001 "prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g%03d.bin"
+// R  : use ReLU as activation function
+#define FNF_L1RR05006000000001 "prm/l1rr050_06_rlt_uni_rd001/l1rr050_06_rlt_uni_rd001_g%03d.bin"
 // don't use activation function
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
@@ -55,8 +58,8 @@
 // step function
 #define step(x) ((x) > 0)
 
-// rectified linear function (ramp function)
-#define ReLU(x) (step(x) * (x))
+// rectified linear unit (ramp function)
+#define ReLU(x) getMax(0, x);
 
 // types
 

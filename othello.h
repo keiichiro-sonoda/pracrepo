@@ -33,6 +33,9 @@
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
+// get the larger number
+#define getMax(a, b) ((a) > (b) ? (a) : (b))
+
 // set all elements to one
 #define ones(A, n) for (int i = 0; i < n; i++) (A)[i] = 1
 
@@ -111,7 +114,7 @@ int inArray(int *ar, int ar_len, int el);
 // get index of el?
 int getIndex(const int *ar, int ar_len, int el);
 // get maximum value of array
-int getMax(int *ar, int ar_len);
+int getMaxArray(int *ar, int ar_len);
 // reverse a piece at a certain address
 // give a Board pointer to rewrite it
 void reOneAd(Board *bp, int ad);
