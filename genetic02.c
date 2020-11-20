@@ -432,6 +432,17 @@ float calcWinRateSprmVSRand(Sprm pr, int pr_color, int n) {
     return (float)count / n;
 }
 
+// calculate win rate when playing against random AI
+// n: number of games in each color
+float calcWinRateSprmVSRandTotal(Sprm pr, int n) {
+    float rb, rw;
+    rb = calcWinRateSprmVSRand(pr, 0b01, n);
+    rw = calcWinRateSprmVSRand(pr, 0b10, n);
+    printf("win rate (black): %.2f\n", rb);
+    printf("win rate (white): %.2f\n", rw);
+    return (rb + rw) / 2;
+}
+
 // make first generation file
 // give a file name format
 // record all individuals!!

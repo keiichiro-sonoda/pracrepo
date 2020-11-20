@@ -59,7 +59,7 @@ int SprmVSPrm1LNormal(Sprm p1, Prm1L p2, int p1_color) {
 
 int main(void) {
     srand(SEED);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     initBoard();
     Sprm spr1;
     Prm1L pr1l1;
@@ -69,6 +69,6 @@ int main(void) {
     pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
     randPrm1L(&pr1l1);
     showPrm1L(pr1l1);
-    printFloat(calcWinRateSprmVSRand(spr1, 0b01, 1000));
+    calcWinRateSprmVSRandTotal(spr1, 500);
     return 0;
 }

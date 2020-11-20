@@ -199,6 +199,10 @@ int SprmVSRandomNormal(const Sprm *prp, int my_color);
 // n: number of games
 float calcWinRateSprmVSRand(Sprm pr, int pr_color, int n);
 
+// calculate win rate when playing against random AI
+// n: number of games in each color
+float calcWinRateSprmVSRandTotal(Sprm pr, int n);
+
 // make first generation file
 // give a file name format
 // record all individuals!!
