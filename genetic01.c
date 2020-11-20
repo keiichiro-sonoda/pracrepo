@@ -994,21 +994,3 @@ void nGenePrm1LLoop(void (*scm)(const int*, const int*, const Prm1L*, Prm1L*), c
         kugiri(100);
     }
 }
-
-int testFunc(int argc, char *argv[]) {
-    int i;
-    int st = 57;
-    int loop = 100;
-    long st_tm, tm;
-    // initial configuration
-    START.board[1] = START_H;
-    START.board[0] = START_L;
-    // seed reset
-    srand((unsigned)time(&st_tm));
-    for (i = st; i < st + loop; i++) {
-        nextGeneration(i);
-        time(&tm);
-        printf("elapsed time: %lds\n", tm - st_tm);
-    }
-    return 0;
-}
