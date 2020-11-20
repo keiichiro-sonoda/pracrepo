@@ -67,8 +67,9 @@ int main(void) {
     //randSprm(&spr1);
     showSprmOneLine(spr1);
     pr1l1 = loadRepPrm1L(FNF_L1R05006000000001, 100, 50);
-    randPrm1L(&pr1l1);
+    //randPrm1L(&pr1l1);
     showPrm1L(pr1l1);
-    calcWinRateSprmVSRandTotal(spr1, 500);
+    //calcWinRateSprmVSRandTotal(spr1, 500);
+    printFloat(calcWinRatePrm1LVSRand(pr1l1, 0b01, 1000));
     return 0;
 }

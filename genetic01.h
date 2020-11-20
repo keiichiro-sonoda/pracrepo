@@ -136,6 +136,10 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
 // boards are normalized
 int Prm1LVSRandomNormal(Prm1L pr, int my_color);
 
+// calculate win rate when playing against random AI
+// n: number of games
+float calcWinRatePrm1LVSRand(Prm1L pr, int pr_color, int n);
+
 int leagueMatch(Family fml);
 
 // win: +2, draw: +1, lose: 0

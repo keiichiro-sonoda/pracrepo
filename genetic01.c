@@ -436,6 +436,16 @@ int Prm1LVSRandomNormal(Prm1L pr, int my_color) {
     return 0;
 }
 
+// calculate win rate when playing against random AI
+// n: number of games
+float calcWinRatePrm1LVSRand(Prm1L pr, int pr_color, int n) {
+    int count = 0;
+    for (int i = 0; i < n; i++)
+        if (Prm1LVSRandomNormal(pr, pr_color) == pr_color)
+            count++;
+    return (float)count / n;
+}
+
 int leagueMatch(Family fml) {
     int i, j, k;
     // index, color, (d, w, l)
