@@ -162,11 +162,8 @@ int main(void) {
     initBoard();
     char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
-    //checkSprmFile(format, 0);
-    //nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 3);
-    Sprm pra[POPULATION];
-    loadSprmFile(format, 0, pra, sizeof pra);
-    calcWinRateSprmVSRandTotal(pra[0], 500);
+    checkSprmFile(format, 0);
+    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 3);
     printString("end");
     return 0;
 }
