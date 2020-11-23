@@ -463,21 +463,30 @@ int makeFirstGeneFileFlex(const char *format) {
     return 0;
 }
 
-// read parameters from a file
-int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
+// ファイル名をそのまま与えてSprmをロード
+int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
     FILE *fp;
-    // the file name to be read
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    printf("read file : %s\n", fnamer);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
-        // failed
-        printf("%s can't be opened.\n", fnamer);
+    // 読み込み用で開く
+    if ((fp = fopen(fname, "rb")) == NULL) {
+        // 失敗
+        printf("%s can't be opened.\n", fname);
         return -1;
     }
+    // 成功
     fread(pra, pra_size, 1, fp);
     fclose(fp);
     return 0;
+}
+
+// read parameters from a file
+int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
+    // the file name to be read
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    // ファイル名確認
+    printf("read file : %s\n", fnamer);
+    // ロードしてエラー値を返す
+    return loadSprmFileDirect(fnamer, pra, pra_size);
 }
 
 // load a representative of Sprm

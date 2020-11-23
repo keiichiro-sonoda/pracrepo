@@ -13,7 +13,7 @@ int main(void) {
     // 初期化関数
     setIndexes();
     initBoard();
-    checkSprmFile(FNF_05006000000005, 100);
+    checkSprmFile(FNF_05006000000005, 103);
     printString("debugging");
     return 0;
 }

@@ -211,6 +211,9 @@ float calcWinRateSprmVSRandTotal(Sprm pr, int n);
 // record all individuals!!
 int makeFirstGeneFileFlex(const char *format);
 
+// ファイル名をそのまま与えてSprmをロード
+int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
+
 // read parameters from a file
 int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size);
 
