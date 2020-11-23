@@ -160,11 +160,9 @@ int main(void) {
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
-    //makeFirstGeneFileFlex(format);
+    makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
-    //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
-    //nGeneSSAFlexLoopSeed(rouletteUniRdSftNoLim, format, 1, 1, 199);
-    printDecimal(POPULATION);
+    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 1, 0, 3);
     printString("end");
     return 0;
 }
