@@ -213,7 +213,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     fig = plt.figure(figsize=(8, 5))
     ax1 = fig.add_subplot(211)
     ax2 = fig.add_subplot(212)
-    fig.subplots_adjust(bottom=0, left=0, top=1, right=1)
+    fig.subplots_adjust(bottom=0.2, left=0.2, top=0.8, right=0.8)
     makeMeansGraph(ax1, g, means)
     makeSDGraph(ax2, g, SD)
     plt.show()
@@ -277,10 +277,12 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 20. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限有シフト突変5%
                 "prm//sprm050_06_rlt_uni_rdsftl005//sprm050_06_rlt_uni_rdsftl005_g{:03d}.bin",
                 # 21. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
-                "prm//sprm050_06_rlt_uni_rdsft005//sprm050_06_rlt_uni_rdsft005_g{:03d}.bin"]
+                "prm//sprm050_06_rlt_uni_rdsft005//sprm050_06_rlt_uni_rdsft005_g{:03d}.bin",
+                # 22. 指し手固定, 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
+                "prm//sprmdef050_06_rd_uni_rdsft005//sprmdef050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 21
+    ind = 22
     viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
