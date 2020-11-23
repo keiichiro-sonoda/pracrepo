@@ -432,15 +432,20 @@ float calcWinRateSprmVSRand(Sprm pr, int pr_color, int n) {
     return (float)count / n;
 }
 
+// ランダムAIと対戦したときの勝率を返す
+// n: 白黒それぞれでの対戦数
+// ついでに表示もする
 // calculate win rate when playing against random AI
 // n: number of games in each color
 float calcWinRateSprmVSRandTotal(Sprm pr, int n) {
-    float rb, rw;
+    float rb, rw, rt;
     rb = calcWinRateSprmVSRand(pr, 0b01, n);
     rw = calcWinRateSprmVSRand(pr, 0b10, n);
-    printf("win rate (black): %.2f\n", rb);
-    printf("win rate (white): %.2f\n", rw);
-    return (rb + rw) / 2;
+    rt = (rb + rw) / 2;
+    // 各種数値を表示
+    printf("number of games: %d x 2\n", n);
+    printf("win rate (black, white, total): %.2f, %.2f, %.2f\n", rb, rw, rt);
+    return rt;
 }
 
 // make first generation file
