@@ -1,8 +1,3 @@
-import pandas as pd
-train = pd.read_csv('/home/sonoda/train.csv')
-print(train)
+import matplotlib as mpl
 
-train_shape = train.shape
-print(train_shape)
-
-#print("これがGitLensなのか")
+print(mpl.rcParams["figure.figsize"])
