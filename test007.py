@@ -429,6 +429,9 @@ class Widget(QWidget):
         self.update()
     
     # ペイント時にはここを実行しなければならない
+    # ボタンが押された時等に勝手に実行される?
+    # ubuntuとwindowsでは実行タイミングに差がある模様
+    # 盤面リセット時に描画がリセットされない
     def paintEvent(self, event):
         # テスト時
         if self.test_flag:
@@ -535,6 +538,8 @@ class Widget(QWidget):
             self.setInitGraph()
             # 盤面クリックは有効にしておく
             self.press_lock = False
+        # 強制ペイントイベント
+        self.update()
     
     # スタートボタンクリック時動作
     def startClicked(self):
