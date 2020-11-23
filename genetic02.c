@@ -55,7 +55,7 @@ int getMinArray(const int *A, int n) {
 
 // normalize an address
 int normalAd(int ad) {
-    int i, eq_ads[8], adm;
+    int i, eq_ads[8];
     eq_ads[0] = ad;
     eq_ads[4] = mirrorLRAd(ad);
     for (i = 0; i < 3; i++) {
@@ -522,7 +522,7 @@ void checkSprmFile(const char *format, int gene_num) {
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {
-    int i, j, k;
+    int i, j;
     // all zero
     zeros(result, POPULATION);
     // black index

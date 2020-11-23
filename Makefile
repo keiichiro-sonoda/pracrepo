@@ -27,7 +27,7 @@ othello_win.exe: othello_win.c othello_win.h
 test01: test01.c genetic01.o othello.o sort01.o
 	gcc test01.c genetic01.o othello.o sort01.o -o test01 -lm -Wall
 test02: test02.c genetic02.o othello.o sort01.o
-	gcc test02.c genetic02.o othello.o sort01.o -o test02 -lm
+	gcc test02.c genetic02.o othello.o sort01.o -o test02 -lm -Wall
 compare: compare.c genetic01.o genetic02.o othello.o sort01.o
 	gcc compare.c genetic01.o genetic02.o othello.o sort01.o -o compare -lm
 test_win.exe: test_win.c genetic02_win.o othello_win.o sort01_win.o
