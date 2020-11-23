@@ -13,3 +13,5 @@ print(ax)
 
 fig.savefig("//home//sonoda//Pictures//001.png", facecolor="#00ff00")
 fig.savefig("//home//sonoda//Pictures//001_tight.png", facecolor="#00ff00", bbox_inches="tight")
+
+plt.show()
