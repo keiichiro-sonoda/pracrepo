@@ -5,25 +5,25 @@ import math
 from matplotlib import pyplot as plt
 
 # 共有ライブラリ読み込み(同じディレクトリで実行)
-exe2_win = cdll.LoadLibrary("./share02.so")
+share02 = cdll.LoadLibrary("./share02.so")
 # 配列型定義
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
 # 初期化関数
-exe2_win.initPy()
+share02.initPy()
 
 # 全個体の平均値
-getFamilyMeans = exe2_win.getFamilyMeansPy
+getFamilyMeans = share02.getFamilyMeansPy
 getFamilyMeans.rectype = c_int32
 getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # 全個体の標準偏差
-getFamilySD = exe2_win.getFamilySDPy
+getFamilySD = share02.getFamilySDPy
 getFamilySD.rectype = c_int32
 getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # あるファイルの先頭の要素
-getTopSprm = exe2_win.getTopSprmPy
+getTopSprm = share02.getTopSprmPy
 getTopSprm.rectype = c_int32
 getTopSprm.argtypes = (c_char_p, FloatArray64)
 
@@ -79,12 +79,12 @@ def makeMeansGraph(ax, x, ys):
         bbox_to_anchor=(1.01, 1),
         loc='upper left',
         borderaxespad=0,
-        fontsize=10
+        fontsize=5
     )
     #ax.grid()
     # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("means", fontsize=15)
+    ax.set_xlabel("generation", fontsize=10)
+    ax.set_ylabel("means", fontsize=10)
     # 横幅指定（読み込みに成功したデータだけ）
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 最大値と最小値を取得
@@ -145,11 +145,11 @@ def makeSDGraph(ax, x, ys):
         bbox_to_anchor=(1.01, 1),
         loc='upper left',
         borderaxespad=0,
-        fontsize=10
+        fontsize=5
     )
     # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("standard deviation", fontsize=15)
+    ax.set_xlabel("generation", fontsize=10)
+    ax.set_ylabel("standard deviation", fontsize=10)
     # 横幅指定（読み込めたデータだけ）
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 縦幅指定（固定）
@@ -213,6 +213,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     fig = plt.figure(figsize=(8, 5))
     ax1 = fig.add_subplot(211)
     ax2 = fig.add_subplot(212)
+    fig.subplots_adjust(bottom=0, left=0, top=1, right=1)
     makeMeansGraph(ax1, g, means)
     makeSDGraph(ax2, g, SD)
     plt.show()
