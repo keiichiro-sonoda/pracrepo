@@ -3,8 +3,8 @@ import time
 import random as rd
 import ctypes
 import numpy as np
-# インポート個別に
-# 予約語被る可能性低そうだし, 全部インポートしちゃおうか
+
+# 予約語が被らないことを前提にしてインポート
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
