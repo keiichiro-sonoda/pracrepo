@@ -5,4 +5,4 @@ print(train)
 train_shape = train.shape
 print(train_shape)
 
-print("これがGitLensなのか")
+#print("これがGitLensなのか")
