@@ -22,6 +22,8 @@ int main(void) {
     int l2 = arrayLength(sample3);
     for (int i = 0; i < l1; i++)
         sample2[i] = ACT_FUNC(sample1[i]);
+    printDecimal(l2);
+    printFloatArray(sample2, l1);
     printString("yeah");
     return 0;
 }

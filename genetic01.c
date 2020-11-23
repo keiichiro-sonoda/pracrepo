@@ -509,7 +509,7 @@ int leagueMatch(Family fml) {
 
 // win: +2, draw: +1, lose: 0
 int leagueMatchSimple(Family fml, int *result) {
-    int i, j, k;
+    int i, j;
     // all zero
     zeros(result, POPULATION);
     // black index
