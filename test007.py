@@ -12,21 +12,21 @@ import pyqtgraph as pg
 
 # 共有ライブラリ読み込み
 # このライブラリがある場所に移動して実行する
-exe2_win = ctypes.cdll.LoadLibrary("exe2_win.so")
-share01 = ctypes.cdll.LoadLibrary("share01.so")
+share02 = ctypes.cdll.LoadLibrary("./share02.so")
+share01 = ctypes.cdll.LoadLibrary("./share01.so")
 # c_float が64個の配列型を定義
 FloatArray64 = ctypes.c_float * 64
 IntArray64 = ctypes.c_int32 * 64
 # 共有ライブラリを使う際の初期化
 # これが無いと不具合の可能性大
-exe2_win.initPy()
+share02.initPy()
 
 # デバッグ関数
 #share01.sortTest()
 
 # 関数取得 & 返り値, 引数指定
 # 返り値指定は restype 属性!
-getTopSprm = exe2_win.getTopSprmPy
+getTopSprm = share02.getTopSprmPy
 getTopSprm.restype = None
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)
 

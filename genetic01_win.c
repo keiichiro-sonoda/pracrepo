@@ -7,6 +7,8 @@
 #include "genetic01_win.h"
 #include "sort01_win.h"
 
+// 帯域変数のリンクに失敗?するらしい
+// リンクするために -fPIC オプションが必要なのかな?
 // global variables
 Prm1L USE_PRM1L;
 float USE_VECTOR[MASU_NUM + 1];

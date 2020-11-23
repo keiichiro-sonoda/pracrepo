@@ -43,7 +43,7 @@ genetic02.o: genetic02.c genetic02.h
 othello_win.o: othello_win.c othello_win.h
 	gcc othello_win.c -c -fPIC -Wall
 genetic01_win.o: genetic01_win.c genetic01_win.h
-	gcc genetic01_win.c -c
+	gcc genetic01_win.c -c -fPIC -Wall
 genetic02_win.o: genetic02_win.c genetic02_win.h
 	gcc genetic02_win.c -c -fPIC -Wall
 sort01_win.o: sort01_win.c sort01_win.h
