@@ -429,9 +429,7 @@ class Widget(QWidget):
         self.update()
     
     # ペイント時にはここを実行しなければならない
-    # ボタンが押された時等に勝手に実行される?
-    # ubuntuとwindowsでは実行タイミングに差がある模様
-    # 盤面リセット時に描画がリセットされない
+    # self.update() で実行されるらしいことを忘れていた
     def paintEvent(self, event):
         # テスト時
         if self.test_flag:
