@@ -7,15 +7,13 @@
 #include "genetic02.h"
 
 int main(void) {
+    // シード設定 (再現可能性のため)
     srand(SEED);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
+    // 初期化関数
     setIndexes();
     initBoard();
-    int pair[2];
-    int points[6] = {6, 5, 4, 3, 2, 1};
-    //randIntDoubleDep(pair, 1, 6);
-    rouletteIntMltDep(points, 6, pair, 2);
-    printDecimalArray(pair, 2);
+    checkSprmFile(FNF_05006000000005, 100);
     printString("debugging");
     return 0;
 }
