@@ -91,6 +91,9 @@
 // each mutation has a 5% chance of occuring
 #define FNF_05006000010005 "prm/sprm050_06_rlt_uni_rdsft005/sprm050_06_rlt_uni_rdsft005_g%03d.bin"
 
+// ランダム選択(01), 一様交叉(00), ランダム突変後制限なしシフト突変(10)
+#define FNF_05006010010005 "prm/sprm050_06_rd_uni_rdsft005/sprm050_06_rd_uni_rdsft005_g%03d.bin"
+
 // 20: shift mutation (limited) after random mutation
 #define FNF_05006000020005 "prm/sprm050_06_rlt_uni_rdsftl005/sprm050_06_rlt_uni_rdsftl005_g%03d.bin"
 
