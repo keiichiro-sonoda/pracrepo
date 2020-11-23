@@ -850,12 +850,6 @@ int nGeneSSAFlex(scmFunc selAndCross, const char *format, int gene_num, int safe
     // show the part of fitness
     printString("results:");
     printDecimalArrayPart(fitness, POPULATION);
-    // 戦績チェック (参考用)
-    // 見るのはソートされている現世代
-    printf("the strongest:\n");
-    calcWinRateSprmVSRandTotal(current[0], 500);
-    printf("the weakest:\n");
-    calcWinRateSprmVSRandTotal(current[POPULATION - 1], 500);
     // elite selection
     for (int i = 0; i < ELITE_NUM; i++)
         next[i] = current[numbers[i]];
@@ -866,6 +860,13 @@ int nGeneSSAFlex(scmFunc selAndCross, const char *format, int gene_num, int safe
     showFamilyPart(next);
     // view statistics
     checkSprmStatistics(next, POPULATION);
+    // 戦績チェック (参考用)
+    // 見るのはソートされている現世代
+    // 次の世代作成の乱数が変わらないように, 選択・交叉後に行う
+    printf("the strongest:\n");
+    calcWinRateSprmVSRandTotal(current[0], 500);
+    printf("the weakest:\n");
+    calcWinRateSprmVSRandTotal(current[POPULATION - 1], 500);
     // write next family to the file
     // and return error flag
     return dumpSprmFileDirect(fnamew, next, sizeof next);
