@@ -521,36 +521,6 @@ void checkSprmFile(const char *format, int gene_num) {
 
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
-void leagueMatchSimpleSprm(Sprm *generation, int *result) {
-    int i, j;
-    // all zero
-    zeros(result, POPULATION);
-    // black index
-    for (i = 0; i < POPULATION; i++) {
-        //printf("\ai = %d / %d", i, FAMILY_NUM);
-        // white index
-        for (j = 0; j < POPULATION; j++) {
-            if (i == j) continue;
-            switch(oneToOneNormalSprm(generation + i, generation + j)) {
-                // black won
-                case 1:
-                    result[i] += 2;
-                    break;
-                // white won
-                case 2:
-                    result[j] += 2;
-                    break;
-                // draw
-                default:
-                    result[i]++;
-                    result[j]++;
-            }
-        }
-    }
-}
-
-// use Sprm[100]
-// win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
 void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result) {
     // set all elements to zero
@@ -637,7 +607,7 @@ void getSurvivorSprm(Sprm *generation, Sprm *survivors) {
     for (i = 0; i < POPULATION; i++)
         number[i] = i;
     // game!
-    leagueMatchSimpleSprm(generation, result);
+    leagueMatchSprmFlex(DET_FUNC, generation, result);
     // sort (descending order)
     quicksortDD(result, number, 0, POPULATION - 1);
     // show ranking
