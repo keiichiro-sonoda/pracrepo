@@ -8,6 +8,7 @@
 // ヘッダファイルのおかげで型定義もしなくて済む
 // やっぱグローバル変数は厄介かも
 
+
 Board START;
 
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
@@ -730,7 +731,6 @@ int play(void) {
     int t_count = 1;
     int flag = 0;
     int can_put[NEXT_MAX];
-    int kc[3] = {0, 0, 0};
     Board next_boards[NEXT_MAX];
     // initial turn (black)
     int turn = 0b01;
@@ -1121,21 +1121,18 @@ void board2arraySymmetry(Board src, int *dst) {
     }
 }
 
-// main
-// othello_win.c はメインを定義しないことにする?
-// デバッグ用にmain()に改名
+// デバッグ用
 int main2(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;
-    Board nbs[32];
-    int i;
-    int kc[3];
     // 偏ったサンプル
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
+    showBoard(sample1);
+    showBoard(sample2);
     play();
     //showBoard(START);
     return 0;

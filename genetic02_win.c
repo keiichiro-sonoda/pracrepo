@@ -603,7 +603,6 @@ void initPy(void) {
 }
 
 // 初期化できているか確認
-// あいうえお
 void showStartPy(void) {
     showBoard(START);
 }
