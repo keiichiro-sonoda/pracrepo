@@ -815,7 +815,7 @@ void randAveUni(const int *fitness, const int *numbers, const Sprm *current, Spr
 // make next generation file
 // write all individuals to the file
 // give a function pointer for selection and crossing
-int nGeneSSAFlex(void (*selAndCross)(const int*, const int*, const Sprm*, Sprm*), const char *format, int gene_num, int safety) {
+int nGeneSSAFlex(scmFunc selAndCross, const char *format, int gene_num, int safety) {
     char fnamew[FILENAME_MAX];
     // the file name to be written
     snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);

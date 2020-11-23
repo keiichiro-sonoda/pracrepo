@@ -157,12 +157,13 @@ void randUniRdSftNoLim(const int *fitness, const int *numbers, const Sprm *curre
 int main(void) {
     srand(SEED);
     //srand((unsigned)time(NULL));
+    // 初期設定
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
-    makeFirstGeneFileFlex(format);
+    //makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
-    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 1, 0, 3);
+    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 3);
     printString("end");
     return 0;
 }
