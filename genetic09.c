@@ -142,12 +142,24 @@ void rouletteUniRdSftNoLim(const int *fitness, const int *numbers, const Sprm *c
     }
 }
 
+// ランダム選択 (つまり適応度に依存しない)
+// 一様交叉
+// ランダム突然変異後, 制限なしシフト突然変異を行う
+void randUniRdSftNoLim(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
+    int parents[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        randIntDoubleDep(parents, 0, POPULATION - 1);
+        next[count] = makeChildCrossMSprm(current[parents[0]], current[parents[1]]);
+        shiftMutNoLim(next + count);
+    }
+}
+
 int main(void) {
     srand(SEED);
     //srand((unsigned)time(NULL));
     setIndexes();
     initBoard();
-    char format[] = FNF_05006000010005;
+    char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
     //nGeneSSAFlexLoop(rouletteUniSft, format, 1, 0, 2);
