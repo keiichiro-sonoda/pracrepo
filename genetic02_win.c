@@ -4,6 +4,7 @@
 #include <time.h>
 #include <float.h>
 #include <math.h>
+
 #include "genetic02_win.h"
 #include "sort01_win.h"
 
@@ -62,7 +63,7 @@ int mirrorLRAd(int src) {
 
 // normalize an address
 int normalAd(int ad) {
-    int i, eq_ads[8], adm;
+    int i, eq_ads[8];
     eq_ads[0] = ad;
     eq_ads[4] = mirrorLRAd(ad);
     for (i = 0; i < 3; i++) {
@@ -265,7 +266,6 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 // ファイルを読み込んで配列に代入
 // ファイル名を構築して, loadSprmFileDirect を実行するだけ
 int loadSprmFileFlex(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
-    FILE *fp;
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
     return loadSprmFileDirect(fnamer, pra, pra_size);
@@ -431,7 +431,7 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {
-    int i, j, k;
+    int i, j;
     // all zero
     zeros(result, POPULATION);
     // black index
@@ -603,6 +603,7 @@ void initPy(void) {
 }
 
 // 初期化できているか確認
+// あいうえお
 void showStartPy(void) {
     showBoard(START);
 }
