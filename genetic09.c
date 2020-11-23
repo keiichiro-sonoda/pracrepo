@@ -164,7 +164,7 @@ int main(void) {
     char format[] = FNF_D05006010010005;
     makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
-    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 2);
+    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 100);
     printString("end");
     return 0;
 }

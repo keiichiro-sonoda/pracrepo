@@ -4,27 +4,29 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 123U
+#define SEED 123U // シード値
 #endif
 
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 6
+#define ELITE_NUM 6 // エリート数
 #endif
 
 #ifndef POPULATION
-#define POPULATION 50
+#define POPULATION 50 // 個体数
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.05f
+#define MUT_RATE 0.05f // 突然変異率
 #endif
 
+// 指し手固定
 // function to determine the nextboard
 #define DET_FUNC getBestBoardForBlackSimple
 
+// 指し手ルーレット選択
 #ifndef DET_FUNC
 #define DET_FUNC getBoardForBlackSimpleRoulette
 #endif
