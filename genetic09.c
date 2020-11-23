@@ -162,9 +162,9 @@ int main(void) {
     setIndexes();
     initBoard();
     char format[] = FNF_D05006010010005;
-    makeFirstGeneFileFlex(format);
+    //makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
-    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 100);
+    //nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 100);
     printString("end");
     return 0;
 }

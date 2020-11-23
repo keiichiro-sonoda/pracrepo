@@ -5,7 +5,7 @@ import math
 from matplotlib import pyplot as plt
 
 # 共有ライブラリ読み込み(同じディレクトリで実行)
-exe2_win = cdll.LoadLibrary("exe2_win.so")
+exe2_win = cdll.LoadLibrary("./share02.so")
 # 配列型定義
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
