@@ -240,19 +240,28 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
 // 代表者取得関数も使えたが, エラー判定ができないのでやめておく
 // 指し手決定関数を決める識別子?も与える
 // 0: 固定, 1: ルーレット
-int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int det_func_id, int result[3]) {
+int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int decNxt_id, int result[3]) {
     printString(fnamer);
     Sprm family[loc_pop];
     if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
         return -1; // ロード失敗
     // ロード成功
     int winner;
+    Board (*decNxt)(Board*, int, const Sprm*);
     // 結果を代入する配列を初期化
     zeros(result, 3);
+    // 指し手決定関数の設定
+    switch (decNxt_id) {
+        case 0: // 固定
+            decNxt = getBestBoardForBlackSimple;
+            break;
+        default: // ルーレット
+            decNxt = getBoardForBlackSimpleRoulette;
+    }
     for (int i = 0; i < game_num; i++) {
         // 勝者取得
         // 配列をそのまま与える -> 先頭のポインタを与える
-        winner = SprmVSRandomNormal(DET_FUNC, family, color);
+        winner = SprmVSRandomNormal(decNxt, family, color);
         // 勝ち
         if (winner == color) {
             result[0]++;
