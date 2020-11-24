@@ -1,6 +1,5 @@
 # グラフ作成ファイル
 # ubuntu で使うために分岐した
-# 日本語入力はできるようになったが, グラフはまた表示できない
 from ctypes import *
 import numpy as np
 import math
