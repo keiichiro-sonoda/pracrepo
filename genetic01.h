@@ -15,6 +15,7 @@
 #define MUT_RATE 0.05f // 突然変異率
 #endif
 
+// ここで活性化関数を指定する
 // specify the activation function here
 #ifndef ACT_FUNC
 #define ACT_FUNC ReLU
