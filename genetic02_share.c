@@ -233,6 +233,39 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
     return 0;
 }
 
+// あるファイルの先頭パラメータ (エリート選択されていると仮定すると, トップパラメータ)
+// がランダムAIと対戦したときの (勝ち数, 引き分け数, 負け数) を返したい
+// 白黒は引数として与える, トータル処理は python に任せたい
+// 個体数と試合数を引数で指定
+// 代表者取得関数も使えたが, エラー判定ができないのでやめておく
+int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int result[3]) {
+    printString("debugging");
+    Sprm family[loc_pop];
+    int winner;
+    // 結果を代入する配列を初期化
+    zeros(result, 3);
+    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
+        return -1; // ロード失敗
+    for (int i = 0; i < game_num; i++) {
+        // 勝者取得
+        // 配列をそのまま与える -> 先頭のポインタを与える
+        winner = SprmVSRandomNormal(family, color);
+        // 勝ち
+        if (winner == color) {
+            result[0]++;
+        }
+        // 引き分け
+        else if (winner == 0) {
+            result[1]++;
+        }
+        // 負け
+        else {
+            result[2]++;
+        }
+    }
+    return 0;
+}
+
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result) {

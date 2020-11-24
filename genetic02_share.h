@@ -63,6 +63,13 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]);
 // 個体数以下の数をnに指定することも可能
 int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n);
 
+// あるファイルの先頭パラメータ (エリート選択されていると仮定すると, トップパラメータ)
+// がランダムAIと対戦したときの (勝ち数, 引き分け数, 負け数) を返したい
+// 白黒は引数として与える, トータル処理は python に任せたい
+// 個体数と試合数を引数で指定
+// 代表者取得関数も使えたが, エラー判定ができないのでやめておく
+int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int result[3]);
+
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 void leagueMatchSimpleSprm(Sprm *generation, int *result);
