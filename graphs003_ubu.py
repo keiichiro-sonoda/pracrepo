@@ -256,11 +256,16 @@ def imgTest(fname_format, generation):
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
 def makeWinRateFile(fname_format, population, g_min, g_max):
-    td = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
-    f = open(".//test.json", "w")
-    json.dump(td, f)
+    tdw = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
+    f = open(".//json//test.json", "w")
+    json.dump(tdw, f)
     f.close()
-    
+    f = open(".//json//test.json", "r")
+    tdr = json.load(f)
+    print(tdr)
+    print(tdr["0"])
+    print(tdr["0"]["white"])
+
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初 (指し手固定)
