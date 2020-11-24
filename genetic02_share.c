@@ -6,6 +6,7 @@
 #include <float.h>
 #include <math.h>
 
+// この中に genetic02.h と othello.h が包含されている
 #include "genetic02_share.h"
 #include "sort01.h"
 

@@ -6,6 +6,7 @@ import math
 from matplotlib import pyplot as plt
 
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
+# ubuntu用であることに注意
 share02 = cdll.LoadLibrary(".//share02_ubu.so")
 # 配列型定義
 FloatArray10 = c_float * 10
