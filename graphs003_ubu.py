@@ -313,9 +313,12 @@ def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
     f = open(json_fname, "r")
     wcd = json.load(f)
     f.close()
+    wrl = []
     for k, v in wcd.items():
         wr = (v["black"][0] + v["white"][0]) / (sum(v["black"]) + sum(v["white"]))
-        print(k, v, wr)
+        # タプル化
+        wrl.append((k, wr))
+    print(wrl)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
