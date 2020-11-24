@@ -6,6 +6,7 @@
 // 元ファイルをincludeして再利用しちゃおう
 // 被った関数は削除すればいいかな?
 // このファイルを include すればついでに include される
+// othello.h も包含している
 #include "genetic02.h"
 
 // 正規化された添え字の配列

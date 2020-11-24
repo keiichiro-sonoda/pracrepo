@@ -320,10 +320,13 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
 
 // python で使うときにまず実行する
 void initPy(void) {
+    srand(SEED);
     // これは不要かも
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     // これはまじで必須
     setCORR_TABLE();
+    // 旧グローバル変数
+    setIndexes();
     // 念のため
     initBoard();
 }

@@ -24,7 +24,7 @@
 
 // 指し手固定
 // function to determine the nextboard
-//#define DET_FUNC getBestBoardForBlackSimple
+#define DET_FUNC getBestBoardForBlackSimple
 
 // 指し手ルーレット選択
 #ifndef DET_FUNC

@@ -163,9 +163,9 @@ int main(void) {
     initBoard();
     char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 105);
+    //checkSprmFile(format, 105);
     //nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 100, 5);
-    Sprm pr = loadRepSprm(format, 105, 50);
+    Sprm pr = loadRepSprm(format, 100, 50);
     showSprmOneLine(pr);
     calcWinRateSprmVSRandTotal(pr, 500);
     printString("end");
