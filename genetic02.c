@@ -426,11 +426,13 @@ int SprmVSRandomNormal(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *pr
     return 0;
 }
 
+// 指し手決定関数はマクロで指定
 // calculate win rate when playing against random AI
 // n: number of games
 float calcWinRateSprmVSRand(Sprm pr, int pr_color, int n) {
     int count = 0;
     for (int i = 0; i < n; i++)
+        // ここでマクロを使う
         if (SprmVSRandomNormal(DET_FUNC, &pr, pr_color) == pr_color)
             count++;
     return (float)count / n;
