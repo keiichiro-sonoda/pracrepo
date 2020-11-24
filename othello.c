@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "othello.h"
 
-// intial board
+// initial board
 // declarations are necessary
 Board START;
 

@@ -6,8 +6,8 @@
 #include <float.h>
 #include <math.h>
 
-#include "genetic02_win.h"
-#include "sort01_win.h"
+#include "genetic02_share.h"
+#include "sort01.h"
 
 // global variables
 Board START;
@@ -45,21 +45,12 @@ void showFloatArray(float *fa, int n) {
     printf("}\n");
 }
 
-int getMin(int a, int b) {
-    return (a < b ? a : b);
-}
-
 int getMinArray(const int *A, int n) {
-    int i;
     int min = 0x7fffffff;
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         min = getMin(A[i], min);
     }
     return min;
-}
-
-int mirrorLRAd(int src) {
-    return (src / 16) * 16 + 14 - src % 16;
 }
 
 // normalize an address
@@ -334,8 +325,8 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 
 // パラメータ毎に平均値を計算する関数
 void calcSprmMeans(const Sprm *family, float means[SPRM_LEN], int n) {
-    // 0 で初期化
-    zeros(means, SPRM_LEN);
+    // 0 で初期化 (float配列用関数)
+    zerosFloat(means, SPRM_LEN);
     // 和を計算
     for (int i = 0; i < n; i++)
         for (int j = 0; j < SPRM_LEN; j++)
@@ -351,8 +342,8 @@ void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n) {
     float means[SPRM_LEN];
     // まずは平均値を計算
     calcSprmMeans(family, means, n);
-    // 初期化
-    zeros(SD, SPRM_LEN);
+    // 初期化 (float配列用関数)
+    zerosFloat(SD, SPRM_LEN);
     // 偏差の2乗の和を計算
     for (int i = 0; i < n; i++)
         for (int j = 0; j < SPRM_LEN; j++)
@@ -577,20 +568,6 @@ int nextGenerationSprm(int gene_num) {
     fclose(fp);
 
     return 0;
-}
-
-// loop several times
-void nextGenerationSprmLoop(int st, int loop) {
-    time_t t0, t1;
-    // get start time
-    time(&t0);
-    int i;
-    for (i = st; i < st + loop; i++) {
-        nextGenerationSprm(i);
-        // get time
-        time(&t1);
-        printf("elapsed time: %I64ds\n", t1 - t0);
-    }
 }
 
 // python で使うときにまず実行する
