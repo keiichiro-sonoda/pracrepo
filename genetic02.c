@@ -868,9 +868,9 @@ int nGeneSSAFlex(scmFunc selAndCross, const char *format, int gene_num, int safe
     // 次の世代作成の乱数が変わらないように, 選択・交叉後に行う
     kugiri(100);
     printf("the strongest:\n");
-    calcWinRateSprmVSRandTotal(current[0], 500);
+    calcWinRateSprmVSRandTotal(current[numbers[0]], 500);
     printf("the weakest:\n");
-    calcWinRateSprmVSRandTotal(current[POPULATION - 1], 500);
+    calcWinRateSprmVSRandTotal(current[numbers[POPULATION - 1]], 500);
     // write next family to the file
     // and return error flag
     return dumpSprmFileDirect(fnamew, next, sizeof next);

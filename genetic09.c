@@ -161,10 +161,10 @@ int main(void) {
     // 初期設定
     setIndexes();
     initBoard();
-    char format[] = FNF_D05006010010005;
-    //makeFirstGeneFileFlex(format);
+    char format[] = FNF_TEST;
+    makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
-    //nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 100);
+    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 100, 5);
     printString("end");
     return 0;
 }
