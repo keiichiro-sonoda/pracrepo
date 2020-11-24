@@ -126,20 +126,10 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result);
 // calculate distance
 float distSprm(Sprm p1, Sprm p2);
 
-// choose survivors from Sprm[100]
-// and show match results
-void getSurvivorSprm(Sprm *generation, Sprm *survivors);
-
-// make next generation file
-int nextGenerationSprm(int gene_num);
-
 // python で使うときにまず実行する
 void initPy(void);
 
 // 初期化できているか確認
 void showStartPy(void);
-
-// pythonから渡される文字列を表示してみたい
-void printStringPy(const char *s);
 
 #endif
