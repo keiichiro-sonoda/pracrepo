@@ -359,5 +359,5 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
-    makeWinCountFile(FILE_FORMATS[ind], 50, 1, 100, 0, 0)
+    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 100, 0, 0)
     print("終わり")
