@@ -238,7 +238,9 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
 // 白黒は引数として与える, トータル処理は python に任せたい
 // 個体数と試合数を引数で指定
 // 代表者取得関数も使えたが, エラー判定ができないのでやめておく
-int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int result[3]) {
+// 指し手決定関数を決める識別子?も与える
+// 0: 固定, 1: ルーレット
+int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int det_func_id, int result[3]) {
     printString(fnamer);
     Sprm family[loc_pop];
     if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
@@ -250,7 +252,7 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
     for (int i = 0; i < game_num; i++) {
         // 勝者取得
         // 配列をそのまま与える -> 先頭のポインタを与える
-        winner = SprmVSRandomNormal(family, color);
+        winner = SprmVSRandomNormal(DET_FUNC, family, color);
         // 勝ち
         if (winner == color) {
             result[0]++;

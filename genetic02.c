@@ -378,7 +378,9 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
 
 // play against random
 // return winner
-int SprmVSRandomNormal(const Sprm *prp, int my_color) {
+// 引数で指し手決定関数を変更可能にした
+// pythonで扱うときにマクロをいちいち変更するのが面倒だった
+int SprmVSRandomNormal(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *prp, int my_color) {
     Board nba[NEXT_MAX];
     int kc[3];
     int pass = 0;
@@ -406,7 +408,7 @@ int SprmVSRandomNormal(const Sprm *prp, int my_color) {
         // determine a next board
         // parameter's turn
         if (turn == my_color) {
-            main_board = DET_FUNC(nba, n, prp);
+            main_board = decNxt(nba, n, prp);
         } // random turn
         else {
             // randomly choose a next board
@@ -428,7 +430,7 @@ int SprmVSRandomNormal(const Sprm *prp, int my_color) {
 float calcWinRateSprmVSRand(Sprm pr, int pr_color, int n) {
     int count = 0;
     for (int i = 0; i < n; i++)
-        if (SprmVSRandomNormal(&pr, pr_color) == pr_color)
+        if (SprmVSRandomNormal(DET_FUNC, &pr, pr_color) == pr_color)
             count++;
     return (float)count / n;
 }

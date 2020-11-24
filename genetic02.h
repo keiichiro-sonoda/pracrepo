@@ -203,7 +203,9 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
 
 // play against random
 // return winner
-int SprmVSRandomNormal(const Sprm *prp, int my_color);
+// 引数で指し手決定関数を変更可能にした
+// pythonで扱うときにマクロをいちいち変更するのが面倒だった
+int SprmVSRandomNormal(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *prp, int my_color);
 
 // calculate win rate when playing against random AI
 // n: number of games
