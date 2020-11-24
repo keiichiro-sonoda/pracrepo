@@ -992,6 +992,7 @@ void nGenePrm1LLoop(scmFuncPrm1L scm, const char *format, int safety, int st, in
     time_t t0, t1;
     // get start time
     time(&t0);
+    Prm1L rep_pr;
     for (int i = st; i < st + loop; i++) {
         // set the generation number as the seed
         srand((unsigned)i);
@@ -999,6 +1000,12 @@ void nGenePrm1LLoop(scmFuncPrm1L scm, const char *format, int safety, int st, in
             // error
             printString("error");
             return;
+        }
+        // たまに勝率計算
+        if (i % 20 == 0) {
+            kugiri(100);
+            rep_pr = loadRepPrm1L(format, i, POPULATION);
+            checkWinRatePrm1LVSRand(rep_pr, 500);
         }
         // get time
         time(&t1);
