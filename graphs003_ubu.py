@@ -2,6 +2,7 @@
 # ubuntu で使うために分岐した
 import json
 import re
+import os
 from ctypes import *
 import numpy as np
 import math
@@ -263,6 +264,23 @@ def imgTest(fname_format, generation):
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
 def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
+    # json ファイルのフォーマットに使う部分を取得
+    m = re.match(r"(prm//.*)//", fname_format)
+    # マッチオブジェクトから文字列に変換
+    json_fname = m.groups()[0]
+    if decNxt_id == 0:
+        json_fname += "_best"
+    else:
+        json_fname += "_rlt"
+    # 先頭の "prm" のみ "json" に書き換え (ディレクトリ変更)
+    # 文字列の最後に "_wc.json" と付け加える (wc は win count の意)
+    
+    json_fname = json_fname.replace("prm", "json", 1) + "_wc.json"
+    print(json_fname)
+    if os.path.exists(json_fname):
+        res = input(json_fname + "は存在します. 書き換えますか? (yes\\n)")
+        if res != "yes":
+            return
     # 保存するディクショナリ初期化
     wcd = {}
     # 指定した世代幅くり返し
@@ -276,29 +294,16 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
         tmpd["white"] = rslt
         wcd[i] = tmpd
         print(wcd)
-    # json ファイルのフォーマットに使う部分を取得
-    m = re.match(r"(prm//.*)//", fname_format)
-    # マッチオブジェクトから文字列に変換
-    json_format = m.groups()[0]
-    if decNxt_id == 0:
-        json_format += "_best"
-    else:
-        json_format += "_rlt"
-    # 先頭の "prm" のみ "json" に書き換え (ディレクトリ変更)
-    # 文字列の最後に "_wc.json" と付け加える (wc は win count の意)
-    json_format = json_format.replace("prm", "json", 1) + "_wc.json"
-    print(json_format)
-    f = open(json_format, "w")
+    f = open(json_fname, "w")
     json.dump(wcd, f)
     f.close()
     # 読み込みチェック
-    f = open(json_format, "r")
+    f = open(json_fname, "r")
     tdr = json.load(f)
     f.close()
     print(tdr)
     print(tdr["0"])
     print(tdr["0"]["white"])
-    
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -359,5 +364,5 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
-    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 100, 0, 0)
+    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     print("終わり")
