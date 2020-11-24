@@ -11,7 +11,7 @@ int main(void) {
     initBoard();
     char format[] = FNF_L1RR05006000000005;
     //makeFGFilePrm1L(format);
-    checkPrm1LFile(format, 0);
+    checkPrm1LFile(format, 1);
     // 500 世代に挑戦
     nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
