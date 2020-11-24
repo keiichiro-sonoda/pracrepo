@@ -319,9 +319,25 @@ def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
         wr = (v["black"][0] + v["white"][0]) / (sum(v["black"]) + sum(v["white"]))
         # キーはintにしてタプル化
         wrl.append((int(k), wr))
+    # 辞書に順番という概念がないため一応ソート
     wrl.sort()
+    # numpy配列に変換
     wra = np.array(wrl)
-    print(wra)
+    # 世代数と勝率を別々の配列に分ける
+    x = wra[:, 0]
+    y = wra[:, 1]
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y, color=LINE_COLORS[0])
+    # ラベル指定
+    ax.set_xlabel("generation", fontsize=10)
+    ax.set_ylabel("win rate", fontsize=10)
+    # 横幅指定（読み込めたデータだけ）
+    ax.set_xticks(np.linspace(x[0], x[-1], 11))
+    # 縦幅指定（固定）
+    ax.set_yticks(np.linspace(-0.0, 1.0, 11))
+    ax.grid()
+    plt.show()
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
