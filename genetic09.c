@@ -161,10 +161,10 @@ int main(void) {
     // 初期設定
     setCORR_TABLE();
     initBoard();
-    char format[] = FNF_05006010010005;
+    char format[] = FNF_TEST;
     //makeFirstGeneFileFlex(format);
     checkSprmFile(format, 3);
-    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 0, 100);
+    //nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 1, 2, 1);
     printString("end");
     return 0;
 }
