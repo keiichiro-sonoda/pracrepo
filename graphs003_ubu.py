@@ -314,7 +314,7 @@ def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
     wcd = json.load(f)
     f.close()
     for k, v in wcd.items():
-        wr = sum(v["black"]) + sum(v["white"])
+        wr = (v["black"][0] + v["white"][0]) / (sum(v["black"]) + sum(v["white"]))
         print(k, v, wr)
 
 # ファイルフォーマットのリスト
