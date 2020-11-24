@@ -69,6 +69,9 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result);
 // python で使うときにまず実行する
 void initPy(void);
 
+// シード値設定
+void setSeedPy(unsigned int seed);
+
 // 初期化できているか確認
 void showStartPy(void);
 

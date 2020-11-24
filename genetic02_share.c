@@ -298,6 +298,11 @@ void initPy(void) {
     initBoard();
 }
 
+// シード値設定
+void setSeedPy(unsigned int seed) {
+    srand(seed);
+}
+
 // 初期化できているか確認
 void showStartPy(void) {
     showBoard(START);
