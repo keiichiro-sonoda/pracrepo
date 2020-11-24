@@ -1,6 +1,7 @@
 # グラフ作成ファイル
 # ubuntu で使うために分岐した
 import json
+import re
 from ctypes import *
 import numpy as np
 import math
@@ -259,6 +260,8 @@ def makeWinRateFile(fname_format, population, g_min, g_max):
     tdw = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
     # 先頭の "prm" のみ "json" に書き換え
     nformat = fname_format.replace("prm", "json", 1)
+    print(nformat)
+    nformat = re.sub(r"//.*\.bin", "", nformat)
     print(nformat)
     f = open(".//json//test.json", "w")
     json.dump(tdw, f)
