@@ -299,8 +299,8 @@ void initPy(void) {
 
 // シード値設定
 void setSeedPy(unsigned int seed) {
-    printf("%u\n", seed);
-    printf("%x\n", seed);
+    //printf("%u\n", seed);
+    //printf("%x\n", seed);
     srand(seed);
 }
 

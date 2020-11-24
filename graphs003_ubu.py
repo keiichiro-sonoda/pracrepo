@@ -19,9 +19,10 @@ IntArray3 = c_int32 * 3
 share02_ubu.initPy()
 
 # シードはここで設定
-share02_ubu.setSeedPy(-1)
+# 32bit符号無整数
+share02_ubu.setSeedPy(123)
 # シードが設定できているかチェック
-share02_ubu.checkRandPy()
+#share02_ubu.checkRandPy()
 
 # 全個体の平均値
 getFamilyMeans = share02_ubu.getFamilyMeansPy
@@ -262,9 +263,8 @@ def imgTest(fname_format, generation):
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
 def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
-    tdw = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
     # 保存するディクショナリ初期化
-    wrd = {}
+    wcd = {}
     # 指定した世代幅くり返し
     for i in range(g_min, g_max + 1):
         tmpd = {}
@@ -272,26 +272,33 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
         fname = fname_format.format(i)
         rslt = getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
         tmpd["black"] = rslt
-        rslt = getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
+        rslt = getTopSprmGameRsltVSRandWrap(fname, 2, loc_pop, decNxt_id, game_num)
         tmpd["white"] = rslt
-        wrd[i] = tmpd
-        print(wrd)
+        wcd[i] = tmpd
+        print(wcd)
     # json ファイルのフォーマットに使う部分を取得
     m = re.match(r"(prm//.*)//", fname_format)
     # マッチオブジェクトから文字列に変換
     json_format = m.groups()[0]
+    if decNxt_id == 0:
+        json_format += "_best"
+    else:
+        json_format += "_rlt"
     # 先頭の "prm" のみ "json" に書き換え (ディレクトリ変更)
-    # 文字列の最後に "_wr.json" と付け加える (wr は win rate の意)
-    json_format = json_format.replace("prm", "json", 1) + "_wr.json"
+    # 文字列の最後に "_wc.json" と付け加える (wc は win count の意)
+    json_format = json_format.replace("prm", "json", 1) + "_wc.json"
     print(json_format)
-    f = open(".//json//test.json", "w")
-    json.dump(tdw, f)
+    f = open(json_format, "w")
+    json.dump(wcd, f)
     f.close()
-    f = open(".//json//test.json", "r")
+    # 読み込みチェック
+    f = open(json_format, "r")
     tdr = json.load(f)
+    f.close()
     print(tdr)
     print(tdr["0"])
     print(tdr["0"]["white"])
+    
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -352,5 +359,5 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
-    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 100, 0, 0)
+    makeWinCountFile(FILE_FORMATS[ind], 50, 1, 100, 0, 0)
     print("終わり")
