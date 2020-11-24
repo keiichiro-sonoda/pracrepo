@@ -980,8 +980,8 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     // view the part of top parameter
     printString("the top of this generation:");
     showPrm1L(next[0]);
-    // check win rate
-    checkWinRatePrm1LVSRand(next[0], 500);
+    // 逐一勝率チェックしたい場合はこれを実行
+    //checkWinRatePrm1LVSRand(next[0], 500);
     // write next family to the file
     // and return error flag
     return dumpPrm1LDirect(fname, next, sizeof next);

@@ -10,9 +10,9 @@ int main(void) {
     //srand((unsigned)time(NULL));
     initBoard();
     char format[] = FNF_L1RR05006000000005;
-    makeFGFilePrm1L(format);
-    checkPrm1LFile(format, 100);
-    nGenePrm1LLoopSeed(rltUniRd, format, 1, 0, 2);
+    //makeFGFilePrm1L(format);
+    checkPrm1LFile(format, 2);
+    nGenePrm1LLoopSeed(rltUniRd, format, 1, 1, 1);
     // for debugging
     float sample1[] = {-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3};
     int l1 = arrayLength(sample1);
