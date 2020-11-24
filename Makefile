@@ -20,8 +20,8 @@ share01.so: genetic01_win.o othello_win.o sort01_win.o
 	gcc genetic01_win.o othello_win.o sort01_win.o -o share01.so -shared -fPIC -lm
 share02.so: genetic02_win.o  othello_win.o  sort01_win.o
 	gcc genetic02_win.o othello_win.o sort01_win.o -o share02.so -shared -fPIC -lm
-othello: othello.c
-	gcc othello.c -o othello
+share02_ubu.so: genetic02_win.o othello.o sort01.o
+	gcc genetic02_win.o othello.o sort01.o -o share02_ubu.so -shared -fPIC -Wall -lm
 othello_win.exe: othello_win.c othello_win.h
 	gcc othello_win.c -o othello_win.exe -fPIC -Wall
 test01: test01.c genetic01.o othello.o sort01.o
@@ -33,7 +33,7 @@ compare: compare.c genetic01.o genetic02.o othello.o sort01.o
 test_win.exe: test_win.c genetic02_win.o othello_win.o sort01_win.o
 	gcc test_win.c genetic02_win.o othello_win.o sort01_win.o -o test_win.exe
 othello.o: othello.c othello.h
-	gcc othello.c -c
+	gcc othello.c -c -fPIC -Wall
 sort01.o: sort01.c sort01.h
 	gcc sort01.c -c -Wall
 genetic01.o: genetic01.c genetic01.h

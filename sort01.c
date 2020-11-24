@@ -6,13 +6,10 @@
 #include "sort01.h"
 #include "othello.h"
 
-// global variable
-int *GLOBAL;
-
 // for debugging
 void sortTest(void) {
     srand(123U);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
@@ -30,6 +27,7 @@ void sortTest(void) {
         result1[parents[1]]++;
     }
     printDecimalArray(result1, l1);
+    printDecimal(l2);
 }
 
 // insertion sort
@@ -50,34 +48,6 @@ void randIntDoubleDep(int pair[2], int min, int max) {
     pair[1] = randInt(min, max - 1);
     if (pair[1] >= pair[0])
         pair[1]++;
-}
-
-// make an array of random numbers
-void arrayRandom(int n) {
-    GLOBAL = (int *)malloc(n * sizeof(int));
-    // failed
-    if (GLOBAL == NULL) return;
-    for (int i = 0; i < n; i++)
-        // 0-99
-        GLOBAL[i] = rand() % 100;
-}
-
-void globalTest(void) {
-    int n = 10;
-    int rl = 5;
-    int result[rl];
-    int result_all[n];
-    zeros(result_all, n);
-    arrayRandom(n);
-    for (int i = 0; i < 10000; i++) {
-        rouletteIntMltDep(GLOBAL, n, result, rl);
-        for (int j = 0; j < rl; j++) {
-            result_all[result[j]]++;
-        }
-    }
-    printDecimalArray(GLOBAL, n);
-    printDecimalArray(result_all, n);
-    free(GLOBAL);
 }
 
 // make an array of exponents

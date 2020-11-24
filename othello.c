@@ -8,6 +8,7 @@
 // declarations are necessary
 Board START;
 
+// サンプルボード1
 Board SAMPLE1;
 
 // 8 directions
@@ -737,13 +738,13 @@ int wrapNegaMaxAB(Board b, int color, int height) {
     return best_te;
 }
 
+// 対戦関数?
 int play(void) {
     Board main_board = START;
     int count, te, index;
     int t_count = 1;
     int flag = 0;
     int can_put[NEXT_MAX];
-    int kc[3] = {0, 0, 0};
     Board next_boards[NEXT_MAX];
     // initial turn (black)
     int turn = 0b01;
@@ -1048,20 +1049,18 @@ int warnOverwriting(const char *fname) {
     return 0;
 }
 
-// main
-// not defined in othello.h
+// main?
+// なんとなく残してある関数
 int main2(void) {
     initBoard();
     // sample boards
     Board sample1, sample2;
-    Board nbs[32];
-    int i;
-    int kc[3];
     sample1.board[0] = 0xaaaa2aa902aa5541;
     sample1.board[1] = 0x00000000000000aa;
     sample2.board[0] = 0xaaaa28a90aaa5545;
     sample2.board[1] = 0x0000200209021202;
-    //showBoard(sample2);
+    showBoard(sample1);
+    showBoard(sample2);
     play();
     return 0;
 }
