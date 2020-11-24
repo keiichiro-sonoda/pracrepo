@@ -20,18 +20,6 @@ int CORR_TABLE[MASU_NUM];
 // 全てヘッダファイルから輸入
 
 // functions
-// パラメータをマスに対応するように表示
-void showSprm(Sprm pr) {
-    int i;
-    float p;
-    for (i = 0; i < MASU_NUM; i++) {
-        p = pr.weight[CORR_TABLE[i]];
-        printf("%5.2f ", p);
-        if (i % 8 == 7) {
-            putchar('\n');
-        }
-    }
-}
 
 void showFloatArray(float *fa, int n) {
     int i;
@@ -45,83 +33,6 @@ void showFloatArray(float *fa, int n) {
     printf("}\n");
 }
 
-int getMinArray(const int *A, int n) {
-    int min = 0x7fffffff;
-    for (int i = 0; i < n; i++) {
-        min = getMin(A[i], min);
-    }
-    return min;
-}
-
-// normalize an address
-int normalAd(int ad) {
-    int i, eq_ads[8];
-    eq_ads[0] = ad;
-    eq_ads[4] = mirrorLRAd(ad);
-    for (i = 0; i < 3; i++) {
-        eq_ads[i + 1] = rotL90DegAd(eq_ads[i]);
-        eq_ads[i + 5] = mirrorLRAd(eq_ads[i + 1]);
-    }
-    return getMinArray(eq_ads, 8);
-}
-
-// ad: normalized address
-int ad2index(int ad) {
-    if (ad < 16)
-        return ad / 2;
-    if (ad < 32)
-        return ad / 2 - 5;
-    if (ad < 48)
-        return ad / 2 - 11;
-    if (ad < 64)
-        return ad / 2 - 18;
-    return -1;
-}
-
-// -0.5 ~ 0.5
-void randSprm(Sprm *prp) {
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
-        prp->weight[i] = (float)rand() / RAND_MAX - 0.5;
-    }
-}
-
-// calculate average
-Sprm makeChildAverageSprm(Sprm mother, Sprm father) {
-    Sprm child;
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
-        child.weight[i] = (mother.weight[i] + father.weight[i]) / 2;
-    }
-    return child;
-}
-
-// give mutant rate
-float fcrossMFlex(float a, float b, float rate) {
-    // 0.0 ~ 1.0
-    float r = (float)rand() / RAND_MAX;
-    // mutant!
-    if (r <= rate) {
-        //printf("m!\n");
-        return (float)rand() / RAND_MAX - 0.5;
-    }
-    r = (float)rand() / RAND_MAX;
-    // 50 : 50
-    if (r < 0.5) return a;
-    return b;
-}
-
-// cross parameters?
-Sprm makeChildCrossMSprm(Sprm mother, Sprm father) {
-    Sprm child;
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
-        // rate 5%
-        child.weight[i] = fcrossMFlex(mother.weight[i], father.weight[i], 0.05);
-    }
-    return child;
-}
-
 // グローバル変数を設定
 // convert from an address to the weight index?
 void setCORR_TABLE(void) {
@@ -130,93 +41,6 @@ void setCORR_TABLE(void) {
         ad = i * 2;
         CORR_TABLE[i] = ad2index(normalAd(ad));
     }
-}
-
-// caluculate point
-float evaluationSimple(Board b, Sprm pr) {
-    float pt = 0;
-    int i;
-    int ba[MASU_NUM];
-    // Board -> int array
-    board2arraySymmetry(b, ba);
-    //showDecimalArray(ba, MASU_NUM);
-    for (i = 0; i < MASU_NUM; i++) {
-        // calculate inner product
-        pt += ba[i] * pr.weight[CORR_TABLE[i]];
-    }
-    return pt;
-}
-
-// assume that the next turn is black
-// n: the number of next boards
-// use simple parameter
-Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
-    float mx_point = -FLT_MAX;
-    float t_point;
-    int i;
-    Board best_board;
-    for (i = 0; i < n; i++) {
-        // sign inversion!!
-        t_point = -evaluationSimple(next_boards[i], *prp);
-        if (mx_point < t_point) {
-            // update
-            mx_point = t_point;
-            best_board = next_boards[i];
-        }
-    }
-    //printf("%5.2f\n", mx_point);
-    return best_board;
-}
-
-// return winner
-int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp) {
-    Board nba[NEXT_MAX];
-    int kc[3];
-    int pass = 0;
-    int n, dif;
-    // set turn
-    int turn = 0b01;
-    // set initial board
-    Board main_board = START;
-    while (1) {
-        // calculate next
-        n = nextBoardNormal2(main_board, nba, kc);
-        //showBoard(main_board);
-        // can't put a piece anywhere
-        if (n == 0) {
-            // can't do anything one another
-            if (pass) {
-                //printf("end\n");
-                break;
-            }
-            // pass
-            //printf("pass\n");
-            swapNormalizeBoard(&main_board);
-            turn ^= 0b11;
-            pass = 1;
-            continue;
-        }
-        pass = 0;
-        // determine a next board
-        // black (first)
-        if (turn == 0b01) {
-            //printf("black\n");
-            main_board = getBestBoardForBlackSimple(nba, n, spp);
-        } // white (second)
-        else {
-            //printf("white\n");
-            main_board = getBestBoardForBlackSimple(nba, n, gpp);
-        }
-        // switch turn
-        turn ^= 0b11;
-    }
-    // difference between black and white
-    dif = kc[1] - kc[2];
-    //printDecimal(dif);
-    if (dif > 0) return turn;
-    if (dif < 0) return turn ^ 0b11;
-    // draw
-    return 0;
 }
 
 // make first file
@@ -241,18 +65,6 @@ void makeFirstSprmsFile(void) {
     fwrite(pra, sizeof pra, 1, fp);
     // close
     fclose(fp);
-}
-
-// ファイル名をフォーマットと世代番号から構築せず, そのまま指定する
-int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
-    FILE *fp;
-    if ((fp = fopen(fname, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fname);
-        return -1;
-    }
-    fread(pra, pra_size, 1, fp);
-    fclose(fp);
-    return 0;
 }
 
 // ファイルを読み込んで配列に代入
@@ -448,20 +260,6 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
             }
         }
     }
-}
-
-// calculate distance
-float distSprm(Sprm p1, Sprm p2) {
-    int i;
-    float d = 0.0;
-    for (i = 0; i < SPRM_LEN; i++) {
-        // add square distance
-        d += (float)pow(p1.weight[i] - p2.weight[i], 2.0);
-    }
-    // divided by number of parameters
-    d /= SPRM_LEN;
-    // return the square root
-    return (float)sqrt(d);
 }
 
 // python で使うときにまず実行する

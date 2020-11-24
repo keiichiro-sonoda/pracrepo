@@ -220,6 +220,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     plt.show()
 
 # 関数テスト
+# パラメータの画像表示
 def funcTest(fname_format, generation):
     fname = fname_format.format(generation)
     l = getTopSprmWrap(fname)
