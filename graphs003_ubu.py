@@ -282,7 +282,7 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     # シードは直前に設定することにする
     # ランダムAIとの対戦なので一応再現性を確保
     share02_ubu.setSeedPy(SEED)
-    # ファイル名作成
+    # 書き込みファイル名作成
     json_fname = makeJsonFileName(fname_format, decNxt_id)
     if os.path.exists(json_fname):
         res = input(json_fname + "は存在します. 書き換えますか? (yes\\n)")
@@ -293,8 +293,9 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     # 指定した世代幅くり返し
     for i in range(g_min, g_max + 1):
         tmpd = {}
-        # ファイル名
+        # 読み込みファイル名
         fname = fname_format.format(i)
+        # 失敗したら[0, 0, 0]が帰ってくる
         rslt = getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
         tmpd["black"] = rslt
         rslt = getTopSprmGameRsltVSRandWrap(fname, 2, loc_pop, decNxt_id, game_num)
@@ -318,7 +319,8 @@ def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
     f = open(json_fname, "r")
     wcd = json.load(f)
     f.close()
-    print(wcd)
+    for k, v in wcd.items():
+        print(k, v)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
