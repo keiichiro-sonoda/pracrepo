@@ -258,12 +258,13 @@ def imgTest(fname_format, generation):
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
 def makeWinRateFile(fname_format, population, game_num, g_min, g_max):
     tdw = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
+    # 指定した世代幅くり返し
+    for i in range(g_min, g_max + 1):
+        print(i)
     # json ファイルのフォーマットに使う部分を取得
     m = re.match(r"(prm//.*)//", fname_format)
-    print(m)
     # マッチオブジェクトから文字列に変換
     json_format = m.groups()[0]
-    print(json_format)
     # 先頭の "prm" のみ "json" に書き換え (ディレクトリ変更)
     # 文字列の最後に "_wr.json" と付け加える (wr は win rate の意)
     json_format = json_format.replace("prm", "json", 1) + "_wr.json"
@@ -336,5 +337,5 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
-    makeWinRateFile(FILE_FORMATS[ind], 50, 100, 0, 5)
+    makeWinRateFile(FILE_FORMATS[ind], 50, 100, 11, 22)
     print("終わり")
