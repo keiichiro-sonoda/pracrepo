@@ -1021,6 +1021,8 @@ void nGenePrm1LLoopSeed(scmFuncPrm1L scm, const char *format, int safety, int st
     // get start time
     time(&t0);
     unsigned int s1;
+    // たまに使うパラメータを代入する変数
+    Prm1L rep_pr;
     for (int i = st; i < st + loop; i++) {
         // use the number of generation as a part of seed
         s1 = i * SEED;
@@ -1031,6 +1033,12 @@ void nGenePrm1LLoopSeed(scmFuncPrm1L scm, const char *format, int safety, int st
             // error
             printString("error");
             return;
+        }
+        // たまに勝率計算
+        if (i % 20 == 0) {
+            kugiri(100);
+            rep_pr = loadRepPrm1L(format, i, POPULATION);
+            checkWinRatePrm1LVSRand(rep_pr, 500);
         }
         // get time
         time(&t1);
