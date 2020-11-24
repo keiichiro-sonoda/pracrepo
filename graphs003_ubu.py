@@ -315,10 +315,13 @@ def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
     f.close()
     wrl = []
     for k, v in wcd.items():
+        # 勝率計算
         wr = (v["black"][0] + v["white"][0]) / (sum(v["black"]) + sum(v["white"]))
-        # タプル化
-        wrl.append((k, wr))
-    print(wrl)
+        # キーはintにしてタプル化
+        wrl.append((int(k), wr))
+    wrl.sort()
+    wra = np.array(wrl)
+    print(wra)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
