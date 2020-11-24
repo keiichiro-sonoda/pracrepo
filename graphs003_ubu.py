@@ -15,8 +15,11 @@ FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
 IntArray3 = c_int32 * 3
 
-# 初期化関数 (バグの温床)
+# 初期化関数を実行 (バグの温床)
 share02_ubu.initPy()
+
+# シードはここで設定
+share02_ubu.setSeed(123)
 
 # 全個体の平均値
 getFamilyMeans = share02_ubu.getFamilyMeansPy

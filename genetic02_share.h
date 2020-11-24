@@ -72,6 +72,9 @@ void initPy(void);
 // シード値設定
 void setSeedPy(unsigned int seed);
 
+// 乱数チェック
+void checkRandPy(void);
+
 // 初期化できているか確認
 void showStartPy(void);
 

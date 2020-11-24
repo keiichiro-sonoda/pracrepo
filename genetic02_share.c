@@ -289,9 +289,8 @@ void leagueMatchSimpleSprm(Sprm *generation, int *result) {
 
 // python で使うときにまず実行する
 void initPy(void) {
-    srand(SEED);
-    // これは不要かも
-    //srand((unsigned)time(NULL));
+    // デフォは時間でシードを設定
+    srand((unsigned)time(NULL));
     // これはまじで必須
     setCORR_TABLE();
     // 念のため
@@ -301,6 +300,11 @@ void initPy(void) {
 // シード値設定
 void setSeedPy(unsigned int seed) {
     srand(seed);
+}
+
+// 乱数チェック
+void checkRandPy(void) {
+    printDecimal(rand());
 }
 
 // 初期化できているか確認
