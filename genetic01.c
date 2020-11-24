@@ -453,9 +453,7 @@ void checkWinRatePrm1LVSRand(Prm1L pr, int n) {
     rb = calcWinRatePrm1LVSRand(pr, 0b01, n);
     rw = calcWinRatePrm1LVSRand(pr, 0b10, n);
     printf("the number of games: %d x 2\n", n);
-    printf("win rate (black): %4.1f%%\n", rb * 100);
-    printf("win rate (white): %4.1f%%\n", rw * 100);
-    printf("win rate (total): %4.1f%%\n", (rb + rw) * 50);
+    printf("win rate (black, white, total): %4.1f%%, %4.1f%%, %4.1f%%\n", rb * 100, rw * 100, (rb + rw) * 50);
 }
 
 int leagueMatch(Family fml) {

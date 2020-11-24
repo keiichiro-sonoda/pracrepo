@@ -7,7 +7,7 @@
 
 int main(void) {
     srand(SEED);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     initBoard();
     char format[] = FNF_L1RR05006000000001;
     //makeFGFilePrm1L(format);
@@ -25,5 +25,8 @@ int main(void) {
     printDecimal(l2);
     printFloatArray(sample2, l1);
     printString("yeah");
+    Prm1L pr = loadRepPrm1L(FNF_L1RR05006000000001, 100, 50);
+    showPrm1L(pr);
+    checkWinRatePrm1LVSRand(pr, 500);
     return 0;
 }
