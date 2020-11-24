@@ -300,12 +300,16 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 21. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
                 "prm//sprm050_06_rlt_uni_rdsft005//sprm050_06_rlt_uni_rdsft005_g{:03d}.bin",
                 # 22. 指し手固定, 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
-                "prm//sprmdef050_06_rd_uni_rdsft005//sprmdef050_06_rd_uni_rdsft005_g{:03d}.bin"]
+                "prm//sprmdef050_06_rd_uni_rdsft005//sprmdef050_06_rd_uni_rdsft005_g{:03d}.bin",
+                # 23. 指し手ルーレット, 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
+                # 現状は22と同じデータのはず
+                "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 22
+    ind = 23
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
-    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 1, 100))
+    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 0, 500))
+    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 2, 50, 0, 500))
     print("終わり")

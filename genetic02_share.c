@@ -250,6 +250,13 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
     Board (*decNxt)(Board*, int, const Sprm*);
     // 結果を代入する配列を初期化
     zeros(result, 3);
+    // チェック
+    showSprmOneLine(*family);
+    if (color == 0b01) {
+        printf("black\n");
+    } else {
+        printf("white\n");
+    }
     // 指し手決定関数の設定
     switch (decNxt_id) {
         case 0: // 固定
@@ -277,6 +284,7 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
             result[2]++;
         }
     }
+    calcWinRateSprmVSRandTotal(*family, 500);
     return 0;
 }
 
