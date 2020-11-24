@@ -214,7 +214,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     fig = plt.figure(figsize=(8, 5))
     ax1 = fig.add_subplot(211)
     ax2 = fig.add_subplot(212)
-    fig.subplots_adjust(bottom=0.2, left=0.2, top=0.8, right=0.8)
+    #fig.subplots_adjust(bottom=0.2, left=0.2, top=0.8, right=0.8)
     makeMeansGraph(ax1, g, means)
     makeSDGraph(ax2, g, SD)
     plt.show()
