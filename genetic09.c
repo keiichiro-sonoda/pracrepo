@@ -157,14 +157,17 @@ void randUniRdSftNoLim(const int *fitness, const int *numbers, const Sprm *curre
 int main(void) {
     srand(SEED);
     // シード固定に注意
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     // 初期設定
     setIndexes();
     initBoard();
     char format[] = FNF_TEST;
-    makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 0);
-    nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 100, 5);
+    //makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 105);
+    //nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 0, 100, 5);
+    Sprm pr = loadRepSprm(format, 105, 50);
+    showSprmOneLine(pr);
+    calcWinRateSprmVSRandTotal(pr, 500);
     printString("end");
     return 0;
 }
