@@ -10,7 +10,10 @@
 #define PARAM_NUM 2792
 #define PRM1L_LEN 528
 #define ELITE_NUM 6
-#define MUT_RATE 0.01f
+
+#ifndef MUT_RATE
+#define MUT_RATE 0.05f // 突然変異率
+#endif
 
 // specify the activation function here
 #ifndef ACT_FUNC
@@ -31,13 +34,17 @@
 // 050: population
 // 06 : the number of elite
 // 00 : roulette selection
-// 00 : uniform crossover (or none)
-// 00 : random mutation
+// 00 : uniform crossover
+// 00 : random mutation (or none)
 // 001: mutation rate
 // default is the step function
 #define FNF_L1R05006000000001 "prm/l1r050_06_rlt_uni_rd001/l1r050_06_rlt_uni_rd001_g%03d.bin"
+
 // R  : use ReLU as activation function
 #define FNF_L1RR05006000000001 "prm/l1rr050_06_rlt_uni_rd001/l1rr050_06_rlt_uni_rd001_g%03d.bin"
+// 突然変異率だけ変更
+#define FNF_L1RR05006000000005 "prm/l1rr050_06_rlt_uni_rd005/l1rr050_06_rlt_uni_rd005_g%03d.bin"
+
 // don't use activation function
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
@@ -53,6 +60,7 @@
 // uniform crossover (array)
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
 
+// ここでマクロ MUT_RATE を使う
 // MUT_RATE chance to replace with random value
 #define randMutArray(C, n) for (int _ = 0; _ < n; _++) if ((float)rand() / RAND_MAX < MUT_RATE) (C)[_] = randWeight()
 

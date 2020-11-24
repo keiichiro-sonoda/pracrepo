@@ -7,13 +7,12 @@
 
 int main(void) {
     srand(SEED);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     initBoard();
-    char format[] = FNF_L1RR05006000000001;
-    //makeFGFilePrm1L(format);
+    char format[] = FNF_L1RR05006000000005;
+    makeFGFilePrm1L(format);
     checkPrm1LFile(format, 100);
-    //nGenePrm1LLoop(rltUniRd, format, 1, 0, 0);
-    //nGenePrm1LLoopSeed(rltUniRd, format, 1, 0, 100);
+    nGenePrm1LLoopSeed(rltUniRd, format, 1, 0, 2);
     // for debugging
     float sample1[] = {-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3};
     int l1 = arrayLength(sample1);
@@ -25,8 +24,5 @@ int main(void) {
     printDecimal(l2);
     printFloatArray(sample2, l1);
     printString("yeah");
-    Prm1L pr = loadRepPrm1L(FNF_L1RR05006000000001, 100, 50);
-    showPrm1L(pr);
-    checkWinRatePrm1LVSRand(pr, 500);
     return 0;
 }
