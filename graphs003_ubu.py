@@ -12,7 +12,8 @@ share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
 IntArray3 = c_int32 * 3
-# 初期化関数
+
+# 初期化関数 (バグの温床)
 share02_ubu.initPy()
 
 # 全個体の平均値
@@ -310,6 +311,6 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
-    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 0, 500))
-    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 2, 50, 0, 500))
+    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 1, 500))
+    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 2, 50, 1, 500))
     print("終わり")

@@ -14,16 +14,6 @@
 
 // functions
 
-// グローバル変数を設定
-// convert from an address to the weight index?
-void setCORR_TABLE(void) {
-    int i, ad;
-    for (i = 0; i < MASU_NUM; i++) {
-        ad = i * 2;
-        CORR_TABLE[i] = ad2index(normalAd(ad));
-    }
-}
-
 // make first file
 void makeFirstSprmsFile(void) {
     FILE *fp;
@@ -264,7 +254,6 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
             result[2]++;
         }
     }
-    calcWinRateSprmVSRandTotal(*family, 500);
     return 0;
 }
 
