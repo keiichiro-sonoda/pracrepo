@@ -8,6 +8,9 @@ import numpy as np
 import math
 from matplotlib import pyplot as plt
 
+# シード値
+SEED = 123
+
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
 # ubuntu用であることに注意
 share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
@@ -18,12 +21,6 @@ IntArray3 = c_int32 * 3
 
 # 初期化関数を実行 (バグの温床)
 share02_ubu.initPy()
-
-# シードはここで設定
-# 32bit符号無整数
-share02_ubu.setSeedPy(123)
-# シードが設定できているかチェック
-#share02_ubu.checkRandPy()
 
 # 全個体の平均値
 getFamilyMeans = share02_ubu.getFamilyMeansPy
@@ -282,6 +279,10 @@ def makeJsonFileName(fname_format, decNxt_id):
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
 def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
+    # シードは直前に設定することにする
+    # ランダムAIとの対戦なので一応再現性を確保
+    share02_ubu.setSeedPy(SEED)
+    # ファイル名作成
     json_fname = makeJsonFileName(fname_format, decNxt_id)
     if os.path.exists(json_fname):
         res = input(json_fname + "は存在します. 書き換えますか? (yes\\n)")
@@ -314,6 +315,10 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
 # 勝率のグラフを作りたい
 def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
     json_fname = makeJsonFileName(fname_format, decNxt_id)
+    f = open(json_fname, "r")
+    wcd = json.load(f)
+    f.close()
+    print(wcd)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
