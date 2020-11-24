@@ -64,14 +64,14 @@ def getTopSprmWrap(fnamer):
 
 # あるファイルの先頭要素とランダムAIとの試合結果を取得
 # [勝ち数, 引き分け数, 負け数] の順のリストを返す
-# エラーなら空リスト
+# エラーなら [0, 0, 0]
 # 指し手決定関数も指定するように変更
 # 0: 固定, 1: ルーレット
 def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
     # 戻り値保存用
     i_arr_c = IntArray3()
     if getTopSprmGameRsltVSRand(fnamer.encode(), color, loc_pop, game_num, decNxt_id, i_arr_c) < 0:
-        return []
+        return [0, 0, 0]
     return list(i_arr_c)
 
 # グラフ用の色
@@ -256,11 +256,21 @@ def imgTest(fname_format, generation):
 
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
-def makeWinRateFile(fname_format, population, game_num, g_min, g_max):
+def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     tdw = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
+    # 保存するディクショナリ初期化
+    wrd = {}
     # 指定した世代幅くり返し
     for i in range(g_min, g_max + 1):
-        print(i)
+        tmpd = {}
+        # ファイル名
+        fname = fname_format.format(i)
+        rslt = getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
+        tmpd["black"] = rslt
+        rslt = getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
+        tmpd["white"] = rslt
+        wrd[i] = tmpd
+        print(wrd)
     # json ファイルのフォーマットに使う部分を取得
     m = re.match(r"(prm//.*)//", fname_format)
     # マッチオブジェクトから文字列に変換
@@ -337,5 +347,5 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
-    makeWinRateFile(FILE_FORMATS[ind], 50, 100, 11, 22)
+    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 100, 0, 5)
     print("終わり")
