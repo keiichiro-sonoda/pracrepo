@@ -7,27 +7,33 @@ from matplotlib import pyplot as plt
 
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
 # ubuntu用であることに注意
-share02 = cdll.LoadLibrary(".//share02_ubu.so")
+share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
 # 配列型定義
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
+IntArray3 = c_int32 * 3
 # 初期化関数
-share02.initPy()
+share02_ubu.initPy()
 
 # 全個体の平均値
-getFamilyMeans = share02.getFamilyMeansPy
-getFamilyMeans.rectype = c_int32
+getFamilyMeans = share02_ubu.getFamilyMeansPy
+getFamilyMeans.restype = c_int32
 getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # 全個体の標準偏差
-getFamilySD = share02.getFamilySDPy
-getFamilySD.rectype = c_int32
+getFamilySD = share02_ubu.getFamilySDPy
+getFamilySD.restype = c_int32
 getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
 
 # あるファイルの先頭の要素
-getTopSprm = share02.getTopSprmPy
-getTopSprm.rectype = c_int32
+getTopSprm = share02_ubu.getTopSprmPy
+getTopSprm.restype = c_int32
 getTopSprm.argtypes = (c_char_p, FloatArray64)
+
+# あるファイルの先頭要素をランダムAIと対戦させ, その結果を取得
+getTopSprmGameRsltVSRand = share02_ubu.getTopSprmGameRsltVSRandPy
+getTopSprmGameRsltVSRand.restype = c_int32
+getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, IntArray3)
 
 # 各種ラッパー関数
 # n は個体数を指定
@@ -52,6 +58,16 @@ def getTopSprmWrap(fnamer):
     if getTopSprm(fnamer.encode(), f_arr_c) < 0:
         return []
     return list(f_arr_c)
+
+# あるファイルの先頭要素とランダムAIとの試合結果を取得
+# [勝ち数, 引き分け数, 負け数] の順のリストを返す
+# エラーなら空リスト
+def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, game_num):
+    # 戻り値保存用
+    i_arr_c = IntArray3()
+    if getTopSprmGameRsltVSRand(fnamer.encode(), color, loc_pop, game_num, i_arr_c) < 0:
+        return []
+    return list(i_arr_c)
 
 # グラフ用の色
 LINE_COLORS = [
@@ -286,7 +302,8 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 
 if __name__ == "__main__":
     ind = 11
-    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
+    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 100))
     print("終わり")

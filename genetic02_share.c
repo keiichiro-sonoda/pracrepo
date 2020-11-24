@@ -239,13 +239,14 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
 // 個体数と試合数を引数で指定
 // 代表者取得関数も使えたが, エラー判定ができないのでやめておく
 int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int result[3]) {
-    printString("debugging");
+    printString(fnamer);
     Sprm family[loc_pop];
+    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
+        return -1; // ロード失敗
+    // ロード成功
     int winner;
     // 結果を代入する配列を初期化
     zeros(result, 3);
-    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
-        return -1; // ロード失敗
     for (int i = 0; i < game_num; i++) {
         // 勝者取得
         // 配列をそのまま与える -> 先頭のポインタを与える
