@@ -254,9 +254,11 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
     switch (decNxt_id) {
         case 0: // 固定
             decNxt = getBestBoardForBlackSimple;
+            printf("best\n");
             break;
         default: // ルーレット
             decNxt = getBoardForBlackSimpleRoulette;
+            printf("roulette\n");
     }
     for (int i = 0; i < game_num; i++) {
         // 勝者取得

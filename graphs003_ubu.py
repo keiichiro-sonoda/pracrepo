@@ -33,7 +33,7 @@ getTopSprm.argtypes = (c_char_p, FloatArray64)
 # あるファイルの先頭要素をランダムAIと対戦させ, その結果を取得
 getTopSprmGameRsltVSRand = share02_ubu.getTopSprmGameRsltVSRandPy
 getTopSprmGameRsltVSRand.restype = c_int32
-getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, IntArray3)
+getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, IntArray3)
 
 # 各種ラッパー関数
 # n は個体数を指定
@@ -62,10 +62,12 @@ def getTopSprmWrap(fnamer):
 # あるファイルの先頭要素とランダムAIとの試合結果を取得
 # [勝ち数, 引き分け数, 負け数] の順のリストを返す
 # エラーなら空リスト
-def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, game_num):
+# 指し手決定関数も指定するように変更
+# 0: 固定, 1: ルーレット
+def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
     # 戻り値保存用
     i_arr_c = IntArray3()
-    if getTopSprmGameRsltVSRand(fnamer.encode(), color, loc_pop, game_num, i_arr_c) < 0:
+    if getTopSprmGameRsltVSRand(fnamer.encode(), color, loc_pop, game_num, decNxt_id, i_arr_c) < 0:
         return []
     return list(i_arr_c)
 
@@ -301,9 +303,9 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprmdef050_06_rd_uni_rdsft005//sprmdef050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 11
+    ind = 22
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
-    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 100))
+    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 1, 100))
     print("終わり")
