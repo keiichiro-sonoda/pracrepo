@@ -19,7 +19,9 @@ IntArray3 = c_int32 * 3
 share02_ubu.initPy()
 
 # シードはここで設定
-share02_ubu.setSeed(123)
+share02_ubu.setSeedPy(-1)
+# シードが設定できているかチェック
+share02_ubu.checkRandPy()
 
 # 全個体の平均値
 getFamilyMeans = share02_ubu.getFamilyMeansPy
@@ -350,5 +352,5 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
-    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 100, 0, 5)
+    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 100, 0, 0)
     print("終わり")
