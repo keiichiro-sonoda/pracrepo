@@ -261,9 +261,9 @@ def imgTest(fname_format, generation):
     plt.colorbar()
     plt.show()
 
-# 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
-# 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
-def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
+# パラメータが保存されているファイルのフォーマットをjsonファイルのフォーマットに変更
+# 指し手決定関数のidも与える
+def makeJsonFileName(fname_format, decNxt_id):
     # json ファイルのフォーマットに使う部分を取得
     m = re.match(r"(prm//.*)//", fname_format)
     # マッチオブジェクトから文字列に変換
@@ -277,6 +277,12 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     
     json_fname = json_fname.replace("prm", "json", 1) + "_wc.json"
     print(json_fname)
+    return json_fname
+
+# 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
+# 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
+def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
+    json_fname = makeJsonFileName(fname_format, decNxt_id)
     if os.path.exists(json_fname):
         res = input(json_fname + "は存在します. 書き換えますか? (yes\\n)")
         if res != "yes":
@@ -304,6 +310,10 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     print(tdr)
     print(tdr["0"])
     print(tdr["0"]["white"])
+
+# 勝率のグラフを作りたい
+def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
+    json_fname = makeJsonFileName(fname_format, decNxt_id)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -364,5 +374,6 @@ if __name__ == "__main__":
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
-    makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
+    #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
+    viewWinRateGraph(FILE_FORMATS[ind], 0, 0, 100)
     print("終わり")
