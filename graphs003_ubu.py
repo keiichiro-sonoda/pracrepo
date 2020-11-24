@@ -287,4 +287,4 @@ if __name__ == "__main__":
     viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #funcTest(FILE_FORMATS[ind], 100)
-    print("なんでグラフ表示されない?")
+    print("終わり")
