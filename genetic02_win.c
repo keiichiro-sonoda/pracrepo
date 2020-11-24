@@ -588,7 +588,7 @@ void nextGenerationSprmLoop(int st, int loop) {
         nextGenerationSprm(i);
         // get time
         time(&t1);
-        printf("elapsed time: %lds\n", t1 - t0);
+        printf("elapsed time: %I64ds\n", t1 - t0);
     }
 }
 

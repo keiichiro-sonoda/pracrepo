@@ -8,7 +8,6 @@
 // ヘッダファイルのおかげで型定義もしなくて済む
 // やっぱグローバル変数は厄介かも
 
-
 Board START;
 
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
@@ -63,7 +62,8 @@ int showBoard(Board b) {
 // 32桁の16進数で盤面を表示
 // show board in 32 hexadecimal digits
 void showBoardHex(Board b) {
-    printf("0x%016llx%016llx\n", b.board[1], b.board[0]);
+    // 64bit整数の指定はなんかいつもと違うんだね
+    printf("0x%016I64x%016I64x\n", b.board[1], b.board[0]);
 }
 
 // 正規化された盤面と対応する指し手を確認する
