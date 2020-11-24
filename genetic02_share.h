@@ -9,19 +9,8 @@
 // othello.h も包含している
 #include "genetic02.h"
 
-// 正規化された添え字の配列
-// 旧 INDEXES
-// スペルが気に食わなかった
-extern int CORR_TABLE[MASU_NUM];
-
 // functions
 // パラメータの表示
-
-void showFloatArray(float *fa, int n);
-
-// convert from an address to the weight index?
-// グローバル変数設定
-void setCORR_TABLE(void);
 
 // make first file
 void makeFirstSprmsFile(void);

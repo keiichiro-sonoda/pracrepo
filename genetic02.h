@@ -125,7 +125,7 @@ typedef struct sprm{
 typedef void (*scmFunc)(const int*, const int*, const Sprm*, Sprm*);
 
 // global variables
-extern int INDEXES[MASU_NUM];
+extern int CORR_TABLE[MASU_NUM];
 extern Sprm SAMP_PRM;
 
 // functions
@@ -180,7 +180,8 @@ float copyOrMutation(float x, float mut_rate);
 void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_rate);
 
 // convert from an address to the weight index?
-void setIndexes(void);
+void setCORR_TABLE(void);
+
 // caluculate point
 float evaluationSimple(Board b, Sprm pr);
 // assume that the next turn is black

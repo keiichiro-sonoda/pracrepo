@@ -10,7 +10,7 @@
 
 // global variables
 // declarations are required
-int INDEXES[MASU_NUM];
+int CORR_TABLE[MASU_NUM];
 Sprm SAMP_PRM;
 
 // functions
@@ -18,7 +18,7 @@ Sprm SAMP_PRM;
 // print a simple parameter
 void showSprm(Sprm pr) {
     for (int i = 0; i < MASU_NUM; i++) {
-        printf("%5.2f ", pr.weight[INDEXES[i]]);
+        printf("%5.2f ", pr.weight[CORR_TABLE[i]]);
         if (i % 8 == 7)
             putchar(10);
     }
@@ -214,7 +214,7 @@ void setIndexes(void) {
     int i, ad;
     for (i = 0; i < MASU_NUM; i++) {
         ad = i * 2;
-        INDEXES[i] = ad2index(normalAd(ad));
+        CORR_TABLE[i] = ad2index(normalAd(ad));
     }
 }
 
@@ -229,7 +229,7 @@ float evaluationSimple(Board b, Sprm pr) {
     //showDecimalArray(ba, MASU_NUM);
     for (i = 0; i < MASU_NUM; i++) {
         // calculate the inner product
-        pt += ba[i] * pr.weight[INDEXES[i]];
+        pt += ba[i] * pr.weight[CORR_TABLE[i]];
     }
     return pt;
 }

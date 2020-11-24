@@ -11,28 +11,8 @@
 #include "sort01.h"
 
 // global variables
-Board START;
-// correspondence table
-// 対応表??
-// シンプルパラメータに対応するように添え字を設定する
-int CORR_TABLE[MASU_NUM];
-
-// functions defined in othello.c
-// 全てヘッダファイルから輸入
 
 // functions
-
-void showFloatArray(float *fa, int n) {
-    int i;
-    putchar('{');
-    for (i = 0; i < n; i++) {
-        printf("%5.2f", fa[i]);
-        if (i < n - 1) {
-            printf(", ");
-        }
-    }
-    printf("}\n");
-}
 
 // グローバル変数を設定
 // convert from an address to the weight index?
@@ -325,8 +305,6 @@ void initPy(void) {
     //srand((unsigned)time(NULL));
     // これはまじで必須
     setCORR_TABLE();
-    // 旧グローバル変数
-    setIndexes();
     // 念のため
     initBoard();
 }
