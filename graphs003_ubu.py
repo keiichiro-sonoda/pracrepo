@@ -1,5 +1,6 @@
 # グラフ作成ファイル
 # ubuntu で使うために分岐した
+import json
 from ctypes import *
 import numpy as np
 import math
@@ -241,7 +242,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
 
 # 関数テスト
 # パラメータの画像表示
-def funcTest(fname_format, generation):
+def imgTest(fname_format, generation):
     fname = fname_format.format(generation)
     l = getTopSprmWrap(fname)
     z = np.zeros((8, 8))
@@ -252,6 +253,14 @@ def funcTest(fname_format, generation):
     plt.colorbar()
     plt.show()
 
+# 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
+# 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
+def makeWinRateFile(fname_format, population, g_min, g_max):
+    td = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
+    f = open(".//test.json", "w")
+    json.dump(td, f)
+    f.close()
+    
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初 (指し手固定)
@@ -307,10 +316,9 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 23
+    ind = 22
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
-    #funcTest(FILE_FORMATS[ind], 100)
-    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 1, 50, 1, 500))
-    print(getTopSprmGameRsltVSRandWrap(FILE_FORMATS[ind].format(100), 2, 50, 1, 500))
+    #imgTest(FILE_FORMATS[ind], 100)
+    makeWinRateFile(FILE_FORMATS[ind], 50, 0, 5)
     print("終わり")
