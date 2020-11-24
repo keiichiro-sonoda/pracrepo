@@ -385,7 +385,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rlt_uni_sftl005//sprm050_06_rlt_uni_sftl005_g{:03d}.bin",
                 # 20. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限有シフト突変5%
                 "prm//sprm050_06_rlt_uni_rdsftl005//sprm050_06_rlt_uni_rdsftl005_g{:03d}.bin",
-                # 21. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
+                # 21. 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
                 "prm//sprm050_06_rlt_uni_rdsft005//sprm050_06_rlt_uni_rdsft005_g{:03d}.bin",
                 # 22. 指し手固定, 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
                 "prm//sprmdef050_06_rd_uni_rdsft005//sprmdef050_06_rd_uni_rdsft005_g{:03d}.bin",
@@ -394,10 +394,10 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 22
-    #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
+    ind = 23
+    viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
-    viewWinRateGraph(FILE_FORMATS[ind], 0, 0, 100)
+    #viewWinRateGraph(FILE_FORMATS[ind], 0, 0, 100)
     print("終わり")
