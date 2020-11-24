@@ -305,22 +305,17 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     f = open(json_fname, "w")
     json.dump(wcd, f)
     f.close()
-    # 読み込みチェック
-    f = open(json_fname, "r")
-    tdr = json.load(f)
-    f.close()
-    print(tdr)
-    print(tdr["0"])
-    print(tdr["0"]["white"])
 
 # 勝率のグラフを作りたい
+# とりあえず引き分けは考慮せず勝ちだけ考えよう
 def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
     json_fname = makeJsonFileName(fname_format, decNxt_id)
     f = open(json_fname, "r")
     wcd = json.load(f)
     f.close()
     for k, v in wcd.items():
-        print(k, v)
+        wr = sum(v["black"]) + sum(v["white"])
+        print(k, v, wr)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
