@@ -257,6 +257,9 @@ def imgTest(fname_format, generation):
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
 def makeWinRateFile(fname_format, population, g_min, g_max):
     tdw = {0: {"black": [1, 2, 3], "white": [4, 5, 6]}}
+    # 先頭の "prm" のみ "json" に書き換え
+    nformat = fname_format.replace("prm", "json", 1)
+    print(nformat)
     f = open(".//json//test.json", "w")
     json.dump(tdw, f)
     f.close()
