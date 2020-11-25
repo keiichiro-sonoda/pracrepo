@@ -84,6 +84,16 @@ LINE_COLORS = [
     "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
 ]
 
+# グラフを保存するファイル名を決定する関数
+# グラフの種類 (平均値や標準偏差), 描画する世代の範囲を与える
+def makeJpegFileName(fname_format, name, g_min, g_max):
+    m = re.match(r"prm(//.*)//", fname_format)
+    path = "//home//sonoda//Pictures//Graphs" + m.groups()[0]
+    options = "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min) + ".jpg"
+    path += options
+    print(path)
+    return path
+
 # 平均値のグラフを作成
 def makeMeansGraph(ax, x, ys):
     # 縦軸の値の間隔
@@ -124,6 +134,7 @@ def makeMeansGraph(ax, x, ys):
 # 平均値表示(各世代全個体)
 # ファイル名のフォーマットと個体数を渡す
 # 世代幅も指定
+# ついでに画像保存
 def viewMeansGraph(fname_format, population, x_min, x_max):
     x = []
     # 10 マス分のデータの配列を用意
@@ -148,7 +159,9 @@ def viewMeansGraph(fname_format, population, x_min, x_max):
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     makeMeansGraph(ax, x, ys)
-    plt.show()
+    path = makeJpegFileName(fname_format, "means{:03d}".format(population), x_min, x_max)
+    fig.savefig(path)
+    fig.show()
 
 # 標準偏差のグラフを作成
 def makeSDGraph(ax, x, ys):
@@ -275,15 +288,6 @@ def makeJsonFileName(fname_format, decNxt_id):
     print(json_fname)
     return json_fname
 
-# グラフを保存するファイル名を決定する関数
-# グラフの種類 (平均値や標準偏差), 描画する世代の範囲を与える
-def makeJpegFileName(fname_format, name, g_min, g_max):
-    m = re.match(r"prm(//.*)//", fname_format)
-    path = "home//sonoda//Pictures//Graphs" + m.groups()[0]
-    options = "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min)
-    path += options
-    print(path)
-
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
 def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
@@ -404,8 +408,8 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 if __name__ == "__main__":
     ind = 12
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
-    #viewMeansGraph(FILE_FORMATS[ind], 100, 0, 100)
-    makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
+    viewMeansGraph(FILE_FORMATS[ind], 100, 0, 100)
+    #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0, 0, 100)
