@@ -229,10 +229,12 @@ int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
 
 // パラメータを圧縮して書き込む (ファイル名直接指定)
 // 上書きに注意
-int dumpPrm1LCompDirect(const char *fname, Prm1L *pra);
+// フラグを渡す
+int dumpPrm1LCompDirect(const char *fname, Prm1L *pra, char flag);
 
 // 圧縮して書き込み (ファイルフォーマットと世代番号を与える)
-int dumpPrm1LComp(const char *format, int generation, Prm1L *pra);
+// フラグを渡す
+int dumpPrm1LComp(const char *format, int generation, Prm1L *pra, char flag);
 
 // make first generation file (Prm1L)
 // give a file name format

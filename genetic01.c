@@ -601,17 +601,20 @@ int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size) {
 
 // パラメータを圧縮して書き込む (ファイル名直接指定)
 // 上書きに注意
-int dumpPrm1LCompDirect(const char *fname, Prm1L *pra) {
+// フラグを渡す
+int dumpPrm1LCompDirect(const char *fname, Prm1L *pra, char flag) {
     FILE *fp;
-    int total_length = PRM1L_LEN * POPULATION;
-    float w_arr[total_length];
-    char comp_pra[total_length];
+    float w_arr[PRM1L_COMP_LEN - 1];
+    // フラグを含む配列を用意
+    char comp_pra[PRM1L_COMP_LEN];
     // Prm1L配列を重みの一次元配列にまとめる
     for (int i = 0; i < POPULATION; i++) {
         Prm1L2array(pra + i, w_arr + i * PRM1L_LEN);
     }
     // char型に圧縮
-    weight2charArray(w_arr, comp_pra, total_length);
+    weight2charArray(w_arr, comp_pra, PRM1L_COMP_LEN - 1);
+    // 末尾にフラグを代入
+    comp_pra[PRM1L_COMP_LEN - 1] = flag;
     // 書き込み用で開く
     if  ((fp = fopen(fname, "wb")) == NULL) {
         // 失敗
@@ -619,16 +622,17 @@ int dumpPrm1LCompDirect(const char *fname, Prm1L *pra) {
         return -1;
     }
     // 成功
-    fwrite(comp_pra, sizeof comp_pra, 1, fp);
+    fwrite(comp_pra, PRM1L_COMP_LEN, 1, fp);
     fclose(fp);
     return 0;
 }
 
 // 圧縮して書き込み (ファイルフォーマットと世代番号を与える)
-int dumpPrm1LComp(const char *format, int generation, Prm1L *pra) {
+// フラグを渡す
+int dumpPrm1LComp(const char *format, int generation, Prm1L *pra, char flag) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, generation);
-    return dumpPrm1LCompDirect(fnamew, pra);
+    return dumpPrm1LCompDirect(fnamew, pra, flag);
 }
 
 // make first generation file (Prm1L)
@@ -703,6 +707,7 @@ int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size) {
 
 // 圧縮ファイルをロード
 // ファイル名直接記入バージョン
+// 読み込めた場合, ソートフラグを返す
 int loadPrm1LCompDirect(const char *fname, Prm1L *pra) {
     FILE *fp;
     if ((fp = fopen(fname, "rb")) == NULL) {
@@ -711,19 +716,20 @@ int loadPrm1LCompDirect(const char *fname, Prm1L *pra) {
         return -1;
     }
     // 成功
-    int total_length = PRM1L_LEN * POPULATION;
-    char comp_pra[total_length];
-    fread(comp_pra, sizeof comp_pra, 1, fp);
+    char comp_pra[PRM1L_COMP_LEN];
+    fread(comp_pra, PRM1L_COMP_LEN, 1, fp);
     fclose(fp);
-    float w_arr[total_length];
+    // フラグ部分を除く
+    float w_arr[PRM1L_COMP_LEN - 1];
     // 重み配列に変換
-    char2weightArray(comp_pra, w_arr, total_length);
+    char2weightArray(comp_pra, w_arr, PRM1L_COMP_LEN - 1);
     // 配列を個体数に分割してPrm1L配列に代入
     for (int i = 0; i < POPULATION; i++) {
         // ポインタをPrm1Lの長さだけずらす
         array2Prm1L(w_arr + i * PRM1L_LEN, pra + i);
     }
-    return 0;
+    // ソートフラグを返す (char型なので一応intにする)
+    return (int)(comp_pra[PRM1L_COMP_LEN - 1]);
 }
 
 // 圧縮されたファイルからPrm1Lの配列を取得
@@ -1100,9 +1106,10 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
 int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     // ソート前とソート後のパラメータ配列を用意する (メモリの無駄遣いかな?)
     Prm1L pra1[POPULATION], pra2[POPULATION];
-    // ロード
-    if (loadPrm1LCompDirect(fname, pra1) < 0)
-        return -1;
+    // ロードしてフラグを取得
+    int flag = loadPrm1LCompDirect(fname, pra1);
+    // エラーかソート済みならフラグを返す
+    if (flag) return flag;
     // 個体番号を割り振る
     int numbers[POPULATION];
     indices(numbers, POPULATION);
@@ -1114,8 +1121,8 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     // 適応度順に並び替えてpra2に代入
     for (int i = 0; i < POPULATION; i++)
         pra2[i] = pra1[numbers[i]];
-    // ソート後の配列を同じファイルに書き戻す
-    return dumpPrm1LCompDirect(fname, pra2);
+    // ソート後の配列を同じファイルに書き戻す (ソート済みフラグを立てる)
+    return dumpPrm1LCompDirect(fname, pra2, 1);
 }
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)
@@ -1132,8 +1139,17 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safet
         return -1;
     int fitness[POPULATION];
     // 適応度評価とファイルのソート
-    if (sortPrm1LCompFileByFitness(fnames, fitness)  < 0)
-        return -1;
+    int flag = sortPrm1LCompFileByFitness(fnames, fitness);
+    // エラー
+    if (flag < 0) return -1;
+    // ソート済み
+    if (flag == 1) {
+        printf("%s is already sorted!\n", fnames);
+        // 仮適応度
+        for (int i = 0; i < POPULATION; i++)
+            fitness[i] = POPULATION - i;
+    }
+    srand(SEED);
     // なんとなくソート済み適応度を表示
     printDecimalArray(fitness, POPULATION);
     // 今世代と次世代の個体配列を宣言
@@ -1151,7 +1167,8 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safet
     // トップパラメータを見る
     printString("the top of this generation:");
     showPrm1L(next[0]);
-    return dumpPrm1LCompDirect(fnamew, next);
+    // ソート済みフラグは立てずに書き込み
+    return dumpPrm1LCompDirect(fnamew, next, 0);
 }
 
 // with Prm1L
