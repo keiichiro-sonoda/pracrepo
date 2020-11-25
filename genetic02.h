@@ -102,6 +102,11 @@
 // 20: shift mutation (limited) after random mutation
 #define FNF_05006000020005 "prm/sprm050_06_rlt_uni_rdsftl005/sprm050_06_rlt_uni_rdsftl005_g%03d.bin"
 
+// 個体数50, エリート6, ランダム突変100%
+// ルーレットや一様交叉も0だが, 選択や交叉をしてから突然変異をしたとも考えられる(無理やり)
+// ファイル名は簡潔にした
+#define FNF_05006000000100 "prm/sprm050_06_rd100/sprm050_06_rd100_g%03d.bin"
+
 // choose randomly either a or b
 #ifndef alternative
 #define alternative(a, b) (rand() & 1 ? (a) : (b))

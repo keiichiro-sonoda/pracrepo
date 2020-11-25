@@ -170,7 +170,7 @@ int main(void) {
     // 初期設定
     setCORR_TABLE();
     initBoard();
-    char format[] = FNF_TEST;
+    const char format[] = FNF_05006000000100;
     makeFirstGeneFileFlex(format);
     checkSprmFile(format, 0);
     nGeneSSAFlexLoopSeed(allMutation, format, 1, 0, 2);
