@@ -276,9 +276,12 @@ def makeJsonFileName(fname_format, decNxt_id):
     return json_fname
 
 # グラフを保存するファイル名を決定する関数
+# グラフの種類 (平均値や標準偏差), 描画する世代の範囲を与える
 def makeJpegFileName(fname_format, name, g_min, g_max):
     m = re.match(r"prm(//.*)//", fname_format)
     path = "home//sonoda//Pictures//Graphs" + m.groups()[0]
+    options = "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min)
+    path += options
     print(path)
 
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
@@ -402,7 +405,7 @@ if __name__ == "__main__":
     ind = 12
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     #viewMeansGraph(FILE_FORMATS[ind], 100, 0, 100)
-    makeJpegFileName(FILE_FORMATS[ind], "means", 0, 100)
+    makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0, 0, 100)
