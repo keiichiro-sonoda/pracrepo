@@ -13,7 +13,7 @@ int main(void) {
     //makeFGFilePrm1L(format);
     checkPrm1LFile(format, 1);
     // 500 世代に挑戦
-    nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
+    //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     float sample1[] = {-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3};
     int l1 = arrayLength(sample1);
