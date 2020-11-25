@@ -221,6 +221,10 @@ def viewSDGraph(fname_format, population, x_min, x_max):
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     makeSDGraph(ax, x, ys)
+    # フォーマットやグラフの範囲に合わせたパスを作成
+    path = makeJpegFileName(fname_format, "SD{:03d}".format(population), x_min, x_max)
+    # 書き込み
+    fig.savefig(path)
     plt.show()
 
 # 2つのグラフを同時描画したい
@@ -406,9 +410,10 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 14
+    ind = 12
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
-    viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
+    #viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
+    viewSDGraph(FILE_FORMATS[ind], 100, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
