@@ -277,8 +277,8 @@ def makeJsonFileName(fname_format, decNxt_id):
 
 # グラフを保存するファイル名を決定する関数
 def makeJpegFileName(fname_format, name, g_min, g_max):
-    m = re.match(r"prm(//.*//)", fname_format)
-    path = m.groups()[0]
+    m = re.match(r"prm(//.*)//", fname_format)
+    path = "home//sonoda//Pictures//Graphs" + m.groups()[0]
     print(path)
 
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
