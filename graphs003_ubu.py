@@ -323,17 +323,22 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     json.dump(wcd, f)
     f.close()
 
-# 勝率のグラフを作りたい
+# ランダムAIと対戦したときの勝率のグラフを作りたい
+# 白黒は試合数が同じものとし, 平等に扱う
 # とりあえず引き分けは考慮せず勝ちだけ考えよう
-def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
+# 全ての世代で試合数は等しいと仮定 (違ったら同じグラフにするのおかしくね?)
+def viewWinRateGraph(fname_format, decNxt_id):
     json_fname = makeJsonFileName(fname_format, decNxt_id)
     f = open(json_fname, "r")
     wcd = json.load(f)
     f.close()
+    # (世代番号, 勝率) のタプルのリスト
     wrl = []
     for k, v in wcd.items():
+        # 試合数計算 (全て等しいと思うが毎回行う)
+        game_num = sum(v["black"]) + sum(v["white"])
         # 勝率計算
-        wr = (v["black"][0] + v["white"][0]) / (sum(v["black"]) + sum(v["white"]))
+        wr = (v["black"][0] + v["white"][0]) / game_num
         # キーはintにしてタプル化
         wrl.append((int(k), wr))
     # 辞書に順番という概念がないため一応ソート
@@ -343,17 +348,23 @@ def viewWinRateGraph(fname_format, decNxt_id, g_min, g_max):
     # 世代数と勝率を別々の配列に分ける
     x = wra[:, 0]
     y = wra[:, 1]
+    # ソートされているので最小値と最大値を取得
+    x_min = int(x[0])
+    x_max = int(x[-1])
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.plot(x, y, color=LINE_COLORS[0])
+    ax.plot(x, y)
     # ラベル指定
     ax.set_xlabel("generation", fontsize=10)
     ax.set_ylabel("win rate", fontsize=10)
     # 横幅指定（読み込めたデータだけ）
-    ax.set_xticks(np.linspace(x[0], x[-1], 11))
+    ax.set_xticks(np.linspace(x_min, x_max, 11))
     # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.0, 1.0, 11))
     ax.grid()
+    # game_num は最後に計算したものを使う
+    path = makeJpegFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
+    fig.savefig(path, bbox_inches="tight")
     plt.show()
 
 # ファイルフォーマットのリスト
@@ -410,7 +421,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 def main():
-    ind = 11
+    ind = 22
     loc_pop = 50
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
@@ -418,7 +429,7 @@ def main():
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
-    #viewWinRateGraph(FILE_FORMATS[ind], 0, 0, 100)
+    viewWinRateGraph(FILE_FORMATS[ind], 0)
     print("終わり")
 
 if __name__ == "__main__":
