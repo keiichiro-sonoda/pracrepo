@@ -224,7 +224,7 @@ def viewSDGraph(fname_format, population, x_min, x_max):
     # フォーマットやグラフの範囲に合わせたパスを作成
     path = makeJpegFileName(fname_format, "SD{:03d}".format(population), x_min, x_max)
     # 書き込み
-    fig.savefig(path)
+    fig.savefig(path, bbox_inches="tight")
     plt.show()
 
 # 2つのグラフを同時描画したい
