@@ -18,6 +18,11 @@ int main(void) {
     Prm1L pra[POPULATION];
     for (int i = 0; i < POPULATION; i++)
         randPrm1L(pra + i);
+    showPrm1L(pra[0]);
+    showPrm1L(pra[49]);
     dumpPrm1LComp(format, 0, pra);
+    loadPrm1LComp(format, 0, pra);
+    showPrm1L(pra[0]);
+    showPrm1L(pra[49]);
     return 0;
 }
