@@ -83,9 +83,6 @@
 // 圧縮した数値を重みに戻す
 #define char2weight(c) ((float)(c) / 254)
 
-#define weight2uchar(w) ((u_char)((w + 0.5f) * 255))
-#define uchar2weight(uc) ((float)(uc) / 255 - 0.5f)
-
 // types
 
 typedef struct param {

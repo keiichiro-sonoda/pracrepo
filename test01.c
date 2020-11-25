@@ -16,15 +16,12 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     printString(format);
-    u_char uc1, uc2;
-    float f1, f2;
-    for (uc1 = 0; uc1 < 255; uc1++) {
-        f1 = uchar2weight(uc1);
-        uc2 = weight2uchar(f1);
-        f2 = uchar2weight(uc2);
-        printf("%d, %f, %d, %f\n", (int)uc1, f1, (int)uc2, f2);
-        if (uc1 != uc2)
-            printf("NG!\n");
+    int div = 255;
+    int rslt[div];
+    zeros(rslt, div);
+    for (int i = 0; i < div * 10000; i++) {
+        rslt[rand() % div]++;
     }
+    printDecimalArray(rslt, div);
     return 0;
 }
