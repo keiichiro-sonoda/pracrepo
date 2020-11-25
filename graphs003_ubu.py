@@ -329,6 +329,10 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
 # 全ての世代で試合数は等しいと仮定 (違ったら同じグラフにするのおかしくね?)
 def viewWinRateGraph(fname_format, decNxt_id):
     json_fname = makeJsonFileName(fname_format, decNxt_id)
+    # ファイルの存在確認
+    if not os.path.exists(json_fname):
+        print(json_fname, "doesn't exist.")
+        return
     f = open(json_fname, "r")
     wcd = json.load(f)
     f.close()
@@ -421,7 +425,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 def main():
-    ind = 22
+    ind = 16
     loc_pop = 50
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
