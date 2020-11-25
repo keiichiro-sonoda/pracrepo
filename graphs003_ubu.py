@@ -271,10 +271,15 @@ def makeJsonFileName(fname_format, decNxt_id):
         json_fname += "_rlt"
     # 先頭の "prm" のみ "json" に書き換え (ディレクトリ変更)
     # 文字列の最後に "_wc.json" と付け加える (wc は win count の意)
-    
     json_fname = json_fname.replace("prm", "json", 1) + "_wc.json"
     print(json_fname)
     return json_fname
+
+# グラフを保存するファイル名を決定する関数
+def makeJpegFileName(fname_format, name, g_min, g_max):
+    m = re.match(r"prm(//.*//)", fname_format)
+    path = m.groups()[0]
+    print(path)
 
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
@@ -396,7 +401,8 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 if __name__ == "__main__":
     ind = 12
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
-    viewMeansGraph(FILE_FORMATS[ind], 100, 0, 100)
+    #viewMeansGraph(FILE_FORMATS[ind], 100, 0, 100)
+    makeJpegFileName(FILE_FORMATS[ind], "means", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0, 0, 100)
