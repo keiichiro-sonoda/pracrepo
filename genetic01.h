@@ -75,9 +75,12 @@
 // rectified linear unit (ramp function)
 #define ReLU(x) getMax(0, x);
 
-// char型に圧縮
-// -0.5から0.5を0から255へ
+// 重みをchar型に圧縮
+// -0.5から0.5を-127から127へ
 #define weight2char(w) ((char)((w) * 254))
+
+// 圧縮した数値を重みに戻す
+#define char2weight(c) ((float)(c) / 254)
 
 // types
 

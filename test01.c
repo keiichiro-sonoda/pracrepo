@@ -18,9 +18,18 @@ int main(void) {
     printString(format);
     char c;
     float f = randWeight();
-    //f = -0.5f;
+    f = 0.4999999f;
     printFloat(f);
     c = weight2char(f);
     printCharDecimal(c);
+    f = char2weight(c);
+    printFloat(f);
+    c = weight2char(f);
+    printCharDecimal(c);
+    for (c = -127; c < 127; c++) {
+        if (c != weight2char(char2weight(c))) {
+            printf("no!!!\n");
+        }
+    }
     return 0;
 }
