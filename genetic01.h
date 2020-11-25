@@ -8,7 +8,7 @@
 // number of parameters per generation
 #define POPULATION 50
 #define PARAM_NUM 2792
-#define PRM1L_LEN 528
+#define PRM1L_LEN 528 // Prm1L の重みの総数
 #define ELITE_NUM 6
 
 #ifndef MUT_RATE
@@ -57,6 +57,10 @@
 
 // create an array of random weights
 #define randWeightArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeight()
+
+// 圧縮されたchar型重みの乱数の配列を作成
+// 初期世代ファイルに使う予定
+#define randWeightCharArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeightChar()
 
 // choose randomly either a or b
 #define alternative(a, b) (rand() % 2 ? (a) : (b))

@@ -16,16 +16,10 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     printString(format);
-    char c1, c2;
-    float f1;
-    for (int i = 0; i < 30; i++) {
-        // 無理やりランダムなcharを作成
-        c1 = randWeightChar();
-        f1 = char2weight(c1);
-        c2 = weight2char(f1);
-        printf("%d, %f, %d\n", (int)c1, f1, (int)c2);
-        if (c1 != c2)
-            printf("NG!\n");
-    }
+    char str[PRM1L_LEN];
+    randWeightCharArray(str, PRM1L_LEN);
+    for (int i = 0; i < PRM1L_LEN; i++)
+        printf("%d ", (int)str[i]);
+    putchar(10);
     return 0;
 }
