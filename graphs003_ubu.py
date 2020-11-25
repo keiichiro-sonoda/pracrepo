@@ -160,6 +160,7 @@ def viewMeansGraph(fname_format, population, x_min, x_max):
     ax = fig.add_subplot(111)
     makeMeansGraph(ax, x, ys)
     path = makeJpegFileName(fname_format, "means{:03d}".format(population), x_min, x_max)
+    # 出力画像の周囲の境界ボックス?を消す
     fig.savefig(path, bbox_inches="tight")
     plt.show()
 
@@ -406,9 +407,9 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin"]
 
 if __name__ == "__main__":
-    ind = 12
+    ind = 13
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
-    viewMeansGraph(FILE_FORMATS[ind], 100, 0, 100)
+    viewMeansGraph(FILE_FORMATS[ind], 50, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
