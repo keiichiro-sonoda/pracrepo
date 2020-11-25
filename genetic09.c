@@ -171,9 +171,9 @@ int main(void) {
     setCORR_TABLE();
     initBoard();
     const char format[] = FNF_05006000000100;
-    makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 0);
-    nGeneSSAFlexLoopSeed(allMutation, format, 1, 0, 2);
+    //makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 2);
+    nGeneSSAFlexLoopSeed(allMutation, format, 1, 1, 1);
     printString("end");
     return 0;
 }

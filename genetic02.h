@@ -104,8 +104,8 @@
 
 // 個体数50, エリート6, ランダム突変100%
 // ルーレットや一様交叉も0だが, 選択や交叉をしてから突然変異をしたとも考えられる(無理やり)
-// ファイル名は簡潔にした
-#define FNF_05006000000100 "prm/sprm050_06_rd100/sprm050_06_rd100_g%03d.bin"
+// やはりアンダースコアで空白を表現した
+#define FNF_05006000000100 "prm/sprm050_06___rd100/sprm050_06___rd100_g%03d.bin"
 
 // choose randomly either a or b
 #ifndef alternative
