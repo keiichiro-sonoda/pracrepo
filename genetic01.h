@@ -286,6 +286,11 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
 // give a function pointer for selection, crossover and mutation
 int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety);
 
+// 圧縮されたファイルから個体を読み出し, 適応度を評価する
+// 適応度降順に個体を並び替え, 同じファイルに書き込む
+// 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
+int sortPrm1LCompFileByFitness(const char *fname, int *fitness);
+
 // with Prm1L
 void nGenePrm1LLoop(scmFuncPrm1L scm, const char *format, int safety, int st, int loop);
 

@@ -1082,10 +1082,29 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
 
 // 圧縮されたファイルから個体を読み出し, 適応度を評価する
 // 適応度降順に個体を並び替え, 同じファイルに書き込む
-// 適応度はルーレット選択等に用いるため保存
+// 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
 int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
-    Prm1L pra[POPULATION];
-    return 0;
+    // ソート前とソート後のパラメータ配列を用意する (メモリの無駄遣いかな?)
+    Prm1L pra1[POPULATION], pra2[POPULATION];
+    // ロード
+    if (loadPrm1LCompDirect(fname, pra1) < 0)
+        return -1;
+    // 個体番号を割り振る
+    int numbers[POPULATION];
+    indices(numbers, POPULATION);
+    // リーグ戦 (指し手ルーレット)
+    // 現状で適応度評価はこれだけ
+    leagueMatchPrm1LFlex(getBoardForBlackPrm1LRlt, pra1, fitness);
+    // 適応度を基に個体番号も同時にソート
+    randomizedQuicksortDDAll(fitness, numbers, POPULATION);
+    printDecimalArray(fitness, POPULATION);
+    // 適応度順に並び替えてpra2に代入
+    for (int i = 0; i < POPULATION; i++)
+        pra2[i] = pra1[numbers[i]];
+    checkWinRatePrm1LVSRand(pra2[0], 500);
+    checkWinRatePrm1LVSRand(pra2[POPULATION - 1], 500);
+    // ソート後の配列を同じファイルに書き戻す
+    return dumpPrm1LCompDirect(fname, pra2);
 }
 
 // with Prm1L
