@@ -132,7 +132,12 @@ typedef struct family{
 // ソート済み適応度, ソート済み個体番号, 現世代個体配列, 次世代個体配列
 typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
 
+// 大域変数
 // global variables
+
+// 圧縮したPrm1L配列の長さ (1要素1byteなので直接サイズとしても使える)
+// 最後の要素はソート済みフラグに使う予定
+extern int PRM1L_COMP_LEN;
 
 // functions
 

@@ -8,14 +8,18 @@
 #include "sort01.h"
 
 // global variables
+int PRM1L_COMP_LEN;
 
 // functions
 
 // Prm1Lを圧縮して保存するGAを使用するときに
-// 最初に行う設定関数
+// 最初に行う設定関数 (ファイル長設定)
 // おまけに盤面も初期化してくれる
 void initPrm1LComp(void) {
     initBoard();
+    // ソート済みフラグ追加
+    PRM1L_COMP_LEN = PRM1L_LEN * POPULATION + 1;
+    printDecimal(PRM1L_COMP_LEN);
 }
 
 void sigmoidFloatP(float *xp) {

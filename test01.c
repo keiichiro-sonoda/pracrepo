@@ -18,6 +18,6 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     srand(SEED);
-    nGenePrm1LComp(rltUniRd, format, 0, 1);
+    //nGenePrm1LComp(rltUniRd, format, 0, 1);
     return 0;
 }
