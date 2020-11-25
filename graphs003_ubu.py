@@ -116,12 +116,12 @@ def makeMeansGraph(ax, x, ys):
         bbox_to_anchor=(1.01, 1),
         loc='upper left',
         borderaxespad=0,
-        fontsize=5
+        fontsize=10
     )
     #ax.grid()
     # ラベル指定
-    ax.set_xlabel("generation", fontsize=10)
-    ax.set_ylabel("means", fontsize=10)
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("means", fontsize=15)
     # 横幅指定（読み込みに成功したデータだけ）
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 最大値と最小値を取得
@@ -160,8 +160,8 @@ def viewMeansGraph(fname_format, population, x_min, x_max):
     ax = fig.add_subplot(111)
     makeMeansGraph(ax, x, ys)
     path = makeJpegFileName(fname_format, "means{:03d}".format(population), x_min, x_max)
-    fig.savefig(path)
-    fig.show()
+    fig.savefig(path, bbox_inches="tight")
+    plt.show()
 
 # 標準偏差のグラフを作成
 def makeSDGraph(ax, x, ys):
