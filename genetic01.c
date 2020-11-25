@@ -656,6 +656,30 @@ int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size) {
     return loadPrm1LDirect(fnamer, pra, pra_size);
 }
 
+// 圧縮されたファイルからPrm1Lの配列を取得
+int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
+    FILE *fp;
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    if ((fp = fopen(fnamer, "rb")) == NULL) {
+        // 失敗
+        printf("%s can't be opened.\n", fnamer);
+        return -1;
+    }
+    int total_length = PRM1L_LEN * POPULATION;
+    char comp_pra[total_length];
+    fread(comp_pra, sizeof comp_pra, 1, fp);
+    fclose(fp);
+    float w_arr[total_length];
+    // 重み配列に変換
+    char2weightArray(comp_pra, w_arr, total_length);
+    // 配列を個体数に分割してPrm1L配列に代入
+    for (int i = 0; i < POPULATION; i++) {
+        array2Prm1L(w_arr + i * POPULATION, pra + i);
+    }
+    return 0;
+}
+
 // load a representative of Prm1L
 Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop) {
     Prm1L pra[loc_pop];

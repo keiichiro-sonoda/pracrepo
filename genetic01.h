@@ -95,6 +95,9 @@
 // 圧縮した数値を重みに戻す
 #define char2weight(c) ((float)(c) / 254)
 
+// 圧縮されたchar型配列をfloat型配列に変換
+#define char2weightArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = char2weight((src)[_])
+
 // types
 
 typedef struct param {
@@ -224,6 +227,9 @@ int loadPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
 
 // read parameters from a file (Prm1L)
 int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size);
+
+// 圧縮されたファイルからPrm1Lの配列を取得
+int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra);
 
 // load a representative of Prm1L
 Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);

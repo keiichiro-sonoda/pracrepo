@@ -7,7 +7,7 @@
 
 int main(void) {
     srand(SEED);
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     initBoard();
     char format[] = FNF_TEST;
     //makeFGFilePrm1L(format);
@@ -16,5 +16,7 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     makeFGFilePrm1LComp(format);
+    Prm1L pra[POPULATION];
+    loadPrm1LComp(format, 0, pra);
     return 0;
 }
