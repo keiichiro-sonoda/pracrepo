@@ -16,11 +16,11 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     printString(format);
-    char c;
+    unsigned char c;
     float f = randWeight();
+    f = 0.5f;
     printFloat(f);
-    printSize(c);
-    c = '0';
+    c = weight2char(f);
     printCharDecimal(c);
     return 0;
 }
