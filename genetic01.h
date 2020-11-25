@@ -136,6 +136,11 @@ typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
 
 // functions
 
+// Prm1Lを圧縮して保存するGAを使用するときに
+// 最初に行う設定関数
+// おまけに盤面も初期化してくれる
+void initPrm1LComp(void);
+
 void sigmoidFloatP(float *xp);
 
 int board2array(Board src, int *dst);

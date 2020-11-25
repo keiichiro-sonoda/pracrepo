@@ -8,9 +8,9 @@
 int main(void) {
     srand(SEED);
     //srand((unsigned)time(NULL));
-    initBoard();
+    initPrm1LComp();
     const char format[] = FNF_TEST;
-    makeFGFilePrm1LComp(format);
+    //makeFGFilePrm1LComp(format);
     //makeFGFilePrm1L(format);
     //checkPrm1LFile(format, 1);
     // 500 世代に挑戦
