@@ -355,17 +355,17 @@ def viewWinRateGraph(fname_format, decNxt_id):
     ax = fig.add_subplot(111)
     ax.plot(x, y)
     # ラベル指定
-    ax.set_xlabel("generation", fontsize=10)
-    ax.set_ylabel("win rate", fontsize=10)
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("win rate", fontsize=15)
     # 横幅指定（読み込めたデータだけ）
     ax.set_xticks(np.linspace(x_min, x_max, 11))
     # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(-0.0, 1.0, 11))
+    ax.set_yticks(np.linspace(0.0, 1.0, 11))
     ax.grid()
     # game_num は最後に計算したものを使う
     path = makeJpegFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
     fig.savefig(path, bbox_inches="tight")
-    plt.show()
+    #plt.show()
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
