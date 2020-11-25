@@ -27,5 +27,7 @@ int main(void) {
     printString("yeah");
     Prm1L pr = loadRepPrm1L(FNF_L1RR05006000000001, 100, 50);
     checkWinRatePrm1LVSRand(pr, 500);
+    pr = loadRepPrm1L(format, 100, 50);
+    checkWinRatePrm1LVSRand(pr, 500);
     return 0;
 }
