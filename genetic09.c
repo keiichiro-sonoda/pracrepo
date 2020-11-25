@@ -172,8 +172,8 @@ int main(void) {
     initBoard();
     const char format[] = FNF_05006000000100;
     //makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 2);
-    nGeneSSAFlexLoopSeed(allMutation, format, 1, 1, 1);
+    //checkSprmFile(format, 2);
+    nGeneSSAFlexLoopSeed(allMutation, format, 1, 0, 100);
     printString("end");
     return 0;
 }
