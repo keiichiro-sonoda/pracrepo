@@ -1026,6 +1026,7 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
     int parents[2];
     while (count < POPULATION) {
         rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        printf("%d, %d, %d, %d\n", parents[0], parents[1], numbers[parents[0]], numbers[parents[1]]);
         next[count] = uniCrossRMPrm1L(current[numbers[parents[0]]], current[numbers[parents[1]]]);
         count++;
     }
@@ -1131,10 +1132,11 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safet
     // ソート済み配列を読み込む
     if (loadPrm1LCompDirect(fnames, current) < 0)
         return -1;
+    kugiri(100);
     // エリートはそのままコピー
     copyArray(current, next, ELITE_NUM);
     // 選択, 交叉, 突然変異
-    scm(numbers, fitness, current, next);
+    scm(fitness, numbers, current, next);
     // トップパラメータを見る
     printString("the top of this generation:");
     showPrm1L(next[0]);
