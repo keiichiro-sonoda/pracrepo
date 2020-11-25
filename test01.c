@@ -20,7 +20,7 @@ int main(void) {
     float f1;
     for (int i = 0; i < 30; i++) {
         // 無理やりランダムなcharを作成
-        c1 = rand() % 255;
+        c1 = randWeightChar();
         f1 = char2weight(c1);
         c2 = weight2char(f1);
         printf("%d, %f, %d\n", (int)c1, f1, (int)c2);

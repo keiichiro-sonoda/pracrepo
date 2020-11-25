@@ -52,6 +52,9 @@
 // return an floating point random number from -0.5 to 0.5
 #define randWeight() ((float)rand() / RAND_MAX - 0.5f)
 
+// 圧縮された重みで使うchar型の乱数を作成 (-127から127)
+#define randWeightChar() ((char)(rand() % 255))
+
 // create an array of random weights
 #define randWeightArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeight()
 
@@ -82,9 +85,6 @@
 
 // 圧縮した数値を重みに戻す
 #define char2weight(c) ((float)(c) / 254)
-
-// ランダムな重み(圧縮対応)を作る
-#define randWeightComp() (char2weight((char)(rand() % 255)))
 
 // types
 
