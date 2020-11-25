@@ -587,6 +587,38 @@ int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size) {
     return 0;
 }
 
+// パラメータを圧縮して書き込む (ファイル名直接指定)
+// 上書きに注意
+int dumpPrm1LCompDirect(const char *fname, Prm1L *pra) {
+    FILE *fp;
+    int total_length = PRM1L_LEN * POPULATION;
+    float w_arr[total_length];
+    char comp_pra[total_length];
+    // Prm1L配列を重みの一次元配列にまとめる
+    for (int i = 0; i < POPULATION; i++) {
+        Prm1L2array(pra + i, w_arr + i * PRM1L_LEN);
+    }
+    // char型に圧縮
+    weight2charArray(w_arr, comp_pra, total_length);
+    // 書き込み用で開く
+    if  ((fp = fopen(fname, "wb")) == NULL) {
+        // 失敗
+        printf("%s can't be opened.\n", fname);
+        return -1;
+    }
+    // 成功
+    fwrite(comp_pra, sizeof comp_pra, 1, fp);
+    fclose(fp);
+    return 0;
+}
+
+// 圧縮して書き込み (ファイルフォーマットと世代番号を与える)
+int dumpPrm1LComp(const char *format, int generation, Prm1L *pra) {
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, generation);
+    return dumpPrm1LCompDirect(fnamew, pra);
+}
+
 // make first generation file (Prm1L)
 // give a file name format
 // record all individuals
@@ -608,6 +640,7 @@ int makeFGFilePrm1L(const char *format) {
 }
 
 // 圧縮バージョンで最初の世代を作成
+// float型を仲介せずに, ただchar型乱数配列を書き込む
 int makeFGFilePrm1LComp(const char *format) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
@@ -675,6 +708,7 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
     char2weightArray(comp_pra, w_arr, total_length);
     // 配列を個体数に分割してPrm1L配列に代入
     for (int i = 0; i < POPULATION; i++) {
+        // ポインタをPrm1Lの長さだけずらす
         array2Prm1L(w_arr + i * PRM1L_LEN, pra + i);
     }
     return 0;

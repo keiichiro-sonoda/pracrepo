@@ -97,6 +97,8 @@
 
 // 圧縮されたchar型配列をfloat型配列に変換
 #define char2weightArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = char2weight((src)[_])
+// float型配列をchar型配列に圧縮
+#define weight2charArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = weight2char((src)[_])
 
 // types
 
@@ -212,6 +214,13 @@ void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *fami
 // give a file name for writing
 // be careful of overwriting
 int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
+
+// パラメータを圧縮して書き込む (ファイル名直接指定)
+// 上書きに注意
+int dumpPrm1LCompDirect(const char *fname, Prm1L *pra);
+
+// 圧縮して書き込み (ファイルフォーマットと世代番号を与える)
+int dumpPrm1LComp(const char *format, int generation, Prm1L *pra);
 
 // make first generation file (Prm1L)
 // give a file name format

@@ -15,10 +15,9 @@ int main(void) {
     // 500 世代に挑戦
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
-    makeFGFilePrm1LComp(format);
     Prm1L pra[POPULATION];
-    loadPrm1LComp(format, 0, pra);
-    showPrm1L(pra[0]);
-    showPrm1L(pra[49]);
+    for (int i = 0; i < POPULATION; i++)
+        randPrm1L(pra + i);
+    dumpPrm1LComp(format, 0, pra);
     return 0;
 }
