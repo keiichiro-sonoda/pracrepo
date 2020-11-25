@@ -11,7 +11,7 @@ int main(void) {
     initBoard();
     char format[] = FNF_L1RR05006000000005;
     //makeFGFilePrm1L(format);
-    checkPrm1LFile(format, 1);
+    //checkPrm1LFile(format, 1);
     // 500 世代に挑戦
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
@@ -25,5 +25,7 @@ int main(void) {
     printDecimal(l2);
     printFloatArray(sample2, l1);
     printString("yeah");
+    Prm1L pr = loadRepPrm1L(format, 313, 50);
+    checkWinRatePrm1LVSRand(pr, 500);
     return 0;
 }
