@@ -16,20 +16,19 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     printString(format);
-    char c;
-    float f = randWeight();
-    f = 0.4999999f;
-    printFloat(f);
-    c = weight2char(f);
-    printCharDecimal(c);
-    f = char2weight(c);
-    printFloat(f);
-    c = weight2char(f);
-    printCharDecimal(c);
-    for (c = -127; c < 127; c++) {
-        if (c != weight2char(char2weight(c))) {
-            printf("no!!!\n");
-        }
+    char c1, c2;
+    float f1;
+    for (c1 = -128; c1 < 127; c1++) {
+        f1 = char2weight(c1);
+        c2 = weight2char(f1);
+        printf("%d, %f, %d\n", (int)c1, f1, (int)c2);
+        if (c1 ^ c2)
+            printf("NG!\n");
     }
+    f1 = char2weight(c1);
+    c2 = weight2char(f1);
+    printf("%d, %f, %d\n", (int)c1, f1, (int)c2);
+    if (c1 ^ c2)
+        printf("NG!\n");
     return 0;
 }
