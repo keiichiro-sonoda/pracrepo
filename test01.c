@@ -7,7 +7,7 @@
 
 int main(void) {
     srand(SEED);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     initBoard();
     char format[] = FNF_TEST;
     //makeFGFilePrm1L(format);

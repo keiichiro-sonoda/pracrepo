@@ -689,16 +689,15 @@ int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size) {
     return loadPrm1LDirect(fnamer, pra, pra_size);
 }
 
-// 圧縮されたファイルからPrm1Lの配列を取得
-int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
+// ファイル名直接記入バージョン
+int loadPrm1LCompDirect(const char *fname, Prm1L *pra) {
     FILE *fp;
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    if ((fp = fopen(fnamer, "rb")) == NULL) {
+    if ((fp = fopen(fname, "rb")) == NULL) {
         // 失敗
-        printf("%s can't be opened.\n", fnamer);
+        printf("%s can't be opened.\n", fname);
         return -1;
     }
+    // 成功
     int total_length = PRM1L_LEN * POPULATION;
     char comp_pra[total_length];
     fread(comp_pra, sizeof comp_pra, 1, fp);
@@ -712,6 +711,13 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
         array2Prm1L(w_arr + i * PRM1L_LEN, pra + i);
     }
     return 0;
+}
+
+// 圧縮されたファイルからPrm1Lの配列を取得
+int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    return loadPrm1LCompDirect(fnamer, pra);
 }
 
 // load a representative of Prm1L
@@ -1072,6 +1078,14 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     // write next family to the file
     // and return error flag
     return dumpPrm1LDirect(fname, next, sizeof next);
+}
+
+// 圧縮されたファイルから個体を読み出し, 適応度を評価する
+// 適応度降順に個体を並び替え, 同じファイルに書き込む
+// 適応度はルーレット選択等に用いるため保存
+int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
+    Prm1L pra[POPULATION];
+    return 0;
 }
 
 // with Prm1L

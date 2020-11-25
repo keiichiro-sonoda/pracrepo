@@ -29,6 +29,7 @@
 // バイアスの倍率
 // 重みパターンと盤面との乗算結果は-32から32を取り得る (ただしその両端の値を取る確率は極めて低い. と思う)
 // 精度は同じchar型を使うが, 幅を広く持たせることにした
+// このマクロが定義される以前のものは, これが1であると考えれば良い
 #define BIAS_MAG 16
 
 // test file format
@@ -236,6 +237,9 @@ int loadPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
 
 // read parameters from a file (Prm1L)
 int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size);
+
+// ファイル名直接記入バージョン
+int loadPrm1LCompDirect(const char *fname, Prm1L *pra);
 
 // 圧縮されたファイルからPrm1Lの配列を取得
 int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra);
