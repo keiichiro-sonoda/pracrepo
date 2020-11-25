@@ -77,7 +77,7 @@
 
 // char型に圧縮
 // -0.5から0.5を0から255へ
-#define weight2char(w) ((unsigned char)(((w) + 0.5f) * 255))
+#define weight2char(w) ((char)((w) * 254))
 
 // types
 

@@ -16,9 +16,9 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     printString(format);
-    unsigned char c;
+    char c;
     float f = randWeight();
-    f = 0.5f;
+    //f = -0.5f;
     printFloat(f);
     c = weight2char(f);
     printCharDecimal(c);
