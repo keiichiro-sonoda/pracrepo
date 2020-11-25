@@ -20,6 +20,11 @@ int main(void) {
     snprintf(fname, FILENAME_MAX, format, 0);
     printString(fname);
     int fitness[POPULATION];
+    srand(SEED);
     sortPrm1LCompFileByFitness(fname, fitness);
+    Prm1L pra[POPULATION];
+    loadPrm1LCompDirect(fname, pra);
+    checkWinRatePrm1LVSRand(pra[0], 500);
+    checkWinRatePrm1LVSRand(pra[49], 500);
     return 0;
 }

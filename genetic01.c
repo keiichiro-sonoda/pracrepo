@@ -1101,8 +1101,6 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     // 適応度順に並び替えてpra2に代入
     for (int i = 0; i < POPULATION; i++)
         pra2[i] = pra1[numbers[i]];
-    checkWinRatePrm1LVSRand(pra2[0], 500);
-    checkWinRatePrm1LVSRand(pra2[POPULATION - 1], 500);
     // ソート後の配列を同じファイルに書き戻す
     return dumpPrm1LCompDirect(fname, pra2);
 }
