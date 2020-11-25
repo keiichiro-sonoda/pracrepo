@@ -689,6 +689,7 @@ int loadPrm1L(const char *format, int gene_num, Prm1L *pra, size_t pra_size) {
     return loadPrm1LDirect(fnamer, pra, pra_size);
 }
 
+// 圧縮ファイルをロード
 // ファイル名直接記入バージョン
 int loadPrm1LCompDirect(const char *fname, Prm1L *pra) {
     FILE *fp;
@@ -1097,12 +1098,47 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     leagueMatchPrm1LFlex(getBoardForBlackPrm1LRlt, pra1, fitness);
     // 適応度を基に個体番号も同時にソート
     randomizedQuicksortDDAll(fitness, numbers, POPULATION);
-    printDecimalArray(fitness, POPULATION);
     // 適応度順に並び替えてpra2に代入
     for (int i = 0; i < POPULATION; i++)
         pra2[i] = pra1[numbers[i]];
     // ソート後の配列を同じファイルに書き戻す
     return dumpPrm1LCompDirect(fname, pra2);
+}
+
+// 次の世代のファイルを作る関数 (圧縮バージョン)
+// ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
+int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
+    // 読み込み (ソート) 用と書き込み用ファイル名
+    char fnames[FILENAME_MAX], fnamew[FILENAME_MAX];
+    snprintf(fnames, FILENAME_MAX, format, gene_num);
+    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
+    printf("sort file: %s\n", fnames);
+    printf("new file : %s\n", fnamew);
+    // 上書き拒否
+    if (safety && (warnOverwriting(fnamew) < 0))
+        return -1;
+    int fitness[POPULATION];
+    // 適応度評価とファイルのソート
+    if (sortPrm1LCompFileByFitness(fnames, fitness)  < 0)
+        return -1;
+    // なんとなくソート済み適応度を表示
+    printDecimalArray(fitness, POPULATION);
+    // 今世代と次世代の個体配列を宣言
+    Prm1L current[POPULATION], next[POPULATION];
+    // 個体配列自体がソートされているため不要だが, 旧仕様との互換性のために定義
+    int numbers[POPULATION];
+    indices(numbers, POPULATION);
+    // ソート済み配列を読み込む
+    if (loadPrm1LCompDirect(fnames, current) < 0)
+        return -1;
+    // エリートはそのままコピー
+    copyArray(current, next, ELITE_NUM);
+    // 選択, 交叉, 突然変異
+    scm(numbers, fitness, current, next);
+    // トップパラメータを見る
+    printString("the top of this generation:");
+    showPrm1L(next[0]);
+    return dumpPrm1LCompDirect(fnamew, next);
 }
 
 // with Prm1L

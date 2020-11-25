@@ -41,8 +41,9 @@
 // set all elements to one
 #define ones(A, n) for (int i = 0; i < n; i++) (A)[i] = 1
 
+// 配列コピー (型に依存しないって便利ね)
 // copy an array
-#define copyArray(src, dst, n) for (int i = 0; i < n; i++) (dst)[i] = (src)[i]
+#define copyArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = (src)[_]
 
 // subract constant value from all elements
 #define subConst(A, n, c) for (int i = 0; i < n; i++) (A)[i] -= (c)

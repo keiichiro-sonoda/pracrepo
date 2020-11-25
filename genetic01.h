@@ -129,6 +129,7 @@ typedef struct family{
 } Family;
 
 // type of function for selection, crossover and mutation
+// ソート済み適応度, ソート済み個体番号, 現世代個体配列, 次世代個体配列
 typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
 
 // global variables
@@ -290,6 +291,10 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety);
 // 適応度降順に個体を並び替え, 同じファイルに書き込む
 // 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
 int sortPrm1LCompFileByFitness(const char *fname, int *fitness);
+
+// 次の世代のファイルを作る関数 (圧縮バージョン)
+// ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
+int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safety);
 
 // with Prm1L
 void nGenePrm1LLoop(scmFuncPrm1L scm, const char *format, int safety, int st, int loop);
