@@ -28,7 +28,8 @@ int board2array(Board src, int *dst) {
 void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]) {
     board2arraySymmetry(src, dst);
     // for bias
-    dst[MASU_NUM] = 1;
+    // ここで倍率を設定する
+    dst[MASU_NUM] = BIAS_MAG;
 }
 
 // convert weight array to Prm1L
@@ -603,6 +604,34 @@ int makeFGFilePrm1L(const char *format) {
     if (dumpPrm1LDirect(fnamew, pra, sizeof pra) < 0)
         return -1;
     printf("%ld bytes were written\n", sizeof pra);
+    return 0;
+}
+
+// 圧縮バージョンで最初の世代を作成
+int makeFGFilePrm1LComp(const char *format) {
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, 0);
+    // 上書き注意
+    if (warnOverwriting(fnamew) < 0)
+        return -1;
+    FILE *fp;
+    // 個体全体の重みの総数
+    int total_length = PRM1L_LEN * POPULATION;
+    // 圧縮されたPrm1Lの配列を格納
+    // 一次元配列として扱う
+    char comp_pra[total_length];
+    // -127から127のchar型乱数を代入
+    randWeightCharArray(comp_pra, total_length);
+    if ((fp = fopen(fnamew, "wb")) == NULL) {
+        // 失敗
+        printf("%s can't be opened.\n", fnamew);
+        return -1;
+    }
+    // 書き込んで閉じる
+    fwrite(comp_pra, sizeof comp_pra, 1, fp);
+    fclose(fp);
+    // 書き込まれたサイズを表示
+    printf("%ld bytes were written\n", sizeof comp_pra);
     return 0;
 }
 

@@ -26,6 +26,11 @@
 #define SEED 123u
 #endif
 
+// バイアスの倍率
+// 重みパターンと盤面との乗算結果は-32から32を取り得る (ただしその両端の値を取る確率は極めて低い. と思う)
+// 精度は同じchar型を使うが, 幅を広く持たせることにした
+#define BIAS_MAG 16
+
 // test file format
 // common with genetic02
 #define FNF_TEST "prm/test/test%03d.bin"
@@ -209,6 +214,9 @@ int dumpPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size);
 // give a file name format
 // record all individuals
 int makeFGFilePrm1L(const char *format);
+
+// 圧縮バージョンで最初の世代を作成
+int makeFGFilePrm1LComp(const char *format);
 
 // read parameters from a file (Prm1L)
 // give a file name directly
