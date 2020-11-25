@@ -664,20 +664,20 @@ int makeFGFilePrm1LComp(const char *format) {
     if (warnOverwriting(fnamew) < 0)
         return -1;
     FILE *fp;
-    // 個体全体の重みの総数
-    int total_length = PRM1L_LEN * POPULATION;
     // 圧縮されたPrm1Lの配列を格納
     // 一次元配列として扱う
-    char comp_pra[total_length];
-    // -127から127のchar型乱数を代入
-    randWeightCharArray(comp_pra, total_length);
+    char comp_pra[PRM1L_COMP_LEN];
+    // -127から127のchar型乱数を代入 (フラグ部分以外)
+    randWeightCharArray(comp_pra, PRM1L_COMP_LEN - 1);
+    // フラグは0で初期化
+    comp_pra[PRM1L_COMP_LEN - 1] = 0;
     if ((fp = fopen(fnamew, "wb")) == NULL) {
         // 失敗
         printf("%s can't be opened.\n", fnamew);
         return -1;
     }
     // 書き込んで閉じる
-    fwrite(comp_pra, sizeof comp_pra, 1, fp);
+    fwrite(comp_pra, PRM1L_COMP_LEN, 1, fp);
     fclose(fp);
     // 書き込まれたサイズを表示
     printf("%ld bytes were written\n", sizeof comp_pra);
@@ -1140,6 +1140,7 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safet
     int fitness[POPULATION];
     // 適応度評価とファイルのソート
     int flag = sortPrm1LCompFileByFitness(fnames, fitness);
+    printDecimal(flag);
     // エラー
     if (flag < 0) return -1;
     // ソート済み
