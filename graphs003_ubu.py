@@ -186,11 +186,11 @@ def makeSDGraph(ax, x, ys):
         bbox_to_anchor=(1.01, 1),
         loc='upper left',
         borderaxespad=0,
-        fontsize=5
+        fontsize=10
     )
     # ラベル指定
-    ax.set_xlabel("generation", fontsize=10)
-    ax.set_ylabel("standard deviation", fontsize=10)
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("standard deviation", fontsize=15)
     # 横幅指定（読み込めたデータだけ）
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 縦幅指定（固定）
