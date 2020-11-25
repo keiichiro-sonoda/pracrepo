@@ -154,6 +154,15 @@ void randUniRdSftNoLim(const int *fitness, const int *numbers, const Sprm *curre
     }
 }
 
+// 全て突然変異
+// 選択・交叉という概念がない (エリート選択はある)
+// 特殊パターンなのでマクロ MUT_RATE は使わない
+void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
+    // エリート以外全てランダム
+    for (int count = ELITE_NUM; count < POPULATION; count++)
+        randSprm(next + count);
+}
+
 int main(void) {
     srand(SEED);
     // シード固定に注意
@@ -162,9 +171,9 @@ int main(void) {
     setCORR_TABLE();
     initBoard();
     char format[] = FNF_TEST;
-    //makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 3);
-    //nGeneSSAFlexLoopSeed(randUniRdSftNoLim, format, 1, 2, 1);
+    makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 0);
+    nGeneSSAFlexLoopSeed(allMutation, format, 1, 0, 2);
     printString("end");
     return 0;
 }
