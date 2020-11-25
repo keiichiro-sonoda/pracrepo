@@ -16,12 +16,7 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     printString(format);
-    int div = 255;
-    int rslt[div];
-    zeros(rslt, div);
-    for (int i = 0; i < div * 10000; i++) {
-        rslt[rand() % div]++;
-    }
-    printDecimalArray(rslt, div);
+    for (int i = 0; i < 10; i++)
+        printFloat(randWeightComp());
     return 0;
 }

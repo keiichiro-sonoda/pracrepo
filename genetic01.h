@@ -83,6 +83,9 @@
 // 圧縮した数値を重みに戻す
 #define char2weight(c) ((float)(c) / 254)
 
+// ランダムな重み(圧縮対応)を作る
+#define randWeightComp() (char2weight((char)(rand() % 255)))
+
 // types
 
 typedef struct param {
