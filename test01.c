@@ -18,5 +18,7 @@ int main(void) {
     makeFGFilePrm1LComp(format);
     Prm1L pra[POPULATION];
     loadPrm1LComp(format, 0, pra);
+    showPrm1L(pra[0]);
+    showPrm1L(pra[49]);
     return 0;
 }

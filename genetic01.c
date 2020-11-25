@@ -675,7 +675,7 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
     char2weightArray(comp_pra, w_arr, total_length);
     // 配列を個体数に分割してPrm1L配列に代入
     for (int i = 0; i < POPULATION; i++) {
-        array2Prm1L(w_arr + i * POPULATION, pra + i);
+        array2Prm1L(w_arr + i * PRM1L_LEN, pra + i);
     }
     return 0;
 }
