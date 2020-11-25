@@ -16,19 +16,15 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     printString(format);
-    char c1, c2;
-    float f1;
-    for (c1 = -128; c1 < 127; c1++) {
-        f1 = char2weight(c1);
-        c2 = weight2char(f1);
-        printf("%d, %f, %d\n", (int)c1, f1, (int)c2);
-        if (c1 ^ c2)
+    u_char uc1, uc2;
+    float f1, f2;
+    for (uc1 = 0; uc1 < 255; uc1++) {
+        f1 = uchar2weight(uc1);
+        uc2 = weight2uchar(f1);
+        f2 = uchar2weight(uc2);
+        printf("%d, %f, %d, %f\n", (int)uc1, f1, (int)uc2, f2);
+        if (uc1 != uc2)
             printf("NG!\n");
     }
-    f1 = char2weight(c1);
-    c2 = weight2char(f1);
-    printf("%d, %f, %d\n", (int)c1, f1, (int)c2);
-    if (c1 ^ c2)
-        printf("NG!\n");
     return 0;
 }
