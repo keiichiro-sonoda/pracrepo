@@ -8,7 +8,10 @@
 #include "sort01.h"
 
 // global variables
-int PRM1L_COMP_LEN;
+
+// ファイルの長さ
+// ソート済みフラグ追加
+const int PRM1L_COMP_LEN = PRM1L_LEN * POPULATION + 1;
 
 // functions
 
@@ -17,8 +20,6 @@ int PRM1L_COMP_LEN;
 // おまけに盤面も初期化してくれる
 void initPrm1LComp(void) {
     initBoard();
-    // ソート済みフラグ追加
-    PRM1L_COMP_LEN = PRM1L_LEN * POPULATION + 1;
     printDecimal(PRM1L_COMP_LEN);
 }
 

@@ -137,7 +137,7 @@ typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
 
 // 圧縮したPrm1L配列の長さ (1要素1byteなので直接サイズとしても使える)
 // 最後の要素はソート済みフラグに使う予定
-extern int PRM1L_COMP_LEN;
+extern const int PRM1L_COMP_LEN;
 
 // functions
 
