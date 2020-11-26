@@ -437,7 +437,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 "prm//sprm100_10_rlt_au_rd005//sprm100_10_rlt_au_rd005_g{:03d}.bin"]
 
 def main():
-    ind = 14
+    ind = 16
     loc_pop = 6
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
