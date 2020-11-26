@@ -175,9 +175,8 @@ def makeSDGraph(ax, x, ys):
         lw = 1
         lc = LINE_COLORS[i]
         # 注目マス
-        # 標準偏差はいらないかも
-        #if i in [0, 4]:
-        #    lw = 4
+        if i == 0:
+            lw = 4
         # ラベル付け
         ax.plot(x, ys[i],
             label="{:d}".format(i + 1),
@@ -226,7 +225,7 @@ def viewSDGraph(fname_format, population, x_min, x_max):
     ax = fig.add_subplot(111)
     makeSDGraph(ax, x, ys)
     # フォーマットやグラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fname_format, "SD{:03d}".format(population), x_min, x_max)
+    path = makeJpegFileName(fname_format, "SD{:03d}_e1".format(population), x_min, x_max)
     if path:
     # 書き込み
         fig.savefig(path, bbox_inches="tight")
