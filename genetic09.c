@@ -6,16 +6,17 @@
 #include "sort01.h"
 #include "genetic02.h"
 
+// ルーレット選択
+// 選ばれた親のペアに対し, 平均化交叉と一様交叉を一回ずつ行う
 // roulette selection
 // perform averaging and uniform crossing once for each parents
 void rouletteAveUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
     int count;
     int parents[2];
-    // elite selection
-    for (count = 0; count < ELITE_NUM; count++)
-        next[count] = current[numbers[count]];
+    // for 文に変更してみる
+    // 途中でもcountがインクリメントされるため, ループ毎+2になるはず
     // selection and crossover
-    while (count < POPULATION) {
+    for (count = ELITE_NUM; count < POPULATION; count++) {
         // choose parents by roulette selection
         // don't allow duplication
         rouletteIntMltDep(fitness, POPULATION, parents, 2);
@@ -26,7 +27,6 @@ void rouletteAveUni(const int *fitness, const int *numbers, const Sprm *current,
         if (count >= POPULATION) break;
         // make a child (uniform crossover)
         next[count] = makeChildCrossMSprm(current[numbers[parents[0]]], current[numbers[parents[1]]]);
-        count++;
     }
 }
 
@@ -172,9 +172,9 @@ int main(void) {
     initBoard();
     const char format[] = FNF_TEST;
     printString(format);
-    //makeFirstGeneFileFlex(format);
-    //checkSprmFile(format, 2);
-    //nGeneSSAFlexLoopSeed(allMutation, format, 1, 0, 100);
+    makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 0);
+    nGeneSSAFlexLoopSeed(rouletteAveUni, format, 1, 0, 2);
     printString("end");
     return 0;
 }
