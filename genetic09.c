@@ -175,9 +175,9 @@ int main(void) {
     printf("mutation rate: %4.2f\n", MUT_RATE);
     const char format[] = FNF_10010001000005;
     printString(format);
-    makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 0);
-    nGeneSSAFlexLoopSeed(rouletteAveUni, format, 1, 0, 2);
+    //makeFirstGeneFileFlex(format);
+    checkSprmFile(format, 1);
+    nGeneSSAFlexLoopSeed(rouletteAveUni, format, 1, 0, 100);
     printString("end");
     return 0;
 }
