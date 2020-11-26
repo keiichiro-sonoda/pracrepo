@@ -172,9 +172,18 @@ int main(void) {
     initBoard();
     const char format[] = FNF_TEST;
     printString(format);
-    makeFirstGeneFileFlex(format);
-    checkSprmFile(format, 0);
-    nGeneSSAFlexLoopSeed(rouletteAveUni, format, 1, 0, 2);
+    //makeFirstGeneFileFlex(format);
+    //checkSprmFile(format, 0);
+    //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 1, 0, 2);
+    for (int i = 1; i < 10; i++) {
+        printDecimal(i);
+        i++;
+        if (i >= 10) {
+            printf("breaked!\n");
+            break;
+        }
+        printDecimal(i);
+    }
     printString("end");
     return 0;
 }
