@@ -170,20 +170,14 @@ int main(void) {
     // 初期設定
     setCORR_TABLE();
     initBoard();
-    const char format[] = FNF_TEST;
+    printf("population   : %4d\n", POPULATION);
+    printf("elite number : %4d\n", ELITE_NUM);
+    printf("mutation rate: %4.2f\n", MUT_RATE);
+    const char format[] = FNF_10010001000005;
     printString(format);
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 0);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 1, 0, 2);
-    for (int i = 1; i < 10; i++) {
-        printDecimal(i);
-        i++;
-        if (i >= 10) {
-            printf("breaked!\n");
-            break;
-        }
-        printDecimal(i);
-    }
     printString("end");
     return 0;
 }
