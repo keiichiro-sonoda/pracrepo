@@ -952,7 +952,7 @@ void nGeneSSAFlexLoopSeed(scmFunc selAndCross, const char *format, int safety, i
         // 見るのはソートされていない次世代の先頭要素
         // 実質的には現世代のトップになるはず
         // 次の世代作成の乱数が変わらないように場所に注意
-        if (!(i % 20 + 1)) {
+        if (!((i + 1) % 20)) {
             kugiri(100);
             rep_pra = loadRepSprm(format, i + 1, POPULATION);
             printf("the strongest:\n");
