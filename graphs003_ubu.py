@@ -438,7 +438,7 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 
 def main():
     ind = 25
-    loc_pop = 100
+    loc_pop = 10
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
