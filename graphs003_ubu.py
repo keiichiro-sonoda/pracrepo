@@ -88,6 +88,9 @@ LINE_COLORS = [
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲を与える
 def makeJpegFileName(fname_format, name, g_min, g_max):
     m = re.match(r"prm(//.*)//", fname_format)
+    if not m:
+        print("一致するパターンがありません")
+        return ""
     path = "//home//sonoda//Pictures//Graphs" + m.groups()[0]
     options = "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min) + ".jpg"
     path += options
@@ -160,8 +163,9 @@ def viewMeansGraph(fname_format, population, x_min, x_max):
     ax = fig.add_subplot(111)
     makeMeansGraph(ax, x, ys)
     path = makeJpegFileName(fname_format, "means{:03d}".format(population), x_min, x_max)
+    if path:
     # 出力画像の周囲の境界ボックス?を消す
-    fig.savefig(path, bbox_inches="tight")
+        fig.savefig(path, bbox_inches="tight")
     #plt.show()
 
 # 標準偏差のグラフを作成
@@ -223,8 +227,9 @@ def viewSDGraph(fname_format, population, x_min, x_max):
     makeSDGraph(ax, x, ys)
     # フォーマットやグラフの範囲に合わせたパスを作成
     path = makeJpegFileName(fname_format, "SD{:03d}".format(population), x_min, x_max)
+    if path:
     # 書き込み
-    fig.savefig(path, bbox_inches="tight")
+        fig.savefig(path, bbox_inches="tight")
     #plt.show()
 
 # 2つのグラフを同時描画したい
@@ -281,6 +286,9 @@ def imgTest(fname_format, generation):
 def makeJsonFileName(fname_format, decNxt_id):
     # json ファイルのフォーマットに使う部分を取得
     m = re.match(r"(prm//.*)//", fname_format)
+    if not m:
+        print("一致するパターンがありません")
+        return ""
     # マッチオブジェクトから文字列に変換
     json_fname = m.groups()[0]
     if decNxt_id == 0:
@@ -424,11 +432,13 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 23. 指し手ルーレット, 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
                 "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin",
                 # 24. 指し手ルーレット, 個体数50, エリート6, ランダム突然変異100% (今更だけどエリートは突然変異しないよ)
-                "prm//sprm050_06___rd100//sprm050_06___rd100_g{:03d}.bin"]
+                "prm//sprm050_06___rd100//sprm050_06___rd100_g{:03d}.bin",
+                # 25. 指し手ルーレット, 個体数100, エリート10, 非独立ルーレット選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
+                "prm//sprm100_10_rlt_au_rd005//sprm100_10_rlt_au_rd005_g{:03d}.bin"]
 
 def main():
-    ind = 24
-    loc_pop = 1
+    ind = 25
+    loc_pop = 100
     #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
