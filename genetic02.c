@@ -866,14 +866,6 @@ int nGeneSSAFlex(scmFunc selAndCross, const char *format, int gene_num, int safe
     showFamilyPart(next);
     // view statistics
     checkSprmStatistics(next, POPULATION);
-    // 戦績チェック (参考用)
-    // 見るのはソートされている現世代
-    // 次の世代作成の乱数が変わらないように, 選択・交叉後に行う
-    kugiri(100);
-    printf("the strongest:\n");
-    calcWinRateSprmVSRandTotal(current[numbers[0]], 500);
-    printf("the weakest:\n");
-    calcWinRateSprmVSRandTotal(current[numbers[POPULATION - 1]], 500);
     // write next family to the file
     // and return error flag
     return dumpSprmFileDirect(fnamew, next, sizeof next);
@@ -938,8 +930,11 @@ void nGeneSSAFlexLoopSeed(scmFunc selAndCross, const char *format, int safety, i
     time_t t0, t1;
     // get start time
     time(&t0);
+    // 代表者
+    Sprm rep_pra;
     unsigned int s1, s2;
     for (int i = st; i < st + loop; i++) {
+        // 無駄?にシード設定しまくる部分
         s1 = i + SEED;
         printf("seed1: %d\n", s1);
         // set seed
@@ -952,6 +947,16 @@ void nGeneSSAFlexLoopSeed(scmFunc selAndCross, const char *format, int safety, i
             // error
             printString("error");
             return;
+        }
+        // 戦績チェック (参考用)
+        // 見るのはソートされていない次世代の先頭要素
+        // 実質的には現世代のトップになるはず
+        // 次の世代作成の乱数が変わらないように場所に注意
+        if (i % 20 == 1) {
+            kugiri(100);
+            rep_pra = loadRepSprm(format, i + 1, POPULATION);
+            printf("the strongest:\n");
+            calcWinRateSprmVSRandTotal(rep_pra, 500);
         }
         // get time
         time(&t1);
