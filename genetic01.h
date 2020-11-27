@@ -12,7 +12,7 @@
 #define ELITE_NUM 6
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.05f // 突然変異率
+#define MUT_RATE 0.01f // 突然変異率
 #endif
 
 // ここで活性化関数を指定する
@@ -28,9 +28,10 @@
 
 // バイアスの倍率
 // 重みパターンと盤面との乗算結果は-32から32を取り得る (ただしその両端の値を取る確率は極めて低い. と思う)
+// 最大は多分64にすればよいが、なんとなく半分くらいで十分だと思ってる
 // 精度は同じchar型を使うが, 幅を広く持たせることにした
 // このマクロが定義される以前のものは, これが1であると考えれば良い
-#define BIAS_MAG 16
+#define BIAS_MAG 32
 
 // test file format
 // common with genetic02
@@ -51,6 +52,10 @@
 #define FNF_L1RR05006000000001 "prm/l1rr050_06_rlt_uni_rd001/l1rr050_06_rlt_uni_rd001_g%03d.bin"
 // 突然変異率だけ変更
 #define FNF_L1RR05006000000005 "prm/l1rr050_06_rlt_uni_rd005/l1rr050_06_rlt_uni_rd005_g%03d.bin"
+
+// C  : ファイルを圧縮して保存 (compressの意味)
+// M32: バイアスの倍率が32という意味
+#define FNF_L1RRCM3205006000000001 "prm/l1rrcm32_050_06_rlt_uni_rd001/l1rrcm32_050_06_rlt_uni_rd001_g%03d.bin"
 
 // don't use activation function
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
