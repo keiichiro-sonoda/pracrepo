@@ -26,5 +26,6 @@ int main(void) {
     printSize(i);
     i = strlen(format);
     printDecimal(i);
+    printSize(format);
     return 0;
 }

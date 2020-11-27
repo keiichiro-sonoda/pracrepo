@@ -108,20 +108,6 @@
 
 // types
 
-typedef struct param {
-    float weight1[32][64];
-    float weight2[16][32];
-    float weight3[8][16];
-    float weight4[4][8];
-    float weight5[2][4];
-    float weight6[2];
-    float bias1[32];
-    float bias2[16];
-    float bias3[8];
-    float bias4[4];
-    float bias5[2];
-} Param;
-
 // 1 middle layer
 // including bias
 typedef struct prm1L {
@@ -164,8 +150,6 @@ void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst);
 
 // convert Prm1L to a weight array
 void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]);
-
-int checkParam(Param pr);
 
 // show parameters (for Prm1L)
 void showPrm1L(Prm1L pr);
