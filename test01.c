@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <string.h>
 #include "genetic01.h"
 #include "sort01.h"
 
@@ -23,5 +24,7 @@ int main(void) {
     short i = 0x7fff;
     printDecimal(i);
     printSize(i);
+    i = strlen(format);
+    printDecimal(i);
     return 0;
 }
