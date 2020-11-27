@@ -1,6 +1,10 @@
 #ifndef OTHELLO_H
 #define OTHELLO_H
 
+// マクロで使うライブラリ
+#include <stdio.h>
+#include <stdlib.h>
+
 // maximum number of next boards
 #define NEXT_MAX 32
 #define MASU_NUM 64

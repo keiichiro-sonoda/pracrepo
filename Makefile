@@ -36,6 +36,8 @@ othello.o: othello.c othello.h
 	gcc othello.c -c -fPIC -Wall
 sort01.o: sort01.c sort01.h
 	gcc sort01.c -c -Wall
+genetic00.o: genetic00.c genetic00.h othello.h
+	gcc genetic00.c -c -Wall
 genetic01.o: genetic01.c genetic01.h
 	gcc genetic01.c -c -Wall
 genetic02.o: genetic02.c genetic02.h

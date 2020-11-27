@@ -7,7 +7,6 @@
 
 // number of parameters per generation
 #define POPULATION 50
-#define PARAM_NUM 2792
 #define PRM1L_LEN 528 // Prm1L の重みの総数
 #define ELITE_NUM 6
 
@@ -115,10 +114,6 @@ typedef struct prm1L {
     float weight2[8];
 } Prm1L;
 
-typedef struct family{
-    Param prms [POPULATION];
-} Family;
-
 // type of function for selection, crossover and mutation
 // ソート済み適応度, ソート済み個体番号, 現世代個体配列, 次世代個体配列
 typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
@@ -137,10 +132,6 @@ extern const int PRM1L_COMP_LEN;
 // おまけに盤面も初期化してくれる
 void initPrm1LComp(void);
 
-void sigmoidFloatP(float *xp);
-
-int board2array(Board src, int *dst);
-
 // black: +1, empty: 0, white: -1
 // add an element for bias
 void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]);
@@ -154,34 +145,18 @@ void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]);
 // show parameters (for Prm1L)
 void showPrm1L(Prm1L pr);
 
-// randomly determine parameter
-int paramRand(Param *prp);
-
 // create random parameter (for Prm1L)
 void randPrm1L(Prm1L *prp);
-
-// generation initialization
-int familyRand(Family *fmp);
-
-// calculate point
-// the more advantageous to black, the higher the score
-float evaluation(Board b, Param pr);
 
 // calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
 float evalWithPrm1L(Board b, Prm1L pr);
-
-Board getBestBoard(Board *next_boards, int next_count, int color, Param prm);
 
 // assume that the next turn is black
 // n: the number of next boards
 // use Prm1L
 // decide next board by roulette
 Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
-
-// return winnter
-// draw: 0, black: 1, white: 2
-int oneToOne(Param sente, Param gote);
 
 // return winner
 // give a function pointer to determine the next board (with Prm1L)
@@ -200,11 +175,6 @@ float calcWinRatePrm1LVSRand(Prm1L pr, int pr_color, int n);
 // check win rate when playing against random AI
 // n: number of games in each color??
 void checkWinRatePrm1LVSRand(Prm1L pr, int n);
-
-int leagueMatch(Family fml);
-
-// win: +2, draw: +1, lose: 0
-int leagueMatchSimple(Family fml, int *result);
 
 // with Prm1L[POPULATION]
 // win: +2, draw: +1, lose: 0
@@ -252,33 +222,12 @@ Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);
 // view parematers in a file (Prm1L)
 void checkPrm1LFile(const char *format, int gene_num);
 
-int readResultFile(int *result, int r_size, char *fnamel);
-
-// choose survivors
-// shallow copy?
-int getSurvivor(Family *fmlp, Param *survivors);
-
-float faverage(float f1, float f2);
-
-Param makeChildAverage(Param mother, Param father);
-
-float fcrossM(float f1, float f2);
-
-Param makeChildCrossM(Param mother, Param father);
-
 // uniform crossover (Prm1L)
 Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father);
 
 // uniform crossover (Prm1L)
 // including random mutation
 Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father);
-
-// square distance
-float sqDist(float f1, float f2);
-
-float paramDistance(Param p1, Param p2);
-
-int nextGeneration(int gene_num);
 
 // roulette selection
 // uniform crossover
