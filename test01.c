@@ -20,7 +20,7 @@ int main(void) {
     // for debugging
     srand(SEED);
     //nGenePrm1LComp(rltUniRd, format, 0, 1);
-    short i = 1;
+    short i = 0x7fff;
     printDecimal(i);
     printSize(i);
     return 0;
