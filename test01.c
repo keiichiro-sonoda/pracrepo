@@ -9,8 +9,9 @@ int main(void) {
     srand(SEED);
     //srand((unsigned)time(NULL));
     initPrm1LComp();
-    showBoard(START);
+    //showBoard(START);
     const char format[] = FNF_TEST;
+    printString(format);
     //makeFGFilePrm1LComp(format);
     //makeFGFilePrm1L(format);
     //checkPrm1LFile(format, 1);
@@ -18,6 +19,9 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     srand(SEED);
-    nGenePrm1LComp(rltUniRd, format, 0, 1);
+    //nGenePrm1LComp(rltUniRd, format, 0, 1);
+    short i = 1;
+    printDecimal(i);
+    printSize(i);
     return 0;
 }
