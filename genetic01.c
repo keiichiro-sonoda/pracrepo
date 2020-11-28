@@ -704,6 +704,7 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, u_int see
     // 乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
     // ループ関数じゃなくてこっちでやったほうが手間が少なかった
     if (!(gene_num % 20)) {
+        kugiri(100);
         int game_num = 500;
         printf("the number of games: %d x 2\n", game_num);
         printf("the strongest:\n");
