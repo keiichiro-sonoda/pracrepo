@@ -20,6 +20,9 @@ int main(void) {
     srand(SEED);
     //nGenePrm1LComp(rltUniRd, format, 0, 1);
     char str[81];
-    makeFitnessFileName(str, sizeof str, format, 0);
+    if (makeFitnessFileName(str, sizeof str, format, 0) < 0) {
+        return -1;
+    }
+    printString(str);
     return 0;
 }
