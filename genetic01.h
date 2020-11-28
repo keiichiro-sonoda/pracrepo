@@ -22,7 +22,7 @@
 
 // specify the seed value here
 #ifndef SEED
-#define SEED 123u
+#define SEED 124u
 #endif
 
 // バイアスの倍率
