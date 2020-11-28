@@ -19,7 +19,7 @@ int main(void) {
     // for debugging
     srand(SEED);
     //nGenePrm1LComp(rltUniRd, format, 0, 1);
-    char str[81];
+    char str[80];
     if (makeFitnessFileName(str, sizeof str, format, 0) < 0) {
         return -1;
     }

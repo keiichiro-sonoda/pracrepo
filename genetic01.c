@@ -562,7 +562,6 @@ int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo) {
     char fnameo_part[o_len- 3];
     // snprintfで.bin以外コピー
     snprintf(fnameo_part, o_len - 3, "%s", fnameo);
-    printString(fnameo_part);
     // 合成
     snprintf(dst, dst_size, fitness_format, fnameo_part);
     return 0;
