@@ -576,7 +576,7 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
 // .bin の前に _fitness を付けたい
 // エラー処理は未定
 int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene_num) {
-    snprintf(dst, dst_size, format, gene_num);
+    printDecimal(snprintf(dst, dst_size, format, gene_num));
     printString(dst);
     return 0;
 }
