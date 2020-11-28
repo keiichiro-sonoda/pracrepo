@@ -553,7 +553,7 @@ int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo) {
     int o_len = strlen(fnameo);
     // 文字列追加後, オーバーフローする場合
     if (o_len + 8 >= dst_size) {
-        printf("error\n");
+        printf("file name over\n");
         return -1;
     }
     // 末尾にくっつける文字列を定義
@@ -582,10 +582,16 @@ int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene
 // 圧縮されたファイルから個体を読み出し, 適応度を評価する
 // 適応度降順に個体を並び替え, 同じファイルに書き込む
 // 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
-// 次世代作成関数が膨らまないように, ソート済みの場合はここで適応度の読み書きをする
+// 次世代作成関数が膨らまないように, ここで適応度の読み書きをする
 int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     // ソート前とソート後のパラメータ配列を用意する (メモリの無駄遣いかな?)
     Prm1L pra1[POPULATION], pra2[POPULATION];
+    // 適応度ファイル名
+    char fnamef[FILENAME_MAX];
+    // 万が一のファイル名オーバー対策
+    if (makeFitnessFileNameDirect(fnamef, FILENAME_MAX, fname) < 0)
+        return -1;
+    printString(fnamef);
     // ロードしてフラグを取得
     int flag = loadPrm1LCompDirect(fname, pra1);
     // エラーかソート済みならフラグを返す
