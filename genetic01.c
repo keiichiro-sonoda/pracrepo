@@ -340,8 +340,6 @@ int dumpFitnessShortDirect(const char *fname, const int *fitness) {
     }
     fwrite(fitness_short, sizeof fitness_short, 1, fp);
     fclose(fp);
-    printf("size: ");
-    printSize(fitness_short);
     return 0;
 }
 
