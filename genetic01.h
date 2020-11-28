@@ -270,4 +270,8 @@ void nGenePrm1LLoop(scmFuncPrm1L scm, const char *format, int safety, int st, in
 // use SEED
 void nGenePrm1LLoopSeed(scmFuncPrm1L scm, const char *format, int safety, int st, int loop);
 
+// 圧縮版次世代作成関数をループさせる関数
+// 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
+void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int start, int stop);
+
 #endif

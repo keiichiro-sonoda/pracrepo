@@ -759,3 +759,20 @@ void nGenePrm1LLoopSeed(scmFuncPrm1L scm, const char *format, int safety, int st
         kugiri(100);
     }
 }
+
+// 圧縮版次世代作成関数をループさせる関数
+// 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
+void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int start, int stop) {
+    time_t t_arr[2];
+    time(t_arr);
+    u_int s1, s2;
+    for (int gene_num = start; gene_num < stop; gene_num++) {
+        s1 = SEED + gene_num;
+        s2 = rand() & SEED;
+        printf("%x, %x", s1, s2);
+        // get time
+        time(t_arr + 1);
+        printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
+        kugiri(100);
+    }
+}
