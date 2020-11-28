@@ -586,6 +586,7 @@ int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene
     printCharDecimal(dst[len]);
     dst[len - 4] = 0;
     printString(dst);
+    printf("%s\n", dst + len - 3);
     return 0;
 }
 
