@@ -791,7 +791,8 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
         s2 = rand() ^ SEED;
         printf("seed1: %d, seed2: %d\n", s1, s2);
         // 次の世代へ!
-        nGenePrm1LComp(scm, format, gene_num, s1, s2, safety);
+        if (nGenePrm1LComp(scm, format, gene_num, s1, s2, safety) < 0)
+            return;
         // get time
         time(t_arr + 1);
         printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
