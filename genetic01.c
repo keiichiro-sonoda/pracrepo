@@ -576,17 +576,19 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
 // .bin の前に _fitness を付けたい
 // エラー処理は未定
 int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene_num) {
+    // まずはオリジナルのファイル名から作る
+    char fnameo[FILENAME_MAX];
     // フォーマットと世代番号を合わせ, 長さを取得
-    int len = snprintf(dst, dst_size, format, gene_num);
-    if (len >= dst_size) {
-        printf("error\n");
-        printString(dst);
-        return -1;
-    }
-    printCharDecimal(dst[len]);
-    dst[len - 4] = 0;
+    int len = snprintf(fnameo, FILENAME_MAX, format, gene_num);
+    printString(fnameo);
+    // 新たにくっつける文字列
+    char fitness_format[] = "%s_fitness.bin";
+    // .binを排除
+    fnameo[len - 4] = 0;
+    printString(fnameo);
+    // 合成
+    snprintf(dst, dst_size, fitness_format, fnameo);
     printString(dst);
-    printf("%s\n", dst + len - 3);
     return 0;
 }
 
