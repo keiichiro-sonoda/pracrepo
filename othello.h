@@ -67,6 +67,9 @@
 // positive range only
 #define randInt(min, max) (rand() % ((max) - (min) + 1) + (min))
 
+// 32bitバイナリ表示するマクロ(ハイフン付き)
+#define printBin32(x) printf("0b"); for (char _ = 31; _ >= 0; _--) { printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10)
+
 // 64bit
 typedef unsigned long int int8B;
 
@@ -207,9 +210,5 @@ void board2arraySymmetry(Board src, int *dst);
 
 // warning before overwriting
 int warnOverwriting(const char *fname);
-
-// int型の数値を2進数で表示したい
-// 1が現れる最上位桁から表示
-void printBin32(u_int x);
 
 #endif

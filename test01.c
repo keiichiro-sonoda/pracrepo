@@ -18,7 +18,7 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LComp(rltUniRd, format, 0, SEED, SEED * 2, 1);
-    int a = 8192;
+    int a = 8191;
     printBin32(a);
     return 0;
 }
