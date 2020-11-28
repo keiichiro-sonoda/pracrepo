@@ -1,6 +1,7 @@
 #include <math.h>
 #include <time.h>
 #include <float.h>
+#include <string.h>
 
 #include "genetic01.h"
 #include "sort01.h"
@@ -571,8 +572,18 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     return dumpPrm1LCompDirect(fname, pra2, 1);
 }
 
+// 適応度保存用ファイルのファイル名を作る
+// .bin の前に _fitness を付けたい
+// エラー処理は未定
+int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene_num) {
+    snprintf(dst, dst_size, format, gene_num);
+    printString(dst);
+    return 0;
+}
+
 // 次の世代のファイルを作る関数 (圧縮バージョン)
 // ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
+// ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
 int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     // 読み込み (ソート) 用と書き込み用ファイル名
     char fnames[FILENAME_MAX], fnamew[FILENAME_MAX];

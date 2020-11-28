@@ -19,11 +19,7 @@ int main(void) {
     // for debugging
     srand(SEED);
     //nGenePrm1LComp(rltUniRd, format, 0, 1);
-    short i = 0x7fff;
-    printDecimal(i);
-    printSize(i);
-    i = strlen(format);
-    printDecimal(i);
-    printSize(format);
+    char str[FILENAME_MAX];
+    makeFitnessFileName(str, sizeof str, format, 0);
     return 0;
 }

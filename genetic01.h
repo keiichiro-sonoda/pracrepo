@@ -239,8 +239,13 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety);
 
 // 圧縮されたファイルから個体を読み出し, 適応度を評価する
 // 適応度降順に個体を並び替え, 同じファイルに書き込む
-// 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
+// 適応度はルーレット選択等に用いるため, 呼び出し元へ配列を渡す
 int sortPrm1LCompFileByFitness(const char *fname, int *fitness);
+
+// 適応度保存用ファイルのファイル名を作る
+// .bin の前に _fitness を付けたい
+// エラー処理は未定
+int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene_num);
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)
 // ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
