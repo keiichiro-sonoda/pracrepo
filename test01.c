@@ -5,9 +5,9 @@
 #include "sort01.h"
 
 int main(void) {
-    srand(SEED);
-    //srand((unsigned)time(NULL));
+    // 初期化にシード設定も含まれる
     initPrm1LComp();
+    //srand((unsigned)time(NULL));
     //showBoard(START);
     const char format[] = FNF_TEST;
     printString(format);
@@ -17,8 +17,6 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    //nGenePrm1LComp(rltUniRd, format, 0, SEED, SEED * 2, 1);
-    int a = 8191;
-    printBin32(a);
+    nGenePrm1LCompLoop(rltUniRd, format, 1, 1, 2);
     return 0;
 }

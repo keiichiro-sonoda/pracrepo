@@ -18,8 +18,8 @@ const int PRM1L_COMP_LEN = PRM1L_LEN * POPULATION + 1;
 // 最初に行う設定関数 (ファイル長設定)
 // おまけに盤面も初期化してくれる
 void initPrm1LComp(void) {
+    srand(SEED);
     initBoard();
-    printDecimal(PRM1L_COMP_LEN);
 }
 
 // black: +1, empty: 0, white: -1
@@ -769,8 +769,14 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
     for (int gene_num = start; gene_num < stop; gene_num++) {
         // 1 はなんとなくのオフセット
         s1 = SEED + gene_num + 1;
+        srand(s1);
+        // s2はs1に依存する
+        // 排他的論理和で乱数改変
+        // 和を計算したときのオーバーフローを回避?
         s2 = rand() ^ SEED;
-        printf("%x, %x", s1, s2);
+        printf("seed1: %d, seed2: %d\n", s1, s2);
+        // 次の世代へ!
+        nGenePrm1LComp(scm, format, gene_num, s1, s2, safety);
         // get time
         time(t_arr + 1);
         printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
