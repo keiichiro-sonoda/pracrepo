@@ -547,25 +547,37 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     return dumpPrm1LDirect(fname, next, sizeof next);
 }
 
+// 適応度評価したファイル名をそのまま与えるバージョン
+int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo) {
+    // 元の長さ
+    int o_len = strlen(fnameo);
+    // 文字列追加後, オーバーフローする場合
+    if (o_len + 8 >= dst_size) {
+        printf("error\n");
+        return -1;
+    }
+    // 末尾にくっつける文字列を定義
+    char fitness_format[] = "%s_fitness.bin";
+    // .bin以外の文字列を格納できる最低の長さ
+    char fnameo_part[o_len- 3];
+    // snprintfで.bin以外コピー
+    snprintf(fnameo_part, o_len - 3, "%s", fnameo);
+    printString(fnameo_part);
+    // 合成
+    snprintf(dst, dst_size, fitness_format, fnameo_part);
+    return 0;
+}
+
 // 適応度保存用ファイルのファイル名を作る
 // .bin の前に _fitness を付けたい
 // エラー処理は未定
 int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene_num) {
     // まずはオリジナルのファイル名から作る
     char fnameo[FILENAME_MAX];
-    // フォーマットと世代番号を合わせ, 長さを取得
-    int len = snprintf(fnameo, FILENAME_MAX, format, gene_num);
-    if (len  + 8 >= dst_size) {
-        printf("error\n");
-        return -1;
-    }
-    // 新たにくっつける文字列
-    char fitness_format[] = "%s_fitness.bin";
-    // .binを排除
-    fnameo[len - 4] = 0;
-    // 合成
-    snprintf(dst, dst_size, fitness_format, fnameo);
-    return 0;
+    // フォーマットと世代番号を合わせる
+    snprintf(fnameo, FILENAME_MAX, format, gene_num);
+    // あとはダイレクトにおまかせ
+    return makeFitnessFileNameDirect(dst, dst_size, fnameo);
 }
 
 // 圧縮されたファイルから個体を読み出し, 適応度を評価する

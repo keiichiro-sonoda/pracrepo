@@ -237,6 +237,9 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
 // give a function pointer for selection, crossover and mutation
 int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety);
 
+// 適応度評価したファイル名をそのまま与えるバージョン
+int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo);
+
 // 適応度保存用ファイルのファイル名を作る
 // .bin の前に _fitness を付けたい
 // エラー処理は未定
