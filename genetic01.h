@@ -223,6 +223,9 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra);
 // load a representative of Prm1L
 Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);
 
+// short型で保存されている適応度を読み込む
+int loadFitnessShortDirect(const char *fname, int *fitness);
+
 // view parematers in a file (Prm1L)
 void checkPrm1LFile(const char *format, int gene_num);
 

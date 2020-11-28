@@ -460,6 +460,22 @@ Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop) {
     return *pra;
 }
 
+// short型で保存されている適応度を読み込む
+int loadFitnessShortDirect(const char *fname, int *fitness) {
+    FILE *fp;
+    if ((fp = fopen(fname, "rb")) == NULL) {
+        printf("%s can't be opened.\n", fname);
+        return -1;
+    }
+    // short型配列を定義して読み込み
+    short fitness_short[POPULATION];
+    fread(fitness_short, sizeof fitness_short, 1, fp);
+    fclose(fp);
+    // int型配列にコピー
+    copyArray(fitness_short, fitness, POPULATION);
+    return 0;
+}
+
 // view parematers in a file (Prm1L)
 void checkPrm1LFile(const char *format, int gene_num) {
     Prm1L pra[POPULATION];
@@ -606,13 +622,19 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     Prm1L pra1[POPULATION], pra2[POPULATION];
     // 適応度ファイル名
     char fnamef[FILENAME_MAX];
-    // 万が一のファイル名オーバー対策
+    // 万が一のファイル名オーバーフロー対策
     if (makeFitnessFileNameDirect(fnamef, FILENAME_MAX, fname) < 0)
         return -1;
     // ロードしてフラグを取得
     int flag = loadPrm1LCompDirect(fname, pra1);
-    // エラーかソート済みならフラグを返す
-    if (flag) return flag;
+    // エラーなら-1を返す
+    if (flag < 0) return -1;
+    // ソート済みなら適応度ファイルを読み込む
+    if (flag == 1) {
+        if (loadFitnessShortDirect(fnamef, fitness) < 0)
+            return -1;
+        return 1;
+    }
     // 個体番号を割り振る
     int numbers[POPULATION];
     indices(numbers, POPULATION);
@@ -653,9 +675,6 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safet
     // ソート済み
     if (flag == 1) {
         printf("%s is already sorted!\n", fnames);
-        // 仮適応度
-        for (int i = 0; i < POPULATION; i++)
-            fitness[i] = POPULATION - i;
     }
     srand(SEED);
     // なんとなくソート済み適応度を表示
