@@ -580,6 +580,10 @@ int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene
     char fnameo[FILENAME_MAX];
     // フォーマットと世代番号を合わせ, 長さを取得
     int len = snprintf(fnameo, FILENAME_MAX, format, gene_num);
+    printDecimal(len);
+    if (len  + 8 >= dst_size) {
+        printf("error\n");
+    }
     printString(fnameo);
     // 新たにくっつける文字列
     char fitness_format[] = "%s_fitness.bin";
