@@ -327,6 +327,24 @@ int dumpPrm1LComp(const char *format, int generation, Prm1L *pra, char flag) {
     return dumpPrm1LCompDirect(fnamew, pra, flag);
 }
 
+// 適応度書き込み
+// 適応度がshort型に収まること前提で書き込み
+int dumpFitnessShortDirect(const char *fname, const int *fitness) {
+    FILE *fp;
+    short fitness_short[POPULATION];
+    // short型配列にコピー
+    copyArray(fitness, fitness_short, POPULATION);
+    if ((fp = fopen(fname, "wb")) == NULL) {
+        printf("%s can't be opened.\n", fname);
+        return -1;
+    }
+    fwrite(fitness_short, sizeof fitness_short, 1, fp);
+    fclose(fp);
+    printf("size: ");
+    printSize(fitness_short);
+    return 0;
+}
+
 // make first generation file (Prm1L)
 // give a file name format
 // record all individuals
@@ -591,7 +609,6 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     // 万が一のファイル名オーバー対策
     if (makeFitnessFileNameDirect(fnamef, FILENAME_MAX, fname) < 0)
         return -1;
-    printString(fnamef);
     // ロードしてフラグを取得
     int flag = loadPrm1LCompDirect(fname, pra1);
     // エラーかソート済みならフラグを返す
@@ -608,7 +625,10 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     for (int i = 0; i < POPULATION; i++)
         pra2[i] = pra1[numbers[i]];
     // ソート後の配列を同じファイルに書き戻す (ソート済みフラグを立てる)
-    return dumpPrm1LCompDirect(fname, pra2, 1);
+    if (dumpPrm1LCompDirect(fname, pra2, 1)  < 0)
+        return -1;
+    // 適応度書き込み
+    return dumpFitnessShortDirect(fnamef, fitness);
 }
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)

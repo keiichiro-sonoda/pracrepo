@@ -195,6 +195,10 @@ int dumpPrm1LCompDirect(const char *fname, Prm1L *pra, char flag);
 // フラグを渡す
 int dumpPrm1LComp(const char *format, int generation, Prm1L *pra, char flag);
 
+// 適応度書き込み
+// 適応度がshort型に収まること前提で書き込み
+int dumpFitnessShortDirect(const char *fname, const int *fitness);
+
 // make first generation file (Prm1L)
 // give a file name format
 // record all individuals
