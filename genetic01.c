@@ -689,13 +689,13 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, u_int see
     // ソート済み配列を読み込む
     if (loadPrm1LCompDirect(fnames, current) < 0)
         return -1;
+    // トップパラメータを見る
+    printString("the top of this generation:");
+    showPrm1L(current[0]);
     // エリートはそのままコピー
     copyArray(current, next, ELITE_NUM);
     // 選択, 交叉, 突然変異
     scm(fitness, numbers, current, next);
-    // トップパラメータを見る
-    printString("the top of this generation:");
-    showPrm1L(next[0]);
     // ソート済みフラグは立てずに書き込み
     return dumpPrm1LCompDirect(fnamew, next, 0);
 }
