@@ -9,7 +9,7 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_TEST;
+    const char format[] = FNF_L1RRCM3205006000000001;
     printString(format);
     //makeFGFilePrm1LComp(format);
     //makeFGFilePrm1L(format);
@@ -17,6 +17,6 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltUniRd, format, 0, 0, 3);
+    nGenePrm1LCompLoop(rltUniRd, format, 1, 1, 3);
     return 0;
 }
