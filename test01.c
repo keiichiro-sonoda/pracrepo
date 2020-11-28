@@ -18,6 +18,12 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    nGenePrm1LComp(rltUniRd, format, 0, SEED, SEED * 2, 1);
+    //nGenePrm1LComp(rltUniRd, format, 0, SEED, SEED * 2, 1);
+    u_int s1;
+    s1 = rand();
+    printDecimal(s1);
+    srand(s1);
+    s1 = rand();
+    printDecimal(s1);
     return 0;
 }
