@@ -696,6 +696,16 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, u_int see
     copyArray(current, next, ELITE_NUM);
     // 選択, 交叉, 突然変異
     scm(fitness, numbers, current, next);
+    // 乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
+    // ループ関数じゃなくてこっちでやったほうが手間が少なかった
+    if (!(gene_num % 20)) {
+        int game_num = 500;
+        printf("the number of games: %d x 2\n", game_num);
+        printf("the strongest:\n");
+        checkWinRatePrm1LVSRand(current[0], game_num);
+        printf("the weakest:\n");
+        checkWinRatePrm1LVSRand(current[POPULATION - 1], game_num);
+    }
     // ソート済みフラグは立てずに書き込み
     return dumpPrm1LCompDirect(fnamew, next, 0);
 }
