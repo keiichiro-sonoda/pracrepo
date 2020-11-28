@@ -17,6 +17,6 @@ int main(void) {
     //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltUniRd, format, 1, 100, 201);
+    nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
     return 0;
 }
