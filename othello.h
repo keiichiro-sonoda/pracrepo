@@ -208,4 +208,8 @@ void board2arraySymmetry(Board src, int *dst);
 // warning before overwriting
 int warnOverwriting(const char *fname);
 
+// int型の数値を2進数で表示したい
+// 1が現れる最上位桁から表示
+void printBin32(u_int x);
+
 #endif

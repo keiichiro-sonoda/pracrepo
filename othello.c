@@ -1049,6 +1049,19 @@ int warnOverwriting(const char *fname) {
     return 0;
 }
 
+// 32ビット表示ってことにした
+// 1が現れる最上位桁から表示
+// -1を与えると無限ループになったので強制的に符号なしに変更
+void printBin32(u_int x) {
+    printDecimal(x);
+    printf("0b");
+    for (char i = 31; i >= 0; i--) {
+        printf("%d", (x >> i) & 1);
+        if (!(i % 4) && i) putchar('-');
+    }
+    putchar(10);
+}
+
 // main?
 // なんとなく残してある関数
 int main2(void) {

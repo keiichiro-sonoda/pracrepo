@@ -767,8 +767,9 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
     time(t_arr);
     u_int s1, s2;
     for (int gene_num = start; gene_num < stop; gene_num++) {
-        s1 = SEED + gene_num;
-        s2 = rand() & SEED;
+        // 1 はなんとなくのオフセット
+        s1 = SEED + gene_num + 1;
+        s2 = rand() ^ SEED;
         printf("%x, %x", s1, s2);
         // get time
         time(t_arr + 1);
