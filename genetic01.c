@@ -547,9 +547,31 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     return dumpPrm1LDirect(fname, next, sizeof next);
 }
 
+// 適応度保存用ファイルのファイル名を作る
+// .bin の前に _fitness を付けたい
+// エラー処理は未定
+int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene_num) {
+    // まずはオリジナルのファイル名から作る
+    char fnameo[FILENAME_MAX];
+    // フォーマットと世代番号を合わせ, 長さを取得
+    int len = snprintf(fnameo, FILENAME_MAX, format, gene_num);
+    if (len  + 8 >= dst_size) {
+        printf("error\n");
+        return -1;
+    }
+    // 新たにくっつける文字列
+    char fitness_format[] = "%s_fitness.bin";
+    // .binを排除
+    fnameo[len - 4] = 0;
+    // 合成
+    snprintf(dst, dst_size, fitness_format, fnameo);
+    return 0;
+}
+
 // 圧縮されたファイルから個体を読み出し, 適応度を評価する
 // 適応度降順に個体を並び替え, 同じファイルに書き込む
 // 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
+// 次世代作成関数が膨らまないように, ソート済みの場合はここで適応度の読み書きをする
 int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     // ソート前とソート後のパラメータ配列を用意する (メモリの無駄遣いかな?)
     Prm1L pra1[POPULATION], pra2[POPULATION];
@@ -570,27 +592,6 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
         pra2[i] = pra1[numbers[i]];
     // ソート後の配列を同じファイルに書き戻す (ソート済みフラグを立てる)
     return dumpPrm1LCompDirect(fname, pra2, 1);
-}
-
-// 適応度保存用ファイルのファイル名を作る
-// .bin の前に _fitness を付けたい
-// エラー処理は未定
-int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene_num) {
-    // まずはオリジナルのファイル名から作る
-    char fnameo[FILENAME_MAX];
-    // フォーマットと世代番号を合わせ, 長さを取得
-    int len = snprintf(fnameo, FILENAME_MAX, format, gene_num);
-    if (len  + 8 >= dst_size) {
-        printf("error\n");
-        return -1;
-    }
-    // 新たにくっつける文字列
-    char fitness_format[] = "%s_fitness.bin";
-    // .binを排除
-    fnameo[len - 4] = 0;
-    // 合成
-    snprintf(dst, dst_size, fitness_format, fnameo);
-    return 0;
 }
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)
