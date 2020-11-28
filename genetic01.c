@@ -20,6 +20,11 @@ const int PRM1L_COMP_LEN = PRM1L_LEN * POPULATION + 1;
 void initPrm1LComp(void) {
     srand(SEED);
     initBoard();
+    printf("population         : %4d\n", POPULATION);
+    printf("the number of elite: %4d\n", ELITE_NUM);
+    printf("mutation rate      : %4.2f\n", MUT_RATE);
+    printf("bias magnification : %4d\n", BIAS_MAG);
+    printf("seed               : %4u\n", SEED);
 }
 
 // black: +1, empty: 0, white: -1
@@ -242,7 +247,7 @@ void checkWinRatePrm1LVSRand(Prm1L pr, int n) {
     float rb, rw;
     rb = calcWinRatePrm1LVSRand(pr, 0b01, n);
     rw = calcWinRatePrm1LVSRand(pr, 0b10, n);
-    printf("the number of games: %d x 2\n", n);
+    //printf("the number of games: %d x 2\n", n);
     printf("win rate (black, white, total): %4.1f%%, %4.1f%%, %4.1f%%\n", rb * 100, rw * 100, (rb + rw) * 50);
 }
 
