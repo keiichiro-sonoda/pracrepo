@@ -654,7 +654,8 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
 // 次の世代のファイルを作る関数 (圧縮バージョン)
 // ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
 // ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
-int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
+// 再現性確保のためのシードを2つ与えることにする
+int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety) {
     // 読み込み (ソート) 用と書き込み用ファイル名
     char fnames[FILENAME_MAX], fnamew[FILENAME_MAX];
     snprintf(fnames, FILENAME_MAX, format, gene_num);
@@ -665,16 +666,19 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safet
     if (safety && (warnOverwriting(fnamew) < 0))
         return -1;
     int fitness[POPULATION];
+    // 対戦・ソート用シード
+    srand(seed1);
     // 適応度評価とファイルのソート
+    // さらに適応度ファイルの読み書きも行う
     int flag = sortPrm1LCompFileByFitness(fnames, fitness);
-    printDecimal(flag);
     // エラー
     if (flag < 0) return -1;
     // ソート済み
     if (flag == 1) {
         printf("%s is already sorted!\n", fnames);
     }
-    srand(SEED);
+    // 選択・交叉・突然変異用シード
+    srand(seed2);
     // なんとなくソート済み適応度を表示
     printDecimalArray(fitness, POPULATION);
     // 今世代と次世代の個体配列を宣言

@@ -259,7 +259,9 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness);
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)
 // ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
-int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, int safety);
+// ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
+// 再現性確保のためのシードを２つ与えることにする
+int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety);
 
 // with Prm1L
 void nGenePrm1LLoop(scmFuncPrm1L scm, const char *format, int safety, int st, int loop);
