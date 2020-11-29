@@ -22,6 +22,7 @@ int main(void) {
     float sg1[sgl], sg2[sgl], sg3[sgl];
     randWeightArray(sg1, sgl);
     randWeightArray(sg2, sgl);
+    srand(rand());
     uniCrossArray(sg1, sg2, sg3, sgl);
     printFloatArray(sg1, sgl);
     printFloatArray(sg2, sgl);
