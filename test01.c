@@ -18,7 +18,10 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
-    for (int i = 0; i < 100; i++)
-        printCharDecimal(randWeightChar());
+    char smp1[POPULATION];
+    randWeightCharArray(smp1, POPULATION);
+    for (int i = 0; i < POPULATION; i++)
+        printf("%d ", (int)smp1[i]);
+    putchar(10);
     return 0;
 }

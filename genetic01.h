@@ -62,7 +62,7 @@
 #define randWeight() ((float)rand() / RAND_MAX - 0.5f)
 
 // 圧縮された重みで使うchar型の乱数を作成 (-127から127)
-#define randWeightChar() ((char)(rand() % 255))
+#define randWeightChar() ((char)(rand() % 255 - 127))
 
 // create an array of random weights
 #define randWeightArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeight()
