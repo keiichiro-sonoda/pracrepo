@@ -520,6 +520,18 @@ Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father) {
     return child;
 }
 
+// ブロックごとに一様交叉を行う
+// weight1[i][], weight2[i] の組み合わせをブロックと考える
+// パターンとその重みのペアと見なせる?
+Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
+    Prm1L child;
+    randPrm1L(&child);
+    for (int i = 0; i < 8; i++) {
+        ;
+    }
+    return child;
+}
+
 // roulette selection
 // uniform crossover
 // random mutation

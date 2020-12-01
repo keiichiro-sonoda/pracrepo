@@ -105,13 +105,19 @@
 // float型配列をchar型配列に圧縮
 #define weight2charArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = weight2char((src)[_])
 
+// レイヤ2の入力の長さ
+// 変える予定は無いができる限り共通の数であることを主張したい
+#ifndef L2_NUM
+#define L2_NUM 8
+#endif
+
 // types
 
 // 1 middle layer
 // including bias
 typedef struct prm1L {
-    float weight1[8][MASU_NUM + 1];
-    float weight2[8];
+    float weight1[L2_NUM][MASU_NUM + 1];
+    float weight2[L2_NUM];
 } Prm1L;
 
 // type of function for selection, crossover and mutation
