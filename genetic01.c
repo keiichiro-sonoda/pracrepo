@@ -746,6 +746,8 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, u_int see
     copyArray(current, next, ELITE_NUM);
     // 選択, 交叉, 突然変異
     scm(fitness, numbers, current, next);
+    // 統計調査
+    viewStatPrm1L(current);
     // 乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
     // ループ関数じゃなくてこっちでやったほうが手間が少なかった
     if (!(gene_num % 20)) {
@@ -844,4 +846,33 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
         printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
         kugiri(100);
     }
+}
+
+// 統計値を眺めてみたい
+// 主に分散に興味がある
+// 各個体を528次元ベクトルと考え, 平均のベクトルを求めたい
+// さらにその平均のベクトルからの距離の平均を求めたい
+void viewStatPrm1L(Prm1L *pra) {
+    int i, j;
+    float arr_2d[POPULATION][PRM1L_LEN], means[PRM1L_LEN];
+    // 各個体を2次元配列に格納
+    for (i = 0; i < POPULATION; i++) {
+        Prm1L2array(pra + i, arr_2d[i]);
+    }
+    // 初期化
+    zerosFloat(means, PRM1L_LEN);
+    // まずは和を計算
+    for (i = 0; i < POPULATION; i++) {
+        for (j = 0; j < PRM1L_LEN; j++) {
+            means[j] += arr_2d[i][j];
+        }
+    }
+    // 個体数で割る
+    for (j = 0; j < PRM1L_LEN; j++) {
+        means[j] /= POPULATION;
+    }
+    // 平均値をパラメータに変換して表示してみる
+    Prm1L tpr;
+    array2Prm1L(means, &tpr);
+    showPrm1L(tpr);
 }

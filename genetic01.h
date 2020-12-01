@@ -301,4 +301,10 @@ void nGenePrm1LLoopSeed(scmFuncPrm1L scm, const char *format, int safety, int st
 // 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
 void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int start, int stop);
 
+// 統計値を眺めてみたい
+// 主に分散に興味がある
+// 各個体を528次元ベクトルと考え, 平均のベクトルを求めたい
+// さらにその平均のベクトルからの距離の平均を求めたい
+void viewStatPrm1L(Prm1L *pra);
+
 #endif

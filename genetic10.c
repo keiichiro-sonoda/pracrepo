@@ -26,6 +26,6 @@ int main(void) {
     printString(format);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltUniBlRd, format, 1, 0, 2);
+    nGenePrm1LCompLoop(rltUniBlRd, format, 1, 0, 1);
     return 0;
 }
