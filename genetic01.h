@@ -63,7 +63,7 @@
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
 // return an floating point random number from -0.5 to 0.5
-#define randWeight() ((float)rand() / RAND_MAX - 0.5f)
+#define randWeight() ((float)randFloat() - 0.5f)
 
 // 圧縮された重みで使うchar型の乱数を作成 (-127から127)
 #define randWeightChar() ((char)(rand() % 255 - 127))
@@ -83,7 +83,7 @@
 
 // ここでマクロ MUT_RATE を使う
 // MUT_RATE chance to replace with random value
-#define randMutArray(C, n) for (int _ = 0; _ < n; _++) if ((float)rand() / RAND_MAX < MUT_RATE) (C)[_] = randWeight()
+#define randMutArray(C, n) for (int _ = 0; _ < (n); _++) if (randFloat() < MUT_RATE) (C)[_] = randWeight()
 
 // activation functions
 // sigmoid function (return float)
@@ -258,6 +258,10 @@ void copyBlockPrm1L(Prm1L *src, Prm1L *dst, int bl_num);
 // weight1[i][], weight2[i] の組み合わせをブロックと考える
 // パターンとその重みのペアと見なせる?
 Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father);
+
+// ランダム突然変異する
+// 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
+void randMutPrm1L(Prm1L *prp);
 
 // roulette selection
 // uniform crossover

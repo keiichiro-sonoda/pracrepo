@@ -21,7 +21,11 @@ int main(void) {
     randPrm1L(&pr2);
     showPrm1L(pr1);
     showPrm1L(pr2);
+    printf("crossover\n");
     pr3 = uniCrossBlockPrm1L(pr1, pr2);
+    showPrm1L(pr3);
+    randMutPrm1L(&pr3);
+    printf("mutated?\n");
     showPrm1L(pr3);
     return 0;
 }

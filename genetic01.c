@@ -553,6 +553,18 @@ Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
     return child;
 }
 
+// ランダム突然変異する
+// 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
+void randMutPrm1L(Prm1L *prp) {
+    float tmp[PRM1L_LEN];
+    // 配列に変換
+    Prm1L2array(prp, tmp);
+    // 突然変異率は各値ごと MUT_RATE に依存
+    randMutArray(tmp, PRM1L_LEN);
+    // 引数のポインタに代入し直す
+    array2Prm1L(tmp, prp);
+}
+
 // roulette selection
 // uniform crossover
 // random mutation

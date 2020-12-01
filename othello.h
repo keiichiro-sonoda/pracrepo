@@ -67,6 +67,9 @@
 // positive range only
 #define randInt(min, max) (rand() % ((max) - (min) + 1) + (min))
 
+// 0.0 以上 1.0 以下の float 型乱数を返す
+#define randFloat() ((float)rand() / RAND_MAX)
+
 // 0 か 1 を返すだけのマクロ
 #define randBit() (rand() & 1)
 
