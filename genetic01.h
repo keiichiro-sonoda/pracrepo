@@ -106,8 +106,8 @@
 
 // レイヤ2の入力の長さ
 // 変える予定は無いができる限り共通の数であることを主張したい
-#ifndef L2_NUM
-#define L2_NUM 8
+#ifndef PRM1L_L2_NUM
+#define PRM1L_L2_NUM 8
 #endif
 
 // types
@@ -115,8 +115,8 @@
 // 1 middle layer
 // including bias
 typedef struct prm1L {
-    float weight1[L2_NUM][MASU_NUM + 1];
-    float weight2[L2_NUM];
+    float weight1[PRM1L_L2_NUM][MASU_NUM + 1];
+    float weight2[PRM1L_L2_NUM];
 } Prm1L;
 
 // type of function for selection, crossover and mutation
@@ -128,7 +128,7 @@ typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
 
 // Prm1Lの要素数
 // マクロだったものを変数に変更
-// MASU_NUM と L2_NUM を基に計算
+// MASU_NUM と PRM1L_L2_NUM を基に計算
 extern const int PRM1L_LEN;
 
 // 圧縮したPrm1L配列の長さ (1要素1byteなので直接サイズとしても使える)

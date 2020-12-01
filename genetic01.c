@@ -9,7 +9,7 @@
 // global variables
 
 // Prm1L の要素数
-const int PRM1L_LEN = (MASU_NUM + 2) * L2_NUM;
+const int PRM1L_LEN = (MASU_NUM + 2) * PRM1L_L2_NUM;
 
 // ファイルの長さ
 // ソート済みフラグ追加
@@ -530,7 +530,7 @@ Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father) {
 Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
     Prm1L child;
     randPrm1L(&child);
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < PRM1L_L2_NUM; i++) {
         ;
     }
     return child;

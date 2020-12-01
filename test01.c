@@ -18,7 +18,6 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
-    printDecimal(L2_NUM);
-    printBin32(L2_NUM);
+    printDecimal(PRM1L_L2_NUM);
     return 0;
 }
