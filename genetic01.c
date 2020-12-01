@@ -28,7 +28,7 @@ void initPrm1LComp(void) {
     printf("mutation rate      : %4.2f\n", MUT_RATE);
     printf("bias magnification : %4d\n", BIAS_MAG);
     printf("seed               : %4u\n", SEED);
-    printDecimal(PRM1L_LEN);
+    //printDecimal(PRM1L_LEN);
 }
 
 // black: +1, empty: 0, white: -1
@@ -543,6 +543,7 @@ Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
     for (int i = 0; i < PRM1L_L2_NUM; i++) {
         // 50%の抽選で1が出た場合, motherから引き継ぎ
         if (randBit()) {
+            printDecimal(i);
             copyBlockPrm1L(&mother, &child, i);
         }
         // 0が出た場合, fatherから引き継ぎ

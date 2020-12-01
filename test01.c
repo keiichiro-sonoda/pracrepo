@@ -18,10 +18,12 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
-    char smp1[POPULATION];
-    randWeightCharArray(smp1, POPULATION);
-    for (int i = 0; i < POPULATION; i++)
-        printf("%d ", (int)smp1[i]);
-    putchar(10);
+    Prm1L pr1, pr2, pr3;
+    randPrm1L(&pr1);
+    randPrm1L(&pr2);
+    showPrm1L(pr1);
+    showPrm1L(pr2);
+    pr3 = uniCrossBlockPrm1L(pr1, pr2);
+    showPrm1L(pr3);
     return 0;
 }
