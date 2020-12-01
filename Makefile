@@ -14,6 +14,8 @@ exe8: genetic08.c genetic02.c othello.c sort01.o
 	gcc genetic08.c genetic02.c othello.c sort01.o -o exe8 -lm
 exe9: genetic09.c genetic02.o othello.o sort01.o
 	gcc genetic09.c genetic02.o othello.o sort01.o -o exe9 -lm -Wall
+exe10: genetic10.c genetic01.o othello.o sort01.o
+	gcc genetic10.c genetic01.o othello.o sort01.o -o exe10 -lm -Wall
 exe2_win.exe: genetic02_win.c genetic02_win.h othello_win.c othello_win.h sort01_win.o
 	gcc genetic02_win.c othello_win.c sort01_win.o -o exe2_win.exe -lm
 share01.so: genetic01_win.o othello_win.o sort01_win.o

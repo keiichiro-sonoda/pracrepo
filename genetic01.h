@@ -1,6 +1,10 @@
 #ifndef GENETIC01_H
 #define GENETIC01_H
 
+// マクロで使うのが確定しているライブラリ
+#include <math.h>
+
+// この中で stdio.h, stdlib.h はインクルード済み
 #include "othello.h"
 
 #define PI 3.14159265358979323846264338
@@ -72,7 +76,7 @@
 #define randWeightCharArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeightChar()
 
 // choose randomly either a or b
-#define alternative(a, b) (rand() % 2 ? (a) : (b))
+#define alternative(a, b) (randBit() ? (a) : (b))
 
 // uniform crossover (array)
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
