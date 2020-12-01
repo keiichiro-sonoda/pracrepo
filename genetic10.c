@@ -22,7 +22,7 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_TEST;
+    const char format[] = FNF_L1RRCM3205006000500001;
     printString(format);
     // for debugging
     makeFGFilePrm1LComp(format);

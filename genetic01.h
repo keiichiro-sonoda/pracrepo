@@ -59,6 +59,9 @@
 // M32: バイアスの倍率が32という意味
 #define FNF_L1RRCM3205006000000001 "prm/l1rrcm32_050_06_rlt_uni_rd001/l1rrcm32_050_06_rlt_uni_rd001_g%03d.bin"
 
+// 05: ブロックごと一様交叉 (3と4は多点交叉等の予約)
+#define FNF_L1RRCM3205006000500001 "prm/l1rrcm32_050_06_rlt_ub_rd001/l1rrcm32_050_06_rlt_ub_rd001_g%03d.bin"
+
 // don't use activation function
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
