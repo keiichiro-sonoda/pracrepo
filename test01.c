@@ -9,7 +9,7 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_L1RRCM3205006000000001;
+    const char format[] = FNF_TEST;
     printString(format);
     //makeFGFilePrm1LComp(format);
     //makeFGFilePrm1L(format);

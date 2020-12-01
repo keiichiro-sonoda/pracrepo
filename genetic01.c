@@ -8,6 +8,9 @@
 
 // global variables
 
+// Prm1L の要素数
+const int PRM1L_LEN = (MASU_NUM + 2) * L2_NUM;
+
 // ファイルの長さ
 // ソート済みフラグ追加
 const int PRM1L_COMP_LEN = PRM1L_LEN * POPULATION + 1;
@@ -25,6 +28,7 @@ void initPrm1LComp(void) {
     printf("mutation rate      : %4.2f\n", MUT_RATE);
     printf("bias magnification : %4d\n", BIAS_MAG);
     printf("seed               : %4u\n", SEED);
+    printDecimal(PRM1L_LEN);
 }
 
 // black: +1, empty: 0, white: -1

@@ -7,7 +7,6 @@
 
 // number of parameters per generation
 #define POPULATION 50
-#define PRM1L_LEN 528 // Prm1L の重みの総数
 #define ELITE_NUM 6
 
 #ifndef MUT_RATE
@@ -126,6 +125,11 @@ typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
 
 // 大域変数
 // global variables
+
+// Prm1Lの要素数
+// マクロだったものを変数に変更
+// MASU_NUM と L2_NUM を基に計算
+extern const int PRM1L_LEN;
 
 // 圧縮したPrm1L配列の長さ (1要素1byteなので直接サイズとしても使える)
 // 最後の要素はソート済みフラグに使う予定
