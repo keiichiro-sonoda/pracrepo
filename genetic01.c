@@ -855,6 +855,7 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
 void viewStatPrm1L(Prm1L *pra) {
     int i, j;
     float arr_2d[POPULATION][PRM1L_LEN], means[PRM1L_LEN];
+    float tmp;
     // 各個体を2次元配列に格納
     for (i = 0; i < POPULATION; i++) {
         Prm1L2array(pra + i, arr_2d[i]);
@@ -864,7 +865,12 @@ void viewStatPrm1L(Prm1L *pra) {
     // まずは和を計算
     for (i = 0; i < POPULATION; i++) {
         for (j = 0; j < PRM1L_LEN; j++) {
-            means[j] += arr_2d[i][j];
+            // 試しに絶対値の平均をとってみる
+            tmp = arr_2d[i][j];
+            if (tmp >= 0)
+                means[j] += arr_2d[i][j];
+            else
+                means[j] -= arr_2d[i][j];
         }
     }
     // 個体数で割る
