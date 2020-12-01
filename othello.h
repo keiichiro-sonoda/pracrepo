@@ -47,7 +47,7 @@
 
 // 配列コピー (型に依存しないって便利ね)
 // copy an array
-#define copyArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = (src)[_]
+#define copyArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = (src)[_]
 
 // subract constant value from all elements
 #define subConst(A, n, c) for (int i = 0; i < n; i++) (A)[i] -= (c)
