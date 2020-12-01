@@ -25,7 +25,7 @@ int main(void) {
     const char format[] = FNF_L1RRCM3205006000500001;
     printString(format);
     // for debugging
-    makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltUniBlRd, format, 1, 0, 2);
+    //makeFGFilePrm1LComp(format);
+    nGenePrm1LCompLoop(rltUniBlRd, format, 1, 0, 101);
     return 0;
 }
