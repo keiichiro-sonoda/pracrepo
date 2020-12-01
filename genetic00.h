@@ -47,8 +47,6 @@
 #define sigmoidFloatP(xp) (*(xp) = sigmoidFloat(*(xp)))
 // 平均値を計算 (型に依存しないが, 整数等は切り捨てられるため注意)
 #define getAve(a, b) (((a) + (b)) / 2)
-// 二乗距離を計算
-#define sqDist(a, b) square((a) - (b))
 
 // 最初に思いついたでかいパラメータ
 // 次はいつ使うんだろうね

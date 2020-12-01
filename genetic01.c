@@ -854,8 +854,7 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
 // さらにその平均のベクトルからの距離の平均を求めたい
 void viewStatPrm1L(Prm1L *pra) {
     int i, j;
-    float arr_2d[POPULATION][PRM1L_LEN], means[PRM1L_LEN];
-    float tmp;
+    float arr_2d[POPULATION][PRM1L_LEN], means[PRM1L_LEN], dists[POPULATION];
     // 各個体を2次元配列に格納
     for (i = 0; i < POPULATION; i++) {
         Prm1L2array(pra + i, arr_2d[i]);
@@ -865,21 +864,23 @@ void viewStatPrm1L(Prm1L *pra) {
     // まずは和を計算
     for (i = 0; i < POPULATION; i++) {
         for (j = 0; j < PRM1L_LEN; j++) {
-            // 試しに絶対値の平均をとってみる
-            tmp = arr_2d[i][j];
-            if (tmp >= 0)
-                means[j] += arr_2d[i][j];
-            else
-                means[j] -= arr_2d[i][j];
+            means[j] += arr_2d[i][j];
         }
     }
     // 個体数で割る
     for (j = 0; j < PRM1L_LEN; j++) {
         means[j] /= POPULATION;
     }
-    // 平均値をパラメータに変換して表示してみる
-    Prm1L tpr;
-    array2Prm1L(means, &tpr);
-    printf("means\n");
-    showPrm1L(tpr);
+    // 各個体ベクトルから平均ベクトルを引いて偏差の二乗に書き換え
+    // 重心を原点にするってことでいいのかな?
+    for (i = 0; i < POPULATION; i++) {
+        sqDistArray(arr_2d[i], means, arr_2d[i], PRM1L_LEN);
+        // 各個体の平均ベクトルからの二乗距離を計算
+        dists[i] = sumFloat(arr_2d[i], PRM1L_LEN);
+        // 平方根を計算してユークリッド距離にする
+        dists[i] = sqrtf(dists[i]);
+    }
+    // 平均ベクトルからの距離の平均を計算して表示
+    // まじでややこしい
+    printFloat(aveFloat(dists, POPULATION));
 }

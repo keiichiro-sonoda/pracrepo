@@ -63,6 +63,13 @@
 // calculate the square
 #define square(x) ((x) * (x))
 
+// 二乗距離を計算
+#define sqDist(a, b) square((a) - (b))
+
+// ベクトル A と B の各要素の二乗距離を計算し D に代入
+// D の総和の平方根が A と B の距離になる
+#define sqDistArray(A, B, D, n) for (int _ = 0; _ < (n); _++) (D)[_] = sqDist((A)[_], (B)[_])
+
 // return an integer random number from min to max
 // positive range only
 #define randInt(min, max) (rand() % ((max) - (min) + 1) + (min))

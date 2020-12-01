@@ -27,6 +27,10 @@ int sumInt(const int *A, int n);
 // return the sum of a floating point array
 float sumFloat(const float *A, int n);
 
+// 合計を求める関数から平均を求めるマクロを作りたかった
+// 関数の途中で定義しても大丈夫か?
+#define aveFloat(A, n) (sumFloat(A, n) / (n))
+
 // delete the element of the specified index
 // the size of the array doesn't change
 void delInt(int *A, int n, int index);
