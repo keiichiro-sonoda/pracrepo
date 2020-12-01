@@ -76,7 +76,7 @@ int sumInt(const int *A, int n) {
 
 // return the sum of a floating point array
 float sumFloat(const float *A, int n) {
-    float s = 0.0;
+    float s = 0.0f;
     for (int i = 0; i < n; i++)
         s += A[i];
     return s;

@@ -882,5 +882,6 @@ void viewStatPrm1L(Prm1L *pra) {
     }
     // 平均ベクトルからの距離の平均を計算して表示
     // まじでややこしい
+    printf("the average of deviation vector??: ");
     printFloat(aveFloat(dists, POPULATION));
 }

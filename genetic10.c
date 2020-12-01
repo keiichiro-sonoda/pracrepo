@@ -25,9 +25,7 @@ int main(void) {
     const char format[] = FNF_TEST;
     printString(format);
     // for debugging
-    //makeFGFilePrm1LComp(format);
-    //nGenePrm1LCompLoop(rltUniBlRd, format, 1, 0, 1);
-    float smp1[] = {0.1, 0.2, 0.3, 0.4};
-    printFloat(aveFloat(smp1, 4));
+    makeFGFilePrm1LComp(format);
+    nGenePrm1LCompLoop(rltUniBlRd, format, 1, 0, 2);
     return 0;
 }
