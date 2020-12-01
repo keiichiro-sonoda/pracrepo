@@ -2,6 +2,21 @@
 #include "genetic01.h"
 #include "sort01.h"
 
+// ルーレット選択
+// ブロック毎一様交叉
+// ランダム突然変異
+// ソート済みの個体配列を用いる場合 numbers は不要だが互換性のため
+void rltUniBlRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next) {
+    int parents[2];
+    for (int count = ELITE_NUM; count < POPULATION; count ++) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        // ブロック毎一様交叉 (突然変異なし)
+        next[count] = uniCrossBlockPrm1L(current[numbers[parents[0]]], current[numbers[parents[1]]]);
+        // 値毎ランダム突然変異
+        randMutPrm1L(next + count);
+    }
+}
+
 int main(void) {
     // 初期化にシード設定も含まれる
     initPrm1LComp();
@@ -9,23 +24,8 @@ int main(void) {
     //showBoard(START);
     const char format[] = FNF_TEST;
     printString(format);
-    //makeFGFilePrm1LComp(format);
-    //makeFGFilePrm1L(format);
-    //checkPrm1LFile(format, 1);
-    //nGenePrm1LLoopSeed(rltUniRd, format, 0, 0, 500);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
-    Prm1L pr1, pr2, pr3;
-    randPrm1L(&pr1);
-    randPrm1L(&pr2);
-    showPrm1L(pr1);
-    showPrm1L(pr2);
-    printf("crossover\n");
-    pr3 = uniCrossBlockPrm1L(pr1, pr2);
-    showPrm1L(pr3);
-    randMutPrm1L(&pr3);
-    printf("mutated?\n");
-    showPrm1L(pr3);
+    nGenePrm1LCompLoop(rltUniBlRd, format, 1, 0, 2);
     return 0;
 }
