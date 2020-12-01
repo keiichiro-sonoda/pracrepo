@@ -18,6 +18,10 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
-    printDecimal(PRM1L_L2_NUM);
+    int rslt[2];
+    zeros(rslt, 2);
+    for (int i = 0; i < 10000; i++)
+        rslt[randBit()]++;
+    printDecimalArray(rslt, 2);
     return 0;
 }

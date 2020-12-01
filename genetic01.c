@@ -530,6 +530,7 @@ Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father) {
 Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
     Prm1L child;
     randPrm1L(&child);
+    // レイヤ2の数くり返し
     for (int i = 0; i < PRM1L_L2_NUM; i++) {
         ;
     }
