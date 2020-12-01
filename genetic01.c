@@ -524,6 +524,15 @@ Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father) {
     return child;
 }
 
+// 指定した番号のブロックをコピー
+// コピー元, コピー先のパラメータはそれぞれポインタで与える
+void copyBlockPrm1L(Prm1L *src, Prm1L *dst, int bl_num) {
+    // パターンをコピー
+    copyArray(src->weight1[bl_num], dst->weight1[bl_num], MASU_NUM + 1);
+    // 対応する重みをコピー
+    dst->weight2[bl_num] = src->weight2[bl_num];
+}
+
 // ブロックごとに一様交叉を行う
 // weight1[i][], weight2[i] の組み合わせをブロックと考える
 // パターンとその重みのペアと見なせる?
@@ -532,7 +541,14 @@ Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
     randPrm1L(&child);
     // レイヤ2の数くり返し
     for (int i = 0; i < PRM1L_L2_NUM; i++) {
-        ;
+        // 50%の抽選で1が出た場合, motherから引き継ぎ
+        if (randBit()) {
+            copyBlockPrm1L(&mother, &child, i);
+        }
+        // 0が出た場合, fatherから引き継ぎ
+        else {
+            copyBlockPrm1L(&father, &child, i);
+        }
     }
     return child;
 }

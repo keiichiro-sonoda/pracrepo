@@ -246,6 +246,15 @@ Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father);
 // including random mutation
 Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father);
 
+// 指定した番号のブロックをコピー
+// コピー元, コピー先のパラメータはそれぞれポインタで与える
+void copyBlockPrm1L(Prm1L *src, Prm1L *dst, int bl_num);
+
+// ブロックごとに一様交叉を行う
+// weight1[i][], weight2[i] の組み合わせをブロックと考える
+// パターンとその重みのペアと見なせる?
+Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father);
+
 // roulette selection
 // uniform crossover
 void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next);
