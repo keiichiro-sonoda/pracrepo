@@ -874,5 +874,6 @@ void viewStatPrm1L(Prm1L *pra) {
     // 平均値をパラメータに変換して表示してみる
     Prm1L tpr;
     array2Prm1L(means, &tpr);
+    printf("means\n");
     showPrm1L(tpr);
 }
