@@ -9,7 +9,7 @@
 // for debugging
 void sortTest(void) {
     srand(123u);
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     int sample1[] = {11, 5, 6, 8, 1, 2, 10, 3, -5, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
@@ -17,9 +17,18 @@ void sortTest(void) {
     randomizedQuicksortAll(sample1, l1);
     printDecimalArray(sample1, l1);
     printFloat(aveFloat(sample2, l2));
-    int rslt[3];
-    randIntMltDep(rslt, 3, 0, 2);
-    printDecimalArray(rslt, 3);
+    int n = 3;
+    int tmp[n];
+    int range = 10;
+    int rslt[range];
+    zeros(rslt, range);
+    for (int i = 0; i < 10000; i++) {
+        randIntMltDep(tmp, n, 0, range - 1);
+        for (int j = 0; j < n; j++) {
+            rslt[tmp[j]]++;
+        }
+    }
+    printDecimalArray(rslt, range);
 }
 
 // insertion sort
