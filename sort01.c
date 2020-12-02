@@ -8,7 +8,7 @@
 
 // for debugging
 void sortTest(void) {
-    srand(123U);
+    srand(123u);
     //srand((unsigned)time(NULL));
     int sample1[] = {5, 6, 8, 1, 2, 10, 3, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 0.0, 0.1, 0.3, 1.0, 2.5, 4.0};
@@ -28,6 +28,8 @@ void sortTest(void) {
     }
     printDecimalArray(result1, l1);
     printDecimal(l2);
+    randomizedQuicksortAll(sample1, l1);
+    printDecimalArray(sample1, l1);
 }
 
 // insertion sort
@@ -192,11 +194,10 @@ void rouletteFloatTest(const float *A, int n) {
 }
 
 // exchange A[i] and A[j]
-int exchange(int *A, int i, int j) {
+void exchange(int *A, int i, int j) {
     int t = A[i];
     A[i] = A[j];
     A[j] = t;
-    return 0;
 }
 
 // exchange A[i] and A[j]
@@ -223,6 +224,21 @@ int partitionDD(int *A, int *B, int p, int r) {
     }
     exchange(A, i, r);
     exchange(B, i, r);
+    return i;
+}
+
+// 乱択版パーティション (昇順)
+int randomizedPartition(int *A, int p, int r) {
+    exchange(A, randIntRange(p, r), r);
+    int x = A[r];
+    int i = p;
+    for (int j = p; j < r; j++) {
+        if (A[j] < x) {
+            exchange(A, i, j);
+            i++;
+        }
+    }
+    exchange(A, i, r);
     return i;
 }
 
@@ -253,6 +269,15 @@ void quicksortDD(int *A, int *B, int p, int r) {
         int q = partitionDD(A, B, p, r);
         quicksortDD(A, B, p, q - 1);
         quicksortDD(A, B, q + 1, r);
+    }
+}
+
+// 乱択版クイックソート (昇順)
+void randomizedQuicksort(int *A, int p, int r) {
+    if (p < r) {
+        int q = randomizedPartition(A, p, r);
+        randomizedQuicksort(A, p, q - 1);
+        randomizedQuicksort(A, q + 1, r);
     }
 }
 

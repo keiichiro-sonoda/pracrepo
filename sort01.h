@@ -64,11 +64,14 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);
 void rouletteFloatTest(const float *A, int n);
 
 // exchange A[i] and A[j]
-int exchange(int *A, int i, int j);
+void exchange(int *A, int i, int j);
 
 // exchange A[i] and A[j]
 // also exchange B[i] and B[j]
 void exchangeD(int *A, int *B, int i, int j);
+
+// 乱択版パーティション (昇順)
+int randomizedPartition(int *A, int p, int r);
 
 // randomized partition
 // A: array to compare
@@ -78,6 +81,12 @@ int randomizedPartitionDD(int *A, int *B, int p, int r);
 int partitionDD(int *A, int *B, int p, int r);
 // descending order
 void quicksortDD(int *A, int *B, int p, int r);
+
+// 乱択版クイックソート (昇順)
+void randomizedQuicksort(int *A, int p, int r);
+
+// 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
+#define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
 
 // randomized quicksort
 void randomizedQuicksortDD(int *A, int *B, int p, int r);
