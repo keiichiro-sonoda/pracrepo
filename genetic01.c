@@ -599,6 +599,39 @@ void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
     }
 }
 
+// ある点と交叉点配列 (ソート済み) を与え, その点が交叉する点か否かを判別する
+int isCross(int i, const int *cpa, int cp_num) {
+    // 小さい交叉点から比較していく
+    for (int j = 0; j < cp_num; j++) {
+        if (i <= cpa[j]) {
+            return j & 1;
+        }
+    }
+    return cp_num & 1;
+}
+
+// 多点交叉を試してみたい
+// 引数に交叉点の数を追加 (一点交叉と二点交叉いらなくなるね)
+// n点交叉は, 交叉点の選び方によってn-1点交叉と同じになる
+void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2], int cp_num) {
+    float p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
+    // 交叉点配列
+    int cpa[cp_num];
+    Prm1L2array(mother_p, p_arr[0]);
+    Prm1L2array(father_p, p_arr[1]);
+    // 0からパラメータの末尾まで, 交叉点を指定した数だけ重複なしでランダムに選ぶ
+    randIntMltDep(cpa, cp_num, 0, PRM1L_LEN - 1);
+    // 昇順にソート
+    randomizedQuicksortAll(cpa, cp_num);
+    for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < PRM1L_LEN; i++) {
+            // 交叉点を境界にして交互に交叉するかどうかが決まる
+            c_arr[i] = p_arr[j ^ (isCross(i, cpa, cp_num))][i];
+        }
+        array2Prm1L(c_arr, children + j);
+    }
+}
+
 // ランダム突然変異する
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
 void randMutPrm1L(Prm1L *prp) {
