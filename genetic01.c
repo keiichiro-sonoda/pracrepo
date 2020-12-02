@@ -615,14 +615,17 @@ void randMutPrm1L(Prm1L *prp) {
 
 // 交叉関数のデバッグ
 void crossTest(void) {
-    Prm1L mother, father;
+    Prm1L mother, father, children[2];
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
     initArrayConst(m_arr, PRM1L_LEN, 0.0f);
-    initArrayConst(f_arr, PRM1L_LEN, 0.5f);
+    initArrayConst(f_arr, PRM1L_LEN, 0.111f);
     array2Prm1L(m_arr, &mother);
     array2Prm1L(f_arr, &father);
     showPrm1L(mother);
     showPrm1L(father);
+    doublePCross(&mother, &father, children);
+    showPrm1L(children[0]);
+    showPrm1L(children[1]);
 }
 
 // roulette selection
