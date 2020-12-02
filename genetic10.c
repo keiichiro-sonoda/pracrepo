@@ -17,6 +17,30 @@ void rltUniBlRd(const int *fitness, const int *numbers, const Prm1L *current, Pr
     }
 }
 
+// ルーレット選択
+// 一点交叉 (2人っ子) 
+// ランダム突然変異
+void rltSPRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next) {
+    int parents[2];
+    Prm1L children[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        // 一点交叉 (突然変異なし)
+        singlePCross(current + numbers[parents[0]], current + numbers[parents[1]], children);
+        // 値毎ランダム突然変異
+        for (int i = 0; i < 2; i++)
+            randMutPrm1L(children + i);
+        next[count] = children[0];
+        count++;
+        // オーバーフロー
+        if (count >= POPULATION) {
+            printf("yeah\n");
+            break;
+        }
+        next[count] = children[1];
+    }
+}
+
 int main(void) {
     // 初期化にシード設定も含まれる
     initPrm1LComp();
@@ -25,15 +49,7 @@ int main(void) {
     const char format[] = FNF_TEST;
     printString(format);
     // for debugging
-    //makeFGFilePrm1LComp(format);
-    //nGenePrm1LCompLoop(rltUniBlRd, format, 1, 100, 201);
-    Prm1L pra[POPULATION];
-    Prm1L children[2];
-    loadPrm1LComp(format, 0, pra);
-    showPrm1L(pra[0]);
-    showPrm1L(pra[1]);
-    singlePCross(pra, pra + 1, children);
-    showPrm1L(children[0]);
-    showPrm1L(children[1]);
+    makeFGFilePrm1LComp(format);
+    nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 2);
     return 0;
 }

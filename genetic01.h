@@ -11,7 +11,7 @@
 
 // number of parameters per generation
 #define POPULATION 50
-#define ELITE_NUM 6
+#define ELITE_NUM 5
 
 #ifndef MUT_RATE
 #define MUT_RATE 0.01f // 突然変異率
