@@ -590,7 +590,6 @@ void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
     randIntDoubleDep(cpa, 0, PRM1L_LEN - 1);
     // ソート
     randomizedQuicksortAll(cpa, 2);
-    printDecimalArray(cpa, 2);
     for (int j = 0; j < 2; j++) {
         for (int i = 0; i < PRM1L_LEN; i++) {
             // 小交叉点より大きく, 大交叉点以下なら交換

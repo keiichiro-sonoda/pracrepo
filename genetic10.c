@@ -38,17 +38,40 @@ void rltSPRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L
     }
 }
 
+// ルーレット選択
+// 二点交叉 (2人っ子) 
+// ランダム突然変異
+void rltDPRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next) {
+    int parents[2];
+    Prm1L children[2];
+    int count = ELITE_NUM;
+    while (count < POPULATION) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        // 二点交叉 (突然変異なし)
+        doublePCross(current + numbers[parents[0]], current + numbers[parents[1]], children);
+        // 子の数くり返し
+        for (int i = 0; i < 2; i++) {
+            // ランダム突然変異
+            randMutPrm1L(children + i);
+            next[count] = children[i];
+            count++;
+            // オーバーフロー
+            if (count >= POPULATION) break;
+        }
+    }
+}
+
 int main(void) {
     // 初期化にシード設定も含まれる
     initPrm1LComp();
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     //showBoard(START);
     const char format[] = FNF_TEST;
     printString(format);
     // for debugging
-    //makeFGFilePrm1LComp(format);
-    //nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 101);
-    crossTest();
+    makeFGFilePrm1LComp(format);
+    nGenePrm1LCompLoop(rltDPRd, format, 1, 0, 2);
+    //crossTest();
     //sortTest();
     return 0;
 }
