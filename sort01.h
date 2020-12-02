@@ -1,6 +1,9 @@
 #ifndef SORT01_H
 #define SORT01_H
 
+// 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
+#define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
+
 // debugging function
 void sortTest(void);
 
@@ -84,9 +87,6 @@ void quicksortDD(int *A, int *B, int p, int r);
 
 // 乱択版クイックソート (昇順)
 void randomizedQuicksort(int *A, int p, int r);
-
-// 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
-#define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
 
 // randomized quicksort
 void randomizedQuicksortDD(int *A, int *B, int p, int r);
