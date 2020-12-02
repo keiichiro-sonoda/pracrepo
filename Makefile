@@ -36,7 +36,7 @@ test_win.exe: test_win.c genetic02_win.o othello_win.o sort01_win.o
 	gcc test_win.c genetic02_win.o othello_win.o sort01_win.o -o test_win.exe
 othello.o: othello.c othello.h
 	gcc othello.c -c -fPIC -Wall
-sort01.o: sort01.c sort01.h
+sort01.o: sort01.c sort01.h othello.h
 	gcc sort01.c -c -Wall
 genetic00.o: genetic00.c genetic00.h othello.h
 	gcc genetic00.c -c -Wall
