@@ -42,10 +42,13 @@ void insertionSort(int *A, int n) {
     }
 }
 
+// 重複しないように指定された範囲の整数乱数を2つ取得
 // randomly select 2 integers without duplication
 void randIntDoubleDep(int pair[2], int min, int max) {
-    pair[0] = randInt(min, max);
-    pair[1] = randInt(min, max - 1);
+    pair[0] = randIntRange(min, max);
+    // 最大値を1減らす (取り得る範囲を小さくする)
+    pair[1] = randIntRange(min, max - 1);
+    // 1回目の乱数以上なら1を足して調整
     if (pair[1] >= pair[0])
         pair[1]++;
 }
@@ -227,7 +230,8 @@ int partitionDD(int *A, int *B, int p, int r) {
 // A: array to compare
 // B: sorted by A
 int randomizedPartitionDD(int *A, int *B, int p, int r) {
-    int i = randInt(p, r);
+    // 分割の基準となる値はランダムに決定する
+    int i = randIntRange(p, r);
     // randomized!
     exchangeD(A, B, i, r);
     int x = A[r];
