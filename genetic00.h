@@ -22,8 +22,6 @@
 #define MUT_RATE 0.05f
 #endif
 
-// 0.0から1.0のfloatを返すマクロ
-#define randFloat() ((float)rand() / RAND_MAX)
 // randFloat() の範囲を-0.5だけずらしたfloatを返す
 // return an floating point random number from -0.5 to 0.5
 #ifndef randWeight

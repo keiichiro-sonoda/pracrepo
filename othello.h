@@ -70,12 +70,14 @@
 // D の総和の平方根が A と B の距離になる
 #define sqDistArray(A, B, D, n) for (int _ = 0; _ < (n); _++) (D)[_] = sqDist((A)[_], (B)[_])
 
+// 0以上x未満の整数乱数を返すマクロ
+#define randInt(x) (rand() % x)
+
 // return an integer random number from min to max
 // positive range only
-#define randIntRange(min, max) (rand() % ((max) - (min) + 1) + (min))
+#define randIntRange(min, max) (randInt((max) - (min) + 1) + (min))
 
 // 0.0 以上 1.0 以下の float 型乱数を返す
-// あいうえお
 #define randFloat() ((float)rand() / RAND_MAX)
 
 // 0 か 1 を返すだけのマクロ
