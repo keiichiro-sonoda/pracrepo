@@ -41,12 +41,15 @@ void rltSPRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L
 int main(void) {
     // 初期化にシード設定も含まれる
     initPrm1LComp();
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     //showBoard(START);
     const char format[] = FNF_L1RRCM3205006000200001;
     printString(format);
     // for debugging
-    makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 2);
+    //makeFGFilePrm1LComp(format);
+    //nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 2);
+    for (int i = 0; i < 10; i++) {
+        printDecimal(randIntRange(0, 3));
+    }
     return 0;
 }
