@@ -25,12 +25,15 @@ int main(void) {
     const char format[] = FNF_TEST;
     printString(format);
     // for debugging
-    //makeFGFilePrm1LComp(format);
+    makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniBlRd, format, 1, 100, 201);
-    float smp1[10];
-    ones(smp1, 10);
-    printFloatArray(smp1, 10);
-    subConst(smp1, 10, 0.2);
-    printFloatArray(smp1, 10);
+    Prm1L pra[POPULATION];
+    Prm1L children[2];
+    loadPrm1LComp(format, 0, pra);
+    showPrm1L(pra[0]);
+    showPrm1L(pra[1]);
+    singlePCross(pra, pra + 1, children);
+    showPrm1L(children[0]);
+    showPrm1L(children[1]);
     return 0;
 }
