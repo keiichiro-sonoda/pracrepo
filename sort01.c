@@ -232,6 +232,7 @@ int partitionDD(int *A, int *B, int p, int r) {
 int randomizedPartitionDD(int *A, int *B, int p, int r) {
     // 分割の基準となる値はランダムに決定する
     int i = randIntRange(p, r);
+    i = r;
     // randomized!
     exchangeD(A, B, i, r);
     int x = A[r];
