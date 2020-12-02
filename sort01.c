@@ -17,8 +17,9 @@ void sortTest(void) {
     randomizedQuicksortAll(sample1, l1);
     printDecimalArray(sample1, l1);
     printFloat(aveFloat(sample2, l2));
-    ones(sample1, l1);
-    printDecimalArray(sample1, l1);
+    int rslt[3];
+    randIntMltDep(rslt, 3, 0, 2);
+    printDecimalArray(rslt, 3);
 }
 
 // insertion sort
@@ -42,6 +43,21 @@ void randIntDoubleDep(int pair[2], int min, int max) {
     // 1回目の乱数以上なら1を足して調整
     if (pair[1] >= pair[0])
         pair[1]++;
+}
+
+// 重複しないように指定された数だけ範囲内のの整数乱数を取得
+void randIntMltDep(int *rd_nums, int n, int min, int max) {
+    int i, tmp_max;
+    for (i = 0; i < n; i++) {
+        // くり返す毎に範囲が狭まる
+        tmp_max = max - i;
+        // 取り得る整数が尽きた場合
+        if (tmp_max < min) break;
+        rd_nums[i] = randIntRange(min, tmp_max);
+    }
+    // 添字修復
+    // 指定された数が上限を越えていても一応動くように?
+    fixIndices(rd_nums, i);
 }
 
 // make an array of exponents

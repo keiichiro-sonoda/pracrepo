@@ -20,6 +20,9 @@ void insertionSort(int *A, int n);
 // randomly select 2 integers without duplication
 void randIntDoubleDep(int pair[2], int min, int max);
 
+// 重複しないように指定された数だけ範囲内のの整数乱数を取得
+void randIntMltDep(int *rd_nums, int n, int min, int max);
+
 // make an array of random numbers
 void arrayRandom(int n);
 
