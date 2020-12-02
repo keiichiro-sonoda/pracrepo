@@ -15,7 +15,7 @@
 #endif
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 6 // エリート数
+#define ELITE_NUM 7 // エリート数
 #endif
 
 #ifndef MUT_RATE
