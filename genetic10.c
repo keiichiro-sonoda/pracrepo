@@ -70,7 +70,7 @@ int main(void) {
     printString(format);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltDPRd, format, 1, 0, 2);
+    nGenePrm1LCompLoop(rltDPRd, format, 1, 1, 100);
     //crossTest();
     //sortTest();
     return 0;
