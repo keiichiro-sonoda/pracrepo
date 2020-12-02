@@ -559,19 +559,20 @@ Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
 // 親の引き継ぎ方を入れ替えた2つの子を得る
 // 今回は親もポインタで与えることにする (ややこしくてごめん)
 void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]) {
-    // 親は2次元配列に
-    // 子は作ったらパラメータに変換するため, 一時置き場と考える
+    // 親は2次元配列にコピー
+    // 子は作った直後にパラメータに変換するため, 一時置き場と考える
     float p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
-    int i, j, cp;
     Prm1L2array(mother_p, p_arr[0]);
     Prm1L2array(father_p, p_arr[1]);
     // 0からパラメータの末尾の手前までの乱数を交叉点とする
-    cp = randInt(PRM1L_LEN - 1);
-    for (j = 0; j < 2; j++) {
-        for (i = 0; i < PRM1L_LEN; i++) {
-            // 比較演算子をそのまま添字にする
+    int cp = randInt(PRM1L_LEN - 1);
+    printDecimal(cp);
+    // 子を1つずつ作成
+    for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < PRM1L_LEN; i++) {
+            // 比較演算の結果を添字計算に適用にする
             // 0 か 1 を返すなら問題ないはず
-            c_arr[i] = p_arr[j ^ (i <= cp)][i];
+            c_arr[i] = p_arr[j ^ (i > cp)][i];
         }
         // パラメータに変換
         array2Prm1L(c_arr, children + j);

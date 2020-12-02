@@ -25,7 +25,7 @@ int main(void) {
     const char format[] = FNF_TEST;
     printString(format);
     // for debugging
-    makeFGFilePrm1LComp(format);
+    //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniBlRd, format, 1, 100, 201);
     Prm1L pra[POPULATION];
     Prm1L children[2];
