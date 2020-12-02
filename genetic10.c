@@ -47,6 +47,6 @@ int main(void) {
     printString(format);
     // for debugging
     makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 2);
+    nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 101);
     return 0;
 }
