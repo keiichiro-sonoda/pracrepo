@@ -41,7 +41,7 @@ void rltSPRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L
 int main(void) {
     // 初期化にシード設定も含まれる
     initPrm1LComp();
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     //showBoard(START);
     const char format[] = FNF_TEST;
     printString(format);

@@ -583,18 +583,19 @@ void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
 void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]) {
     float p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
     // 交叉点配列
-    int cpa[2], dummy[2];
+    int cpa[2];
     Prm1L2array(mother_p, p_arr[0]);
     Prm1L2array(father_p, p_arr[1]);
     // 0からパラメータの末尾まで, 2点を重複なしでランダムに選ぶ
     randIntDoubleDep(cpa, 0, PRM1L_LEN - 1);
     // ソート
-    randomizedQuicksortDDAll(cpa, dummy, 2);
+    randomizedQuicksortAll(cpa, 2);
+    cpa[1] = PRM1L_LEN - 2;
     printDecimalArray(cpa, 2);
     for (int j = 0; j < 2; j++) {
         for (int i = 0; i < PRM1L_LEN; i++) {
             // 小交叉点より大きく, 大交叉点以下なら交換
-            c_arr[i] = p_arr[j ^ ((cpa[1] < i)  && (i <= cpa[0]))][i];
+            c_arr[i] = p_arr[j ^ ((cpa[0] < i)  && (i <= cpa[1]))][i];
         }
         array2Prm1L(c_arr, children + j);
     }
