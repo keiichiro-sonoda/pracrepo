@@ -27,5 +27,8 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniBlRd, format, 1, 100, 201);
+    int smp1[10];
+    ones(smp1, 10);
+    printDecimalArray(smp1, 10);
     return 0;
 }
