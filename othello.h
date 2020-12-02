@@ -75,7 +75,7 @@
 
 // return an integer random number from min to max
 // positive range only
-#define randIntRange(min, max) (randInt((max) - (min) + 1) + (min))
+#define randIntRange(min, max) (rand() % ((max) - (min) + 1) + (min))
 
 // 0.0 以上 1.0 以下の float 型乱数を返す
 #define randFloat() ((float)rand() / RAND_MAX)
