@@ -284,6 +284,9 @@ void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
 void randMutPrm1L(Prm1L *prp);
 
+// 交叉関数のデバッグ
+void crossTest(void);
+
 // roulette selection
 // uniform crossover
 void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L *next);

@@ -613,6 +613,18 @@ void randMutPrm1L(Prm1L *prp) {
     array2Prm1L(tmp, prp);
 }
 
+// 交叉関数のデバッグ
+void crossTest(void) {
+    Prm1L mother, father;
+    float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
+    initArrayConst(m_arr, PRM1L_LEN, 0.0f);
+    initArrayConst(f_arr, PRM1L_LEN, 0.5f);
+    array2Prm1L(m_arr, &mother);
+    array2Prm1L(f_arr, &father);
+    showPrm1L(mother);
+    showPrm1L(father);
+}
+
 // roulette selection
 // uniform crossover
 // random mutation
