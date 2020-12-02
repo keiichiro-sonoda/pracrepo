@@ -42,6 +42,9 @@
 // get the larger number
 #define getMax(a, b) ((a) > (b) ? (a) : (b))
 
+// 配列を定数で初期化する
+#define initArrayConst(A, n, c) for (int _ = 0; _ < (n); _++) (A)[_] = (c)
+
 // set all elements to one
 #define ones(A, n) for (int _ = 0; _ < (n); _++) (A)[_] = 1
 
