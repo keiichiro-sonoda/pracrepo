@@ -46,7 +46,15 @@ int main(void) {
     const char format[] = FNF_TEST;
     printString(format);
     // for debugging
-    //makeFGFilePrm1LComp(format);
+    makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 101);
+    Prm1L pra[POPULATION];
+    Prm1L children[2];
+    loadPrm1LComp(format, 0, pra);
+    showPrm1L(pra[0]);
+    showPrm1L(pra[1]);
+    doublePCross(pra, pra + 1, children);
+    showPrm1L(children[0]);
+    showPrm1L(children[1]);
     return 0;
 }

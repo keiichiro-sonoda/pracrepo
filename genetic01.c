@@ -578,6 +578,28 @@ void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
     }
 }
 
+// 二点交叉 (２人っ子)
+// 末尾が交叉点として選ばれた場合, 一点交叉と等価になる
+void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]) {
+    float p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
+    // 交叉点配列
+    int cpa[2], dummy[2];
+    Prm1L2array(mother_p, p_arr[0]);
+    Prm1L2array(father_p, p_arr[1]);
+    // 0からパラメータの末尾まで, 2点を重複なしでランダムに選ぶ
+    randIntDoubleDep(cpa, 0, PRM1L_LEN - 1);
+    // ソート
+    randomizedQuicksortDDAll(cpa, dummy, 2);
+    printDecimalArray(cpa, 2);
+    for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < PRM1L_LEN; i++) {
+            // 小交叉点より大きく, 大交叉点以下なら交換
+            c_arr[i] = p_arr[j ^ ((cpa[1] < i)  && (i <= cpa[0]))][i];
+        }
+        array2Prm1L(c_arr, children + j);
+    }
+}
+
 // ランダム突然変異する
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
 void randMutPrm1L(Prm1L *prp) {
