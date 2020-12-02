@@ -17,7 +17,7 @@ void sortTest(void) {
     randomizedQuicksortAll(sample1, l1);
     printDecimalArray(sample1, l1);
     printFloat(aveFloat(sample2, l2));
-    initArrayConst(sample1, l1, 7);
+    ones(sample1, l1);
     printDecimalArray(sample1, l1);
 }
 

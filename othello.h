@@ -45,8 +45,8 @@
 // 配列を定数で初期化する
 #define initArrayConst(A, n, c) for (int _ = 0; _ < (n); _++) (A)[_] = (c)
 
-// set all elements to one
-#define ones(A, n) for (int _ = 0; _ < (n); _++) (A)[_] = 1
+// set all elements to ones
+#define ones(A, n) initArrayConst(A, n, 1)
 
 // 配列コピー (型に依存しないって便利ね)
 // copy an array
