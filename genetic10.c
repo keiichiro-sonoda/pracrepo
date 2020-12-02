@@ -33,10 +33,7 @@ void rltSPRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1L
         next[count] = children[0];
         count++;
         // オーバーフロー
-        if (count >= POPULATION) {
-            printf("yeah\n");
-            break;
-        }
+        if (count >= POPULATION) break;
         next[count] = children[1];
     }
 }
@@ -46,10 +43,10 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_TEST;
+    const char format[] = FNF_L1RRCM3205006000200001;
     printString(format);
     // for debugging
-    makeFGFilePrm1LComp(format);
+    //makeFGFilePrm1LComp(format);
     nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 2);
     return 0;
 }

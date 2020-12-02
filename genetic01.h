@@ -10,8 +10,13 @@
 #define PI 3.14159265358979323846264338
 
 // number of parameters per generation
-#define POPULATION 50
-#define ELITE_NUM 5
+#ifndef POPULATION
+#define POPULATION 50 // 個体数
+#endif
+
+#ifndef ELITE_NUM
+#define ELITE_NUM 6 // エリート数
+#endif
 
 #ifndef MUT_RATE
 #define MUT_RATE 0.01f // 突然変異率
@@ -58,6 +63,9 @@
 // C  : ファイルを圧縮して保存 (compressの意味)
 // M32: バイアスの倍率が32という意味
 #define FNF_L1RRCM3205006000000001 "prm/l1rrcm32_050_06_rlt_uni_rd001/l1rrcm32_050_06_rlt_uni_rd001_g%03d.bin"
+
+// 02: 一点交叉
+#define FNF_L1RRCM3205006000200001 "prm/l1rrcm32_050_06_rlt_1p_rd001/l1rrcm32_050_06_rlt_1p_rd001_g%03d.bin"
 
 // 05: ブロックごと一様交叉 (3と4は多点交叉等の予約)
 #define FNF_L1RRCM3205006000500001 "prm/l1rrcm32_050_06_rlt_ub_rd001/l1rrcm32_050_06_rlt_ub_rd001_g%03d.bin"
