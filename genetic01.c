@@ -40,32 +40,33 @@ void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]) {
     dst[MASU_NUM] = BIAS_MAG;
 }
 
+// コピー元は変更しない
 // convert weight array to Prm1L
-void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst) {
+void array2Prm1L(const float src[PRM1L_LEN], Prm1L *dst) {
     int c = 0;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < PRM1L_L2_NUM; i++) {
         for (int j = 0; j <= MASU_NUM; j++) {
             dst->weight1[i][j] = src[c];
             c++;
         }
     }
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < PRM1L_L2_NUM; i++) {
         dst->weight2[i] = src[c];
         c++;
     }
 }
 
-// パラメータ自体は変更しないのでconstを追加
+// パラメータ自体は変更しないのでconstを追加 (参照渡しなので)
 // convert Prm1L to a weight array
 void Prm1L2array(const Prm1L *src, float dst[PRM1L_LEN]) {
     int c = 0;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < PRM1L_L2_NUM; i++) {
         for (int j = 0; j <= MASU_NUM; j++) {
             dst[c] = src->weight1[i][j];
             c++;
         }
     }
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < PRM1L_L2_NUM; i++) {
         dst[c] = src->weight2[i];
         c++;
     }
@@ -74,12 +75,12 @@ void Prm1L2array(const Prm1L *src, float dst[PRM1L_LEN]) {
 // show parameters (for Prm1L)
 void showPrm1L(Prm1L pr) {
     printString("weight1:");
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < PRM1L_L2_NUM; i++) {
         //printFloatArray(pr.weight1[i], MASU_NUM + 1);
         printFloatArrayPart(pr.weight1[i], MASU_NUM + 1);
     }
     printString("weight2:");
-    printFloatArray(pr.weight2, 8);
+    printFloatArray(pr.weight2, PRM1L_L2_NUM);
 }
 
 // create random parameters (for Prm1L)
@@ -562,6 +563,7 @@ void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L *children)
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
     Prm1L2array(mother_p, m_arr);
     Prm1L2array(father_p, f_arr);
+    
 }
 
 // ランダム突然変異する
