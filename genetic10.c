@@ -66,11 +66,11 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_L1RRCM3205006000300001;
+    const char format[] = FNF_TEST;
     printString(format);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltDPRd, format, 1, 100, 101);
+    //nGenePrm1LCompLoop(rltDPRd, format, 1, 100, 101);
     //crossTest();
     //sortTest();
     return 0;
