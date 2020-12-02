@@ -4,6 +4,10 @@
 // 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
 #define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
 
+// wrapper function for randomizedQuicksortDD
+// マクロにした
+#define randomizedQuicksortDDAll(A, B, n) randomizedQuicksortDD(A, B, 0, n - 1)
+
 // float型配列の平均値を求めるマクロ
 #define aveFloat(A, n) (sumFloat(A, n) / (n))
 
@@ -89,8 +93,5 @@ void randomizedQuicksort(int *A, int p, int r);
 
 // randomized quicksort
 void randomizedQuicksortDD(int *A, int *B, int p, int r);
-
-// wrapper function for randomizedQuicksortDD
-void randomizedQuicksortDDAll(int *A, int *B, int n);
 
 #endif

@@ -278,8 +278,3 @@ void randomizedQuicksortDD(int *A, int *B, int p, int r) {
         randomizedQuicksortDD(A, B, q + 1, r);
     }
 }
-
-// wrapper function for randomizedQuicksortDD
-void randomizedQuicksortDDAll(int *A, int *B, int n) {
-    randomizedQuicksortDD(A, B, 0, n - 1);
-}
