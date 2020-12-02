@@ -263,6 +263,11 @@ void copyBlockPrm1L(Prm1L *src, Prm1L *dst, int bl_num);
 // パターンとその重みのペアと見なせる?
 Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father);
 
+// 一点交叉
+// 親の引き継ぎ方を入れ替えた2つの子を得る
+// 今回は親もポインタで与えることにする (ややこしくてごめん)
+void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]);
+
 // ランダム突然変異する
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
 void randMutPrm1L(Prm1L *prp);

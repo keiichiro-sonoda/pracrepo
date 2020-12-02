@@ -558,12 +558,24 @@ Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
 // 一点交叉
 // 親の引き継ぎ方を入れ替えた2つの子を得る
 // 今回は親もポインタで与えることにする (ややこしくてごめん)
-void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L *children) {
-    // 配列に変換
-    float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
-    Prm1L2array(mother_p, m_arr);
-    Prm1L2array(father_p, f_arr);
-    
+void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]) {
+    // 親と子をそれぞれ2次元配列で定義
+    float p_arr[2][PRM1L_LEN], c_arr[2][PRM1L_LEN];
+    int i, j, cp;
+    Prm1L2array(mother_p, p_arr[0]);
+    Prm1L2array(father_p, p_arr[1]);
+    // 0からパラメータの末尾の手前までの乱数を交叉点とする
+    cp = randInt(PRM1L_LEN - 1);
+    for (j = 0; j < 2; j++) {
+        for (i = 0; j < PRM1L_LEN; j++) {
+            if (i <= cp)
+                c_arr[j][i] = p_arr[j][i];
+            else  
+                c_arr[j][i] = p_arr[j ^ 1][i];
+        }
+        // パラメータに変換
+        array2Prm1L(c_arr[j], children + j);
+    }
 }
 
 // ランダム突然変異する
