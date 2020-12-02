@@ -49,6 +49,12 @@ int main(void) {
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltSPRd, format, 1, 0, 101);
     crossTest();
+    for (int i = 0; i < 0x7fffffff; i++) {
+        if (randIntRange(0, PRM1L_LEN - 1) == PRM1L_LEN) {
+            printf("yeah!\n");
+            break;
+        }
+    }
     //sortTest();
     return 0;
 }
