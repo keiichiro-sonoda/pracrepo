@@ -27,8 +27,10 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniBlRd, format, 1, 100, 201);
-    int smp1[10];
+    float smp1[10];
     ones(smp1, 10);
-    printDecimalArray(smp1, 10);
+    printFloatArray(smp1, 10);
+    subConst(smp1, 10, 0.2);
+    printFloatArray(smp1, 10);
     return 0;
 }
