@@ -15,7 +15,7 @@
 #endif
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 7 // エリート数
+#define ELITE_NUM 6 // エリート数
 #endif
 
 #ifndef MUT_RATE
@@ -66,6 +66,9 @@
 
 // 02: 一点交叉
 #define FNF_L1RRCM3205006000200001 "prm/l1rrcm32_050_06_rlt_1p_rd001/l1rrcm32_050_06_rlt_1p_rd001_g%03d.bin"
+
+// 03: 二点交叉
+#define FNF_L1RRCM3205006000300001 "prm/l1rrcm32_050_06_rlt_2p_rd001/l1rrcm32_050_06_rlt_2p_rd001_g%03d.bin"
 
 // 05: ブロックごと一様交叉 (3と4は多点交叉等の予約)
 #define FNF_L1RRCM3205006000500001 "prm/l1rrcm32_050_06_rlt_ub_rd001/l1rrcm32_050_06_rlt_ub_rd001_g%03d.bin"
