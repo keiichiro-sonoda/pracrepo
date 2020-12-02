@@ -55,8 +55,9 @@ void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst) {
     }
 }
 
+// パラメータ自体は変更しないのでconstを追加
 // convert Prm1L to a weight array
-void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]) {
+void Prm1L2array(const Prm1L *src, float dst[PRM1L_LEN]) {
     int c = 0;
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j <= MASU_NUM; j++) {
@@ -551,6 +552,16 @@ Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
         }
     }
     return child;
+}
+
+// 一点交叉
+// 親の引き継ぎ方を入れ替えた2つの子を得る
+// 今回は親もポインタで与えることにする (ややこしくてごめん)
+void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L *children) {
+    // 配列に変換
+    float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
+    Prm1L2array(mother_p, m_arr);
+    Prm1L2array(father_p, f_arr);
 }
 
 // ランダム突然変異する

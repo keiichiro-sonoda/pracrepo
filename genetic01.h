@@ -156,8 +156,9 @@ void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]);
 // convert weight array to Prm1L
 void array2Prm1L(float src[PRM1L_LEN], Prm1L *dst);
 
+// パラメータ自体は変更しないのでconstを追加
 // convert Prm1L to a weight array
-void Prm1L2array(Prm1L *src, float dst[PRM1L_LEN]);
+void Prm1L2array(const Prm1L *src, float dst[PRM1L_LEN]);
 
 // show parameters (for Prm1L)
 void showPrm1L(Prm1L pr);

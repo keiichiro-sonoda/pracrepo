@@ -22,10 +22,10 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_L1RRCM3205006000500001;
+    const char format[] = FNF_TEST;
     printString(format);
     // for debugging
     //makeFGFilePrm1LComp(format);
-    nGenePrm1LCompLoop(rltUniBlRd, format, 1, 100, 201);
+    //nGenePrm1LCompLoop(rltUniBlRd, format, 1, 100, 201);
     return 0;
 }
