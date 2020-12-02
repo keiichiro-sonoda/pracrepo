@@ -566,6 +566,7 @@ void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
     Prm1L2array(father_p, p_arr[1]);
     // 0からパラメータの末尾の手前までの乱数を交叉点とする
     int cp = randInt(PRM1L_LEN - 1);
+    cp = PRM1L_LEN - 2;
     printDecimal(cp);
     // 子を1つずつ作成
     for (int j = 0; j < 2; j++) {
