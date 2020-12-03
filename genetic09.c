@@ -176,7 +176,11 @@ int main(void) {
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    printCharDecimal(randUChar());
+    u_char tuc = randUchar();
+    printCharDecimal(tuc);
+    printSize(tuc);
     printString("end");
+    tuc = 127;
+    printFloat(uchar2weight(tuc));
     return 0;
 }

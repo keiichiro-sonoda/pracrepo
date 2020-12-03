@@ -145,8 +145,11 @@
 #define randFloat() ((float)rand() / RAND_MAX)
 #endif
 
-// 符号なし文字型の乱数を返す
-#define randUChar() ((u_char)(rand() % 256))
+// 符号無文字型の乱数を返す
+#define randUchar() ((u_char)(rand() % 256))
+
+// 圧縮された符号無文字を-0.5から0.5までの小数に変換
+#define uchar2weight(uc) (((uc) - 127.5) / 255)
 
 // simple parameter
 typedef struct sprm{
