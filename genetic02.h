@@ -7,7 +7,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 123U // シード値
+#define SEED 122U // シード値
 #endif
 
 // 等価でないマスの数

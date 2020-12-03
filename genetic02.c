@@ -429,16 +429,18 @@ int makeFirstGeneFileFlex(const char *format) {
 }
 
 // 圧縮版Sprm初期世代ファイルを作成したい
+// Sprm を経由せず直接書き込もうか
 int makeFGFileSprmComp(const char *format) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     warnOverwritingExit(fnamew);
-    Sprm pra[POPULATION];
-    // 圧縮対応乱数重み配列を作成
-    randSprmArrayComp(pra, POPULATION);
-    showFamilyPart(pra);
-    // フラグなしで書き込み
-    if (dumpSprmFileCompDirect(fnamew, pra, 0) < 0) return -1;
+    u_char uca[SPRM_FILE_SIZE_COMP];
+    // ただの符号無文字型乱数配列を作成
+    randUcharArray(uca, SPRM_FILE_SIZE_COMP);
+    // 末尾はフラグ0で初期化
+    uca[SPRM_FILE_SIZE_COMP - 1] = 0;
+    // そのまま書き込み
+    dumpFileDirectExit(fnamew, uca, SPRM_FILE_SIZE_COMP);
     return 0;
 }
 
