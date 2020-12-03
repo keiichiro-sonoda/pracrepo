@@ -1041,6 +1041,53 @@ int warnOverwriting(const char *fname) {
     return 0;
 }
 
+// ソート済み適応度配列を格納するファイル名を作る関数
+// 汎用性があるとどうしてもothelloに来てしまう
+// 適応度評価したファイル名をそのまま与えるバージョン
+int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo) {
+    // 元の長さ
+    int o_len = strlen(fnameo);
+    // 文字列追加後, オーバーフローする場合
+    if (o_len + 8 >= dst_size) {
+        printf("file name over\n");
+        return -1;
+    }
+    // 末尾にくっつける文字列を定義
+    char fitness_format[] = "%s_fitness.bin";
+    // .bin以外の文字列を格納できる最低の長さ
+    char fnameo_part[o_len- 3];
+    // snprintfで.bin以外コピー
+    snprintf(fnameo_part, o_len - 3, "%s", fnameo);
+    // 合成
+    snprintf(dst, dst_size, fitness_format, fnameo_part);
+    return 0;
+}
+
+// short型で保存されている適応度を読み込む
+// othelloに移動したはいいが POPULATION が無いので引数で定義
+// 汎用マクロでかなり短縮できるか?
+int loadFitnessShortDirect(const char *fname, int *fitness, int n) {
+    // short型配列を定義
+    short fitness_short[n];
+    // ロード. できなかったら-1で戻る
+    loadFileDirectExit(fname, fitness_short, sizeof fitness_short);
+    // int型配列にコピー
+    copyArray(fitness_short, fitness, n);
+    return 0;
+}
+
+// 適応度書き込み
+// 適応度がshort型に収まること前提で書き込み
+// 上書き要注意
+int dumpFitnessShortDirect(const char *fname, const int *fitness, int n) {
+    short fitness_short[n];
+    // short型配列にコピー
+    copyArray(fitness, fitness_short, n);
+    // 汎用型ファイル書き込みマクロ
+    dumpFileDirectExit(fname, fitness_short, sizeof fitness_short);
+    return 0;
+}
+
 // main?
 // なんとなく残してある関数
 int main2(void) {

@@ -338,22 +338,6 @@ int dumpPrm1LComp(const char *format, int generation, Prm1L *pra, char flag) {
     return dumpPrm1LCompDirect(fnamew, pra, flag);
 }
 
-// 適応度書き込み
-// 適応度がshort型に収まること前提で書き込み
-int dumpFitnessShortDirect(const char *fname, const int *fitness) {
-    FILE *fp;
-    short fitness_short[POPULATION];
-    // short型配列にコピー
-    copyArray(fitness, fitness_short, POPULATION);
-    if ((fp = fopen(fname, "wb")) == NULL) {
-        printf("%s can't be opened.\n", fname);
-        return -1;
-    }
-    fwrite(fitness_short, sizeof fitness_short, 1, fp);
-    fclose(fp);
-    return 0;
-}
-
 // make first generation file (Prm1L)
 // give a file name format
 // record all individuals
@@ -467,22 +451,6 @@ Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop) {
         randPrm1L(pra);
     }
     return *pra;
-}
-
-// short型で保存されている適応度を読み込む
-int loadFitnessShortDirect(const char *fname, int *fitness) {
-    FILE *fp;
-    if ((fp = fopen(fname, "rb")) == NULL) {
-        printf("%s can't be opened.\n", fname);
-        return -1;
-    }
-    // short型配列を定義して読み込み
-    short fitness_short[POPULATION];
-    fread(fitness_short, sizeof fitness_short, 1, fp);
-    fclose(fp);
-    // int型配列にコピー
-    copyArray(fitness_short, fitness, POPULATION);
-    return 0;
 }
 
 // view parematers in a file (Prm1L)
@@ -723,26 +691,6 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     return dumpPrm1LDirect(fname, next, sizeof next);
 }
 
-// 適応度評価したファイル名をそのまま与えるバージョン
-int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo) {
-    // 元の長さ
-    int o_len = strlen(fnameo);
-    // 文字列追加後, オーバーフローする場合
-    if (o_len + 8 >= dst_size) {
-        printf("file name over\n");
-        return -1;
-    }
-    // 末尾にくっつける文字列を定義
-    char fitness_format[] = "%s_fitness.bin";
-    // .bin以外の文字列を格納できる最低の長さ
-    char fnameo_part[o_len- 3];
-    // snprintfで.bin以外コピー
-    snprintf(fnameo_part, o_len - 3, "%s", fnameo);
-    // 合成
-    snprintf(dst, dst_size, fitness_format, fnameo_part);
-    return 0;
-}
-
 // 適応度保存用ファイルのファイル名を作る
 // .bin の前に _fitness を付けたい
 // エラー処理は未定
@@ -773,7 +721,7 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     if (flag < 0) return -1;
     // ソート済みなら適応度ファイルを読み込む
     if (flag == 1) {
-        if (loadFitnessShortDirect(fnamef, fitness) < 0)
+        if (loadFitnessShortDirect(fnamef, fitness, POPULATION) < 0)
             return -1;
         return 1;
     }

@@ -10,7 +10,7 @@
 
 // wrapper function for randomizedQuicksortDD
 // マクロにした
-#define randomizedQuicksortDDAll(A, B, n) randomizedQuicksortDD(A, B, 0, n - 1)
+#define randomizedQuicksortDDAll(A, B, n) randomizedQuicksortDD(A, B, 0, (n) - 1)
 
 // float型配列の平均値を求めるマクロ
 #define aveFloat(A, n) (sumFloat(A, n) / (n))

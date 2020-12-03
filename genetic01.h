@@ -252,9 +252,6 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra);
 // load a representative of Prm1L
 Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);
 
-// short型で保存されている適応度を読み込む
-int loadFitnessShortDirect(const char *fname, int *fitness);
-
 // view parematers in a file (Prm1L)
 void checkPrm1LFile(const char *format, int gene_num);
 
@@ -297,9 +294,6 @@ void rltUniRd(const int *fitness, const int *numbers, const Prm1L *current, Prm1
 // make next generation file
 // give a function pointer for selection, crossover and mutation
 int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety);
-
-// 適応度評価したファイル名をそのまま与えるバージョン
-int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo);
 
 // 適応度保存用ファイルのファイル名を作る
 // .bin の前に _fitness を付けたい

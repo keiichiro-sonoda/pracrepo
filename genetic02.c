@@ -942,3 +942,43 @@ void copyFGFlex(const char *dst_format) {
     // close
     fclose(fp);
 }
+
+// 圧縮されたファイルから個体を読み出し, 適応度を評価する
+// 適応度降順に個体を並び替え, 同じファイルに書き込む
+// 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
+// 次世代作成関数が膨らまないように, ここで適応度の読み書きをする
+int sortSprmCompFileByFitness(const char *fname, int *fitness) {
+    // ソート前とソート後のパラメータ配列を用意する (メモリの無駄遣いかな?)
+    Sprm pra1[POPULATION], pra2[POPULATION];
+    // 適応度ファイル名
+    char fnamef[FILENAME_MAX];
+    // 万が一のファイル名オーバーフロー対策
+    if (makeFitnessFileNameDirect(fnamef, FILENAME_MAX, fname) < 0)
+        return -1;
+    // ロードしてフラグを取得
+    int flag = loadSprmFileCompDirect(fname, pra1);
+    // エラーなら-1を返す
+    if (flag < 0) return -1;
+    // ソート済みなら適応度ファイルを読み込む
+    if (flag == 1) {
+        if (loadFitnessShortDirect(fnamef, fitness, POPULATION) < 0)
+            return -1;
+        return 1;
+    }
+    // 個体番号を割り振る
+    int numbers[POPULATION];
+    indices(numbers, POPULATION);
+    // リーグ戦 (指し手ルーレット)
+    // 現状で適応度評価はこれだけ
+    leagueMatchSprmFlex(DET_FUNC, pra1, fitness);
+    // 適応度を基に個体番号も同時にソート
+    randomizedQuicksortDDAll(fitness, numbers, POPULATION);
+    // 適応度順に並び替えてpra2に代入
+    for (int i = 0; i < POPULATION; i++)
+        pra2[i] = pra1[numbers[i]];
+    // ソート後の配列を同じファイルに書き戻す (ソート済みフラグを立てる)
+    if (dumpSprmFileCompDirect(fname, pra2, 1)  < 0)
+        return -1;
+    // 適応度書き込み
+    return dumpFitnessShortDirect(fnamef, fitness, POPULATION);
+}

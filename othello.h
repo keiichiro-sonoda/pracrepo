@@ -4,6 +4,7 @@
 // マクロで使うライブラリ
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // maximum number of next boards
 #define NEXT_MAX 32
@@ -261,5 +262,20 @@ void board2arraySymmetry(Board src, int *dst);
 
 // warning before overwriting
 int warnOverwriting(const char *fname);
+
+// ソート済み適応度配列を格納するファイル名を作る関数
+// 汎用性があるとどうしてもothelloに来てしまう
+// 適応度評価したファイル名をそのまま与えるバージョン
+int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo);
+
+// short型で保存されている適応度を読み込む
+// othelloに移動したはいいが POPULATION が無いので引数で定義
+// 汎用マクロでかなり短縮できるか?
+int loadFitnessShortDirect(const char *fname, int *fitness, int n);
+
+// 適応度書き込み
+// 適応度がshort型に収まること前提で書き込み
+// 上書き要注意
+int dumpFitnessShortDirect(const char *fname, const int *fitness, int n);
 
 #endif
