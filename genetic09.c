@@ -176,7 +176,7 @@ int main(void) {
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    makeFGFileSprmComp(format);
+    //makeFGFileSprmComp(format);
     Sprm pra[POPULATION];
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, 0);
