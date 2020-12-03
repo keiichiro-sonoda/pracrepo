@@ -146,11 +146,14 @@
 #endif
 
 // 符号無文字型の乱数を返す
-#define randUchar() ((u_char)(rand() % 256))
+// 代入する変数の型に依存?
+#define randUchar() (rand() % 256)
 
 // 圧縮された符号無文字を-0.5から0.5までの小数に変換
 #define uchar2weight(uc) (((uc) - 127.5f) / 255)
 
+// -0.5から0.5までの小数を符号無文字型に圧縮
+// 圧縮精度より小さい値を足せば, 切り捨てられて同じ値になる?
 #define weight2uchar(w) (((w) + 0.5000000596f) * 255)
 
 // simple parameter
