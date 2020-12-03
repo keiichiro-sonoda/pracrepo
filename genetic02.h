@@ -11,11 +11,11 @@
 #define SURVIVE_NUM 10
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 10 // エリート数
+#define ELITE_NUM 6 // エリート数
 #endif
 
 #ifndef POPULATION
-#define POPULATION 100 // 個体数
+#define POPULATION 50 // 個体数
 #endif
 
 #ifndef MUT_RATE
