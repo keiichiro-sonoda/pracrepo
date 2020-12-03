@@ -102,7 +102,7 @@
 #define loadFileDirectExit(fname, xp, x_size) do {\
     FILE *_fp;\
     if ((_fp = fopen(fname, "rb")) == NULL) {\
-        printf("%s can't be opened.\n", fname);\
+        printf("\a%s can't be opened.\n", fname);\
         return -1;\
     }\
     fread(xp, x_size, 1, _fp);\
@@ -116,7 +116,7 @@
 #define dumpFileDirectExit(fname, xp, x_size) do {\
     FILE *_fp;\
     if ((_fp = fopen((fname), "wb")) == NULL) {\
-        printf("%s can't be opened.\n", (fname));\
+        printf("\a%s can't be opened.\n", (fname));\
         return -1;\
     }\
     fwrite((xp), (x_size), 1, _fp);\
