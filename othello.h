@@ -88,7 +88,7 @@
 
 // 32bitバイナリ表示するマクロ(ハイフン付き)
 // 波括弧を使わない if 節で使う場面を想定
-#define printBin32(x) do {printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10)} while (0)
+#define printBin32(x) do {printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10);} while (0)
 
 // 初期盤面の設定
 // initial configure

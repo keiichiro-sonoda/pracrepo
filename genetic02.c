@@ -21,10 +21,7 @@ Sprm SAMP_PRM;
 void initSprm(void) {
     srand(SEED);
     setCORR_TABLE();
-    if (0)
-        initBoard();
-    else 
-        initBoard();
+    initBoard();
     printf("population          : %4d\n", POPULATION);
     printf("the number of elites: %4d\n", ELITE_NUM);
     printf("mutation rate       : %4.2f\n", MUT_RATE);
