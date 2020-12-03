@@ -7,7 +7,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 124U // シード値
+#define SEED 123U // シード値
 #endif
 
 // 等価でないマスの数
@@ -160,6 +160,19 @@
 
 // 重み配列を符号無文字型配列に変換 (圧縮)
 #define weight2ucharArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = weight2uchar((src)[_])
+
+// Sprm配列を圧縮
+// 関数でもconstは引っかかったのでマクロに戻す
+// できる限りマクロに式を渡さないように一時変数を多様
+#define compSprmArray(pra, uca, n) do {\
+    const float *_fp;\
+    u_char *_ucp;\
+    for (int _ = 0; _ < n; _++) {\
+        _fp = (pra)[_].weight;\
+        _ucp = (uca) + _ * SPRM_LEN;\
+        weight2ucharArray(_fp, _ucp, SPRM_LEN);\
+    }\
+} while (0)
 
 // Sprmの配列を圧縮対応乱数で作成
 // n には基本 POPULATION を与えると思うが可変にしておく
@@ -354,11 +367,5 @@ void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nG
 // copy the first generation
 // give the destination file format
 void copyFGFlex(const char *dst_format);
-
-// Sprm配列を圧縮
-// 関数型マクロを考えたけど, Sprm限定なら関数のほうが良さそう
-// constの問題に引っかかった
-// 引数で与えた式が何度も繰り返されるって考えるとあまり効率良くないのかな?
-void compSprmArray(const Sprm *pra, u_char *uca, int n);
 
 #endif

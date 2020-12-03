@@ -938,15 +938,3 @@ void copyFGFlex(const char *dst_format) {
     // close
     fclose(fp);
 }
-
-// Sprm配列を圧縮
-// 関数型マクロを考えたけど, Sprm限定なら関数のほうが良さそう
-// constの問題に引っかかった
-// 引数で与えた式が何度も繰り返されるって考えるとあまり効率良くないのかな?
-void compSprmArray(const Sprm *pra, u_char *uca, int n) {
-    const float *fp;
-    for (int i = 0; i < n; i++) {
-        fp = pra[i].weight;
-        weight2ucharArray(fp, uca + i * SPRM_LEN, SPRM_LEN);
-    }
-}
