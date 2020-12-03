@@ -13,8 +13,8 @@
 // 1 billion
 #define BILLION 1000000000
 // initial board information
-#define START_H 0x0000000000000180L
-#define START_L 0x0240000000000000L
+#define START_A 0x0000000000000180L
+#define START_B 0x0240000000000000L
 
 // sample board information
 #define SAMPLE1_A 0x0000000000000180L
@@ -88,6 +88,10 @@
 
 // 32bitバイナリ表示するマクロ(ハイフン付き)
 #define printBin32(x) printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10)
+
+// 初期盤面の設定
+// initial configure
+#define initBoard() {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;}
 
 // 64bit
 typedef unsigned long int int8B;
@@ -210,8 +214,7 @@ Board mirrorHLBoard(Board b1);
 Board minBoard(Board b1, Board b2);
 // normalize a board
 Board normalBoard(Board b1);
-// initial configure
-void initBoard(void);
+
 void normalizeBoard(Board *bp);
 // swap and normalize a board
 void swapNormalizeBoard(Board *bp);

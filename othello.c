@@ -839,14 +839,6 @@ Board normalBoard(Board b1) {
     return bm;
 }
 
-// initial configure
-void initBoard(void) {
-    START.board[1] = START_H;
-    START.board[0] = START_L;
-    SAMPLE1.board[1] = SAMPLE1_A;
-    SAMPLE1.board[0] = SAMPLE1_B;
-}
-
 void normalizeBoard(Board *bp) {
     *bp = normalBoard(*bp);
     return;

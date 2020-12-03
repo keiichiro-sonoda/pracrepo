@@ -167,6 +167,7 @@ int main(void) {
     initSprm();
     for (int i = 0; i < 8; i++)
         printDecimalArray(CORR_TABLE + i * 8, 8);
+    showBoard(START);
     showBoard(SAMPLE1);
     // シード固定に注意
     //srand((unsigned)time(NULL));

@@ -42,7 +42,7 @@ genetic00.o: genetic00.c genetic00.h othello.h
 	gcc genetic00.c -c -Wall
 genetic01.o: genetic01.c genetic01.h othello.h sort01.h
 	gcc genetic01.c -c -Wall
-genetic02.o: genetic02.c genetic02.h
+genetic02.o: genetic02.c genetic02.h othello.h
 	gcc genetic02.c -c -Wall -fPIC
 genetic02_share.o: genetic02_share.c genetic02_share.h
 	gcc genetic02_share.c -c -Wall -fPIC
