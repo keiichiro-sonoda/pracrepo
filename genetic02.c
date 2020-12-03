@@ -434,10 +434,11 @@ int makeFGFileSprmComp(const char *format) {
     snprintf(fnamew, FILENAME_MAX, format, 0);
     warnOverwritingExit(fnamew);
     Sprm pra[POPULATION];
+    // 圧縮対応乱数重み配列を作成
     randSprmArrayComp(pra, POPULATION);
     showFamilyPart(pra);
     // フラグなしで書き込み
-    if (dumpSprmFileCompDirect(fnamew, pra, 5) < 0) return -1;
+    if (dumpSprmFileCompDirect(fnamew, pra, 0) < 0) return -1;
     return 0;
 }
 
@@ -457,6 +458,7 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 }
 
 // 圧縮ファイルからロード
+// エラーやソート済みフラグを返す
 int loadSprmFileCompDirect(const char *fname, Sprm *pra) {
     u_char uca[SPRM_FILE_SIZE_COMP];
     loadFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
