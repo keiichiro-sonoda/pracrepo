@@ -378,4 +378,10 @@ void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nG
 // give the destination file format
 void copyFGFlex(const char *dst_format);
 
+// 圧縮されたファイルから個体を読み出し, 適応度を評価する
+// 適応度降順に個体を並び替え, 同じファイルに書き込む
+// 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
+// 次世代作成関数が膨らまないように, ここで適応度の読み書きをする
+int sortSprmCompFileByFitness(const char *fname, int *fitness);
+
 #endif

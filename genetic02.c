@@ -961,7 +961,7 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     if (flag < 0) return -1;
     // ソート済みなら適応度ファイルを読み込む
     if (flag == 1) {
-        // 読み込めなかったら関数を抜ける
+        // 読み込めなかったらエラーを返す
         loadFitnessShortDirectExit(fnamef, fitness, POPULATION);
         return 1;
     }

@@ -183,5 +183,8 @@ int main(void) {
     printString(fnamer);
     printDecimal(loadSprmFileCompDirect(fnamer, pra));
     showFamilyPart(pra);
+    int fitness[POPULATION];
+    sortSprmCompFileByFitness(fnamer, fitness);
+    printDecimalArray(fitness, POPULATION);
     return 0;
 }
