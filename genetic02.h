@@ -7,7 +7,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 123U // シード値
+#define SEED 122U // シード値
 #endif
 
 // 等価でないマスの数
@@ -163,14 +163,26 @@
 
 // Sprm配列を圧縮
 // 関数でもconstは引っかかったのでマクロに戻す
-// できる限りマクロに式を渡さないように一時変数を多様
+// できる限りマクロに式を渡さないように一時変数を多用
 #define compSprmArray(pra, uca, n) do {\
     const float *_fp;\
     u_char *_ucp;\
-    for (int _ = 0; _ < n; _++) {\
+    for (int _ = 0; _ < (n); _++) {\
         _fp = (pra)[_].weight;\
         _ucp = (uca) + _ * SPRM_LEN;\
         weight2ucharArray(_fp, _ucp, SPRM_LEN);\
+    }\
+} while (0)
+
+// 圧縮された配列からSprm配列に展開
+// extract という単語を略してみる
+#define extrSprmArray(uca, pra, n) do {\
+    const u_char *_ucp;\
+    float *_fp;\
+    for (int _ = 0; _ < (n); _++) {\
+        _ucp = (uca) + _ * SPRM_LEN;\
+        _fp = (pra)[_].weight;\
+        uchar2weightArray(_ucp, _fp, SPRM_LEN);\
     }\
 } while (0)
 

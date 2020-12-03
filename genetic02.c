@@ -461,9 +461,10 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 // エラーやソート済みフラグを返す
 int loadSprmFileCompDirect(const char *fname, Sprm *pra) {
     u_char uca[SPRM_FILE_SIZE_COMP];
+    // ロード
     loadFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
-    for (int i = 0; i < POPULATION; i++)
-        uchar2weightArray(uca + i * SPRM_LEN, pra[i].weight, SPRM_LEN);
+    // 展開
+    extrSprmArray(uca, pra, POPULATION);
     // フラグを返す
     return (int)(uca[SPRM_FILE_SIZE_COMP - 1]);
 }
@@ -512,6 +513,7 @@ int dumpSprmFileCompDirect(const char *fname, const Sprm *pra, u_char flag) {
     u_char uca[SPRM_FILE_SIZE_COMP];
     // 圧縮
     compSprmArray(pra, uca, POPULATION);
+    // 末尾のフラグ
     uca[SPRM_FILE_SIZE_COMP - 1] = flag;
     dumpFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
     printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);
