@@ -224,11 +224,8 @@ void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_
 // Sprm からマスに対応する値を取り出すためのグローバル変数設定
 // convert from an address to the weight index?
 void setCORR_TABLE(void) {
-    int ad;
-    for (int i = 0; i < MASU_NUM; i++) {
-        ad = i * 2;
-        CORR_TABLE[i] = ad2index(normalAd(ad));
-    }
+    for (int i = 0; i < MASU_NUM; i++)
+        CORR_TABLE[i] = ad2index(normalAd(i * 2));
 }
 
 // caluculate point
