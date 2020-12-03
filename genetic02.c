@@ -980,5 +980,6 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     if (dumpSprmFileCompDirect(fname, pra2, 1)  < 0)
         return -1;
     // 適応度書き込み
-    return dumpFitnessShortDirect(fnamef, fitness, POPULATION);
+    dumpFitnessShortDirectExit(fnamef, fitness, POPULATION)
+    return 0;
 }

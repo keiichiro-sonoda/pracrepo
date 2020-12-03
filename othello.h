@@ -105,7 +105,7 @@
         printf("\a%s can't be opened.\n", fname);\
         return -1;\
     }\
-    fread(xp, x_size, 1, _fp);\
+    fread((xp), (x_size), 1, _fp);\
     fclose(_fp);\
 } while (0)
 
@@ -129,8 +129,16 @@
 #define loadFitnessShortDirectExit(fname, fitness, n) do {\
     short fitness_short[n];\
     loadFileDirectExit(fname, fitness_short, sizeof fitness_short);\
-    copyArray(fitness_short, fitness, n);\
+    copyArray(fitness_short, (fitness), (n));\
 } while (0)
+
+// 適応度書き込み
+// 上書き要注意
+#define dumpFitnessShortDirectExit(fname, fitness, n) do {\
+    short fitness_short[n];\
+    copyArray((fitness), fitness_short, (n));\
+    dumpFileDirectExit(fname, fitness_short, sizeof fitness_short);\
+} while (0);
 
 // 64bit
 typedef unsigned long int int8B;
