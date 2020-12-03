@@ -181,7 +181,7 @@ int main(void) {
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, 0);
     printString(fnamer);
-    loadSprmFileCompDirect(fnamer, pra);
+    printDecimal(loadSprmFileCompDirect(fnamer, pra));
     showFamilyPart(pra);
     return 0;
 }

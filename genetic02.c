@@ -437,8 +437,7 @@ int makeFGFileSprmComp(const char *format) {
     randSprmArrayComp(pra, POPULATION);
     showFamilyPart(pra);
     // フラグなしで書き込み
-    if (dumpSprmFileCompDirect(fnamew, pra, 0) < 0) return -1;
-    printf("yeah\n");
+    if (dumpSprmFileCompDirect(fnamew, pra, 5) < 0) return -1;
     return 0;
 }
 
@@ -464,7 +463,7 @@ int loadSprmFileCompDirect(const char *fname, Sprm *pra) {
     for (int i = 0; i < POPULATION; i++)
         uchar2weightArray(uca + i * SPRM_LEN, pra[i].weight, SPRM_LEN);
     // フラグを返す
-    return (int)uca[SPRM_FILE_SIZE_COMP];
+    return (int)(uca[SPRM_FILE_SIZE_COMP - 1]);
 }
 
 // read parameters from a file
@@ -511,7 +510,7 @@ int dumpSprmFileCompDirect(const char *fname, const Sprm *pra, u_char flag) {
     u_char uca[SPRM_FILE_SIZE_COMP];
     for (int i = 0; i < POPULATION; i++)
         weight2ucharArray(pra[i].weight, uca + i * SPRM_LEN, SPRM_LEN);
-    uca[SPRM_FILE_SIZE_COMP] = flag;
+    uca[SPRM_FILE_SIZE_COMP - 1] = flag;
     dumpFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
     printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);
     return 0;
