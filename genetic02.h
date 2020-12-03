@@ -128,6 +128,10 @@
 // set global variable "SAMP_PRM"
 #define makeSprmSample() do {float spr[] = {SAMP_PRM_NUMS}; for (int _ = 0; _ < SPRM_LEN; _++) SAMP_PRM.weight[_] = spr[_];} while(0)
 
+// パラメータを一行で表示
+// print a simple parameter on one line
+#define showSprmOneLine(pr) printFloatArray(pr.weight, SPRM_LEN)
+
 // uniform crossover (array)
 #ifndef uniCrossArray
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
@@ -159,9 +163,6 @@ void initSprm(void);
 
 // print a simple parameter
 void showSprm(Sprm pr);
-
-// print a simple parameter on one line
-void showSprmOneLine(Sprm pr);
 
 // show a part of parameter array
 void showFamilyPart(Sprm *pra);

@@ -37,11 +37,6 @@ void showSprm(Sprm pr) {
     }
 }
 
-// print a simple parameter on one line
-void showSprmOneLine(Sprm pr) {
-    printFloatArray(pr.weight, SPRM_LEN);
-}
-
 // show a part of parameter array
 void showFamilyPart(Sprm *pra) {
     // population is 5 or less
