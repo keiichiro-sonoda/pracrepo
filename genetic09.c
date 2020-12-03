@@ -166,10 +166,6 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 int main(void) {
     initSprm();
     showCORR_TABLE();
-    if (0)
-        printBin32(POPULATION);
-    else 
-        printBin32(ELITE_NUM);
     // シード固定に注意
     //srand((unsigned)time(NULL));
     // 初期設定

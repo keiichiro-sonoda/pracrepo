@@ -734,74 +734,6 @@ int nextGenerationSprmFlex(void (*getSvr)(const Sprm*, Sprm*), const char *forma
     return 0;
 }
 
-// make next generation file
-// write all individuals to the file
-int nGeneSprmSaveAll(const char *format, int gene_num, int safety) {
-    char fnamew[FILENAME_MAX];
-    FILE *fp;
-    // the file name to be written
-    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
-    // current family
-    Sprm current[POPULATION];
-    // load data
-    if (loadSprmFile(format, gene_num, current, sizeof current) < 0) {
-        return -1;
-    }
-    // view the file name
-    printf("write file: %s\n", fnamew);
-    // don't allow overwriting
-    if (safety && warnOverwriting(fnamew) < 0) {
-        return -1;
-    }
-    // a function that determine the next board
-    Board (*decNxt)(Board*, int, const Sprm*);
-    decNxt = getBoardForBlackSimpleRoulette;
-    // next family
-    Sprm next[POPULATION];
-    // count the number of children
-    int count;
-    // the array to store points
-    int fitness[POPULATION];
-    // individual numbers
-    int numbers[POPULATION];
-    // indices of parents
-    int lucky[2];
-    // numbers = {0, 1, 2, ...}
-    indices(numbers, POPULATION);
-    // game (the next board is decided by roulette)
-    leagueMatchSprmFlex(decNxt, current, fitness);
-    // sort (descending order)
-    randomizedQuicksortDDAll(fitness, numbers, POPULATION);
-    // show the part of fitness
-    //printDecimalArrayPart(numbers, POPULATION);
-    printDecimalArrayPart(fitness, POPULATION);
-    // elite selection
-    for (count = 0; count < ELITE_NUM; count++)
-        next[count] = current[numbers[count]];
-    while (count < POPULATION) {
-        // choose parents by roulette
-        // don't allow duplication
-        rouletteIntMltDep(fitness, POPULATION, lucky, 2);
-        // make a child (uniform crossover)
-        next[count] = makeChildCrossMSprm(current[numbers[lucky[0]]], current[numbers[lucky[1]]]);
-        count++;
-    }
-    showFamilyPart(next);
-    // view statistics
-    checkSprmStatistics(next, POPULATION);
-
-    // write next family to the file
-    if ((fp = fopen(fnamew, "wb")) == NULL) {
-        // failed
-        printf("\a%s cannot be opened\n", fnamew);
-        return -1;
-    }
-    // opened!
-    fwrite(next, sizeof next, 1, fp);
-    fclose(fp);
-    return 0;
-}
-
 // select randomly except for elite selection
 // perform averaging and uniform crossing once for each parents
 void randAveUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
@@ -825,6 +757,7 @@ void randAveUni(const int *fitness, const int *numbers, const Sprm *current, Spr
     }
 }
 
+// 選択・交叉・突然変異の関数は別途定義
 // make next generation file
 // write all individuals to the file
 // give a function pointer for selection and crossing
