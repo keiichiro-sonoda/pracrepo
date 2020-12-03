@@ -98,9 +98,9 @@
 #define warnOverwritingExit(fname) if (warnOverwriting(fname) < 0) return -1  
 
 // マクロで型に依存せずにバイナリファイル作れるんじゃね?
-// 勝手に関数戻っちゃってもいいかも
-// この文字列が展開されるだけなら, サイズもそのまま計算できそう
-// でもやっぱサイズは与えよう
+// ファイル開けなかったら, マクロ呼び出し元で戻る
+// 注意すべきことは, 呼び出し元が数値を返す関数だってこと
+// charでもfloatでも大丈夫なのかな?
 #define dumpFileDirectExit(fname, xp, x_size) do {\
     FILE *_fp;\
     if ((_fp = fopen((fname), "wb")) == NULL) {\
