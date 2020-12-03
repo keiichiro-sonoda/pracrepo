@@ -740,7 +740,8 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     if (dumpPrm1LCompDirect(fname, pra2, 1)  < 0)
         return -1;
     // 適応度書き込み
-    return dumpFitnessShortDirect(fnamef, fitness, POPULATION);
+    dumpFitnessShortDirectExit(fnamef, fitness, POPULATION);
+    return 0;
 }
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)

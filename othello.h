@@ -285,9 +285,4 @@ int warnOverwriting(const char *fname);
 // 適応度評価したファイル名をそのまま与えるバージョン
 int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo);
 
-// 適応度書き込み
-// 適応度がshort型に収まること前提で書き込み
-// 上書き要注意
-int dumpFitnessShortDirect(const char *fname, const int *fitness, int n);
-
 #endif
