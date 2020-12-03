@@ -10,6 +10,7 @@
 #define SEED 123U // シード値
 #endif
 
+// 等価でないマスの数
 #define SPRM_LEN 10
 #define SURVIVE_NUM 10
 
@@ -156,6 +157,16 @@
 
 // 符号無文字型配列をfloat型配列に変換
 #define uchar2weightArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = uchar2weight((src)[_])
+
+// Sprmの配列を圧縮対応乱数で作成
+// n には基本 POPULATION を与えると思うが可変にしておく
+#define randSprmArrayComp(pra, n) do {\
+    u_char _uca[SPRM_LEN];\
+    for (int _ = 0; _ < (n); _++) {\
+        randUcharArray(_uca, SPRM_LEN);\
+        uchar2weightArray(_uca, pra[_].weight, SPRM_LEN);\
+    }\
+} while (0)
 
 // simple parameter
 typedef struct sprm{

@@ -427,11 +427,7 @@ int makeFGFileSprmComp(const char *format) {
     snprintf(fnamew, FILENAME_MAX, format, 0);
     warnOverwritingExit(fnamew);
     Sprm pra[POPULATION];
-    u_char uca[SPRM_LEN];
-    for (int i = 0; i < POPULATION; i++) {
-        randUcharArray(uca, SPRM_LEN);
-        uchar2weightArray(uca, pra[i].weight, SPRM_LEN);
-    }
+    randSprmArrayComp(pra, POPULATION);
     showFamilyPart(pra);
     return 0;
 }
