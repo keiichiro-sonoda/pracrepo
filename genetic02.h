@@ -180,7 +180,11 @@ typedef struct sprm{
 typedef void (*scmFunc)(const int*, const int*, const Sprm*, Sprm*);
 
 // global variables
+
+// マスとSprmの重みの対応表
 extern int CORR_TABLE[MASU_NUM];
+// 圧縮版Sprmファイルのサイズ (フラグ付き)
+extern const int SPRM_FILE_SIZE_COMP;
 extern Sprm SAMP_PRM;
 
 // functions

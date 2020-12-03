@@ -10,7 +10,13 @@
 
 // global variables
 // declarations are required
+
 int CORR_TABLE[MASU_NUM];
+
+// 圧縮後は重みひとつあたり1バイトで計算
+// フラグ分も足す
+const int SPRM_FILE_SIZE_COMP = SPRM_LEN * POPULATION + 1;
+
 Sprm SAMP_PRM;
 
 // functions
@@ -26,6 +32,7 @@ void initSprm(void) {
     printf("population          : %4d\n", POPULATION);
     printf("the number of elites: %4d\n", ELITE_NUM);
     printf("mutation rate       : %4.2f\n", MUT_RATE);
+    printf("parameter file size : %4d\n", SPRM_FILE_SIZE_COMP);
 }
 
 // print a simple parameter
@@ -484,6 +491,12 @@ int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
     }
     fwrite(pra, pra_size, 1, fp);
     fclose(fp);
+    return 0;
+}
+
+// Sprm配列を圧縮してファイルに書き込む
+// ソート済みか否かのフラグも与える
+int dumpSprmFileCompDirect(const char *fname, Sprm *pra, u_char flag) {
     return 0;
 }
 
