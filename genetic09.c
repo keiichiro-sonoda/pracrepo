@@ -165,6 +165,8 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 
 int main(void) {
     initSprm();
+    for (int i = 0; i < 8; i++)
+        printDecimalArray(CORR_TABLE + i * 8, 8);
     // シード固定に注意
     //srand((unsigned)time(NULL));
     // 初期設定
