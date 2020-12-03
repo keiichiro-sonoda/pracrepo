@@ -166,6 +166,8 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 int main(void) {
     initSprm();
     showCORR_TABLE();
+    showSprmOneLine(SAMP_PRM);
+    showSprm(SAMP_PRM);
     // シード固定に注意
     //srand((unsigned)time(NULL));
     // 初期設定
