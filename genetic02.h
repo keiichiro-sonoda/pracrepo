@@ -116,6 +116,10 @@
 #define alternative(a, b) (rand() & 1 ? (a) : (b))
 #endif
 
+// Sprm からマスに対応する値を取り出すためのグローバル変数設定
+// convert from an address to the weight index?
+#define setCORR_TABLE() for (int i = 0; i < MASU_NUM; i++) CORR_TABLE[i] = ad2index(normalAd(i * 2))
+
 // uniform crossover (array)
 #ifndef uniCrossArray
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
@@ -193,9 +197,6 @@ float copyOrMutation(float x, float mut_rate);
 // give 2 parameters, children's array, and mutation rate
 // the number of children is 2
 void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_rate);
-
-// convert from an address to the weight index?
-void setCORR_TABLE(void);
 
 // caluculate point
 float evaluationSimple(Board b, Sprm pr);
