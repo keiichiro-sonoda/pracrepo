@@ -140,6 +140,11 @@ extern Sprm SAMP_PRM;
 
 // functions
 
+// グローバル変数等初期化関数
+// シード設定も行う
+// パラメータも表示
+void initSprm(void);
+
 // print a simple parameter
 void showSprm(Sprm pr);
 

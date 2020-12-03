@@ -15,6 +15,18 @@ Sprm SAMP_PRM;
 
 // functions
 
+// グローバル変数等初期化関数
+// シード設定も行う
+// パラメータも表示
+void initSprm(void) {
+    srand(SEED);
+    setCORR_TABLE();
+    initBoard();
+    printf("population          : %4d\n", POPULATION);
+    printf("the number of elites: %4d\n", ELITE_NUM);
+    printf("mutation rate       : %4.2f\n", MUT_RATE);
+}
+
 // print a simple parameter
 void showSprm(Sprm pr) {
     for (int i = 0; i < MASU_NUM; i++) {
