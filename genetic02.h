@@ -162,9 +162,11 @@
 // n には基本 POPULATION を与えると思うが可変にしておく
 #define randSprmArrayComp(pra, n) do {\
     u_char _uca[SPRM_LEN];\
+    Sprm *_prp;\
     for (int _ = 0; _ < (n); _++) {\
+        _prp = pra + _;\
         randUcharArray(_uca, SPRM_LEN);\
-        uchar2weightArray(_uca, pra[_].weight, SPRM_LEN);\
+        uchar2weightArray(_uca, _prp->weight, SPRM_LEN);\
     }\
 } while (0)
 
