@@ -87,11 +87,12 @@
 #define randBit() (rand() & 1)
 
 // 32bitバイナリ表示するマクロ(ハイフン付き)
-#define printBin32(x) printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10)
+// 波括弧を使わない if 節で使う場面を想定
+#define printBin32(x) do {printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10)} while (0)
 
 // 初期盤面の設定
 // initial configure
-#define initBoard() {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;}
+#define initBoard() do {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;} while (0)
 
 // 64bit
 typedef unsigned long int int8B;
