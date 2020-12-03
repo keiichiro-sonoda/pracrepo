@@ -14,21 +14,9 @@ void sortTest(void) {
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
+    printDecimal(l2);
     randomizedQuicksortAll(sample1, l1);
     printDecimalArray(sample1, l1);
-    printFloat(aveFloat(sample2, l2));
-    int n = 3;
-    int tmp[n];
-    int range = 10;
-    int rslt[range];
-    zeros(rslt, range);
-    for (int i = 0; i < 10000; i++) {
-        randIntMltDep(tmp, n, 0, range - 1);
-        for (int j = 0; j < n; j++) {
-            rslt[tmp[j]]++;
-        }
-    }
-    printDecimalArray(rslt, range);
 }
 
 // insertion sort
@@ -208,13 +196,6 @@ void rouletteFloatTest(const float *A, int n) {
 }
 
 // exchange A[i] and A[j]
-void exchange(int *A, int i, int j) {
-    int t = A[i];
-    A[i] = A[j];
-    A[j] = t;
-}
-
-// exchange A[i] and A[j]
 // also exchange B[i] and B[j]
 void exchangeD(int *A, int *B, int i, int j) {
     int t = A[i];
@@ -231,28 +212,28 @@ int partitionDD(int *A, int *B, int p, int r) {
     i = p;
     for (j = p; j < r; j++) {
         if (A[j] > x) {
-            exchange(A, i, j);
-            exchange(B, i, j);
+            exchange(int, A, i, j);
+            exchange(int, B, i, j);
             i++;
         }
     }
-    exchange(A, i, r);
-    exchange(B, i, r);
+    exchange(int, A, i, r);
+    exchange(int, B, i, r);
     return i;
 }
 
 // 乱択版パーティション (昇順)
 int randomizedPartition(int *A, int p, int r) {
-    exchange(A, randIntRange(p, r), r);
+    exchange(int, A, randIntRange(p, r), r);
     int x = A[r];
     int i = p;
     for (int j = p; j < r; j++) {
         if (A[j] < x) {
-            exchange(A, i, j);
+            exchange(int, A, i, j);
             i++;
         }
     }
-    exchange(A, i, r);
+    exchange(int, A, i, r);
     return i;
 }
 

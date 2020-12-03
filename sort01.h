@@ -1,6 +1,10 @@
 #ifndef SORT01_H
 #define SORT01_H
 
+// 配列 A の添字 i と j の要素を交換
+// exchange A[i] and A[j]
+#define exchange(type, A, i, j) do {type _ = (A)[i]; (A)[i] = (A)[j]; (A)[j] = _;} while (0)
+
 // 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
 #define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
 
@@ -71,9 +75,6 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);
 
 // check if rouletteFloat workes as expected
 void rouletteFloatTest(const float *A, int n);
-
-// exchange A[i] and A[j]
-void exchange(int *A, int i, int j);
 
 // exchange A[i] and A[j]
 // also exchange B[i] and B[j]
