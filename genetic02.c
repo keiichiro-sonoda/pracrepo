@@ -423,6 +423,16 @@ int makeFirstGeneFileFlex(const char *format) {
 
 // 圧縮版Sprm初期世代ファイルを作成したい
 int makeFGFileSprmComp(const char *format) {
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, 0);
+    warnOverwritingExit(fnamew);
+    Sprm pra[POPULATION];
+    u_char uca[SPRM_LEN];
+    for (int i = 0; i < POPULATION; i++) {
+        randUcharArray(uca, SPRM_LEN);
+        uchar2weightArray(uca, pra[i].weight, SPRM_LEN);
+    }
+    showFamilyPart(pra);
     return 0;
 }
 

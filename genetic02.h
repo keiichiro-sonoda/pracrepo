@@ -140,11 +140,6 @@
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
 #endif
 
-// from 0.0 to 1.0
-#ifndef randFloat
-#define randFloat() ((float)rand() / RAND_MAX)
-#endif
-
 // 符号無文字型の乱数を返す
 // 代入する変数の型に依存?
 #define randUchar() (rand() % 256)
@@ -155,6 +150,12 @@
 // -0.5から0.5までの小数を符号無文字型に圧縮
 // 圧縮精度より小さい値を足せば, 切り捨てられて同じ値になる?
 #define weight2uchar(w) (((w) + 0.5000000596f) * 255)
+
+// 符号無文字型の乱数配列を作成
+#define randUcharArray(A, n) for (int _ = 0; _ < (n); _++) A[_] = randUchar()
+
+// 符号無文字型配列をfloat型配列に変換
+#define uchar2weightArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = uchar2weight((src)[_])
 
 // simple parameter
 typedef struct sprm{
@@ -256,6 +257,9 @@ float calcWinRateSprmVSRandTotal(Sprm pr, int n);
 // give a file name format
 // record all individuals!!
 int makeFirstGeneFileFlex(const char *format);
+
+// 圧縮版Sprm初期世代ファイルを作成したい
+int makeFGFileSprmComp(const char *format);
 
 // ファイル名をそのまま与えてSprmをロード
 int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);

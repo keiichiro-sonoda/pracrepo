@@ -94,6 +94,9 @@
 // initial configure
 #define initBoard() do {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;} while (0)
 
+// return とかマクロで書いていいのかな
+#define warnOverwritingExit(fname) if (warnOverwriting(fname) < 0) return -1  
+
 // 64bit
 typedef unsigned long int int8B;
 

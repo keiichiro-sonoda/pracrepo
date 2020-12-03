@@ -168,24 +168,14 @@ int main(void) {
     //showCORR_TABLE();
     //showSprmOneLine(SAMP_PRM);
     // シード固定に注意
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     // 初期設定
-    const char format[] = FNF_10010001000005;
+    const char format[] = FNF_TEST;
     printString(format);
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    u_char uc1, uc2;
-    float w1;
-    for (int i = 0; i < 256; i++) {
-        uc1 = i;
-        w1 = uchar2weight(uc1);
-        uc2 = weight2uchar(w1);
-        printf("%d, %f, %d", i, w1, (int)uc2);
-        if (uc1 ^ uc2)
-            printf(" NG!");
-        putchar(10);
-    }
+    makeFGFileSprmComp(format);
     return 0;
 }
