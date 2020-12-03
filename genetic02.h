@@ -1,6 +1,9 @@
 #ifndef GENETIC02_H
 #define GENETIC02_H
+
 // to use MASU_NUM
+//#include <stdio.h>
+//#include <stdlib.h>
 #include "othello.h"
 
 #ifndef SEED
@@ -141,6 +144,9 @@
 #ifndef randFloat
 #define randFloat() ((float)rand() / RAND_MAX)
 #endif
+
+// 符号なし文字型の乱数を返す
+#define randUChar() ((u_char)(rand() % 256))
 
 // simple parameter
 typedef struct sprm{

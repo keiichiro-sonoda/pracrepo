@@ -165,17 +165,18 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 
 int main(void) {
     initSprm();
-    showCORR_TABLE();
-    showSprmOneLine(SAMP_PRM);
+    //showCORR_TABLE();
+    //showSprmOneLine(SAMP_PRM);
     // シード固定に注意
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     // 初期設定
     const char format[] = FNF_10010001000005;
     printString(format);
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
-    sortTest();
+    //sortTest();
+    printCharDecimal(randUChar());
     printString("end");
     return 0;
 }
