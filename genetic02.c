@@ -510,8 +510,8 @@ int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 // ソート済みか否かのフラグも与える
 int dumpSprmFileCompDirect(const char *fname, const Sprm *pra, u_char flag) {
     u_char uca[SPRM_FILE_SIZE_COMP];
-    for (int i = 0; i < POPULATION; i++)
-        weight2ucharArray(pra[i].weight, uca + i * SPRM_LEN, SPRM_LEN);
+    // 圧縮
+    compSprmArray(pra, uca, POPULATION);
     uca[SPRM_FILE_SIZE_COMP - 1] = flag;
     dumpFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
     printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);
@@ -937,4 +937,16 @@ void copyFGFlex(const char *dst_format) {
     fwrite(pa, sizeof pa, 1, fp);
     // close
     fclose(fp);
+}
+
+// Sprm配列を圧縮
+// 関数型マクロを考えたけど, Sprm限定なら関数のほうが良さそう
+// constの問題に引っかかった
+// 引数で与えた式が何度も繰り返されるって考えるとあまり効率良くないのかな?
+void compSprmArray(const Sprm *pra, u_char *uca, int n) {
+    const float *fp;
+    for (int i = 0; i < n; i++) {
+        fp = pra[i].weight;
+        weight2ucharArray(fp, uca + i * SPRM_LEN, SPRM_LEN);
+    }
 }

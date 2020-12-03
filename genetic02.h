@@ -7,7 +7,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 123U // シード値
+#define SEED 124U // シード値
 #endif
 
 // 等価でないマスの数
@@ -354,5 +354,11 @@ void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nG
 // copy the first generation
 // give the destination file format
 void copyFGFlex(const char *dst_format);
+
+// Sprm配列を圧縮
+// 関数型マクロを考えたけど, Sprm限定なら関数のほうが良さそう
+// constの問題に引っかかった
+// 引数で与えた式が何度も繰り返されるって考えるとあまり効率良くないのかな?
+void compSprmArray(const Sprm *pra, u_char *uca, int n);
 
 #endif
