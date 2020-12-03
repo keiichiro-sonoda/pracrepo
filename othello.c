@@ -1063,19 +1063,6 @@ int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo) {
     return 0;
 }
 
-// short型で保存されている適応度を読み込む
-// othelloに移動したはいいが POPULATION が無いので引数で定義
-// 汎用マクロでかなり短縮できるか?
-int loadFitnessShortDirect(const char *fname, int *fitness, int n) {
-    // short型配列を定義
-    short fitness_short[n];
-    // ロード. できなかったら-1で戻る
-    loadFileDirectExit(fname, fitness_short, sizeof fitness_short);
-    // int型配列にコピー
-    copyArray(fitness_short, fitness, n);
-    return 0;
-}
-
 // 適応度書き込み
 // 適応度がshort型に収まること前提で書き込み
 // 上書き要注意

@@ -123,6 +123,15 @@
     fclose(_fp);\
 } while (0)
 
+// short型で保存されている適応度を読み込む
+// othelloに移動したはいいが POPULATION が無いので引数で定義
+// マクロ中毒
+#define loadFitnessShortDirectExit(fname, fitness, n) do {\
+    short fitness_short[n];\
+    loadFileDirectExit(fname, fitness_short, sizeof fitness_short);\
+    copyArray(fitness_short, fitness, n);\
+} while (0)
+
 // 64bit
 typedef unsigned long int int8B;
 
@@ -267,11 +276,6 @@ int warnOverwriting(const char *fname);
 // 汎用性があるとどうしてもothelloに来てしまう
 // 適応度評価したファイル名をそのまま与えるバージョン
 int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo);
-
-// short型で保存されている適応度を読み込む
-// othelloに移動したはいいが POPULATION が無いので引数で定義
-// 汎用マクロでかなり短縮できるか?
-int loadFitnessShortDirect(const char *fname, int *fitness, int n);
 
 // 適応度書き込み
 // 適応度がshort型に収まること前提で書き込み
