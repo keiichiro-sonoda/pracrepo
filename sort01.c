@@ -224,9 +224,11 @@ int partitionDD(int *A, int *B, int p, int r) {
 
 // 乱択版パーティション (昇順)
 int randomizedPartition(int *A, int p, int r) {
-    exchange(int, A, randIntRange(p, r), r);
+    // マクロ内で乱数を作成すると, 展開されたときに二度実行されてしまう
+    int i = randIntRange(p, r);
+    exchange(int, A, i, r);
     int x = A[r];
-    int i = p;
+    i = p;
     for (int j = p; j < r; j++) {
         if (A[j] < x) {
             exchange(int, A, i, j);
