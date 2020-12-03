@@ -221,9 +221,6 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp);
 Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp);
 
 // return winner
-int oneToOneNormalSprm(const Sprm *spp, const Sprm *gpp);
-
-// return winner
 // give a function pointer as an argument
 int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
 
