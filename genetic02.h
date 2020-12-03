@@ -149,7 +149,9 @@
 #define randUchar() ((u_char)(rand() % 256))
 
 // 圧縮された符号無文字を-0.5から0.5までの小数に変換
-#define uchar2weight(uc) (((uc) - 127.5) / 255)
+#define uchar2weight(uc) (((uc) - 127.5f) / 255)
+
+#define weight2uchar(w) (((w) + 0.5f) * 255)
 
 // simple parameter
 typedef struct sprm{
