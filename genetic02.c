@@ -438,6 +438,7 @@ int makeFGFileSprmComp(const char *format) {
     showFamilyPart(pra);
     // フラグなしで書き込み
     if (dumpSprmFileCompDirect(fnamew, pra, 0) < 0) return -1;
+    printf("yeah\n");
     return 0;
 }
 
@@ -454,6 +455,16 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
     fread(pra, pra_size, 1, fp);
     fclose(fp);
     return 0;
+}
+
+// 圧縮ファイルからロード
+int loadSprmFileCompDirect(const char *fname, Sprm *pra) {
+    u_char uca[SPRM_FILE_SIZE_COMP];
+    loadFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
+    for (int i = 0; i < POPULATION; i++)
+        uchar2weightArray(uca + i * SPRM_LEN, pra[i].weight, SPRM_LEN);
+    // フラグを返す
+    return (int)uca[SPRM_FILE_SIZE_COMP];
 }
 
 // read parameters from a file

@@ -97,6 +97,17 @@
 // return とかマクロで書いていいのかな
 #define warnOverwritingExit(fname) if (warnOverwriting(fname) < 0) return -1  
 
+// 当然ロード版も作るよね
+#define loadFileDirectExit(fname, xp, x_size) do {\
+    FILE *_fp;\
+    if ((_fp = fopen(fname, "rb")) == NULL) {\
+        printf("%s can't be opened.\n", fname);\
+        return -1;\
+    }\
+    fread(xp, x_size, 1, _fp);\
+    fclose(_fp);\
+} while (0)
+
 // マクロで型に依存せずにバイナリファイル作れるんじゃね?
 // ファイル開けなかったら, マクロ呼び出し元で戻る
 // 注意すべきことは, 呼び出し元が数値を返す関数だってこと
