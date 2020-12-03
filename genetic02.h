@@ -118,7 +118,10 @@
 
 // Sprm からマスに対応する値を取り出すためのグローバル変数設定
 // convert from an address to the weight index?
-#define setCORR_TABLE() for (int i = 0; i < MASU_NUM; i++) CORR_TABLE[i] = ad2index(normalAd(i * 2))
+#define setCORR_TABLE() for (int _ = 0; _ < MASU_NUM; _++) CORR_TABLE[_] = ad2index(normalAd(_ * 2))
+
+// グローバル変数を表示
+#define showCORR_TABLE() for (int _ = 0; _ < 8; _++) printDecimalArray(CORR_TABLE + _ * 8, 8)
 
 // uniform crossover (array)
 #ifndef uniCrossArray
