@@ -123,6 +123,11 @@
 // グローバル変数を表示
 #define showCORR_TABLE() for (int _ = 0; _ < 8; _++) printDecimalArray(CORR_TABLE + _ * 8, 8)
 
+// サンプルパラメータを作成
+// make a sample of parameters
+// set global variable "SAMP_PRM"
+#define makeSprmSample() do {float spr[] = {SAMP_PRM_NUMS}; for (int _ = 0; _ < SPRM_LEN; _++) SAMP_PRM.weight[_] = spr[_];} while(0)
+
 // uniform crossover (array)
 #ifndef uniCrossArray
 #define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
@@ -301,9 +306,6 @@ void nGeneSSAFlexLoopSeed(scmFunc selAndCross, const char *format, int safety, i
 
 // give a function to loop
 void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nGeneF)(void(), const char*, int, int), const char *format, int safety, int st, int loop);
-
-// make a sample of parameters
-void makeSprmSample(void);
 
 // copy the first generation
 // give the destination file format

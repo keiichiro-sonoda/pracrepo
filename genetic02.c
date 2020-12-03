@@ -22,6 +22,7 @@ void initSprm(void) {
     srand(SEED);
     setCORR_TABLE();
     initBoard();
+    makeSprmSample();
     printf("population          : %4d\n", POPULATION);
     printf("the number of elites: %4d\n", ELITE_NUM);
     printf("mutation rate       : %4.2f\n", MUT_RATE);
@@ -914,15 +915,6 @@ void nextGenerationSprmFlexLoopFlex(void (*getSvr)(const Sprm*, Sprm*), int (*nG
         time(&t1);
         printf("elapsed time: %lds\n", t1 - t0);
     }
-}
-
-// make a sample of parameters
-// set global variable "SAMP_PRM"
-void makeSprmSample(void) {
-    // use macro
-    float spr[] = {SAMP_PRM_NUMS};
-    for (int i = 0; i < SPRM_LEN; i++)
-        SAMP_PRM.weight[i] = spr[i];
 }
 
 // copy the first generation
