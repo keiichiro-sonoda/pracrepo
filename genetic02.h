@@ -155,8 +155,11 @@
 // 符号無文字型の乱数配列を作成
 #define randUcharArray(A, n) for (int _ = 0; _ < (n); _++) A[_] = randUchar()
 
-// 符号無文字型配列をfloat型配列に変換
+// 符号無文字型配列を重み配列に変換
 #define uchar2weightArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = uchar2weight((src)[_])
+
+// 重み配列を符号無文字型配列に変換 (圧縮)
+#define weight2ucharArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = weight2uchar((src)[_])
 
 // Sprmの配列を圧縮対応乱数で作成
 // n には基本 POPULATION を与えると思うが可変にしておく
@@ -292,6 +295,10 @@ Sprm loadRepSprm(const char *format, int gene_num, int loc_pop);
 // give a file name for writing
 // be careful of overwriting
 int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
+
+// Sprm配列を圧縮してファイルに書き込む
+// ソート済みか否かのフラグも与える
+int dumpSprmFileCompDirect(const char *fname, const Sprm *pra, u_char flag);
 
 // check parameter in a file
 // give the file name format and generation number

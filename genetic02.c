@@ -436,8 +436,8 @@ int makeFGFileSprmComp(const char *format) {
     Sprm pra[POPULATION];
     randSprmArrayComp(pra, POPULATION);
     showFamilyPart(pra);
-    dumpFileDirectExit(fnamew, pra, sizeof pra);
-    printf("%ld bytes were written\n", sizeof pra);
+    // フラグなしで書き込み
+    if (dumpSprmFileCompDirect(fnamew, pra, 0) < 0) return -1;
     return 0;
 }
 
@@ -496,7 +496,13 @@ int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 
 // Sprm配列を圧縮してファイルに書き込む
 // ソート済みか否かのフラグも与える
-int dumpSprmFileCompDirect(const char *fname, Sprm *pra, u_char flag) {
+int dumpSprmFileCompDirect(const char *fname, const Sprm *pra, u_char flag) {
+    u_char uca[SPRM_FILE_SIZE_COMP];
+    for (int i = 0; i < POPULATION; i++)
+        weight2ucharArray(pra[i].weight, uca + i * SPRM_LEN, SPRM_LEN);
+    uca[SPRM_FILE_SIZE_COMP] = flag;
+    dumpFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
+    printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);
     return 0;
 }
 
