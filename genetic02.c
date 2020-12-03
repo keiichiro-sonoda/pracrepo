@@ -429,6 +429,8 @@ int makeFGFileSprmComp(const char *format) {
     Sprm pra[POPULATION];
     randSprmArrayComp(pra, POPULATION);
     showFamilyPart(pra);
+    dumpFileDirectExit("yeah/yeah", pra, sizeof pra);
+    printf("%ld bytes were written\n", sizeof pra);
     return 0;
 }
 

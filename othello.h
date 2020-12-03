@@ -97,6 +97,20 @@
 // return とかマクロで書いていいのかな
 #define warnOverwritingExit(fname) if (warnOverwriting(fname) < 0) return -1  
 
+// マクロで型に依存せずにバイナリファイル作れるんじゃね?
+// 勝手に関数戻っちゃってもいいかも
+// この文字列が展開されるだけなら, サイズもそのまま計算できそう
+// でもやっぱサイズは与えよう
+#define dumpFileDirectExit(fname, xp, x_size) do {\
+    FILE *_fp;\
+    if ((_fp = fopen((fname), "wb")) == NULL) {\
+        printf("%s can't be opened.\n", (fname));\
+        return -1;\
+    }\
+    fwrite((xp), (x_size), 1, _fp);\
+    fclose(_fp);\
+} while (0)
+
 // 64bit
 typedef unsigned long int int8B;
 
