@@ -160,6 +160,7 @@
 
 // Sprmの配列を圧縮対応乱数で作成
 // n には基本 POPULATION を与えると思うが可変にしておく
+// イテレータ変数が被らないように, 各Sprmのポインタを一時変数に代入
 #define randSprmArrayComp(pra, n) do {\
     u_char _uca[SPRM_LEN];\
     Sprm *_prp;\
