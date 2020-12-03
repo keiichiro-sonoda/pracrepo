@@ -181,7 +181,11 @@ int main(void) {
     for (int i = 0; i < 256; i++) {
         uc1 = i;
         w1 = uchar2weight(uc1);
-        printf("%d, %f\n", i, w1);
+        uc2 = weight2uchar(w1);
+        printf("%d, %f, %d", i, w1, (int)uc2);
+        if (uc1 ^ uc2)
+            printf(" NG!");
+        putchar(10);
     }
     return 0;
 }
