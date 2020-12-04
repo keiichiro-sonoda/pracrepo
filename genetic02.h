@@ -332,7 +332,10 @@ int makeFGFileSprmComp(const char *format);
 int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
 
 // 圧縮ファイルからロード
-int loadSprmFileCompDirect(const char *fname, Sprm *pra);
+// エラーやソート済みフラグを返す
+// 返り値が重要な場合はマクロ化しにくいかな?
+// 個体数を指定するように変更
+int loadSprmFileCompDirect(const char *fname, Sprm *pra, int loc_pop);
 
 // read parameters from a file
 int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size);

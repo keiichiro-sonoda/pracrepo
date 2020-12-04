@@ -151,6 +151,14 @@ int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
     return 0;
 }
 
+// 圧縮ファイル用, 平均値取得関数
+int getFamilyMeansCompPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
+    Sprm family[n];
+    if (loadSprmFileCompDirect(fnamer, family) < 0)
+        return -1;
+    ;
+}
+
 // トップ10の標準偏差を取得(共有ライブラリ用)
 // 世代番号でなく, ファイル名で指定する
 // ファイル名を世代番号でしていするのはpythonで行なう

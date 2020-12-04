@@ -473,14 +473,16 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 // 圧縮ファイルからロード
 // エラーやソート済みフラグを返す
 // 返り値が重要な場合はマクロ化しにくいかな?
-int loadSprmFileCompDirect(const char *fname, Sprm *pra) {
-    u_char uca[SPRM_FILE_SIZE_COMP];
-    // ロード
-    loadFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
+// 個体数を指定するように変更
+int loadSprmFileCompDirect(const char *fname, Sprm *pra, int loc_pop) {
+    const int loc_size = SPRM_LEN * loc_pop + 1;
+    u_char uca[loc_size];
+    // ロードかエラー
+    loadFileDirectExit(fname, uca, loc_size);
     // 展開
-    extrSprmArray(uca, pra, POPULATION);
+    extrSprmArray(uca, pra, loc_pop);
     // フラグを返す
-    return (int)(uca[SPRM_FILE_SIZE_COMP - 1]);
+    return (int)(uca[loc_size - 1]);
 }
 
 // read parameters from a file
@@ -966,7 +968,7 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     // 適応度ファイル名作成, オーバーフローしたら抜ける
     makeFitnessFileNameDirectExit(fnamef, FILENAME_MAX, fname);
     // ロードしてフラグを取得
-    int flag = loadSprmFileCompDirect(fname, pra1);
+    int flag = loadSprmFileCompDirect(fname, pra1, POPULATION);
     // エラーなら-1を返す
     if (flag < 0) return -1;
     // ソート済みなら適応度ファイルを読み込む
@@ -1027,7 +1029,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     // 今世代と次世代の個体配列を宣言
     Sprm current[POPULATION], next[POPULATION];
     // ソート済み配列を読み込む
-    if (loadSprmFileCompDirect(fnames, current) < 0) {
+    if (loadSprmFileCompDirect(fnames, current, POPULATION) < 0) {
         return -1;
     }
     // エリートはそのままコピー
