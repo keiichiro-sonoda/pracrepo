@@ -168,13 +168,13 @@ int main(void) {
     // シード固定に注意
     //srand((unsigned)time(NULL));
     // 初期設定
-    const char format[] = FNF_TEST;
+    const char format[] = FNF_RC05006000000005;
     printString(format);
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    //makeFGFileSprmComp(format);
-    nGeneSprmCompLoop(rltUniRdS, format, 1, 1, 3);
+    makeFGFileSprmComp(format);
+    nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     return 0;
 }

@@ -8,7 +8,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 122U // シード値
+#define SEED 123U // シード値
 #endif
 
 #define SPRM_LEN 10 // 区別できるマスの数
@@ -68,6 +68,12 @@
 // 00: random mutation
 // 005: mutation rate
 #define FNF_05006000000005 "prm/sprm050_06_rlt_uni_rd005/sprm050_06_rlt_uni_rd005_g%03d.bin"
+
+// R: 指し手ルーレット (今まで何も付けてなかったけど一応)
+// C: 圧縮バージョン
+// ファイル名もsprmが長いのでsでよくね?って思った
+// ランダムAI対戦を復活させたらどうなるだろう?
+#define FNF_RC05006000000005 "prm/srltc050_06_rlt_uni_rd005/srltc050_06_rlt_uni_rd005_%03d.bin"
 
 // select the board with the highest evaluation value
 #define FNF_D05006000000005 "prm/sprmdef050_06_rlt_uni_rd005/sprmdef050_06_rlt_uni_rd005_g%03d.bin"
