@@ -14,8 +14,13 @@ void sortTest(void) {
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, 4.0};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
+    int numbers[l1];
+    indices(numbers, l1);
     printDecimal(l2);
-    randomizedQuicksortAll(sample1, l1);
+    printDecimalArray(numbers, l1);
+    printDecimalArray(sample1, l1);
+    randomizedQuicksortDDAll(sample1, numbers, l1);
+    printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
 }
 
@@ -195,17 +200,7 @@ void rouletteFloatTest(const float *A, int n) {
     printDecimalArray(results, n);
 }
 
-// exchange A[i] and A[j]
-// also exchange B[i] and B[j]
-void exchangeD(int *A, int *B, int i, int j) {
-    int t = A[i];
-    A[i] = A[j];
-    A[j] = t;
-    t = B[i];
-    B[i] = B[j];
-    B[j] = t;
-}
-
+// 降順
 int partitionDD(int *A, int *B, int p, int r) {
     int i, j;
     int x = A[r];
@@ -246,16 +241,16 @@ int randomizedPartitionDD(int *A, int *B, int p, int r) {
     // 分割の基準となる値はランダムに決定する
     int i = randIntRange(p, r);
     // randomized!
-    exchangeD(A, B, i, r);
+    exchangeD(int, A, B, i, r);
     int x = A[r];
     i = p;
     for (int j = p; j < r; j++) {
         if (A[j] > x) {
-            exchangeD(A, B, i, j);
+            exchangeD(int, A, B, i, j);
             i++;
         }
     }
-    exchangeD(A, B, i, r);
+    exchangeD(int, A, B, i, r);
     return i;
 }
 

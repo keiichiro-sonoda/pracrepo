@@ -5,6 +5,11 @@
 // exchange A[i] and A[j]
 #define exchange(type, A, i, j) do {type _ = (A)[i]; (A)[i] = (A)[j]; (A)[j] = _;} while (0)
 
+// 2つの配列で, それぞれ添字 i と j の要素を交換
+// exchange A[i] and A[j]
+// also exchange B[i] and B[j]
+#define exchangeD(type, A, B, i, j) do {exchange(type, A, i, j); exchange(type, B, i, j);} while (0)
+
 // 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
 #define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
 
@@ -75,10 +80,6 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);
 
 // check if rouletteFloat workes as expected
 void rouletteFloatTest(const float *A, int n);
-
-// exchange A[i] and A[j]
-// also exchange B[i] and B[j]
-void exchangeD(int *A, int *B, int i, int j);
 
 // 乱択版パーティション (昇順)
 int randomizedPartition(int *A, int p, int r);
