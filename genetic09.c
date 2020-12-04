@@ -176,13 +176,15 @@ int main(void) {
     //sortTest();
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 1);
-    int r;
-    srand((unsigned)time(NULL));
-    for (int i = 0; i < 100000; i++) {
-        r = rand();
-        if ((r % 256) != (r & 0xff)) {
-            printf("no!\n");
-        }
+    u_char uc1, uc2;
+    float w1;
+    for (int i = 0; i < 256; i++) {
+        uc1 = i;
+        w1 = uchar2weight(uc1);
+        uc2 = weight2uchar(w1);
+        printf("%d, %f, %d\n", uc1, w1, uc2);
+        if (uc1 ^ uc2)
+            printf("だめ\n");
     }
     return 0;
 }
