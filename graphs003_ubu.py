@@ -230,7 +230,7 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed):
     ax = fig.add_subplot(111)
     makeSDGraph(ax, x, ys)
     # フォーマットやグラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fname_format, "SD{:03d}".format(population), int(x[0]), int(x[1]))
+    path = makeJpegFileName(fname_format, "SD{:03d}".format(population), int(x[0]), int(x[-1]))
     if path:
     # 書き込み
         fig.savefig(path, bbox_inches="tight")
@@ -447,10 +447,10 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 COMPRESSED_INDICES = [26]
 
 def main():
-    ind = 26
+    ind = 25
     loc_pop = 50
-    start_g = -50
-    stop_g = 200
+    start_g = 95
+    stop_g = 105
     active_format = FILE_FORMATS[ind]
     # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
