@@ -508,19 +508,6 @@ int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
     return 0;
 }
 
-// Sprm配列を圧縮してファイルに書き込む
-// ソート済みか否かのフラグも与える
-int dumpSprmFileCompDirect(const char *fname, const Sprm *pra, u_char flag) {
-    u_char uca[SPRM_FILE_SIZE_COMP];
-    // 圧縮
-    compSprmArray(pra, uca, POPULATION);
-    // 末尾のフラグ
-    uca[SPRM_FILE_SIZE_COMP - 1] = flag;
-    dumpFileDirectExit(fname, uca, SPRM_FILE_SIZE_COMP);
-    printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);
-    return 0;
-}
-
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num) {

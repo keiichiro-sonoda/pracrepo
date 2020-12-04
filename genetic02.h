@@ -334,10 +334,6 @@ Sprm loadRepSprm(const char *format, int gene_num, int loc_pop);
 // be careful of overwriting
 int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
 
-// Sprm配列を圧縮してファイルに書き込む
-// ソート済みか否かのフラグも与える
-int dumpSprmFileCompDirect(const char *fname, const Sprm *pra, u_char flag);
-
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num);
