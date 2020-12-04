@@ -176,5 +176,13 @@ int main(void) {
     //sortTest();
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 1);
+    int r;
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < 100000; i++) {
+        r = rand();
+        if ((r % 256) != (r & 0xff)) {
+            printf("no!\n");
+        }
+    }
     return 0;
 }
