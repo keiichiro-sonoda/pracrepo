@@ -447,8 +447,8 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 COMPRESSED_INDICES = [26]
 
 def main():
-    ind = 11
-    loc_pop = 6
+    ind = 26
+    loc_pop = 50
     start_g = 0
     stop_g = 100
     active_format = FILE_FORMATS[ind]
