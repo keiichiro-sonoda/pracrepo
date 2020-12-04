@@ -55,7 +55,8 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]);
 
 // ある世代全個体の標準偏差を取得
 // 個体数以下の数をnに指定することも可能
-int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n);
+// 圧縮版か否かを判別する引数を追加
+int getFamilySDPy(const char*, float*, int, int);
 
 // あるファイルの先頭パラメータ (エリート選択されていると仮定すると, トップパラメータ)
 // がランダムAIと対戦したときの (勝ち数, 引き分け数, 負け数) を返したい

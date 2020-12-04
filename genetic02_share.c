@@ -203,10 +203,19 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 
 // ある世代全個体の標準偏差を取得
 // 個体数以下の数をnに指定することも可能
-int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
+// 圧縮版か否かを判別する引数を追加
+int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
-    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
-        return -1;
+    int e;
+    switch (compressed) {
+        case 0: // 非圧縮
+            e = loadSprmFileDirect(fnamer, family, sizeof family);
+            break;
+        default: // 圧縮
+            e = loadSprmFileCompDirect(fnamer, family, n);
+    }
+    if (e < 0) return -1;
+    // 標準偏差計算
     calcSprmSD(family, f_pointer, n);
     return 0;
 }
