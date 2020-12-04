@@ -59,7 +59,7 @@
 #define FNF_NOFIT "prm/sprm_nofit/sprm_nofit%03d.bin"
 
 // test file format
-#define FNF_TEST "prm/test/test%03d.bin"
+#define FNF_TEST "prm/test/test%03d_s%03d.bin"
 
 // 050: population
 // 06: the number of elite

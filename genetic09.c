@@ -79,10 +79,8 @@ void rltSPRdS(const int *fitness, const Sprm *current, Sprm *next) {
         singlePointCrossover(current[parents[0]], current[parents[1]], children, MUT_RATE);
         // インクリメントを式に組み込むことを試す
         next[count++] = children[0];
-        if (count >= POPULATION) {
-            printf("yeah\n");
-            break;
-        }
+        if (count >= POPULATION) break;
+        // こっちでインクリメントすると, for文でも行うので過剰になる
         next[count] = children[1];
     }
 }
