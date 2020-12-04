@@ -188,7 +188,7 @@ int main(void) {
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
-    //makeFGFileSprmComp(format);
-    nGeneSprmCompLoop(rltSPRdS, format, 1, 1, 3);
+    makeFGFileSprmComp(format);
+    nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 201);
     return 0;
 }
