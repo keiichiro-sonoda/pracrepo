@@ -215,8 +215,8 @@
 #define formatPlusSeed(format_old, format, format_size) do {\
     int l = strlen(format_old) - 3;\
     char _ex_bin[l];\
-    snprintf(_ex_bin, l, "%s", format_old);\
-    snprintf(format, FILENAME_MAX, "%s_s%03u.bin", _ex_bin, SEED);\
+    snprintf(_ex_bin, l, "%s", (format_old));\
+    snprintf((format), (format_size), "%s_s%03u.bin", _ex_bin, SEED);\
 } while (0)
 
 // simple parameter
