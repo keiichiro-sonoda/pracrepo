@@ -699,8 +699,9 @@ int makeFitnessFileName(char *dst, size_t dst_size, const char *format, int gene
     char fnameo[FILENAME_MAX];
     // フォーマットと世代番号を合わせる
     snprintf(fnameo, FILENAME_MAX, format, gene_num);
-    // あとはダイレクトにおまかせ
-    return makeFitnessFileNameDirect(dst, dst_size, fnameo);
+    // あとはダイレクトにおまかせ (エラー処理まで)
+    makeFitnessFileNameDirectExit(dst, dst_size, fnameo);
+    return 0;
 }
 
 // 圧縮されたファイルから個体を読み出し, 適応度を評価する
@@ -713,8 +714,7 @@ int sortPrm1LCompFileByFitness(const char *fname, int *fitness) {
     // 適応度ファイル名
     char fnamef[FILENAME_MAX];
     // 万が一のファイル名オーバーフロー対策
-    if (makeFitnessFileNameDirect(fnamef, FILENAME_MAX, fname) < 0)
-        return -1;
+    makeFitnessFileNameDirectExit(fnamef, FILENAME_MAX, fname);
     // ロードしてフラグを取得
     int flag = loadPrm1LCompDirect(fname, pra1);
     // エラーなら-1を返す
