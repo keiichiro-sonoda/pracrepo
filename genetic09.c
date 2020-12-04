@@ -75,7 +75,10 @@ void rltSPRdS(const int *fitness, const Sprm *current, Sprm *next) {
     int parents[2];
     Sprm children[2];
     for (int count = ELITE_NUM; count < POPULATION; count++) {
-        ;
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        singlePointCrossover(current[parents[0]], current[parents[1]], children, MUT_RATE);
+        next[count] = children[0];
+        if (count++ >= POPULATION) break;
     }
 }
 
@@ -185,11 +188,8 @@ int main(void) {
     //sortTest();
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 1);
-    int rslt[9];
-    zeros(rslt, 9);
-    for (int i = 0; i < 90000; i++)
-        rslt[randInt(SPRM_LEN - 1)]++;
-    printDecimalArray(rslt, 9);
-    printDecimal(sumInt(rslt, 9));
+    int c = 0;
+    printDecimal(c++);
+    printDecimal(c);
     return 0;
 }

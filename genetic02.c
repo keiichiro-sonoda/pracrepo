@@ -220,6 +220,7 @@ float copyOrMutation(float x, float mut_rate) {
 // single point crossover
 // give 2 parameters, children's array, and mutation rate
 // the number of children is 2
+// ランダム突然変異を含む
 void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_rate) {
     // a random number from 0 to 8
     int p = randInt(SPRM_LEN - 1);
