@@ -953,8 +953,7 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     // 適応度ファイル名
     char fnamef[FILENAME_MAX];
     // 適応度ファイル名作成, オーバーフローしたら抜ける
-    makeFitnessFileNameDirectExit(fnamef, 28, fname);
-    printf("yeah\n");
+    makeFitnessFileNameDirectExit(fnamef, FILENAME_MAX, fname);
     // ロードしてフラグを取得
     int flag = loadSprmFileCompDirect(fname, pra1);
     // エラーなら-1を返す
