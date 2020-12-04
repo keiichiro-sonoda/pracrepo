@@ -1041,28 +1041,6 @@ int warnOverwriting(const char *fname) {
     return 0;
 }
 
-// ソート済み適応度配列を格納するファイル名を作る関数
-// 汎用性があるとどうしてもothelloに来てしまう
-// 適応度評価したファイル名をそのまま与えるバージョン
-int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo) {
-    // 元の長さ
-    int o_len = strlen(fnameo);
-    // 文字列追加後, オーバーフローする場合
-    if (o_len + 8 >= dst_size) {
-        printf("file name over\n");
-        return -1;
-    }
-    // 末尾にくっつける文字列を定義
-    char fitness_format[] = "%s_fitness.bin";
-    // .bin以外の文字列を格納できる最低の長さ
-    char fnameo_part[o_len- 3];
-    // snprintfで.bin以外コピー
-    snprintf(fnameo_part, o_len - 3, "%s", fnameo);
-    // 合成
-    snprintf(dst, dst_size, fitness_format, fnameo_part);
-    return 0;
-}
-
 // main?
 // なんとなく残してある関数
 int main2(void) {

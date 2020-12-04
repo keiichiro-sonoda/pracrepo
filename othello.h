@@ -292,9 +292,4 @@ void board2arraySymmetry(Board src, int *dst);
 // warning before overwriting
 int warnOverwriting(const char *fname);
 
-// ソート済み適応度配列を格納するファイル名を作る関数
-// 汎用性があるとどうしてもothelloに来てしまう
-// 適応度評価したファイル名をそのまま与えるバージョン
-int makeFitnessFileNameDirect(char *dst, size_t dst_size, const char *fnameo);
-
 #endif
