@@ -1,6 +1,4 @@
 // define some functions for selection and crossing
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 
 #include "sort01.h"

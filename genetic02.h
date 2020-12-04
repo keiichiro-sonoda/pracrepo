@@ -4,22 +4,23 @@
 // to use MASU_NUM
 //#include <stdio.h>
 //#include <stdlib.h>
+//#include <string.h>
 #include "othello.h"
 
 #ifndef SEED
 #define SEED 122U // シード値
 #endif
 
-// 等価でないマスの数
-#define SPRM_LEN 10
+#define SPRM_LEN 10 // 区別できるマスの数
+
 #define SURVIVE_NUM 10
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 1 // エリート数
+#define ELITE_NUM 6 // エリート数
 #endif
 
 #ifndef POPULATION
-#define POPULATION 5 // 個体数
+#define POPULATION 50 // 個体数
 #endif
 
 #ifndef MUT_RATE
