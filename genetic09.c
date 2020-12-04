@@ -183,13 +183,22 @@ int main(void) {
     // シード固定に注意
     srand((unsigned)time(NULL));
     // 初期設定
-    const char format[] = FNF_TEST;
+    const char format_old[] = FNF_TEST;
+    int l = strlen(format_old) - 3;
+    char str[l];
+    snprintf(str, l, "%s", format_old);
+    printString(str);
+    char str_seed[30];
+    snprintf(str_seed, 30, "%03u", SEED);
+    printString(str_seed);
+    char format[FILENAME_MAX];
+    snprintf(format, FILENAME_MAX, "%s_s%s.bin", str, str_seed);
     printString(format);
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    makeFGFileSprmComp(format);
-    nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 1);
+    //makeFGFileSprmComp(format);
+    //nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 1);
     return 0;
 }
