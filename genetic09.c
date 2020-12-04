@@ -77,8 +77,13 @@ void rltSPRdS(const int *fitness, const Sprm *current, Sprm *next) {
     for (int count = ELITE_NUM; count < POPULATION; count++) {
         rouletteIntMltDep(fitness, POPULATION, parents, 2);
         singlePointCrossover(current[parents[0]], current[parents[1]], children, MUT_RATE);
-        next[count] = children[0];
-        if (count++ >= POPULATION) break;
+        // インクリメントを式に組み込むことを試す
+        next[count++] = children[0];
+        if (count >= POPULATION) {
+            printf("yeah\n");
+            break;
+        }
+        next[count] = children[1];
     }
 }
 
@@ -186,10 +191,7 @@ int main(void) {
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    //makeFGFileSprmComp(format);
-    //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 1);
-    int c = 0;
-    printDecimal(c++);
-    printDecimal(c);
+    makeFGFileSprmComp(format);
+    nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 1);
     return 0;
 }
