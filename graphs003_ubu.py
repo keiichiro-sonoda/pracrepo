@@ -440,15 +440,18 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 26. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
                 "prm//srltc050_06_rlt_uni_rd005//srltc050_06_rlt_uni_rd005_{:03d}.bin"]
 
+# 圧縮版ファイルのフォーマットの添字はこのリストに加えていく
+COMPRESSED_INDICES = [26]
+
 def main():
-    ind = 26
+    ind = 11
     loc_pop = 50
     start_g = 0
     stop_g = 100
     # 現状は添字で圧縮非圧縮を判断する
     # これからは圧縮版を前提で考える?
     # 論文どうするよ
-    if ind >= 26:
+    if ind in COMPRESSED_INDICES:
         viewMeansGraph(FILE_FORMATS[ind], loc_pop, start_g, stop_g, 1)
     else:
         viewMeansGraph(FILE_FORMATS[ind], loc_pop, start_g, stop_g, 0)
