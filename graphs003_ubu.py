@@ -448,7 +448,7 @@ COMPRESSED_INDICES = [26]
 
 def main():
     ind = 11
-    loc_pop = 50
+    loc_pop = 6
     start_g = 0
     stop_g = 100
     active_format = FILE_FORMATS[ind]
