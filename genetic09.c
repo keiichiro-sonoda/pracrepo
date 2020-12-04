@@ -190,7 +190,7 @@ int main(void) {
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    //makeFGFileSprmComp(format);
-    //nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 1);
+    makeFGFileSprmComp(format);
+    nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 1);
     return 0;
 }
