@@ -443,7 +443,15 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 def main():
     ind = 26
     loc_pop = 50
-    viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100, 1)
+    start_g = 0
+    stop_g = 100
+    # 現状は添字で圧縮非圧縮を判断する
+    # これからは圧縮版を前提で考える?
+    # 論文どうするよ
+    if ind >= 26:
+        viewMeansGraph(FILE_FORMATS[ind], loc_pop, start_g, stop_g, 1)
+    else:
+        viewMeansGraph(FILE_FORMATS[ind], loc_pop, start_g, stop_g, 0)
     #viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
