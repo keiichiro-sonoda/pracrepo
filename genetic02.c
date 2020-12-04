@@ -204,14 +204,15 @@ void shiftMutLimited(Sprm *prp) {
     }
 }
 
+// 一定確率で乱数を返す
 // mutate with a given probability
 // otherwise copy
 float copyOrMutation(float x, float mut_rate) {
     // equal is not necessary
-    if ((float)rand() / RAND_MAX <= mut_rate) {
+    if (randFloat() <= mut_rate) {
         // from -0.5 to 0.5
         //printf("mutated!\n");
-        return (float)rand() / RAND_MAX - 0.5;
+        return randFloat() - 0.5f;
     }
     return x;
 }

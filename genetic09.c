@@ -70,6 +70,12 @@ void rouletteSP(const int *fitness, const int *numbers, const Sprm *current, Spr
     }
 }
 
+// ルーレット選択, 一点交叉, ランダム突然変異, ソート済み個体限定
+void rltSPRdS(const int *fitness, const Sprm *current, Sprm *next) {
+    int parents[2];
+    Sprm children[2];
+}
+
 // roulette selection
 // uniform crossover
 // random mutation
@@ -166,7 +172,7 @@ int main(void) {
     //showCORR_TABLE();
     //showSprmOneLine(SAMP_PRM);
     // シード固定に注意
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     // 初期設定
     const char format[] = FNF_TEST;
     printString(format);
@@ -176,8 +182,13 @@ int main(void) {
     //sortTest();
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 1);
-    for (int i = 0; i < 50; i++) {
-        printFloat(powf(0.9f, i));
+    float ft = 1.0f;
+    int count = 0;
+    for (int i = 0; i < 100000; i++) {
+        if (ft != copyOrMutation(ft, 0.9)) {
+            count++;
+        } 
     }
+    printDecimal(count);
     return 0;
 }
