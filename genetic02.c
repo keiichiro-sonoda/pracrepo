@@ -954,7 +954,6 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     char fnamef[FILENAME_MAX];
     // 適応度ファイル名作成, オーバーフローしたら抜ける
     makeFitnessFileNameDirectExit(fnamef, FILENAME_MAX, fname);
-    printString(fnamef);
     // ロードしてフラグを取得
     int flag = loadSprmFileCompDirect(fname, pra1);
     // エラーなら-1を返す
@@ -963,6 +962,7 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     if (flag == 1) {
         // 読み込めなかったらエラーを返す
         loadFitnessShortDirectExit(fnamef, fitness, POPULATION);
+        printf("あいうえお\n");
         return 1;
     }
     // 個体番号を割り振る
