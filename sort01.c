@@ -19,10 +19,14 @@ void sortTest(void) {
     printDecimal(l2);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
-    randomizedQuicksortDDAll(sample1, numbers, l1);
-    //randomizedQuicksortAll(sample1, l1);
+    //randomizedQuicksortDDAll(sample1, numbers, l1);
+    randomizedQuicksortAll(sample1, l1);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
+    int a;
+    _exchange(numbers, 16, 17, a);
+    printDecimal(a);
+    printDecimalArray(numbers, l1);
 }
 
 // insertion sort

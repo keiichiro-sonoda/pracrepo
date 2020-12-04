@@ -1,17 +1,17 @@
 #ifndef SORT01_H
 #define SORT01_H
 
-// tmpに x を退避させて, x と y の値を交換
-#define _exchange(tmp, x, y) (tmp = x, x = y, y = tmp)
+// tmp に A[i] を退避させ, A[i] と A[j] を交換
+#define _exchange(A, i, j, tmp) (tmp = (A)[i], (A)[i] = (A)[j], (A)[j] = tmp)
 
 // 配列 A の添字 i と j の要素を交換
 // exchange A[i] and A[j]
-#define exchange(type, A, i, j) do {type _; _exchange(_, (A)[i], (A)[j]);} while (0)
+#define exchange(type, A, i, j) do {type _; _exchange(A, i, j, _);} while (0)
 
 // 2つの配列で, それぞれ添字 i と j の要素を交換
 // exchange A[i] and A[j]
 // also exchange B[i] and B[j]
-#define exchangeD(type, A, B, i, j) do {type _; _exchange(_, (A)[i], (A)[j]); _exchange(_, (B)[i], (B)[j]);} while (0)
+#define exchangeD(type, A, B, i, j) do {type _; _exchange(A, i, j, _); _exchange(B, i, j, _);} while (0)
 
 // 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
 #define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
