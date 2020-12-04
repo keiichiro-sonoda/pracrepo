@@ -197,6 +197,17 @@
     extrSprmArray(_uca, pra, n);\
 } while (0)
 
+// Sprm配列を圧縮してファイルに書き込む
+// ソート済みか否かのフラグも与える
+// 書き込み失敗で抜ける
+#define dumpSprmFileCompDirectExit(fname, pra, flag) do {\
+    u_char uca[SPRM_FILE_SIZE_COMP];\
+    compSprmArray((pra), uca, POPULATION);\
+    uca[SPRM_FILE_SIZE_COMP - 1] = (flag);\
+    dumpFileDirectExit((fname), uca, SPRM_FILE_SIZE_COMP);\
+    printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);\
+} while (0)
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];

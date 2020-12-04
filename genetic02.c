@@ -461,6 +461,7 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 
 // 圧縮ファイルからロード
 // エラーやソート済みフラグを返す
+// 返り値が重要な場合はマクロ化しにくいかな?
 int loadSprmFileCompDirect(const char *fname, Sprm *pra) {
     u_char uca[SPRM_FILE_SIZE_COMP];
     // ロード
@@ -962,7 +963,6 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     if (flag == 1) {
         // 読み込めなかったらエラーを返す
         loadFitnessShortDirectExit(fnamef, fitness, POPULATION);
-        printf("あいうえお\n");
         return 1;
     }
     // 個体番号を割り振る
@@ -977,8 +977,7 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     for (int i = 0; i < POPULATION; i++)
         pra2[i] = pra1[numbers[i]];
     // ソート後の配列を同じファイルに書き戻す (ソート済みフラグを立てる)
-    if (dumpSprmFileCompDirect(fname, pra2, 1)  < 0)
-        return -1;
+    dumpSprmFileCompDirectExit(fname, pra2, 1);
     // 適応度書き込み
     dumpFitnessShortDirectExit(fnamef, fitness, POPULATION)
     return 0;
