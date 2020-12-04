@@ -49,6 +49,9 @@
 // set all elements to ones
 #define ones(A, n) initArrayConst(A, n, 1)
 
+// 全て0で初期化
+#define zeros(A, n) initArrayConst(A, n, 0)
+
 // 配列コピー (型に依存しないって便利ね)
 // copy an array
 #define copyArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = (src)[_]
@@ -241,9 +244,6 @@ int showCoordinates(const int *can_put, int length);
 int showCanPut(Board b, const int *can_put, int next_count);
 
 int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards);
-
-// all zero
-void zeros(int *A, int n);
 
 // all zero (float)
 void zerosFloat(float *A, int n);

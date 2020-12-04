@@ -494,12 +494,6 @@ int showCanPutPlus(Board b, int color, int *can_put, Board *next_boards) {
     return length;
 }
 
-// all zero
-void zeros(int *A, int n) {
-    for (int i = 0; i < n; i++)
-        A[i] = 0;
-}
-
 // all zero (float)
 void zerosFloat(float *A, int n) {
     for (int i = 0; i < n; i++)
