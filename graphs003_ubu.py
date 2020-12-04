@@ -449,8 +449,8 @@ COMPRESSED_INDICES = [26]
 def main():
     ind = 26
     loc_pop = 50
-    start_g = 0
-    stop_g = 100
+    start_g = -50
+    stop_g = 200
     active_format = FILE_FORMATS[ind]
     # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
