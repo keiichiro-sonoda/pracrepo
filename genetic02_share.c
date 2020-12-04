@@ -215,6 +215,7 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int comp
             e = loadSprmFileCompDirect(fnamer, family, n);
     }
     if (e < 0) return -1;
+    showSprmOneLine(*family);
     // 標準偏差計算
     calcSprmSD(family, f_pointer, n);
     return 0;
