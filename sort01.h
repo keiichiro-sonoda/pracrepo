@@ -1,9 +1,12 @@
 #ifndef SORT01_H
 #define SORT01_H
 
+// tmpに x を退避させて, x と y の値を交換
+#define _exchange(tmp, x, y) (tmp = x, x = y, y = tmp)
+
 // 配列 A の添字 i と j の要素を交換
 // exchange A[i] and A[j]
-#define exchange(type, A, i, j) do {type _ = (A)[i]; (A)[i] = (A)[j]; (A)[j] = _;} while (0)
+#define exchange(type, A, i, j) do {type _; _exchange(_, (A)[i], (A)[j]);} while (0)
 
 // 2つの配列で, それぞれ添字 i と j の要素を交換
 // exchange A[i] and A[j]
