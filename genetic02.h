@@ -8,12 +8,12 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 122U // シード値
+#define SEED 123U // シード値
 #endif
 
 #define SPRM_LEN 10 // 区別できるマスの数
 
-#define SURVIVE_NUM 10
+#define SURVIVE_NUM 10 // 陳腐化したマクロ
 
 #ifndef ELITE_NUM
 #define ELITE_NUM 6 // エリート数
@@ -216,6 +216,9 @@ typedef struct sprm{
 // the type of function pointer to select, crossover and mutation
 typedef void (*scmFunc)(const int*, const int*, const Sprm*, Sprm*);
 
+// ソート済み対応の選択・交叉・突然変異関数
+typedef void (*scmSprmSorted)(const int*, const Sprm*, Sprm*);
+
 // global variables
 
 // マスとSprmの重みの対応表
@@ -363,6 +366,10 @@ void nextGenerationSprmLoopFlex(int (*nGene)(int, int), int safety, int st, int 
 // perform averaging and uniform crossing once for each parents
 void randAveUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *next);
 
+// ルーレット選択, 一様交叉, ランダム突然変異
+// ソート済み前提のため個体番号は使わない
+void rltUniRdS(const int *, const Sprm*, Sprm*);
+
 // make next generation file
 // write all individuals to the file
 // give a function pointer for selection and crossing
@@ -392,9 +399,14 @@ void copyFGFlex(const char *dst_format);
 int sortSprmCompFileByFitness(const char *fname, int *fitness);
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)
-// ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
+// ついでに適応度評価をした現世代のファイルもソートして書き換える
 // ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
-// 再現性確保のためのシードを2つ与えることにする
-int nGeneSprmComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety);
+// 再現性確保のためのシードを2つ与える
+// 個体番号配列を撤廃
+int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety);
+
+// 圧縮版次世代作成関数をループさせる関数
+// 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
+void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int start, int stop);
 
 #endif

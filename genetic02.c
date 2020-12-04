@@ -739,6 +739,16 @@ void randAveUni(const int *fitness, const int *numbers, const Sprm *current, Spr
     }
 }
 
+// ルーレット選択, 一様交叉, ランダム突然変異
+// ソート済み前提のため個体番号は使わない
+void rltUniRdS(const int *fitness, const Sprm *current, Sprm *next) {
+    int parents[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        next[count] = makeChildCrossMSprm(current[parents[0]], current[parents[1]]);
+    }
+}
+
 // 選択・交叉・突然変異の関数は別途定義
 // make next generation file
 // write all individuals to the file
@@ -973,10 +983,11 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
 }
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)
-// ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
+// ついでに適応度評価をした現世代のファイルもソートして書き換える
 // ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
-// 再現性確保のためのシードを2つ与えることにする
-int nGeneSprmComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety) {
+// 再現性確保のためのシードを2つ与える
+// 個体番号配列を撤廃
+int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety) {
     // 読み込み (ソート) 用と書き込み用ファイル名
     char fnames[FILENAME_MAX], fnamew[FILENAME_MAX];
     snprintf(fnames, FILENAME_MAX, format, gene_num);
@@ -1003,9 +1014,6 @@ int nGeneSprmComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_
     printDecimalArray(fitness, POPULATION);
     // 今世代と次世代の個体配列を宣言
     Sprm current[POPULATION], next[POPULATION];
-    // 個体配列自体がソートされているため不要だが, 旧仕様との互換性のために定義
-    int numbers[POPULATION];
-    indices(numbers, POPULATION);
     // ソート済み配列を読み込む
     if (loadSprmFileCompDirect(fnames, current) < 0) {
         return -1;
@@ -1013,7 +1021,7 @@ int nGeneSprmComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_
     // エリートはそのままコピー
     copyArray(current, next, ELITE_NUM);
     // 選択, 交叉, 突然変異
-    scm(fitness, numbers, current, next);
+    scm(fitness, current, next);
     // 現世代の個体の一部と統計値を確認
     showFamilyPart(current);
     checkSprmStatistics(current, POPULATION);
@@ -1031,4 +1039,28 @@ int nGeneSprmComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_
     // ソート済みフラグは立てずに書き込み
     dumpSprmFileCompDirectExit(fnamew, next, 0);
     return 0;
+}
+
+// 圧縮版次世代作成関数をループさせる関数
+// 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
+void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int start, int stop) {
+    time_t t_arr[2];
+    // 初期時刻を記録
+    time(t_arr);
+    u_int s1, s2;
+    for (int gene_num = start; gene_num < stop; gene_num++) {
+        // 1 はなんとなくのオフセット
+        srand(s1 = SEED + gene_num + 1);
+        // s2はs1に依存する
+        // 排他的論理和で乱数改変
+        // 和を計算したときのオーバーフローを回避?
+        printf("seed1: %d, seed2: %d\n", s1, s2 = rand() ^ SEED);
+        // 次の世代へ!
+        if (nGeneSprmComp(scm, format, start, s1, s2, safety))
+            return;
+        // get time
+        time(t_arr + 1);
+        printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
+        kugiri(100);
+    }
 }
