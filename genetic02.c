@@ -975,7 +975,7 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
 // ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
 // ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
 // 再現性確保のためのシードを2つ与えることにする
-int nGeneSprmLComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety) {
+int nGeneSprmComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety) {
     // 読み込み (ソート) 用と書き込み用ファイル名
     char fnames[FILENAME_MAX], fnamew[FILENAME_MAX];
     snprintf(fnames, FILENAME_MAX, format, gene_num);
@@ -1013,7 +1013,8 @@ int nGeneSprmLComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u
     copyArray(current, next, ELITE_NUM);
     // 選択, 交叉, 突然変異
     scm(fitness, numbers, current, next);
-    // 統計調査
+    // 現世代の個体の一部と統計値を確認
+    showFamilyPart(current);
     checkSprmStatistics(current, POPULATION);
     // 乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
     // ループ関数じゃなくてこっちでやった方がロードの手間は少ない

@@ -396,6 +396,6 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness);
 // ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
 // ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
 // 再現性確保のためのシードを2つ与えることにする
-int nGeneSprmLComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety);
+int nGeneSprmComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety);
 
 #endif

@@ -175,16 +175,6 @@ int main(void) {
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
     //makeFGFileSprmComp(format);
-    Sprm pra[POPULATION];
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, format, 0);
-    int fitness[POPULATION];
-    zeros(fitness, POPULATION);
-    loadSprmFileCompDirect(fnamer, pra);
-    showFamilyPart(pra);
-    sortSprmCompFileByFitness(fnamer, fitness);
-    printDecimalArray(fitness, POPULATION);
-    loadSprmFileCompDirect(fnamer, pra);
-    showFamilyPart(pra);
+    nGeneSprmComp(allMutation, format, 0, SEED, SEED, 1);
     return 0;
 }
