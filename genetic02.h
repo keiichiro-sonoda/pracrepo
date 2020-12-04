@@ -213,6 +213,10 @@ typedef struct sprm{
     float weight[SPRM_LEN];
 } Sprm;
 
+// 次の盤面決定関数の型を定義
+// 盤面配列, 長さ, 使うパラメータのポインタを与える
+typedef Board (*decNxtSprm)(const Board*, int, const Sprm*);
+
 // the type of function pointer to select, crossover and mutation
 typedef void (*scmFunc)(const int*, const int*, const Sprm*, Sprm*);
 
@@ -285,23 +289,23 @@ float evaluationSimple(Board b, Sprm pr);
 // assume that the next turn is black
 // n: the number of next boards
 // use simple parameter
-Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp);
+Board getBestBoardForBlackSimple(const Board *next_boards, int n, const Sprm *prp);
 
 // assume that the next turn is black
 // n: the number of next boards
 // use simple parameter
 // decide next board by roulette
-Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp);
+Board getBoardForBlackSimpleRoulette(const Board *next_boards, int n, const Sprm *prp);
 
 // return winner
 // give a function pointer as an argument
-int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp);
+int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp);
 
 // play against random
 // return winner
 // 引数で指し手決定関数を変更可能にした
 // pythonで扱うときにマクロをいちいち変更するのが面倒だった
-int SprmVSRandomNormal(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *prp, int my_color);
+int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color);
 
 // calculate win rate when playing against random AI
 // n: number of games
@@ -343,7 +347,7 @@ void checkSprmFile(const char *format, int gene_num);
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
-void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result);
+void leagueMatchSprmFlex(decNxtSprm, const Sprm*, int*);
 
 // calculate distance
 float distSprm(Sprm p1, Sprm p2);

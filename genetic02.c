@@ -241,12 +241,11 @@ float evaluationSimple(Board b, Sprm pr) {
 // assume that the next turn is black
 // n: the number of next boards
 // use simple parameter
-Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
+Board getBestBoardForBlackSimple(const Board *next_boards, int n, const Sprm *prp) {
     float mx_point = -FLT_MAX;
     float t_point;
-    int i;
     Board best_board;
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         // sign inversion!!
         t_point = -evaluationSimple(next_boards[i], *prp);
         if (mx_point < t_point) {
@@ -262,7 +261,7 @@ Board getBestBoardForBlackSimple(Board *next_boards, int n, const Sprm *prp) {
 // n: the number of next boards
 // use simple parameter
 // decide next board by roulette
-Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp) {
+Board getBoardForBlackSimpleRoulette(const Board *next_boards, int n, const Sprm *prp) {
     float exp_points[n];
     float s;
     int choosed;
@@ -279,7 +278,7 @@ Board getBoardForBlackSimpleRoulette(Board *next_boards, int n, const Sprm *prp)
 
 // return winner
 // give a function pointer as an argument
-int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *spp, const Sprm *gpp) {
+int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp) {
     Board nba[NEXT_MAX];
     int kc[3];
     int pass = 0;
@@ -311,11 +310,11 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
         // black (first)
         if (turn == 0b01) {
             //printf("black\n");
-            main_board = decNxt(nba, n, spp);
+            main_board = dnfunc(nba, n, spp);
         } // white (second)
         else {
             //printf("white\n");
-            main_board = decNxt(nba, n, gpp);
+            main_board = dnfunc(nba, n, gpp);
         }
         // switch turn
         turn ^= 0b11;
@@ -333,7 +332,7 @@ int oneToOneNormalSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm
 // return winner
 // 引数で指し手決定関数を変更可能にした
 // pythonで扱うときにマクロをいちいち変更するのが面倒だった
-int SprmVSRandomNormal(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *prp, int my_color) {
+int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
     Board nba[NEXT_MAX];
     int kc[3];
     int pass = 0;
@@ -361,7 +360,7 @@ int SprmVSRandomNormal(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *pr
         // determine a next board
         // parameter's turn
         if (turn == my_color) {
-            main_board = decNxt(nba, n, prp);
+            main_board = dnfunc(nba, n, prp);
         } // random turn
         else {
             // randomly choose a next board
@@ -524,7 +523,7 @@ void checkSprmFile(const char *format, int gene_num) {
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
-void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *generation, int *result) {
+void leagueMatchSprmFlex(decNxtSprm dnfunc, const Sprm *generation, int *result) {
     // set all elements to zero
     zeros(result, POPULATION);
     // black index
@@ -533,7 +532,7 @@ void leagueMatchSprmFlex(Board (*decNxt)(Board*, int, const Sprm*), const Sprm *
         // white index
         for (int j = 0; j < POPULATION; j++) {
             if (i == j) continue;
-            switch(oneToOneNormalSprmFlex(decNxt, generation + i, generation + j)) {
+            switch(oneToOneNormalSprmFlex(dnfunc, generation + i, generation + j)) {
                 // black won
                 case 1:
                     result[i] += 2;
