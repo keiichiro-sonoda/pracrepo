@@ -401,7 +401,6 @@ float calcWinRateSprmVSRandTotal(Sprm pr, int n) {
     rw = calcWinRateSprmVSRand(pr, 0b10, n);
     rt = (rb + rw) / 2;
     // 各種数値を表示
-    printf("number of games: %d x 2\n", n);
     printf("win rate (black, white, total): %.2f, %.2f, %.2f\n", rb, rw, rt);
     return rt;
 }
