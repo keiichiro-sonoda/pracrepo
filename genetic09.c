@@ -74,6 +74,9 @@ void rouletteSP(const int *fitness, const int *numbers, const Sprm *current, Spr
 void rltSPRdS(const int *fitness, const Sprm *current, Sprm *next) {
     int parents[2];
     Sprm children[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        ;
+    }
 }
 
 // roulette selection
@@ -182,13 +185,11 @@ int main(void) {
     //sortTest();
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 1);
-    float ft = 1.0f;
-    int count = 0;
-    for (int i = 0; i < 100000; i++) {
-        if (ft != copyOrMutation(ft, 0.9)) {
-            count++;
-        } 
-    }
-    printDecimal(count);
+    int rslt[9];
+    zeros(rslt, 9);
+    for (int i = 0; i < 90000; i++)
+        rslt[randInt(SPRM_LEN - 1)]++;
+    printDecimalArray(rslt, 9);
+    printDecimal(sumInt(rslt, 9));
     return 0;
 }

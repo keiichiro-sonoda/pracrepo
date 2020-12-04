@@ -222,7 +222,7 @@ float copyOrMutation(float x, float mut_rate) {
 // the number of children is 2
 void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_rate) {
     // a random number from 0 to 8
-    int p = rand() % (SPRM_LEN - 1);
+    int p = randInt(SPRM_LEN - 1);
     //printDecimal(p);
     // from 0 to p
     for (int i = 0; i <= p; i++) {
