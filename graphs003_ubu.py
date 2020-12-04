@@ -23,15 +23,16 @@ IntArray3 = c_int32 * 3
 share02_ubu.initPy()
 
 # 全個体の平均値
-# 第4引数に圧縮フラグを設定
+# 第四引数に圧縮フラグを設定
 getFamilyMeans = share02_ubu.getFamilyMeansPy
 getFamilyMeans.restype = c_int32
 getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32, c_int32)
 
 # 全個体の標準偏差
+# 第四引数に圧縮フラグを設定
 getFamilySD = share02_ubu.getFamilySDPy
 getFamilySD.restype = c_int32
-getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32)
+getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32, c_int32)
 
 # あるファイルの先頭の要素
 getTopSprm = share02_ubu.getTopSprmPy
@@ -54,9 +55,10 @@ def getFamilyMeansWrap(fnamer, n, compressed):
         return []
     return list(f_arr_c)
 
-def getFamilySDWrap(fnamer, n):
+# 圧縮フラグを追加
+def getFamilySDWrap(fnamer, n, compressed):
     f_arr_c = FloatArray10()
-    flag = getFamilySD(fnamer.encode(), f_arr_c, n)
+    flag = getFamilySD(fnamer.encode(), f_arr_c, n, compressed)
     if flag < 0:
         return []
     return list(f_arr_c)
@@ -201,14 +203,15 @@ def makeSDGraph(ax, x, ys):
     # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.0, 0.40, 5))
 
-# 標準偏差表示
-def viewSDGraph(fname_format, population, x_min, x_max):
+# 標準偏差表示, グラフ画像作成
+# 圧縮フラグを追加
+def viewSDGraph(fname_format, population, x_min, x_max, compressed):
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
     for i in range(x_min, x_max + 1):
         # i 世代全個体の標準偏差を取り出す
-        tprm = getFamilySDWrap(fname_format.format(i), population)
+        tprm = getFamilySDWrap(fname_format.format(i), population, compressed)
         # 空リストがの場合（読み込み失敗）
         if not tprm:
             continue
@@ -249,7 +252,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed):
         if not tmp1:
             continue
         # 標準偏差も読み込む
-        tmp2 = getFamilySDWrap(fname, population)
+        tmp2 = getFamilySDWrap(fname, population, compressed)
         # x は読み込めた整数全て
         g.append(i)
         # それぞれのマスの評価値に代入!
@@ -448,13 +451,14 @@ def main():
     loc_pop = 50
     start_g = 0
     stop_g = 100
-    # 現状は添字で圧縮非圧縮を判断する
-    # これからは圧縮版を前提で考える?
-    # 論文どうするよ
+    active_format = FILE_FORMATS[ind]
+    # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
-        viewMeansGraph(FILE_FORMATS[ind], loc_pop, start_g, stop_g, 1)
+        viewMeansGraph(active_format, loc_pop, start_g, stop_g, 1)
+        viewSDGraph(active_format, loc_pop, start_g, stop_g, 1)
     else:
-        viewMeansGraph(FILE_FORMATS[ind], loc_pop, start_g, stop_g, 0)
+        viewMeansGraph(active_format, loc_pop, start_g, stop_g, 0)
+        viewSDGraph(active_format, loc_pop, start_g, start_g, 0)
     #viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
