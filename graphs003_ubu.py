@@ -11,6 +11,9 @@ from matplotlib import pyplot as plt
 # シード値
 SEED = 123
 
+# グラフ描画のみ
+VIEW_ONLY = True
+
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
 # ubuntu用であることに注意
 share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
@@ -167,10 +170,10 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
     ax = fig.add_subplot(111)
     makeMeansGraph(ax, x, ys)
     path = makeJpegFileName(fname_format, "means{:03d}".format(population), int(x[0]), int(x[-1]))
-    if path:
+    if path and not VIEW_ONLY:
     # 出力画像の周囲の境界ボックス?を消す
         fig.savefig(path, bbox_inches="tight")
-    #plt.show()
+        print("saved!!")
 
 # 標準偏差のグラフを作成
 def makeSDGraph(ax, x, ys):
@@ -231,10 +234,10 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed):
     makeSDGraph(ax, x, ys)
     # フォーマットやグラフの範囲に合わせたパスを作成
     path = makeJpegFileName(fname_format, "SD{:03d}".format(population), int(x[0]), int(x[-1]))
-    if path:
     # 書き込み
+    if path and not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
-    #plt.show()
+        print("saved!!")
 
 # 2つのグラフを同時描画したい
 # 圧縮フラグ追加
@@ -447,10 +450,12 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 COMPRESSED_INDICES = [26]
 
 def main():
-    ind = 25
+    global VIEW_ONLY
+    #VIEW_ONLY = False
+    ind = 11
     loc_pop = 50
-    start_g = 95
-    stop_g = 105
+    start_g = 0
+    stop_g = 100
     active_format = FILE_FORMATS[ind]
     # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
