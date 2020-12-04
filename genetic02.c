@@ -31,6 +31,7 @@ void initSprm(void) {
     printf("the number of elites: %4d\n", ELITE_NUM);
     printf("mutation rate       : %4.2f\n", MUT_RATE);
     printf("parameter file size : %4d\n", SPRM_FILE_SIZE_COMP);
+    printf("seed                : %4d\n", SEED);
 }
 
 // print a simple parameter
@@ -56,7 +57,6 @@ void showFamilyPart(Sprm *pra) {
         showSprmOneLine(pra[i]);
     printf("                                      ...\n");
     showSprmOneLine(pra[POPULATION - 1]);
-    return;
 }
 
 // get the smallest value in an array
