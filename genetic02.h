@@ -8,7 +8,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 123U // シード値
+#define SEED 365U // シード値
 #endif
 
 #define SPRM_LEN 10 // 区別できるマスの数
