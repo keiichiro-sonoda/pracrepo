@@ -20,13 +20,10 @@ void sortTest(void) {
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
     //randomizedQuicksortDDAll(sample1, numbers, l1);
-    randomizedQuicksortAll(sample1, l1);
+    //randomizedQuicksortAll(sample1, l1);
+    quicksortDD(sample1, numbers, 0, l1 - 1);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
-    int a;
-    _exchange(numbers, 16, 17, a);
-    printDecimal(a);
-    printDecimalArray(numbers, l1);
 }
 
 // insertion sort
@@ -206,19 +203,18 @@ void rouletteFloatTest(const float *A, int n) {
 }
 
 // 降順
+// 基準は A[r] で固定される
 int partitionDD(int *A, int *B, int p, int r) {
     int i, j;
     int x = A[r];
     i = p;
     for (j = p; j < r; j++) {
         if (A[j] > x) {
-            exchange(int, A, i, j);
-            exchange(int, B, i, j);
+            exchangeD(int, A, B, i, j);
             i++;
         }
     }
-    exchange(int, A, i, r);
-    exchange(int, B, i, r);
+    exchangeD(int, A, B, i, j);
     return i;
 }
 
