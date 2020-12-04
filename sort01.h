@@ -8,7 +8,14 @@
 // 2つの配列で, それぞれ添字 i と j の要素を交換
 // exchange A[i] and A[j]
 // also exchange B[i] and B[j]
-#define exchangeD(type, A, B, i, j) do {exchange(type, A, i, j); exchange(type, B, i, j);} while (0)
+#define exchangeD(type, A, B, i, j) do {\
+    type _ = (A)[i];\
+    (A)[i] = (A)[j];\
+    (A)[j] = _;\
+    _ = (B)[i];\
+    (B)[i] = B[j];\
+    (B)[j] = _;\
+} while (0)
 
 // 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
 #define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
