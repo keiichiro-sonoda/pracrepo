@@ -210,6 +210,15 @@
     dumpFileDirectExit((fname), uca, SPRM_FILE_SIZE_COMP);\
 } while (0)
 
+// シードを追加したフォーマットを作成
+// 30は適当な数字
+#define formatPlusSeed(format_old, format, format_size) do {\
+    int l = strlen(format_old) - 3;\
+    char _ex_bin[l];\
+    snprintf(_ex_bin, l, "%s", format_old);\
+    snprintf(format, FILENAME_MAX, "%s_s%03u.bin", _ex_bin, SEED);\
+} while (0)
+
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];
