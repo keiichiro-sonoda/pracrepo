@@ -144,7 +144,7 @@
 // 適応度評価対象のファイル名から作成
 #define makeFitnessFileNameDirectExit(dst, dst_size, fnameo) do {\
     int _len = strlen(fnameo) - 3;\
-    if (_len + 10 >= (dst_size)) {printf("\afile name over\n"); return -1;}\
+    if (_len + 11 >= (dst_size)) {printf("\afile name over\n"); return -1;}\
     const char fitness_format[] = "%s_fitness.bin";\
     char fnameo_part[_len];\
     snprintf(fnameo_part, _len, "%s", (fnameo));\

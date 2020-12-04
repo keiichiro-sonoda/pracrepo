@@ -180,10 +180,8 @@ int main(void) {
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, 0);
     int fitness[POPULATION];
+    zeros(fitness, POPULATION);
     sortSprmCompFileByFitness(fnamer, fitness);
     printDecimalArray(fitness, POPULATION);
-    char fnamef[28];
-    makeFitnessFileNameDirectExit(fnamef, sizeof fnamef, fnamer);
-    printString(fnamef);
     return 0;
 }
