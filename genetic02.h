@@ -392,4 +392,10 @@ void copyFGFlex(const char *dst_format);
 // 次世代作成関数が膨らまないように, ここで適応度の読み書きをする
 int sortSprmCompFileByFitness(const char *fname, int *fitness);
 
+// 次の世代のファイルを作る関数 (圧縮バージョン)
+// ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
+// ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
+// 再現性確保のためのシードを2つ与えることにする
+int nGeneSprmLComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety);
+
 #endif

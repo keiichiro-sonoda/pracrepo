@@ -564,6 +564,8 @@ float distSprm(Sprm p1, Sprm p2) {
     return (float)sqrt(d);
 }
 
+// 各値ごと平均値と標準偏差を計算して表示
+// nos はサンプル数の意味
 // calculate means and standard deviation from some parameters
 void checkSprmStatistics(const Sprm *pra, int nos) {
     int i, j;
@@ -948,12 +950,13 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     if (flag == 1) {
         // 読み込めなかったらエラーを返す
         loadFitnessShortDirectExit(fnamef, fitness, POPULATION);
+        // ソート済みフラグを返す
         return 1;
     }
     // 個体番号を割り振る
     int numbers[POPULATION];
     indices(numbers, POPULATION);
-    // リーグ戦 (指し手ルーレット)
+    // リーグ戦 (指し手決定関数はマクロ依存)
     // 現状で適応度評価はこれだけ
     leagueMatchSprmFlex(DET_FUNC, pra1, fitness);
     // 適応度を基に個体番号も同時にソート
@@ -965,5 +968,65 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     dumpSprmFileCompDirectExit(fname, pra2, 1);
     // 適応度書き込み
     dumpFitnessShortDirectExit(fnamef, fitness, POPULATION)
+    return 0;
+}
+
+// 次の世代のファイルを作る関数 (圧縮バージョン)
+// ついでに適応度評価をした現世代のファイルもソートして書き換える (あとで使えそう)
+// ソート済みファイルを使ってルーレット選択をする際, 適応度も必要と考えてファイルに保存
+// 再現性確保のためのシードを2つ与えることにする
+int nGeneSprmLComp(scmFunc scm, const char *format, int gene_num, u_int seed1, u_int seed2, int safety) {
+    // 読み込み (ソート) 用と書き込み用ファイル名
+    char fnames[FILENAME_MAX], fnamew[FILENAME_MAX];
+    snprintf(fnames, FILENAME_MAX, format, gene_num);
+    snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
+    printf("sort file: %s\n", fnames);
+    printf("new file : %s\n", fnamew);
+    // 上書き拒否
+    if (safety) warnOverwritingExit(fnamew);
+    int fitness[POPULATION];
+    // 対戦・ソート用シード
+    srand(seed1);
+    // 適応度評価とファイルのソート
+    // さらに適応度ファイルの読み書きも行う
+    int flag = sortSprmCompFileByFitness(fnames, fitness);
+    // エラー
+    if (flag < 0) return -1;
+    // ソート済み
+    if (flag == 1) {
+        printf("%s is already sorted!\n", fnames);
+    }
+    // 選択・交叉・突然変異用シード
+    srand(seed2);
+    // なんとなくソート済み適応度を表示
+    printDecimalArray(fitness, POPULATION);
+    // 今世代と次世代の個体配列を宣言
+    Sprm current[POPULATION], next[POPULATION];
+    // 個体配列自体がソートされているため不要だが, 旧仕様との互換性のために定義
+    int numbers[POPULATION];
+    indices(numbers, POPULATION);
+    // ソート済み配列を読み込む
+    if (loadSprmFileCompDirect(fnames, current) < 0) {
+        return -1;
+    }
+    // エリートはそのままコピー
+    copyArray(current, next, ELITE_NUM);
+    // 選択, 交叉, 突然変異
+    scm(fitness, numbers, current, next);
+    // 統計調査
+    checkSprmStatistics(current, POPULATION);
+    // 乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
+    // ループ関数じゃなくてこっちでやった方がロードの手間は少ない
+    if (!(gene_num % 20)) {
+        kugiri(100);
+        int game_num = 500;
+        printf("the number of games: %d x 2\n", game_num);
+        printf("the strongest:\n");
+        calcWinRateSprmVSRandTotal(current[0], game_num);
+        printf("the weakest:\n");
+        calcWinRateSprmVSRandTotal(current[POPULATION - 1], game_num);
+    }
+    // ソート済みフラグは立てずに書き込み
+    dumpSprmFileCompDirectExit(fnamew, next, 0);
     return 0;
 }
