@@ -23,9 +23,10 @@ IntArray3 = c_int32 * 3
 share02_ubu.initPy()
 
 # 全個体の平均値
+# 第4引数に圧縮フラグを設定
 getFamilyMeans = share02_ubu.getFamilyMeansPy
 getFamilyMeans.restype = c_int32
-getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32)
+getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32, c_int32)
 
 # 全個体の標準偏差
 getFamilySD = share02_ubu.getFamilySDPy
@@ -43,11 +44,11 @@ getTopSprmGameRsltVSRand.restype = c_int32
 getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, IntArray3)
 
 # 各種ラッパー関数
-# n は個体数を指定
-# オーバーに注意
-def getFamilyMeansWrap(fnamer, n):
+# n は個体数を指定 (過小はいいがオーバーに注意)
+# 圧縮フラグを追加
+def getFamilyMeansWrap(fnamer, n, compressed):
     f_arr_c = FloatArray10()
-    flag = getFamilyMeans(fnamer.encode(), f_arr_c, n)
+    flag = getFamilyMeans(fnamer.encode(), f_arr_c, n, compressed)
     # 読み込み失敗
     if flag < 0:
         return []
@@ -138,13 +139,14 @@ def makeMeansGraph(ax, x, ys):
 # ファイル名のフォーマットと個体数を渡す
 # 世代幅も指定
 # ついでに画像保存
-def viewMeansGraph(fname_format, population, x_min, x_max):
+# 圧縮フラグを追加
+def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
     for i in range(x_min, x_max + 1):
         # i 世代全個体の平均値を取り出す
-        tprm = getFamilyMeansWrap(fname_format.format(i), population)
+        tprm = getFamilyMeansWrap(fname_format.format(i), population, compressed)
         # 読み込みエラー
         if not tprm:
             continue
@@ -232,7 +234,8 @@ def viewSDGraph(fname_format, population, x_min, x_max):
     #plt.show()
 
 # 2つのグラフを同時描画したい
-def viewStatGraphs(fname_format, population, g_min, g_max):
+# 圧縮フラグ追加
+def viewStatGraphs(fname_format, population, g_min, g_max, compressed):
     g = []
     # 10 マス分のデータの配列を用意
     means = [[] for i in range(10)]
@@ -240,7 +243,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max):
     for i in range(g_min, g_max + 1):
         fname = fname_format.format(i)
         # i 世代全個体の平均値
-        tmp1 = getFamilyMeansWrap(fname, population)
+        tmp1 = getFamilyMeansWrap(fname, population, compressed)
         # 空リストがの場合（読み込み失敗）
         # 平均値が読み込める=標準偏差も読み込めると考える
         if not tmp1:
@@ -440,8 +443,8 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 def main():
     ind = 26
     loc_pop = 50
-    viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
-    viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
+    viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100, 1)
+    #viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
