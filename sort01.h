@@ -13,6 +13,10 @@
 // also exchange B[i] and B[j]
 #define exchangeD(type, A, B, i, j) do {type _; _exchange(A, i, j, _); _exchange(B, i, j, _);} while (0)
 
+// 降順, Aの値を基準にBも一緒にクイックソート
+// ラッパー関数型マクロ
+#define quicksortDDAll(A, B, n) quicksortDD(A, B, 0, (n) - 1)
+
 // 乱択版クイックソートラッパーマクロ (A はint型配列しか対応しないので注意)
 #define randomizedQuicksortAll(A, n) randomizedQuicksort(A, 0, n - 1)
 

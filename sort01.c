@@ -21,7 +21,7 @@ void sortTest(void) {
     printDecimalArray(sample1, l1);
     //randomizedQuicksortDDAll(sample1, numbers, l1);
     //randomizedQuicksortAll(sample1, l1);
-    quicksortDD(sample1, numbers, 0, l1 - 1);
+    quicksortDDAll(sample1, numbers, l1);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
 }
