@@ -1,7 +1,5 @@
 // pythonのctypesから呼び出す共有ライブラリを作る
 // ubuntu で python を実行することを考慮すると様々な問題が発生
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include <float.h>
 #include <math.h>
@@ -144,16 +142,7 @@ void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n) {
 // compressed が0なら非圧縮, 0以外なら圧縮
 int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
-    int e;
-    switch (compressed) {
-        case 0: // 非圧縮版
-            e = loadSprmFileDirect(fnamer, family, sizeof family);
-            break;
-        default: // 圧縮版
-            e = loadSprmFileCompDirect(fnamer, family, n);
-    }
-    // フラグが負ならエラー
-    if (e < 0) return -1;
+    loadSprmFileDirectFlexExit(fnamer, family, n, compressed);
     // 平均値計算
     calcSprmMeans(family, f_pointer, n);
     return 0;
@@ -206,16 +195,7 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // 圧縮版か否かを判別する引数を追加
 int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
-    int e;
-    switch (compressed) {
-        case 0: // 非圧縮
-            e = loadSprmFileDirect(fnamer, family, sizeof family);
-            break;
-        default: // 圧縮
-            e = loadSprmFileCompDirect(fnamer, family, n);
-    }
-    if (e < 0) return -1;
-    showSprmOneLine(*family);
+    loadSprmFileDirectFlexExit(fnamer, family, n, compressed);
     // 標準偏差計算
     calcSprmSD(family, f_pointer, n);
     return 0;
