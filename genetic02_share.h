@@ -43,6 +43,9 @@ void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n);
 // 個体数は可変にしたいので長さも引数として与える
 int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n);
 
+// 圧縮ファイル用, 平均値取得関数
+int getFamilyMeansCompPy(const char *fnamer, float f_pointer[SPRM_LEN], int n);
+
 // トップ10の標準偏差を取得(共有ライブラリ用)
 // 世代番号でなく, ファイル名で指定する
 // ファイル名を世代番号でしていするのはpythonで行なう
