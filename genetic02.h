@@ -73,7 +73,8 @@
 // C: 圧縮バージョン
 // ファイル名もsprmが長いのでsでよくね?って思った
 // ランダムAI対戦を復活させたらどうなるだろう?
-#define FNF_RC05006000000005 "prm/srltc050_06_rlt_uni_rd005/srltc050_06_rlt_uni_rd005_%03d.bin"
+// g 付け忘れてた
+#define FNF_RC05006000000005 "prm/srltc050_06_rlt_uni_rd005/srltc050_06_rlt_uni_rd005_g%03d.bin"
 
 // select the board with the highest evaluation value
 #define FNF_D05006000000005 "prm/sprmdef050_06_rlt_uni_rd005/sprmdef050_06_rlt_uni_rd005_g%03d.bin"
@@ -93,6 +94,8 @@
 
 // 02: single point crossover
 #define FNF_05006000200005 "prm/sprm050_06_rlt_1p_rd005/sprm050_06_rlt_1p_rd005_g%03d.bin"
+// 指し手ルーレット, 圧縮, ルーレット選択, 一点交叉, ラン突5%
+#define FNF_RC05006000200005 "prm/srltc050_06_rlt_1p_rd005/srltc050_06_rlt_1p_rd005_g%03d.bin"
 
 // 01: shift mutation (no limit)
 #define FNF_05006000001005 "prm/sprm050_06_rlt_uni_sft005/sprm050_06_rlt_uni_sft005_g%03d.bin"
