@@ -1056,7 +1056,7 @@ void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int st
         // 和を計算したときのオーバーフローを回避?
         printf("seed1: %d, seed2: %d\n", s1, s2 = rand() ^ SEED);
         // 次の世代へ!
-        if (nGeneSprmComp(scm, format, start, s1, s2, safety))
+        if (nGeneSprmComp(scm, format, gene_num, s1, s2, safety))
             return;
         // get time
         time(t_arr + 1);
