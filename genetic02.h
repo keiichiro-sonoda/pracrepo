@@ -27,14 +27,10 @@
 #define MUT_RATE 0.05f // 突然変異率
 #endif
 
-// 指し手固定
-// function to determine the nextboard
-//#define DET_FUNC getBestBoardForBlackSimple
-
-// 指し手ルーレット選択
-#ifndef DET_FUNC
-#define DET_FUNC getBoardForBlackSimpleRoulette
-#endif
+// 指し手決定関数の識別子
+// 0: 固定
+// それ以外: ルーレット
+#define DET_FUNC_ID 1
 
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
@@ -229,7 +225,10 @@ typedef void (*scmSprmSorted)(const int*, const Sprm*, Sprm*);
 extern int CORR_TABLE[MASU_NUM];
 // 圧縮版Sprmファイルのサイズ (フラグ付き)
 extern const int SPRM_FILE_SIZE_COMP;
+
 extern Sprm SAMP_PRM;
+// 指し手決定関数 (マクロのIDによって決まる)
+extern decNxtSprm DET_FUNC;
 
 // functions
 

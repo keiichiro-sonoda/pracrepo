@@ -17,6 +17,9 @@ const int SPRM_FILE_SIZE_COMP = SPRM_LEN * POPULATION + 1;
 
 Sprm SAMP_PRM;
 
+// 指し手決定関数 (マクロのIDによって決まる)
+decNxtSprm DET_FUNC;
+
 // functions
 
 // グローバル変数等初期化関数
@@ -32,6 +35,16 @@ void initSprm(void) {
     printf("mutation rate       : %4.2f\n", MUT_RATE);
     printf("parameter file size : %4d\n", SPRM_FILE_SIZE_COMP);
     printf("seed                : %4d\n", SEED);
+    printf("指し手              : ");
+    switch (DET_FUNC_ID) {
+        case 0: // 固定
+            DET_FUNC = getBestBoardForBlackSimple;
+            printf("固定\n");
+            break;
+        default: // ルーレット
+            DET_FUNC = getBoardForBlackSimpleRoulette;
+            printf("ルーレット\n");
+    }
 }
 
 // print a simple parameter
