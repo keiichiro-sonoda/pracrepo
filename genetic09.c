@@ -176,13 +176,9 @@ int main(void) {
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    //makeFGFileSprmComp(format);
-    Sprm pra[POPULATION];
+    makeFGFileSprmComp(format);
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, 0);
-    printString(fnamer);
-    printDecimal(loadSprmFileCompDirect(fnamer, pra));
-    showFamilyPart(pra);
     int fitness[POPULATION];
     sortSprmCompFileByFitness(fnamer, fitness);
     printDecimalArray(fitness, POPULATION);

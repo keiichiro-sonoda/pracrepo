@@ -140,6 +140,18 @@
     dumpFileDirectExit((fname), fitness_short, sizeof fitness_short);\
 } while (0);
 
+// ソート済み適応度配列を格納するファイル名を作る関数型マクロ
+// 適応度評価対象のファイル名から作成
+#define makeFitnessFileNameDirectExit(dst, dst_size, fnameo) do {\
+    int _len = strlen(fnameo) - 3;\
+    if (_len + 11 >= (dst_size)) {printf("\afile name over\n"); return -1;}\
+    const char fitness_format[] = "%s_fitness.bin";\
+    char fnameo_part[_len];\
+    snprintf(fnameo_part, _len, "%s", fnameo);\
+    printString(fnameo_part);\
+    snprintf(dst, dst_size, fitness_format, fnameo_part);\
+} while (0)
+
 // 64bit
 typedef unsigned long int int8B;
 

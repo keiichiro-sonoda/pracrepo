@@ -952,9 +952,8 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     Sprm pra1[POPULATION], pra2[POPULATION];
     // 適応度ファイル名
     char fnamef[FILENAME_MAX];
-    // 万が一のファイル名オーバーフロー対策
-    if (makeFitnessFileNameDirect(fnamef, FILENAME_MAX, fname) < 0)
-        return -1;
+    // 適応度ファイル名作成, オーバーフローしたら抜ける
+    makeFitnessFileNameDirectExit(fnamef, FILENAME_MAX, fname);
     // ロードしてフラグを取得
     int flag = loadSprmFileCompDirect(fname, pra1);
     // エラーなら-1を返す
