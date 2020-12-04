@@ -176,6 +176,8 @@ int main(void) {
     //sortTest();
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 1);
-    sortTest();
+    for (int i = 0; i < 50; i++) {
+        printFloat(powf(0.9f, i));
+    }
     return 0;
 }

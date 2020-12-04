@@ -19,9 +19,9 @@ void sortTest(void) {
     printDecimal(l2);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
-    //randomizedQuicksortDDAll(sample1, numbers, l1);
+    randomizedQuicksortDDAll(sample1, numbers, l1);
     //randomizedQuicksortAll(sample1, l1);
-    quicksortDDAll(sample1, numbers, l1);
+    //quicksortDDAll(sample1, numbers, l1);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
 }
