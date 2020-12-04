@@ -440,13 +440,13 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 def main():
     ind = 26
     loc_pop = 50
-    #viewStatGraphs(FILE_FORMATS[ind], 50, 0, 100)
     viewMeansGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     viewWinRateGraph(FILE_FORMATS[ind], 0)
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":

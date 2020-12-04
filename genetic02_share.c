@@ -139,23 +139,22 @@ void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n) {
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 // 無効なファイル名が渡されたときの処理も追加
-int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
+// pythonでいちいち関数増やすのもだるいので, 圧縮版も兼ねてしまおう
+// 引数を一つ増やして識別したほうが簡単そうだ…多分
+// compressed が0なら非圧縮, 0以外なら圧縮
+int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
-    // ファイル読み込み
-    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
-        // 失敗
-        return -1;
-    // 成功
+    int e;
+    switch (compressed) {
+        case 0: // 非圧縮版
+            e = loadSprmFileDirect(fnamer, family, sizeof family);
+            break;
+        default: // 圧縮版
+            e = loadSprmFileCompDirect(fnamer, family, n);
+    }
+    // フラグが負ならエラー
+    if (e < 0) return -1;
     // 平均値計算
-    calcSprmMeans(family, f_pointer, n);
-    return 0;
-}
-
-// 圧縮ファイル用, 平均値取得関数
-int getFamilyMeansCompPy(const char *fnamer, float f_pointer[SPRM_LEN], int n) {
-    Sprm family[n];
-    if (loadSprmFileCompDirect(fnamer, family, n) < 0)
-        return -1;
     calcSprmMeans(family, f_pointer, n);
     return 0;
 }
