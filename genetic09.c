@@ -176,11 +176,14 @@ int main(void) {
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //sortTest();
-    makeFGFileSprmComp(format);
+    //makeFGFileSprmComp(format);
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, 0);
     int fitness[POPULATION];
     sortSprmCompFileByFitness(fnamer, fitness);
     printDecimalArray(fitness, POPULATION);
+    char fnamef[28];
+    makeFitnessFileNameDirectExit(fnamef, sizeof fnamef, fnamer);
+    printString(fnamef);
     return 0;
 }
