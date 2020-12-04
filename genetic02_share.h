@@ -16,7 +16,7 @@
     int e;\
     switch (compressed) {\
         case 0 : e = loadSprmFileDirect(fnamer, family, sizeof(Sprm) * (n)); break;\
-        default: e = loadSprmFileCompDirect(fnamer, family, n);\
+        default: e = loadSprmFileCompDirect(fnamer, family, n); printf("圧縮\n");\
     }\
     if (e < 0) return -1;\
 } while (0)

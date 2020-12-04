@@ -230,7 +230,7 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed):
     ax = fig.add_subplot(111)
     makeSDGraph(ax, x, ys)
     # フォーマットやグラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fname_format, "SD{:03d}".format(population), x_min, x_max)
+    path = makeJpegFileName(fname_format, "SD{:03d}".format(population), int(x[0]), int(x[1]))
     if path:
     # 書き込み
         fig.savefig(path, bbox_inches="tight")
