@@ -217,7 +217,8 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
         return -1; // ロード失敗
     // ロード成功
     int winner;
-    Board (*decNxt)(Board*, int, const Sprm*);
+    // 指し手決定関数
+    decNxtSprm dnfunc;
     // 結果を代入する配列を初期化
     zeros(result, 3);
     // チェック
@@ -228,19 +229,20 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
         printf("white\n");
     }
     // 指し手決定関数の設定
+    // 現状は0とそれ以外で区別
     switch (decNxt_id) {
-        case 0: // 固定
-            decNxt = getBestBoardForBlackSimple;
+        case 0: // IDが0なら固定
+            dnfunc = getBestBoardForBlackSimple;
             printf("best\n");
             break;
-        default: // ルーレット
-            decNxt = getBoardForBlackSimpleRoulette;
+        default: // IDが0以外ならルーレット
+            dnfunc = getBoardForBlackSimpleRoulette;
             printf("roulette\n");
     }
     for (int i = 0; i < game_num; i++) {
         // 勝者取得
         // 配列をそのまま与える -> 先頭のポインタを与える
-        winner = SprmVSRandomNormal(decNxt, family, color);
+        winner = SprmVSRandomNormal(dnfunc, family, color);
         // 勝ち
         if (winner == color) {
             result[0]++;
@@ -255,36 +257,6 @@ int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int g
         }
     }
     return 0;
-}
-
-// use Sprm[100]
-// win: +2, draw: +1, lose: 0
-void leagueMatchSimpleSprm(Sprm *generation, int *result) {
-    int i, j;
-    // all zero
-    zeros(result, POPULATION);
-    // black index
-    for (i = 0; i < POPULATION; i++) {
-        //printf("\ai = %d / %d", i, FAMILY_NUM);
-        // white index
-        for (j = 0; j < POPULATION; j++) {
-            if (i == j) continue;
-            switch(oneToOneNormalSprm(generation + i, generation + j)) {
-                // black won
-                case 1:
-                    result[i] += 2;
-                    break;
-                // white won
-                case 2:
-                    result[j] += 2;
-                    break;
-                // draw
-                default:
-                    result[i]++;
-                    result[j]++;
-            }
-        }
-    }
 }
 
 // python で使うときにまず実行する

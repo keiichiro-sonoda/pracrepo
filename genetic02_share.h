@@ -62,10 +62,6 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n);
 // 0: 固定, 1: ルーレット
 int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int det_func_id, int result[3]);
 
-// use Sprm[100]
-// win: +2, draw: +1, lose: 0
-void leagueMatchSimpleSprm(Sprm *generation, int *result);
-
 // python で使うときにまず実行する
 void initPy(void);
 

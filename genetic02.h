@@ -135,7 +135,7 @@
 
 // パラメータを一行で表示
 // print a simple parameter on one line
-#define showSprmOneLine(pr) printFloatArray(pr.weight, SPRM_LEN)
+#define showSprmOneLine(pr) printFloatArray((pr).weight, SPRM_LEN)
 
 // uniform crossover (array)
 #ifndef uniCrossArray
