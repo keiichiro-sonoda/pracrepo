@@ -206,7 +206,6 @@
     compSprmArray((pra), uca, POPULATION);\
     uca[SPRM_FILE_SIZE_COMP - 1] = (flag);\
     dumpFileDirectExit((fname), uca, SPRM_FILE_SIZE_COMP);\
-    printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);\
 } while (0)
 
 // simple parameter

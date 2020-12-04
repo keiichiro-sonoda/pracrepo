@@ -438,6 +438,8 @@ int makeFGFileSprmComp(const char *format) {
     uca[SPRM_FILE_SIZE_COMP - 1] = 0;
     // そのまま書き込み
     dumpFileDirectExit(fnamew, uca, SPRM_FILE_SIZE_COMP);
+    // 初期世代作成時のみサイズを表示
+    printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);
     return 0;
 }
 
