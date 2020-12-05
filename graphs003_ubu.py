@@ -91,15 +91,17 @@ LINE_COLORS = [
 ]
 
 # グラフを保存するファイル名を決定する関数
-# グラフの種類 (平均値や標準偏差), 描画する世代の範囲を与える
+# グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
+# シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
 def makeJpegFileName(fname_format, name, g_min, g_max):
-    m = re.match(r"prm(//.*)//", fname_format)
+    m = re.match(r'prm(//.+)//.+(_s[0-9]+\.bin)', fname_format)
     if not m:
+        print("シードを含んだフォーマットではありません")
         print("一致するパターンがありません")
         return ""
-    path = "//home//sonoda//Pictures//Graphs" + m.groups()[0]
-    options = "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min) + ".jpg"
-    path += options
+    mg = m.groups()
+    print(mg)
+    path = "//home//sonoda//Pictures//Graphs" + mg[0] + "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min) + mg[1] + ".jpg"
     print(path)
     return path
 
@@ -389,8 +391,8 @@ def viewWinRateGraph(fname_format, decNxt_id):
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
 def formatPlusSeed(fname_format, seed):
-    # .bin とそれ以外を区別
-    m = re.match("(.+)(\.bin)", fname_format)
+    # .bin とそれ以外を分割
+    m = re.match(r'(.+)(\.bin)', fname_format)
     if not m:
         print("一致するパターンがありません")
         return ""
@@ -471,10 +473,10 @@ SEED_DICT = {27: (123, 365), 28: (365,)}
 def main():
     global VIEW_ONLY
     #VIEW_ONLY = False
-    ind = 27
+    ind = 11
     loc_pop = 6
     start_g = 0
-    stop_g = 100
+    stop_g = 0
     # シードをつけるか否か
     if ind in SEED_DICT:
         active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
@@ -493,7 +495,7 @@ def main():
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     viewWinRateGraph(FILE_FORMATS[ind], 0)
-    plt.show()
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
