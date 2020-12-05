@@ -199,9 +199,9 @@ int main(void) {
     // このマクロの第一引数を変える
     formatPlusSeed(FNF_RC05006000200005, format, FILENAME_MAX);
     printString(format);
-    makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 0);
+    //makeFGFileSprmComp(format);
+    checkSprmFileComp(format, 4);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
-    //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
+    nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 4);
     return 0;
 }
