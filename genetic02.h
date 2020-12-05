@@ -24,7 +24,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.0f // 突然変異率
+#define MUT_RATE 0.05f // 突然変異率
 #endif
 
 // 指し手決定関数の識別子

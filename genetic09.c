@@ -30,12 +30,15 @@ void rouletteAveUni(const int *fitness, const int *numbers, const Sprm *current,
 
 // ルーレット選択, 平均化交叉と一様交叉一回ずつ
 // 全体の突然変異率を整えるために, 一様交叉と同じ割合で平均化交叉後にも突然変異を加える
-// ソート済み配列前提
+// ソート済み配列前提. さらに平均化交叉後の突然変異乱数は圧縮に対応させる
 void rltAveUniEqS(const int *fitness, const Sprm *current, Sprm *next) {
     int parents[2];
     for (int count = ELITE_NUM; count < POPULATION; count++) {
         rouletteIntMltDep(fitness, POPULATION, parents, 2);
-        next[count++] = makeChildAverageSprm(current[parents[0]], current[parents[1]]);
+        next[count] = makeChildAverageSprm(current[parents[0]], current[parents[1]]);
+        randMutSprmCC(next + count);
+        if (count++ >= POPULATION) break;
+        next[count] = makeChildCrossMSprm(current[parents[0]], current[parents[1]]);
     }
 }
 
@@ -190,7 +193,7 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 int main(void) {
     initSprm();
     // シード固定に注意
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     // 初期設定
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
@@ -200,19 +203,6 @@ int main(void) {
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //makeFGFileSprmComp(format);
-    //nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 201);
-    Sprm pr1, pr2;
-    randSprm(&pr1);
-    int count;
-    for (int i = 0; i < 256000; i++) {
-        pr2 = pr1;
-        randMutSprmCC(&pr1);
-        for (int i = 0; i < SPRM_LEN; i++) {
-            if (pr2.weight[i] == pr1.weight[i]) {
-                count++;
-            }
-        }
-    }
-    printDecimal(count);
+    nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 3);
     return 0;
 }
