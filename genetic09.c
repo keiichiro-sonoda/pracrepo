@@ -204,11 +204,11 @@ int main(void) {
     Sprm pr1, pr2;
     randSprm(&pr1);
     int count;
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 256000; i++) {
         pr2 = pr1;
         randMutSprmCC(&pr1);
         for (int i = 0; i < SPRM_LEN; i++) {
-            if (pr2.weight[i] != pr1.weight[i]) {
+            if (pr2.weight[i] == pr1.weight[i]) {
                 count++;
             }
         }
