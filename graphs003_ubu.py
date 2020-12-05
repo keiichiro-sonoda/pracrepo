@@ -187,19 +187,23 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
         print("saved!!")
 
 # 標準偏差のグラフを作成
-def makeSDGraph(ax, x, ys):
-    # 各マスの変移をプロット
+# 強調マスを指定できるようにする
+def makeSDGraph(ax, x, ys, emphasize):
+    # まずは注目マス以外
     for i in range(10):
-        lw = 1
-        lc = LINE_COLORS[i]
-        # 注目マス (必要に応じて変更)
-        if i == -1:
-            lw = 4
-        # ラベル付け
+        if i in emphasize:
+            continue
         ax.plot(x, ys[i],
             label="{:d}".format(i + 1),
-            color=lc,
-            linewidth=lw
+            color=LINE_COLORS[i],
+            linewidth=1
+        )
+    # 注目マス (違うのは先の太さだけ)
+    for i in emphasize:
+        ax.plot(x, ys[i],
+            label="{:d}".format(i + 1),
+            color=LINE_COLORS[i],
+            linewidth=4
         )
     #plt.legend(loc="best")
     # 凡例調節
@@ -219,7 +223,8 @@ def makeSDGraph(ax, x, ys):
 
 # 標準偏差表示, グラフ画像作成
 # 圧縮フラグを追加
-def viewSDGraph(fname_format, population, x_min, x_max, compressed):
+# 強調リストを追加
+def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]):
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
@@ -234,17 +239,20 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed):
         # それぞれのマスの評価値に代入!
         for j in range(10):
             ys[j].append(tprm[j])
-    
     # 読み込めたデータがひとつもない
     if not x:
         return
-    
-    # 使い慣れたいからオブジェクト指向にしよう
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
-    makeSDGraph(ax, x, ys)
+    name = "SD{:03d}"
+    if emphasize:
+        name += "_e"
+        for i in range(len(emphasize)):
+            name += "_{:d}".format(emphasize[i])
+            emphasize[i] -= 1
+    makeSDGraph(ax, x, ys, emphasize)
     # フォーマットやグラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fname_format, "SD{:03d}".format(population), int(x[0]), int(x[-1]))
+    path = makeJpegFileName(fname_format, name.format(population), int(x[0]), int(x[-1]))
     # 書き込み
     if path and not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
@@ -252,7 +260,8 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed):
 
 # 2つのグラフを同時描画したい
 # 圧縮フラグ追加
-def viewStatGraphs(fname_format, population, g_min, g_max, compressed):
+# 強調リストを追加 (初期値は空)
+def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize=[]):
     g = []
     # 10 マス分のデータの配列を用意
     means = [[] for i in range(10)]
@@ -486,6 +495,7 @@ def main():
     loc_pop = 6
     start_g = 0
     stop_g = 100
+    chumoku = [10, 3, 2]
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
@@ -496,10 +506,10 @@ def main():
     # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 1)
-        viewSDGraph(active_format, loc_pop, start_g, stop_g, 1)
+        viewSDGraph(active_format, loc_pop, start_g, stop_g, 1, chumoku)
     else:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 0)
-        viewSDGraph(active_format, loc_pop, start_g, stop_g, 0)
+        viewSDGraph(active_format, loc_pop, start_g, stop_g, 0, chumoku)
     #viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
