@@ -225,6 +225,15 @@
     snprintf((format), (format_size), "%s_s%03u.bin", _ex_bin, SEED);\
 } while (0)
 
+// 配列を突然変異 (圧縮対応乱数限定)
+// 一定確率で乱数に書き換え
+#define randMutArrayCC(A, n) for (int _ = 0; _ < (n); _++) if (randFloat() < MUT_RATE) (A)[_] = randWeightUchar()
+
+// Sprmのランダム突然変異 (圧縮対応乱数限定)
+// 引数にはSprmのポインタ型を与える
+#define randMutSprmCC(prp) do {float *_fp; _fp = prp.weight; } while (0)
+
+// 型の定義
 // simple parameter
 typedef struct sprm{
     float weight[SPRM_LEN];

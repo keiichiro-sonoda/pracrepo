@@ -201,11 +201,10 @@ int main(void) {
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 201);
-    float rw;
-    for (int i = 0; i < 100000; i++) {
-        rw = randWeightUchar();
-        if (rw < -0.5 || 0.5 <= rw)
-            printf("だめ\n");
-    }
+    Sprm prt;
+    randSprm(&prt);
+    showSprmOneLine(prt);
+    randMutSprmCC(&prt);
+    showSprmOneLine(prt);
     return 0;
 }
