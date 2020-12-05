@@ -464,8 +464,9 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
 # 圧縮版ファイルのフォーマットの添字はこのリストに加えていく
 COMPRESSED_INDICES = [26, 27, 28]
 
-# フォーマットにシードが付いているか
-PLUS_SEED = [27, 28]
+# 各フォーマットでどのシードを使ったのか記録
+# フォーマットにシードが付いているかの判定に使える
+SEED_DICT = {27: (365,), 28: (365,)}
 
 def main():
     global VIEW_ONLY
@@ -475,8 +476,8 @@ def main():
     start_g = 0
     stop_g = 200
     # シードをつけるか否か
-    if ind in PLUS_SEED:
-        active_format = formatPlusSeed(FILE_FORMATS[ind], 365)
+    if ind in SEED_DICT:
+        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
     else:
         active_format = FILE_FORMATS[ind]
     print(active_format)
