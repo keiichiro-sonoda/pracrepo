@@ -446,7 +446,8 @@ int makeFirstGeneFileFlex(const char *format) {
 
 // 圧縮版Sprm初期世代ファイルを作成したい
 // Sprm を経由せず直接書き込もうか
-// マクロ SEED でシード設定して再現性を確保
+// マクロ SEED でシード設定してファイル名とシードを対応させる
+// ファイル名が正しく設定されていることは前提だが
 int makeFGFileSprmComp(const char *format) {
     srand(SEED);
     char fnamew[FILENAME_MAX];
@@ -541,6 +542,22 @@ void checkSprmFile(const char *format, int gene_num) {
         return;
     }
     // check some parameters
+    showFamilyPart(pra);
+}
+
+// 圧縮ファイルからパラメータを読み取って確認
+// ファイル名作成のルーチンを省略したいところだが...
+void checkSprmFileComp(const char *format, int gene_num) {
+    Sprm pra[POPULATION];
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    int flag = loadSprmFileCompDirect(fnamer, pra, POPULATION);
+    if (flag < 0) return;
+    if (flag == 1) {
+        printf("ソート済\n");
+    } else {
+        printf("未ソート\n");
+    }
     showFamilyPart(pra);
 }
 

@@ -383,6 +383,10 @@ int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num);
 
+// 圧縮ファイルからパラメータを読み取って確認
+// ファイル名作成のルーチンを省略したいところだが...
+void checkSprmFileComp(const char *format, int gene_num);
+
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
