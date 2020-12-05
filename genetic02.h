@@ -263,6 +263,10 @@ extern Sprm SAMP_PRM;
 // 指し手決定関数 (マクロのIDによって決まる)
 extern decNxtSprm DET_FUNC;
 
+// シード値に SEED を設定したときの最初に得られる乱数を記録
+// シード値が変わってないかチェック
+extern int FIRST_RAND;
+
 // functions
 
 // グローバル変数等初期化関数

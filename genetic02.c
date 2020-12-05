@@ -20,12 +20,17 @@ Sprm SAMP_PRM;
 // 指し手決定関数 (マクロのIDによって決まる)
 decNxtSprm DET_FUNC;
 
+// シードが正しいか確認用
+int FIRST_RAND;
+
 // functions
 
 // グローバル変数等初期化関数
 // シード設定も行う
 // パラメータも表示
 void initSprm(void) {
+    srand(SEED);
+    FIRST_RAND = rand();
     srand(SEED);
     setCORR_TABLE();
     initBoard();
@@ -441,7 +446,9 @@ int makeFirstGeneFileFlex(const char *format) {
 
 // 圧縮版Sprm初期世代ファイルを作成したい
 // Sprm を経由せず直接書き込もうか
+// マクロ SEED でシード設定して再現性を確保
 int makeFGFileSprmComp(const char *format) {
+    srand(SEED);
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     warnOverwritingExit(fnamew);
