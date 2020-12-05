@@ -28,6 +28,17 @@ void rouletteAveUni(const int *fitness, const int *numbers, const Sprm *current,
     }
 }
 
+// ルーレット選択, 平均化交叉と一様交叉一回ずつ
+// 全体の突然変異率を整えるために, 一様交叉と同じ割合で平均化交叉後にも突然変異を加える
+// ソート済み配列前提
+void rltAveUniEqS(const int *fitness, const Sprm *current, Sprm *next) {
+    int parents[2];
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        rouletteIntMltDep(fitness, POPULATION, parents, 2);
+        next[count++] = makeChildAverageSprm(current[parents[0]], current[parents[1]]);
+    }
+}
+
 // random selection
 // only use uniform crossing
 void randUni(const int *fitness, const int *numbers, const Sprm *current, Sprm *next) {
@@ -179,16 +190,22 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 int main(void) {
     initSprm();
     // シード固定に注意
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     // 初期設定
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
-    formatPlusSeed(FNF_RC05006000200005, format, FILENAME_MAX);
+    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     printString(format);
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
     //makeFGFileSprmComp(format);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 201);
+    float rw;
+    for (int i = 0; i < 100000; i++) {
+        rw = randWeightUchar();
+        if (rw < -0.5 || 0.5 <= rw)
+            printf("だめ\n");
+    }
     return 0;
 }

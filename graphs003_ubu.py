@@ -389,7 +389,6 @@ def viewWinRateGraph(fname_format, decNxt_id):
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
 def formatPlusSeed(fname_format, seed):
-    print(fname_format)
     # .bin とそれ以外を区別
     m = re.match("(.+)(\.bin)", fname_format)
     if not m:
@@ -468,11 +467,11 @@ PLUS_SEED = [27]
 
 def main():
     global VIEW_ONLY
-    #VIEW_ONLY = False
+    VIEW_ONLY = False
     ind = 27
-    loc_pop = 50
+    loc_pop = 6
     start_g = 0
-    stop_g = 200
+    stop_g = 100
     # シードをつけるか否か
     if ind in PLUS_SEED:
         active_format = formatPlusSeed(FILE_FORMATS[ind], 365)
