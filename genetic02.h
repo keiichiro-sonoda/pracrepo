@@ -24,7 +24,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.05f // 突然変異率
+#define MUT_RATE 1.0f // 突然変異率
 #endif
 
 // 指し手決定関数の識別子
@@ -231,7 +231,7 @@
 
 // Sprmのランダム突然変異 (圧縮対応乱数限定)
 // 引数にはSprmのポインタ型を与える
-#define randMutSprmCC(prp) do {float *_fp; _fp = prp.weight; } while (0)
+#define randMutSprmCC(prp) do {float *_flp; _flp = (prp)->weight; randMutArrayCC(_flp, SPRM_LEN);} while (0)
 
 // 型の定義
 // simple parameter
