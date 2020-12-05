@@ -94,14 +94,22 @@ LINE_COLORS = [
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
 def makeJpegFileName(fname_format, name, g_min, g_max):
-    m = re.match(r'prm(//.+)//.+(_s[0-9]+\.bin)', fname_format)
-    if not m:
-        print("シードを含んだフォーマットではありません")
+    # シード関係なく共通する部分
+    # 最初のふるい落とし
+    m1 = re.match(r'prm(//.+)//(.+)\.bin', fname_format)
+    if not m1:
         print("一致するパターンがありません")
         return ""
-    mg = m.groups()
-    print(mg)
-    path = "//home//sonoda//Pictures//Graphs" + mg[0] + "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min) + mg[1] + ".jpg"
+    mg1 = m1.groups()
+    # シードの有無
+    m2 = re.match(r'.+(_s[0-9]+)', mg1[1])
+    if not m2:
+        print("シードを含みません")
+        sp = "_no_seed"
+    else:
+        print("シードを含みます")
+        sp = m2.groups()[0]
+    path = "//home//sonoda//Pictures//Graphs" + mg1[0] + "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min) + sp + ".jpg"
     print(path)
     return path
 
@@ -473,12 +481,13 @@ SEED_DICT = {27: (123, 365), 28: (365,)}
 def main():
     global VIEW_ONLY
     #VIEW_ONLY = False
-    ind = 11
+    ind = 27
     loc_pop = 6
     start_g = 0
     stop_g = 0
     # シードをつけるか否か
     if ind in SEED_DICT:
+        # シードがある場合はここで指定
         active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
     else:
         active_format = FILE_FORMATS[ind]
