@@ -86,6 +86,9 @@
 #define FNF_10010011000005 "prm/sprm100_10_rd_au_rd005/sprm100_10_rd_au_rd005_g%03d.bin"
 #define FNF_05006011000005 "prm/sprm050_06_rd_au_rd005/sprm050_06_rd_au_rd005_g%03d.bin"
 
+// 11: 平均と一様交叉半分ずつ. ただし突然変異率はともに等確率とする.
+#define FNF_RC05006001100005 "prm/srltc050_06_rlt_aue_rd005/srltc050_06_rlt_aue_rd005_g%03d.bin"
+
 // ルーレット選択, 平均一様, ランダム突変5%
 #define FNF_10010001000005 "prm/sprm100_10_rlt_au_rd005/sprm100_10_rlt_au_rd005_g%03d.bin"
 #define FNF_05006001000005 "prm/sprm050_06_rlt_au_rd005/sprm050_06_rlt_au_rd005_g%03d.bin"

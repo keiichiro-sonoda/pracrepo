@@ -197,12 +197,12 @@ int main(void) {
     // 初期設定
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
-    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
+    formatPlusSeed(FNF_RC05006001100005, format, FILENAME_MAX);
     printString(format);
     //makeFirstGeneFileFlex(format);
     //checkSprmFile(format, 20);
     //nGeneSSAFlexLoopSeed(rouletteAveUni, format, 0, 19, 81);
-    //makeFGFileSprmComp(format);
+    makeFGFileSprmComp(format);
     nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 3);
     return 0;
 }
