@@ -507,15 +507,15 @@ SEED_DICT = {27: (123, 365), 28: (365,)}
 def main():
     global VIEW_ONLY
     #VIEW_ONLY = False
-    ind = 16
+    ind = 27
     loc_pop = 6
     start_g = 0
     stop_g = 100
-    chumoku = [2]
+    chumoku = [2, 1, 5]
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
-        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
+        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][1])
     else:
         active_format = FILE_FORMATS[ind]
     print(active_format)
