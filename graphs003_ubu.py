@@ -457,21 +457,23 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 26. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
                 "prm//srltc050_06_rlt_uni_rd005//srltc050_06_rlt_uni_rd005_g{:03d}.bin",
                 # 27. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
-                "prm//srltc050_06_rlt_1p_rd005//srltc050_06_rlt_1p_rd005_g{:03d}.bin"]
+                "prm//srltc050_06_rlt_1p_rd005//srltc050_06_rlt_1p_rd005_g{:03d}.bin",
+                # 28. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 平均と一様一回ずつ, それぞれランダム突然変異5%
+                "prm//srltc050_06_rlt_aue_rd005//srltc050_06_rlt_aue_rd005_g{:03d}.bin"]
 
 # 圧縮版ファイルのフォーマットの添字はこのリストに加えていく
-COMPRESSED_INDICES = [26, 27]
+COMPRESSED_INDICES = [26, 27, 28]
 
 # フォーマットにシードが付いているか
-PLUS_SEED = [27]
+PLUS_SEED = [27, 28]
 
 def main():
     global VIEW_ONLY
-    VIEW_ONLY = False
-    ind = 27
+    #VIEW_ONLY = False
+    ind = 28
     loc_pop = 6
     start_g = 0
-    stop_g = 100
+    stop_g = 200
     # シードをつけるか否か
     if ind in PLUS_SEED:
         active_format = formatPlusSeed(FILE_FORMATS[ind], 365)
