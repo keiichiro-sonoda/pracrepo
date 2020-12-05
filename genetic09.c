@@ -191,16 +191,17 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 }
 
 int main(void) {
+    // 初期設定
     initSprm();
     // シード固定に注意
     //srand((unsigned)time(NULL));
-    // 初期設定
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
-    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
+    formatPlusSeed(FNF_RC05006000200005, format, FILENAME_MAX);
     printString(format);
-    makeFGFileSprmComp(format);
+    //makeFGFileSprmComp(format);
     checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
+    nGeneSprmCompLoop(rltSPRdS, format, 1, 0, 3);
     return 0;
 }
