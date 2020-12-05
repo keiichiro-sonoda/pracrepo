@@ -391,7 +391,7 @@ def viewWinRateGraph(fname_format, decNxt_id):
 def formatPlusSeed(fname_format, seed):
     print(fname_format)
     # .bin とそれ以外を区別
-    m = re.match(r"(.+)(/.bin)", fname_format)
+    m = re.match(r'(.+)(\.bin)', fname_format)
     if not m:
         print("一致するパターンがありません")
         return ""
@@ -456,9 +456,9 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 25. 指し手ルーレット, 個体数100, エリート10, 非独立ルーレット選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
                 "prm//sprm100_10_rlt_au_rd005//sprm100_10_rlt_au_rd005_g{:03d}.bin",
                 # 26. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
-                "prm//srltc050_06_rlt_uni_rd005//srltc050_06_rlt_uni_rd005_{:03d}.bin",
+                "prm//srltc050_06_rlt_uni_rd005//srltc050_06_rlt_uni_rd005_g{:03d}.bin",
                 # 27. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
-                "prm//srltc050_06_rlt_1p_rd005//srltc050_06_rlt_1p_rd005_{:03d}.bin"]
+                "prm//srltc050_06_rlt_1p_rd005//srltc050_06_rlt_1p_rd005_g{:03d}.bin"]
 
 # 圧縮版ファイルのフォーマットの添字はこのリストに加えていく
 COMPRESSED_INDICES = [26, 27]
@@ -472,7 +472,7 @@ def main():
     ind = 27
     loc_pop = 50
     start_g = 0
-    stop_g = 0
+    stop_g = 200
     # シードをつけるか否か
     if ind in PLUS_SEED:
         active_format = formatPlusSeed(FILE_FORMATS[ind], 365)
@@ -491,7 +491,7 @@ def main():
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     viewWinRateGraph(FILE_FORMATS[ind], 0)
-    #plt.show()
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
