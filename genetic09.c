@@ -193,7 +193,7 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 int main(void) {
     initSprm();
     // シード固定に注意
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     // 初期設定
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
