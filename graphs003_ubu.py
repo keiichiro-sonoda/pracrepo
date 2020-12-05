@@ -14,6 +14,9 @@ SEED = 123
 # グラフ描画のみ
 VIEW_ONLY = True
 
+# シンプルパラメータの長さ
+SPRM_LEN = 10
+
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
 # ubuntu用であることに注意
 share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
@@ -190,7 +193,7 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
 # 強調マスを指定できるようにする
 def makeSDGraph(ax, x, ys, emphasize):
     # まずは注目マス以外
-    for i in range(10):
+    for i in range(SPRM_LEN):
         if i in emphasize:
             continue
         ax.plot(x, ys[i],
@@ -227,7 +230,7 @@ def makeSDGraph(ax, x, ys, emphasize):
 def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]):
     x = []
     # 10 マス分のデータの配列を用意
-    ys = [[] for i in range(10)]
+    ys = [[] for i in range(SPRM_LEN)]
     for i in range(x_min, x_max + 1):
         # i 世代全個体の標準偏差を取り出す
         tprm = getFamilySDWrap(fname_format.format(i), population, compressed)
@@ -245,12 +248,25 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     name = "SD{:03d}"
+    # 強調マスを番号から添字に変換し, さらに逆順に並べる
+    # 1から10以外の無効なマスが与えられたら無視する
+    # 重複も無視
+    e_valid = []
     if emphasize:
-        name += "_e"
-        for i in range(len(emphasize)):
-            name += "_{:d}".format(emphasize[i])
-            emphasize[i] -= 1
-    makeSDGraph(ax, x, ys, emphasize)
+        for i in emphasize:
+            # 添字に変換 (-1)
+            ind = i - 1
+            # 範囲外か重複
+            if (ind < 0 or SPRM_LEN <= ind or ind in e_valid):
+                continue
+            e_valid.insert(0, ind)
+        # 有効なマスが存在
+        if e_valid:
+            name += "_e{:d}".format(e_valid[-1] + 1)
+            # 後ろから文字に追加?
+            for ind in range(len(e_valid) - 2, -1, -1):
+                name += "_{:d}".format(e_valid[ind] + 1)
+    makeSDGraph(ax, x, ys, e_valid)
     # フォーマットやグラフの範囲に合わせたパスを作成
     path = makeJpegFileName(fname_format, name.format(population), int(x[0]), int(x[-1]))
     # 書き込み
@@ -293,7 +309,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
     ax2 = fig.add_subplot(212)
     #fig.subplots_adjust(bottom=0.2, left=0.2, top=0.8, right=0.8)
     makeMeansGraph(ax1, g, means)
-    makeSDGraph(ax2, g, SD)
+    makeSDGraph(ax2, g, SD, emphasize)
     plt.show()
 
 # 関数テスト
@@ -495,7 +511,7 @@ def main():
     loc_pop = 6
     start_g = 0
     stop_g = 100
-    chumoku = [10, 3, 2]
+    chumoku = [10, 3, 2, 11]
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
