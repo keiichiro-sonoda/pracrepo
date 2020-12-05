@@ -391,7 +391,7 @@ def viewWinRateGraph(fname_format, decNxt_id):
 def formatPlusSeed(fname_format, seed):
     print(fname_format)
     # .bin とそれ以外を区別
-    m = re.match(r'(.+)(\.bin)', fname_format)
+    m = re.match("(.+)(\.bin)", fname_format)
     if not m:
         print("一致するパターンがありません")
         return ""
