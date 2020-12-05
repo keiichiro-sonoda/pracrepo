@@ -502,7 +502,7 @@ COMPRESSED_INDICES = [26, 27, 28]
 
 # 各フォーマットでどのシードを使ったのか記録
 # フォーマットにシードが付いているかの判定に使える
-SEED_DICT = {27: (123, 365), 28: (365,)}
+SEED_DICT = {27: (123, 365, 999), 28: (365,)}
 
 def main():
     global VIEW_ONLY
@@ -511,11 +511,11 @@ def main():
     loc_pop = 6
     start_g = 0
     stop_g = 100
-    chumoku = [2, 1, 5]
+    chumoku = []
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
-        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][1])
+        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][2])
     else:
         active_format = FILE_FORMATS[ind]
     print(active_format)
