@@ -93,6 +93,7 @@ LINE_COLORS = [
 # グラフを保存するファイル名を決定する関数
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
+# シードが無い場合のグラフを新たに作ると, 旧ファイル名と異なるファイル名になる (_no_seedが付与される)
 def makeJpegFileName(fname_format, name, g_min, g_max):
     # シード関係なく共通する部分
     # 最初のふるい落とし
@@ -484,7 +485,7 @@ def main():
     ind = 27
     loc_pop = 6
     start_g = 0
-    stop_g = 0
+    stop_g = 100
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
@@ -503,8 +504,8 @@ def main():
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
-    viewWinRateGraph(FILE_FORMATS[ind], 0)
-    #plt.show()
+    #viewWinRateGraph(FILE_FORMATS[ind], 0)
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
