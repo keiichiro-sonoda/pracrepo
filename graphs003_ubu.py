@@ -507,11 +507,11 @@ SEED_DICT = {27: (123, 365), 28: (365,)}
 def main():
     global VIEW_ONLY
     #VIEW_ONLY = False
-    ind = 27
+    ind = 16
     loc_pop = 6
     start_g = 0
     stop_g = 100
-    chumoku = [10, 3, 2, 11]
+    chumoku = [2]
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
