@@ -14,11 +14,6 @@ Board SAMPLE1;
 // 8 directions
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 
-// get a piece at a certain address
-int getKoma(Board b, int ad) {
-    return (b.board[ad >> 6] >> (ad & 0x3f)) & 0b11;
-}
-
 // put a piece at a certain address
 void putKoma(Board *bp, int ad, int koma) {
     bp->board[ad >> 6] |= (int8B)koma << (ad & 0x3f);

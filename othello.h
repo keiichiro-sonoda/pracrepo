@@ -95,6 +95,11 @@
 // 波括弧を使わない if 節で使う場面を想定
 #define printBin32(x) do {printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10);} while (0)
 
+// 指定したアドレスのコマを取得
+// ad >> 6 が 0 なら下半分, 1 なら上半分
+// get a piece at a certain address
+#define getKoma(b, ad) (((b).board[(ad) >> 6] >> ((ad) & 0x3f)) & 0b11)
+
 // 初期盤面の設定
 // initial configure
 #define initBoard() do {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;} while (0)
@@ -174,10 +179,9 @@ extern Board SAMPLE1;
 // 8 directions
 extern const int DIRECTION[8];
 
-// get a piece at a certain address
-int getKoma(Board b, int ad);
 // put a piece at a certain address
 void putKoma(Board *bp, int ad, int koma);
+
 // empty the board
 void emptyBoard(Board *bp);
 // all zero
