@@ -115,6 +115,11 @@
 // reverse pieces in some addresses?
 #define reRange(bp, ads, n) for (int _ = 0; _ < (n); _++) reOneAd(bp, ads[_])
 
+// 与えられた座標同士が隣り合う座標なのか確認
+// 繰り上 (下) がりしているのか, 範囲外なのか
+// src は範囲内であること前提とする
+#define isNeighbor(src, dst) (!(((dst) < 0 || 126 < (dst)) || (!((src) % 16) && ((dst) % 16 == 14)) || (((src) % 16) == 14 && !((dst) % 16))))
+
 // 初期盤面の設定
 // initial configure
 #define initBoard() do {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;} while (0)

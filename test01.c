@@ -19,6 +19,16 @@ int main(void) {
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
     showBoard(START);
-    play();
+    //play();
+    int ad, nad;
+    for (int i = 0; i < MASU_NUM; i++) {
+        ad = i << 1;
+        for (int j = 0; j < 8; j++) {
+            nad = DIRECTION[j];
+            if (ifNeighbor(ad, nad) != isNeighbor(ad, nad)) {
+                printf("%d, %d\n", ad, nad);
+            }
+        }
+    }
     return 0;
 }
