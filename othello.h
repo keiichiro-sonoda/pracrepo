@@ -101,6 +101,11 @@
 // get a piece at a certain address
 #define getKoma(b, ad) (((b).board[(ad) >> 6] >> ((ad) & 0x3f)) & 0b11)
 
+// コマを置く (対象は空マス前提)
+// 関数だったころの名残で盤面のポインタを渡す
+// put a piece at a certain address
+#define putKoma(bp, ad, koma) ((bp)->board[(ad) >> 6] |= (int8B)(koma) << ((ad) & 0x3f))
+
 // 初期盤面の設定
 // initial configure
 #define initBoard() do {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;} while (0)
@@ -179,9 +184,6 @@ extern Board SAMPLE1;
 
 // 8 directions
 extern const int DIRECTION[8];
-
-// put a piece at a certain address
-void putKoma(Board *bp, int ad, int koma);
 
 // empty the board
 void emptyBoard(Board *bp);

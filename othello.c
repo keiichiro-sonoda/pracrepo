@@ -14,12 +14,6 @@ Board SAMPLE1;
 // 8 directions
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 
-// put a piece at a certain address
-void putKoma(Board *bp, int ad, int koma) {
-    bp->board[ad >> 6] |= (int8B)koma << (ad & 0x3f);
-    return;
-}
-
 // empty the board
 void emptyBoard(Board *bp) {
     bp->board[0] = 0;
@@ -689,6 +683,7 @@ int negaMaxAB(Board b, int color, int depth, int pass, int alpha, int beta) {
     return -alpha;
 }
 
+// 不要な探索を排除したネガマックス
 int wrapNegaMaxAB(Board b, int color, int height) {
     // best action?
     int best_te = -1;
@@ -707,10 +702,10 @@ int wrapNegaMaxAB(Board b, int color, int height) {
     for (index = 0; index < nc; index++) {
         pt = negaMaxAB(nba[index], opc, 4, 0, -BILLION, -alpha);
         te = cpa[index];
-        // bad action??
+        // 角の斜め内側はなんとなく避ける (終盤は逆効果説あり)
         if (te == 18 || te == 28 || te == 98 || te == 108) {
             pt -= 500;
-        // corner
+        // 角は好んで取る
         } else if (te == 0 || te == 16 || te == 112 || te == 126) {
             pt += 500;
         }
