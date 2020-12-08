@@ -115,10 +115,15 @@
 // reverse pieces in some addresses?
 #define reRange(bp, ads, n) for (int _ = 0; _ < (n); _++) reOneAd(bp, ads[_])
 
+// srcから見てdstが繰り下がっていないかどうかをチェック
+// isNeighbor で呼び出されることを想定
+// src が最右列でないかつ, dst が最左列でないなら 1 を返す
+#define isNotCarryDown(src, dst) ((src) % 16 || (dst) % 16 != 14)
+
 // 与えられた座標同士が隣り合う座標なのか確認
 // 繰り上 (下) がりしているのか, 範囲外なのか
 // src は範囲内であること前提とする
-#define isNeighbor(src, dst) (!(((dst) < 0 || 126 < (dst)) || (!((src) % 16) && ((dst) % 16 == 14)) || (((src) % 16) == 14 && !((dst) % 16))))
+#define isNeighbor(src, dst) (0 <= (dst) && (dst) <= 126 && isNotCarryDown(src, dst) && isNotCarryDown(dst, src))
 
 // 初期盤面の設定
 // initial configure
