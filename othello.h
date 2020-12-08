@@ -96,6 +96,7 @@
 #define printBin32(x) do {printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10);} while (0)
 
 // 指定したアドレスのコマを取得
+// b は Board型を想定, ad は整数ならなんでもよさそう
 // ad >> 6 が 0 なら下半分, 1 なら上半分
 // get a piece at a certain address
 #define getKoma(b, ad) (((b).board[(ad) >> 6] >> ((ad) & 0x3f)) & 0b11)
