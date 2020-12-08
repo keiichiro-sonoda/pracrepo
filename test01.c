@@ -21,7 +21,8 @@ int main(void) {
     showBoard(START);
     showBoard(SAMPLE1);
     Board bt;
-    bt = normalBoard(START);
+    bt = SAMPLE1;
+    swapNormalizeBoard(&bt);
     showBoard(bt);
     //play();
     return 0;
