@@ -101,10 +101,15 @@
 // get a piece at a certain address
 #define getKoma(b, ad) (((b).board[(ad) >> 6] >> ((ad) & 0x3f)) & 0b11)
 
-// コマを置く (対象は空マス前提)
+// コマを置く (対象は空マスを想定)
 // 関数だったころの名残で盤面のポインタを渡す
 // put a piece at a certain address
 #define putKoma(bp, ad, koma) ((bp)->board[(ad) >> 6] |= (int8B)(koma) << ((ad) & 0x3f))
+
+// 指定した座標のコマを反転 (対象は空マス以外を想定)
+// reverse a piece at a certain address
+// give a Board pointer to rewrite it
+#define reOneAd(bp, ad) ((bp)->board[(ad) >> 6] ^= (int8B)0b11 << ((ad) & 0x3f))
 
 // 初期盤面の設定
 // initial configure
@@ -220,9 +225,6 @@ int getIndex(const int *ar, int ar_len, int el);
 // get maximum value of int array
 int getMaxIntArray(int *A, int n);
 
-// reverse a piece at a certain address
-// give a Board pointer to rewrite it
-void reOneAd(Board *bp, int ad);
 // reverse pieces in some addresses?
 void reRange(Board *bp, int *ads, int length);
 // find addresses to put black

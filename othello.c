@@ -160,13 +160,6 @@ int getMaxIntArray(int *A, int n) {
     return mx;
 }
 
-// reverse a piece at a certain address
-// give a Board pointer to rewrite it
-void reOneAd(Board *bp, int ad) {
-    (bp->board)[ad >> 6] ^= (int8B)0b11 << (ad & 0x3F);
-    return;
-}
-
 // reverse pieces in some addresses?
 void reRange(Board *bp, int *ads, int length) {
     int i;
