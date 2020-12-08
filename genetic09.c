@@ -203,5 +203,6 @@ int main(void) {
     checkSprmFileComp(format, 200);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
+    showBoard(START);
     return 0;
 }

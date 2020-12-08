@@ -306,7 +306,8 @@ int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp) 
     // set turn
     int turn = 0b01;
     // set initial board
-    Board main_board = START;
+    // 初期盤面の変更に伴い正規化が必要になった
+    Board main_board = normalBoard(START);
     while (1) {
         // calculate next
         n = nextBoardNormal2(main_board, nba, kc);
