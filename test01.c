@@ -24,7 +24,10 @@ int main(void) {
     bt = SAMPLE1;
     swapNormalizeBoard(&bt);
     showBoard(bt);
-    kugiri(200);
+    if (1)
+        kugiri(200);
+    else
+        kugiri(5);
     //play();
     return 0;
 }
