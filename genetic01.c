@@ -143,7 +143,8 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
     // set turn
     int turn = 0b01;
     // set initial board
-    Board main_board = START;
+    // 初期盤面が正規化されていないため, 正規化必須
+    Board main_board = normalBoard(START);
     while (1) {
         // calculate next
         n = nextBoardNormal2(main_board, nba, kc);
