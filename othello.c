@@ -160,14 +160,6 @@ int getMaxIntArray(int *A, int n) {
     return mx;
 }
 
-// reverse pieces in some addresses?
-void reRange(Board *bp, int *ads, int length) {
-    int i;
-    for (i = 0; i < length; i++)
-        reOneAd(bp, ads[i]);
-    return;
-}
-
 // find addresses to put black
 // and calculate nextboard
 int canPutBlackPlus(Board b, int *cpb, Board *nbs) {

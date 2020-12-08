@@ -111,6 +111,10 @@
 // give a Board pointer to rewrite it
 #define reOneAd(bp, ad) ((bp)->board[(ad) >> 6] ^= (int8B)0b11 << ((ad) & 0x3f))
 
+// ads には反転対象のアドレス配列を与える
+// reverse pieces in some addresses?
+#define reRange(bp, ads, n) for (int _ = 0; _ < (n); _++) reOneAd(bp, ads[_])
+
 // 初期盤面の設定
 // initial configure
 #define initBoard() do {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;} while (0)
@@ -225,8 +229,6 @@ int getIndex(const int *ar, int ar_len, int el);
 // get maximum value of int array
 int getMaxIntArray(int *A, int n);
 
-// reverse pieces in some addresses?
-void reRange(Board *bp, int *ads, int length);
 // find addresses to put black
 // and calculate nextboard
 int canPutBlackPlus(Board b, int *cpb, Board *nbs);
