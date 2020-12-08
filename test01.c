@@ -18,12 +18,6 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
-    Prm1L pr1, pr2, pr3;
-    randPrm1L(&pr1);
-    randPrm1L(&pr2);
-    showPrm1L(pr1);
-    showPrm1L(pr2);
-    pr3 = uniCrossBlockPrm1L(pr1, pr2);
-    showPrm1L(pr3);
+    showBoard(START);
     return 0;
 }
