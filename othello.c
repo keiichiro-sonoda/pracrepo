@@ -741,6 +741,7 @@ Board getRandPossibleBoard(void) {
     turn = 0b01;
     pass = 0;
     end_turn = randIntRange(1, 60);
+    end_turn = 10;
     // ループ毎にターンは必ず入れ替わる
     for (turn_count = 1; turn_count <= end_turn; turn ^= 0b11) {
         n = canPutPP(main_board, turn, can_put, next_boards, koma_count);
