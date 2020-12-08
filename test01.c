@@ -24,6 +24,7 @@ int main(void) {
     bt = SAMPLE1;
     swapNormalizeBoard(&bt);
     showBoard(bt);
+    kugiri(200);
     //play();
     return 0;
 }

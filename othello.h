@@ -29,12 +29,12 @@
 
 // macros
 // for debug
-#define kugiri(length) for (int _ = 0; _ < length; _++) putchar('-'); putchar('\n')
+#define kugiri(n) do {for (int _ = 0; _ < (n); _++) putchar('-'); putchar(10);} while (0)
 #define printString(s) printf("%s\n", s)
 #define printDecimal(x) printf("%d\n", x)
 #define printFloat(x) printf("%f\n", x)
 #define printSize(x) printf("%ld\n", sizeof x)
-#define arrayLength(A) sizeof(A) / sizeof(A[0])
+#define arrayLength(A) (sizeof(A) / sizeof(A[0]))
 // char型の整数表現を確認する (多分32bit以内ならchar以外も可)
 #define printCharDecimal(x) printf("%d\n", (int)(x))
 
