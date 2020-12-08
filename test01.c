@@ -20,6 +20,9 @@ int main(void) {
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
     showBoard(START);
     showBoard(SAMPLE1);
+    Board bt;
+    bt = normalBoard(START);
+    showBoard(bt);
     //play();
     return 0;
 }
