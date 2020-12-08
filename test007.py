@@ -186,8 +186,8 @@ class Widget(QWidget):
         for pos in self.tag2pos.values():
             imgcanvas.drawRect(*pos[1], self.SQLEN, self.SQLEN)
         
-        # 最初の4つのコマを配置
-        for tag, c_num in [("d4", 1), ("d5", 2), ("e4", 2), ("e5", 1)]:
+        # 最初の4つのコマを配置 (左上が白になるのが公式ルールらしい)
+        for tag, c_num in [("d4", 2), ("d5", 1), ("e4", 1), ("e5", 2)]:
             self.putKoma(tag, c_num, imgcanvas)
         # ターンを先手にする
         self.turn = 1
