@@ -291,7 +291,13 @@ int wrapNegaMax(Board b, int color);
 // alpha beta
 int negaMaxAB(Board b, int color, int depth, int pass, int alpha, int beta);
 int wrapNegaMaxAB(Board b, int color, int height);
+
+// CUI 対戦
 int play(void);
+
+// 起こりうるランダムな盤面を返す関数
+Board getRandPossibleBoard(void);
+
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1);
 Board mirrorHLBoard(Board b1);

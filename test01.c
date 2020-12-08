@@ -5,7 +5,7 @@
 int main(void) {
     // 初期化にシード設定も含まれる
     initPrm1LComp();
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     //showBoard(START);
     const char format[] = FNF_TEST;
     printString(format);
@@ -17,9 +17,7 @@ int main(void) {
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
     Board bt;
-    bt = START;
-    showBoard(bt);
-    emptyBoard(&bt);
+    bt = getRandPossibleBoard();
     showBoard(bt);
     //play();
     return 0;

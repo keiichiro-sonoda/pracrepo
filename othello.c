@@ -733,6 +733,29 @@ int play(void) {
     return 0;
 }
 
+// 起こりうるランダムな盤面を返す関数
+Board getRandPossibleBoard(void) {
+    Board main_board, next_boards[NEXT_MAX];
+    int n, turn, turn_count, pass, can_put[NEXT_MAX], koma_count[3];
+    main_board = START;
+    turn = 0b01;
+    pass = 0;
+    // ループ毎にターンは必ず入れ替わる
+    for (turn_count = 1; ; turn ^= 0b11) {
+        n = canPutPP(main_board, turn, can_put, next_boards, koma_count);
+        if (!n) {
+            if (pass) break;
+            pass = 1;
+            continue;
+        }
+        pass = 0;
+        // ランダムに次の盤面を選択
+        main_board = next_boards[randInt(n)];
+        turn_count++;
+    }
+    return main_board;
+}
+
 // rotate the board 90 degrees to the left
 Board rotL90DegBoard(Board b1) {
     Board b2 = createEmptyBoard();
