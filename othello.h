@@ -229,8 +229,7 @@ void printFloatArrayPart(const float *A, int n);
 
 // print an arrya of hexadecimal numbers
 int showHexArray(int *ia, int ia_len);
-// neighbor?
-int ifNeighbor(int src, int dst);
+
 // check if the element is in the array
 int inArray(int *ar, int ar_len, int el);
 // get index of el?

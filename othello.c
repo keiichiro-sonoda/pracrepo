@@ -118,19 +118,6 @@ int showHexArray(int *ia, int ia_len) {
     return 0;
 }
 
-// neighbor?
-int ifNeighbor(int src, int dst) {
-    // range over
-    if (dst < 0 || 126 < dst) return 0;
-    int c1, c2;
-    c1 = src % 16;
-    c2 = dst % 16;
-    // left or right over
-    if ((c1 == 0 && c2 == 14) || (c1 == 14 && c2 == 0)) return 0;
-    // neighbor!!
-    return 1;
-}
-
 // check if the element is in the array
 int inArray(int *ar, int ar_len, int el) {
     int i;
@@ -177,13 +164,13 @@ int canPutBlackPlus(Board b, int *cpb, Board *nbs) {
             dir = DIRECTION[i];
             ads[0] = ad + dir;
             // neighbor!
-            if (ifNeighbor(ad, ads[0])) {
+            if (isNeighbor(ad, ads[0])) {
                 // not white
                 if (getKoma(b, ads[0]) ^ 0b10) continue;
                 // white
                 ads[1] = ads[0] + dir;
                 // while -> for
-                for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+                for (j = 1; isNeighbor(ads[j - 1], ads[j]); j++) {
                 // check the diagonal
                     koma = getKoma(b, ads[j]);
                     // black
@@ -237,14 +224,14 @@ Board nextBoardBlack(Board b, int te) {
         dir = DIRECTION[i];
         ads[0] = te + dir;
         // not neighbor
-        if (!ifNeighbor(te, ads[0])) continue;
+        if (!isNeighbor(te, ads[0])) continue;
         // not white
         if (getKoma(b, ads[0]) ^ 0b10) continue;
         ads[1] = ads[0] + dir;
         // continue flag
         con = 1;
         // check diagonal
-        for (j = 1; con && ifNeighbor(ads[j - 1], ads[j]); j++) {
+        for (j = 1; con && isNeighbor(ads[j - 1], ads[j]); j++) {
             switch (getKoma(b, ads[j])) {
                 // white
                 case 0b10:
@@ -280,10 +267,10 @@ Board nextBoardWhite(Board b, int te) {
         dir = DIRECTION[i];
         ads[0] = te + dir;
         // not neighbor or neighbor is not black
-        if (!ifNeighbor(te, ads[0]) || (getKoma(b, ads[0]) ^ 0b01)) continue;
+        if (!isNeighbor(te, ads[0]) || (getKoma(b, ads[0]) ^ 0b01)) continue;
         ads[1] = ads[0] + dir;
         // check the diagonal
-        for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+        for (j = 1; isNeighbor(ads[j - 1], ads[j]); j++) {
             koma = getKoma(b, ads[j]);
             // black
             if (koma == 0b01) {
@@ -323,13 +310,13 @@ int canPutWhitePlus(Board b, int *cpw, Board *nbs) {
             // check the opposite
             oad = ad - dir;
             // not neighbor or neighbor is not empty
-            if (!ifNeighbor(ad, oad) || getKoma(b, oad)) continue;
+            if (!isNeighbor(ad, oad) || getKoma(b, oad)) continue;
             // already known
             if (inArray(cpw, index, oad)) continue;
             ads[0] = ad;
             ads[1] = ad + dir;
             // check the diagonal
-            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; isNeighbor(ads[j - 1], ads[j]); j++) {
                 koma = getKoma(b, ads[j]);
                 // black
                 if (koma == 0b01) {
@@ -514,11 +501,11 @@ int canPutPP(Board b, int color, int *can_put, Board *next_boards, int *koma_cou
             dir = DIRECTION[i];
             ads[0] = ad + dir;
             // not neighbor or the neighbor is not opponent
-            if (!ifNeighbor(ad, ads[0]) || (getKoma(b, ads[0]) ^ opc)) continue;
+            if (!isNeighbor(ad, ads[0]) || (getKoma(b, ads[0]) ^ opc)) continue;
             // white
             ads[1] = ads[0] + dir;
             // check the diagonal
-            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; isNeighbor(ads[j - 1], ads[j]); j++) {
                 koma = getKoma(b, ads[j]);
                 // my color
                 // can put!!
@@ -853,11 +840,11 @@ int nextBoardNormal(Board b, Board *next_boards) {
             dif = DIRECTION[i];
             ads[0] = ad + dif;
             // not neighbor or neighbor is not white
-            if (!ifNeighbor(ad, ads[0]) || getKoma(b, ads[0]) ^ 0b10) continue;
+            if (!isNeighbor(ad, ads[0]) || getKoma(b, ads[0]) ^ 0b10) continue;
             ads[1] = ads[0] + dif;
             cnt = 1;
             // search the diagonal
-            for (j = 1; cnt && ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; cnt && isNeighbor(ads[j - 1], ads[j]); j++) {
                 switch(getKoma(b, ads[j])) {
                     // white
                     case 0b10:
@@ -925,11 +912,11 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count) {
             dir = DIRECTION[i];
             ads[0] = ad + dir;
             // not neighbor or the neighbor is not black
-            if (!ifNeighbor(ad, ads[0]) || (getKoma(sb, ads[0]) ^ 0b01)) continue;
+            if (!isNeighbor(ad, ads[0]) || (getKoma(sb, ads[0]) ^ 0b01)) continue;
             // white
             ads[1] = ads[0] + dir;
             // check the diagonal
-            for (j = 1; ifNeighbor(ads[j - 1], ads[j]); j++) {
+            for (j = 1; isNeighbor(ads[j - 1], ads[j]); j++) {
                 koma = getKoma(sb, ads[j]);
                 // white
                 // can put!!
