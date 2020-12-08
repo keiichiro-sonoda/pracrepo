@@ -1,6 +1,4 @@
 #include <time.h>
-#include <math.h>
-#include <string.h>
 #include "genetic01.h"
 #include "sort01.h"
 
