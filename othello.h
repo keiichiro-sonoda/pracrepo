@@ -15,12 +15,12 @@
 // 1 billion
 #define BILLION 1000000000
 // initial board information
-#define START_A 0x0000000000000180L
-#define START_B 0x0240000000000000L
+#define START_A 0x0000000000000240ul
+#define START_B 0x0180000000000000ul
 
 // sample board information
-#define SAMPLE1_A 0x0000000000000180L
-#define SAMPLE1_B 0x0280008000000000L
+#define SAMPLE1_A 0x0000000000000240ul
+#define SAMPLE1_B 0x0180000000000000ul
 
 // bin -> char
 // black: (0b01, o), white: (0b10, x), empty: (0b00, -)

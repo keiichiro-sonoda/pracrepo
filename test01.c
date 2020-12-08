@@ -19,6 +19,7 @@ int main(void) {
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
     showBoard(START);
-    play();
+    showBoard(SAMPLE1);
+    //play();
     return 0;
 }
