@@ -724,14 +724,13 @@ int play(void) {
         t_count++;
         // black (stdin)
         if (turn == 0b01) {
-            //te = wrapNegaMaxAB(main_board, turn, 6);
-            //te = wrapNegaMax(main_board, turn);
-            te = getValidActStdin(can_put, count);
+            te = wrapNegaMaxAB(main_board, turn, 8);
+            //te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // white (auto)
         else {
-            te = wrapNegaMaxAB(main_board, turn, 6);
-            //te = wrapNegaMax(main_board, turn);
+            //te = wrapNegaMaxAB(main_board, turn, 6);
+            te = getValidActStdin(can_put, count);
             index = getIndex(can_put, count, te);
         } // update board
         main_board = next_boards[index];
