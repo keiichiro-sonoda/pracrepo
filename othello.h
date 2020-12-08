@@ -118,16 +118,22 @@
 // srcから見てdstが繰り下がっていないかどうかをチェック
 // isNeighbor で呼び出されることを想定
 // src が最右列でないかつ, dst が最左列でないなら 1 を返す
-#define isNotCarryDown(src, dst) ((src) % 16 || (dst) % 16 != 14)
+#define notCarryDown(src, dst) ((src) % 16 || (dst) % 16 != 14)
 
 // 与えられた座標同士が隣り合う座標なのか確認
 // 繰り上 (下) がりしているのか, 範囲外なのか
 // src は範囲内であること前提とする
-#define isNeighbor(src, dst) (0 <= (dst) && (dst) <= 126 && isNotCarryDown(src, dst) && isNotCarryDown(dst, src))
+#define isNeighbor(src, dst) (0 <= (dst) && (dst) <= 126 && notCarryDown(src, dst) && notCarryDown(dst, src))
 
 // 初期盤面の設定
 // initial configure
 #define initBoard() do {START.board[1] = START_A; START.board[0] = START_B; SAMPLE1.board[1] = SAMPLE1_A; SAMPLE1.board[0] = SAMPLE1_B;} while (0)
+
+// 盤面を空にする
+// 宣言文を使わなければ括弧が便利かも
+// 不要だが返り値は 0
+// empty the board
+#define emptyBoard(bp) ((bp)->board[0] = 0, (bp)->board[1] = 0)
 
 // return とかマクロで書いていいのかな
 #define warnOverwritingExit(fname) if (warnOverwriting(fname) < 0) return -1  
@@ -186,7 +192,8 @@
     snprintf((dst), dst_size, fitness_format, fnameo_part);\
 } while (0)
 
-// 64bit
+// 環境によって適宜変更 (64bitの符号なし整数)
+// 64bit の値が使えない環境は動作不可
 typedef unsigned long int int8B;
 
 // othello board
@@ -204,8 +211,6 @@ extern Board SAMPLE1;
 // 8 directions
 extern const int DIRECTION[8];
 
-// empty the board
-void emptyBoard(Board *bp);
 // all zero
 Board createEmptyBoard(void);
 // show a board

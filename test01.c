@@ -18,16 +18,11 @@ int main(void) {
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltUniRd, format, 1, 200, 401);
-    showBoard(START);
-    showBoard(SAMPLE1);
     Board bt;
-    bt = SAMPLE1;
-    swapNormalizeBoard(&bt);
+    bt = START;
     showBoard(bt);
-    if (1)
-        kugiri(200);
-    else
-        kugiri(5);
+    bt = createEmptyBoard();
+    showBoard(bt);
     //play();
     return 0;
 }

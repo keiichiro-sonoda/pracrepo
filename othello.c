@@ -14,13 +14,6 @@ Board SAMPLE1;
 // 8 directions
 const int DIRECTION[8] = {18, 16, 14, 2, -2, -14, -16, -18};
 
-// empty the board
-void emptyBoard(Board *bp) {
-    bp->board[0] = 0;
-    bp->board[1] = 0;
-    return;
-}
-
 // all zero
 Board createEmptyBoard(void) {
     Board eb;
