@@ -21,7 +21,7 @@ int main(void) {
     Board bt;
     bt = START;
     showBoard(bt);
-    bt = createEmptyBoard();
+    emptyBoard(&bt);
     showBoard(bt);
     //play();
     return 0;
