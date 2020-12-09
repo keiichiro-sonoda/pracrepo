@@ -190,6 +190,19 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
         randSprm(next + count);
 }
 
+// 等比数列ランキング選択, 一様交叉, ランダム突然変異, ソート済み限定
+// 適応度は使わないが互換性のため
+// 研究対象
+void rankGeoProgUniRdS(const int *fitness, const Sprm *current, Sprm *next) {
+    int parents[2];
+    double prob[POPULATION];
+    // 等比数列を作成
+    geoProg(prob, POPULATION, 1., 0.9);
+    for (int count = ELITE_NUM; count < POPULATION; count++) {
+        rouletteDoubleMltDep(prob, POPULATION, parents, 2);
+    }
+}
+
 int main(void) {
     // 初期設定
     initSprm();
@@ -205,6 +218,9 @@ int main(void) {
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //showBoard(START);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
-    sortTest();
+    //sortTest();
+    double at[POPULATION];
+    geoProg(at, POPULATION, 2., 0.8);
+    printFloatArrayExp(at, POPULATION);
     return 0;
 }
