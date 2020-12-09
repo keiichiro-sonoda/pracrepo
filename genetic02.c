@@ -1059,13 +1059,13 @@ int sortSprmCompFileByFitness(efSprm eFit,const char *fname, int *fitness) {
     char fnamef[FILENAME_MAX];
     // 適応度ファイル名作成, オーバーフローしたら抜ける
     makeFitnessFileNameDirectExit(fnamef, FILENAME_MAX, fname);
+    int flag;
     // ロードしてフラグを取得
-    int flag = loadSprmFileCompDirect(fname, pra1, POPULATION);
     // エラーなら-1を返す
-    if (flag < 0) return -1;
+    if ((flag = loadSprmFileCompDirect(fname, pra1, POPULATION)) < 0) return -1;
     // ソート済みなら適応度ファイルを読み込む
     if (flag == 1) {
-        // 読み込めなかったらエラーを返す
+        // 読み込めなかったら抜ける
         loadFitnessShortDirectExit(fnamef, fitness, POPULATION);
         // ソート済みフラグを返す
         return 1;
@@ -1118,6 +1118,8 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     srand(seed2);
     // ソート済み適応度を表示
     printDecimalArray(fitness, POPULATION);
+    // 合計値を確認 (適応度評価法が判断できるかも?)
+    printf("適応度合計: %d\n", sumInt(fitness, POPULATION));
     // 今世代と次世代の個体配列を宣言
     Sprm current[POPULATION], next[POPULATION];
     // ソート済み個体配列を読み込む
