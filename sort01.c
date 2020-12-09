@@ -29,6 +29,7 @@ void sortTest(void) {
         result[rouletteDouble(sample3, l3, s)]++;
     }
     printDecimalArray(result, l3);
+    printDecimal(sumInt(result, l3));
 }
 
 // insertion sort
