@@ -190,16 +190,30 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
         randSprm(next + count);
 }
 
-// 等比数列ランキング選択, 一様交叉, ランダム突然変異, ソート済み限定
+// 等比数列ランキング選択, 一様交叉, ランダム突然変異, ソート済み限定, 圧縮推奨
 // 適応度は使わないが互換性のため
 // 研究対象
 void rankGeoProgUniRdS(const int *fitness, const Sprm *current, Sprm *next) {
-    int parents[2];
+    int i, count, parents[2];
+    Sprm children[2];
     double prob[POPULATION];
-    // 等比数列を作成 (正直初項は0以外ならなんでもいい)
+    // 等比数列を作成 (初項は0以外ならなんでもいい?)
     geoProg(prob, POPULATION, 1., CMN_RATIO);
-    for (int count = ELITE_NUM; count < POPULATION; count++) {
+    // 1ループで子は2つなので, 毎回2を足す
+    for (count = ELITE_NUM; count < POPULATION; count += 2) {
+        // ルーレット選択 (重複なし)
         rouletteDoubleMltDep(prob, POPULATION, parents, 2);
+        // 一様交叉で2つの子を作成
+        uniCrossSprm2C(current + parents[0], current + parents[1], children);
+        // 子の数くり返し (0 と 1)
+        for (i = 0; i < 2; i++) {
+            // オーバーフロー
+            if (count + i >= POPULATION) break;
+            // ランダム突然変異 (圧縮対応乱数)
+            randMutSprmCC(children + i);
+            // 次の世代に追加
+            next[count + i] = children[i];
+        }
     }
 }
 
@@ -207,7 +221,7 @@ int main(void) {
     // 初期設定
     initSprm();
     // シード固定に注意
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
     formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
@@ -219,6 +233,5 @@ int main(void) {
     //showBoard(START);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     //sortTest();
-    crossTestSprm();
     return 0;
 }

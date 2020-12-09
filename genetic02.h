@@ -238,7 +238,8 @@
 
 // 配列を突然変異 (圧縮対応乱数限定)
 // 一定確率で乱数に書き換え
-#define randMutArrayCC(A, n) for (int _ = 0; _ < (n); _++) if (randFloat() < MUT_RATE) (A)[_] = randWeightUchar()
+// 突然変異決定乱数を double 型にして精度up?
+#define randMutArrayCC(A, n) for (int _ = 0; _ < (n); _++) if (randDouble() < MUT_RATE) (A)[_] = randWeightUchar()
 
 // Sprmのランダム突然変異 (圧縮対応乱数限定)
 // 引数にはSprmのポインタ型を与える
