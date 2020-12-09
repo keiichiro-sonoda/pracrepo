@@ -204,5 +204,12 @@ int main(void) {
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //showBoard(START);
+    if (EF_FUNC_SPRM == evalFitnessSprmVSRandFGN) {
+        printf("対ランダムでーす\n");
+    } else if (EF_FUNC_SPRM == leagueMatchSprmFlex) {
+        puts("リーグ戦でーす");
+    } else {
+        puts("知るかアホ");
+    }
     return 0;
 }

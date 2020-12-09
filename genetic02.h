@@ -34,7 +34,7 @@
 // 適応度評価関数を決める識別子
 // 1bit目: 指し手関数識別子 (0: 固定, それ以外: ルーレット)
 // 2bit目: 対ランダム or リーグ戦 (0: リーグ戦, それ以外: 対ランダム)
-#define EF_FUNC_ID 0b10
+#define EF_FUNC_ID 0b100
 
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
@@ -269,8 +269,12 @@ extern int CORR_TABLE[MASU_NUM];
 extern const int SPRM_FILE_SIZE_COMP;
 
 extern Sprm SAMP_PRM;
+
 // 指し手決定関数 (マクロのIDによって決まる)
 extern decNxtSprm DET_FUNC;
+
+// 適応度評価関数 (マクロのIDによって決まる)
+extern efSprm EF_FUNC_SPRM;
 
 // シード値に SEED を設定したときの最初に得られる乱数を記録
 // シード値が変わってないかチェック (いつ使うのだろう)
