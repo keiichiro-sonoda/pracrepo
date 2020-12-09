@@ -14,7 +14,7 @@ void sortTest(void) {
     int l2 = arrayLength(sample2);
     int l3 = arrayLength(sample3);
     l3 = 50;
-    int l4 = 10;
+    int l4 = 49;
     int result[l4];
     int total_result[l3];
     zeros(total_result, l3);
@@ -23,9 +23,9 @@ void sortTest(void) {
     double sample4[l3];
     int numbers[l3];
     indices(numbers, l3);
-    powArray(numbers, sample4, l3, 0.5);
+    powArray(numbers, sample4, l3, 0.9);
     printFloatArrayExp(sample4, l3);
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 100000; i++) {
         rouletteDoubleMltDep(sample4, l3, result, l4);
         for (int j = 0; j < l4; j++) {
             total_result[result[j]]++;
@@ -173,8 +173,12 @@ int rouletteDouble(const double *A, int n, double s) {
     return i - 1;
 }
 
+// 重複なし選択の際に起こる添字のズレを修正
+// 後に選ばれた添字が先に選ばれた添字以上の場合, 後に選ばれた添字をインクリメントする
+// 後ろから前に修正していくことが重要?
 // fix the indices misalignment
 void fixIndices(int *A, int n) {
+    // 末尾の一つ前の添字から
     for (int i = n - 2; i >= 0; i--)
         for (int j = i + 1; j < n; j++)
             if (A[i] <= A[j])
