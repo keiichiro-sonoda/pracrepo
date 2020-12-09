@@ -16,13 +16,9 @@ void sortTest(void) {
     double sample4[l3];
     int numbers[l1];
     indices(numbers, l1);
-    printDecimal(l2);
-    int result[l3];
-    zeros(result, l3);
-    powArray(sample3, sample4, l3, 2.);
-    printFloatArrayExp(sample4, l3);
-    printDecimalArray(result, l3);
-    printDecimal(sumInt(result, l3));
+    printDecimalArray(numbers, l1);
+    delElement(numbers, l1, 16);
+    printDecimalArray(numbers, l1);
 }
 
 // insertion sort
@@ -212,6 +208,12 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
     }
     // fix the results
     fixIndices(rslt, rslt_len);
+}
+
+// ルーレット選択で重複なしで要素を選択
+// 選ばれた要素は選択肢から排除
+void rouletteDoubleMltDep(const double *A, int A_len, int *rslt, int rslt_len) {
+    zeros(rslt, rslt_len);
 }
 
 // check if rouletteFloat workes as expected

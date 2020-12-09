@@ -27,6 +27,10 @@
 // マクロにした
 #define randomizedQuicksortDDAll(A, B, n) randomizedQuicksortDD(A, B, 0, (n) - 1)
 
+// ある添字の要素を削除する
+//左詰めをして, あたかも配列が短くなったように見せかける
+#define delElement(A, n, index) for (int _ = (index) + 1; _ < (n); _++) (A)[_ - 1] = (A)[_]
+
 // sum に配列 A の合計を代入する
 // sum は 0 で初期化されている前提
 #define addAll(A, n, sum) for (int _ = 0; _ < (n); _++) (sum) += (A)[_]
