@@ -256,6 +256,11 @@ typedef void (*scmFunc)(const int*, const int*, const Sprm*, Sprm*);
 // ソート済み対応の選択・交叉・突然変異関数
 typedef void (*scmSprmSorted)(const int*, const Sprm*, Sprm*);
 
+// 適応度評価関数 (functions to evaluate fitness)
+// リーグ戦, ランダム対戦等
+// 引数は指し手決定関数ポインタ, 評価対象のSprm配列, 適応度を代入する配列
+typedef void (*efSprm)(decNxtSprm, const Sprm*, int*);
+
 // global variables
 
 // マスとSprmの重みの対応表
@@ -268,7 +273,7 @@ extern Sprm SAMP_PRM;
 extern decNxtSprm DET_FUNC;
 
 // シード値に SEED を設定したときの最初に得られる乱数を記録
-// シード値が変わってないかチェック
+// シード値が変わってないかチェック (いつ使うのだろう)
 extern int FIRST_RAND;
 
 // functions
@@ -404,6 +409,10 @@ void leagueMatchSprmFlex(decNxtSprm, const Sprm*, int*);
 // 勝点の計算は今まで同様とする
 // 試合数を引数で渡す以外は, リーグ戦の引数と同様
 void evalFitnessSprmVSRand(decNxtSprm, const Sprm*, int*, int);
+
+// 試合数が固定されたバージョン (fix the nubmer of games)
+// リーグ戦関数と型を合わせるため
+void evalFitnessSprmVSRandFGN(decNxtSprm, const Sprm*, int*);
 
 // calculate distance
 float distSprm(Sprm p1, Sprm p2);

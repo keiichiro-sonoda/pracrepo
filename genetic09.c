@@ -207,7 +207,7 @@ int main(void) {
     Sprm pra[POPULATION];
     int fitness[POPULATION];
     loadSprmFileComp(format, 200, pra, POPULATION);
-    evalFitnessSprmVSRand(getBestBoardForBlackSimple, pra, fitness, GAME_NUM);
+    evalFitnessSprmVSRandFGN(getBestBoardForBlackSimple, pra, fitness);
     printDecimalArray(fitness, POPULATION);
     return 0;
 }

@@ -636,6 +636,12 @@ void evalFitnessSprmVSRand(decNxtSprm dnfunc, const Sprm *family, int *result, i
     }
 }
 
+// 試合数が固定されたバージョン (fix the nubmer of games)
+// リーグ戦関数と型を合わせるため
+void evalFitnessSprmVSRandFGN(decNxtSprm dnfunc, const Sprm *family, int *result) {
+    evalFitnessSprmVSRand(dnfunc, family, result, GAME_NUM);
+}
+
 // calculate distance
 float distSprm(Sprm p1, Sprm p2) {
     int i;
