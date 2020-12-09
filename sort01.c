@@ -25,7 +25,7 @@ void sortTest(void) {
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
     int s = 0;
-    addAll(numbers, l1, s);
+    addAll(sample1, l1, s);
     printDecimal(s);
     s = sumInt(numbers, l1);
     printDecimal(s);
@@ -88,8 +88,7 @@ void expArrayIFFlex(const int *X, float *Y, int n, float base) {
 // return the sum of an integer array
 int sumInt(const int *A, int n) {
     int s = 0;
-    for (int i = 0; i < n; i++)
-        s += A[i];
+    addAll(A, n, s);
     return s;
 }
 
