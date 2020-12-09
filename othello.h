@@ -99,6 +99,10 @@
 // 波括弧を使わない if 節で使う場面を想定
 #define printBin32(x) do {printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10);} while (0)
 
+// 浮動小数点数の配列の要素を指数表示する
+// 関数化すると float と double の差で警告が出るのでマクロを使う
+#define printFloatArrayExp(A, n) do {printf("{%.3e", (A)[0]); for (int _ = 1; _ < (n); _++) printf(", %.3e", (A)[_]); puts("}");} while (0)
+
 // 指定したアドレスのコマを取得
 // b は Board型を想定, ad は整数ならなんでもよさそう
 // ad >> 6 が 0 なら下半分, 1 なら上半分

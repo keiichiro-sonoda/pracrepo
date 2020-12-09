@@ -20,9 +20,7 @@ void sortTest(void) {
     int result[l3];
     zeros(result, l3);
     powArray(sample3, sample4, l3, 2.);
-    for (int i = 0; i < l3; i++)
-        printf("%e, ", sample4[i]);
-    putchar(10);
+    printFloatArrayExp(sample4, l3);
     printDecimalArray(result, l3);
     printDecimal(sumInt(result, l3));
 }
