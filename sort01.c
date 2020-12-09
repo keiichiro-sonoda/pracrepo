@@ -24,11 +24,11 @@ void sortTest(void) {
     //quicksortDDAll(sample1, numbers, l1);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
-    int s = 0;
-    addAll(sample1, l1, s);
-    printDecimal(s);
-    s = sumInt(numbers, l1);
-    printDecimal(s);
+    float s = 1.f;
+    addAll(sample2, l2, s);
+    printFloat(s);
+    s = sumFloat(sample2, l2);
+    printFloat(s);
 }
 
 // insertion sort
@@ -94,9 +94,8 @@ int sumInt(const int *A, int n) {
 
 // return the sum of a floating point array
 float sumFloat(const float *A, int n) {
-    float s = 0.0f;
-    for (int i = 0; i < n; i++)
-        s += A[i];
+    float s = .0f;
+    addAll(A, n, s);
     return s;
 }
 
