@@ -205,7 +205,7 @@ int main(void) {
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //showBoard(START);
     int w;
-    w = SprmVSRandomNormal(getBestBoardForBlackSimple, &SAMP_PRM, 0b10);
+    w = SprmVSRandomNormal(getBestBoardForBlackSimple, &SAMP_PRM, 0b01);
     printDecimal(w);
     return 0;
 }
