@@ -1,6 +1,9 @@
 #ifndef SORT01_H
 #define SORT01_H
 
+// ダブってもいいや
+#include "math.h"
+
 // tmp に A[i] を退避させ, A[i] と A[j] を交換
 #define _exchange(A, i, j, tmp) (tmp = (A)[i], (A)[i] = (A)[j], (A)[j] = tmp)
 
@@ -30,6 +33,11 @@
 
 // float型配列の平均値を求めるマクロ
 #define aveFloat(A, n) (sumFloat(A, n) / (n))
+
+// 配列 X の指数関数の出力を Y に代入
+// X の型は不問, Y は double 型推奨
+// 底は非負
+#define powArray(X, Y, n, base) for (int _ = 0; _ <(n); _++) (Y)[_] = pow((base), (X)[_])
 
 // debugging function
 void sortTest(void);

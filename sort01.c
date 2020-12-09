@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <time.h>
 
 #include "sort01.h"
@@ -16,18 +13,16 @@ void sortTest(void) {
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     int l3 = arrayLength(sample3);
+    double sample4[l3];
     int numbers[l1];
     indices(numbers, l1);
     printDecimal(l2);
     int result[l3];
     zeros(result, l3);
-    double s = sumDouble(sample3, l3);
-    int loop = s * 10000;
-    printFloat(s);
-    printDecimal(loop);
-    for (int i = 0; i < loop; i++) {
-        result[rouletteDouble(sample3, l3, s)]++;
-    }
+    powArray(sample3, sample4, l3, 2.);
+    for (int i = 0; i < l3; i++)
+        printf("%e, ", sample4[i]);
+    putchar(10);
     printDecimalArray(result, l3);
     printDecimal(sumInt(result, l3));
 }
