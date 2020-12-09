@@ -207,7 +207,7 @@ int main(void) {
     // 初期設定
     initSprm();
     // シード固定に注意
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
     formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
@@ -222,8 +222,8 @@ int main(void) {
     Sprm pr1, pr2;
     Sprm pra[2];
     //zeros(pr1.weight, SPRM_LEN);
-    initArrayConst(pr1.weight, SPRM_LEN, -0.5f);
-    initArrayConst(pr2.weight, SPRM_LEN, 0.5f);
+    initArrayConst(pr1.weight, SPRM_LEN, 0.0f);
+    initArrayConst(pr2.weight, SPRM_LEN, 0.111f);
     showSprmOneLine(pr1);
     showSprmOneLine(pr2);
     uniCrossSprm2C(&pr1, &pr2, pra);
