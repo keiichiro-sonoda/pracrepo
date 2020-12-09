@@ -465,7 +465,7 @@ void copyFGFlex(const char *dst_format);
 // 適応度降順に個体を並び替え, 同じファイルに書き込む
 // 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
 // 次世代作成関数が膨らまないように, ここで適応度の読み書きをする
-int sortSprmCompFileByFitness(const char *fname, int *fitness);
+int sortSprmCompFileByFitness(efSprm, const char*, int*);
 
 // 次の世代のファイルを作る関数 (圧縮バージョン)
 // ついでに適応度評価をした現世代のファイルもソートして書き換える

@@ -197,17 +197,12 @@ int main(void) {
     //srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
-    formatPlusSeed(FNF_RC05006000200005, format, FILENAME_MAX);
+    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     printString(format);
     //makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 200);
+    //checkSprmFileComp(format, 200);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //showBoard(START);
-    Sprm pra[POPULATION];
-    int fitness[POPULATION];
-    loadSprmFileComp(format, 200, pra, POPULATION);
-    evalFitnessSprmVSRandFGN(getBestBoardForBlackSimple, pra, fitness);
-    printDecimalArray(fitness, POPULATION);
     return 0;
 }

@@ -1035,9 +1035,10 @@ void copyFGFlex(const char *dst_format) {
 
 // 圧縮されたファイルから個体を読み出し, 適応度を評価する
 // 適応度降順に個体を並び替え, 同じファイルに書き込む
+// 適応度を計算する関数を引数で渡す
 // 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
 // 次世代作成関数が膨らまないように, ここで適応度の読み書きをする
-int sortSprmCompFileByFitness(const char *fname, int *fitness) {
+int sortSprmCompFileByFitness(efSprm eFit,const char *fname, int *fitness) {
     // ソート前とソート後のパラメータ配列を用意する (メモリの無駄遣いかな?)
     Sprm pra1[POPULATION], pra2[POPULATION];
     // 適応度ファイル名
@@ -1058,9 +1059,8 @@ int sortSprmCompFileByFitness(const char *fname, int *fitness) {
     // 個体番号を割り振る
     int numbers[POPULATION];
     indices(numbers, POPULATION);
-    // リーグ戦 (指し手決定関数はマクロ依存)
-    // 現状で適応度評価はこれだけ
-    leagueMatchSprmFlex(DET_FUNC, pra1, fitness);
+    // 適応度評価 (指し手決定関数はグローバル変数依存)
+    eFit(DET_FUNC, pra1, fitness);
     // 適応度を基に個体番号も同時にソート
     randomizedQuicksortDDAll(fitness, numbers, POPULATION);
     // 適応度順に並び替えてpra2に代入
@@ -1092,7 +1092,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     srand(seed1);
     // 適応度評価とファイルのソート
     // さらに適応度ファイルの読み書きも行う
-    int flag = sortSprmCompFileByFitness(fnames, fitness);
+    int flag = sortSprmCompFileByFitness(evalFitnessSprmVSRandFGN, fnames, fitness);
     // エラー
     if (flag < 0) return -1;
     // ソート済み
