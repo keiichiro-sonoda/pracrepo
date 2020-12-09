@@ -1099,27 +1099,28 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     snprintf(fnamew, FILENAME_MAX, format, gene_num + 1);
     printf("sort file: %s\n", fnames);
     printf("new file : %s\n", fnamew);
-    // 上書き拒否
+    // 上書き拒否なら抜ける
     if (safety) warnOverwritingExit(fnamew);
-    int fitness[POPULATION];
+    // ソートフラグと, 引き渡し用適応度配列
+    int flag, fitness[POPULATION];
     // 対戦・ソート用シード
     srand(seed1);
     // 適応度評価とファイルのソート
     // さらに適応度ファイルの読み書きも行う
-    int flag = sortSprmCompFileByFitness(evalFitnessSprmVSRandFGN, fnames, fitness);
+    // 適応度評価方法はグローバル変数から参照 (マクロで決まる)
     // エラー
-    if (flag < 0) return -1;
-    // ソート済み
+    if ((flag = sortSprmCompFileByFitness(EF_FUNC_SPRM, fnames, fitness)) < 0) return -1;
+    // ソート済みであることを伝える
     if (flag == 1) {
         printf("%s is already sorted!\n", fnames);
     }
     // 選択・交叉・突然変異用シード
     srand(seed2);
-    // なんとなくソート済み適応度を表示
+    // ソート済み適応度を表示
     printDecimalArray(fitness, POPULATION);
     // 今世代と次世代の個体配列を宣言
     Sprm current[POPULATION], next[POPULATION];
-    // ソート済み配列を読み込む
+    // ソート済み個体配列を読み込む
     if (loadSprmFileCompDirect(fnames, current, POPULATION) < 0) {
         return -1;
     }
@@ -1130,8 +1131,10 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     // 現世代の個体の一部と統計値を確認
     showFamilyPart(current);
     checkSprmStatistics(current, POPULATION);
-    // 乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
-    // ループ関数じゃなくてこっちでやった方がロードの手間は少ない
+    /*
+    乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
+    ループ関数じゃなくてこっちでやった方がロードの手間は少ない
+    適応度に対ランダム勝ち点を使う場合はわざわざ確認しなくてもよさそう
     if (!(gene_num % 20)) {
         kugiri(100);
         int game_num = 500;
@@ -1141,6 +1144,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
         printf("the weakest:\n");
         calcWinRateSprmVSRandTotal(current[POPULATION - 1], game_num);
     }
+    */
     // ソート済みフラグは立てずに書き込み
     dumpSprmFileCompDirectExit(fnamew, next, 0);
     return 0;
