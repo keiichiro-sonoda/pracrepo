@@ -355,7 +355,7 @@ int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp) 
 // pythonで扱うときにマクロをいちいち変更するのが面倒だった
 int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
     Board main_board, nba[NEXT_MAX];
-    int n, dif, pass, turn, kc[3];
+    int winner, n, dif, pass, turn, kc[3];
     pass = 0;
     // set initial turn (black)
     turn = 0b01;
@@ -363,6 +363,7 @@ int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
     // 正規化を忘れずに
     main_board = normalBoard(START);
     while (1) {
+        showBoard(main_board);
         // calculate next (and normalize)
         // can't put a piece anywhere
         if ((n = nextBoardNormal2(main_board, nba, kc)) == 0) {
@@ -380,21 +381,30 @@ int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
         // determine a next board
         // parameter's turn
         if (turn == my_color) {
+            printf("Sprm のターン: %d\n", turn);
             main_board = dnfunc(nba, n, prp);
         } // random turn
         else {
             // randomly choose a next board
+            printf("ランダムのターン: %d\n", turn);
             main_board = nba[randInt(n)];
         }
         // switch turn
         turn ^= 0b11;
     }
+    // 最後に指した手番が turn に記録される
+    // 最後に指した人のコマは黒(◯)で終了する
+    // 黒の方が多ければ最後に指した方が勝利
+    // 白の方が多ければもう一方が勝利
     // difference between black and white
-    dif = kc[1] - kc[2];
-    if (dif > 0) return turn;
-    if (dif < 0) return turn ^ 0b11;
-    // draw
-    return 0;
+    if ((dif = kc[1] - kc[2]) > 0) {
+        winner = turn;
+    } else if (dif < 0) {
+        winner = turn ^ 0b11;
+    } else {
+        winner = 0;
+    }
+    return winner;
 }
 
 // 指し手決定関数はマクロで指定
