@@ -194,7 +194,7 @@ int main(void) {
     // 初期設定
     initSprm();
     // シード固定に注意
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
     formatPlusSeed(FNF_RC05006000200005, format, FILENAME_MAX);
@@ -203,6 +203,9 @@ int main(void) {
     checkSprmFileComp(format, 200);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
-    showBoard(START);
+    //showBoard(START);
+    int w;
+    w = SprmVSRandomNormal(getBestBoardForBlackSimple, &SAMP_PRM, 0b10);
+    printDecimal(w);
     return 0;
 }

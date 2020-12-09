@@ -354,19 +354,18 @@ int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp) 
 // 引数で指し手決定関数を変更可能にした
 // pythonで扱うときにマクロをいちいち変更するのが面倒だった
 int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
-    Board nba[NEXT_MAX];
-    int kc[3];
-    int pass = 0;
-    int n, dif;
+    Board main_board, nba[NEXT_MAX];
+    int n, dif, pass, turn, kc[3];
+    pass = 0;
     // set initial turn (black)
-    int turn = 0b01;
+    turn = 0b01;
     // set initial board
-    Board main_board = START;
+    // 正規化を忘れずに
+    main_board = normalBoard(START);
     while (1) {
         // calculate next (and normalize)
-        n = nextBoardNormal2(main_board, nba, kc);
         // can't put a piece anywhere
-        if (n == 0) {
+        if ((n = nextBoardNormal2(main_board, nba, kc)) == 0) {
             // can't do anything one another
             if (pass) {
                 break;
@@ -385,7 +384,7 @@ int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
         } // random turn
         else {
             // randomly choose a next board
-            main_board = nba[rand() % n];
+            main_board = nba[randInt(n)];
         }
         // switch turn
         turn ^= 0b11;
