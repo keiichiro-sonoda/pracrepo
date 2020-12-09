@@ -219,15 +219,6 @@ int main(void) {
     //showBoard(START);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     //sortTest();
-    Sprm pr1, pr2;
-    Sprm pra[2];
-    //zeros(pr1.weight, SPRM_LEN);
-    initArrayConst(pr1.weight, SPRM_LEN, 0.0f);
-    initArrayConst(pr2.weight, SPRM_LEN, 0.111f);
-    showSprmOneLine(pr1);
-    showSprmOneLine(pr2);
-    uniCrossSprm2C(&pr1, &pr2, pra);
-    showSprmOneLine(pra[0]);
-    showSprmOneLine(pra[1]);
+    crossTestSprm();
     return 0;
 }

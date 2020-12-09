@@ -340,6 +340,9 @@ void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_
 // 一様交叉 (2人っ子), 突然変異なし
 void uniCrossSprm2C(const Sprm*, const Sprm*, Sprm*);
 
+// 交叉テスト用関数
+void crossTestSprm(void);
+
 // caluculate point
 float evaluationSimple(Board b, Sprm pr);
 // assume that the next turn is black

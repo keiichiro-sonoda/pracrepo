@@ -262,13 +262,27 @@ void uniCrossSprm2C(const Sprm *mother, const Sprm *father, Sprm children[2]) {
     for (int i = 0; i < SPRM_LEN; i++) {
         // 0 か 1 を返す
         rb = randBit();
-        if (rb) printf("%d ", i);
         // 添字が rb と一致する子は母から受け継ぐ
         children[rb].weight[i] = mother->weight[i];
         // 添字が rb でない子は父から受け継ぐ
         children[rb ^ 1].weight[i] = father->weight[i];
     }
-    putchar(10);
+}
+
+// 交叉テスト用関数
+void crossTestSprm(void) {
+    Sprm pr1, pr2, pra[2];
+    initArrayConst(pr1.weight, SPRM_LEN, .222f);
+    initArrayConst(pr2.weight, SPRM_LEN, .111f);
+    printf("親1: ");
+    showSprmOneLine(pr1);
+    printf("親2: ");
+    showSprmOneLine(pr2);
+    uniCrossSprm2C(&pr1, &pr2, pra);
+    printf("子1: ");
+    showSprmOneLine(pra[0]);
+    printf("子2: ");
+    showSprmOneLine(pra[1]);
 }
 
 // caluculate point
