@@ -26,9 +26,9 @@ void sortTest(void) {
     printDecimalArray(sample1, l1);
     float s = 12.f;
     addAll(sample2, l2, s);
-    printFloat(s);
+    printFloatExp(s);
     s = sumFloat(sample2, l2);
-    printFloat(s);
+    printFloatExp(s);
 }
 
 // insertion sort

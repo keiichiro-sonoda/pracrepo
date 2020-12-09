@@ -32,7 +32,8 @@
 #define kugiri(n) do {for (int _ = 0; _ < (n); _++) putchar('-'); putchar(10);} while (0)
 #define printString(s) printf("%s\n", s)
 #define printDecimal(x) printf("%d\n", x)
-#define printFloat(x) printf("%+24.21f\n", x)
+#define printFloat(x) printf("%f\n", x)
+#define printFloatExp(x) printf("%+17.10e\n", x) // 浮動小数点数を指数表示する
 #define printSize(x) printf("%ld\n", sizeof x)
 #define arrayLength(A) (sizeof(A) / sizeof(A[0]))
 // char型の整数表現を確認する (多分32bit以内ならchar以外も可)
