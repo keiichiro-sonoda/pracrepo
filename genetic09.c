@@ -204,8 +204,11 @@ int main(void) {
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //showBoard(START);
-    int w;
-    w = SprmVSRandomNormal(getBestBoardForBlackSimple, &SAMP_PRM, 0b01);
-    printDecimal(w);
+    int t;
+    if ((t = -1) > 1) {
+        printf("tは1より大きい\n");
+    } else if (t == -1) {
+        printf("tは-1です\n");
+    }
     return 0;
 }
