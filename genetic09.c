@@ -193,7 +193,7 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 // 等比数列ランキング選択, 一様交叉, ランダム突然変異, ソート済み限定, 圧縮推奨
 // 適応度は使わないが互換性のため
 // 研究対象
-void rankGeoProgUniRdS(const int *fitness, const Sprm *current, Sprm *next) {
+void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     int i, count, parents[2];
     Sprm children[2];
     double prob[POPULATION];
@@ -206,9 +206,8 @@ void rankGeoProgUniRdS(const int *fitness, const Sprm *current, Sprm *next) {
         // 一様交叉で2つの子を作成
         uniCrossSprm2C(current + parents[0], current + parents[1], children);
         // 子の数くり返し (0 と 1)
-        for (i = 0; i < 2; i++) {
-            // オーバーフロー
-            if (count + i >= POPULATION) break;
+        // ここでオーバーフローも検知
+        for (i = 0; (i < 2) && (count + i < POPULATION); i++) {
             // ランダム突然変異 (圧縮対応乱数)
             randMutSprmCC(children + i);
             // 次の世代に追加
