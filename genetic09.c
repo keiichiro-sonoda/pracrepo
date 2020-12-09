@@ -213,14 +213,16 @@ int main(void) {
     formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     printString(format);
     //makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 0);
+    //checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //showBoard(START);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     //sortTest();
-    double at[POPULATION];
-    geoProg(at, POPULATION, 10., CMN_RATIO);
-    printFloatArrayExp(at, POPULATION);
+    Sprm pr1, pr2;
+    zeros(pr1.weight, SPRM_LEN);
+    initArrayConst(pr2.weight, SPRM_LEN, 0.5f);
+    showSprmOneLine(pr1);
+    showSprmOneLine(pr2);
     return 0;
 }

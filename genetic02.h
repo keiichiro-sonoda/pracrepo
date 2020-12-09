@@ -337,6 +337,9 @@ float copyOrMutation(float x, float mut_rate);
 // the number of children is 2
 void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_rate);
 
+// 一様交叉 (2人っ子), 突然変異なし
+void uniCross2CSprm(const Sprm *mother, const Sprm *father, Sprm children[2]);
+
 // caluculate point
 float evaluationSimple(Board b, Sprm pr);
 // assume that the next turn is black
