@@ -27,6 +27,10 @@
 #define MUT_RATE 0.05f // 突然変異率
 #endif
 
+#ifndef GAME_NUM
+#define GAME_NUM 50 // 色ごとの試合数 (白黒入れ替えるので, 総試合数はこの倍になる)
+#endif
+
 // 指し手決定関数の識別子
 // 0: 固定
 // それ以外: ルーレット
@@ -391,6 +395,11 @@ void checkSprmFileComp(const char *format, int gene_num);
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
 void leagueMatchSprmFlex(decNxtSprm, const Sprm*, int*);
+
+// ランダムな手を選ぶ相手との対戦で, 適応度を決める
+// 勝点の計算は今まで同様とする
+// 試合数を引数で渡す以外は, リーグ戦の引数と同様
+void evalFitnessSprmVSRand(decNxtSprm, const Sprm*, int*, int);
 
 // calculate distance
 float distSprm(Sprm p1, Sprm p2);

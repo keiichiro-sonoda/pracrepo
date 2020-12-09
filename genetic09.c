@@ -194,7 +194,7 @@ int main(void) {
     // 初期設定
     initSprm();
     // シード固定に注意
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
     formatPlusSeed(FNF_RC05006000200005, format, FILENAME_MAX);
@@ -204,12 +204,11 @@ int main(void) {
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //showBoard(START);
-    int t;
-    if ((t = -1) > 1) {
-        printf("tは1より大きい\n");
-    } else if (t == -1) {
-        printf("tは-1です\n");
-    }
-    printDecimal(SprmVSRandomNormal(getBestBoardForBlackSimple, &SAMP_PRM, 0b01));
+    Sprm pra[POPULATION];
+    int fitness[POPULATION];
+    for (int i = 0; i < POPULATION; i++)
+        randSprm(pra + i);
+    evalFitnessSprmVSRand(getBestBoardForBlackSimple, pra, fitness, GAME_NUM);
+    printDecimalArray(fitness, POPULATION);
     return 0;
 }

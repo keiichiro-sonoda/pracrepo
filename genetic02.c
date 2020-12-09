@@ -601,6 +601,34 @@ void leagueMatchSprmFlex(decNxtSprm dnfunc, const Sprm *generation, int *result)
     }
 }
 
+// ランダムな手を選ぶ相手との対戦で, 適応度を決める
+// 勝点の計算は今まで同様とする
+// 試合数を引数で渡す以外は, リーグ戦の引数と同様
+void evalFitnessSprmVSRand(decNxtSprm dnfunc, const Sprm *family, int *result, int gn) {
+    int i, j, color, winner;
+    // 結果配列は 0 で初期化
+    zeros(result, POPULATION);
+    // 個体を順番に評価
+    for (i = 0; i < POPULATION; i++) {
+        // 手番は黒(1)と白(2)両方
+        for (color = 1; color <= 2; j++) {
+            // 各個体, 各色毎に渡された試合数だけくり返す
+            for (j = 0; j < gn; j++) {
+                // 勝者を取得
+                // 個体の勝利 (勝ち点2)
+                if ((winner = SprmVSRandomNormal(dnfunc, family + i, color)) == color) {
+                    result += 2;
+                }
+                // 引き分け (勝ち点1)
+                else if (winner == 0) {
+                    result++;
+                }
+                // 負けは何もしない
+            }
+        }
+    }
+}
+
 // calculate distance
 float distSprm(Sprm p1, Sprm p2) {
     int i;
