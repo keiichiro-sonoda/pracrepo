@@ -220,9 +220,14 @@ int main(void) {
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     //sortTest();
     Sprm pr1, pr2;
-    zeros(pr1.weight, SPRM_LEN);
+    Sprm pra[2];
+    //zeros(pr1.weight, SPRM_LEN);
+    initArrayConst(pr1.weight, SPRM_LEN, -0.5f);
     initArrayConst(pr2.weight, SPRM_LEN, 0.5f);
     showSprmOneLine(pr1);
     showSprmOneLine(pr2);
+    uniCrossSprm2C(&pr1, &pr2, pra);
+    showSprmOneLine(pra[0]);
+    showSprmOneLine(pra[1]);
     return 0;
 }

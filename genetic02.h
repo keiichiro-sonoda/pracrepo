@@ -338,7 +338,7 @@ float copyOrMutation(float x, float mut_rate);
 void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_rate);
 
 // 一様交叉 (2人っ子), 突然変異なし
-void uniCross2CSprm(const Sprm *mother, const Sprm *father, Sprm children[2]);
+void uniCrossSprm2C(const Sprm*, const Sprm*, Sprm*);
 
 // caluculate point
 float evaluationSimple(Board b, Sprm pr);

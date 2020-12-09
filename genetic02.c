@@ -257,16 +257,18 @@ void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_
 }
 
 // 一様交叉 (2人っ子), 突然変異なし
-void uniCross2CSprm(const Sprm *mother, const Sprm *father, Sprm children[2]) {
+void uniCrossSprm2C(const Sprm *mother, const Sprm *father, Sprm children[2]) {
     int rb;
     for (int i = 0; i < SPRM_LEN; i++) {
         // 0 か 1 を返す
         rb = randBit();
+        if (rb) printf("%d ", i);
         // 添字が rb と一致する子は母から受け継ぐ
         children[rb].weight[i] = mother->weight[i];
         // 添字が rb でない子は父から受け継ぐ
         children[rb ^ 1].weight[i] = father->weight[i];
     }
+    putchar(10);
 }
 
 // caluculate point
