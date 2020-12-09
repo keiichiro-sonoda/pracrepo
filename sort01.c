@@ -12,7 +12,7 @@ void sortTest(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {11, 5, 6, 8, 1, 2, 10, 3, -5, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, -11.0, 4.0};
-    double sample3[] = {1., .5, 1.0e-10, 0., 10., 3.829e+1};
+    double sample3[] = {1., .5, 1.0e-3, 0., 10., 3.829e+1, .25, 1.e-2, .5e+3, 3.e-3};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     int l3 = arrayLength(sample3);
@@ -22,8 +22,10 @@ void sortTest(void) {
     int result[l3];
     zeros(result, l3);
     double s = sumDouble(sample3, l3);
+    int loop = s * 10000;
     printFloat(s);
-    for (int i = 0; i < 10000; i++) {
+    printDecimal(loop);
+    for (int i = 0; i < loop; i++) {
         result[rouletteDouble(sample3, l3, s)]++;
     }
     printDecimalArray(result, l3);
