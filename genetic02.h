@@ -15,6 +15,10 @@
 
 #define SURVIVE_NUM 10 // 陳腐化したマクロ
 
+#ifndef CMN_RATIO
+#define CMN_RATIO 0.9 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
+#endif
+
 #ifndef ELITE_NUM
 #define ELITE_NUM 6 // エリート数
 #endif

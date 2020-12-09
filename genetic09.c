@@ -196,8 +196,8 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 void rankGeoProgUniRdS(const int *fitness, const Sprm *current, Sprm *next) {
     int parents[2];
     double prob[POPULATION];
-    // 等比数列を作成
-    geoProg(prob, POPULATION, 1., 0.9);
+    // 等比数列を作成 (正直初項は0以外ならなんでもいい)
+    geoProg(prob, POPULATION, 1., CMN_RATIO);
     for (int count = ELITE_NUM; count < POPULATION; count++) {
         rouletteDoubleMltDep(prob, POPULATION, parents, 2);
     }
@@ -220,10 +220,7 @@ int main(void) {
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     //sortTest();
     double at[POPULATION];
-    if (0)
-        geoProg(at, POPULATION, 2., 0.8);
-    else
-        geoProg(at, POPULATION, 0.25, 2);
+    geoProg(at, POPULATION, 10., CMN_RATIO);
     printFloatArrayExp(at, POPULATION);
     return 0;
 }
