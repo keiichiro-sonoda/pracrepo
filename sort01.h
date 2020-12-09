@@ -60,6 +60,9 @@ int sumInt(const int *A, int n);
 // return the sum of a floating point array
 float sumFloat(const float *A, int n);
 
+// double 型の配列の和を返す
+double sumDouble(const double *A, int n);
+
 // delete the element of the specified index
 // the size of the array doesn't change
 void delInt(int *A, int n, int index);

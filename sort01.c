@@ -12,23 +12,14 @@ void sortTest(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {11, 5, 6, 8, 1, 2, 10, 3, -5, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, -11.0, 4.0};
+    double sample3[] = {-1., -.5, -1.0e-10, 0., -10., 3.829e+1};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
+    int l3 = arrayLength(sample3);
     int numbers[l1];
     indices(numbers, l1);
     printDecimal(l2);
-    //printDecimalArray(numbers, l1);
-    //printDecimalArray(sample1, l1);
-    randomizedQuicksortDDAll(sample1, numbers, l1);
-    //randomizedQuicksortAll(sample1, l1);
-    //quicksortDDAll(sample1, numbers, l1);
-    printDecimalArray(numbers, l1);
-    printDecimalArray(sample1, l1);
-    float s = 12.f;
-    addAll(sample2, l2, s);
-    printFloatExp(s);
-    s = sumFloat(sample2, l2);
-    printFloatExp(s);
+    printFloatExp(sumDouble(sample3, l3));
 }
 
 // insertion sort
@@ -95,6 +86,13 @@ int sumInt(const int *A, int n) {
 // return the sum of a floating point array
 float sumFloat(const float *A, int n) {
     float s = .0f;
+    addAll(A, n, s);
+    return s;
+}
+
+// double 型の配列の和を返す
+double sumDouble(const double *A, int n) {
+    double s = .0;
     addAll(A, n, s);
     return s;
 }
