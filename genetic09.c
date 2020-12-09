@@ -220,7 +220,10 @@ int main(void) {
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     //sortTest();
     double at[POPULATION];
-    geoProg(at, POPULATION, 2., 0.8);
+    if (0)
+        geoProg(at, POPULATION, 2., 0.8);
+    else
+        geoProg(at, POPULATION, 0.25, 2);
     printFloatArrayExp(at, POPULATION);
     return 0;
 }

@@ -60,6 +60,7 @@
 
 // 初項 ft, 項比 cr の等比数列を作成
 // 初項は A[0]
+// 1つ前の要素に公比を掛けてもいいが, 初項の処理が面倒なので一般項を用いる
 #define geoProg(A, n, ft, cr) for (int _ = 0; _ < (n); _++) (A)[_] = (ft) * pow((cr), _)
 
 // subract constant value from all elements
