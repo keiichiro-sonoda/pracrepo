@@ -11,7 +11,7 @@ void sortTest(void) {
     srand(123u);
     srand((unsigned)time(NULL));
     int sample1[] = {11, 5, 6, 8, 1, 2, 10, 3, -5, 4, 2, 10, 9, 7, 20, 0, -2, -1};
-    float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, 4.0};
+    float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, -11.0, 4.0};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     int numbers[l1];
@@ -24,7 +24,7 @@ void sortTest(void) {
     //quicksortDDAll(sample1, numbers, l1);
     printDecimalArray(numbers, l1);
     printDecimalArray(sample1, l1);
-    float s = 1.f;
+    float s = 12.f;
     addAll(sample2, l2, s);
     printFloat(s);
     s = sumFloat(sample2, l2);
