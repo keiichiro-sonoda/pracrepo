@@ -14,7 +14,7 @@ void sortTest(void) {
     int l2 = arrayLength(sample2);
     int l3 = arrayLength(sample3);
     l3 = 50;
-    int l4 = 1;
+    int l4 = 10;
     int result[l4];
     int total_result[l3];
     zeros(total_result, l3);
@@ -25,7 +25,7 @@ void sortTest(void) {
     indices(numbers, l3);
     powArray(numbers, sample4, l3, 0.5);
     printFloatArrayExp(sample4, l3);
-    for (int i = 0; i < 100000; i++) {
+    for (int i = 0; i < 10000; i++) {
         rouletteDoubleMltDep(sample4, l3, result, l4);
         for (int j = 0; j < l4; j++) {
             total_result[result[j]]++;
