@@ -497,12 +497,12 @@ int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
 int loadSprmFileCompDirect(const char *fname, Sprm *pra, int loc_pop) {
     const int loc_size = SPRM_LEN * loc_pop + 1;
     u_char uca[loc_size];
-    // ロードかエラー
+    // ロードか, エラーで抜け出す
     loadFileDirectExit(fname, uca, loc_size);
     // 展開
     extrSprmArray(uca, pra, loc_pop);
     // フラグを返す
-    return (int)(uca[loc_size - 1]);
+    return uca[loc_size - 1];
 }
 
 // read parameters from a file
@@ -514,6 +514,13 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     printf("read file : %s\n", fnamer);
     // ロードしてエラー値を返す
     return loadSprmFileDirect(fnamer, pra, pra_size);
+}
+
+// 圧縮ファイルからロード (フォーマットと世代番号から)
+int loadSprmFileComp(const char *format, int gene_num, Sprm *pra, int loc_pop) {
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    return loadSprmFileCompDirect(fnamer, pra, loc_pop);
 }
 
 // load a representative of Sprm

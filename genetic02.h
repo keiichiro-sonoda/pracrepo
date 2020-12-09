@@ -375,6 +375,10 @@ int loadSprmFileCompDirect(const char *fname, Sprm *pra, int loc_pop);
 // read parameters from a file
 int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size);
 
+// 圧縮ファイルからロード (フォーマットと世代番号から)
+// フォーマット, 世代番号, Sprm配列, 配列長
+int loadSprmFileComp(const char*, int, Sprm*, int);
+
 // load representative of Sprm
 Sprm loadRepSprm(const char *format, int gene_num, int loc_pop);
 

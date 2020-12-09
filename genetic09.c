@@ -206,9 +206,7 @@ int main(void) {
     //showBoard(START);
     Sprm pra[POPULATION];
     int fitness[POPULATION];
-    pra[0] = SAMP_PRM;
-    for (int i = 1; i < POPULATION; i++)
-        randSprm(pra + i);
+    loadSprmFileComp(format, 200, pra, POPULATION);
     evalFitnessSprmVSRand(getBestBoardForBlackSimple, pra, fitness, GAME_NUM);
     printDecimalArray(fitness, POPULATION);
     return 0;
