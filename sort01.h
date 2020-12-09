@@ -24,6 +24,10 @@
 // マクロにした
 #define randomizedQuicksortDDAll(A, B, n) randomizedQuicksortDD(A, B, 0, (n) - 1)
 
+// sum に配列 A の合計を代入する
+// sum は 0 で初期化されている前提
+#define addAll(A, n, sum) for (int _ = 0; _ < (n); _++) (sum) += (A)[_]
+
 // float型配列の平均値を求めるマクロ
 #define aveFloat(A, n) (sumFloat(A, n) / (n))
 
