@@ -80,6 +80,10 @@ int rouletteInt(const int *A, int n, int s);
 // only supports non-negative floating point numbers
 int rouletteFloat(const float *A, int n, float s);
 
+// double 型の配列でルーレット選択
+// 値は非負であること前提
+int rouletteDouble(const double*, int, double);
+
 // fix the indices misalignment
 void fixIndices(int *A, int n);
 

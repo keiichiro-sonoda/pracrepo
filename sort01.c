@@ -12,14 +12,21 @@ void sortTest(void) {
     srand((unsigned)time(NULL));
     int sample1[] = {11, 5, 6, 8, 1, 2, 10, 3, -5, 4, 2, 10, 9, 7, 20, 0, -2, -1};
     float sample2[] = {-100.0, -1.0, -0.5, -0.2, 93.8, 0.1, 0.3, 1.0, 2.5, -11.0, 4.0};
-    double sample3[] = {-1., -.5, -1.0e-10, 0., -10., 3.829e+1};
+    double sample3[] = {1., .5, 1.0e-10, 0., 10., 3.829e+1};
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     int l3 = arrayLength(sample3);
     int numbers[l1];
     indices(numbers, l1);
     printDecimal(l2);
-    printFloatExp(sumDouble(sample3, l3));
+    int result[l3];
+    zeros(result, l3);
+    double s = sumDouble(sample3, l3);
+    printFloat(s);
+    for (int i = 0; i < 10000; i++) {
+        result[rouletteDouble(sample3, l3, s)]++;
+    }
+    printDecimalArray(result, l3);
 }
 
 // insertion sort
@@ -138,6 +145,27 @@ int rouletteFloat(const float *A, int n, float s) {
             return i;
     }
     return i;
+}
+
+// double 型の配列でルーレット選択
+// 値は非負であること前提
+int rouletteDouble(const double *A, int n, double s) {
+    // 戻り値兼イテレータ変数
+    int i = 0;
+    double rd, cum;
+    // 0 から配列の合計値までの乱数
+    rd = randDouble() * s;
+    // 累積を格納する変数に先頭要素を代入 (初期化も兼ねて)
+    cum = A[i++];
+    do {
+        // 累積が乱数を上回ったとき, ループを抜ける
+        if (cum > rd) break;
+        // 累積に加算 (ついでにインクリメント)
+        cum += A[i++];
+    }
+    while (i < n);
+    // 終了時の添字-1を返す
+    return i - 1;
 }
 
 // fix the indices misalignment
