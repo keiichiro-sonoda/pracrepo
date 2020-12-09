@@ -363,7 +363,7 @@ int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
     // 正規化を忘れずに
     main_board = normalBoard(START);
     while (1) {
-        showBoard(main_board);
+        //showBoard(main_board);
         // calculate next (and normalize)
         // can't put a piece anywhere
         if ((n = nextBoardNormal2(main_board, nba, kc)) == 0) {
@@ -381,12 +381,12 @@ int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
         // determine a next board
         // parameter's turn
         if (turn == my_color) {
-            printf("Sprm のターン: %d\n", turn);
+            //printf("Sprm のターン: %d\n", turn);
             main_board = dnfunc(nba, n, prp);
         } // random turn
         else {
             // randomly choose a next board
-            printf("ランダムのターン: %d\n", turn);
+            //printf("ランダムのターン: %d\n", turn);
             main_board = nba[randInt(n)];
         }
         // switch turn

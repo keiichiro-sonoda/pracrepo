@@ -210,5 +210,6 @@ int main(void) {
     } else if (t == -1) {
         printf("tは-1です\n");
     }
+    printDecimal(SprmVSRandomNormal(getBestBoardForBlackSimple, &SAMP_PRM, 0b01));
     return 0;
 }
