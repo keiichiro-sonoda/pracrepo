@@ -211,5 +211,12 @@ int main(void) {
     } else {
         puts("知るかアホ");
     }
+    if (DET_FUNC == getBestBoardForBlackSimple) {
+        puts("最大の手を選びまーす");
+    } else if (DET_FUNC == getBoardForBlackSimpleRoulette) {
+        puts("ルーレットで手を選びまーす");
+    } else {
+        puts("なにこれ?");
+    }
     return 0;
 }
