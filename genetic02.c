@@ -20,6 +20,9 @@ Sprm SAMP_PRM;
 // 指し手決定関数 (マクロのIDによって決まる)
 decNxtSprm DET_FUNC;
 
+// 適応度評価関数 (マクロのIDによって決まる)
+efSprm EF_FUNC_SPRM;
+
 // シードが正しいか確認用
 int FIRST_RAND;
 
@@ -40,15 +43,26 @@ void initSprm(void) {
     printf("mutation rate       : %4.2f\n", MUT_RATE);
     printf("parameter file size : %4d\n", SPRM_FILE_SIZE_COMP);
     printf("seed                : %4d\n", SEED);
-    printf("指し手              : ");
-    switch (DET_FUNC_ID) {
-        case 0: // 固定
-            DET_FUNC = getBestBoardForBlackSimple;
-            printf("固定\n");
+    printf("適応度評価方法      : ");
+    // 2bit目を見る
+    switch ((EF_FUNC_ID >> 1) & 1) {
+        case 0: // リーグ戦
+            EF_FUNC_SPRM = leagueMatchSprmFlex;
+            printf("リーグ戦");
             break;
-        default: // ルーレット
+        default:
+            EF_FUNC_SPRM = evalFitnessSprmVSRandFGN;
+            printf("対ランダム");
+    }
+    // 1bit目を見る
+    switch (EF_FUNC_ID & 1) {
+        case 0: // 常に評価が最大の手を選ぶ
+            DET_FUNC = getBestBoardForBlackSimple;
+            printf(" (指し手マックス)\n");
+            break;
+        default: // ルーレットで手を選ぶ
             DET_FUNC = getBoardForBlackSimpleRoulette;
-            printf("ルーレット\n");
+            printf(" (指し手ルーレット)\n");
     }
 }
 
