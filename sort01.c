@@ -13,12 +13,12 @@ void sortTest(void) {
     int l1 = arrayLength(sample1);
     int l2 = arrayLength(sample2);
     int l3 = arrayLength(sample3);
+    l3 = 50;
     double sample4[l3];
-    int numbers[l1];
-    indices(numbers, l1);
-    printDecimalArray(numbers, l1);
-    delElement(numbers, l1, 16);
-    printDecimalArray(numbers, l1);
+    int numbers[l3];
+    indices(numbers, l3);
+    powArray(numbers, sample4, l3, 0.5);
+    printFloatArrayExp(sample4, l3);
 }
 
 // insertion sort
@@ -213,7 +213,27 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len) {
 // ルーレット選択で重複なしで要素を選択
 // 選ばれた要素は選択肢から排除
 void rouletteDoubleMltDep(const double *A, int A_len, int *rslt, int rslt_len) {
-    zeros(rslt, rslt_len);
+    double s, cand[A_len];
+    // 選択候補の配列を初期化
+    copyArray(A, cand, A_len);
+    s = sumDouble(A, A_len);
+    // 選択数が要素数を越えていたら…要素数に合わせる
+    // その場合選ばれる組み合わせは全ての要素で固定される
+    if (A_len < rslt_len) {
+        rslt_len = A_len;
+    }
+    for (int i = 0; i < rslt_len; i++) {
+        // 候補の中からルーレット選択
+        rslt[i] = rouletteDouble(cand, A_len, s);
+        // 合計値から選ばれた値を引く
+        s -= cand[rslt[i]];
+        // 要素を排除 (左詰め)
+        delElement(cand, A_len, rslt[i]);
+        // 仮引数 A_len は候補の長さとして扱い, ループ毎にデクリメント
+        A_len--;
+    }
+    // 左詰めした添字は元に戻す
+    fixIndices(rslt, rslt_len);
 }
 
 // check if rouletteFloat workes as expected

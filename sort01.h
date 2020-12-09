@@ -108,6 +108,10 @@ void rouletteIntMltDep(const int *A, int A_len, int *rslt, int rslt_len);
 // don't allow duplication
 void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);
 
+// ルーレット選択で重複なしで要素を選択
+// 選ばれた要素は選択肢から排除
+void rouletteDoubleMltDep(const double *A, int A_len, int *rslt, int rslt_len);
+
 // check if rouletteFloat workes as expected
 void rouletteFloatTest(const float *A, int n);
 
