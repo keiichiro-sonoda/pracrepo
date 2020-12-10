@@ -427,11 +427,12 @@ def viewWinRateGraph(fname_format, decNxt_id):
 def formatPlusSeed(fname_format, seed):
     # .bin とそれ以外を分割
     m = re.match(r'(.+)(\.bin)', fname_format)
-    if not m:
+    new = ""
+    if m:
+        mg = m.groups()
+        new = mg[0] + "_s{0:03d}".format(seed) + mg[1]
+    else:
         print("一致するパターンがありません")
-        return ""
-    mg = m.groups()
-    new = mg[0] + "_s{0:03d}".format(seed) + mg[1]
     return new
 
 # 適応度ファイルフォーマットを作成
@@ -547,7 +548,7 @@ def main():
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
-    plt.show()
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
