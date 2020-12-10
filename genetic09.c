@@ -239,9 +239,10 @@ int main(void) {
     Sprm pra[50];
     for (int i = 0; i < 50; i++) {
         //zeros(pra[i].weight, SPRM_LEN);
-        initArrayConst(pra[i].weight, 10, 0.111);
+        //initArrayConst(pra[i].weight, 10, 0.111);
+        randSprm(pra + i);
     }
     showFamilyPart(pra);
-    checkSprmStatistics(pra, 50);
+    checkSprmStatistics(pra, 3);
     return 0;
 }

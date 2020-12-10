@@ -438,6 +438,10 @@ void evalFitnessSprmVSRandFGN(decNxtSprm, const Sprm*, int*);
 // calculate distance
 float distSprm(Sprm p1, Sprm p2);
 
+// Sprm の平均値を求める
+// 統計値はなんとなく double 型を使う
+void calcSprmMeans(const Sprm*, int, double*);
+
 // calculate means and standard deviation from some parameters
 void checkSprmStatistics(const Sprm *pra, int nos);
 

@@ -706,6 +706,22 @@ float distSprm(Sprm p1, Sprm p2) {
     return (float)sqrt(d);
 }
 
+// Sprm の平均値を求める
+// 統計値はなんとなく double 型を使う
+void calcSprmMeans(const Sprm *pra, int n, double *means) {
+    int i, j;
+    // 0 で初期化
+    zeros(means, SPRM_LEN);
+    for (j = 0; j < SPRM_LEN; j++) {
+        for (i = 0; i < n; i++) {
+            // 各重みの合計値を計算
+            means[j] += pra[i].weight[j];
+        }
+        // サンプル数で割る
+        means[j] /= n;
+    }
+}
+
 // 各値ごと平均値と標準偏差を計算して表示
 // nos はサンプル数の意味
 // 負のルートを計算したくないので定義どおりの計算方法を用いる
@@ -719,18 +735,9 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     }
     int i, j;
     double mean[SPRM_LEN], bunsan[SPRM_LEN], sd[SPRM_LEN];
-    zeros(mean, SPRM_LEN);
     zeros(bunsan, SPRM_LEN);
-
-    // 個体毎に値を取り出すのではなく, 各値を順番に見ていく
-    // ある値の合計を計算し終わった段階で, 個体数で割る
-    // i と j が逆なのは以前のやり方との比較用
-    for (j = 0; j < SPRM_LEN; j++) {
-        for (i = 0; i < nos; i++) {
-            mean[j] += pra[i].weight[j];
-        }
-        mean[j] /= nos;
-    }
+    // 平均値計算は別関数に委託
+    calcSprmMeans(pra, nos, mean);
     // 各値毎偏差の2乗の合計値を計算
     // 個体数 - 1 で割って分散にし, 平方根で標準偏差にする
     for (j = 0; j < SPRM_LEN; j++) {
