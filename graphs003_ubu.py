@@ -6,6 +6,7 @@ import os
 from ctypes import *
 import numpy as np
 import math
+import statistics as stat
 from matplotlib import pyplot as plt
 
 # シード値
@@ -447,6 +448,10 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max):
     for i in range(g_min, g_max + 1):
         fl = getFitnessWrap(fff.format(i), loc_pop)
         print(fl)
+        print("最大値", max(fl))
+        print("平均値", stat.mean(fl))
+        print("中央値", stat.median(fl))
+        print("最小値", min(fl))
 
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
