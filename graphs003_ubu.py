@@ -24,6 +24,10 @@ share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
 IntArray3 = c_int32 * 3
+# 適応度代入用
+# 100 は最大の個体数と考える, 必要があれば調整
+# 可変にできないものか…
+IntArray100 = c_int32 * 100
 
 # 初期化関数を実行 (バグの温床)
 share02_ubu.initPy()
@@ -50,6 +54,11 @@ getTopSprmGameRsltVSRand = share02_ubu.getTopSprmGameRsltVSRandPy
 getTopSprmGameRsltVSRand.restype = c_int32
 getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, IntArray3)
 
+# 適応度取得関数
+getFitness = share02_ubu.getFitnessPy
+getFitness.restype = c_int32
+getFitness.argtypes = (c_char_p, IntArray100, c_int32)
+
 # 各種ラッパー関数
 # n は個体数を指定 (過小はいいがオーバーに注意)
 # 圧縮フラグを追加
@@ -74,6 +83,16 @@ def getTopSprmWrap(fnamer):
     if getTopSprm(fnamer.encode(), f_arr_c) < 0:
         return []
     return list(f_arr_c)
+
+# 適応度取得
+def getFitnessWrap(fnamer, n):
+    # int配列, 余裕を持って多めに確保
+    i_arr_c = IntArray100()
+    res_list = []
+    # エラーじゃなければ必要なサイズにスライスして戻り値とする
+    if getFitness(fnamer.encode(), i_arr_c, n) >= 0:
+        res_list = list(i_arr_c)[:n]
+    return res_list
 
 # あるファイルの先頭要素とランダムAIとの試合結果を取得
 # [勝ち数, 引き分け数, 負け数] の順のリストを返す
@@ -426,7 +445,8 @@ def viewWinRateGraph(fname_format, decNxt_id):
 # 最大値, 中央値, 最小値でも表示してみようかな?
 def viewFitnessGraph(fff, loc_pop, g_min, g_max):
     for i in range(g_min, g_max + 1):
-        pass
+        fl = getFitnessWrap(fff.format(g_min), i)
+        print(fl)
 
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
@@ -529,7 +549,7 @@ def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
-    ind = 11
+    ind = 29
     loc_pop = 50
     start_g = 0
     stop_g = 100
@@ -541,11 +561,12 @@ def main():
     else:
         active_format = FILE_FORMATS[ind]
     print(active_format)
-    print(makeFitnessFileFormat(active_format))
     # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 1)
         viewSDGraph(active_format, loc_pop, start_g, stop_g, 1, chumoku)
+        # 圧縮版なら適応度ファイルもあるやろ多分
+        viewFitnessGraph(makeFitnessFileFormat(active_format), loc_pop, start_g, stop_g)
     else:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 0)
         viewSDGraph(active_format, loc_pop, start_g, stop_g, 0, chumoku)
