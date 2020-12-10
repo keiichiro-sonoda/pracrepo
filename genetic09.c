@@ -207,6 +207,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
         uniCrossSprm2C(current + parents[0], current + parents[1], children);
         // 子の数くり返し (0 と 1)
         // ここでオーバーフローも検知
+        // 外の for 文と二重検知で効率は悪いかも
         for (i = 0; (i < 2) && (count + i < POPULATION); i++) {
             // ランダム突然変異 (圧縮対応乱数)
             randMutSprmCC(children + i);
@@ -225,12 +226,12 @@ int main(void) {
     // このマクロの第一引数を変える
     formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     printString(format);
-    //makeFGFileSprmComp(format);
-    //checkSprmFileComp(format, 0);
+    makeFGFileSprmComp(format);
+    checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
-    //showBoard(START);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 0, 3);
     //sortTest();
     return 0;
 }
