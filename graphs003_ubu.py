@@ -445,7 +445,7 @@ def viewWinRateGraph(fname_format, decNxt_id):
 # 最大値, 中央値, 最小値でも表示してみようかな?
 def viewFitnessGraph(fff, loc_pop, g_min, g_max):
     for i in range(g_min, g_max + 1):
-        fl = getFitnessWrap(fff.format(g_min), i)
+        fl = getFitnessWrap(fff.format(i), loc_pop)
         print(fl)
 
 # フォーマットにシードも追加
