@@ -507,4 +507,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
 // 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
 void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int start, int stop);
 
+// ソートだけ, 再現性があること前提だが
+void sortOnlySprmComp(scmSprmSorted scm, const char *format, int gene_num);
+
 #endif

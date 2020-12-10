@@ -1110,7 +1110,7 @@ void copyFGFlex(const char *dst_format) {
 // 適応度を計算する関数を引数で渡す
 // 適応度はルーレット選択等に用いるため, 呼び出し元で配列を渡す
 // 次世代作成関数が膨らまないように, ここで適応度の読み書きをする
-int sortSprmCompFileByFitness(efSprm eFit,const char *fname, int *fitness) {
+int sortSprmCompFileByFitness(efSprm eFit, const char *fname, int *fitness) {
     // ソート前とソート後のパラメータ配列を用意する (メモリの無駄遣いかな?)
     Sprm pra1[POPULATION], pra2[POPULATION];
     // 適応度ファイル名
@@ -1232,4 +1232,24 @@ void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int st
         printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
         kugiri(100);
     }
+}
+
+// ソートだけ, 再現性があること前提だが
+void sortOnlySprmComp(scmSprmSorted scm, const char *format, int gene_num) {
+    u_int s1;
+    int flag, fitness[POPULATION];
+    char fnames[FILENAME_MAX];
+    // ループと同一シードを使う
+    printf("seed1: %d", s1 = SEED + gene_num + 1);
+    // ソート対象ファイル名を作成
+    snprintf(fnames, FILENAME_MAX, format, gene_num);
+    srand(s1);
+    // 適応度評価とファイルのソート
+    // ソート済ならその旨を伝える
+    if ((flag  = sortSprmCompFileByFitness(EF_FUNC_SPRM, fnames, fitness)) == 1) {
+        printf("%s is already sorted!\n", fnames);
+    }
+    if (flag < 0) return;
+    // ソートに成功, もしくはソート済なら適応度を表示
+    printDecimalArray(fitness, POPULATION);
 }
