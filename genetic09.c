@@ -224,8 +224,8 @@ int main(void) {
     //srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
-    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    //formatPlusSeed(FNF_RDC05000_0290_0000001, format, FILENAME_MAX);
+    //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
+    formatPlusSeed(FNF_RDC05000_0290_0000001, format, FILENAME_MAX);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
