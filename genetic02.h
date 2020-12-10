@@ -132,10 +132,11 @@
 // やはりアンダースコアで空白を表現した
 #define FNF_05006000000100 "prm/sprm050_06___rd100/sprm050_06___rd100_g%03d.bin"
 
-// 圧縮, 個体数50, エリートなし, ランキング選択 (幾何, 比0.90), 
+// 圧縮, 個体数50, エリートなし, ランキング選択 (幾何, 比0.90), 一様交叉2, ランダム突然変異1%
 // RD: 対ランダム & 指し手固定
 // _0290_: 等比数列ランキング選択と, その公比の100倍 (公比1はランダム選択と等価である)
-#define FNF_RDC05000_0290_0000001 "prm/srddc050__rkg90_uni_rd001/srddc050__rkg90_uni_rd001_g%03d.bin"
+// 05: 一様交叉2人っ子バージョン
+#define FNF_RDC05000_0290_0500001 "prm/srddc050__rkg90_uni2_rd001/srddc050__rkg90_uni2_rd001_g%03d.bin"
 
 // choose randomly either a or b
 #ifndef alternative
