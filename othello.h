@@ -148,6 +148,23 @@
 // empty the board
 #define emptyBoard(bp) ((bp)->board[0] = 0, (bp)->board[1] = 0)
 
+// -Exit() というマクロは整数を返す関数内で使うことだけ想定
+// 標準入力で y と Enter だけ押されたら, 何もしない
+// それ以外は勝手に -1 で抜ける
+#define kakuninExit() do {\
+    char c;\
+    if ((c = getchar()) != 121) {\
+        if (c != 10) while (getchar() != 10);\
+        printf("terminated\n");\
+        return -1;\
+    }\
+    if (getchar() != 10) {\
+        while (getchar() != 10);\
+        printf("terminated\n");\
+        return -1;\
+    }\
+} while (0)
+
 // return とかマクロで書いていいのかな
 #define warnOverwritingExit(fname) if (warnOverwriting(fname) < 0) return -1  
 

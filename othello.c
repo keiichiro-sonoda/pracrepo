@@ -988,28 +988,17 @@ void board2arraySymmetry(Board src, int *dst) {
 int warnOverwriting(const char *fname) {
     FILE *fp;
     // open to read
-    fp = fopen(fname, "rb");
-    if (fp == NULL) {
-        // not exist
-        return 0;
+    // 存在したら警告する
+    if ((fp = fopen(fname, "rb")) != NULL) {
+        // exist
+        fclose(fp);
+        // 警告文
+        printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);
+        // y & Enter 以外が入力されたら -1 を返す
+        kakuninExit();
     }
-    // exist
-    fclose(fp);
-    printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);
-    char c;
-    c = getchar();
-    if (c != 121) {
-        if (c != 10)
-            while (getchar() != 10);
-        printf("terminated\n");
-        return -1;
-    }
-    if (getchar() != 10) {
-        while (getchar() != 10);
-        printf("terminated\n");
-        return -1;
-    }
-    // allowed
+    // 許可された, もしくは存在しない場合は 0 を返す
+    // allowed or not exist
     return 0;
 }
 
