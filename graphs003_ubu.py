@@ -244,6 +244,36 @@ def makeSDGraph(ax, x, ys, emphasize):
     # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.0, 0.40, 5))
 
+# 適応度のグラフを作成
+# データとグラフオブジェクト? を渡す
+def makeFitnessGraph(ax, x, ys):
+    # 縦軸の値の間隔
+    step = 20
+    # 各データのプロットとラベル指定
+    ax.plot(x, ys[0], label="max")
+    ax.plot(x, ys[1], label="median")
+    ax.plot(x, ys[2], label="min")
+    # 凡例調節
+    ax.legend(
+        bbox_to_anchor=(1.01, 1),
+        loc='upper left',
+        borderaxespad=0,
+        fontsize=10
+    )
+    #ax.grid()
+    # ラベル指定
+    ax.set_xlabel("generation", fontsize=15)
+    ax.set_ylabel("point", fontsize=15)
+    # 横幅指定（読み込みに成功したデータだけ）
+    ax.set_xticks(np.linspace(x[0], x[-1], 11))
+    # 最大値の最大値から上限を決める
+    y_max = math.ceil(max(ys[0]) / step) * step
+    # 最小値の最小値から下限を決める
+    y_min = math.floor(min(ys[2]) / step) * step
+    print(y_max, y_min)
+    # 縦幅指定 (間隔は固定)
+    ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
+
 # 標準偏差表示, グラフ画像作成
 # 圧縮フラグを追加
 # 強調リストを追加
@@ -443,15 +473,39 @@ def viewWinRateGraph(fname_format, decNxt_id):
     fig.savefig(path, bbox_inches="tight")
 
 # 適応度を見るグラフ
+# これは世代全体を見ること前提
 # 最大値, 中央値, 最小値でも表示してみようかな?
 def viewFitnessGraph(fff, loc_pop, g_min, g_max):
+    # 世代数 (読み込めた数値だけ格納)
+    x = []
+    # 3 つの配列を用意
+    ys = [[], [], []]
     for i in range(g_min, g_max + 1):
+        # i 世代の適応度を取り出す
         fl = getFitnessWrap(fff.format(i), loc_pop)
-        print(fl)
-        print("最大値", max(fl))
-        print("平均値", stat.mean(fl))
-        print("中央値", stat.median(fl))
-        print("最小値", min(fl))
+        if not fl:
+            continue
+        # 読み込めたらその世代を x に追加
+        x.append(i)
+        # 最大値を格納
+        ys[0].append(max(fl))
+        # 中央値を格納 (ソート済だから非効率かもね)
+        ys[1].append(stat.median(fl))
+        # 最小値を格納
+        ys[2].append(min(fl))
+    if not x:
+        return
+    fig = plt.figure(figsize=(8, 5))
+    ax = fig.add_subplot(111)
+    # max, median, min の頭文字 (mean も m だけどね)
+    name = "mmm{:03d}".format(loc_pop)
+    makeFitnessGraph(ax, x, ys)
+    # フォーマットやグラフの範囲に合わせたパスを作成
+    path = makeJpegFileName(fff, name, int(x[0]), int(x[-1]))
+    # 書き込み
+    if path and not VIEW_ONLY:
+        fig.savefig(path, bbox_inches="tight")
+        print("saved!!")
 
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
