@@ -495,27 +495,30 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 27. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
                 "prm//srltc050_06_rlt_1p_rd005//srltc050_06_rlt_1p_rd005_g{:03d}.bin",
                 # 28. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 平均と一様一回ずつ, それぞれランダム突然変異5%
-                "prm//srltc050_06_rlt_aue_rd005//srltc050_06_rlt_aue_rd005_g{:03d}.bin"]
+                "prm//srltc050_06_rlt_aue_rd005//srltc050_06_rlt_aue_rd005_g{:03d}.bin",
+                # 29. 圧縮版, 対ランダム, 指し手固定, 個体数50, エリートなし, 等比数列ランキング選択公比0.90, 2人っ子一様交叉, ラン突1%
+                "prm//srddc050__rkg90_uni2_rd001//srddc050__rkg90_uni2_rd001_g{:03d}.bin"]
 
 # 圧縮版ファイルのフォーマットの添字はこのリストに加えていく
-COMPRESSED_INDICES = [26, 27, 28]
+COMPRESSED_INDICES = [26, 27, 28, 29]
 
 # 各フォーマットでどのシードを使ったのか記録
 # フォーマットにシードが付いているかの判定に使える
-SEED_DICT = {27: (123, 365, 999), 28: (365,)}
+SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (999,)}
 
 def main():
     global VIEW_ONLY
+    # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
-    ind = 27
-    loc_pop = 6
+    ind = 29
+    loc_pop = 50
     start_g = 0
     stop_g = 100
     chumoku = []
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
-        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][2])
+        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
     else:
         active_format = FILE_FORMATS[ind]
     print(active_format)
