@@ -78,17 +78,6 @@ void printDecimalArrayRange(const int *A, int a, int b) {
     printDecimalArray(A + a, b - a);
 }
 
-// print an array of floating point number
-void printFloatArray(const float *A, int n) {
-    putchar(123);
-    for (int i = 0; i < n; i++) {
-        printf("%6.3f", A[i]);
-        if (i < n - 1)
-            printf(", ");
-    }
-    printf("}\n");
-}
-
 // show the first three and the last one
 void printFloatArrayPart(const float *A, int n) {
     // show all

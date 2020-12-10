@@ -708,34 +708,38 @@ float distSprm(Sprm p1, Sprm p2) {
 
 // 各値ごと平均値と標準偏差を計算して表示
 // nos はサンプル数の意味
+// 負のルートを計算したくないので定義どおりの計算方法を用いる
+// さらに n - 1 で割る方法に戻す
 // calculate means and standard deviation from some parameters
 void checkSprmStatistics(const Sprm *pra, int nos) {
+    // サンプル1個は無効, 分散計算時に0で割ることになる
+    if (nos < 2) {
+        puts("統計値不要");
+        return;
+    }
     int i, j;
-    float mean[SPRM_LEN];
-    float bunsan[SPRM_LEN];
-    float sd[SPRM_LEN];
+    double mean[SPRM_LEN], bunsan[SPRM_LEN], sd[SPRM_LEN];
     zeros(mean, SPRM_LEN);
     zeros(bunsan, SPRM_LEN);
-    // calculate sum of each weight
-    for (i = 0; i < nos; i++)
-        for (j = 0; j < SPRM_LEN; j++)
-            mean[j] += pra[i].weight[j];
-    
-    // divide by the number of samples
-    for (j = 0; j < SPRM_LEN; j++)
-        mean[j] /= nos;
-    
-    // calculate sum of the square of each weight
-    for (i = 0; i < nos; i++)
-        for (j = 0; j < SPRM_LEN; j++)
-            bunsan[j] += square(pra[i].weight[j]);
-    
-    // calculate standard deviation
+
+    // 個体毎に値を取り出すのではなく, 各値を順番に見ていく
+    // ある値の合計を計算し終わった段階で, 個体数で割る
+    // i と j が逆なのは以前のやり方との比較用
     for (j = 0; j < SPRM_LEN; j++) {
-        bunsan[j] = bunsan[j] / nos - square(mean[j]);
-        sd[j] = sqrtf(bunsan[j]);
+        for (i = 0; i < nos; i++) {
+            mean[j] += pra[i].weight[j];
+        }
+        mean[j] /= nos;
     }
-    
+    // 各値毎偏差の2乗の合計値を計算
+    // 個体数 - 1 で割って分散にし, 平方根で標準偏差にする
+    for (j = 0; j < SPRM_LEN; j++) {
+        for (i = 0; i < nos; i++) {
+            bunsan[j] += pow(pra[i].weight[j] - mean[j], 2.);
+        }
+        bunsan[j] /= (nos - 1);
+        sd[j] = sqrt(bunsan[j]);
+    }
     // display
     printString("statistics:");
     printf("mean: ");
