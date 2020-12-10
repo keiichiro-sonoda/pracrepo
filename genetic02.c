@@ -83,17 +83,17 @@ void showFamilyPart(const Sprm *pra) {
         // show all
         for (int i = 0; i < POPULATION; i++) {
             // 番号も表示
-            printf("%3d : ", i);
+            printf("%4d: ", i);
             showSprmOneLine(pra[i]);
         }
         return;
     }
     // population is greater than 5
     for (int i = 0; i < 3; i++) {
-        printf("%3d : ", i);
+        printf("%4d: ", i);
         showSprmOneLine(pra[i]);
     }
-    printf("                                           ...\n%3d : ", POPULATION - 1);
+    printf("                                           ...\n%4d: ", POPULATION - 1);
     showSprmOneLine(pra[POPULATION - 1]);
 }
 
@@ -508,6 +508,7 @@ int makeFirstGeneFileFlex(const char *format) {
 // マクロ SEED でシード設定してファイル名とシードを対応させる
 // ファイル名が正しく設定されていることは前提だが
 int makeFGFileSprmComp(const char *format) {
+    puts("初期世代を作成します");
     srand(SEED);
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
