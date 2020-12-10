@@ -422,6 +422,12 @@ def viewWinRateGraph(fname_format, decNxt_id):
     path = makeJpegFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
     fig.savefig(path, bbox_inches="tight")
 
+# 適応度を見るグラフ
+# 最大値, 中央値, 最小値でも表示してみようかな?
+def viewFitnessGraph(fff, loc_pop, g_min, g_max):
+    for i in range(g_min, g_max + 1):
+        pass
+
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
 def formatPlusSeed(fname_format, seed):
@@ -523,7 +529,7 @@ def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
-    ind = 29
+    ind = 11
     loc_pop = 50
     start_g = 0
     stop_g = 100

@@ -204,8 +204,9 @@
 } while (0)
 
 // short型で保存されている適応度を読み込む
+// fitness は short 型配列でなくてもよい
 // othelloに移動したはいいが POPULATION が無いので引数で定義
-// マクロ中毒
+// Python で読み込むことを考えると, 結果的に配列長を指定できるのは便利
 #define loadFitnessShortDirectExit(fname, fitness, n) do {\
     short fitness_short[n];\
     loadFileDirectExit((fname), fitness_short, sizeof fitness_short);\

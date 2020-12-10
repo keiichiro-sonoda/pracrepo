@@ -283,3 +283,11 @@ void checkRandPy(void) {
 void showStartPy(void) {
     showBoard(START);
 }
+
+// 適応度ファイルを Python から読み取る
+// fitness には loc_pop 以上の領域を確保すること
+int getFitnessPy(const char *fname, int *fitness, int loc_pop) {
+    // マクロで自動読み取り, エラーなら -1 を返す
+    loadFitnessShortDirectExit(fname, fitness, loc_pop);
+    return 0;
+}

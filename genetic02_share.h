@@ -91,4 +91,8 @@ void checkRandPy(void);
 // 初期化できているか確認
 void showStartPy(void);
 
+// 適応度ファイルを Python から読み取る
+// fitness には loc_pop 以上の領域を確保すること
+int getFitnessPy(const char*, int*, int);
+
 #endif
