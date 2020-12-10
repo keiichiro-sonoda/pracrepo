@@ -83,17 +83,17 @@ void showFamilyPart(const Sprm *pra) {
         // show all
         for (int i = 0; i < POPULATION; i++) {
             // 番号も表示
-            printf("%3d :", i);
+            printf("%3d : ", i);
             showSprmOneLine(pra[i]);
         }
         return;
     }
     // population is greater than 5
     for (int i = 0; i < 3; i++) {
-        printf("%3d :", i);
+        printf("%3d : ", i);
         showSprmOneLine(pra[i]);
     }
-    printf("                                        ...\n%3d :", POPULATION - 1);
+    printf("                                           ...\n%3d : ", POPULATION - 1);
     showSprmOneLine(pra[POPULATION - 1]);
 }
 
@@ -736,7 +736,7 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     printString("statistics:");
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
-    printf("SD:   ");
+    printf("SD  : ");
     printFloatArray(sd, SPRM_LEN);
 }
 
