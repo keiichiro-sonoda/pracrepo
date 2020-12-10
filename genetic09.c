@@ -224,25 +224,18 @@ int main(void) {
     //srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
-    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    //formatPlusSeed(FNF_RDC05000_0290_0500001, format, FILENAME_MAX);
+    //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
+    formatPlusSeed(FNF_RDC05000_0290_0500001, format, FILENAME_MAX);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
     //makeFGFileSprmComp(format);
-    //checkSprmFileComp(format, 0);
+    checkSprmFileComp(format, 3);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
-    //nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 0, 1);
+    // 研究対象
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 2, 4);
     //sortTest();
-    Sprm pra[50];
-    for (int i = 0; i < 50; i++) {
-        //zeros(pra[i].weight, SPRM_LEN);
-        //initArrayConst(pra[i].weight, 10, 0.111);
-        randSprm(pra + i);
-    }
-    showFamilyPart(pra);
-    checkSprmStatistics(pra, 1);
     return 0;
 }
