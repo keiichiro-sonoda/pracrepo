@@ -747,7 +747,6 @@ void calcSprmVariances(const Sprm *pra, int n, const double *means, double *vars
 // calculate means and standard deviation from some parameters
 void checkSprmStatistics(const Sprm *pra, int nos) {
     double mean[SPRM_LEN], bunsan[SPRM_LEN], sd[SPRM_LEN];
-    zeros(bunsan, SPRM_LEN);
     // 平均値計算は別関数に委託
     calcSprmMeans(pra, nos, mean);
     // 分散計算も別関数に委託
@@ -758,8 +757,7 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     printString("statistics:");
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
-    printf("var : ");
-    printFloatArray(bunsan, SPRM_LEN);
+    //printf("var : "); printFloatArray(bunsan, SPRM_LEN);
     printf("SD  : ");
     printFloatArray(sd, SPRM_LEN);
 }

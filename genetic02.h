@@ -442,6 +442,10 @@ float distSprm(Sprm p1, Sprm p2);
 // 統計値はなんとなく double 型を使う
 void calcSprmMeans(const Sprm*, int, double*);
 
+// Sprm の分散を求める (サンプル数 - 1 で割る)
+// 引数には平均値も与える
+void calcSprmVariances(const Sprm*, int, const double*, double*);
+
 // calculate means and standard deviation from some parameters
 void checkSprmStatistics(const Sprm *pra, int nos);
 
