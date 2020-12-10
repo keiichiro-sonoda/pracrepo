@@ -229,12 +229,12 @@ int main(void) {
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
-    makeFGFileSprmComp(format);
+    //makeFGFileSprmComp(format);
     checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 0, 3);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 1, 3);
     //sortTest();
     return 0;
 }
