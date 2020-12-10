@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 # シード値
 SEED = 123
 
-# グラフ描画のみ
+# グラフ描画のみ (画像を保存したい場合は False にする)
 VIEW_ONLY = True
 
 # シンプルパラメータの長さ
@@ -434,6 +434,18 @@ def formatPlusSeed(fname_format, seed):
     new = mg[0] + "_s{0:03d}".format(seed) + mg[1]
     return new
 
+# 適応度ファイルフォーマットを作成
+# シードを付加した後に実行することを想定
+# .bin を _format.bin に置き換えるだけ
+def makeFitnessFileFormat(fname_format):
+    # .bin とそれ以外を分割
+    m = re.match(r'(.+)(\.bin)', fname_format)
+    if not m:
+        print("一致するパターンがありません")
+        return ""
+    mg = m.groups()
+    return mg[0] + "_fitness" + mg[1]
+
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初 (指し手固定)
@@ -522,6 +534,7 @@ def main():
     else:
         active_format = FILE_FORMATS[ind]
     print(active_format)
+    print(makeFitnessFileFormat(active_format))
     # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 1)
