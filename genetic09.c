@@ -234,7 +234,7 @@ int main(void) {
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 1, 3);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 1, 101);
     //sortTest();
     return 0;
 }
