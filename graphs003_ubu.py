@@ -634,7 +634,7 @@ def main():
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
-    #plt.show()
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
