@@ -149,9 +149,11 @@
 #define emptyBoard(bp) ((bp)->board[0] = 0, (bp)->board[1] = 0)
 
 // -Exit() というマクロは整数を返す関数内で使うことだけ想定
+// 警告文は改行無しで別途表示するのがよい
 // 標準入力で y と Enter だけ押されたら, 何もしない
 // それ以外は勝手に -1 で抜ける
 #define kakuninExit() do {\
+    printf(" (y\\n): ");\
     char c;\
     if ((c = getchar()) != 121) {\
         if (c != 10) while (getchar() != 10);\
@@ -171,7 +173,7 @@
     FILE *fp;\
     if ((fp = fopen(fname, "rb")) != NULL) {\
         fclose(fp);\
-        printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);\
+        printf("\a\"%s\" exists. Do you overwrite it?", fname);\
         kakuninExit();\
     }\
 } while (0)
