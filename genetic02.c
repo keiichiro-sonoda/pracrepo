@@ -722,6 +722,24 @@ void calcSprmMeans(const Sprm *pra, int n, double *means) {
     }
 }
 
+// Sprm の分散を求める (サンプル数 - 1 で割る)
+// 引数には平均値も与える
+void calcSprmVariances(const Sprm *pra, int n, const double *means, double *vars) {
+    int i, j;
+    // 0 で初期化
+    zeros(vars, SPRM_LEN);
+    // サンプル数 1 なら分散 0 でいいや
+    if (n < 2) return;
+    for (j = 0; j < SPRM_LEN; j++) {
+        for (i = 0; i < n; i++) {
+            // 各重みの偏差の2乗の合計値を計算
+            vars[j] += pow(pra[i].weight[j] - means[j], 2.);
+        }
+        // サンプル数 - 1 で割る
+        vars[j] /= n - 1;
+    }
+}
+
 // 各値ごと平均値と標準偏差を計算して表示
 // nos はサンプル数の意味
 // 負のルートを計算したくないので定義どおりの計算方法を用いる
@@ -733,20 +751,14 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
         puts("統計値不要");
         return;
     }
-    int i, j;
     double mean[SPRM_LEN], bunsan[SPRM_LEN], sd[SPRM_LEN];
     zeros(bunsan, SPRM_LEN);
     // 平均値計算は別関数に委託
     calcSprmMeans(pra, nos, mean);
-    // 各値毎偏差の2乗の合計値を計算
-    // 個体数 - 1 で割って分散にし, 平方根で標準偏差にする
-    for (j = 0; j < SPRM_LEN; j++) {
-        for (i = 0; i < nos; i++) {
-            bunsan[j] += pow(pra[i].weight[j] - mean[j], 2.);
-        }
-        bunsan[j] /= (nos - 1);
-        sd[j] = sqrt(bunsan[j]);
-    }
+    // 分散計算も別関数に委託
+    calcSprmVariances(pra, nos, mean, bunsan);
+    // 平方根とって標準偏差にする
+    sqrtArray(bunsan, sd, SPRM_LEN);
     // display
     printString("statistics:");
     printf("mean: ");

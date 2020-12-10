@@ -66,6 +66,9 @@
 // subract constant value from all elements
 #define subConst(A, n, c) for (int _ = 0; _ < (n); _++) (A)[_] -= (c)
 
+// 平方根の関数を作成
+#define sqrtArray(X, Y, n) for (int _ = 0; _ < (n); _++) (Y)[_] = sqrt((X)[_])
+
 // flip horizontal
 // src: 0, 2, 4, ... , 126
 #define mirrorLRAd(src) ((src) / 16 * 16 + 14 - (src) % 16)
