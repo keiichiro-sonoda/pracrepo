@@ -227,6 +227,7 @@ int main(void) {
     formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     //formatPlusSeed(FNF_RDC05000_0290_0000001, format, FILENAME_MAX);
     printString(format);
+    kakuninExit();
     makeFGFileSprmComp(format);
     checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
