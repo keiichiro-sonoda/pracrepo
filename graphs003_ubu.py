@@ -497,10 +497,10 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max):
         return
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
-    # max, median, min の頭文字 (mean も m だけどね)
-    name = "mmm{:03d}".format(loc_pop)
+    # グラフファイル名作成時にfitnessが除外されるのでここで追加
+    name = "fitness{:03d}".format(loc_pop)
     makeFitnessGraph(ax, x, ys)
-    # フォーマットやグラフの範囲に合わせたパスを作成
+    # フォーマット, データの種類, グラフの範囲に合わせたパスを作成
     path = makeJpegFileName(fff, name, int(x[0]), int(x[-1]))
     # 書き込み
     if path and not VIEW_ONLY:
