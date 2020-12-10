@@ -243,6 +243,6 @@ int main(void) {
         randSprm(pra + i);
     }
     showFamilyPart(pra);
-    checkSprmStatistics(pra, 3);
+    checkSprmStatistics(pra, 1);
     return 0;
 }

@@ -728,7 +728,7 @@ void calcSprmVariances(const Sprm *pra, int n, const double *means, double *vars
     int i, j;
     // 0 で初期化
     zeros(vars, SPRM_LEN);
-    // サンプル数 1 なら分散 0 でいいや
+    // サンプル数 1 なら分散 0 のまま返す
     if (n < 2) return;
     for (j = 0; j < SPRM_LEN; j++) {
         for (i = 0; i < n; i++) {
@@ -746,11 +746,6 @@ void calcSprmVariances(const Sprm *pra, int n, const double *means, double *vars
 // さらに n - 1 で割る方法に戻す
 // calculate means and standard deviation from some parameters
 void checkSprmStatistics(const Sprm *pra, int nos) {
-    // サンプル1個は無効, 分散計算時に0で割ることになる
-    if (nos < 2) {
-        puts("統計値不要");
-        return;
-    }
     double mean[SPRM_LEN], bunsan[SPRM_LEN], sd[SPRM_LEN];
     zeros(bunsan, SPRM_LEN);
     // 平均値計算は別関数に委託
