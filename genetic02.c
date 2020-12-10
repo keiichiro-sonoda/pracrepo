@@ -484,8 +484,8 @@ int makeFirstGeneFileFlex(const char *format) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     // check existence
-    if (warnOverwriting(fnamew) < 0)
-        return -1;
+    // 警告と退出 (この関数自体使われるのか?)
+    warnOverwritingExit(fnamew);
     // make new family randomly
     Sprm pra[POPULATION];
     for (int i = 0; i < POPULATION; i++)
@@ -884,6 +884,7 @@ void rltUniRdS(const int *fitness, const Sprm *current, Sprm *next) {
 }
 
 // 選択・交叉・突然変異の関数は別途定義
+// 圧縮しないバージョン
 // make next generation file
 // write all individuals to the file
 // give a function pointer for selection and crossing
@@ -899,8 +900,8 @@ int nGeneSSAFlex(scmFunc selAndCross, const char *format, int gene_num, int safe
     // view the file name
     printf("write file: %s\n", fnamew);
     // don't allow overwriting
-    if (safety && warnOverwriting(fnamew) < 0)
-        return -1;
+    // 安全装置チェック, 上書き警告, 退出
+    if (safety) warnOverwritingExit(fnamew);
     // next family
     Sprm next[POPULATION];
     // the array to store points

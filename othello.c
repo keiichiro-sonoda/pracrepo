@@ -984,24 +984,6 @@ void board2arraySymmetry(Board src, int *dst) {
     }
 }
 
-// warning before overwriting
-int warnOverwriting(const char *fname) {
-    FILE *fp;
-    // open to read
-    // 存在したら警告する
-    if ((fp = fopen(fname, "rb")) != NULL) {
-        // exist
-        fclose(fp);
-        // 警告文
-        printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);
-        // y & Enter 以外が入力されたら -1 を返す
-        kakuninExit();
-    }
-    // 許可された, もしくは存在しない場合は 0 を返す
-    // allowed or not exist
-    return 0;
-}
-
 // main?
 // なんとなく残してある関数
 int main2(void) {

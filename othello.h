@@ -359,7 +359,4 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 // black: +1, empty: 0, white: -1
 void board2arraySymmetry(Board src, int *dst);
 
-// warning before overwriting
-int warnOverwriting(const char *fname);
-
 #endif
