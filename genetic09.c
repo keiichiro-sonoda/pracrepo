@@ -230,11 +230,18 @@ int main(void) {
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
     //makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 0);
+    //checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 0, 1);
+    //nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 0, 1);
     //sortTest();
+    Sprm pra[50];
+    for (int i = 0; i < 50; i++) {
+        //zeros(pra[i].weight, SPRM_LEN);
+        initArrayConst(pra[i].weight, 10, 0.111);
+    }
+    showFamilyPart(pra);
+    checkSprmStatistics(pra, 50);
     return 0;
 }

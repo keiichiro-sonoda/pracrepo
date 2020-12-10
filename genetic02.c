@@ -712,9 +712,10 @@ float distSprm(Sprm p1, Sprm p2) {
 void checkSprmStatistics(const Sprm *pra, int nos) {
     int i, j;
     float mean[SPRM_LEN];
+    float bunsan[SPRM_LEN];
     float sd[SPRM_LEN];
-    zerosFloat(mean, SPRM_LEN);
-    zerosFloat(sd, SPRM_LEN);
+    zeros(mean, SPRM_LEN);
+    zeros(bunsan, SPRM_LEN);
     // calculate sum of each weight
     for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
@@ -727,16 +728,20 @@ void checkSprmStatistics(const Sprm *pra, int nos) {
     // calculate sum of the square of each weight
     for (i = 0; i < nos; i++)
         for (j = 0; j < SPRM_LEN; j++)
-            sd[j] += square(pra[i].weight[j]);
+            bunsan[j] += square(pra[i].weight[j]);
     
     // calculate standard deviation
-    for (j = 0; j < SPRM_LEN; j++)
-        sd[j] = sqrtf(sd[j] / nos - square(mean[j]));
+    for (j = 0; j < SPRM_LEN; j++) {
+        bunsan[j] = bunsan[j] / nos - square(mean[j]);
+        sd[j] = sqrtf(bunsan[j]);
+    }
     
     // display
     printString("statistics:");
     printf("mean: ");
     printFloatArray(mean, SPRM_LEN);
+    printf("var : ");
+    printFloatArray(bunsan, SPRM_LEN);
     printf("SD  : ");
     printFloatArray(sd, SPRM_LEN);
 }
