@@ -20,7 +20,7 @@
 #endif
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 1 // エリート数
+#define ELITE_NUM 0 // エリート数
 #endif
 
 #ifndef POPULATION
@@ -28,7 +28,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE .5 // 突然変異率 (double)
+#define MUT_RATE .01 // 突然変異率 (double)
 #endif
 
 #ifndef GAME_NUM
@@ -131,6 +131,11 @@
 // ルーレットや一様交叉も0だが, 選択や交叉をしてから突然変異をしたとも考えられる(無理やり)
 // やはりアンダースコアで空白を表現した
 #define FNF_05006000000100 "prm/sprm050_06___rd100/sprm050_06___rd100_g%03d.bin"
+
+// 圧縮, 個体数50, エリートなし, ランキング選択 (幾何, 比0.90), 
+// RD: 対ランダム & 指し手固定
+// _0290_: 等比数列ランキング選択と, その公比の100倍 (公比1はランダム選択と等価である)
+#define FNF_RDC05000_0290_0000001 "prm/srddc050__rkg90_uni_rd001/srddc050__rkg90_uni_rd001_g%03d.bin"
 
 // choose randomly either a or b
 #ifndef alternative
