@@ -230,12 +230,12 @@ int main(void) {
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
     //makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 3);
+    checkSprmFileComp(format, 1);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     // 研究対象
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 1, 4);
+    //nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 1, 101);
     //sortTest();
     return 0;
 }
