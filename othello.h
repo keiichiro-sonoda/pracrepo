@@ -165,8 +165,16 @@
     }\
 } while (0)
 
-// return とかマクロで書いていいのかな
-#define warnOverwritingExit(fname) if (warnOverwriting(fname) < 0) return -1  
+// 上書き警告関数をマクロ化
+// 存在したら kakuninExit () を使用
+#define warnOverwritingExit(fname) do {\
+    FILE *fp;\
+    if ((fp = fopen(fname, "rb")) != NULL) {\
+        fclose(fp);\
+        printf("\a\"%s\" exists. Do you overwrite it? (y\\n): ", fname);\
+        kakuninExit();\
+    }\
+} while (0)
 
 // 当然ロード版も作るよね
 #define loadFileDirectExit(fname, xp, x_size) do {\
