@@ -8,7 +8,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 999U // シード値
+#define SEED 123U // シード値
 #endif
 
 #define SPRM_LEN 10 // 区別できるマスの数
@@ -302,7 +302,7 @@ void initSprm(void);
 void showSprm(Sprm pr);
 
 // show a part of parameter array
-void showFamilyPart(Sprm *pra);
+void showFamilyPart(const Sprm*);
 
 // get the smallest value in an array
 int getMinArray(const int *A, int n);

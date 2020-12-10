@@ -64,6 +64,7 @@ void initSprm(void) {
             DET_FUNC = getBoardForBlackSimpleRoulette;
             printf(" (指し手ルーレット)\n");
     }
+    printf("等比数列の公比      : %4.2f\n", CMN_RATIO);
 }
 
 // print a simple parameter
@@ -76,18 +77,23 @@ void showSprm(Sprm pr) {
 }
 
 // show a part of parameter array
-void showFamilyPart(Sprm *pra) {
+void showFamilyPart(const Sprm *pra) {
     // population is 5 or less
     if (POPULATION <= 5) {
         // show all
-        for (int i = 0; i < POPULATION; i++)
+        for (int i = 0; i < POPULATION; i++) {
+            // 番号も表示
+            printf("%3d :", i);
             showSprmOneLine(pra[i]);
+        }
         return;
     }
     // population is greater than 5
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
+        printf("%3d :", i);
         showSprmOneLine(pra[i]);
-    printf("                                      ...\n");
+    }
+    printf("                                        ...\n%3d :", POPULATION - 1);
     showSprmOneLine(pra[POPULATION - 1]);
 }
 

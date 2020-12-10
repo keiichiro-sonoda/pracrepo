@@ -224,13 +224,13 @@ int main(void) {
     //srand((unsigned)time(NULL));
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
-    //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    formatPlusSeed(FNF_RDC05000_0290_0500001, format, FILENAME_MAX);
+    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
+    //formatPlusSeed(FNF_RDC05000_0290_0500001, format, FILENAME_MAX);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
-    //makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 101);
+    makeFGFileSprmComp(format);
+    checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
