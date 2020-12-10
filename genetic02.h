@@ -20,7 +20,7 @@
 #endif
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 0 // エリート数
+#define ELITE_NUM 1 // エリート数
 #endif
 
 #ifndef POPULATION
@@ -28,7 +28,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.01 // 突然変異率 (double)
+#define MUT_RATE .5 // 突然変異率 (double)
 #endif
 
 #ifndef GAME_NUM
