@@ -235,7 +235,7 @@ int main(void) {
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     // 研究対象
-    //nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 1, 101);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 0, 2);
     //sortTest();
     return 0;
 }
