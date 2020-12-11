@@ -240,23 +240,19 @@ int main(void) {
     initSprm();
     // シード固定に注意
     //srand((unsigned)time(NULL));
-    // フォーマット自動作成
+    // フォーマット自動作成 (シードまで)
     char format[FILENAME_MAX];
     if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, CMN_RATIO) < 0) {
         puts("フォーマット作成失敗");
         return -1;
     }
     printString(format);
-    scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, 8, MUTATION_ID);
+    // マクロのIDで関数決定
+    scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
     if (scm == rankGeoProgUni2CRdS) {
         puts("yeah");
     }
-    if (scm == NULL) {
-        puts("おや?");
-    }
-    // このマクロの第一引数を変える
-    //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    //printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
+    printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
     //checkSprmFileComp(format, 1);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
