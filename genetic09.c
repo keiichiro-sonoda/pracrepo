@@ -234,11 +234,8 @@ int main(void) {
     }
     printString(format);
     scmSprmSorted func1;
-    func1 = rltUniRdS;
     kakikae(&func1);
-    if (func1 == rltUniRdS) {
-        puts("変わってない");
-    }
+    printSize(func1);
     if (func1 == rankGeoProgUni2CRdS) {
         puts("変わった!!");
     }
