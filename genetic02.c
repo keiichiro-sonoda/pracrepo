@@ -508,7 +508,7 @@ int makeFirstGeneFileFlex(const char *format) {
 // マクロ SEED でシード設定してファイル名とシードを対応させる
 // ファイル名が正しく設定されていることは前提だが
 int makeFGFileSprmComp(const char *format) {
-    puts("初期世代を作成します");
+    puts("初期世代作成");
     srand(SEED);
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
