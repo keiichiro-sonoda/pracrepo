@@ -124,6 +124,18 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int is_comp, int 
         default:
             ;
     }
+    // 突然変異 (突然変異率が0より大きい場合のみ処理する)
+    if (loc_mr > 0) {
+        strcatSize(info_str, "_", BUF_LEN);
+        switch (mut_id) {
+            case 0: // ランダム突然変異
+                snprintf(tmp, BUF_LEN, "rd%03d", (int)(loc_mr * 100));
+                strcatSize(info_str, tmp, BUF_LEN);
+                break;
+            default:
+                ;
+        }
+    }
     printString(info_str);
 
     double cr = va_arg(args, double);
