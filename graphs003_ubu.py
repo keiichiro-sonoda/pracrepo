@@ -66,10 +66,11 @@ getFitness.argtypes = (c_char_p, IntArray100, c_int32)
 def getFamilyMeansWrap(fnamer, n, compressed):
     f_arr_c = FloatArray10()
     flag = getFamilyMeans(fnamer.encode(), f_arr_c, n, compressed)
-    # 読み込み失敗
-    if flag < 0:
-        return []
-    return list(f_arr_c)
+    res_list = []
+    # 読み込み成功
+    if flag >= 0:
+        res_list = list(f_arr_c)
+    return res_list
 
 # 圧縮フラグを追加
 def getFamilySDWrap(fnamer, n, compressed):
@@ -602,7 +603,7 @@ COMPRESSED_INDICES = [26, 27, 28, 29]
 
 # 各フォーマットでどのシードを使ったのか記録
 # フォーマットにシードが付いているかの判定に使える
-SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (999,)}
+SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999)}
 
 def main():
     global VIEW_ONLY
@@ -619,7 +620,7 @@ def main():
         active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
     else:
         active_format = FILE_FORMATS[ind]
-    print(active_format)
+    print("フォーマット: ", active_format)
     # 圧縮添字リストを見てどちらを使うか判断
     if ind in COMPRESSED_INDICES:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 1)
