@@ -225,17 +225,17 @@ int main(void) {
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
     //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    formatPlusSeed(FNF_RDC05000_0290_0500001, format, FILENAME_MAX);
+    formatPlusSeed(FNF_RDC05000_0280_0500001, format, FILENAME_MAX);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
-    //makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 3);
+    makeFGFileSprmComp(format);
+    checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     // 研究対象
-    //nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 3, 4);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 1, 0, 4);
     // 修正用
     //sortOnlySprmComp(rankGeoProgUni2CRdS, format, 4);
     //checkSprmFileComp(format, 4);
