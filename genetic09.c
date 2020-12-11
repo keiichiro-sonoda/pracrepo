@@ -224,7 +224,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
     scmSprmSorted res_func;
     // 全て合わせて switch で個別処理
     switch (sel_id * 10000 + crs_id * 100 + mut_id) {
-        case 020500:
+        case 20500:
             puts("等比数列ランキング選択, 2人っ子一様交叉, ランダム突然変異");
             res_func = rankGeoProgUni2CRdS;
             break;
