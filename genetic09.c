@@ -230,7 +230,7 @@ int main(void) {
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
     //makeFGFileSprmComp(format);
-    checkSprmFileComp(format, 1);
+    //checkSprmFileComp(format, 1);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
@@ -240,5 +240,15 @@ int main(void) {
     //sortOnlySprmComp(rankGeoProgUni2CRdS, format, 4);
     //checkSprmFileComp(format, 4);
     //sortTest();
+    srand((unsigned)time(NULL));
+    int x, y, z, c;
+    z = 0;
+    x = 3;
+    y = 5;
+    for (int i = 0; i < 1000; i++) {
+        z = alternative(x, y);
+        if (z == y) c++;
+    }
+    printDecimal(c);
     return 0;
 }

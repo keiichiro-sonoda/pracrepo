@@ -142,7 +142,7 @@
 
 // choose randomly either a or b
 #ifndef alternative
-#define alternative(a, b) (rand() & 1 ? (a) : (b))
+#define alternative(a, b) (randBit() ? (a) : (b))
 #endif
 
 // Sprm からマスに対応する値を取り出すためのグローバル変数設定
