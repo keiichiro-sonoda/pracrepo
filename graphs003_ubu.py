@@ -610,14 +610,14 @@ def main():
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
     ind = 29
-    loc_pop = 50
+    loc_pop = 1
     start_g = 0
     stop_g = 100
     chumoku = []
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
-        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
+        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][1])
     else:
         active_format = FILE_FORMATS[ind]
     print("フォーマット: ", active_format)
