@@ -239,6 +239,7 @@ int main(void) {
     //sortOnlySprmComp(rankGeoProgUni2CRdS, format, 4);
     //checkSprmFileComp(format, 4);
     //sortTest();
-    makeSprmFileFormatAuto(EF_FUNC_ID, POPULATION, ELITE_NUM, 02, 05, 00, MUT_RATE, 1, 0.2);
+    char str[FILENAME_MAX];
+    makeSprmFileFormatAuto(str, FILENAME_MAX, EF_FUNC_ID, POPULATION, ELITE_NUM, 02, 05, 00, MUT_RATE, 1, 1, 1, 2e-20);
     return 0;
 }
