@@ -44,13 +44,6 @@ int getTopSprmPy(const char *fnamer, float f_pointer[MASU_NUM]);
 // ファイル名を世代番号でしていするのはpythonで行なう
 void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]);
 
-// パラメータ毎に平均値を計算する関数
-void calcSprmMeans(const Sprm *family, float means[SPRM_LEN], int n);
-
-// パラメータ毎に標準偏差を計算する関数
-// 世代の全てのデータを使うことを想定して, 個体数で割ることにする
-void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n);
-
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 // 無効なファイル名が渡されたときの処理も追加

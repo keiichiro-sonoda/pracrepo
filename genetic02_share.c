@@ -104,36 +104,6 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
         f_pointer[i] = weight_sum[i] / 10;
 }
 
-// パラメータ毎に平均値を計算する関数
-void calcSprmMeans(const Sprm *family, float means[SPRM_LEN], int n) {
-    // 0 で初期化 (float配列用関数)
-    zerosFloat(means, SPRM_LEN);
-    // 和を計算
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < SPRM_LEN; j++)
-            means[j] += family[i].weight[j];
-    // 個体数で割る
-    for (int j = 0; j < SPRM_LEN; j++)
-        means[j] /= n;
-}
-
-// パラメータ毎に標準偏差を計算する関数
-// 世代の全てのデータを使うことを想定して, 個体数で割ることにする
-void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n) {
-    float means[SPRM_LEN];
-    // まずは平均値を計算
-    calcSprmMeans(family, means, n);
-    // 初期化 (float配列用関数)
-    zerosFloat(SD, SPRM_LEN);
-    // 偏差の2乗の和を計算
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < SPRM_LEN; j++)
-            SD[j] += powf(family[i].weight[j] - means[j], 2.0);
-    // 個体数で割って平方根を計算
-    for (int j = 0; j < SPRM_LEN; j++)
-        SD[j] = sqrtf(SD[j] / n);
-}
-
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
 // 無効なファイル名が渡されたときの処理も追加
@@ -143,8 +113,11 @@ void calcSprmSD(const Sprm *family, float SD[SPRM_LEN], int n) {
 int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
     loadSprmFileDirectFlexExit(fnamer, family, n, compressed);
-    // 平均値計算
-    calcSprmMeans(family, f_pointer, n);
+    double d_means[SPRM_LEN];
+    // 平均値計算関数は genetic02 で再定義した (計算は double 型)
+    calcSprmMeans(family, n, d_means);
+    // float 配列にコピー
+    copyArray(d_means, f_pointer, n);
     return 0;
 }
 
@@ -196,8 +169,14 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
     loadSprmFileDirectFlexExit(fnamer, family, n, compressed);
-    // 標準偏差計算
-    calcSprmSD(family, f_pointer, n);
+    // 一時的に double 型で計算
+    double d_means[SPRM_LEN], d_vars[SPRM_LEN];
+    // まずは平均値計算
+    calcSprmMeans(family, n, d_means);
+    // 分散を計算
+    calcSprmVariances(family, n, d_means, d_vars);
+    // 標準偏差にして渡す (型もついでに float に変わる)
+    sqrtArray(d_vars, f_pointer, SPRM_LEN);
     return 0;
 }
 
