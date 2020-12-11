@@ -111,7 +111,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             strcatSize(info_str, tmp, BUF_LEN);
             break;
         default:
-            miteigiExit();
+            miteigiExit(-1);
     }
     strcatSize(info_str, "_", BUF_LEN);
     // 交叉
@@ -120,7 +120,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             strcatSize(info_str, "uni2", BUF_LEN);
             break;
         default:
-            miteigiExit();
+            miteigiExit(-1);
     }
     // 突然変異 (突然変異率が0より大きい場合のみ処理する)
     if (loc_mr > 0) {
@@ -131,7 +131,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
                 strcatSize(info_str, tmp, BUF_LEN);
                 break;
             default:
-                miteigiExit();
+                miteigiExit(-1);
         }
     }
     // パスを作成 (ディレクトリ名とファイル名の共通部分が info_str)

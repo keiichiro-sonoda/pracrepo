@@ -229,7 +229,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
             res_func = rankGeoProgUni2CRdS;
             break;
         default:
-            res_func = NULL;
+            miteigiExit(NULL);
     }
     printDecimal(sel_id * 10000 + crs_id * 100 + mut_id);
     return res_func;
@@ -247,7 +247,7 @@ int main(void) {
         return -1;
     }
     printString(format);
-    scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
+    scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, 8, MUTATION_ID);
     if (scm == rankGeoProgUni2CRdS) {
         puts("yeah");
     }

@@ -208,7 +208,8 @@
 #define weight2ucharArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = weight2uchar((src)[_])
 
 // 整数を返す関数で, 未定義の部分に入ったら実行 (使うとこ限られそう?)
-#define miteigiExit() if (1) {printf("\a未定義\n"); return -1;} 
+// 返り値となる値を与える
+#define miteigiExit(res_val) if (1) {printf("\a未定義\n"); return (res_val);} 
 
 // Sprm配列を圧縮
 // 関数でもconstは引っかかったのでマクロに戻す
