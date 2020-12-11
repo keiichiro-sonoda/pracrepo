@@ -222,11 +222,12 @@ int main(void) {
     initSprm();
     // シード固定に注意
     //srand((unsigned)time(NULL));
+    // フォーマット自動作成
     char format[FILENAME_MAX];
+    makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, CMN_RATIO);
+    printString(format);
     // このマクロの第一引数を変える
     //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    printString(format);
     //printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
     //checkSprmFileComp(format, 1);
@@ -239,8 +240,5 @@ int main(void) {
     //sortOnlySprmComp(rankGeoProgUni2CRdS, format, 4);
     //checkSprmFileComp(format, 4);
     //sortTest();
-    char str[FILENAME_MAX];
-    makeSprmFileFormatAuto(str, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, CMN_RATIO);
-    printString(str);
     return 0;
 }
