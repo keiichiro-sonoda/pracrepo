@@ -171,7 +171,7 @@ def makeMeansGraph(ax, x, ys):
     # 最大値と最小値を取得
     y_max = math.ceil(max(max(i) for i in ys) / step) * step
     y_min = math.floor(min(min(i) for i in ys) / step) * step
-    print(y_max, y_min)
+    print("平均値の範囲", y_max, y_min)
     # 縦幅指定 (間隔は固定)
     ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
 
@@ -271,7 +271,7 @@ def makeFitnessGraph(ax, x, ys):
     y_max = math.ceil(max(ys[0]) / step) * step
     # 最小値の最小値から下限を決める
     y_min = math.floor(min(ys[2]) / step) * step
-    print(y_max, y_min)
+    print("得点の範囲", y_max, y_min)
     # 縦幅指定 (間隔は固定)
     ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
 
