@@ -5,6 +5,7 @@
 //#include <stdio.h>
 //#include <stdlib.h>
 //#include <string.h>
+#include <stdarg.h> // 可変長引数を実現するためのライブラリ?
 #include "othello.h"
 
 #ifndef SEED
