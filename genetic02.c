@@ -1240,7 +1240,7 @@ void sortOnlySprmComp(scmSprmSorted scm, const char *format, int gene_num) {
     int flag, fitness[POPULATION];
     char fnames[FILENAME_MAX];
     // ループと同一シードを使う
-    printf("seed1: %d", s1 = SEED + gene_num + 1);
+    printf("seed1: %d\n", s1 = SEED + gene_num + 1);
     // ソート対象ファイル名を作成
     snprintf(fnames, FILENAME_MAX, format, gene_num);
     srand(s1);
