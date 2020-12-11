@@ -16,7 +16,7 @@
 #define SURVIVE_NUM 10 // 陳腐化したマクロ
 
 #ifndef CMN_RATIO
-#define CMN_RATIO 0.8 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
+#define CMN_RATIO 0.5 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
 #endif
 
 #ifndef ELITE_NUM
@@ -138,6 +138,7 @@
 // 05: 一様交叉2人っ子バージョン
 #define FNF_RDC05000_0290_0500001 "prm/srddc050__rkg90_uni2_rd001/srddc050__rkg90_uni2_rd001_g%03d.bin"
 #define FNF_RDC05000_0280_0500001 "prm/srddc050__rkg80_uni2_rd001/srddc050__rkg80_uni2_rd001_g%03d.bin"
+#define FNF_RDC05000_0250_0500001 "prm/srddc050__rkg50_uni2_rd001/srddc050__rkg50_uni2_rd001_g%03d.bin"
 
 // choose randomly either a or b
 #ifndef alternative
