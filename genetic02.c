@@ -72,7 +72,9 @@ void initSprm(void) {
 // 適応度ID, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他
 // 可変長引数を試してみたい
 int makeSprmFileFormatAuto(int eff_id, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, ...) {
+    // 引数の構造体?
     va_list args;
+    // 開始
     va_start(args, loc_mr);
     double cr = va_arg(args, double);
     printFloatExp(cr);
