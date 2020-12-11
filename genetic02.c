@@ -75,9 +75,11 @@ int makeSprmFileFormatAuto(int eff_id, int loc_pop, int loc_eln, int sel_id, int
     va_list args;
     va_start(args, loc_mr);
     double cr = va_arg(args, double);
-    printFloat(cr);
+    printFloatExp(cr);
     int t = va_arg(args, int);
     printDecimal(t);
+    // 終了. これが必要らしい
+    va_end(args);
     return 0;
 }
 

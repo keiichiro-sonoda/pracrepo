@@ -227,7 +227,7 @@ int main(void) {
     //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     printString(format);
-    printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
+    //printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
     //checkSprmFileComp(format, 1);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
@@ -239,6 +239,6 @@ int main(void) {
     //sortOnlySprmComp(rankGeoProgUni2CRdS, format, 4);
     //checkSprmFileComp(format, 4);
     //sortTest();
-    makeSprmFileFormatAuto(EF_FUNC_ID, POPULATION, ELITE_NUM, 02, 05, 00, MUT_RATE, CMN_RATIO, 123);
+    makeSprmFileFormatAuto(EF_FUNC_ID, POPULATION, ELITE_NUM, 02, 05, 00, MUT_RATE, 1, 0.2);
     return 0;
 }
