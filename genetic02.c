@@ -699,9 +699,9 @@ void checkSprmFileComp(const char *format, int gene_num) {
     printf("確認するファイル: ");
     printf(format, gene_num);
     if (flag == 1) {
-        printf("ソート済\n");
+        printf("\nソート済\n");
     } else {
-        printf("未ソート\n");
+        printf("\n未ソート\n");
     }
     showFamilyPart(pra);
 }

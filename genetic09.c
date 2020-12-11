@@ -249,13 +249,13 @@ int main(void) {
     scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
-    makeFGFileSprmComp(format);
+    //makeFGFileSprmComp(format);
     checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
     //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
     // 研究対象
-    nGeneSprmCompLoop(scm, format, 1, 0, 4);
+    nGeneSprmCompLoop(scm, format, 1, 1, 3);
     // 修正用
     //sortOnlySprmComp(rankGeoProgUni2CRdS, format, 4);
     //checkSprmFileComp(format, 4);
