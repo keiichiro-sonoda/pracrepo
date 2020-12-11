@@ -177,6 +177,7 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int comp
     calcSprmVariances(family, n, d_means, d_vars);
     // 標準偏差にして渡す (型もついでに float に変わる)
     sqrtArray(d_vars, f_pointer, SPRM_LEN);
+    randUcharArray(f_pointer, SPRM_LEN);
     return 0;
 }
 
