@@ -101,15 +101,25 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int is_comp, int 
     strcatSize(info_str, tmp, BUF_LEN);
     // エリート数は2桁 (0なら表示しない)
     if (loc_eln) {
-        snprintf(tmp, BUF_LEN, "%02d_", loc_eln);
+        snprintf(tmp, BUF_LEN, "%02d", loc_eln);
         strcatSize(info_str, tmp, BUF_LEN);
     }
+    strcatSize(info_str, "_", BUF_LEN);
     // 選択
     switch (sel_id) {
         case 2: // 等比数列ランキング選択
             // 可変長引数で公比が与えられるはずなので, 100倍した整数値を最低2桁で表示
             snprintf(tmp, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
             strcatSize(info_str, tmp, BUF_LEN);
+            break;
+        default:
+            ;
+    }
+    strcatSize(info_str, "_", BUF_LEN);
+    // 交叉
+    switch (crs_id) {
+        case 5: // 一様交叉 (2人っ子)
+            strcatSize(info_str, "uni2", BUF_LEN);
             break;
         default:
             ;
