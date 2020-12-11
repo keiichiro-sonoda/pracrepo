@@ -76,10 +76,19 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
     va_list args;
     // 開始. 第二引数には最後の固定引数?を渡すらしい
     va_start(args, loc_mr);
+    
+    char tmp[BUF_LEN];
+    switch (eff_id & 0b10) {
+        case 0b00: // リーグ戦
+            strcatSize(tmp, "l", BUF_LEN);
+            break;
+        default: // 対ランダム
+            strcatSize(tmp, "rd", BUF_LEN);
+    }
+    printString(tmp);
+
     double cr = va_arg(args, double);
     printFloatExp(cr);
-    int t = va_arg(args, int);
-    printDecimal(t);
     // 終了. これが必要らしい
     va_end(args);
     return 0;

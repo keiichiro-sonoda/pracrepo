@@ -155,6 +155,11 @@
 // empty the board
 #define emptyBoard(bp) ((bp)->board[0] = 0, (bp)->board[1] = 0)
 
+// 連結先のサイズを指定して安全? に文字列連結
+// 連結後の文字列の長さがサイズ未満なら連結
+// サイズぴったりだとナル文字が置けない?
+#define strcatSize(dst, src, dst_size) if (strlen(dst) + strlen(src) < (dst_size)) strcat(dst, src)
+
 // -Exit() というマクロは整数を返す関数内で使うことだけ想定
 // 警告文は改行無しで別途表示するのがよい
 // 標準入力で y と Enter だけ押されたら, 何もしない
