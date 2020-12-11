@@ -21,7 +21,7 @@
 #endif
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 0 // エリート数
+#define ELITE_NUM 5 // エリート数
 #endif
 
 #ifndef POPULATION

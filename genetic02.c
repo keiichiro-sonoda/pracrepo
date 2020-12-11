@@ -94,8 +94,14 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
             strcatSize(info_str, "r", BUF_LEN);
     }
     char tmp[BUF_LEN];
-    snprintf(tmp, BUF_LEN, "_%03d", loc_pop);
+    // 個体数は3桁
+    snprintf(tmp, BUF_LEN, "_%03d_", loc_pop);
     strcatSize(info_str, tmp, BUF_LEN);
+    // エリート数は2桁 (0なら表示しない)
+    if (loc_eln) {
+        snprintf(tmp, BUF_LEN, "%02d", loc_eln);
+        strcatSize(info_str, tmp, BUF_LEN);
+    }
     printString(info_str);
 
     double cr = va_arg(args, double);
