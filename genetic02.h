@@ -45,6 +45,10 @@
 // 5: 一様交叉 (2人っ子)
 #define CROSSOVER_ID 5
 
+// 突然変異識別子
+// 0: ランダム突然変異
+#define MUTATION_ID 0
+
 #define COMPRESS 1 // 圧縮するか否か
 
 #define SPRM_LEN 10 // 区別できるマスの数 (個体の配列長)

@@ -137,11 +137,12 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
         }
     }
     printString(info_str);
+    // パスを作成
     snprintf(dst, dst_size, "prm/%s/%s", info_str, info_str);
     strcatSize(dst, "_g%03d", dst_size);
-    snprintf(tmp, BUF_LEN, "%03d", loc_seed);
+    // シードと拡張子の追加
+    snprintf(tmp, BUF_LEN, "_s%03d.bin", loc_seed);
     strcatSize(dst, tmp, BUF_LEN);
-    printString(dst);
     // 終了. これが必要らしい, メモリの解放?
     va_end(args);
     return 0;
