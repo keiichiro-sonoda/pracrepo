@@ -240,6 +240,6 @@ int main(void) {
     //checkSprmFileComp(format, 4);
     //sortTest();
     char str[FILENAME_MAX];
-    makeSprmFileFormatAuto(str, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 2, 5, 0, MUT_RATE, CMN_RATIO);
+    makeSprmFileFormatAuto(str, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SEL_ID, 5, 0, MUT_RATE, CMN_RATIO);
     return 0;
 }

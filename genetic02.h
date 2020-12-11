@@ -35,11 +35,11 @@
 // 適応度評価関数を決める識別子
 // 1bit目: 指し手関数識別子 (0: 固定, それ以外: ルーレット)
 // 2bit目: 対ランダム or リーグ戦 (0: リーグ戦, それ以外: 対ランダム)
-#define EF_FUNC_ID 0b011
+#define EF_FUNC_ID 0b010
 
 // 選択方法識別子
 // 2: 等比数列ランキング選択
-#define SEL_ID 2
+#define SEL_ID 3
 
 #define COMPRESS 1 // 圧縮するか否か
 

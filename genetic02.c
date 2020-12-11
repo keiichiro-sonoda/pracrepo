@@ -138,8 +138,9 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     }
     printString(info_str);
     snprintf(dst, dst_size, "prm/%s/%s", info_str, info_str);
+    strcatSize(dst, "_g%03d.bin", dst_size);
     printString(dst);
-    // 終了. これが必要らしい
+    // 終了. これが必要らしい, メモリの解放?
     va_end(args);
     return 0;
 }
