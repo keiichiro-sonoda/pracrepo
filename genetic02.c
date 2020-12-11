@@ -95,7 +95,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     // 圧縮するかどうか
     if (is_comp) strcatSize(info_str, "c", BUF_LEN);
     // 個体数は3桁
-    snprintf(tmp, BUF_LEN, "_%03d_", loc_pop);
+    snprintf(tmp, BUF_LEN, "%03d_", loc_pop);
     strcatSize(info_str, tmp, BUF_LEN);
     // エリート数は2桁 (0なら表示しない)
     if (loc_eln) {
@@ -692,13 +692,12 @@ void checkSprmFile(const char *format, int gene_num) {
 }
 
 // 圧縮ファイルからパラメータを読み取って確認
-// ファイル名作成のルーチンを省略したいところだが...
 void checkSprmFileComp(const char *format, int gene_num) {
     Sprm pra[POPULATION];
-    char fnamer[FILENAME_MAX];
-    snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    int flag = loadSprmFileCompDirect(fnamer, pra, POPULATION);
+    int flag = loadSprmFileComp(format, gene_num, pra, POPULATION);
     if (flag < 0) return;
+    printf("確認するファイル: ");
+    printf(format, gene_num);
     if (flag == 1) {
         printf("ソート済\n");
     } else {
