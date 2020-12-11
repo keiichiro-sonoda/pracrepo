@@ -217,6 +217,10 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     }
 }
 
+void kakikae(scmSprmSorted f) {
+    f = rankGeoProgUni2CRdS;
+}
+
 int main(void) {
     // 初期設定
     initSprm();
@@ -229,6 +233,12 @@ int main(void) {
         return -1;
     }
     printString(format);
+    scmSprmSorted func1;
+    func1 = rltUniRdS;
+    kakikae(func1);
+    if (func1 == rltUniRdS) {
+        puts("変わってない");
+    }
     // このマクロの第一引数を変える
     //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     //printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
