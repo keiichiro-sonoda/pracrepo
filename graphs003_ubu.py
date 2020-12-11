@@ -609,7 +609,7 @@ def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
-    ind = 29
+    ind = 28
     loc_pop = 50
     start_g = 0
     stop_g = 100
