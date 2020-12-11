@@ -217,8 +217,8 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     }
 }
 
-void kakikae(scmSprmSorted f) {
-    f = rankGeoProgUni2CRdS;
+void kakikae(scmSprmSorted *f) {
+    (*f) = rankGeoProgUni2CRdS;
 }
 
 int main(void) {
@@ -235,9 +235,12 @@ int main(void) {
     printString(format);
     scmSprmSorted func1;
     func1 = rltUniRdS;
-    kakikae(func1);
+    kakikae(&func1);
     if (func1 == rltUniRdS) {
         puts("変わってない");
+    }
+    if (func1 == rankGeoProgUni2CRdS) {
+        puts("変わった!!");
     }
     // このマクロの第一引数を変える
     //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
