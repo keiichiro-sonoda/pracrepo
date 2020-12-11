@@ -207,6 +207,9 @@
 // 重み配列を符号無文字型配列に変換 (圧縮)
 #define weight2ucharArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = weight2uchar((src)[_])
 
+// 整数を返す関数で, 未定義の部分に入ったら実行 (使うとこ限られそう?)
+#define miteigiExit() if (1) {printf("\a未定義\n"); return -1;} 
+
 // Sprm配列を圧縮
 // 関数でもconstは引っかかったのでマクロに戻す
 // できる限りマクロに式を渡さないように一時変数を多用
