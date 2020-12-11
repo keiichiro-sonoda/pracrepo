@@ -69,9 +69,9 @@ void initSprm(void) {
 
 // Sprm のファイルフォーマットを自動生成する関数 (予定)
 // 各種要素を引数で指定
-// 適応度ID, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他
+// 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他
 // 可変長引数を試してみたい
-int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, ...) {
+int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int is_comp, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, ...) {
     // 引数の構造体?
     va_list args;
     // 開始. 第二引数には最後の固定引数?を渡すらしい
@@ -93,6 +93,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
         default: // 指し手ルーレット
             strcatSize(info_str, "r", BUF_LEN);
     }
+    // 圧縮するかどうか
+    if (is_comp) strcatSize(info_str, "c", BUF_LEN);
     char tmp[BUF_LEN];
     // 個体数は3桁
     snprintf(tmp, BUF_LEN, "_%03d_", loc_pop);
@@ -105,7 +107,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
     // 選択
     switch (sel_id) {
         case 2: // 等比数列ランキング選択
-            // 可変長引数で公比が与えられるはず
+            // 可変長引数で公比が与えられるはずなので, 100倍した整数値を最低2桁で表示
             snprintf(tmp, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
             strcatSize(info_str, tmp, BUF_LEN);
             break;

@@ -12,16 +12,12 @@
 #define SEED 123U // シード値
 #endif
 
-#define SPRM_LEN 10 // 区別できるマスの数
-
-#define SURVIVE_NUM 10 // 陳腐化したマクロ
-
 #ifndef CMN_RATIO
-#define CMN_RATIO 0.95 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
+#define CMN_RATIO 0.2 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
 #endif
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 5 // エリート数
+#define ELITE_NUM 0 // エリート数
 #endif
 
 #ifndef POPULATION
@@ -39,7 +35,17 @@
 // 適応度評価関数を決める識別子
 // 1bit目: 指し手関数識別子 (0: 固定, それ以外: ルーレット)
 // 2bit目: 対ランダム or リーグ戦 (0: リーグ戦, それ以外: 対ランダム)
-#define EF_FUNC_ID 0b010
+#define EF_FUNC_ID 0b011
+
+// 選択方法識別子
+// 2: 等比数列ランキング選択
+#define SEL_ID 2
+
+#define COMPRESS 1 // 圧縮するか否か
+
+#define SPRM_LEN 10 // 区別できるマスの数 (個体の配列長)
+
+#define SURVIVE_NUM 10 // 陳腐化したマクロ
 
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
@@ -307,7 +313,7 @@ void initSprm(void);
 // Sprm のファイルフォーマットを自動生成する関数 (予定)
 // 各種要素を引数で指定
 // 適応度ID, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他オプション
-int makeSprmFileFormatAuto(char*, int, int, int, int, int, int, int, double, ...);
+int makeSprmFileFormatAuto(char*, int, int, int, int, int, int, int, int, double, ...);
 
 // print a simple parameter
 void showSprm(Sprm pr);
