@@ -615,10 +615,10 @@ def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
-    ind = 32
-    loc_pop = 50
+    ind = 29
+    loc_pop = 1
     start_g = 0
-    stop_g = 100
+    stop_g = 10
     chumoku = []
     # シードをつけるか否か
     if ind in SEED_DICT:
