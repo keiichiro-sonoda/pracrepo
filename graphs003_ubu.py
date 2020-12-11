@@ -636,7 +636,6 @@ def main():
     else:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 0)
         viewSDGraph(active_format, loc_pop, start_g, stop_g, 0, chumoku)
-    #viewSDGraph(FILE_FORMATS[ind], loc_pop, 0, 100)
     #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
