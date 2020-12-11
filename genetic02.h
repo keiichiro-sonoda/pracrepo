@@ -300,6 +300,11 @@ extern int FIRST_RAND;
 // パラメータも表示
 void initSprm(void);
 
+// Sprm のファイルフォーマットを自動生成する関数 (予定)
+// 各種要素を引数で指定
+// 適応度ID, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他オプション
+int makeSprmFileFormatAuto(int, int, int, int, int, int, double, ...);
+
 // print a simple parameter
 void showSprm(Sprm pr);
 

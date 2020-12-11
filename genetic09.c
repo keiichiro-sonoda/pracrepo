@@ -225,10 +225,9 @@ int main(void) {
     char format[FILENAME_MAX];
     // このマクロの第一引数を変える
     //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
-    formatPlusSeed(FNF_RDC05000_0250_0500001, format, FILENAME_MAX);
+    formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
     printString(format);
-    printf("条件とファイルフォーマットは合っていますか?");
-    kakuninExit();
+    printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
     //checkSprmFileComp(format, 1);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
@@ -240,15 +239,6 @@ int main(void) {
     //sortOnlySprmComp(rankGeoProgUni2CRdS, format, 4);
     //checkSprmFileComp(format, 4);
     //sortTest();
-    srand((unsigned)time(NULL));
-    int x, y, z, c;
-    z = 0;
-    x = 3;
-    y = 5;
-    for (int i = 0; i < 1000; i++) {
-        z = alternative(x, y);
-        if (z == y) c++;
-    }
-    printDecimal(c);
+    makeSprmFileFormatAuto(EF_FUNC_ID, POPULATION, ELITE_NUM, 02, 05, 00, MUT_RATE);
     return 0;
 }

@@ -67,6 +67,14 @@ void initSprm(void) {
     printf("等比数列の公比      : %4.2f\n", CMN_RATIO);
 }
 
+// Sprm のファイルフォーマットを自動生成する関数 (予定)
+// 各種要素を引数で指定
+// 適応度ID, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他
+// 可変長引数を試してみたい
+int makeSprmFileFormatAuto(int eff_id, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, ...) {
+    return 0;
+}
+
 // print a simple parameter
 void showSprm(Sprm pr) {
     for (int i = 0; i < MASU_NUM; i++) {
@@ -567,6 +575,7 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
 }
 
 // 圧縮ファイルからロード (フォーマットと世代番号から)
+// 返り値はエラーフラグか, ソートフラグ
 int loadSprmFileComp(const char *format, int gene_num, Sprm *pra, int loc_pop) {
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
