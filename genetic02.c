@@ -93,6 +93,9 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
         default: // 指し手ルーレット
             strcatSize(info_str, "r", BUF_LEN);
     }
+    char tmp[BUF_LEN];
+    snprintf(tmp, BUF_LEN, "_%03d", loc_pop);
+    strcatSize(info_str, tmp, BUF_LEN);
     printString(info_str);
 
     double cr = va_arg(args, double);
