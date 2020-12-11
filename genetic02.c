@@ -76,8 +76,9 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     va_list args;
     // 開始. 第二引数には最後の固定引数?を渡すらしい
     va_start(args, loc_seed);
-    // s\0 で初期化した文字列
+    // s\0 で初期化した文字列. ここにシード以外の情報が入る?
     char info_str[BUF_LEN] = {115, 0};
+    char tmp[BUF_LEN];
     // 適応度
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
@@ -95,7 +96,6 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     }
     // 圧縮するかどうか
     if (is_comp) strcatSize(info_str, "c", BUF_LEN);
-    char tmp[BUF_LEN];
     // 個体数は3桁
     snprintf(tmp, BUF_LEN, "_%03d_", loc_pop);
     strcatSize(info_str, tmp, BUF_LEN);
@@ -136,8 +136,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
                 ;
         }
     }
-    printString(info_str);
-    // パスを作成
+    // パスを作成 (ディレクトリ名とファイル名の共通部分が info_str)
     snprintf(dst, dst_size, "prm/%s/%s", info_str, info_str);
     strcatSize(dst, "_g%03d", dst_size);
     // シードと拡張子の追加
