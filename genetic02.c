@@ -77,13 +77,13 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
     // 開始. 第二引数には最後の固定引数?を渡すらしい
     va_start(args, loc_mr);
     
-    char tmp[BUF_LEN];
+    char tmp[BUF_LEN] = {0};
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
-            strcatSize(tmp, "l", BUF_LEN);
+            strcatSize(tmp, "l", 2);
             break;
         default: // 対ランダム
-            strcatSize(tmp, "rd", BUF_LEN);
+            strcatSize(tmp, "rd", 2);
     }
     printString(tmp);
 
