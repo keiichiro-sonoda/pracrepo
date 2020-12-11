@@ -117,7 +117,7 @@ int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int c
     // 平均値計算関数は genetic02 で再定義した (計算は double 型)
     calcSprmMeans(family, n, d_means);
     // float 配列にコピー
-    copyArray(d_means, f_pointer, n);
+    copyArray(d_means, f_pointer, SPRM_LEN);
     return 0;
 }
 
