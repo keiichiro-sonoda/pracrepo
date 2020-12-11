@@ -67,10 +67,8 @@ void initSprm(void) {
     printf("等比数列の公比      : %4.2f\n", CMN_RATIO);
 }
 
-// Sprm のファイルフォーマットを自動生成する関数 (予定)
-// 各種要素を引数で指定
+// Sprm のファイルフォーマットを自動生成する関数
 // 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, シード値, その他
-// 可変長引数を試してみたい
 int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, int loc_seed, ...) {
     // 引数の構造体?
     va_list args;

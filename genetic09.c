@@ -217,8 +217,22 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     }
 }
 
-void kakikae(scmSprmSorted *f) {
-    (*f) = rankGeoProgUni2CRdS;
+// 関数型を返す関数
+// 識別子から選択・交叉・突然変異関数 (ソート済限定) を決定する
+scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
+    // デフォルト
+    scmSprmSorted res_func;
+    // 全て合わせて switch で個別処理
+    switch (sel_id * 10000 + crs_id * 100 + mut_id) {
+        case 020500:
+            puts("等比数列ランキング選択, 2人っ子一様交叉, ランダム突然変異");
+            res_func = rankGeoProgUni2CRdS;
+            break;
+        default:
+            res_func = NULL;
+    }
+    printDecimal(sel_id * 10000 + crs_id * 100 + mut_id);
+    return res_func;
 }
 
 int main(void) {
@@ -233,11 +247,12 @@ int main(void) {
         return -1;
     }
     printString(format);
-    scmSprmSorted func1;
-    kakikae(&func1);
-    printSize(func1);
-    if (func1 == rankGeoProgUni2CRdS) {
-        puts("変わった!!");
+    scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
+    if (scm == rankGeoProgUni2CRdS) {
+        puts("yeah");
+    }
+    if (scm == NULL) {
+        puts("おや?");
     }
     // このマクロの第一引数を変える
     //formatPlusSeed(FNF_TEST, format, FILENAME_MAX);
