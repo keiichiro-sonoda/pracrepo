@@ -37,9 +37,13 @@
 // 2bit目: 対ランダム or リーグ戦 (0: リーグ戦, それ以外: 対ランダム)
 #define EF_FUNC_ID 0b010
 
-// 選択方法識別子
+// 選択識別子
 // 2: 等比数列ランキング選択
-#define SEL_ID 3
+#define SELECTION_ID 2
+
+// 交叉識別子
+// 5: 一様交叉 (2人っ子)
+#define CROSSOVER_ID 5
 
 #define COMPRESS 1 // 圧縮するか否か
 
@@ -313,7 +317,7 @@ void initSprm(void);
 // Sprm のファイルフォーマットを自動生成する関数 (予定)
 // 各種要素を引数で指定
 // 適応度ID, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他オプション
-int makeSprmFileFormatAuto(char*, int, int, int, int, int, int, int, int, double, ...);
+int makeSprmFileFormatAuto(char*, int, int, int, int, int, int, int, int, double, int, ...);
 
 // print a simple parameter
 void showSprm(Sprm pr);

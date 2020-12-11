@@ -69,13 +69,13 @@ void initSprm(void) {
 
 // Sprm のファイルフォーマットを自動生成する関数 (予定)
 // 各種要素を引数で指定
-// 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他
+// 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, シード値, その他
 // 可変長引数を試してみたい
-int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, ...) {
+int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, int loc_seed, ...) {
     // 引数の構造体?
     va_list args;
     // 開始. 第二引数には最後の固定引数?を渡すらしい
-    va_start(args, loc_mr);
+    va_start(args, loc_seed);
     // s\0 で初期化した文字列
     char info_str[BUF_LEN] = {115, 0};
     // 適応度
@@ -138,7 +138,9 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     }
     printString(info_str);
     snprintf(dst, dst_size, "prm/%s/%s", info_str, info_str);
-    strcatSize(dst, "_g%03d.bin", dst_size);
+    strcatSize(dst, "_g%03d", dst_size);
+    snprintf(tmp, BUF_LEN, "%03d", loc_seed);
+    strcatSize(dst, tmp, BUF_LEN);
     printString(dst);
     // 終了. これが必要らしい, メモリの解放?
     va_end(args);
