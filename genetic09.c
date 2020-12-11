@@ -229,7 +229,7 @@ int main(void) {
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?");
     kakuninExit();
-    makeFGFileSprmComp(format);
+    //makeFGFileSprmComp(format);
     checkSprmFileComp(format, 3);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
