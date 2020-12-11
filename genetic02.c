@@ -78,7 +78,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
     va_start(args, loc_mr);
     // s\0 で初期化した文字列
     char info_str[BUF_LEN] = {115, 0};
-
+    // 適応度
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
             strcatSize(info_str, "l", BUF_LEN);
@@ -99,8 +99,18 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
     strcatSize(info_str, tmp, BUF_LEN);
     // エリート数は2桁 (0なら表示しない)
     if (loc_eln) {
-        snprintf(tmp, BUF_LEN, "%02d", loc_eln);
+        snprintf(tmp, BUF_LEN, "%02d_", loc_eln);
         strcatSize(info_str, tmp, BUF_LEN);
+    }
+    // 選択
+    switch (sel_id) {
+        case 2: // 等比数列ランキング選択
+            // 可変長引数で公比が与えられるはず
+            snprintf(tmp, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
+            strcatSize(info_str, tmp, BUF_LEN);
+            break;
+        default:
+            ;
     }
     printString(info_str);
 
