@@ -76,24 +76,24 @@ int makeSprmFileFormatAuto(char *dst, int dst_len, int eff_id, int loc_pop, int 
     va_list args;
     // 開始. 第二引数には最後の固定引数?を渡すらしい
     va_start(args, loc_mr);
-    // 0 で初期化した文字列
-    char tmp[BUF_LEN] = {0};
+    // s\0 で初期化した文字列
+    char info_str[BUF_LEN] = {115, 0};
 
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
-            strcatSize(tmp, "l", BUF_LEN);
+            strcatSize(info_str, "l", BUF_LEN);
             break;
         default: // 対ランダム
-            strcatSize(tmp, "rd", BUF_LEN);
+            strcatSize(info_str, "rd", BUF_LEN);
     }
     switch (eff_id & 0b01) {
         case 0b00:// 指し手固定
-            strcatSize(tmp, "d", BUF_LEN);
+            strcatSize(info_str, "d", BUF_LEN);
             break;
         default: // 指し手ルーレット
-            strcatSize(tmp, "r", BUF_LEN);
+            strcatSize(info_str, "r", BUF_LEN);
     }
-    printString(tmp);
+    printString(info_str);
 
     double cr = va_arg(args, double);
     printFloatExp(cr);
