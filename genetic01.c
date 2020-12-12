@@ -346,8 +346,8 @@ int makeFGFilePrm1L(const char *format) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     // check existence
-    if (warnOverwriting(fnamew) < 0)
-        return -1;
+    // 上書き禁止なら抜ける
+    warnOverwritingExit(fnamew);
     // make new family randomly
     Prm1L pra[POPULATION];
     for (int i = 0; i < POPULATION; i++)
@@ -364,9 +364,8 @@ int makeFGFilePrm1L(const char *format) {
 int makeFGFilePrm1LComp(const char *format) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
-    // 上書き注意
-    if (warnOverwriting(fnamew) < 0)
-        return -1;
+    // 上書き注意, 勝手に抜ける
+    warnOverwritingExit(fnamew);
     FILE *fp;
     // 圧縮されたPrm1Lの配列を格納
     // 一次元配列として扱う
@@ -658,8 +657,8 @@ int nGenePrm1L(scmFuncPrm1L scm, const char *format, int gene_num, int safety) {
     snprintf(fname, FILENAME_MAX, format, gene_num + 1);
     printf("write file: %s\n", fname);
     // don't allow overwriting
-    if (safety && warnOverwriting(fname) < 0)
-        return -1;
+    // 上書きが嫌なら戻る
+    if (safety) warnOverwritingExit(fname);
     // next family
     Prm1L next[POPULATION];
     // the array to store points
@@ -757,8 +756,7 @@ int nGenePrm1LComp(scmFuncPrm1L scm, const char *format, int gene_num, u_int see
     printf("sort file: %s\n", fnames);
     printf("new file : %s\n", fnamew);
     // 上書き拒否
-    if (safety && (warnOverwriting(fnamew) < 0))
-        return -1;
+    if (safety) warnOverwritingExit(fnamew);
     int fitness[POPULATION];
     // 対戦・ソート用シード
     srand(seed1);
@@ -845,9 +843,8 @@ void nGenePrm1LLoopSeed(scmFuncPrm1L scm, const char *format, int safety, int st
     Prm1L rep_pr;
     for (int i = st; i < st + loop; i++) {
         // use the number of generation as a part of seed
-        s1 = i * SEED;
         // set seed
-        printf("seed: %d\n", s1);
+        printf("seed: %d\n", s1 = i * SEED);
         srand((unsigned)s1);
         if (nGenePrm1L(scm, format, i, safety) < 0) {
             // error
