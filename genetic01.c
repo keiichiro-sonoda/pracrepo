@@ -92,8 +92,7 @@ void randPrm1L(Prm1L *prp) {
 // calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
 float evalWithPrm1L(Board b, Prm1L pr) {
-    int i, j;
-    int inputs[MASU_NUM + 1];
+    int i, j, inputs[MASU_NUM + 1];
     // middle points
     float pa1[PRM1L_L2_NUM];
     // output point
@@ -118,13 +117,22 @@ float evalWithPrm1L(Board b, Prm1L pr) {
 }
 
 // Prm1L で評価した中で最良の盤面を取得 (正規化前提)
+// 相手のコマが黒なので, 相手目線で評価値が最低の盤面を選ぶ (符号反転しないため)
 // 次の盤面の配列, 配列長, Prm1L ポインタ
 Board getBoardForBlackPrm1LBest(const Board *next_boards, int n, const Prm1L *prp) {
-    float min_pt = FLT_MAX;
+    // 最良 (悪?) の盤面の添字を格納する
+    int worst_board_ind;
+    float pt, min_pt;
+    // floatで表現できる最大値で初期化
+    min_pt = FLT_MAX;
     for (int i = 0; i < n; i++) {
-        printFloatExp(min_pt);
+        // 最小値を下回ったら更新
+        if ((pt = evalWithPrm1L(next_boards[i], *prp)) < min_pt) {
+            min_pt = pt;
+            worst_board_ind = i;
+        }
     }
-    return next_boards[0];
+    return next_boards[worst_board_ind];
 }
 
 // assume that the next turn is black

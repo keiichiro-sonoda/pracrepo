@@ -185,6 +185,11 @@ void randPrm1L(Prm1L *prp);
 // the more advantageous to black, the higher the score
 float evalWithPrm1L(Board b, Prm1L pr);
 
+// Prm1L で評価した中で最良の盤面を取得 (正規化前提)
+// 相手のコマが黒なので, 相手目線で評価値が最低の盤面を選ぶ (符号反転しないため)
+// 次の盤面の配列, 配列長, Prm1L ポインタ
+Board getBoardForBlackPrm1LBest(const Board *next_boards, int n, const Prm1L *prp);
+
 // assume that the next turn is black
 // n: the number of next boards
 // use Prm1L
