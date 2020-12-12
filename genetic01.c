@@ -55,19 +55,18 @@ void array2Prm1L(const float src[PRM1L_LEN], Prm1L *dst) {
     }
 }
 
-// パラメータ自体は変更しないのでconstを追加 (参照渡しなので)
+// 1層, 2層の順に配列に代入
 // convert Prm1L to a weight array
 void Prm1L2array(const Prm1L *src, float dst[PRM1L_LEN]) {
-    int c = 0;
-    for (int i = 0; i < PRM1L_L2_NUM; i++) {
-        for (int j = 0; j <= MASU_NUM; j++) {
-            dst[c] = src->weight1[i][j];
-            c++;
+    int i, j, k;
+    k = 0;
+    for (i = 0; i < PRM1L_L2_NUM; i++) {
+        for (j = 0; j <= MASU_NUM; j++) {
+            dst[k++] = src->weight1[i][j];
         }
     }
     for (int i = 0; i < PRM1L_L2_NUM; i++) {
-        dst[c] = src->weight2[i];
-        c++;
+        dst[k++] = src->weight2[i];
     }
 }
 
