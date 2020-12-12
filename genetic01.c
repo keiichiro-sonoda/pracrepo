@@ -638,9 +638,10 @@ Prm1L blendCrossPrm1LComp(const Prm1L *mother_p, const Prm1L *father_p) {
         max_a += d * ALPHA_BLX;
         min_a -= d * ALPHA_BLX;
         tmp = randDoubleRange(min_a, max_a);
+        // 値を範囲内に収める
         tmp = clamp(tmp, -0.5f, 0.5f);
-        //tmp = char2weight(weight2char(tmp));
-        c_arr[i] = tmp;
+        // 圧縮しても値が変わらないようにする
+        c_arr[i] = char2weight(weight2char(tmp));
     }
     array2Prm1L(c_arr, &child);
     return child;
