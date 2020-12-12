@@ -33,7 +33,7 @@
 #endif
 
 // BLX-α 交叉で使う α の値
-#define ALPHA_BLX 0.3
+#define ALPHA_BLX 1.0
 
 // specify the seed value here
 #ifndef SEED
@@ -46,6 +46,12 @@
 // 精度は同じchar型を使うが, 幅を広く持たせることにした
 // このマクロが定義される以前のものは, これが1であると考えれば良い
 #define BIAS_MAG 32
+
+// レイヤ2の入力の長さ
+// 変える予定は無いができる限り共通の数であることを主張したい
+#ifndef PRM1L_L2_NUM
+#define PRM1L_L2_NUM 8
+#endif
 
 // test file format
 // common with genetic02
@@ -128,12 +134,6 @@
 #define char2weightArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = char2weight((src)[_])
 // float型配列をchar型配列に圧縮
 #define weight2charArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = weight2char((src)[_])
-
-// レイヤ2の入力の長さ
-// 変える予定は無いができる限り共通の数であることを主張したい
-#ifndef PRM1L_L2_NUM
-#define PRM1L_L2_NUM 8
-#endif
 
 // types
 
