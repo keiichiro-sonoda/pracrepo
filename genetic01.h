@@ -2,10 +2,14 @@
 #define GENETIC01_H
 
 // マクロで使うのが確定しているライブラリ
-#include <math.h>
+#include <float.h>
 
-// この中で stdio.h, stdlib.h はインクルード済み
+// この中でいくつかインクルード済み
 #include "othello.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
+//#include <math.h>
 
 #define PI 3.14159265358979323846264338
 

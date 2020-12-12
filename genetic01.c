@@ -1,6 +1,5 @@
 #include <math.h>
 #include <time.h>
-#include <float.h>
 #include <string.h>
 
 #include "genetic01.h"
@@ -93,18 +92,19 @@ void randPrm1L(Prm1L *prp) {
 // calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
 float evalWithPrm1L(Board b, Prm1L pr) {
+    int i, j;
     int inputs[MASU_NUM + 1];
     // middle points
-    float pa1[8];
+    float pa1[PRM1L_L2_NUM];
     // output point
-    float output = 0.0f;
+    float output = .0f;
     // convert board to array
     board2arraySymmetryPlus(b, inputs);
-    // initialization
-    zerosFloat(pa1, 8);
+    // 第2層への出力を初期化
+    zeros(pa1, PRM1L_L2_NUM);
     // first layer
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j <= MASU_NUM; j++) {
+    for (i = 0; i < PRM1L_L2_NUM; i++) {
+        for (j = 0; j <= MASU_NUM; j++) {
             pa1[i] += inputs[j] * pr.weight1[i][j];
         }
         // activate
@@ -112,9 +112,19 @@ float evalWithPrm1L(Board b, Prm1L pr) {
     }
     //printFloatArray(pa1, 8);
     // output layer
-    for (int i = 0; i < 8; i++)
+    for (i = 0; i < PRM1L_L2_NUM; i++)
         output += pa1[i] * pr.weight2[i];
     return output;
+}
+
+// Prm1L で評価した中で最良の盤面を取得 (正規化前提)
+// 次の盤面の配列, 配列長, Prm1L ポインタ
+Board getBoardForBlackPrm1LBest(const Board *next_boards, int n, const Prm1L *prp) {
+    float min_pt = FLT_MAX;
+    for (int i = 0; i < n; i++) {
+        printFloatExp(min_pt);
+    }
+    return next_boards[0];
 }
 
 // assume that the next turn is black

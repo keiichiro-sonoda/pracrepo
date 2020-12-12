@@ -72,6 +72,8 @@ int main(void) {
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltDPRd, format, 1, 100, 101);
     //crossTest();
-    sortTest();
+    //sortTest();
+    printFloatExp(FLT_MAX);
+    printFloatExp(FLT_MIN);
     return 0;
 }
