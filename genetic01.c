@@ -600,21 +600,35 @@ int isCross(int i, const int *cpa, int cp_num) {
 // 引数に交叉点の数を追加 (一点交叉と二点交叉いらなくなるね)
 // n点交叉は, 交叉点の選び方によってn-1点交叉と同じになる
 void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2], int cp_num) {
-    float p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
-    // 交叉点配列
-    int cpa[cp_num];
+    float p_arr[2][PRM1L_LEN], c_arr[2][PRM1L_LEN];
+    int i, j, k, flag, cp_look, cpa[cp_num + 1];
     Prm1L2array(mother_p, p_arr[0]);
     Prm1L2array(father_p, p_arr[1]);
-    // 0からパラメータの末尾まで, 交叉点を指定した数だけ重複なしでランダムに選ぶ
-    randIntMltDep(cpa, cp_num, 0, PRM1L_LEN - 1);
-    // 昇順にソート
+    // 0からパラメータの末尾-1まで, 交叉点を指定した数だけ重複なしでランダムに選ぶ
+    randIntMltDep(cpa, cp_num, 0, PRM1L_LEN - 2);
+    // 交叉点を昇順にソート
     randomizedQuicksortAll(cpa, cp_num);
-    for (int j = 0; j < 2; j++) {
-        for (int i = 0; i < PRM1L_LEN; i++) {
-            // 交叉点を境界にして交互に交叉するかどうかが決まる
-            c_arr[i] = p_arr[j ^ (isCross(i, cpa, cp_num))][i];
+    // 末尾は番兵 (最後に意味のない交叉点を用意)
+    cpa[cp_num] = 0x7fffffff;
+    printDecimalArray(cpa, cp_num + 1);
+    // 確認する交叉点をセット (添字もセット)
+    cp_look = cpa[k = 0];
+    // 1 のときは入れ替えで値を引き継ぐ
+    flag = 0;
+    for (i = 0; i < PRM1L_LEN; i++) {
+        // 交叉点を超えたら, 引き継ぎ対象を入れ替え, 次の交叉点を見る
+        if (cp_look > i) {
+            flag ^= 1;
+            cp_look = cpa[++k];
         }
-        array2Prm1L(c_arr, children + j);
+        for (j = 0; j < 2; j++) {
+            // それぞれ引き継ぎ
+            c_arr[j][i] = p_arr[j ^ flag][i];
+        }
+    }
+    // Prm1L に戻す
+    for (j = 0; j < 2; j++) {
+        array2Prm1L(c_arr[j], children + j);
     }
 }
 
