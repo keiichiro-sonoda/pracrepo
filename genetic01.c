@@ -638,7 +638,7 @@ Prm1L blendCrossPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
         min_a -= d * ALPHA_BLX;
         tmp = randDoubleRange(min_a, max_a);
         tmp = clamp(tmp, -0.5f, 0.5f);
-        tmp = char2weight(weight2char(tmp));
+        //tmp = char2weight(weight2char(tmp));
         c_arr[i] = tmp;
     }
     array2Prm1L(c_arr, &child);

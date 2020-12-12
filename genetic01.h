@@ -126,7 +126,7 @@
 // 重みをchar型に圧縮
 // -0.5から0.5を-127から127へ
 // char型も一応符号の概念があるっぽい (環境依存)
-#define weight2char(w) ((w) * 254)
+#define weight2char(w) ((signed char)((w) * 254))
 
 // 圧縮した数値を重みに戻す
 #define char2weight(c) ((float)(c) / 254)
