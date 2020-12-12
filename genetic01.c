@@ -663,7 +663,7 @@ void randMutPrm1L(Prm1L *prp) {
 
 // 交叉関数のデバッグ
 void crossTestPrm1L(void) {
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     Prm1L mother, father, children[2];
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
     initArrayConst(m_arr, PRM1L_LEN, 0.5f);
@@ -675,6 +675,8 @@ void crossTestPrm1L(void) {
     //doublePCross(&mother, &father, children);
     //multiPCross(&mother, &father, children, 4);
     children[0] = blendCrossPrm1LComp(&mother, &father);
+    showPrm1L(children[0]);
+    randMutPrm1LComp(children);
     showPrm1L(children[0]);
     //showPrm1L(children[1]);
 }

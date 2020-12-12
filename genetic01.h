@@ -125,7 +125,7 @@
 // MUT_RATE chance to replace with random value
 #define randMutArray(C, n) for (int _ = 0; _ < (n); _++) if (randDouble() < MUT_RATE) (C)[_] = randWeight()
 
-// 圧縮対応のランダム突然変異
+// 圧縮対応のランダム突然変異 (配列)
 #define randMutArrayComp(C, n) for (int _ = 0; _ < (n); _++) if (randDouble() < MUT_RATE) (C)[_] = randWeightComp()
 
 // activation functions
@@ -142,6 +142,14 @@
 #define char2weightArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = char2weight((src)[_])
 // float型配列をchar型配列に圧縮
 #define weight2charArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = weight2char((src)[_])
+
+// Prm1L の圧縮対応ランダム突然変異
+#define randMutPrm1LComp(prp) do {\
+    float _pr_arr[PRM1L_LEN];\
+    Prm1L2array(prp, _pr_arr);\
+    randMutArrayComp(_pr_arr, PRM1L_LEN);\
+    array2Prm1L(_pr_arr, prp);\
+} while (0)
 
 // types
 
