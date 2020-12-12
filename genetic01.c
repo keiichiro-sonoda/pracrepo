@@ -585,20 +585,8 @@ void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
     }
 }
 
-// ある点と交叉点配列 (ソート済み) を与え, その点が交叉する点か否かを判別する
-int isCross(int i, const int *cpa, int cp_num) {
-    // 小さい交叉点から比較していく
-    for (int j = 0; j < cp_num; j++) {
-        if (i <= cpa[j]) {
-            return j & 1;
-        }
-    }
-    return cp_num & 1;
-}
-
 // 多点交叉を試してみたい
 // 引数に交叉点の数を追加 (一点交叉と二点交叉いらなくなるね)
-// n点交叉は, 交叉点の選び方によってn-1点交叉と同じになる
 void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2], int cp_num) {
     float p_arr[2][PRM1L_LEN], c_arr[2][PRM1L_LEN];
     int i, j, k, flag, cp_look, cpa[cp_num + 1];
@@ -610,7 +598,6 @@ void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]
     randomizedQuicksortAll(cpa, cp_num);
     // 末尾は番兵 (最後に意味のない交叉点を用意)
     cpa[cp_num] = 0x7fffffff;
-    printDecimalArray(cpa, cp_num + 1);
     // 確認する交叉点をセット (添字もセット)
     cp_look = cpa[k = 0];
     // 1 のときは入れ替えで値を引き継ぐ

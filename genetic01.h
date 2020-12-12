@@ -285,6 +285,11 @@ void singlePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
 // 末尾が交叉点として選ばれた場合, 一点交叉と等価になる
 void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]);
 
+// 多点交叉を試してみたい
+// 引数に交叉点の数を追加 (一点交叉と二点交叉いらなくなるね)
+// 母, 父, 子の配列[2], 交叉点数
+void multiPCross(const Prm1L*, const Prm1L*, Prm1L*, int);
+
 // ランダム突然変異する
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
 void randMutPrm1L(Prm1L *prp);
