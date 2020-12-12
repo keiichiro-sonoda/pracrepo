@@ -617,7 +617,7 @@ void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]
     flag = 0;
     for (i = 0; i < PRM1L_LEN; i++) {
         // 交叉点を超えたら, 引き継ぎ対象を入れ替え, 次の交叉点を見る
-        if (cp_look > i) {
+        if (i > cp_look) {
             flag ^= 1;
             cp_look = cpa[++k];
         }
@@ -646,6 +646,7 @@ void randMutPrm1L(Prm1L *prp) {
 
 // 交叉関数のデバッグ
 void crossTestPrm1L(void) {
+    srand((unsigned)time(NULL));
     Prm1L mother, father, children[2];
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
     initArrayConst(m_arr, PRM1L_LEN, 0.0f);
@@ -655,7 +656,7 @@ void crossTestPrm1L(void) {
     showPrm1L(mother);
     showPrm1L(father);
     //doublePCross(&mother, &father, children);
-    multiPCross(&mother, &father, children, 1);
+    multiPCross(&mother, &father, children, 3);
     showPrm1L(children[0]);
     showPrm1L(children[1]);
 }
