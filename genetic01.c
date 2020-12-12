@@ -631,7 +631,7 @@ void randMutPrm1L(Prm1L *prp) {
 }
 
 // 交叉関数のデバッグ
-void crossTest(void) {
+void crossTestPrm1L(void) {
     Prm1L mother, father, children[2];
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
     initArrayConst(m_arr, PRM1L_LEN, 0.0f);
@@ -640,7 +640,8 @@ void crossTest(void) {
     array2Prm1L(f_arr, &father);
     showPrm1L(mother);
     showPrm1L(father);
-    doublePCross(&mother, &father, children);
+    //doublePCross(&mother, &father, children);
+    multiPCross(&mother, &father, children, 1);
     showPrm1L(children[0]);
     showPrm1L(children[1]);
 }

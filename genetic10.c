@@ -73,7 +73,6 @@ int main(void) {
     //nGenePrm1LCompLoop(rltDPRd, format, 1, 100, 101);
     //crossTest();
     //sortTest();
-    printFloatExp(FLT_MAX);
-    printFloatExp(FLT_MIN);
+    crossTestPrm1L();
     return 0;
 }

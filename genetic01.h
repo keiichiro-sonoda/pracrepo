@@ -290,7 +290,7 @@ void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
 void randMutPrm1L(Prm1L *prp);
 
 // 交叉関数のデバッグ
-void crossTest(void);
+void crossTestPrm1L(void);
 
 // roulette selection
 // uniform crossover
