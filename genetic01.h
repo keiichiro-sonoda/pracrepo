@@ -23,7 +23,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 1. // 突然変異率
+#define MUT_RATE .01 // 突然変異率
 #endif
 
 // ここで活性化関数を指定する
