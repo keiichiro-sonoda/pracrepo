@@ -622,7 +622,8 @@ void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]
 // BLX-α 交叉? (Blend Crossover)
 // 2つの個体でできる超直方体の内部もしくは周辺に子を作成
 // 子は1回につき1つ
-Prm1L blendCrossPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
+// 圧縮対応の値に変換する
+Prm1L blendCrossPrm1LComp(const Prm1L *mother_p, const Prm1L *father_p) {
     Prm1L child;
     float d, tmp, min_a, max_a, p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
     Prm1L2array(mother_p, p_arr[0]);
@@ -670,7 +671,7 @@ void crossTestPrm1L(void) {
     //showPrm1L(father);
     //doublePCross(&mother, &father, children);
     //multiPCross(&mother, &father, children, 4);
-    children[0] = blendCrossPrm1L(&mother, &father);
+    children[0] = blendCrossPrm1LComp(&mother, &father);
     showPrm1L(children[0]);
     //showPrm1L(children[1]);
 }

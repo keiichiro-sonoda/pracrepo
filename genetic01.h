@@ -297,7 +297,7 @@ void multiPCross(const Prm1L*, const Prm1L*, Prm1L*, int);
 // BLX-α 交叉? (Blend Crossover)
 // 2つの個体でできる超直方体の内部もしくは周辺に子を作成
 // 子は1回につき1つ
-Prm1L blendCrossPrm1L(const Prm1L*, const Prm1L*);
+Prm1L blendCrossPrm1LComp(const Prm1L*, const Prm1L*);
 
 // ランダム突然変異する
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
