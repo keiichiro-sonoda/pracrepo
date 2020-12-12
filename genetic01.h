@@ -23,7 +23,7 @@
 #endif
 
 #ifndef MUT_RATE
-#define MUT_RATE 0.01f // 突然変異率
+#define MUT_RATE 0.01 // 突然変異率
 #endif
 
 // ここで活性化関数を指定する
@@ -91,10 +91,22 @@
 #define FNF_NON_AF "prm/l1r050_06_rlt_uni_rd001/non_act_func/l1r050_06_rlt_uni_rd001_g%03d.bin"
 
 // return an floating point random number from -0.5 to 0.5
-#define randWeight() ((float)randFloat() - 0.5f)
+#define randWeight() (randFloat() - .5f)
 
-// 圧縮された重みで使うchar型の乱数を作成 (-127から127)
-#define randWeightChar() ((char)(rand() % 255 - 127))
+// 圧縮された重みで使う符号付き文字型の乱数を作成 (-127から127)
+#define randWeightChar() ((signed char)(rand() % 255 - 127))
+
+// 重みをchar型に圧縮
+// -0.5から0.5を-127から127へ (範囲外は考慮していない)
+// char型も一応符号の概念があるっぽい (環境依存)
+#define weight2char(w) ((signed char)((w) * 254))
+
+// 圧縮された文字を小数に戻す
+#define char2weight(c) ((float)(c) / 254)
+
+// 圧縮対応の float 型乱数を作成
+// 一旦文字型乱数を作成した後, 小数に変換
+#define randWeightComp() char2weight(randWeightChar()) 
 
 // create an array of random weights
 #define randWeightArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeight()
@@ -111,7 +123,10 @@
 
 // ここでマクロ MUT_RATE を使う
 // MUT_RATE chance to replace with random value
-#define randMutArray(C, n) for (int _ = 0; _ < (n); _++) if (randFloat() < MUT_RATE) (C)[_] = randWeight()
+#define randMutArray(C, n) for (int _ = 0; _ < (n); _++) if (randDouble() < MUT_RATE) (C)[_] = randWeight()
+
+// 圧縮対応のランダム突然変異
+#define randMutArrayComp(C, n) for (int _ = 0; _ < (n); _++) if (randDouble() < MUT_RATE) (C)[_] = randWeightComp()
 
 // activation functions
 // sigmoid function (return float)
@@ -122,14 +137,6 @@
 
 // rectified linear unit (ramp function)
 #define ReLU(x) getMax(0, x);
-
-// 重みをchar型に圧縮
-// -0.5から0.5を-127から127へ
-// char型も一応符号の概念があるっぽい (環境依存)
-#define weight2char(w) ((signed char)((w) * 254))
-
-// 圧縮した数値を重みに戻す
-#define char2weight(c) ((float)(c) / 254)
 
 // 圧縮されたchar型配列をfloat型配列に変換
 #define char2weightArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = char2weight((src)[_])
