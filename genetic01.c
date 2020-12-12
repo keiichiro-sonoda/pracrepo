@@ -624,7 +624,7 @@ void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]
 // 子は1回につき1つ
 Prm1L blendCrossPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
     Prm1L child;
-    float d, min_a, max_a, p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
+    float d, tmp, min_a, max_a, p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
     Prm1L2array(mother_p, p_arr[0]);
     Prm1L2array(father_p, p_arr[1]);
     for (int i = 0; i < PRM1L_LEN; i++) {
@@ -636,7 +636,9 @@ Prm1L blendCrossPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
         // 範囲を少し引き伸ばす
         max_a += d * ALPHA_BLX;
         min_a -= d * ALPHA_BLX;
-        c_arr[i] = randDoubleRange(min_a, max_a);
+        tmp = randDoubleRange(min_a, max_a);
+        tmp = clamp(tmp, -0.5f, 0.5f);
+        c_arr[i] = tmp;
     }
     array2Prm1L(c_arr, &child);
     return child;
@@ -659,8 +661,8 @@ void crossTestPrm1L(void) {
     srand((unsigned)time(NULL));
     Prm1L mother, father, children[2];
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
-    initArrayConst(m_arr, PRM1L_LEN, 0.2f);
-    initArrayConst(f_arr, PRM1L_LEN, 0.1f);
+    initArrayConst(m_arr, PRM1L_LEN, -0.5f);
+    initArrayConst(f_arr, PRM1L_LEN, 0.0f);
     array2Prm1L(m_arr, &mother);
     array2Prm1L(f_arr, &father);
     showPrm1L(mother);

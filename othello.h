@@ -109,6 +109,10 @@
 // type型の変数xとyの値を交換
 #define swap(type, x, y) do {type _t; _t = (x); (x) = (y); (y) = _t;} while (0)
 
+// x が min 未満なら min を, max より大きければ max を, 間にあれば x を返す
+// 先に min と比較
+#define clamp(x, min, max) (((x) < (min) ? (min) : ((max) < (x) ? (max) : (x))))
+
 // 32bitバイナリ表示するマクロ(ハイフン付き)
 // 波括弧を使わない if 節で使う場面を想定
 #define printBin32(x) do {printf("0b"); for (char _ = 31; _ >= 0; _--) {printf("%d", (x >> _) & 1); if (!(_ % 4) && _) putchar('-');} putchar(10);} while (0)
