@@ -656,7 +656,7 @@ void crossTestPrm1L(void) {
     showPrm1L(mother);
     showPrm1L(father);
     //doublePCross(&mother, &father, children);
-    multiPCross(&mother, &father, children, 2);
+    multiPCross(&mother, &father, children, 4);
     showPrm1L(children[0]);
     showPrm1L(children[1]);
 }
