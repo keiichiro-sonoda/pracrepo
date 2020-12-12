@@ -97,11 +97,17 @@
 // 0.0 以上 1.0 以下の float 型乱数を返す
 #define randFloat() ((float)rand() / RAND_MAX)
 
-// 0.0 以上 1.0 以下の double 型乱数を返す
+// 0.0 以上 1.0 以下の double 型一様乱数を返す
 #define randDouble() ((double)rand() / RAND_MAX)
+
+// min 以上 max 以下の double 型一様乱数を返す
+#define randDoubleRange(min, max) (randDouble() * ((max) - (min)) + (min))
 
 // 0 か 1 を返すだけのマクロ
 #define randBit() (rand() & 1)
+
+// type型の変数xとyの値を交換
+#define swap(type, x, y) do {type _t; _t = (x); (x) = (y); (y) = _t;} while (0)
 
 // 32bitバイナリ表示するマクロ(ハイフン付き)
 // 波括弧を使わない if 節で使う場面を想定

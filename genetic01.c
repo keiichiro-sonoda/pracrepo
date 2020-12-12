@@ -624,11 +624,19 @@ void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]
 // 子は1回につき1つ
 Prm1L blendCrossPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
     Prm1L child;
-    float p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
+    float d, min_a, max_a, p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
     Prm1L2array(mother_p, p_arr[0]);
     Prm1L2array(father_p, p_arr[1]);
     for (int i = 0; i < PRM1L_LEN; i++) {
-        c_arr[i] = (p_arr[0][i] + p_arr[1][i]) / 2.;
+        // 代入しつつ比較
+        if ((min_a = p_arr[0][i]) > (max_a = p_arr[1][i]))
+            // 母の値が大きければ交換
+            swap(float, min_a, max_a);
+        d = max_a - min_a;
+        // 範囲を少し引き伸ばす
+        max_a += d * ALPHA_BLX;
+        min_a -= d * ALPHA_BLX;
+        c_arr[i] = randDoubleRange(min_a, max_a);
     }
     array2Prm1L(c_arr, &child);
     return child;
