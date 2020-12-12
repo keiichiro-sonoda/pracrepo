@@ -39,19 +39,20 @@ void board2arraySymmetryPlus(Board src, int dst[MASU_NUM + 1]) {
     dst[MASU_NUM] = BIAS_MAG;
 }
 
-// コピー元は変更しない
+// 配列を Prm1L にする
 // convert weight array to Prm1L
 void array2Prm1L(const float src[PRM1L_LEN], Prm1L *dst) {
-    int c = 0;
-    for (int i = 0; i < PRM1L_L2_NUM; i++) {
-        for (int j = 0; j <= MASU_NUM; j++) {
-            dst->weight1[i][j] = src[c];
-            c++;
+    int i, j, k;
+    k = 0;
+    // 第1層
+    for (i = 0; i < PRM1L_L2_NUM; i++) {
+        for (j = 0; j <= MASU_NUM; j++) {
+            dst->weight1[i][j] = src[k++];
         }
     }
-    for (int i = 0; i < PRM1L_L2_NUM; i++) {
-        dst->weight2[i] = src[c];
-        c++;
+    // 第2層
+    for (i = 0; i < PRM1L_L2_NUM; i++) {
+        dst->weight2[i] = src[k++];
     }
 }
 
@@ -60,12 +61,14 @@ void array2Prm1L(const float src[PRM1L_LEN], Prm1L *dst) {
 void Prm1L2array(const Prm1L *src, float dst[PRM1L_LEN]) {
     int i, j, k;
     k = 0;
+    // 第1層
     for (i = 0; i < PRM1L_L2_NUM; i++) {
         for (j = 0; j <= MASU_NUM; j++) {
             dst[k++] = src->weight1[i][j];
         }
     }
-    for (int i = 0; i < PRM1L_L2_NUM; i++) {
+    // 第2層
+    for (i = 0; i < PRM1L_L2_NUM; i++) {
         dst[k++] = src->weight2[i];
     }
 }
