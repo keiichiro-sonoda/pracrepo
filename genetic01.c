@@ -516,7 +516,7 @@ Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father) {
 
 // 指定した番号のブロックをコピー
 // コピー元, コピー先のパラメータはそれぞれポインタで与える
-void copyBlockPrm1L(Prm1L *src, Prm1L *dst, int bl_num) {
+void copyBlockPrm1L(const Prm1L *src, Prm1L *dst, int bl_num) {
     // パターンをコピー
     copyArray(src->weight1[bl_num], dst->weight1[bl_num], MASU_NUM + 1);
     // 対応する重みをコピー
@@ -666,7 +666,7 @@ void crossTestPrm1L(void) {
     srand((unsigned)time(NULL));
     Prm1L mother, father, children[2];
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
-    initArrayConst(m_arr, PRM1L_LEN, 0.0f);
+    initArrayConst(m_arr, PRM1L_LEN, 0.111f);
     initArrayConst(f_arr, PRM1L_LEN, 0.f);
     array2Prm1L(m_arr, &mother);
     array2Prm1L(f_arr, &father);
@@ -674,9 +674,9 @@ void crossTestPrm1L(void) {
     //showPrm1L(father);
     //doublePCross(&mother, &father, children);
     //multiPCross(&mother, &father, children, 4);
-    children[0] = blendCrossPrm1LComp(&mother, &father);
-    showPrm1L(children[0]);
-    randMutPrm1LComp(children);
+    //children[0] = blendCrossPrm1LComp(&mother, &father);
+    children[0] = uniCrossBlockPrm1L(mother, father);
+    //showPrm1L(children[0]); randMutPrm1LComp(children);
     showPrm1L(children[0]);
     //showPrm1L(children[1]);
 }

@@ -288,7 +288,7 @@ Prm1L uniCrossRMPrm1L(Prm1L mother, Prm1L father);
 
 // 指定した番号のブロックをコピー
 // コピー元, コピー先のパラメータはそれぞれポインタで与える
-void copyBlockPrm1L(Prm1L *src, Prm1L *dst, int bl_num);
+void copyBlockPrm1L(const Prm1L*, Prm1L*, int);
 
 // ブロックごとに一様交叉を行う
 // weight1[i][], weight2[i] の組み合わせをブロックと考える
