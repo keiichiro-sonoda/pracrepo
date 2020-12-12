@@ -664,8 +664,8 @@ void crossTestPrm1L(void) {
     //srand((unsigned)time(NULL));
     Prm1L mother, father, children[2];
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN];
-    initArrayConst(m_arr, PRM1L_LEN, -0.5f);
-    initArrayConst(f_arr, PRM1L_LEN, .5f);
+    initArrayConst(m_arr, PRM1L_LEN, 0.5f);
+    initArrayConst(f_arr, PRM1L_LEN, -0.5f);
     array2Prm1L(m_arr, &mother);
     array2Prm1L(f_arr, &father);
     //showPrm1L(mother);
