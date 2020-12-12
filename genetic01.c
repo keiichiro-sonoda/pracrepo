@@ -585,7 +585,7 @@ void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
     }
 }
 
-// 多点交叉を試してみたい
+// 多点交叉
 // 引数に交叉点の数を追加 (一点交叉と二点交叉いらなくなるね)
 void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2], int cp_num) {
     float p_arr[2][PRM1L_LEN], c_arr[2][PRM1L_LEN];
@@ -619,6 +619,21 @@ void multiPCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2]
     }
 }
 
+// BLX-α 交叉? (Blend Crossover)
+// 2つの個体でできる超直方体の内部もしくは周辺に子を作成
+// 子は1回につき1つ
+Prm1L blendCrossPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
+    Prm1L child;
+    float p_arr[2][PRM1L_LEN], c_arr[PRM1L_LEN];
+    Prm1L2array(mother_p, p_arr[0]);
+    Prm1L2array(father_p, p_arr[1]);
+    for (int i = 0; i < PRM1L_LEN; i++) {
+        c_arr[i] = (p_arr[0][i] + p_arr[1][i]) / 2.;
+    }
+    array2Prm1L(c_arr, &child);
+    return child;
+}
+
 // ランダム突然変異する
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
 void randMutPrm1L(Prm1L *prp) {
@@ -643,9 +658,10 @@ void crossTestPrm1L(void) {
     showPrm1L(mother);
     showPrm1L(father);
     //doublePCross(&mother, &father, children);
-    multiPCross(&mother, &father, children, 4);
+    //multiPCross(&mother, &father, children, 4);
+    children[0] = blendCrossPrm1L(&mother, &father);
     showPrm1L(children[0]);
-    showPrm1L(children[1]);
+    //showPrm1L(children[1]);
 }
 
 // roulette selection

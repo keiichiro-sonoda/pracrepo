@@ -32,6 +32,9 @@
 #define ACT_FUNC ReLU
 #endif
 
+// BLX-α 交叉で使う α の値
+#define ALPHA_BLX 0.3
+
 // specify the seed value here
 #ifndef SEED
 #define SEED 123u
@@ -289,6 +292,11 @@ void doublePCross(const Prm1L *mother_p, const Prm1L *father_p, Prm1L children[2
 // 引数に交叉点の数を追加 (一点交叉と二点交叉いらなくなるね)
 // 母, 父, 子の配列[2], 交叉点数
 void multiPCross(const Prm1L*, const Prm1L*, Prm1L*, int);
+
+// BLX-α 交叉? (Blend Crossover)
+// 2つの個体でできる超直方体の内部もしくは周辺に子を作成
+// 子は1回につき1つ
+Prm1L blendCrossPrm1L(const Prm1L*, const Prm1L*);
 
 // ランダム突然変異する
 // 既に交叉と突然変異が合体している関数なら不要だが, そうでない場合のため
