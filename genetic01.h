@@ -33,7 +33,8 @@
 #endif
 
 // BLX-α 交叉で使う α の値
-#define ALPHA_BLX 1.0
+// 噂によると 0.3 前後がおすすめらしい
+#define ALPHA_BLX 0.3
 
 // specify the seed value here
 #ifndef SEED
