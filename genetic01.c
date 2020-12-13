@@ -1131,7 +1131,7 @@ int nGenePrm1LMGGComp(const char *fname) {
     children[1] = tmp_family[numbers[rd]];
     puts("トップ");
     showPrm1L(children[0]);
-    printf("ルーレット (%02d 位)\n", rd + 1);
+    printf("ルーレット (%2d位)\n", rd + 1);
     showPrm1L(children[1]);
     // 親が格納されてた場所に書き直す
     return update2Prm1LMGGComp(fname, pick_nums, children);
@@ -1150,6 +1150,7 @@ void nGenePrm1LMGGCompLoop(const char *fname, int loop) {
         printElapsedTime(t_arr[1] - t_arr[0]);
         kugiri(100);
     }
+    printf("1世代あたり平均 %6.3f 秒\n", (double)(t_arr[1] - t_arr[0]) / loop);
 }
 
 // 統計値を眺めてみたい
