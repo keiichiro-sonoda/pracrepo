@@ -308,10 +308,15 @@ int loadPrm1LCompDirect(const char *fname, Prm1L *pra);
 // 圧縮されたファイルからPrm1Lの配列を取得
 int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra);
 
-// MGG ファイルから, 指定した番号の2個体を取得
+// MGG ファイルから, 無作為に2個体を取得
+// シードは世代番号で決定
 // 返り値は世代数とする
 // ファイル名, 番号の配列, 各番号から取り出したパラメータを格納する配列
-int pick2Prm1LMGGComp(const char*, const int*, Prm1L*);
+int pick2Prm1LMGGComp(const char*, int*, Prm1L*);
+
+// MGG ファイルの指定した2つの番号を, 勝ち残った個体に更新
+// なんとなく返り値は世代数でいっか
+int update2Prm1LMGGComp(const char *fname, const int nums[2], const Prm1L winners[2]);
 
 // load a representative of Prm1L
 Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);

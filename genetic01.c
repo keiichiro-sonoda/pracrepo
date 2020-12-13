@@ -472,7 +472,7 @@ int makeFGFilePrm1LMGGComp(const char *fname) {
     dat_len = sizeof mgg_comp.dat;
     randWeightCharArray(mgg_comp.dat, dat_len);
     // 世代は 0 で初期化
-    mgg_comp.adv = 8;
+    mgg_comp.adv = 0;
     // 書き込み. 失敗したら抜ける
     dumpFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
     // 書き込まれたサイズを表示
@@ -537,14 +537,17 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
 
 // MGG ファイルから, 指定した番号の2個体を取得
 // 返り値は世代数とする
-int pick2Prm1LMGGComp(const char *fname, const int nums[2], Prm1L parents[2]) {
+int pick2Prm1LMGGComp(const char *fname, int nums[2], Prm1L parents[2]) {
     MggPrm1LComp mgg_comp;
     // ロード (失敗なら-1で抜ける)
     loadFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
     // 解凍後一時的に保存する
     float tmp[PRM1L_LEN];
     // 読み込み開始ポインタ
-    signed char *start_p;
+    const signed char *start_p;
+    // シードは世代番号とし, 重複なしで2つを選ぶ
+    srand((unsigned)mgg_comp.adv);
+    randIntDoubleDep(nums, 0, MGG_NUM_PRM1L - 1);
     for (int i = 0; i < 2; i++) {
         start_p = mgg_comp.dat + PRM1L_LEN * nums[i];
         // 文字から小数に
@@ -553,6 +556,30 @@ int pick2Prm1LMGGComp(const char *fname, const int nums[2], Prm1L parents[2]) {
         array2Prm1L(tmp, parents + i);
     }
     // 世代数を返す
+    return mgg_comp.adv;
+}
+
+// MGG ファイルの指定した2つの番号を, 勝ち残った個体に更新
+// なんとなく返り値は世代数でいっか
+int update2Prm1LMGGComp(const char *fname, const int nums[2], const Prm1L winners[2]) {
+    MggPrm1LComp mgg_comp;
+    // ロード
+    loadFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
+    // 書き込み前の一時変数
+    float tmp[PRM1L_LEN];
+    // 書き込み開始ポインタ
+    signed char *start_p;
+    for (int i = 0; i < 2; i++) {
+        // 配列に変換
+        Prm1L2array(winners + i, tmp);
+        start_p = mgg_comp.dat + PRM1L_LEN * nums[i];
+        // 小数を文字にして書き込み
+        weight2charArray(tmp, start_p, PRM1L_LEN);
+    }
+    // 世代数をインクリメント
+    mgg_comp.adv++;
+    // 同じファイルに書き込む
+    dumpFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
     return mgg_comp.adv;
 }
 

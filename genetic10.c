@@ -77,6 +77,7 @@ int main(void) {
     int nums[] = {1, 2};
     Prm1L pra[2];
     printDecimal(pick2Prm1LMGGComp(format, nums, pra));
+    printDecimalArray(nums, 2);
     showPrm1L(pra[0]);
     showPrm1L(pra[1]);
     return 0;
