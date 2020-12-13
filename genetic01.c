@@ -350,10 +350,10 @@ void evalFitnessHybrid(decNxtPrm1L dnfunc, const Prm1L *family, int *fitness) {
     int fit_l[POPULATION], fit_r[POPULATION];
     // リーグ戦勝ち点
     leagueMatchPrm1LFlex(dnfunc, family, fit_l);
-    printDecimalArray(fit_l, POPULATION);
     // 対ランダム勝ち点
     evalFitnessPrm1LVSRand(dnfunc, family, fit_r, GAME_NUM_PRM1L);
-    printDecimalArray(fit_r, POPULATION);
+    //printDecimalArray(fit_l, POPULATION); printDecimalArray(fit_r, POPULATION);
+    printf("ランダム対戦勝ち点合計: %5d\n", sumInt(fit_r, POPULATION));
     // 和を計算して適応度とする
     for (int i = 0; i < POPULATION; i++) {
         fitness[i] = fit_l[i] + fit_r[i];
@@ -1080,7 +1080,7 @@ int nGenePrm1LMGGComp(const char *fname) {
         return -1;
     }
     printf("第 %d 世代\n", gene_num);
-    printf("選ばれた番号: "); printDecimalArray(pick_nums, 2);
+    printf("選ばれた番号: %2d, %2d\n", pick_nums[0], pick_nums[1]);
     Prm1L children[2];
     int count, rd, numbers[POPULATION], fitness[POPULATION];
     // 1回の交叉で2つの子を作ると仮定
