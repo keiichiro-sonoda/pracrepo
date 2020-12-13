@@ -209,20 +209,19 @@ int oneToOneNPrm1LFlex(decNxtPrm1L dnfunc, Prm1L spr, Prm1L gpr) {
 // return winner
 // boards are normalized
 int Prm1LVSRandomNormal(decNxtPrm1L dnfunc, Prm1L pr, int my_color) {
-    Board nba[NEXT_MAX];
-    int kc[3];
-    int pass = 0;
-    int n, dif;
+    Board main_board, nba[NEXT_MAX];
+    int n, dif, pass, turn, winner, kc[3];
+    pass = 0;
     // set turn
-    int turn = 0b01;
+    turn = 0b01;
     // set initial board
-    Board main_board = START;
+    // 初期盤面も正規化
+    main_board = normalBoard(START);
     while (1) {
         // calculate next
-        n = nextBoardNormal2(main_board, nba, kc);
         //showBoard(main_board);
         // can't put a piece anywhere
-        if (n == 0) {
+        if ((n = nextBoardNormal2(main_board, nba, kc)) == 0) {
             // can't do anything one another
             if (pass) {
                 //printf("end\n");
@@ -245,17 +244,24 @@ int Prm1LVSRandomNormal(decNxtPrm1L dnfunc, Prm1L pr, int my_color) {
         } // random
         else {
             //printf("white\n");
-            main_board = nba[rand() % n];
+            main_board = nba[randInt(n)];
         }
         // switch turn
         turn ^= 0b11;
     }
+    // 勝者初期化
+    winner = 0;
     // difference between black and white
-    dif = kc[1] - kc[2];
-    if (dif > 0) return turn;
-    if (dif < 0) return turn ^ 0b11;
-    // draw
-    return 0;
+    // 黒が多いなら, 最後に指した方が勝ち
+    if ((dif = kc[1] - kc[2]) > 0) {
+        winner = turn;
+    }
+    // 白が多いなら, 最後に指さなかった方が勝ち
+    else if (dif < 0) {
+        winner = turn ^ 0b11;
+    }
+    // 引き分けなら 0 を返す
+    return winner;
 }
 
 // calculate win rate when playing against random AI
@@ -312,9 +318,45 @@ void leagueMatchPrm1LFlex(decNxtPrm1L dnfunc, const Prm1L *family, int *result) 
     }
 }
 
+// ランダム対戦の勝ち点で適応度を決める
+void evalFitnessPrm1LVSRand (decNxtPrm1L dnfunc, const Prm1L *family, int *fitness, int gn) {
+    int i, j, color, winner;
+    // 結果配列は 0 で初期化
+    zeros(fitness, POPULATION);
+    // 個体を順番に評価
+    for (i = 0; i < POPULATION; i++) {
+        // 手番は黒(1)と白(2)両方
+        for (color = 1; color <= 2; color++) {
+            // 各個体, 各色毎に渡された試合数だけくり返す
+            for (j = 0; j < gn; j++) {
+                // 勝者を取得
+                // 個体の勝利 (勝ち点2)
+                if ((winner = Prm1LVSRandomNormal(dnfunc, family[j], color)) == color) {
+                    fitness[i] += 2;
+                }
+                // 引き分け (勝ち点1)
+                else if (winner == 0) {
+                    fitness[i]++;
+                }
+                // 負けは何もしない
+            }
+        }
+    }
+}
+
 // リーグ戦と対ランダムの両方で適応度を決める
-void evalFitnessHybrid() {
-    ;
+void evalFitnessHybrid(decNxtPrm1L dnfunc, const Prm1L *family, int *fitness) {
+    int fit_l[POPULATION], fit_r[POPULATION];
+    // リーグ戦勝ち点
+    leagueMatchPrm1LFlex(dnfunc, family, fit_l);
+    printDecimalArray(fit_l, POPULATION);
+    // 対ランダム勝ち点
+    evalFitnessPrm1LVSRand(dnfunc, family, fit_r, GAME_NUM_PRM1L);
+    printDecimalArray(fit_r, POPULATION);
+    // 和を計算して適応度とする
+    for (int i = 0; i < POPULATION; i++) {
+        fitness[i] = fit_l[i] + fit_r[i];
+    }
 }
 
 // write parameters to a file

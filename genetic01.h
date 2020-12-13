@@ -41,6 +41,10 @@
 #define SEED 123u
 #endif
 
+ // ランダム対戦の色ごとの対戦数
+ // リーグ戦とのハイブリッドの場合は 1:1 くらいにしておこうかな
+#define GAME_NUM_PRM1L 50
+
 // バイアスの倍率
 // 重みパターンと盤面との乗算結果は-32から32を取り得る (ただしその両端の値を取る確率は極めて低い. と思う)
 // 最大は多分64にすればよいが、なんとなく半分くらいで十分だと思ってる
@@ -243,6 +247,14 @@ void checkWinRatePrm1LVSRand(Prm1L pr, int n);
 // give a function pointer to decide the next board
 // 指し手決定関数, 個体配列, 適応度格納配列
 void leagueMatchPrm1LFlex(decNxtPrm1L, const Prm1L*, int*);
+
+// ランダム対戦の勝ち点で適応度を決める
+// 指し手決定関数, 個体配列, 適応度格納配列, 色ごとの試合数
+void evalFitnessPrm1LVSRand (decNxtPrm1L, const Prm1L*, int*, int);
+
+// リーグ戦と対ランダムの両方で適応度を決める
+// 指し手決定関数, 個体配列, 適応度格納配列
+void evalFitnessHybrid(decNxtPrm1L, const Prm1L*, int*);
 
 // write parameters to a file
 // give a file name for writing
