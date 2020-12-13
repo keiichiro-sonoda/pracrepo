@@ -148,9 +148,9 @@
 #define ReLU(x) getMax(0, x);
 
 // 圧縮されたchar型配列をfloat型配列に変換
-#define char2weightArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = char2weight((src)[_])
+#define char2weightArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = char2weight((src)[_])
 // float型配列をchar型配列に圧縮
-#define weight2charArray(src, dst, n) for (int _ = 0; _ < n; _++) (dst)[_] = weight2char((src)[_])
+#define weight2charArray(src, dst, n) for (int _ = 0; _ < (n); _++) (dst)[_] = weight2char((src)[_])
 
 // Prm1L の圧縮対応ランダム突然変異
 #define randMutPrm1LComp(prp) do {\
@@ -173,7 +173,7 @@ typedef struct prm1L {
 // 何世代進めたかの情報も保存したい
 typedef struct mggPrm1LComp {
     signed char dat[(MASU_NUM + 2) * PRM1L_L2_NUM * MGG_NUM_PRM1L];
-    u_int adv;
+    int adv;
 } MggPrm1LComp;
 
 // type of function for selection, crossover and mutation
@@ -307,6 +307,11 @@ int loadPrm1LCompDirect(const char *fname, Prm1L *pra);
 
 // 圧縮されたファイルからPrm1Lの配列を取得
 int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra);
+
+// MGG ファイルから, 指定した番号の2個体を取得
+// 返り値は世代数とする
+// ファイル名, 番号の配列, 各番号から取り出したパラメータを格納する配列
+int pick2Prm1LMGGComp(const char*, const int*, Prm1L*);
 
 // load a representative of Prm1L
 Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);

@@ -28,7 +28,7 @@ void initPrm1LComp(void) {
     printf("bias magnification : %4d\n", BIAS_MAG);
     printf("seed               : %4u\n", SEED);
     //printDecimal(PRM1L_LEN);
-    printDecimal(PRM1L_COMP_LEN);
+    //printDecimal(PRM1L_COMP_LEN);
 }
 
 // black: +1, empty: 0, white: -1
@@ -537,12 +537,23 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
 
 // MGG ファイルから, 指定した番号の2個体を取得
 // 返り値は世代数とする
-int Pick2Prm1LMGGComp(const char *fname, const int nums[2], Prm1L parents[2]) {
+int pick2Prm1LMGGComp(const char *fname, const int nums[2], Prm1L parents[2]) {
     MggPrm1LComp mgg_comp;
     // ロード (失敗なら-1で抜ける)
     loadFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
+    // 解凍後一時的に保存する
     float tmp[PRM1L_LEN];
-
+    // 読み込み開始ポインタ
+    signed char *start_p;
+    for (int i = 0; i < 2; i++) {
+        start_p = mgg_comp.dat + PRM1L_LEN * nums[i];
+        // 文字から小数に
+        char2weightArray(start_p, tmp, PRM1L_LEN);
+        // パラメータ型に変換
+        array2Prm1L(tmp, parents + i);
+    }
+    // 世代数を返す
+    return mgg_comp.adv;
 }
 
 // load a representative of Prm1L
