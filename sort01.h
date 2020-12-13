@@ -88,6 +88,10 @@ void delFloat(float *A, int n, int index);
 // return an index
 int rouletteInt(const int *A, int n, int s);
 
+// 合計値も計算するバージョン
+// int 型配列 (非負), 配列長
+int rouletteIntCalcSum(const int*, int);
+
 // roulette selection
 // only supports non-negative floating point numbers
 int rouletteFloat(const float *A, int n, float s);

@@ -1122,12 +1122,13 @@ int nGenePrm1LMGGComp(const char *fname) {
     printDecimalArray(fitness, POPULATION);
     // 適応度トップの個体は残す
     children[0] = tmp_family[numbers[0]];
-    // もう1つはルーレットで決める
-    rd = rouletteInt(fitness, POPULATION, sumInt(fitness, POPULATION));
+    // もう1つはルーレットで決める (トップを除外)
+    // 除外された配列での添字が返るため, 1を足して修正
+    rd = rouletteIntCalcSum(fitness + 1, POPULATION - 1) + 1;
     children[1] = tmp_family[numbers[rd]];
     puts("トップ");
     showPrm1L(children[0]);
-    printf("ルーレット (%02d 位)\n", rd);
+    printf("ルーレット (%02d 位)\n", rd + 1);
     showPrm1L(children[1]);
     // 親が格納されてた場所に書き直す
     return update2Prm1LMGGComp(fname, pick_nums, children);

@@ -129,14 +129,19 @@ void delFloat(float *A, int n, int index) {
 int rouletteInt(const int *A, int n, int s) {
     // avoid dividing by 0
     if (s == 0) return 0;
-    int r = rand() % s;
-    int i;
+    int i, r;
+    r = randInt(s);
     for (i = 0; i < n - 1; i++) {
         r -= A[i];
         if (r < 0)
             return i;
     }
     return i;
+}
+
+// 合計値も計算するバージョン
+int rouletteIntCalcSum(const int *A, int n) {
+    return rouletteInt(A, n, sumInt(A, n));
 }
 
 // roulette selection
