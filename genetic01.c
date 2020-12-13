@@ -537,7 +537,7 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
 
 // MGG ファイルから, 指定した番号の2個体を取得
 // 返り値は世代数とする
-int pick2Prm1LMGGComp(const char *fname, int nums[2], Prm1L parents[2]) {
+int pick2Prm1LMGGComp(const char *fname, int nums[2], Prm1L parents[2], int specify) {
     MggPrm1LComp mgg_comp;
     // ロード (失敗なら-1で抜ける)
     loadFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
@@ -545,11 +545,12 @@ int pick2Prm1LMGGComp(const char *fname, int nums[2], Prm1L parents[2]) {
     float tmp[PRM1L_LEN];
     // 読み込み開始ポインタ
     const signed char *start_p;
-    // シードは世代番号と SEED の和. 重複なしで2つを選ぶ
-    srand(mgg_comp.adv + SEED);
-    randIntDoubleDep(nums, 0, MGG_NUM_PRM1L - 1);
-    nums[0] = 0;
-    nums[1] = 99;
+    // 番号指定の場合はパス
+    if (!specify) {
+        // シードは世代番号と SEED の和. 重複なしで2つを選ぶ
+        srand(mgg_comp.adv + SEED);
+        randIntDoubleDep(nums, 0, MGG_NUM_PRM1L - 1);
+    }
     for (int i = 0; i < 2; i++) {
         start_p = mgg_comp.dat + PRM1L_LEN * nums[i];
         // 文字から小数に

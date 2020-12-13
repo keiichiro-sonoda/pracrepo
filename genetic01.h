@@ -311,8 +311,8 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra);
 // MGG ファイルから, 無作為に2個体を取得
 // シードは世代番号で決定
 // 返り値は世代数とする
-// ファイル名, 番号の配列, 各番号から取り出したパラメータを格納する配列
-int pick2Prm1LMGGComp(const char*, int*, Prm1L*);
+// ファイル名, 番号の配列, 各番号から取り出したパラメータを格納する配列, 番号指定フラグ
+int pick2Prm1LMGGComp(const char*, int*, Prm1L*, int);
 
 // MGG ファイルの指定した2つの番号を, 勝ち残った個体に更新
 // なんとなく返り値は世代数でいっか
