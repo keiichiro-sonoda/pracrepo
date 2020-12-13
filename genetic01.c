@@ -93,7 +93,7 @@ void randPrm1L(Prm1L *prp) {
 
 // calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
-float evalWithPrm1L(Board b, Prm1L pr) {
+float evalWithPrm1L(Board b, const Prm1L *prp) {
     int i, j, inputs[MASU_NUM + 1];
     // middle points
     float pa1[PRM1L_L2_NUM];
@@ -106,7 +106,7 @@ float evalWithPrm1L(Board b, Prm1L pr) {
     // first layer
     for (i = 0; i < PRM1L_L2_NUM; i++) {
         for (j = 0; j <= MASU_NUM; j++) {
-            pa1[i] += inputs[j] * pr.weight1[i][j];
+            pa1[i] += inputs[j] * prp->weight1[i][j];
         }
         // activate
         pa1[i] = ACT_FUNC(pa1[i]);
@@ -114,7 +114,7 @@ float evalWithPrm1L(Board b, Prm1L pr) {
     //printFloatArray(pa1, 8);
     // output layer
     for (i = 0; i < PRM1L_L2_NUM; i++)
-        output += pa1[i] * pr.weight2[i];
+        output += pa1[i] * prp->weight2[i];
     return output;
 }
 
@@ -129,7 +129,7 @@ Board getBoardForBlackPrm1LBest(const Board *next_boards, int n, const Prm1L *pr
     min_pt = FLT_MAX;
     for (int i = 0; i < n; i++) {
         // 最小値を下回ったら更新
-        if ((pt = evalWithPrm1L(next_boards[i], *prp)) < min_pt) {
+        if ((pt = evalWithPrm1L(next_boards[i], prp)) < min_pt) {
             min_pt = pt;
             worst_board_ind = i;
         }
@@ -141,13 +141,13 @@ Board getBoardForBlackPrm1LBest(const Board *next_boards, int n, const Prm1L *pr
 // n: the number of next boards
 // use Prm1L
 // decide next board by roulette
-Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
+Board getBoardForBlackPrm1LRlt(const Board *next_boards, int n, const Prm1L *prp) {
     float exp_points[n];
     for (int i = 0; i < n; i++) {
         // evaluate all next boards
         // and calculate the power of e (to make numbers positive)
         // sign inversion!
-        exp_points[i] = expf(-evalWithPrm1L(next_boards[i], pr) * 10);
+        exp_points[i] = expf(-evalWithPrm1L(next_boards[i], prp) * 10);
     }
     return next_boards[rouletteFloat(exp_points, n, sumFloat(exp_points, n))];
 }
@@ -155,7 +155,7 @@ Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr) {
 // return winner
 // give a function pointer to determine the next board (with Prm1L)
 // boards are normalized
-int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr) {
+int oneToOneNPrm1LFlex(decNxtPrm1L dnfunc, Prm1L spr, Prm1L gpr) {
     Board nba[NEXT_MAX];
     int kc[3];
     int pass = 0;
@@ -188,11 +188,11 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
         // black (first)
         if (turn == 0b01) {
             //printf("black\n");
-            main_board = decNxt(nba, n, spr);
+            main_board = dnfunc(nba, n, &spr);
         } // white (second)
         else {
             //printf("white\n");
-            main_board = decNxt(nba, n, gpr);
+            main_board = dnfunc(nba, n, &gpr);
         }
         // switch turn
         turn ^= 0b11;
@@ -208,7 +208,7 @@ int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr
 // play against random
 // return winner
 // boards are normalized
-int Prm1LVSRandomNormal(Prm1L pr, int my_color) {
+int Prm1LVSRandomNormal(decNxtPrm1L dnfunc, Prm1L pr, int my_color) {
     Board nba[NEXT_MAX];
     int kc[3];
     int pass = 0;
@@ -241,7 +241,7 @@ int Prm1LVSRandomNormal(Prm1L pr, int my_color) {
         if (turn == my_color) {
             // determine the next board by roulette
             //printf("black\n");
-            main_board = getBoardForBlackPrm1LRlt(nba, n, pr);
+            main_board = dnfunc(nba, n, &pr);
         } // random
         else {
             //printf("white\n");
@@ -260,11 +260,15 @@ int Prm1LVSRandomNormal(Prm1L pr, int my_color) {
 
 // calculate win rate when playing against random AI
 // n: number of games
+// 勝ち数のみカウント
 float calcWinRatePrm1LVSRand(Prm1L pr, int pr_color, int n) {
     int count = 0;
-    for (int i = 0; i < n; i++)
-        if (Prm1LVSRandomNormal(pr, pr_color) == pr_color)
+    for (int i = 0; i < n; i++) {
+        // パラメータの指し手はルーレットで決める
+        if (Prm1LVSRandomNormal(getBoardForBlackPrm1LRlt, pr, pr_color) == pr_color) {
             count++;
+        }
+    }
     return (float)count / n;
 }
 
@@ -281,7 +285,7 @@ void checkWinRatePrm1LVSRand(Prm1L pr, int n) {
 // with Prm1L[POPULATION]
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
-void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *family, int *result) {
+void leagueMatchPrm1LFlex(decNxtPrm1L dnfunc, const Prm1L *family, int *result) {
     // set all elements to zero
     zeros(result, POPULATION);
     // black index
@@ -290,7 +294,7 @@ void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *fami
         // white index
         for (int j = 0; j < POPULATION; j++) {
             if (i == j) continue;
-            switch(oneToOneNPrm1LFlex(decNxt, family[i], family[j])) {
+            switch(oneToOneNPrm1LFlex(dnfunc, family[i], family[j])) {
                 // black won
                 case 1:
                     result[i] += 2;
@@ -306,6 +310,11 @@ void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *fami
             }
         }
     }
+}
+
+// リーグ戦と対ランダムの両方で適応度を決める
+void evalFitnessHybrid() {
+    ;
 }
 
 // write parameters to a file

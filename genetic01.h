@@ -164,6 +164,9 @@ typedef struct prm1L {
 // ソート済み適応度, ソート済み個体番号, 現世代個体配列, 次世代個体配列
 typedef void (*scmFuncPrm1L)(const int*, const int*, const Prm1L*, Prm1L*);
 
+// 次の盤面を決定する関数の型
+typedef Board (*decNxtPrm1L)(const Board*, int, const Prm1L*);
+
 // 大域変数
 // global variables
 
@@ -202,7 +205,7 @@ void randPrm1L(Prm1L *prp);
 
 // calculate point (with Prm1L)
 // the more advantageous to black, the higher the score
-float evalWithPrm1L(Board b, Prm1L pr);
+float evalWithPrm1L(Board b, const Prm1L *prp);
 
 // Prm1L で評価した中で最良の盤面を取得 (正規化前提)
 // 相手のコマが黒なので, 相手目線で評価値が最低の盤面を選ぶ (符号反転しないため)
@@ -213,17 +216,19 @@ Board getBoardForBlackPrm1LBest(const Board *next_boards, int n, const Prm1L *pr
 // n: the number of next boards
 // use Prm1L
 // decide next board by roulette
-Board getBoardForBlackPrm1LRlt(Board *next_boards, int n, Prm1L pr);
+Board getBoardForBlackPrm1LRlt(const Board*, int, const Prm1L*);
 
 // return winner
 // give a function pointer to determine the next board (with Prm1L)
 // boards are normalized
-int oneToOneNPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), Prm1L spr, Prm1L gpr);
+// 指し手決定関数, 先手パラメータ, 後手パラメータ
+int oneToOneNPrm1LFlex(decNxtPrm1L, Prm1L, Prm1L);
 
 // play against random
 // return winner
 // boards are normalized
-int Prm1LVSRandomNormal(Prm1L pr, int my_color);
+// 指し手決定関数, パラメータ, パラメータの手番
+int Prm1LVSRandomNormal(decNxtPrm1L, Prm1L, int);
 
 // calculate win rate when playing against random AI
 // n: number of games
@@ -236,7 +241,8 @@ void checkWinRatePrm1LVSRand(Prm1L pr, int n);
 // with Prm1L[POPULATION]
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
-void leagueMatchPrm1LFlex(Board (*decNxt)(Board*, int, Prm1L), const Prm1L *family, int *result);
+// 指し手決定関数, 個体配列, 適応度格納配列
+void leagueMatchPrm1LFlex(decNxtPrm1L, const Prm1L*, int*);
 
 // write parameters to a file
 // give a file name for writing
