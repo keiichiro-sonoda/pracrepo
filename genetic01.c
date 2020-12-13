@@ -1073,16 +1073,18 @@ int nGenePrm1LMGGComp(const char *fname) {
     Prm1L tmp_family[POPULATION];
     int gene_num, pick_nums[2];
     // 世代番号とシード依存で個体を2つ選択
+    // ここでシードが固定されるため, 後で設定する必要は無い
     // 親は tmp_family の先頭2つに格納
     if ((gene_num = pick2Prm1LMGGComp(fname, pick_nums, tmp_family, 0)) < 0) {
         return -1;
     }
+    printf("第 %d 世代\n", gene_num);
     Prm1L children[2];
-    int count, rd, fitness[POPULATION];
+    int count, rd, numbers[POPULATION], fitness[POPULATION];
     // 1回の交叉で2つの子を作ると仮定
     // 添字 0, 1 は親が入っているので 2 からスタート
     // 交叉方法と確率はとりあえず適当に決める
-    for (count = 2; count < POPULATION; count += 2) {
+    for (count = 2; count < POPULATION; count++) {
         // 0 から 9 までの乱数
         // 0, 1, 2 が出たら, rd + 1 点交叉
         if ((rd = randInt(10)) <= 2) {
@@ -1104,14 +1106,31 @@ int nGenePrm1LMGGComp(const char *fname) {
             children[0] = blendCrossPrm1LComp(tmp_family, tmp_family + 1);
             children[1] = blendCrossPrm1LComp(tmp_family, tmp_family + 1);
         }
-        // 子をそれぞれ突然変異させ仮家族に加える
+        // 子をそれぞれ圧縮対応突然変異させ仮家族に加える
         randMutPrm1LComp(children);
-        tmp_family[count] = children[0];
-        if (count + 1 >= POPULATION) break;
+        tmp_family[count++] = children[0];
+        if (count >= POPULATION) break;
         randMutPrm1LComp(children + 1);
-        tmp_family[count + 1] = children[1];
+        tmp_family[count] = children[1];
     }
-    return 0;
+    // ハイブリッド適応度計算
+    evalFitnessHybrid(getBoardForBlackPrm1LBest, tmp_family, fitness);
+    // 個体番号
+    indices(numbers, POPULATION);
+    // 降順ダブルクイックソート
+    randomizedQuicksortDDAll(fitness, numbers, POPULATION);
+    printDecimalArray(fitness, POPULATION);
+    // 適応度トップの個体は残す
+    children[0] = tmp_family[numbers[0]];
+    // もう1つはルーレットで決める
+    rd = rouletteInt(fitness, POPULATION, sumInt(fitness, POPULATION));
+    children[1] = tmp_family[numbers[rd]];
+    puts("トップ");
+    showPrm1L(children[0]);
+    printf("ルーレット (%02d 位)\n", rd);
+    showPrm1L(children[1]);
+    // 親が格納されてた場所に書き直す
+    return update2Prm1LMGGComp(fname, pick_nums, children);
 }
 
 // 統計値を眺めてみたい
