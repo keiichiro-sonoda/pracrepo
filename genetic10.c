@@ -73,7 +73,7 @@ int main(void) {
     //nGenePrm1LCompLoop(rltDPRd, format, 1, 100, 101);
     //sortTest();
     //crossTestPrm1L();
-    makeFGFilePrm1LMGGComp(format);
+    //makeFGFilePrm1LMGGComp(format);
     nGenePrm1LMGGComp(format);
     return 0;
 }
