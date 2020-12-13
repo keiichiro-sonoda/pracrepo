@@ -40,7 +40,7 @@
 
 // specify the seed value here
 #ifndef SEED
-#define SEED 124u
+#define SEED 123u
 #endif
 
  // ランダム対戦の色ごとの対戦数

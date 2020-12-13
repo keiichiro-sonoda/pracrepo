@@ -472,7 +472,7 @@ int makeFGFilePrm1LMGGComp(const char *fname) {
     dat_len = sizeof mgg_comp.dat;
     randWeightCharArray(mgg_comp.dat, dat_len);
     // 世代は 0 で初期化
-    mgg_comp.adv = 0;
+    mgg_comp.adv = 8;
     // 書き込み. 失敗したら抜ける
     dumpFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
     // 書き込まれたサイズを表示
