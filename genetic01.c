@@ -1146,7 +1146,8 @@ void nGenePrm1LMGGCompLoop(const char *fname, int loop) {
             return;
         }
         time(t_arr + 1);
-        printf("経過時間: %ld 秒\n", t_arr[1] - t_arr[0]);
+        printf("経過: ");
+        printElapsedTime(t_arr[1] - t_arr[0]);
         kugiri(100);
     }
 }
