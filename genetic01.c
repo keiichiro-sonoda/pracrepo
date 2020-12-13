@@ -465,6 +465,7 @@ int makeFGFilePrm1LComp(const char *format) {
 int makeFGFilePrm1LMGGComp(const char *fname) {
     int dat_len;
     srand(SEED);
+    puts("初期世代作成");
     // 上書き拒否なら抜ける
     warnOverwritingExit(fname);
     // 書き込む変数
@@ -1079,6 +1080,7 @@ int nGenePrm1LMGGComp(const char *fname) {
         return -1;
     }
     printf("第 %d 世代\n", gene_num);
+    printf("選ばれた番号: "); printDecimalArray(pick_nums, 2);
     Prm1L children[2];
     int count, rd, numbers[POPULATION], fitness[POPULATION];
     // 1回の交叉で2つの子を作ると仮定
@@ -1134,6 +1136,20 @@ int nGenePrm1LMGGComp(const char *fname) {
     return update2Prm1LMGGComp(fname, pick_nums, children);
 }
 
+// MGG で何世代か進める
+void nGenePrm1LMGGCompLoop(const char *fname, int loop) {
+    time_t t_arr[2];
+    time(t_arr);
+    for (int i = 0; i < loop; i++) {
+        if (nGenePrm1LMGGComp(fname) < 0) {
+            return;
+        }
+        time(t_arr + 1);
+        printf("経過時間: %ld 秒\n", t_arr[1] - t_arr[0]);
+        kugiri(100);
+    }
+}
+
 // 統計値を眺めてみたい
 // 主に分散に興味がある
 // 各個体を528次元ベクトルと考え, 平均のベクトルを求めたい
@@ -1146,7 +1162,7 @@ void viewStatPrm1L(Prm1L *pra) {
         Prm1L2array(pra + i, arr_2d[i]);
     }
     // 初期化
-    zerosFloat(means, PRM1L_LEN);
+    zeros(means, PRM1L_LEN);
     // まずは和を計算
     for (i = 0; i < POPULATION; i++) {
         for (j = 0; j < PRM1L_LEN; j++) {

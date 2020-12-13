@@ -405,6 +405,9 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
 // MGG, 圧縮版, 次世代作成関数
 int nGenePrm1LMGGComp(const char *fname);
 
+// MGG, 圧縮版, 次世代作成を何度か行う
+void nGenePrm1LMGGCompLoop(const char *fname, int loop);
+
 // 統計値を眺めてみたい
 // 主に分散に興味がある
 // 各個体を528次元ベクトルと考え, 平均のベクトルを求めたい
