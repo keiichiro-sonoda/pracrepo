@@ -77,9 +77,9 @@ int main(void) {
     int nums[] = {99, 0};
     Prm1L pra[2];
     float yeah[PRM1L_LEN];
-    zeros(yeah, PRM1L_LEN);
+    initArrayConst(yeah, PRM1L_LEN, -0.499999f);
     array2Prm1L(yeah, pra);
-    initArrayConst(yeah, PRM1L_LEN, 0.111f);
+    initArrayConst(yeah, PRM1L_LEN, -0.004f);
     array2Prm1L(yeah, pra + 1);
     update2Prm1LMGGComp(format, nums, pra);
     printDecimal(pick2Prm1LMGGComp(format, nums, pra, 1));
