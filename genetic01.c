@@ -545,9 +545,11 @@ int pick2Prm1LMGGComp(const char *fname, int nums[2], Prm1L parents[2]) {
     float tmp[PRM1L_LEN];
     // 読み込み開始ポインタ
     const signed char *start_p;
-    // シードは世代番号とし, 重複なしで2つを選ぶ
-    srand((unsigned)mgg_comp.adv);
+    // シードは世代番号と SEED の和. 重複なしで2つを選ぶ
+    srand(mgg_comp.adv + SEED);
     randIntDoubleDep(nums, 0, MGG_NUM_PRM1L - 1);
+    nums[0] = 0;
+    nums[1] = 99;
     for (int i = 0; i < 2; i++) {
         start_p = mgg_comp.dat + PRM1L_LEN * nums[i];
         // 文字から小数に
