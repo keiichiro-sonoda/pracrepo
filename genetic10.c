@@ -73,9 +73,15 @@ int main(void) {
     //nGenePrm1LCompLoop(rltDPRd, format, 1, 100, 101);
     //sortTest();
     //crossTestPrm1L();
-    makeFGFilePrm1LMGGComp(format);
-    int nums[] = {1, 2};
+    //makeFGFilePrm1LMGGComp(format);
+    int nums[] = {83, 43};
     Prm1L pra[2];
+    float yeah[PRM1L_LEN];
+    zeros(yeah, PRM1L_LEN);
+    array2Prm1L(yeah, pra);
+    initArrayConst(yeah, PRM1L_LEN, 0.111f);
+    array2Prm1L(yeah, pra + 1);
+    update2Prm1LMGGComp(format, nums, pra);
     printDecimal(pick2Prm1LMGGComp(format, nums, pra));
     printDecimalArray(nums, 2);
     showPrm1L(pra[0]);
