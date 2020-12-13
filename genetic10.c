@@ -74,6 +74,8 @@ int main(void) {
     //sortTest();
     //crossTestPrm1L();
     //makeFGFilePrm1LMGGComp(format);
-    nGenePrm1LMGGCompLoop(format, 100);
+    //nGenePrm1LMGGCompLoop(format, 100);
+    int dt = 3599;
+    printf("%02d 時間 %02d 分 %02d 秒\n", dt / 3600, dt % 3600 / 60, dt % 60);
     return 0;
 }
