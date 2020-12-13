@@ -607,13 +607,14 @@ void checkPrm1LFile(const char *format, int gene_num) {
     showPrm1L(pra[POPULATION - 1]);
 }
 
+// 一様交叉 (突然変異なし)
 // uniform crossover (Prm1L)
-Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father) {
+Prm1L uniCrossPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
     float m_arr[PRM1L_LEN], f_arr[PRM1L_LEN], c_arr[PRM1L_LEN];
     Prm1L child;
     // convert to array
-    Prm1L2array(&mother, m_arr);
-    Prm1L2array(&father, f_arr);
+    Prm1L2array(mother_p, m_arr);
+    Prm1L2array(father_p, f_arr);
     // uniform cross over
     uniCrossArray(m_arr, f_arr, c_arr, PRM1L_LEN);
     // convert to Prm1L
@@ -647,21 +648,20 @@ void copyBlockPrm1L(const Prm1L *src, Prm1L *dst, int bl_num) {
     dst->weight2[bl_num] = src->weight2[bl_num];
 }
 
-// ブロックごとに一様交叉を行う
+// ブロックごとに一様交叉を行う (突然変異なし)
 // weight1[i][], weight2[i] の組み合わせをブロックと考える
-// パターンとその重みのペアと見なせる?
-Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father) {
+// パターンとその重みのペア?
+Prm1L uniCrossBlockPrm1L(const Prm1L *mother_p, const Prm1L *father_p) {
     Prm1L child;
-    randPrm1L(&child);
     // レイヤ2の数くり返し
     for (int i = 0; i < PRM1L_L2_NUM; i++) {
         // 50%の抽選で1が出た場合, motherから引き継ぎ
         if (randBit()) {
-            copyBlockPrm1L(&mother, &child, i);
+            copyBlockPrm1L(mother_p, &child, i);
         }
         // 0が出た場合, fatherから引き継ぎ
         else {
-            copyBlockPrm1L(&father, &child, i);
+            copyBlockPrm1L(father_p, &child, i);
         }
     }
     return child;
@@ -799,7 +799,7 @@ void crossTestPrm1L(void) {
     //doublePCross(&mother, &father, children);
     //multiPCross(&mother, &father, children, 4);
     //children[0] = blendCrossPrm1LComp(&mother, &father);
-    children[0] = uniCrossBlockPrm1L(mother, father);
+    children[0] = uniCrossBlockPrm1L(&mother, &father);
     //showPrm1L(children[0]); randMutPrm1LComp(children);
     showPrm1L(children[0]);
     //showPrm1L(children[1]);
@@ -1065,6 +1065,53 @@ void nGenePrm1LCompLoop(scmFuncPrm1L scm, const char *format, int safety, int st
         printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
         kugiri(100);
     }
+}
+
+// MGG, 圧縮版, 次世代作成関数
+int nGenePrm1LMGGComp(const char *fname) {
+    // 2つの個体から作成される家族
+    Prm1L tmp_family[POPULATION];
+    int gene_num, pick_nums[2];
+    // 世代番号とシード依存で個体を2つ選択
+    // 親は tmp_family の先頭2つに格納
+    if ((gene_num = pick2Prm1LMGGComp(fname, pick_nums, tmp_family, 0)) < 0) {
+        return -1;
+    }
+    Prm1L children[2];
+    int count, rd, fitness[POPULATION];
+    // 1回の交叉で2つの子を作ると仮定
+    // 添字 0, 1 は親が入っているので 2 からスタート
+    // 交叉方法と確率はとりあえず適当に決める
+    for (count = 2; count < POPULATION; count += 2) {
+        // 0 から 9 までの乱数
+        // 0, 1, 2 が出たら, rd + 1 点交叉
+        if ((rd = randInt(10)) <= 2) {
+            multiPCross(tmp_family, tmp_family + 1, children, rd + 1);
+        }
+        // 3 が出たら一様交叉
+        else if (rd == 3) {
+            children[0] = uniCrossPrm1L(tmp_family, tmp_family + 1);
+            children[1] = uniCrossPrm1L(tmp_family, tmp_family + 1);
+        }
+        // 4 が出たらブロック一様交叉
+        else if (rd == 4) {
+            children[0] = uniCrossBlockPrm1L(tmp_family, tmp_family + 1);
+            children[1] = uniCrossBlockPrm1L(tmp_family, tmp_family + 1);
+        }
+        // 5, 6, 7, 8, 9 が出たら BLX-α 交叉
+        // 50%の確率でこの交叉になる
+        else {
+            children[0] = blendCrossPrm1LComp(tmp_family, tmp_family + 1);
+            children[1] = blendCrossPrm1LComp(tmp_family, tmp_family + 1);
+        }
+        // 子をそれぞれ突然変異させ仮家族に加える
+        randMutPrm1LComp(children);
+        tmp_family[count] = children[0];
+        if (count + 1 >= POPULATION) break;
+        randMutPrm1LComp(children + 1);
+        tmp_family[count + 1] = children[1];
+    }
+    return 0;
 }
 
 // 統計値を眺めてみたい

@@ -325,7 +325,8 @@ Prm1L loadRepPrm1L(const char *format, int gene_num, int loc_pop);
 void checkPrm1LFile(const char *format, int gene_num);
 
 // uniform crossover (Prm1L)
-Prm1L uniCrossPrm1L(Prm1L mother, Prm1L father);
+// 母のポインタ, 父のポインタ
+Prm1L uniCrossPrm1L(const Prm1L*, const Prm1L*);
 
 // uniform crossover (Prm1L)
 // including random mutation
@@ -338,7 +339,7 @@ void copyBlockPrm1L(const Prm1L*, Prm1L*, int);
 // ブロックごとに一様交叉を行う
 // weight1[i][], weight2[i] の組み合わせをブロックと考える
 // パターンとその重みのペアと見なせる?
-Prm1L uniCrossBlockPrm1L(Prm1L mother, Prm1L father);
+Prm1L uniCrossBlockPrm1L(const Prm1L*, const Prm1L*);
 
 // 一点交叉
 // 親の引き継ぎ方を入れ替えた2つの子を得る

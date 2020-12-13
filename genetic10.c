@@ -11,7 +11,7 @@ void rltUniBlRd(const int *fitness, const int *numbers, const Prm1L *current, Pr
     for (int count = ELITE_NUM; count < POPULATION; count ++) {
         rouletteIntMltDep(fitness, POPULATION, parents, 2);
         // ブロック毎一様交叉 (突然変異なし)
-        next[count] = uniCrossBlockPrm1L(current[numbers[parents[0]]], current[numbers[parents[1]]]);
+        next[count] = uniCrossBlockPrm1L(current + numbers[parents[0]], current + numbers[parents[1]]);
         // 値毎ランダム突然変異
         randMutPrm1L(next + count);
     }
