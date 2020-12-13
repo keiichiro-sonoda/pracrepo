@@ -74,6 +74,6 @@ int main(void) {
     //sortTest();
     //crossTestPrm1L();
     //makeFGFilePrm1LMGGComp(format);
-    nGenePrm1LMGGCompLoop(format, 1);
+    nGenePrm1LMGGCompLoop(format, 300);
     return 0;
 }
