@@ -11,9 +11,11 @@
 //#include <string.h>
 //#include <math.h>
 
-#define PI 3.14159265358979323846264338
+// MGG を使う際の個体数
+#define MGG_NUM_PRM1L 100
 
 // number of parameters per generation
+// MGG の場合, 適応度計算時の個体数に用いる
 #ifndef POPULATION
 #define POPULATION 50 // 個体数
 #endif
@@ -61,6 +63,9 @@
 // test file format
 // common with genetic02
 #define FNF_TEST "prm/test/test%03d.bin"
+
+// MGG ファイルのテスト用フォーマット
+#define FNF_MGG_TEST "prm/test/mgg.bin"
 
 // L1 : the number of middle layer is 1
 // R  : decide next board by roulette
@@ -163,6 +168,13 @@ typedef struct prm1L {
     float weight1[PRM1L_L2_NUM][MASU_NUM + 1];
     float weight2[PRM1L_L2_NUM];
 } Prm1L;
+
+// MGG のファイルに保存するための型
+// 何世代進めたかの情報も保存したい
+typedef struct mggPrm1LComp {
+    signed char dat[(MASU_NUM + 1) * PRM1L_L2_NUM * MGG_NUM_PRM1L];
+    u_int adv;
+} MggPrm1LComp;
 
 // type of function for selection, crossover and mutation
 // ソート済み適応度, ソート済み個体番号, 現世代個体配列, 次世代個体配列
@@ -277,6 +289,11 @@ int makeFGFilePrm1L(const char *format);
 
 // 圧縮バージョンで最初の世代を作成
 int makeFGFilePrm1LComp(const char *format);
+
+// MGG 初期世代を作成
+// 1つのファイルを書き換えていくスタイルを使いたい
+// ファイル名は直接与える
+int makeFGFilePrm1LMGGComp(const char*);
 
 // read parameters from a file (Prm1L)
 // give a file name directly

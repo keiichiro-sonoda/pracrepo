@@ -458,6 +458,18 @@ int makeFGFilePrm1LComp(const char *format) {
     return 0;
 }
 
+// MGG 初期世代を作成
+// 1つのファイルを書き換えていくスタイルを使いたい
+// ファイル名は直接与える
+int makeFGFilePrm1LMGGComp(const char *fname) {
+    srand(SEED);
+    warnOverwritingExit(fname);
+    MggPrm1LComp mgg_comp;
+    printSize(mgg_comp);
+    printSize(mgg_comp.dat);
+    return 0;
+}
+
 // read parameters from a file (Prm1L)
 // give a file name directly
 int loadPrm1LDirect(const char *fname, Prm1L *pra, size_t pra_size) {

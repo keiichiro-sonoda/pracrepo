@@ -66,19 +66,13 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_TEST;
+    const char format[] = FNF_MGG_TEST;
     printString(format);
     // for debugging
     //makeFGFilePrm1LComp(format);
     //nGenePrm1LCompLoop(rltDPRd, format, 1, 100, 101);
     //sortTest();
     //crossTestPrm1L();
-    makeFGFilePrm1LComp(format);
-    Prm1L pra[POPULATION];
-    int fitness[POPULATION];
-    //loadPrm1LComp(format, 0, pra);
-    loadPrm1LComp(FNF_L1RRCM3205006000500001, 99, pra);
-    evalFitnessHybrid(getBoardForBlackPrm1LRlt, pra, fitness);
-    printDecimalArray(fitness, POPULATION);
+    makeFGFilePrm1LMGGComp(format);
     return 0;
 }
