@@ -464,11 +464,16 @@ int makeFGFilePrm1LComp(const char *format) {
 int makeFGFilePrm1LMGGComp(const char *fname) {
     int dat_len;
     srand(SEED);
+    // 上書き拒否なら抜ける
     warnOverwritingExit(fname);
+    // 書き込む変数
     MggPrm1LComp mgg_comp;
     dat_len = sizeof mgg_comp.dat;
-    printDecimal(dat_len);
     randWeightCharArray(mgg_comp.dat, dat_len);
+    // 世代は 0 で初期化
+    mgg_comp.adv = 0;
+    // 書き込み. 失敗したら抜ける
+    dumpFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
     return 0;
 }
 
