@@ -462,11 +462,13 @@ int makeFGFilePrm1LComp(const char *format) {
 // 1つのファイルを書き換えていくスタイルを使いたい
 // ファイル名は直接与える
 int makeFGFilePrm1LMGGComp(const char *fname) {
+    int dat_len;
     srand(SEED);
     warnOverwritingExit(fname);
     MggPrm1LComp mgg_comp;
-    printSize(mgg_comp);
-    printSize(mgg_comp.dat);
+    dat_len = sizeof mgg_comp.dat;
+    printDecimal(dat_len);
+    randWeightCharArray(mgg_comp.dat, dat_len);
     return 0;
 }
 

@@ -118,17 +118,17 @@
 #define randWeightComp() char2weight(randWeightChar()) 
 
 // create an array of random weights
-#define randWeightArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeight()
+#define randWeightArray(A, n) for (int _ = 0; _ < (n); _++) (A)[_] = randWeight()
 
 // 圧縮されたchar型重みの乱数の配列を作成
 // 初期世代ファイルに使う予定
-#define randWeightCharArray(A, n) for (int _ = 0; _ < n; _++) (A)[_] = randWeightChar()
+#define randWeightCharArray(A, n) for (int _ = 0; _ < (n); _++) (A)[_] = randWeightChar()
 
 // choose randomly either a or b
 #define alternative(a, b) (randBit() ? (a) : (b))
 
 // uniform crossover (array)
-#define uniCrossArray(M, F, C, n) for (int _ = 0; _ < n; _++) (C)[_] = alternative((M)[_], (F)[_])
+#define uniCrossArray(M, F, C, n) for (int _ = 0; _ < (n); _++) (C)[_] = alternative((M)[_], (F)[_])
 
 // ここでマクロ MUT_RATE を使う
 // MUT_RATE chance to replace with random value
