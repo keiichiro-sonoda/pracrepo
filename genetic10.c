@@ -74,7 +74,7 @@ int main(void) {
     //sortTest();
     //crossTestPrm1L();
     makeFGFilePrm1LMGGComp(format);
-    int nums[] = {99, 0};
+    int nums[] = {99, 98};
     Prm1L pra[2];
     pick2Prm1LMGGComp(format, nums, pra);
     showPrm1L(pra[0]);
