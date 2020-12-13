@@ -65,7 +65,7 @@
 #define FNF_TEST "prm/test/test%03d.bin"
 
 // MGG ファイルのテスト用フォーマット
-#define FNF_MGG_TEST "prm/test/mgg.bin"
+#define FNF_MGG_TEST "prm/test/mgg01.bin"
 
 // L1 : the number of middle layer is 1
 // R  : decide next board by roulette
