@@ -28,6 +28,7 @@ void initPrm1LComp(void) {
     printf("bias magnification : %4d\n", BIAS_MAG);
     printf("seed               : %4u\n", SEED);
     //printDecimal(PRM1L_LEN);
+    printDecimal(PRM1L_COMP_LEN);
 }
 
 // black: +1, empty: 0, white: -1
@@ -474,6 +475,8 @@ int makeFGFilePrm1LMGGComp(const char *fname) {
     mgg_comp.adv = 0;
     // 書き込み. 失敗したら抜ける
     dumpFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
+    // 書き込まれたサイズを表示
+    printf("%ld bytes were written\n", sizeof(MggPrm1LComp));
     return 0;
 }
 
@@ -530,6 +533,16 @@ int loadPrm1LComp(const char *format, int gene_num, Prm1L *pra) {
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
     return loadPrm1LCompDirect(fnamer, pra);
+}
+
+// MGG ファイルから, 指定した番号の2個体を取得
+// 返り値は世代数とする
+int Pick2Prm1LMGGComp(const char *fname, const int nums[2], Prm1L parents[2]) {
+    MggPrm1LComp mgg_comp;
+    // ロード (失敗なら-1で抜ける)
+    loadFileDirectExit(fname, &mgg_comp, sizeof(MggPrm1LComp));
+    float tmp[PRM1L_LEN];
+
 }
 
 // load a representative of Prm1L

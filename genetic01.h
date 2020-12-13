@@ -172,7 +172,7 @@ typedef struct prm1L {
 // MGG のファイルに保存するための型
 // 何世代進めたかの情報も保存したい
 typedef struct mggPrm1LComp {
-    signed char dat[(MASU_NUM + 1) * PRM1L_L2_NUM * MGG_NUM_PRM1L];
+    signed char dat[(MASU_NUM + 2) * PRM1L_L2_NUM * MGG_NUM_PRM1L];
     u_int adv;
 } MggPrm1LComp;
 
