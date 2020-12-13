@@ -354,6 +354,7 @@ void evalFitnessHybrid(decNxtPrm1L dnfunc, const Prm1L *family, int *fitness) {
     evalFitnessPrm1LVSRand(dnfunc, family, fit_r, GAME_NUM_PRM1L);
     //printDecimalArray(fit_l, POPULATION); printDecimalArray(fit_r, POPULATION);
     printf("ランダム対戦勝ち点合計: %5d\n", sumInt(fit_r, POPULATION));
+    printf("ランダム対戦勝ち点最大: %5d\n", getMaxIntArray(fit_r, POPULATION));
     // 和を計算して適応度とする
     for (int i = 0; i < POPULATION; i++) {
         fitness[i] = fit_l[i] + fit_r[i];

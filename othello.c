@@ -120,8 +120,9 @@ int getIndex(const int *ar, int ar_len, int el) {
     return -1;
 }
 
+// int 配列の要素の最大値を取得
 // get maximum value of int array
-int getMaxIntArray(int *A, int n) {
+int getMaxIntArray(const int *A, int n) {
     // start with the minimum of int
     int mx = 0x80000000;
     for (int i = 0; i < n; i++)

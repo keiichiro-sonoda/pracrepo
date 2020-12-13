@@ -301,7 +301,8 @@ int inArray(int *ar, int ar_len, int el);
 int getIndex(const int *ar, int ar_len, int el);
 
 // get maximum value of int array
-int getMaxIntArray(int *A, int n);
+// 配列, 配列長
+int getMaxIntArray(const int*, int);
 
 // find addresses to put black
 // and calculate nextboard
