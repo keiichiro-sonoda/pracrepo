@@ -627,22 +627,24 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 33. 公比0.99
                 "prm//srddc050__rkg99_uni2_rd001//srddc050__rkg99_uni2_rd001_g{:03d}.bin",
                 # 34. 公比 exp(-0.005)
-                "prm//srddc050__rkgexp-0.005_uni2_rd001//srddc050__rkgexp-0.005_uni2_rd001_g{:03d}.bin"]
+                "prm//srddc050__rkgexp-0.005_uni2_rd001//srddc050__rkgexp-0.005_uni2_rd001_g{:03d}.bin",
+                # 35. 公比 exp(-0.020)
+                "prm//srddc050__rkgexp-0.020_uni2_rd001//srddc050__rkgexp-0.020_uni2_rd001_g{:03d}.bin"]
 
 # 圧縮版ファイルのフォーマットの添字はこのリストに加えていく
 # そろそろめんどい
-COMPRESSED_INDICES = [26, 27, 28, 29, 30, 31, 32, 33, 34]
+COMPRESSED_INDICES = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
 
 # 各フォーマットでどのシードを使ったのか記録
 # フォーマットにシードが付いているかの判定に使える
-SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (123,), 32: (123,), 33: (123,), 34: (123,)}
+SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (123,), 32: (123,), 33: (123,), 34: (123,), 35: (123,)}
 
 
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
-    ind = 34
+    ind = 35
     loc_pop = 50
     start_g = 0
     stop_g = 100
@@ -667,8 +669,8 @@ def main():
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
-    #plt.show()
-    print(makeSprmFileFormatRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005))
+    plt.show()
+    #print(makeSprmFileFormatRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005))
     print("終わり")
 
 if __name__ == "__main__":
