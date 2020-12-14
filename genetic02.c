@@ -105,7 +105,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     strcatSize(info_str, "_", BUF_LEN);
     // 選択
     switch (sel_id) {
-        double lncr;
+        double arg_d;
         case 2: // 等比数列ランキング選択
             // 可変長引数で公比が与えられるはずなので, 100倍した整数値を最低2桁で表示
             snprintf(tmp_str, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
@@ -113,10 +113,10 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             break;
         case 3: // 等比数列ランキング選択 (自然対数表記型)
             // 可変長引数で公比の自然対数が与えられるとし, 1000倍した整数値を符号付きで0埋め4桁表示
-            if ((lncr = va_arg(args, double)) >= 0) {
-                snprintf(tmp_str, BUF_LEN, "rkgexpp%5.3f", lncr);
+            if ((arg_d = va_arg(args, double)) >= 0.) {
+                snprintf(tmp_str, BUF_LEN, "rkgexpp%5.3f", arg_d);
             } else {
-                snprintf(tmp_str, BUF_LEN, "rkgexpn%5.3f", -lncr);
+                snprintf(tmp_str, BUF_LEN, "rkgexpn%5.3f", -arg_d);
             }
             strcatSize(info_str, tmp_str, BUF_LEN);
             break;
