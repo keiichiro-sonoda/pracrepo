@@ -112,7 +112,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             break;
         case 3: // 等比数列ランキング選択 (自然対数表記型)
             // 可変長引数で公比の自然対数が与えられるとし, 1000倍した整数値を符号付きで0埋め4桁表示
-            snprintf(tmp, BUF_LEN, "rkge%+05d", (int)(va_arg(args, double) * 1000));
+            snprintf(tmp, BUF_LEN, "rkgexp%+05d", (int)(va_arg(args, double) * 1000));
             strcatSize(info_str, tmp, BUF_LEN);
             break;
         default:
