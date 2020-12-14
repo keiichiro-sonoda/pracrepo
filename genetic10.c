@@ -74,6 +74,6 @@ int main(void) {
     //sortTest();
     //crossTestPrm1L();
     // もはやテストフォーマットじゃない
-    nGenePrm1LMGGCompLoop(FNF_MGG_TEST, 400);
+    nGenePrm1LMGGCompLoop(FNF_MGG_TEST, 300);
     return 0;
 }
