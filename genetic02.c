@@ -119,6 +119,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             } else {
                 snprintf(tmp_str, BUF_LEN, "rkgexp%+6.3f", arg_d);
             }
+            printFloatExp(arg_d);
             strcatSize(info_str, tmp_str, BUF_LEN);
             break;
         default:

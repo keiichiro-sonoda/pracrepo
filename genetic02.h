@@ -16,7 +16,7 @@
 #define CMN_RATIO 0.99 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
 #endif
 
-#define CMN_RATIO_LN -0.0001 // 公比の自然対数表記バージョン
+#define CMN_RATIO_LN -1.e-323 // 公比の自然対数表記バージョン
 
 #ifndef ELITE_NUM
 #define ELITE_NUM 0 // エリート数
