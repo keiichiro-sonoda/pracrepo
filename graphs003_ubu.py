@@ -25,6 +25,7 @@ share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
 IntArray3 = c_int32 * 3
+
 # 適応度代入用
 # 100 は最大の個体数と考える, 必要があれば調整
 # 可変にできないものか…

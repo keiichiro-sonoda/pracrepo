@@ -330,7 +330,7 @@ void initSprm(void);
 
 // Sprm のファイルフォーマットを自動生成する関数 (予定)
 // 各種要素を引数で指定
-// 適応度ID, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他オプション
+// 書き込み対象文字列, サイズ, 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他オプション
 int makeSprmFileFormatAuto(char*, int, int, int, int, int, int, int, int, double, int, ...);
 
 // print a simple parameter

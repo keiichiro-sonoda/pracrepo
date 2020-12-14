@@ -12,6 +12,20 @@
 
 // functions
 
+// Sprm のファイルフォーマットを自動生成する関数
+// Python 用
+// ただし研究対象ということで等比数列ランキング選択に限る
+// 書き込み対象文字列, サイズ, 個体数, エリート数, 選択方法, シード値, 公比 (対数かどうかは sel_id 依存)
+int makeSprmFileFormatRankGeoProgPy(char *dst, int dst_size, int loc_pop, int loc_eln, int sel_id, int loc_seed, double cmn_ratio) {
+    char tmp_str[FILENAME_MAX];
+    // 固定: 対ランダム (指し手最大), 圧縮, 一様交叉, ランダム突然変異1%
+    if (makeSprmFileFormatAuto(tmp_str, FILENAME_MAX, 0b10, 1, loc_pop, loc_eln, sel_id, 5, 0, .01, loc_seed, cmn_ratio) < 0) {
+        return -1;
+    }
+    printString(tmp_str);
+    return 0;
+}
+
 // make first file
 void makeFirstSprmsFile(void) {
     FILE *fp;
@@ -41,7 +55,9 @@ void makeFirstSprmsFile(void) {
 int loadSprmFileFlex(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    return loadSprmFileDirect(fnamer, pra, pra_size);
+    // ロードか退出
+    loadFileDirectExit(fnamer, pra, pra_size);
+    return 0;
 }
 
 // n は個体数
@@ -62,8 +78,7 @@ void checkSprmFileFlex(const char *format, int gene_num, int n) {
 int getTopSprmPy(const char *fnamer, float f_pointer[MASU_NUM]) {
     // 10個のパラメータを読み込むが, 使うのは1位だけ
     Sprm pra[SURVIVE_NUM];
-    if (loadSprmFileDirect(fnamer, pra, sizeof pra) < 0)
-        return -1;
+    loadFileDirectExit(fnamer, pra, sizeof pra);
     // 適切な位置にパラメータを配置
     for (int i = 0; i < MASU_NUM; i++)
         // 先頭のパラメータから
@@ -192,8 +207,8 @@ int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int comp
 int getTopSprmGameRsltVSRandPy(const char *fnamer, int color, int loc_pop, int game_num, int decNxt_id, int result[3]) {
     printString(fnamer);
     Sprm family[loc_pop];
-    if (loadSprmFileDirect(fnamer, family, sizeof family) < 0)
-        return -1; // ロード失敗
+    // ロード失敗なら抜ける
+    loadFileDirectExit(fnamer, family, sizeof family);
     // ロード成功
     int winner;
     // 指し手決定関数
