@@ -124,8 +124,9 @@ def makeSprmFileFormatRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ra
     c_arr_c = CharArray4096()
     res_str = ""
     str_len = makeSprmFileFormatRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio)
+    # 作成に成功したら, バイト型にして複合
     if str_len > 0:
-        print(str_len, list(c_arr_c)[:str_len])
+        res_str = bytes(c_arr_c).decode()
     return res_str
 
 # グラフ用の色
@@ -667,7 +668,7 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     #plt.show()
-    makeSprmFileFormatRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005)
+    print(makeSprmFileFormatRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005))
     print("終わり")
 
 if __name__ == "__main__":
