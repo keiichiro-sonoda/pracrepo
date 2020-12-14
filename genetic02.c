@@ -658,6 +658,8 @@ int makeFGFileSprmCompMkdir(const char *format, int safety) {
         printf("\a\"%s\" は存在します. ", fnamew);
         // 安全装置が -1 の場合は特殊フラグで抜ける
         if (safety == -1) {
+            // 改行だけする
+            putchar(10);
             return -2;
         }
         // 上書き警告, 許可が得られなければ抜ける
@@ -1403,7 +1405,7 @@ int getGeneNumComp(const char *format, int loc_pop) {
     i = 0;
     while (1) {
         // エラーならその時点で抜ける
-        if ((flag = loadSprmFileComp(format, i, pra, loc_pop) < 0)) {
+        if ((flag = loadSprmFileComp(format, i, pra, loc_pop)) < 0) {
             // エラーのひとつ前を返す (最終世代がソート済で途切れている可能性もある)
             // もし 0 世代からエラーなら -1 が返ってエラーとして扱えそう
             i--;
