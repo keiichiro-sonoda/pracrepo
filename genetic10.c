@@ -75,6 +75,6 @@ int main(void) {
     //crossTestPrm1L();
     //makeFGFilePrm1LMGGComp(format);
     // もはやテストフォーマットじゃない
-    nGenePrm1LMGGCompLoop(FNF_MGG_TEST, 2489);
+    nGenePrm1LMGGCompLoop(FNF_MGG_TEST, 2);
     return 0;
 }
