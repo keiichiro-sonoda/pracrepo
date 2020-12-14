@@ -263,10 +263,10 @@ int main(void) {
     printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
     // ディレクトリがなければ作成する
-    makeFGFileSprmCompMkdir(format, 0);
+    //makeFGFileSprmCompMkdir(format, 0);
     checkSprmFileComp(format, 0);
     // ループ
-    nGeneSprmCompLoop(scm, format, 1, 0, 101);
+    //nGeneSprmCompLoop(scm, format, 1, 0, 101);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
