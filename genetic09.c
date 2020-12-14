@@ -266,7 +266,7 @@ int main(void) {
     makeFGFileSprmCompMkdir(format, 0);
     checkSprmFileComp(format, 0);
     // ループ
-    nGeneSprmCompLoop(scm, format, 1, 0, 3);
+    nGeneSprmCompLoop(scm, format, 1, 0, 101);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
