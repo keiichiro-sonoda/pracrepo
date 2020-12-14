@@ -544,4 +544,7 @@ int nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int sta
 // ソートだけ, 再現性があること前提だが
 void sortOnlySprmComp(scmSprmSorted scm, const char *format, int gene_num);
 
+// フォーマットの世代数を獲得 (圧縮ファイル限定)
+int getGeneNumComp(const char *format, int loc_pop);
+
 #endif

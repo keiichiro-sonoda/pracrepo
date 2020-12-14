@@ -250,7 +250,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
 int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
-    int n;
+    int n, flag, gene_now;
     // ループ回数を計算
     n = (stop - start) / step;
     for (int i = 0; i < n; i++) {
@@ -265,13 +265,22 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
         CMN_RATIO_EFF = exp(loc_cr_ln);
         printf("公比: exp(%+6.3f) = %f\n", loc_cr_ln, CMN_RATIO_EFF);
         printString(format);
+        // 現世代は 0 から (例外あり)
+        gene_now = 0;
         // 初期世代作成, 必要ならばディレクトリも作成
-        if (makeFGFileSprmCompMkdir(format, 0) < 0) {
+        // 第二引数 -1 は, 初期世代作成スルーモード
+        // 正常にスルーしたら -2 が返る
+        if ((flag = makeFGFileSprmCompMkdir(format, -1)) == -2) {
+            // 進んでいる世代数を獲得
+            gene_now = getGeneNumComp(format, POPULATION);
+        }
+        // 普通に失敗
+        else if (flag < 0) {
             puts("初期世代作成失敗");
             return -1;
         }
-        // 各公比, 指定した世代までループ
-        if (nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 0, 0, gene_max) < 0) {
+        // 各公比, 指定した世代までループ (安全装置なし)
+        if (nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 0, gene_now, gene_max) < 0) {
             return -1;
         }
     }
@@ -306,6 +315,6 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
-    trySomeCommonRatio(-0.010, -0.020, -0.005, 10);
+    trySomeCommonRatio(-0.005, -0.020, -0.005, 100);
     return 0;
 }

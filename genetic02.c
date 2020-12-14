@@ -655,8 +655,13 @@ int makeFGFileSprmCompMkdir(const char *format, int safety) {
     // 読み込み専用で開けた
     if ((fp = fopen(fnamew, "rb"))) {
         fclose(fp);
+        printf("\a\"%s\" は存在します. ", fnamew);
+        // 安全装置が -1 の場合は特殊フラグで抜ける
+        if (safety == -1) {
+            return -2;
+        }
         // 上書き警告, 許可が得られなければ抜ける
-        printf("\a\"%s\" exists. Do you overwrite it?", fnamew);
+        printf("上書きしますか?");
         kakuninExit();
     }
     // 読み込み失敗
@@ -672,7 +677,7 @@ int makeFGFileSprmCompMkdir(const char *format, int safety) {
             return -1;
         }
         // 安全装置が有効な場合, 許可を得る
-        if (safety) {
+        if (safety > 0) {
             printf("ディレクトリ %s を作成しますか?", new_dir);
             kakuninExit();
         }
@@ -1388,4 +1393,31 @@ void sortOnlySprmComp(scmSprmSorted scm, const char *format, int gene_num) {
     if (flag < 0) return;
     // ソートに成功, もしくはソート済なら適応度を表示
     printDecimalArray(fitness, POPULATION);
+}
+
+// フォーマットの世代数を獲得 (圧縮ファイル限定)
+int getGeneNumComp(const char *format, int loc_pop) {
+    int i, flag;
+    // ロードしたパラメータの仮置き場
+    Sprm pra[loc_pop];
+    i = 0;
+    while (1) {
+        // エラーならその時点で抜ける
+        if ((flag = loadSprmFileComp(format, i, pra, loc_pop) < 0)) {
+            // エラーのひとつ前を返す (最終世代がソート済で途切れている可能性もある)
+            // もし 0 世代からエラーなら -1 が返ってエラーとして扱えそう
+            i--;
+            if (i >= 0)
+                printf("%d 世代目がソート済ですが, %d 世代目が存在しません. ", i, i + 1);
+            break;
+        }
+        // 未ソートの場合
+        else if (flag == 0) {
+            printf("%d 世代目が未ソートです.\n", i);
+            break;
+        }
+        // ソート済みなら何もしない
+        i++;
+    }
+    return i;
 }
