@@ -13,7 +13,7 @@
 #endif
 
 #ifndef CMN_RATIO
-#define CMN_RATIO 0.2 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
+#define CMN_RATIO 0.99 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
 #endif
 
 #ifndef ELITE_NUM
