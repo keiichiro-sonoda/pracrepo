@@ -199,6 +199,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     Sprm children[2];
     double prob[POPULATION];
     // 等比数列を作成 (初項は0以外ならなんでもいい?)
+    // グローバル変数がファイル名と対応しているか要注意
     geoProg(prob, POPULATION, 1., CMN_RATIO_EFF);
     // 1ループで子は2つなので, 毎回2を足す
     for (count = ELITE_NUM; count < POPULATION; count += 2) {
@@ -243,6 +244,40 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
     return res_func;
 }
 
+// いくつかの公比を試す
+// 公比は自然対数で与える
+// stop は含まない予定だが, double型 の誤差でどうなるかわからない
+int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
+    double loc_cr_ln;
+    char format[FILENAME_MAX];
+    int n;
+    // ループ回数を計算
+    n = (stop - start) / step;
+    for (int i = 0; i < n; i++) {
+        // 公比計算
+        loc_cr_ln = start + step * i;
+        // 選択・交叉・突然変異方法は固定する
+        if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, 5, 0, MUT_RATE, SEED, loc_cr_ln) < 0) {
+            puts("フォーマット作成失敗");
+            return -1;
+        }
+        // ここでグローバル変数を変更!
+        CMN_RATIO_EFF = exp(loc_cr_ln);
+        printf("公比: exp(%+6.3f) = %f\n", loc_cr_ln, CMN_RATIO_EFF);
+        printString(format);
+        // 初期世代作成, 必要ならばディレクトリも作成
+        if (makeFGFileSprmCompMkdir(format, 0) < 0) {
+            puts("初期世代作成失敗");
+            return -1;
+        }
+        // 各公比, 指定した世代までループ
+        if (nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 0, 0, gene_max) < 0) {
+            return -1;
+        }
+    }
+    return 0;
+}
+
 int main(void) {
     // 初期設定
     initSprm();
@@ -258,18 +293,19 @@ int main(void) {
     scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
     // warning 回避, ポインタの一致を確認
     printHex64(scm);
-    printHex64(rankGeoProgUni2CRdS);
+    //printHex64(rankGeoProgUni2CRdS);
     printString(format);
-    printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
+    //printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
     // ディレクトリがなければ作成する
     //makeFGFileSprmCompMkdir(format, 0);
-    checkSprmFileComp(format, 0);
+    //checkSprmFileComp(format, 0);
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
+    trySomeCommonRatio(-0.005, -0.015, -0.005, 10);
     return 0;
 }

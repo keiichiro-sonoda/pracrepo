@@ -421,7 +421,10 @@ float calcWinRateSprmVSRandTotal(Sprm pr, int n);
 // record all individuals!!
 int makeFirstGeneFileFlex(const char *format);
 
-// 圧縮版Sprm初期世代ファイルを作成したい
+// 上書き注意をせず, ファイル名直接指定
+int _makeFGFileSprmComp(const char *fnamew);
+
+// 圧縮版Sprm初期世代ファイルを作成
 int makeFGFileSprmComp(const char *format);
 
 // 初期世代作成, 必要に応じてディレクトリを作成
@@ -536,7 +539,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
 
 // 圧縮版次世代作成関数をループさせる関数
 // 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
-void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int start, int stop);
+int nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int start, int stop);
 
 // ソートだけ, 再現性があること前提だが
 void sortOnlySprmComp(scmSprmSorted scm, const char *format, int gene_num);

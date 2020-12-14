@@ -595,6 +595,7 @@ int makeFirstGeneFileFlex(const char *format) {
 }
 
 // 上書き注意をせず, ファイル名直接指定
+// Sprm を経由せず直接書き込む
 int _makeFGFileSprmComp(const char *fnamew) {
     u_char uca[SPRM_FILE_SIZE_COMP];
     // シードセット!
@@ -610,8 +611,7 @@ int _makeFGFileSprmComp(const char *fnamew) {
     return 0;
 }
 
-// 圧縮版Sprm初期世代ファイルを作成したい
-// Sprm を経由せず直接書き込もうか
+// 圧縮版Sprm初期世代ファイルを作成
 // マクロ SEED でシード設定してファイル名とシードを対応させる
 // ファイル名が正しく設定されていることは前提だが
 int makeFGFileSprmComp(const char *format) {
@@ -619,7 +619,7 @@ int makeFGFileSprmComp(const char *format) {
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     warnOverwritingExit(fnamew);
-    // 別関数に委託
+    // 別関数に委託 (失敗したら -1)
     return _makeFGFileSprmComp(fnamew);
 }
 
@@ -681,6 +681,7 @@ int makeFGFileSprmCompMkdir(const char *format, int safety) {
             puts("ディレクトリ作成失敗");
             return -1;
         }
+        printf("ディレクトリ %s が作成されました\n", new_dir);
     }
     // 途中で抜けなければ初期世代作成
     return _makeFGFileSprmComp(fnamew);
@@ -1346,7 +1347,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
 
 // 圧縮版次世代作成関数をループさせる関数
 // 引数は開始世代番号と, 終了世代番号に変更 (最終世代はファイル作成のみ)
-void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int start, int stop) {
+int nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int start, int stop) {
     time_t t_arr[2];
     // 初期時刻を記録
     time(t_arr);
@@ -1359,13 +1360,14 @@ void nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int st
         // 和を計算したときのオーバーフローを回避?
         printf("seed1: %d, seed2: %d\n", s1, s2 = rand() ^ SEED);
         // 次の世代へ!
-        if (nGeneSprmComp(scm, format, gene_num, s1, s2, safety))
-            return;
+        if (nGeneSprmComp(scm, format, gene_num, s1, s2, safety) < 0)
+            return -1;
         // get time
         time(t_arr + 1);
         printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
         kugiri(100);
     }
+    return 0;
 }
 
 // ソートだけ, 再現性があること前提だが
