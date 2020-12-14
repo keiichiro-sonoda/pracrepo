@@ -256,22 +256,20 @@ int main(void) {
     }
     // マクロのIDで関数決定
     scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
+    // warning 回避, ポインタの一致を確認
     printHex64(scm);
     printHex64(rankGeoProgUni2CRdS);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
+    // ディレクトリがなければ作成する
     makeFGFileSprmCompMkdir(format);
     //checkSprmFileComp(format, 100);
-    //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
-    //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
-    //nGeneSprmCompLoop(rltUniRdS, format, 1, 0, 3);
-    // 研究対象
-    //nGeneSprmCompLoop(scm, format, 1, 0, 101);
+    // ループ
+    nGeneSprmCompLoop(scm, format, 1, 0, 3);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
-    //printDecimal(mkdir("prm/zzz", 0775));
     return 0;
 }

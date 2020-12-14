@@ -121,7 +121,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             } else {
                 snprintf(tmp_str, BUF_LEN, "rkgexp%+6.3f", arg_d);
             }
-            printFloatExp(arg_d);
+            //printFloatExp(arg_d);
             strcatSize(info_str, tmp_str, BUF_LEN);
             break;
         default:
@@ -597,8 +597,9 @@ int makeFirstGeneFileFlex(const char *format) {
 
 // 上書き注意をせず, ファイル名直接指定
 int _makeFGFileSprmComp(const char *fnamew) {
-    srand(SEED);
     u_char uca[SPRM_FILE_SIZE_COMP];
+    // シードセット!
+    srand(SEED);
     // ただの符号無文字型乱数配列を作成
     randUcharArray(uca, SPRM_FILE_SIZE_COMP);
     // 末尾はフラグ0で初期化
