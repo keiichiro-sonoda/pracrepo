@@ -16,8 +16,8 @@
     int e;\
     size_t _pra_size = sizeof(Sprm) * (n);\
     switch (compressed) {\
-        case 0 : loadFileDirectExit(fnamer, family, _pra_size);\
-        default: e = loadSprmFileCompDirect(fnamer, family, n);\
+        case 0 : loadFileDirectExit((fname), (pra), _pra_size);\
+        default: e = loadSprmFileCompDirect((fname), (pra), (n));\
     }\
     if (e < 0) return -1;\
 } while (0)

@@ -114,6 +114,9 @@ def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
         return [0, 0, 0]
     return list(i_arr_c)
 
+def makeSprmFileFormatRankGeoProgWrap():
+    pass
+
 # グラフ用の色
 LINE_COLORS = [
     "#00ff00", "#1f77b4", "#ff7f0e", "#9467bd", "#ff0000",
