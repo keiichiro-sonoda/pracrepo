@@ -58,7 +58,7 @@ getTopSprm.argtypes = (c_char_p, FloatArray64)
 # あるファイルの先頭要素をランダムAIと対戦させ, その結果を取得
 getTopSprmGameRsltVSRand = share02_ubu.getTopSprmGameRsltVSRandPy
 getTopSprmGameRsltVSRand.restype = c_int32
-getTopSprmGameRsltVSRand.argtypes = (CharArray4096, c_int32, c_int32, c_int32, c_int32, IntArray3)
+getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, IntArray3)
 
 # 適応度取得関数
 getFitness = share02_ubu.getFitnessPy
@@ -68,7 +68,7 @@ getFitness.argtypes = (c_char_p, IntArray100, c_int32)
 # ファイル名決定関数
 makeSprmFileFormatRankGeoProg = share02_ubu.makeSprmFileFormatRankGeoProgPy
 makeSprmFileFormatRankGeoProg.restype = c_int32
-makeSprmFileFormatRankGeoProg.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, c_int32, c_double)
+makeSprmFileFormatRankGeoProg.argtypes = (CharArray4096, c_int32, c_int32, c_int32, c_int32, c_int32, c_double)
 
 # 各種ラッパー関数
 # n は個体数を指定 (過小はいいがオーバーに注意)
