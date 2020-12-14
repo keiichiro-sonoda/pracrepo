@@ -424,6 +424,9 @@ int makeFirstGeneFileFlex(const char *format);
 // 圧縮版Sprm初期世代ファイルを作成したい
 int makeFGFileSprmComp(const char *format);
 
+// 初期世代作成, 必要に応じてディレクトリを作成
+int makeFGFileSprmCompMkdir(const char *format);
+
 // ファイル名をそのまま与えてSprmをロード
 int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
 

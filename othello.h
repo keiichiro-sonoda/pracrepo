@@ -389,4 +389,7 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 // black: +1, empty: 0, white: -1
 void board2arraySymmetry(Board src, int *dst);
 
+// 標準入力で y を入力して許可してほしいけど, 関数を抜けたくない場合
+int kakunin(void);
+
 #endif

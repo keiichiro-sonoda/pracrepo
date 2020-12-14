@@ -974,6 +974,12 @@ void board2arraySymmetry(Board src, int *dst) {
     }
 }
 
+// 標準入力で y を入力して許可してほしいけど, 関数を抜けたくない場合
+int kakunin(void) {
+    kakuninExit();
+    return 0;
+}
+
 // main?
 // なんとなく残してある関数
 int main2(void) {

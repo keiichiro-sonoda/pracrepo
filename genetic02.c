@@ -595,37 +595,81 @@ int makeFirstGeneFileFlex(const char *format) {
     return 0;
 }
 
-// 圧縮版Sprm初期世代ファイルを作成したい
-// Sprm を経由せず直接書き込もうか
-// マクロ SEED でシード設定してファイル名とシードを対応させる
-// ファイル名が正しく設定されていることは前提だが
-int makeFGFileSprmComp(const char *format) {
-    puts("初期世代作成");
+// 上書き注意をせず, ファイル名直接指定
+int _makeFGFileSprmComp(const char *fnamew) {
     srand(SEED);
-    char fnamew[FILENAME_MAX];
-    snprintf(fnamew, FILENAME_MAX, format, 0);
-    warnOverwritingExit(fnamew);
     u_char uca[SPRM_FILE_SIZE_COMP];
     // ただの符号無文字型乱数配列を作成
     randUcharArray(uca, SPRM_FILE_SIZE_COMP);
     // 末尾はフラグ0で初期化
     uca[SPRM_FILE_SIZE_COMP - 1] = 0;
-    // そのまま書き込み
+    // そのまま書き込み, 失敗したら -1 で抜ける
     dumpFileDirectExit(fnamew, uca, SPRM_FILE_SIZE_COMP);
     // 初期世代作成時のみサイズを表示
     printf("%d bytes were written\n", SPRM_FILE_SIZE_COMP);
     return 0;
 }
 
+// 圧縮版Sprm初期世代ファイルを作成したい
+// Sprm を経由せず直接書き込もうか
+// マクロ SEED でシード設定してファイル名とシードを対応させる
+// ファイル名が正しく設定されていることは前提だが
+int makeFGFileSprmComp(const char *format) {
+    puts("初期世代作成");
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, 0);
+    warnOverwritingExit(fnamew);
+    // 別関数に委託
+    return _makeFGFileSprmComp(fnamew);
+}
+
+// ファイル名からディレクトリのパスを抽出 (ファイル直下)
+int extractDirPath(const char *fname, char *dir, int dir_size) {
+    int i, l;
+    l = strlen(fname);
+    char fname_cp[l + 1];
+    strncpy(fname_cp, fname, l);
+    for (i = l - 1; i >= 0; i--) {
+        // '/' が見つかったらなる文字に置換
+        // i はナル文字の位置を示して抜ける
+        if (fname_cp[i] == '/') {
+            fname_cp[i] = 0;
+            break;
+        }
+    }
+    // '/' がファイル名に含まれていない, もしくはオーバーフロー
+    if (i < 0 || dir_size < i) return -1;
+    snprintf(dir, dir_size, "%s", fname_cp);
+    return 0;
+}
+
+// 初期世代作成, 必要に応じてディレクトリを作成
 int makeFGFileSprmCompMkdir(const char *format) {
     FILE *fp;
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
-    if ((fp = fopen(fnamew, "rb")) == NULL) {
-        ;
-    } else {
+    // 読み込み専用で開けた
+    if ((fp = fopen(fnamew, "rb"))) {
         fclose(fp);
+        // 上書き注意, 許可が得られなければ抜ける
+        printf("\a\"%s\" exists. Do you overwrite it?", fnamew);
+        kakuninExit();
+        // パスは存在し, 許可も得られたので初期世代作成
+        _makeFGFileSprmComp(fnamew);
     }
+    // 読み込み失敗
+    // ファイルが存在しない? ので気にせず書き込む
+    else if ((fp = fopen(fnamew, "wb"))) {
+        fclose(fp);
+        _makeFGFileSprmComp(fnamew);
+    }
+    // 書き込みも失敗
+    else {
+        char new_dir[FILENAME_MAX];
+        extractDirPath(fnamew, new_dir, FILENAME_MAX);
+        printString(new_dir);
+    }
+    puts("終わり");
     return 0;
 }
 
