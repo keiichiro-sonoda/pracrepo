@@ -318,6 +318,9 @@ extern efSprm EF_FUNC_SPRM;
 // シード値が変わってないかチェック (いつ使うのだろう)
 extern int FIRST_RAND;
 
+// 有効になっている公比
+extern double CMN_RATIO_EFF;
+
 // functions
 
 // グローバル変数等初期化関数

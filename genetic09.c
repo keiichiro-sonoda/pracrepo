@@ -198,7 +198,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     Sprm children[2];
     double prob[POPULATION];
     // 等比数列を作成 (初項は0以外ならなんでもいい?)
-    geoProg(prob, POPULATION, 1., CMN_RATIO);
+    geoProg(prob, POPULATION, 1., CMN_RATIO_EFF);
     // 1ループで子は2つなので, 毎回2を足す
     for (count = ELITE_NUM; count < POPULATION; count += 2) {
         // ルーレット選択 (重複なし)
@@ -226,6 +226,13 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
     switch (sel_id * 10000 + crs_id * 100 + mut_id) {
         case 20500:
             puts("等比数列ランキング選択, 2人っ子一様交叉, ランダム突然変異");
+            CMN_RATIO_EFF = CMN_RATIO; // 公比はそのまま
+            res_func = rankGeoProgUni2CRdS;
+            break;
+        case 30500:
+            puts("等比数列ランキング選択 (対数表記), 2人っ子一様交叉, ランダム突然変異");
+            CMN_RATIO_EFF = exp(CMN_RATIO_LN);
+            printFloat(CMN_RATIO_EFF);
             res_func = rankGeoProgUni2CRdS;
             break;
         default:

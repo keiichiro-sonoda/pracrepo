@@ -26,6 +26,9 @@ efSprm EF_FUNC_SPRM;
 // シードが正しいか確認用
 int FIRST_RAND;
 
+// 有効になっている公比
+double CMN_RATIO_EFF;
+
 // functions
 
 // グローバル変数等初期化関数
