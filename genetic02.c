@@ -588,9 +588,8 @@ int makeFirstGeneFileFlex(const char *format) {
     Sprm pra[POPULATION];
     for (int i = 0; i < POPULATION; i++)
         randSprm(pra + i);
-    // write
-    if (dumpSprmFileDirect(fnamew, pra, sizeof pra) < 0)
-        return -1;
+    // 書き込みと退出
+    dumpFileDirectExit(fnamew, pra, sizeof pra);
     printf("%ld bytes were written\n", sizeof pra);
     return 0;
 }
@@ -729,21 +728,6 @@ Sprm loadRepSprm(const char *format, int gene_num, int loc_pop) {
     }
     // return the top parameter
     return *pra;
-}
-
-// write parameters to a file
-// give a file name for writing
-// be careful of overwriting
-int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
-    FILE *fp;
-    if ((fp = fopen(fname, "wb")) == NULL) {
-        // failed
-        printf("%s can't be opened.\n", fname);
-        return -1;
-    }
-    fwrite(pra, pra_size, 1, fp);
-    fclose(fp);
-    return 0;
 }
 
 // check parameter in a file
@@ -1103,7 +1087,9 @@ int nGeneSSAFlex(scmFunc selAndCross, const char *format, int gene_num, int safe
     checkSprmStatistics(next, POPULATION);
     // write next family to the file
     // and return error flag
-    return dumpSprmFileDirect(fnamew, next, sizeof next);
+    // 書き込みか退出
+    dumpFileDirectExit(fnamew, next, sizeof next);
+    return 0;
 }
 
 // give a function to loop

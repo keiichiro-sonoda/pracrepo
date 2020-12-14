@@ -443,11 +443,6 @@ int loadSprmFileComp(const char*, int, Sprm*, int);
 // load representative of Sprm
 Sprm loadRepSprm(const char *format, int gene_num, int loc_pop);
 
-// write parameters to a file
-// give a file name for writing
-// be careful of overwriting
-int dumpSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
-
 // check parameter in a file
 // give the file name format and generation number
 void checkSprmFile(const char *format, int gene_num);
