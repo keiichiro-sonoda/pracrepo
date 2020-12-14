@@ -76,7 +76,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     va_start(args, loc_seed);
     // s\0 で初期化した文字列. ここにシード以外の情報が入る?
     char info_str[BUF_LEN] = {115, 0};
-    char tmp[BUF_LEN];
+    char tmp_str[BUF_LEN];
     // 適応度
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
@@ -95,25 +95,25 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     // 圧縮するかどうか
     if (is_comp) strcatSize(info_str, "c", BUF_LEN);
     // 個体数は3桁
-    snprintf(tmp, BUF_LEN, "%03d_", loc_pop);
-    strcatSize(info_str, tmp, BUF_LEN);
+    snprintf(tmp_str, BUF_LEN, "%03d_", loc_pop);
+    strcatSize(info_str, tmp_str, BUF_LEN);
     // エリート数は2桁 (0なら表示しない)
     if (loc_eln) {
-        snprintf(tmp, BUF_LEN, "%02d", loc_eln);
-        strcatSize(info_str, tmp, BUF_LEN);
+        snprintf(tmp_str, BUF_LEN, "%02d", loc_eln);
+        strcatSize(info_str, tmp_str, BUF_LEN);
     }
     strcatSize(info_str, "_", BUF_LEN);
     // 選択
     switch (sel_id) {
         case 2: // 等比数列ランキング選択
             // 可変長引数で公比が与えられるはずなので, 100倍した整数値を最低2桁で表示
-            snprintf(tmp, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
-            strcatSize(info_str, tmp, BUF_LEN);
+            snprintf(tmp_str, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
+            strcatSize(info_str, tmp_str, BUF_LEN);
             break;
         case 3: // 等比数列ランキング選択 (自然対数表記型)
             // 可変長引数で公比の自然対数が与えられるとし, 1000倍した整数値を符号付きで0埋め4桁表示
-            snprintf(tmp, BUF_LEN, "rkgexp%+05d", (int)(va_arg(args, double) * 1000));
-            strcatSize(info_str, tmp, BUF_LEN);
+            snprintf(tmp_str, BUF_LEN, "rkgexp%+6.3f", va_arg(args, double));
+            strcatSize(info_str, tmp_str, BUF_LEN);
             break;
         default:
             miteigiExit(-1);
@@ -132,8 +132,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
         strcatSize(info_str, "_", BUF_LEN);
         switch (mut_id) {
             case 0: // ランダム突然変異
-                snprintf(tmp, BUF_LEN, "rd%03d", (int)(loc_mr * 100));
-                strcatSize(info_str, tmp, BUF_LEN);
+                snprintf(tmp_str, BUF_LEN, "rd%03d", (int)(loc_mr * 100));
+                strcatSize(info_str, tmp_str, BUF_LEN);
                 break;
             default:
                 miteigiExit(-1);
@@ -143,8 +143,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     snprintf(dst, dst_size, "prm/%s/%s", info_str, info_str);
     strcatSize(dst, "_g%03d", dst_size);
     // シードと拡張子の追加
-    snprintf(tmp, BUF_LEN, "_s%03d.bin", loc_seed);
-    strcatSize(dst, tmp, BUF_LEN);
+    snprintf(tmp_str, BUF_LEN, "_s%03d.bin", loc_seed);
+    strcatSize(dst, tmp_str, BUF_LEN);
     // 終了. これが必要らしい, メモリの解放?
     va_end(args);
     return 0;
