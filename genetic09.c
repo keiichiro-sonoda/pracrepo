@@ -251,7 +251,7 @@ int main(void) {
     printHex64(rankGeoProgUni2CRdS);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
-    makeFGFileSprmComp(format);
+    //makeFGFileSprmComp(format);
     checkSprmFileComp(format, 0);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
