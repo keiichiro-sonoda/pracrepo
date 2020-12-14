@@ -233,7 +233,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
         case 30500:
             puts("等比数列ランキング選択 (対数表記), 2人っ子一様交叉, ランダム突然変異");
             CMN_RATIO_EFF = exp(CMN_RATIO_LN); // 指数を計算し公比とする
-            printf("公比: %f\n", CMN_RATIO_EFF);
+            printf("公比: exp(%+6.3f) = %f\n", CMN_RATIO_LN, CMN_RATIO_EFF);
             res_func = rankGeoProgUni2CRdS;
             break;
         default:
@@ -249,7 +249,7 @@ int main(void) {
     //srand((unsigned)time(NULL));
     // フォーマット自動作成 (シードまで)
     char format[FILENAME_MAX];
-    if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, CMN_RATIO_LN) < 0) {
+    if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, CMN_RATIO) < 0) {
         puts("フォーマット作成失敗");
         return -1;
     }
