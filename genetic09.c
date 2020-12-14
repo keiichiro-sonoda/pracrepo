@@ -251,20 +251,22 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
     int n, flag, gene_now;
+    time_t t0, t1;
+    // 最初の時間を取得
+    time(&t0);
     // ループ回数を計算
     n = (stop - start) / step;
     for (int i = 0; i < n; i++) {
         // 公比計算
         loc_cr_ln = start + step * i;
         // 選択・交叉・突然変異方法は固定する
+        // グローバル変数の変更も行うようにした (まとめた方が食い違いしにくそう?)
         if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, 5, 0, MUT_RATE, SEED, loc_cr_ln) < 0) {
             puts("フォーマット作成失敗");
             return -1;
         }
-        // ここでグローバル変数を変更!
-        CMN_RATIO_EFF = exp(loc_cr_ln);
         printf("公比: exp(%+6.3f) = %f\n", loc_cr_ln, CMN_RATIO_EFF);
-        printString(format);
+        printf("フォーマット: %s\n", format);
         // 現世代は 0 から (例外あり)
         gene_now = 0;
         // 初期世代作成, 必要ならばディレクトリも作成
@@ -272,7 +274,14 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
         // 正常にスルーしたら -2 が返る
         if ((flag = makeFGFileSprmCompMkdir(format, -1)) == -2) {
             // 進んでいる世代数を獲得
-            printf("%d 世代目から再開します.\n", gene_now = getGeneNumComp(format, POPULATION));
+            // 最大世代以前なら, そこから再開
+            if ((gene_now = getGeneNumComp(format, POPULATION)) < gene_max) {
+                printf("%d 世代目から再開します.\n", gene_now);
+            }
+            // 最大世代を過ぎていたら, 次の公比へ
+            else {
+                continue;
+            }
         }
         // 普通に失敗
         else if (flag < 0) {
@@ -283,6 +292,10 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
         if (nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 0, gene_now, gene_max) < 0) {
             return -1;
         }
+        time(&t1);
+        printf("プログラム開始から: ");
+        printElapsedTime(t1 - t0);
+        kugiri(100);
     }
     return 0;
 }
@@ -299,7 +312,8 @@ int main(void) {
         return -1;
     }
     // マクロのIDで関数決定
-    scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
+    scmSprmSorted scm = NULL;
+    //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
     // warning 回避, ポインタの一致を確認
     printHex64(scm);
     //printHex64(rankGeoProgUni2CRdS);
@@ -315,6 +329,6 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
-    trySomeCommonRatio(-0.005, -0.025, -0.005, 101);
+    trySomeCommonRatio(-0.005, -0.025, -0.005, 102);
     return 0;
 }

@@ -121,6 +121,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             } else {
                 snprintf(tmp_str, BUF_LEN, "rkgexp%+6.3f", arg_d);
             }
+            // ここで公比を決定する
+            CMN_RATIO_EFF = exp(arg_d);
             //printFloatExp(arg_d);
             strcatSize(info_str, tmp_str, BUF_LEN);
             break;
@@ -1371,7 +1373,7 @@ int nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int sta
             return -1;
         // get time
         time(t_arr + 1);
-        printf("elapsed time: %lds\n", t_arr[1] - t_arr[0]);
+        printElapsedTime(t_arr[1] - t_arr[0]);
         kugiri(100);
     }
     return 0;
