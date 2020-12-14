@@ -67,7 +67,6 @@ void initSprm(void) {
             DET_FUNC = getBoardForBlackSimpleRoulette;
             printf(" (指し手ルーレット)\n");
     }
-    printf("等比数列の公比      : %4.2f\n", CMN_RATIO);
 }
 
 // Sprm のファイルフォーマットを自動生成する関数
