@@ -293,7 +293,7 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
             return -1;
         }
         time(&t1);
-        printf("プログラム開始から: ");
+        printf("公比お試し関数開始から: ");
         printElapsedTime(t1 - t0);
         kugiri(100);
     }
@@ -329,6 +329,6 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
-    trySomeCommonRatio(-0.005, -0.025, -0.005, 102);
+    trySomeCommonRatio(-0.005, -0.040, -0.005, 3);
     return 0;
 }
