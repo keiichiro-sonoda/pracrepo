@@ -18,6 +18,8 @@ VIEW_ONLY = True
 # シンプルパラメータの長さ
 SPRM_LEN = 10
 
+FILENAME_MAX = 4096
+
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
 # ubuntu用であることに注意
 share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
@@ -25,6 +27,8 @@ share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
 IntArray3 = c_int32 * 3
+# なんとなく c の FILENAME_MAX に合わせてみた
+CharArray4096 = c_char * FILENAME_MAX
 
 # 適応度代入用
 # 100 は最大の個体数と考える, 必要があれば調整
@@ -54,7 +58,7 @@ getTopSprm.argtypes = (c_char_p, FloatArray64)
 # あるファイルの先頭要素をランダムAIと対戦させ, その結果を取得
 getTopSprmGameRsltVSRand = share02_ubu.getTopSprmGameRsltVSRandPy
 getTopSprmGameRsltVSRand.restype = c_int32
-getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, IntArray3)
+getTopSprmGameRsltVSRand.argtypes = (CharArray4096, c_int32, c_int32, c_int32, c_int32, IntArray3)
 
 # 適応度取得関数
 getFitness = share02_ubu.getFitnessPy
@@ -114,8 +118,10 @@ def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
         return [0, 0, 0]
     return list(i_arr_c)
 
-def makeSprmFileFormatRankGeoProgWrap():
-    pass
+# ファイル名作成
+def makeSprmFileFormatRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio):
+    c_arr_c = CharArray4096()
+    makeSprmFileFormatRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio)
 
 # グラフ用の色
 LINE_COLORS = [
@@ -656,6 +662,7 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     #plt.show()
+    makeSprmFileFormatRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005)
     print("終わり")
 
 if __name__ == "__main__":
