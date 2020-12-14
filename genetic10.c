@@ -66,7 +66,7 @@ int main(void) {
     initPrm1LComp();
     //srand((unsigned)time(NULL));
     //showBoard(START);
-    const char format[] = FNF_MGG_TEST;
+    const char format[] = FNF_TEST;
     printString(format);
     // for debugging
     //makeFGFilePrm1LComp(format);
@@ -74,6 +74,7 @@ int main(void) {
     //sortTest();
     //crossTestPrm1L();
     //makeFGFilePrm1LMGGComp(format);
-    nGenePrm1LMGGCompLoop(format, 3);
+    // もはやテストフォーマットじゃない
+    nGenePrm1LMGGCompLoop(FNF_MGG_TEST, 2489);
     return 0;
 }
