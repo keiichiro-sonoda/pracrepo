@@ -260,7 +260,7 @@ int main(void) {
     printHex64(rankGeoProgUni2CRdS);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
-    //makeFGFileSprmComp(format);
+    makeFGFileSprmComp(format);
     //checkSprmFileComp(format, 100);
     //nGeneSprmCompLoop(rltAveUniEqS, format, 1, 0, 201);
     //nGeneSprmCompLoop(rltSPRdS, format, 1, 2, 201);
@@ -269,8 +269,14 @@ int main(void) {
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    checkSprmFileComp(format, 0);
+    //checkSprmFileComp(format, 0);
     //sortTest();
-    printDecimal(mkdir("prm/zzz", 0775));
+    //printDecimal(mkdir("prm/zzz", 0775));
+    int a;
+    if (!(a = NULL)) {
+        printHex64(15);
+    } else {
+        printHex64(a);
+    }
     return 0;
 }

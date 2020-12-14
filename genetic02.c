@@ -617,6 +617,18 @@ int makeFGFileSprmComp(const char *format) {
     return 0;
 }
 
+int makeFGFileSprmCompMkdir(const char *format) {
+    FILE *fp;
+    char fnamew[FILENAME_MAX];
+    snprintf(fnamew, FILENAME_MAX, format, 0);
+    if ((fp = fopen(fnamew, "rb")) == NULL) {
+        ;
+    } else {
+        fclose(fp);
+    }
+    return 0;
+}
+
 // ファイル名をそのまま与えてSprmをロード
 int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
     FILE *fp;
