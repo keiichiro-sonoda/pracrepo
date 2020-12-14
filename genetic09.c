@@ -271,6 +271,6 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     checkSprmFileComp(format, 0);
     //sortTest();
-    mkdir("aaa", 0775);
+    printDecimal(mkdir("zzz", 0775));
     return 0;
 }
