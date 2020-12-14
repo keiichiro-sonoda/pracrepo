@@ -638,39 +638,49 @@ int extractDirPath(const char *fname, char *dir, int dir_size) {
         }
     }
     // '/' がファイル名に含まれていない, もしくはオーバーフロー
-    if (i < 0 || dir_size < i) return -1;
+    if (i < 0 || dir_size < i) {
+        puts("ディレクトリ名抽出失敗");
+        return -1;
+    }
     snprintf(dir, dir_size, "%s", fname_cp);
     return 0;
 }
 
 // 初期世代作成, 必要に応じてディレクトリを作成
 int makeFGFileSprmCompMkdir(const char *format) {
+    puts("初期世代作成");
     FILE *fp;
     char fnamew[FILENAME_MAX];
     snprintf(fnamew, FILENAME_MAX, format, 0);
     // 読み込み専用で開けた
     if ((fp = fopen(fnamew, "rb"))) {
         fclose(fp);
-        // 上書き注意, 許可が得られなければ抜ける
+        // 上書き警告, 許可が得られなければ抜ける
         printf("\a\"%s\" exists. Do you overwrite it?", fnamew);
         kakuninExit();
-        // パスは存在し, 許可も得られたので初期世代作成
-        _makeFGFileSprmComp(fnamew);
     }
     // 読み込み失敗
-    // ファイルが存在しない? ので気にせず書き込む
+    // ファイルが存在しない? ので上書きを気にせず書き込み専用で開く
     else if ((fp = fopen(fnamew, "wb"))) {
         fclose(fp);
-        _makeFGFileSprmComp(fnamew);
     }
     // 書き込みも失敗
     else {
         char new_dir[FILENAME_MAX];
-        extractDirPath(fnamew, new_dir, FILENAME_MAX);
-        printString(new_dir);
+        // ディレクトリ名抽出
+        if (extractDirPath(fnamew, new_dir, FILENAME_MAX) < 0) {
+            return -1;
+        }
+        printf("ディレクトリ %s を作成しますか?", new_dir);
+        kakuninExit();
+        // ディレクトリ作成
+        if (mkdir(new_dir, 0775) < 0) {
+            puts("ディレクトリ作成失敗");
+            return -1;
+        }
     }
-    puts("終わり");
-    return 0;
+    // 途中で抜けなければ初期世代作成
+    return _makeFGFileSprmComp(fnamew);
 }
 
 // ファイル名をそのまま与えてSprmをロード
