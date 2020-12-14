@@ -1,5 +1,6 @@
 // define some functions for selection and crossing
 #include <time.h>
+#include <unistd.h>
 
 #include "sort01.h"
 #include "genetic02.h"
@@ -267,8 +268,9 @@ int main(void) {
     // 研究対象
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
     // 修正用
-    sortOnlySprmComp(scm, format, 0);
+    //sortOnlySprmComp(scm, format, 0);
     checkSprmFileComp(format, 0);
     //sortTest();
+    mkdir("aaa", 0755);
     return 0;
 }

@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+// ??
+#include <sys/stat.h>
+#include <sys/types.h>
 
 // maximum number of next boards
 #define NEXT_MAX 32
