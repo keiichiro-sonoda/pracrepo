@@ -241,7 +241,7 @@ int main(void) {
     //srand((unsigned)time(NULL));
     // フォーマット自動作成 (シードまで)
     char format[FILENAME_MAX];
-    if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, CMN_RATIO) < 0) {
+    if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, CMN_RATIO_LN) < 0) {
         puts("フォーマット作成失敗");
         return -1;
     }
