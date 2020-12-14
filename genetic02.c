@@ -684,21 +684,6 @@ int makeFGFileSprmCompMkdir(const char *format) {
     return _makeFGFileSprmComp(fnamew);
 }
 
-// ファイル名をそのまま与えてSprmをロード
-int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size) {
-    FILE *fp;
-    // 読み込み用で開く
-    if ((fp = fopen(fname, "rb")) == NULL) {
-        // 失敗
-        printf("%s can't be opened.\n", fname);
-        return -1;
-    }
-    // 成功
-    fread(pra, pra_size, 1, fp);
-    fclose(fp);
-    return 0;
-}
-
 // 圧縮ファイルからロード
 // エラーやソート済みフラグを返す
 // 返り値が重要な場合はマクロ化しにくいかな?
@@ -721,8 +706,9 @@ int loadSprmFile(const char *format, int gene_num, Sprm *pra, size_t pra_size) {
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
     // ファイル名確認
     printf("read file : %s\n", fnamer);
-    // ロードしてエラー値を返す
-    return loadSprmFileDirect(fnamer, pra, pra_size);
+    // ロード. エラーなら-1で抜ける
+    loadFileDirectExit(fnamer, pra, pra_size);
+    return 0;
 }
 
 // 圧縮ファイルからロード (フォーマットと世代番号から)

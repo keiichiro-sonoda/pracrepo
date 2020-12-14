@@ -427,9 +427,6 @@ int makeFGFileSprmComp(const char *format);
 // 初期世代作成, 必要に応じてディレクトリを作成
 int makeFGFileSprmCompMkdir(const char *format);
 
-// ファイル名をそのまま与えてSprmをロード
-int loadSprmFileDirect(const char *fname, Sprm *pra, size_t pra_size);
-
 // 圧縮ファイルからロード
 // エラーやソート済みフラグを返す
 // 返り値が重要な場合はマクロ化しにくいかな?
