@@ -22,8 +22,11 @@ int makeSprmFileFormatRankGeoProgPy(char *dst, int dst_size, int loc_pop, int lo
     if (makeSprmFileFormatAuto(tmp_str, FILENAME_MAX, 0b10, 1, loc_pop, loc_eln, sel_id, 5, 0, .01, loc_seed, cmn_ratio) < 0) {
         return -1;
     }
-    printString(tmp_str);
-    return 0;
+    int l = strlen(tmp_str);
+    if (dst_size <= l) return -1;
+    strncpy(dst, tmp_str, l);
+    printString(dst);
+    return l;
 }
 
 // make first file

@@ -23,6 +23,7 @@ FILENAME_MAX = 4096
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
 # ubuntu用であることに注意
 share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
+
 # 配列型定義
 FloatArray10 = c_float * 10
 FloatArray64 = c_float * 64
@@ -121,7 +122,11 @@ def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
 # ファイル名作成
 def makeSprmFileFormatRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio):
     c_arr_c = CharArray4096()
-    makeSprmFileFormatRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio)
+    res_str = ""
+    str_len = makeSprmFileFormatRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio)
+    if str_len > 0:
+        print(str_len, list(c_arr_c)[:str_len])
+    return res_str
 
 # グラフ用の色
 LINE_COLORS = [
