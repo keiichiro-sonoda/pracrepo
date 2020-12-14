@@ -647,7 +647,7 @@ int extractDirPath(const char *fname, char *dir, int dir_size) {
 }
 
 // 初期世代作成, 必要に応じてディレクトリを作成
-int makeFGFileSprmCompMkdir(const char *format) {
+int makeFGFileSprmCompMkdir(const char *format, int safety) {
     puts("初期世代作成");
     FILE *fp;
     char fnamew[FILENAME_MAX];
@@ -671,8 +671,11 @@ int makeFGFileSprmCompMkdir(const char *format) {
         if (extractDirPath(fnamew, new_dir, FILENAME_MAX) < 0) {
             return -1;
         }
-        printf("ディレクトリ %s を作成しますか?", new_dir);
-        kakuninExit();
+        // 安全装置が有効な場合, 許可を得る
+        if (safety) {
+            printf("ディレクトリ %s を作成しますか?", new_dir);
+            kakuninExit();
+        }
         // ディレクトリ作成
         if (mkdir(new_dir, 0775) < 0) {
             puts("ディレクトリ作成失敗");

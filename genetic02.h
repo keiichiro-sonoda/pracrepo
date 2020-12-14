@@ -425,7 +425,8 @@ int makeFirstGeneFileFlex(const char *format);
 int makeFGFileSprmComp(const char *format);
 
 // 初期世代作成, 必要に応じてディレクトリを作成
-int makeFGFileSprmCompMkdir(const char *format);
+// ファイルフォーマット, ディレクトリ作成の安全装置フラグ
+int makeFGFileSprmCompMkdir(const char*, int);
 
 // 圧縮ファイルからロード
 // エラーやソート済みフラグを返す
