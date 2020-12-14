@@ -61,6 +61,11 @@ getFitness = share02_ubu.getFitnessPy
 getFitness.restype = c_int32
 getFitness.argtypes = (c_char_p, IntArray100, c_int32)
 
+# ファイル名決定関数
+makeSprmFileFormatRankGeoProg = share02_ubu.makeSprmFileFormatRankGeoProgPy
+makeSprmFileFormatRankGeoProg.restype = c_int32
+makeSprmFileFormatRankGeoProg.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, c_int32, c_double)
+
 # 各種ラッパー関数
 # n は個体数を指定 (過小はいいがオーバーに注意)
 # 圧縮フラグを追加
@@ -647,7 +652,7 @@ def main():
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
-    plt.show()
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
