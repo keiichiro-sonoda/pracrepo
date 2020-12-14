@@ -247,8 +247,8 @@ int main(void) {
     }
     // マクロのIDで関数決定
     scmSprmSorted scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
-    printf("%lx\n", (unsigned long)scm);
-    printf("%lx\n", (unsigned long)rankGeoProgUni2CRdS);
+    printHex64(scm);
+    printHex64(scm);
     printString(format);
     printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);

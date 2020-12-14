@@ -31,13 +31,15 @@
 // for debug
 #define kugiri(n) do {for (int _ = 0; _ < (n); _++) putchar('-'); putchar(10);} while (0)
 #define printString(s) printf("%s\n", s)
-#define printDecimal(x) printf("%d\n", x)
+// キャストで汎用性を高めた? 符号付き32ビット限定
+#define printDecimal(x) printf("%d\n", (int)x)
+// 16進法表示 (あえて符号なしにする意味はあったか?)
+// 関数ポインタの表示に役立つ?
+#define printHex64(x) printf("%lx\n", (u_long)x)
 #define printFloat(x) printf("%f\n", x)
 #define printFloatExp(x) printf("%+.20e\n", x) // 浮動小数点数を指数表示する
 #define printSize(x) printf("%ld\n", sizeof x)
 #define arrayLength(A) (sizeof(A) / sizeof(A[0]))
-// char型の整数表現を確認する (多分32bit以内ならchar以外も可)
-#define printCharDecimal(x) printf("%d\n", (int)(x))
 // 経過時間を表示 (秒数を時間, 分, 秒に変換)
 // 大きすぎる値や, 負の値は考慮しない
 #define printElapsedTime(sec) printf("%02ld 時間 %02ld 分 %02ld 秒\n", (sec) / 3600, (sec) % 3600 / 60, (sec) % 60);
