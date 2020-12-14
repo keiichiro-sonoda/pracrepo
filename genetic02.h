@@ -16,6 +16,8 @@
 #define CMN_RATIO 0.99 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
 #endif
 
+#define CMN_RATIO_LN -0.005 // 公比の自然対数表記バージョン
+
 #ifndef ELITE_NUM
 #define ELITE_NUM 0 // エリート数
 #endif
@@ -39,7 +41,8 @@
 
 // 選択識別子
 // 2: 等比数列ランキング選択
-#define SELECTION_ID 2
+// 3: 等比数列ランキング選択 (自然対数表記型)
+#define SELECTION_ID 3
 
 // 交叉識別子
 // 5: 一様交叉 (2人っ子)
@@ -209,7 +212,7 @@
 
 // 整数を返す関数で, 未定義の部分に入ったら実行 (使うとこ限られそう?)
 // 返り値となる値を与える
-#define miteigiExit(res_val) if (1) {printf("\a未定義\n"); return (res_val);} 
+#define miteigiExit(res_val) do {printf("\a未定義\n"); return (res_val);} while (0)
 
 // Sprm配列を圧縮
 // 関数でもconstは引っかかったのでマクロに戻す
