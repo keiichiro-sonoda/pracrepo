@@ -67,9 +67,9 @@ getFitness.restype = c_int32
 getFitness.argtypes = (c_char_p, IntArray100, c_int32)
 
 # ファイル名決定関数
-makeSprmFileFormatRankGeoProg = share02_ubu.makeSprmFileFormatRankGeoProgPy
-makeSprmFileFormatRankGeoProg.restype = c_int32
-makeSprmFileFormatRankGeoProg.argtypes = (CharArray4096, c_int32, c_int32, c_int32, c_int32, c_int32, c_double, c_int32)
+makeSprmFileNameRankGeoProg = share02_ubu.makeSprmFileNameRankGeoProgPy
+makeSprmFileNameRankGeoProg.restype = c_int32
+makeSprmFileNameRankGeoProg.argtypes = (CharArray4096, c_int32, c_int32, c_int32, c_int32, c_int32, c_double, c_int32)
 
 # 各種ラッパー関数
 # n は個体数を指定 (過小はいいがオーバーに注意)
@@ -122,10 +122,10 @@ def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
 # ファイル名作成
 # 個体数, エリート数, 選択ID, 公比, 世代数を与える
 # 選択ID: 2: 公比そのまま, 3: 公比自然対数
-def makeSprmFileFormatRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num):
+def makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num):
     c_arr_c = CharArray4096()
     res_str = ""
-    str_len = makeSprmFileFormatRankGeoProg(c_arr_c, 86, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
+    str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
     # 作成に成功したら, バイト型にして複合
     if str_len > 0:
         res_str = bytes(c_arr_c).decode()
@@ -672,7 +672,7 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     #plt.show()
-    print(makeSprmFileFormatRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005, 100))
+    print(makeSprmFileNameRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005, 100))
     print("終わり")
 
 if __name__ == "__main__":
