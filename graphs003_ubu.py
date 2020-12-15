@@ -174,11 +174,14 @@ def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation"):
     # 公比が横軸
     elif x_type == "common_ratio":
         #print(mg1[0])
+        # 固定された公比の部分は切り抜く
         m3 = re.match(r'(.*rkgexp)([+-][0-9]\.[0-9]{3})(.*)', mg1[0])
         if m3:
             mg3 = m3.groups()
             #print(mg3)
-        path += mg3[0] + "{0:+5.3f}_{1:+5.3f}".format(float(x_min), float(x_max)) + mg3[2] + name + sp + ".jpg"
+            path += mg3[0] + "{0:+5.3f}{1:+5.3f}".format(float(x_min), float(x_max)) + mg3[2] + name + sp + ".jpg"
+        else:
+            path = ""
     else:
         path = ""
     print(path)
@@ -608,7 +611,8 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     makeFitnessGraph(ax, x, ys, x_label="the natural log of common ratio")
-    fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, -0.005, gene_num)
+    #fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, -0.005, gene_num)
+    # いくつかオプションはここで決めておく
     name = "_g{:03d}_smp{:03d}".format(gene_num, loc_pop)
     makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
 
