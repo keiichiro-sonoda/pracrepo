@@ -617,6 +617,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     path = makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
     if not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
+        print("saved!")
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -734,7 +735,7 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     """
-    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 10, 123)
+    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 50, 123)
     plt.show()
     print("終わり")
 
