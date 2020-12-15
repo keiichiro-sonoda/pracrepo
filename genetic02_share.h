@@ -16,7 +16,7 @@
     int e;\
     size_t _pra_size = sizeof(Sprm) * (n);\
     switch (compressed) {\
-        case 0 : loadFileDirectExit((fname), (pra), _pra_size);\
+        case 0 : loadFileDirectExit((fname), (pra), _pra_size); printf("非圧縮です");\
         default: e = loadSprmFileCompDirect((fname), (pra), (n));\
     }\
     if (e < 0) return -1;\
