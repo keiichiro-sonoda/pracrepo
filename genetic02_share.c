@@ -24,7 +24,8 @@ int makeSprmFileFormatRankGeoProgPy(char *dst, int dst_size, int loc_pop, int lo
     int l;
     // 世代番号を指定
     l = snprintf(dst, dst_size, tmp_str, gene_num);
-    printDecimal(l);
+    printf("snprintf の返り値: %d\n", l);
+    printf("dst の長さ       : %d\n", (int)strlen(dst));
     printString(dst);
     return l;
 }

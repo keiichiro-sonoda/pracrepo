@@ -125,7 +125,7 @@ def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
 def makeSprmFileFormatRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num):
     c_arr_c = CharArray4096()
     res_str = ""
-    str_len = makeSprmFileFormatRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
+    str_len = makeSprmFileFormatRankGeoProg(c_arr_c, 84, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
     # 作成に成功したら, バイト型にして複合
     if str_len > 0:
         res_str = bytes(c_arr_c).decode()
