@@ -703,7 +703,7 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     """
-    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 100, 123)
+    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 0, 123)
     plt.show()
     print("終わり")
 
