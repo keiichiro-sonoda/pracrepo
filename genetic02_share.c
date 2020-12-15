@@ -27,7 +27,7 @@ int makeSprmFileNameRankGeoProgPy(char *dst, int dst_size, int loc_pop, int loc_
         printf("\aオーバーフロー\n");
         l = -1;
     }
-    printString(dst);
+    //printString(dst);
     return l;
 }
 
