@@ -605,8 +605,8 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     makeFitnessGraph(ax, x, ys, x_label="the natural log of common ratio")
+    fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, -0.005, gene_num)
     name = "fit_crln{:03d}".format(loc_pop)
-    print(fname)
     makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
 
 # ファイルフォーマットのリスト
