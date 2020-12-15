@@ -23,9 +23,10 @@ int makeSprmFileFormatRankGeoProgPy(char *dst, int dst_size, int loc_pop, int lo
     }
     int l;
     // 世代番号を指定
-    l = snprintf(dst, dst_size, tmp_str, gene_num);
-    printf("snprintf の返り値: %d\n", l);
-    printf("dst の長さ       : %d\n", (int)strlen(dst));
+    if ((l = snprintf(dst, dst_size, tmp_str, gene_num)) >= dst_size) {
+        printf("\aオーバーフロー\n");
+        l = -1;
+    }
     printString(dst);
     return l;
 }
