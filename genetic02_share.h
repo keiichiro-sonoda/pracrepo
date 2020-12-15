@@ -29,7 +29,7 @@
 // Python 用
 // ただし研究対象ということで等比数列ランキング選択に限る
 // 書き込み対象文字列, サイズ, 個体数, エリート数, 選択方法, シード値, 公比 (対数かどうかは sel_id 依存)
-int makeSprmFileFormatRankGeoProgPy(char*, int, int, int, int, int, double);
+int makeSprmFileFormatRankGeoProgPy(char*, int, int, int, int, int, double, int);
 
 // make first file
 void makeFirstSprmsFile(void);
