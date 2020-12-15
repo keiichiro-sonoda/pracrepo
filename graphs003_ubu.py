@@ -565,10 +565,15 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max):
     x = []
     # 3 つの配列を用意
     ys = [[], [], []]
+    c = 0
     for i in range(g_min, g_max + 1):
         # i 世代の適応度を取り出す
         fl = getFitnessWrap(fff.format(i), loc_pop)
         if not fl:
+            c += 1
+            if c >= 10:
+                print("有効なパラメータを指定してください")
+                return
             continue
         # 読み込めたらその世代を x に追加
         x.append(i)
@@ -686,7 +691,8 @@ FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保�
                 # 25. 指し手ルーレット, 個体数100, エリート10, 非独立ルーレット選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
                 "prm//sprm100_10_rlt_au_rd005//sprm100_10_rlt_au_rd005_g{:03d}.bin",
                 # 26. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
-                "prm//srltc050_06_rlt_uni_rd005//srltc050_06_rlt_uni_rd005_g{:03d}.bin",
+                # gの付け忘れ!
+                "prm//srltc050_06_rlt_uni_rd005//srltc050_06_rlt_uni_rd005_{:03d}.bin",
                 # 27. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
                 "prm//srltc050_06_rlt_1p_rd005//srltc050_06_rlt_1p_rd005_g{:03d}.bin",
                 # 28. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 平均と一様一回ずつ, それぞれランダム突然変異5%
@@ -715,7 +721,7 @@ COMPRESSED_INDICES = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
 SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (123,), 32: (123,), 33: (123,), 34: (123,), 35: (123,)}
 
 def old():
-    ind = 27
+    ind = 26
     loc_pop = 50
     start_g = 0
     stop_g = 100
