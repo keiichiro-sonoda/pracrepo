@@ -561,7 +561,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     ax = fig.add_subplot(111)
     #name = "fit_crln{:03d}".format(loc_pop)
     makeFitnessGraph(ax, x, ys)
-    
+    plt.show()
 
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
