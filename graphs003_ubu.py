@@ -258,11 +258,16 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(10)]
+    c = 0
     for i in range(x_min, x_max + 1):
         # i 世代全個体の平均値を取り出す
         tprm = getFamilyMeansWrap(fname_format.format(i), population, compressed)
         # 読み込みエラー
         if not tprm:
+            c += 1
+            if c >= 10:
+                print("有効なパラメータを指定してください")
+                return
             continue
         # 読み込めたらデータを追加
         # x は範囲内の整数全て
@@ -326,11 +331,16 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]
     x = []
     # 10 マス分のデータの配列を用意
     ys = [[] for i in range(SPRM_LEN)]
+    c = 0
     for i in range(x_min, x_max + 1):
         # i 世代全個体の標準偏差を取り出す
         tprm = getFamilySDWrap(fname_format.format(i), population, compressed)
         # 空リストがの場合（読み込み失敗）
         if not tprm:
+            c += 1
+            if c >= 10:
+                print("有効なパラメータを指定してください")
+                return
             continue
         # x は読み込めた整数全て
         x.append(i)
@@ -705,7 +715,7 @@ COMPRESSED_INDICES = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
 SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (123,), 32: (123,), 33: (123,), 34: (123,), 35: (123,)}
 
 def old():
-    ind = 11
+    ind = 27
     loc_pop = 50
     start_g = 0
     stop_g = 100
