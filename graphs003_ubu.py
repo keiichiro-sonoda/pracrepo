@@ -531,6 +531,17 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max):
         fig.savefig(path, bbox_inches="tight")
         print("saved!!")
 
+# 横軸公比の自然対数, 縦軸適応度のグラフを作成
+# 世代数は固定
+def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed):
+    x = []
+    ys = [[], [], []]
+    n = int((lncr_stop - lncr_start) / lncr_step)
+    for i in range(n + 1):
+        lncr = lncr_start + lncr_step * i
+        fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, gene_num)
+        print(fname)
+
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
 def formatPlusSeed(fname_format, seed):
@@ -672,7 +683,7 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     #plt.show()
-    print(makeSprmFileNameRankGeoProgWrap(loc_pop, 0, 3, 123, -0.005, 100))
+    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 100, 123)
     print("終わり")
 
 if __name__ == "__main__":
