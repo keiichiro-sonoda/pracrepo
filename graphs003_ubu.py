@@ -168,14 +168,17 @@ def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation"):
     else:
         path = "//home//sonoda//Pictures//Graphs"
     # x 軸の種類
+    # 世代が横軸
     if x_type == "generation":
         path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp + ".jpg"
+    # 公比が横軸
     elif x_type == "common_ratio":
-        print(mg1[0])
-        m3 = re.match(r'(.*rkgexp[+-])', mg1[0])
+        #print(mg1[0])
+        m3 = re.match(r'(.*rkgexp)([+-][0-9]\.[0-9]{3})(.*)', mg1[0])
         if m3:
-            print(m3.groups())
-        path += mg1[0] + "_" + name + "_from{0:+5.3f}to{1:+5.3f}".format(float(x_min), float(x_max)) + sp + ".jpg"
+            mg3 = m3.groups()
+            #print(mg3)
+        path += mg3[0] + "{0:+5.3f}_{1:+5.3f}".format(float(x_min), float(x_max)) + mg3[2] + name + sp + ".jpg"
     else:
         path = ""
     print(path)
@@ -606,7 +609,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     ax = fig.add_subplot(111)
     makeFitnessGraph(ax, x, ys, x_label="the natural log of common ratio")
     fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, -0.005, gene_num)
-    name = "fit_crln{:03d}".format(loc_pop)
+    name = "_g{:03d}_smp{:03d}".format(gene_num, loc_pop)
     makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
 
 # ファイルフォーマットのリスト
