@@ -537,10 +537,31 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     x = []
     ys = [[], [], []]
     n = int((lncr_stop - lncr_start) / lncr_step)
+    c = 0
     for i in range(n + 1):
         lncr = lncr_start + lncr_step * i
+        # ファイル名作成
         fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, gene_num)
-        print(fname)
+        # 適応度取得
+        fl = getFitnessWrap(fname, loc_pop)
+        if fl:
+            c = 0
+            x.append(lncr)
+            ys[0].append(max(fl))
+            ys[1].append(stat.median(fl))
+            ys[2].append(min(fl))
+        else:
+            c += 1
+            if c >= 10:
+                print("有効なパラメータを指定してください")
+                return
+    if not x:
+        return
+    fig = plt.figure(figsize=(8, 5))
+    ax = fig.add_subplot(111)
+    #name = "fit_crln{:03d}".format(loc_pop)
+    makeFitnessGraph(ax, x, ys)
+    
 
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
