@@ -132,6 +132,7 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // compressed が0なら非圧縮, 0以外なら圧縮
 int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
+    printSize(family);
     if (!compressed) {
         loadFileDirectExit(fnamer, family, sizeof family);
     } else {

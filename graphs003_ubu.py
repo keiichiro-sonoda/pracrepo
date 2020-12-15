@@ -722,7 +722,7 @@ SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (1
 
 def old():
     ind = 16
-    loc_pop = 1
+    loc_pop = 50
     start_g = 0
     stop_g = 100
     chumoku = []
