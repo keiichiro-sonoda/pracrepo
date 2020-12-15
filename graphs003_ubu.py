@@ -141,13 +141,18 @@ LINE_COLORS = [
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
 # シードが無い場合のグラフを新たに作ると, 旧ファイル名と異なるファイル名になる (_no_seedが付与される)
-def makeJpegFileName(fname_format, name, g_min, g_max):
+def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation"):
     # シード関係なく共通する部分
     # 最初のふるい落とし
+    single = False
     m1 = re.match(r'prm(//.+)//(.+)\.bin', fname_format)
     if not m1:
-        print("一致するパターンがありません")
-        return ""
+        single = True
+        # スラッシュ単体も試す
+        m1 = re.match(r'prm(/.+)/(.+)\.bin', fname_format)
+        if not m1:
+            print("一致するパターンがありません")
+            return ""
     mg1 = m1.groups()
     # シードの有無
     m2 = re.match(r'.+(_s[0-9]+)', mg1[1])
@@ -157,7 +162,18 @@ def makeJpegFileName(fname_format, name, g_min, g_max):
     else:
         print("シードを含みます")
         sp = m2.groups()[0]
-    path = "//home//sonoda//Pictures//Graphs" + mg1[0] + "_" + name + "_g{1:03d}-{0:03d}".format(g_max, g_min) + sp + ".jpg"
+    # スラッシュ単体の場合
+    if single:
+        path = "/home/sonoda/Pictures/Graphs"
+    else:
+        path = "//home//sonoda//Pictures//Graphs"
+    # x 軸の種類
+    if x_type == "generation":
+        path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(x_min, x_max) + sp + ".jpg"
+    elif x_type == "common_ratio":
+        path += mg1[0] + "_" + name + "_from{0:+5.3f}to{1:+5.3f}".format(float(x_min), float(x_max)) + sp + ".jpg"
+    else:
+        path = ""
     print(path)
     return path
 
@@ -584,8 +600,10 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         return
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
-    #name = "fit_crln{:03d}".format(loc_pop)
-    makeFitnessGraph(ax, x, ys, x_label="common ratio ()")
+    makeFitnessGraph(ax, x, ys, x_label="the natural log of common ratio")
+    name = "fit_crln{:03d}".format(loc_pop)
+    print(fname)
+    makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
