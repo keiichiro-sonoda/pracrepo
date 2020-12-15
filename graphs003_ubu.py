@@ -161,6 +161,31 @@ def makeJpegFileName(fname_format, name, g_min, g_max):
     print(path)
     return path
 
+# フォーマットにシードも追加
+# genetic02 のマクロ名と同じ
+def formatPlusSeed(fname_format, seed):
+    # .bin とそれ以外を分割
+    m = re.match(r'(.+)(\.bin)', fname_format)
+    new = ""
+    if m:
+        mg = m.groups()
+        new = mg[0] + "_s{0:03d}".format(seed) + mg[1]
+    else:
+        print("一致するパターンがありません")
+    return new
+
+# 適応度ファイルフォーマットを作成
+# シードを付加した後に実行することを想定
+# .bin を _format.bin に置き換えるだけ
+def makeFitnessFileFormat(fname_format):
+    # .bin とそれ以外を分割
+    m = re.match(r'(.+)(\.bin)', fname_format)
+    if not m:
+        print("一致するパターンがありません")
+        return ""
+    mg = m.groups()
+    return mg[0] + "_fitness" + mg[1]
+
 # 平均値のグラフを作成
 def makeMeansGraph(ax, x, ys):
     # 縦軸の値の間隔
@@ -267,36 +292,6 @@ def makeSDGraph(ax, x, ys, emphasize):
     ax.set_xticks(np.linspace(x[0], x[-1], 11))
     # 縦幅指定（固定）
     ax.set_yticks(np.linspace(-0.0, 0.40, 5))
-
-# 適応度のグラフを作成
-# データとグラフオブジェクト? を渡す
-def makeFitnessGraph(ax, x, ys):
-    # 縦軸の値の間隔
-    step = 20
-    # 各データのプロットとラベル指定
-    ax.plot(x, ys[0], label="max")
-    ax.plot(x, ys[1], label="median")
-    ax.plot(x, ys[2], label="min")
-    # 凡例調節
-    ax.legend(
-        bbox_to_anchor=(1.01, 1),
-        loc='upper left',
-        borderaxespad=0,
-        fontsize=10
-    )
-    #ax.grid()
-    # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("point", fontsize=15)
-    # 横幅指定（読み込みに成功したデータだけ）
-    ax.set_xticks(np.linspace(x[0], x[-1], 11))
-    # 最大値の最大値から上限を決める
-    y_max = math.ceil(max(ys[0]) / step) * step
-    # 最小値の最小値から下限を決める
-    y_min = math.floor(min(ys[2]) / step) * step
-    print("得点の範囲", y_max, y_min)
-    # 縦幅指定 (間隔は固定)
-    ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
 
 # 標準偏差表示, グラフ画像作成
 # 圧縮フラグを追加
@@ -496,6 +491,36 @@ def viewWinRateGraph(fname_format, decNxt_id):
     path = makeJpegFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
     fig.savefig(path, bbox_inches="tight")
 
+# 適応度のグラフを作成
+# データとグラフオブジェクト? を渡す
+def makeFitnessGraph(ax, x, ys, x_label="generation"):
+    # 縦軸の値の間隔
+    step = 20
+    # 各データのプロットとラベル指定
+    ax.plot(x, ys[0], label="max")
+    ax.plot(x, ys[1], label="median")
+    ax.plot(x, ys[2], label="min")
+    # 凡例調節
+    ax.legend(
+        bbox_to_anchor=(1.01, 1),
+        loc='upper left',
+        borderaxespad=0,
+        fontsize=10
+    )
+    #ax.grid()
+    # ラベル指定
+    ax.set_xlabel(x_label, fontsize=15)
+    ax.set_ylabel("point", fontsize=15)
+    # 横幅指定（読み込みに成功したデータだけ）
+    ax.set_xticks(np.linspace(x[0], x[-1], 11))
+    # 最大値の最大値から上限を決める
+    y_max = math.ceil(max(ys[0]) / step) * step
+    # 最小値の最小値から下限を決める
+    y_min = math.floor(min(ys[2]) / step) * step
+    print("得点の範囲", y_max, y_min)
+    # 縦幅指定 (間隔は固定)
+    ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
+
 # 適応度を見るグラフ
 # これは世代全体を見ること前提
 # 最大値, 中央値, 最小値でも表示してみようかな?
@@ -560,32 +585,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     #name = "fit_crln{:03d}".format(loc_pop)
-    makeFitnessGraph(ax, x, ys)
-
-# フォーマットにシードも追加
-# genetic02 のマクロ名と同じ
-def formatPlusSeed(fname_format, seed):
-    # .bin とそれ以外を分割
-    m = re.match(r'(.+)(\.bin)', fname_format)
-    new = ""
-    if m:
-        mg = m.groups()
-        new = mg[0] + "_s{0:03d}".format(seed) + mg[1]
-    else:
-        print("一致するパターンがありません")
-    return new
-
-# 適応度ファイルフォーマットを作成
-# シードを付加した後に実行することを想定
-# .bin を _format.bin に置き換えるだけ
-def makeFitnessFileFormat(fname_format):
-    # .bin とそれ以外を分割
-    m = re.match(r'(.+)(\.bin)', fname_format)
-    if not m:
-        print("一致するパターンがありません")
-        return ""
-    mg = m.groups()
-    return mg[0] + "_fitness" + mg[1]
+    makeFitnessGraph(ax, x, ys, x_label="common ratio ()")
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -703,7 +703,7 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     """
-    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 0, 123)
+    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 50, 123)
     plt.show()
     print("終わり")
 
