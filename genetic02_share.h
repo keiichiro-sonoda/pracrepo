@@ -9,20 +9,6 @@
 // othello.h も包含している
 #include "genetic02.h"
 
-// Sprmファイルを圧縮かどうかのフラグを与えて柔軟に読み込ませる?
-// エラーなら呼び出し元で戻る
-// サイズは個体数から計算
-#define loadSprmFileDirectFlexExit(fname, pra, loc_pop, compressed) do {\
-    int _e = 0;\
-    size_t _pra_size = sizeof(Sprm) * (loc_pop);\
-    /*printDecimal(_pra_size);*/\
-    switch (compressed) {\
-        case 0 : loadFileDirectExit((fname), (pra), _pra_size);\
-        default: _e = loadSprmFileCompDirect((fname), (pra), (loc_pop));\
-    }\
-    if (_e < 0) return -1;\
-} while (0)
-
 // functions
 // パラメータの表示
 

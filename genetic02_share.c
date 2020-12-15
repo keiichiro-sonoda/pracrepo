@@ -132,11 +132,11 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // compressed が0なら非圧縮, 0以外なら圧縮
 int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
-    printSize(family);
-    if (!compressed) {
-        loadFileDirectExit(fnamer, family, sizeof family);
+    if (compressed) {
+        if (loadSprmFileCompDirect(fnamer, family, n) < 0)
+            return -1;
     } else {
-        loadSprmFileDirectFlexExit(fnamer, family, n, compressed);
+        loadFileDirectExit(fnamer, family, sizeof family);
     }
     double d_means[SPRM_LEN];
     // 平均値計算関数は genetic02 で再定義した (計算は double 型)
@@ -193,7 +193,12 @@ void getTop10SDFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 // 圧縮版か否かを判別する引数を追加
 int getFamilySDPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
-    loadSprmFileDirectFlexExit(fnamer, family, n, compressed);
+    if (compressed) {
+        if (loadSprmFileCompDirect(fnamer, family, n) < 0)
+            return -1;
+    } else {
+        loadFileDirectExit(fnamer, family, sizeof family);
+    }
     // 一時的に double 型で計算
     double d_means[SPRM_LEN], d_vars[SPRM_LEN];
     // まずは平均値計算
