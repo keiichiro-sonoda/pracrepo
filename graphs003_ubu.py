@@ -156,21 +156,25 @@ def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation"):
     mg1 = m1.groups()
     # シードの有無
     m2 = re.match(r'.+(_s[0-9]+)', mg1[1])
-    if not m2:
-        print("シードを含みません")
-        sp = "_no_seed"
-    else:
+    sp = "_no_seed"
+    if m2:
         print("シードを含みます")
         sp = m2.groups()[0]
-    # スラッシュ単体の場合
+    else:
+        print("シードを含みません")
+    # スラッシュ単体の場合の処理
     if single:
         path = "/home/sonoda/Pictures/Graphs"
     else:
         path = "//home//sonoda//Pictures//Graphs"
     # x 軸の種類
     if x_type == "generation":
-        path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(x_min, x_max) + sp + ".jpg"
+        path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp + ".jpg"
     elif x_type == "common_ratio":
+        print(mg1[0])
+        m3 = re.match(r'(.*rkgexp[+-])', mg1[0])
+        if m3:
+            print(m3.groups())
         path += mg1[0] + "_" + name + "_from{0:+5.3f}to{1:+5.3f}".format(float(x_min), float(x_max)) + sp + ".jpg"
     else:
         path = ""
@@ -722,7 +726,7 @@ def main():
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     """
     viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 50, 123)
-    plt.show()
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
