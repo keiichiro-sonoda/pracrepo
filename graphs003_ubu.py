@@ -704,16 +704,12 @@ COMPRESSED_INDICES = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
 # フォーマットにシードが付いているかの判定に使える
 SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (123,), 32: (123,), 33: (123,), 34: (123,), 35: (123,)}
 
-def main():
-    global VIEW_ONLY
-    # 画像保存する場合はこのコメントアウトを外す
-    VIEW_ONLY = False
-    ind = 35
+def old():
+    ind = 11
     loc_pop = 50
     start_g = 0
     stop_g = 100
     chumoku = []
-    """
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
@@ -730,12 +726,14 @@ def main():
     else:
         viewMeansGraph(active_format, loc_pop, start_g, stop_g, 0)
         viewSDGraph(active_format, loc_pop, start_g, stop_g, 0, chumoku)
-    #makeJpegFileName(FILE_FORMATS[ind], "means100", 0, 100)
-    #imgTest(FILE_FORMATS[ind], 100)
-    #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
-    #viewWinRateGraph(FILE_FORMATS[ind], 0)
-    """
-    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 50, 123)
+
+def main():
+    global VIEW_ONLY
+    # 画像保存する場合はこのコメントアウトを外す
+    #VIEW_ONLY = False
+    loc_pop = 50
+    old()
+    #viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 20, 123)
     plt.show()
     print("終わり")
 
