@@ -540,10 +540,10 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     c = 0
     for i in range(n + 1):
         lncr = lncr_start + lncr_step * i
-        # ファイル名作成
+        # ファイル名作成 (適応度ファイルではない)
         fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, gene_num)
         # 適応度取得
-        fl = getFitnessWrap(fname, loc_pop)
+        fl = getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         if fl:
             c = 0
             x.append(lncr)
@@ -561,7 +561,6 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     ax = fig.add_subplot(111)
     #name = "fit_crln{:03d}".format(loc_pop)
     makeFitnessGraph(ax, x, ys)
-    plt.show()
 
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
@@ -673,7 +672,6 @@ COMPRESSED_INDICES = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
 # フォーマットにシードが付いているかの判定に使える
 SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (123,), 32: (123,), 33: (123,), 34: (123,), 35: (123,)}
 
-
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
@@ -683,6 +681,7 @@ def main():
     start_g = 0
     stop_g = 100
     chumoku = []
+    """
     # シードをつけるか否か
     if ind in SEED_DICT:
         # シードがある場合はここで指定
@@ -703,8 +702,9 @@ def main():
     #imgTest(FILE_FORMATS[ind], 100)
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
-    #plt.show()
+    """
     viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 100, 123)
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
