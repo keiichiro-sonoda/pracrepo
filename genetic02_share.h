@@ -12,12 +12,13 @@
 // Sprmファイルを圧縮かどうかのフラグを与えて柔軟に読み込ませる?
 // エラーなら呼び出し元で戻る
 // サイズは個体数から計算
-#define loadSprmFileDirectFlexExit(fname, pra, n, compressed) do {\
+#define loadSprmFileDirectFlexExit(fname, pra, loc_pop, compressed) do {\
     int e;\
-    size_t _pra_size = sizeof(Sprm) * (n);\
+    size_t _pra_size = sizeof(Sprm) * (loc_pop);\
+    printDecimal(_pra_size);\
     switch (compressed) {\
-        case 0 : loadFileDirectExit((fname), (pra), _pra_size); printf("非圧縮です");\
-        default: e = loadSprmFileCompDirect((fname), (pra), (n));\
+        case 0 : loadFileDirectExit((fname), (pra), _pra_size);\
+        default: e = loadSprmFileCompDirect((fname), (pra), (loc_pop));\
     }\
     if (e < 0) return -1;\
 } while (0)
