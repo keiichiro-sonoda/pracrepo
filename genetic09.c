@@ -256,6 +256,12 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
     time(&t0);
     // ループ回数を計算
     n = (stop - start) / step;
+    if (n > 0) {
+        printf("試す公比の数: %d\n", n);
+    } else {
+        printf("s\atart, stop, step の値が不適切です. \n");
+        return -1;
+    }
     for (int i = 0; i < n; i++) {
         // 公比計算
         loc_cr_ln = start + step * i;
