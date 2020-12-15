@@ -614,7 +614,9 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     #fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, -0.005, gene_num)
     # いくつかオプションはここで決めておく
     name = "_g{:03d}_smp{:03d}".format(gene_num, loc_pop)
-    makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
+    path = makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
+    if not VIEW_ONLY:
+        fig.savefig(path, bbox_inches="tight")
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -704,7 +706,7 @@ SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (1
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    #VIEW_ONLY = False
+    VIEW_ONLY = False
     ind = 35
     loc_pop = 50
     start_g = 0
@@ -732,8 +734,8 @@ def main():
     #makeWinCountFile(FILE_FORMATS[ind], 50, 0, 1000, 0, 100)
     #viewWinRateGraph(FILE_FORMATS[ind], 0)
     """
-    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 50, 123)
-    #plt.show()
+    viewFitnessGraph2(loc_pop, 0, -0.1, 0.1, 0.005, 10, 123)
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
