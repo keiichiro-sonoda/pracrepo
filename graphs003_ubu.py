@@ -283,7 +283,7 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     makeMeansGraph(ax, x, ys)
-    path = makeJpegFileName(fname_format, "means{:03d}".format(population), int(x[0]), int(x[-1]))
+    path = makeJpegFileName(fname_format, "means{:03d}".format(population), x[0], x[-1])
     if path and not VIEW_ONLY:
     # 出力画像の周囲の境界ボックス?を消す
         fig.savefig(path, bbox_inches="tight")
@@ -373,7 +373,7 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]
                 name += "_{:d}".format(e_valid[ind] + 1)
     makeSDGraph(ax, x, ys, e_valid)
     # フォーマットやグラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fname_format, name.format(population), int(x[0]), int(x[-1]))
+    path = makeJpegFileName(fname_format, name.format(population), x[0], x[-1])
     # 書き込み
     if path and not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
