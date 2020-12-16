@@ -530,7 +530,7 @@ def viewWinRateGraph(fname_format, decNxt_id):
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
 # 横軸も指定可能, 縦軸の凡例も指定可能 (データと数が合うように!)
-def makeFitnessGraph(ax, x, ys, x_label="generation", y_labels=("max", "median", "min")):
+def makeFitnessGraph(ax, x, ys, x_label="generation", y_labels=("max", "median", "min"), grid=False):
     # 縦軸の値の間隔
     step = 20
     # 各データのプロットとラベル指定
@@ -551,6 +551,9 @@ def makeFitnessGraph(ax, x, ys, x_label="generation", y_labels=("max", "median",
     print("得点の範囲", y_max, y_min)
     # 縦幅指定 (間隔は固定)
     ax.set_yticks(np.arange(y_min, y_max + step / 2, step))
+    # グリッド線
+    if grid:
+        ax.grid()
 
 # 適応度を見るグラフ
 # これは世代全体を見ること前提
@@ -593,8 +596,8 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max):
         print("saved!!")
 
 # 横軸公比の自然対数, 縦軸適応度のグラフを作成
-# 世代数は固定
-def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed):
+# 世代数は固定, グリッド線をオプションで追加
+def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed, grid=False):
     x = []
     ys = [[], [], []]
     n = int((lncr_stop - lncr_start) / lncr_step)
@@ -620,10 +623,12 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         return
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
-    makeFitnessGraph(ax, x, ys, x_label="the natural log of common ratio")
+    makeFitnessGraph(ax, x, ys, x_label="the natural log of common ratio", grid=grid)
     #fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, -0.005, gene_num)
     # いくつかオプションはここで決めておく
     name = "_g{:03d}_smp{:03d}".format(gene_num, loc_pop)
+    if grid:
+        name += "_grid"
     path = makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
     if not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
@@ -741,11 +746,11 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    VIEW_ONLY = False
+    #VIEW_ONLY = False
     loc_pop = 50
     loc_eln = 1
     #old()
-    viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 100, 123)
+    viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 100, 123, grid=True)
     plt.show()
     print("終わり")
 
