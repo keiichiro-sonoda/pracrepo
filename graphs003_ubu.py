@@ -529,14 +529,13 @@ def viewWinRateGraph(fname_format, decNxt_id):
 
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
-# 横軸も指定可能
-def makeFitnessGraph(ax, x, ys, x_label="generation"):
+# 横軸も指定可能, 縦軸の凡例も指定可能 (データと数が合うように!)
+def makeFitnessGraph(ax, x, ys, x_label="generation", y_labels=("max", "median", "min")):
     # 縦軸の値の間隔
     step = 20
     # 各データのプロットとラベル指定
-    ax.plot(x, ys[0], label="max", marker="o")
-    ax.plot(x, ys[1], label="median", marker = "o")
-    ax.plot(x, ys[2], label="min", marker="o")
+    for i, j in enumerate(y_labels):
+        ax.plot(x, ys[i], label=j, marker="o", markeredgewidth=0)
     # 凡例調節
     ax.legend(bbox_to_anchor=(1.01, 1), loc='upper left', borderaxespad=0, fontsize=10)
     #ax.grid()
@@ -746,7 +745,7 @@ def main():
     loc_pop = 50
     loc_eln = 1
     #old()
-    viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 100, 123)
+    viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 10, 123)
     plt.show()
     print("終わり")
 
