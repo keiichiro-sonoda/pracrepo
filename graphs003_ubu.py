@@ -128,7 +128,7 @@ def makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_rati
     str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
     # 作成に成功したら, バイト型にして複合
     if str_len > 0:
-        res_str = bytes(c_arr_c).decode()
+        res_str = bytes(c_arr_c[:str_len]).decode()
     return res_str
 
 # グラフ用の色
