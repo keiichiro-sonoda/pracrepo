@@ -9,17 +9,19 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 123U // シード値
+#define SEED 365U // シード値
 #endif
 
+// ランキング選択で, 等比数列で確率を決定する場合の公比
+// 現在は対数表記を用いているためあまり使わない
 #ifndef CMN_RATIO
-#define CMN_RATIO 0.99 // ランキング選択で, 等比数列で確率を決定する場合の公比 (調査対象)
+#define CMN_RATIO 0.99
 #endif
 
 #define CMN_RATIO_LN -.005 // 公比の自然対数表記バージョン
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 2 // エリート数
+#define ELITE_NUM 0 // エリート数
 #endif
 
 #ifndef POPULATION
