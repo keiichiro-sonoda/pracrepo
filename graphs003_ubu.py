@@ -218,7 +218,7 @@ def makeGeneVariable(fname):
     gene_flex = ""
     if m:
         mg = m.groups()
-        print(mg)
+        #print(mg)
         gene_flex = mg[0] + "{:03d}" + mg[2]
     else:
         print("一致するパターンがありません")
@@ -570,7 +570,7 @@ def makeFitnessGraph(ax, x, ys, x_label="generation", y_labels=("max", "median",
 # 適応度を見るグラフ
 # これは世代全体を見ること前提
 # 最大値, 中央値, 最小値でも表示してみようかな?
-def viewFitnessGraph(fff, loc_pop, g_min, g_max):
+def viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=False):
     # 世代数 (読み込めた数値だけ格納)
     x = []
     # 3 つの配列を用意
@@ -599,9 +599,9 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max):
     ax = fig.add_subplot(111)
     # グラフファイル名作成時にfitnessが除外されるのでここで追加
     name = "fitness{:03d}".format(loc_pop)
-    makeFitnessGraph(ax, x, ys)
+    makeFitnessGraph(ax, x, ys, grid=grid)
     # フォーマット, データの種類, グラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fff, name, int(x[0]), int(x[-1]))
+    path = makeJpegFileName(fff, name, x[0], x[-1])
     # 書き込み
     if path and not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
@@ -649,9 +649,10 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         print("saved!")
 
 # フォーマットを自動作成し, あとは本家適応度描画関数におまかせ
-def viewFitnessGraph3(loc_pop, loc_eln, lncr, loc_seed, g_min, g_max):
-    fff = makeGeneVariable(makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0))
-    print(fff)
+def viewFitnessGraph3(loc_pop, loc_eln, lncr, loc_seed, g_min, g_max, grid=False):
+    # 0 世代でファイル名作成, 世代を可変にし, fitness を付加
+    fff = makeFitnessFileFormat(makeGeneVariable(makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0)))
+    viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=grid)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -769,7 +770,7 @@ def main():
     #old()
     #viewFitnessGraph2(50, 2, -0.1, 0.1, 0.005, 10, 123, grid=True)
     viewFitnessGraph3(50, 2, -0.005, 123, 0, 100)
-    #plt.show()
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
