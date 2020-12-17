@@ -212,6 +212,17 @@ def makeFitnessFileFormat(fname_format):
     mg = m.groups()
     return mg[0] + "_fitness" + mg[1]
 
+# 既に固定されている世代を, 書き換えられるように変更
+def makeGeneVariable(fname):
+    m = re.match(r'(.+)(g[0-9]{3})(.+)', fname)
+    gene_flex = ""
+    if m:
+        mg = m.groups()
+        print(mg)
+    else:
+        print("一致するパターンがありません")
+    return gene_flex
+
 # 平均値のグラフを作成
 def makeMeansGraph(ax, x, ys):
     # 縦軸の値の間隔
@@ -629,6 +640,8 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     name = "_g{:03d}_smp{:03d}".format(gene_num, loc_pop)
     if grid:
         name += "_grid"
+    # 最後のファイル名をパス作成に使う (公比は範囲に置き換えられる)
+    #print(fname)
     path = makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
     if not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
@@ -747,11 +760,12 @@ def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
-    loc_pop = 50
-    loc_eln = 2
     #old()
-    viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 10, 123, grid=True)
-    plt.show()
+    viewFitnessGraph2(50, 2, -0.1, 0.1, 0.005, 10, 123, grid=True)
+    fname = makeSprmFileNameRankGeoProgWrap(50, 2, 3, 123, -0.005, 100)
+    print(fname)
+    makeGeneVariable(fname)
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
