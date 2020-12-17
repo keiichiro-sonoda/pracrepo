@@ -750,7 +750,7 @@ def main():
     loc_pop = 50
     loc_eln = 2
     #old()
-    viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 100, 123, grid=True)
+    viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 10, 123, grid=True)
     plt.show()
     print("終わり")
 
