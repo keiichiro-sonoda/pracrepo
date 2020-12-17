@@ -214,11 +214,12 @@ def makeFitnessFileFormat(fname_format):
 
 # 既に固定されている世代を, 書き換えられるように変更
 def makeGeneVariable(fname):
-    m = re.match(r'(.+)(g[0-9]{3})(.+)', fname)
+    m = re.match(r'(.+g)([0-9]{3})(.+)', fname)
     gene_flex = ""
     if m:
         mg = m.groups()
         print(mg)
+        gene_flex = mg[0] + "{:03d}" + mg[2]
     else:
         print("一致するパターンがありません")
     return gene_flex
@@ -764,7 +765,7 @@ def main():
     viewFitnessGraph2(50, 2, -0.1, 0.1, 0.005, 10, 123, grid=True)
     fname = makeSprmFileNameRankGeoProgWrap(50, 2, 3, 123, -0.005, 100)
     print(fname)
-    makeGeneVariable(fname)
+    print(makeGeneVariable(fname))
     #plt.show()
     print("終わり")
 
