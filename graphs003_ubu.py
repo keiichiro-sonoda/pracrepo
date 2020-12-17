@@ -648,6 +648,11 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         fig.savefig(path, bbox_inches="tight")
         print("saved!")
 
+# フォーマットを自動作成し, あとは本家適応度描画関数におまかせ
+def viewFitnessGraph3(loc_pop, loc_eln, lncr, loc_seed, g_min, g_max):
+    fff = makeGeneVariable(makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0))
+    print(fff)
+
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初 (指し手固定)
@@ -762,10 +767,8 @@ def main():
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
     #old()
-    viewFitnessGraph2(50, 2, -0.1, 0.1, 0.005, 10, 123, grid=True)
-    fname = makeSprmFileNameRankGeoProgWrap(50, 2, 3, 123, -0.005, 100)
-    print(fname)
-    print(makeGeneVariable(fname))
+    #viewFitnessGraph2(50, 2, -0.1, 0.1, 0.005, 10, 123, grid=True)
+    viewFitnessGraph3(50, 2, -0.005, 123, 0, 100)
     #plt.show()
     print("終わり")
 
