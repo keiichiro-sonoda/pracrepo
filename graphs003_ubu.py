@@ -748,7 +748,7 @@ def main():
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
     loc_pop = 50
-    loc_eln = 1
+    loc_eln = 2
     #old()
     viewFitnessGraph2(loc_pop, loc_eln, -0.1, 0.1, 0.005, 100, 123, grid=True)
     plt.show()
