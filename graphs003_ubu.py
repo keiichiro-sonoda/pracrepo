@@ -769,7 +769,7 @@ def main():
     #VIEW_ONLY = False
     #old()
     #viewFitnessGraph2(50, 0, -0.02, 0.02, 0.001, 20, 365, grid=True)
-    viewFitnessGraph3(50, 10, 0, 0, 365, 0, 100, grid=True)
+    viewFitnessGraph3(50, 50, 0, 0, 365, 0, 100, grid=True)
     plt.show()
     print("終わり")
 
