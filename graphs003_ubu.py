@@ -649,10 +649,10 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         print("saved!")
 
 # フォーマットを自動作成し, あとは本家適応度描画関数におまかせ
-def viewFitnessGraph3(loc_pop, loc_eln, lncr, loc_seed, g_min, g_max, grid=False):
+def viewFitnessGraph3(loc_pop, smp_num, loc_eln, lncr, loc_seed, g_min, g_max, grid=False):
     # 0 世代でファイル名作成, 世代を可変にし, fitness を付加
     fff = makeFitnessFileFormat(makeGeneVariable(makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0)))
-    viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=grid)
+    viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -768,8 +768,8 @@ def main():
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
     #old()
-    viewFitnessGraph2(50, 0, -0.02, 0.02, 0.001, 20, 365, grid=True)
-    #viewFitnessGraph3(50, 0, 0, 123, 0, 100)
+    #viewFitnessGraph2(50, 0, -0.02, 0.02, 0.001, 20, 365, grid=True)
+    viewFitnessGraph3(50, 10, 0, 0, 365, 0, 100, grid=True)
     plt.show()
     print("終わり")
 
