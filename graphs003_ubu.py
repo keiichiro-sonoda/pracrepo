@@ -768,7 +768,7 @@ def main():
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
     #old()
-    viewFitnessGraph2(50, 0, -0.02, 0.02, 0.001, 10, 365, grid=True)
+    viewFitnessGraph2(50, 0, -0.02, 0.02, 0.001, 20, 365, grid=True)
     #viewFitnessGraph3(50, 0, 0, 123, 0, 100)
     plt.show()
     print("終わり")
