@@ -18,10 +18,12 @@
 #define CMN_RATIO 0.99
 #endif
 
-#define CMN_RATIO_LN -.005 // 公比の自然対数表記バージョン
+// 公比の自然対数表記バージョン
+// 頻繁に動かすパラメータなので, マクロはほぼ使わない
+#define CMN_RATIO_LN -.005 
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 0 // エリート数
+#define ELITE_NUM 1 // エリート数
 #endif
 
 #ifndef POPULATION
