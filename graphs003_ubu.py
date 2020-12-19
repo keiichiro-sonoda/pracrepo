@@ -770,7 +770,7 @@ def main():
     #old()
     population = 50
     elite_num = 1
-    crln = -0.02
+    crln = 0.005
     gene_num = 50
     seed = 365
     #viewFitnessGraph2(population, elite_num, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
