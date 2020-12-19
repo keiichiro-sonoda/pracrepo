@@ -768,11 +768,12 @@ def main():
     # 画像保存する場合はこのコメントアウトを外す
     #VIEW_ONLY = False
     #old()
-    #viewFitnessGraph2(50, 0, -0.02, 0.02, 0.001, 20, 365, grid=True)
     population = 50
+    elite_num = 1
     crln = 0.02
     seed = 365
-    viewFitnessGraph3(population, 50, 0, crln, seed, 0, 100, grid=True)
+    viewFitnessGraph2(population, elite_num, -0.02, 0.02, 0.001, 100, 365, grid=True)
+    #viewFitnessGraph3(population, 50, 0, crln, seed, 0, 100, grid=True)
     plt.show()
     print("終わり")
 
