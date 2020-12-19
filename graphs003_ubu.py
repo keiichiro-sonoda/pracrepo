@@ -770,10 +770,11 @@ def main():
     #old()
     population = 50
     elite_num = 1
-    crln = 0.02
+    crln = -0.02
+    gene_num = 50
     seed = 365
-    viewFitnessGraph2(population, elite_num, -0.02, 0.02, 0.001, 100, 365, grid=True)
-    #viewFitnessGraph3(population, 50, 0, crln, seed, 0, 100, grid=True)
+    #viewFitnessGraph2(population, elite_num, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
+    viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
     plt.show()
     print("終わり")
 
