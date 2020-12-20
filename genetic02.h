@@ -56,6 +56,10 @@
 // 0: ランダム突然変異
 #define MUTATION_ID 0
 
+#ifndef ALPHA_BLX
+#define ALPHA_BLX 0.3 // BLX-α 交叉の α
+#endif
+
 #define COMPRESS 1 // 圧縮するか否か
 
 #define SPRM_LEN 10 // 区別できるマスの数 (個体の配列長)
@@ -385,6 +389,12 @@ void singlePointCrossover(Sprm mother, Sprm father, Sprm children[2], float mut_
 
 // 一様交叉 (2人っ子), 突然変異なし
 void uniCrossSprm2C(const Sprm*, const Sprm*, Sprm*);
+
+// BLX-α 交叉? (Blend Crossover)
+// 2つの個体でできる超直方体の内部もしくは周辺に子を作成
+// 子は1回につき1つ (連続専用交叉で乱数多め?)
+// 圧縮対応の値に変換する
+Sprm blendCrossSprmComp(const Sprm *mother_p, const Sprm *father_p);
 
 // 交叉テスト用関数
 void crossTestSprm(void);

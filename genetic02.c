@@ -369,6 +369,34 @@ void uniCrossSprm2C(const Sprm *mother, const Sprm *father, Sprm children[2]) {
     }
 }
 
+// BLX-α 交叉? (Blend Crossover)
+// 2つの個体でできる超直方体の内部もしくは周辺に子を作成
+// 子は1回につき1つ (連続専用交叉で乱数多め?)
+// 圧縮対応の値に変換する
+Sprm blendCrossSprmComp(const Sprm *mother_p, const Sprm *father_p) {
+    Sprm child;
+    float tmp, min_a, max_a, d;
+    for (int i = 0; i < SPRM_LEN; i++) {
+        // 代入しつつ比較
+        if ((min_a = mother_p->weight[i]) > (max_a = father_p->weight[i])) {
+            // 母の値が大きければ交換
+            swap(float, min_a, max_a);
+        }
+        // 差を計算
+        d = max_a - min_a;
+        // 差に比例した倍率で範囲を少し引き伸ばす
+        max_a += d * ALPHA_BLX;
+        min_a -= d * ALPHA_BLX;
+        // 範囲内の一様乱数を作成 (なぜか double 型)
+        tmp = randDoubleRange(min_a, max_a);
+        // 値を範囲内に収める
+        tmp = clamp(tmp, -0.5f, 0.5f);
+        // 圧縮しても値が変わらないようにする
+        child.weight[i] = tmp;
+    }
+    return child;
+}
+
 // 交叉テスト用関数
 void crossTestSprm(void) {
     Sprm pr1, pr2, pra[2];
