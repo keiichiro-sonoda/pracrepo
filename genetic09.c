@@ -258,6 +258,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
             break;
         case 30600:
             puts("等比数列ランキング選択 (対数表記), BLX-α 交叉, ランダム突然変異");
+            printf("BLX-α 交叉の α : %4.2f\n", ALPHA_BLX);
             res_func = rankGeoProgBLXaRdCS;
             break;
         default:
@@ -345,8 +346,7 @@ int main(void) {
     scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
     // warning 回避, ポインタの一致を確認
     printHex64(scm);
-    printHex64(rankGeoProgBLXaRdCS);
-    printHex64(rankGeoProgUni2CRdS);
+    //printHex64(rankGeoProgBLXaRdCS); printHex64(rankGeoProgUni2CRdS);
     printString(format);
     //printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
