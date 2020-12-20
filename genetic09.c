@@ -364,7 +364,7 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
-    trySomeCommonRatio(-0.020, -0.018, 0.001, 5);
+    trySomeCommonRatio(-0.020, 0.021, 0.001, 101);
     //crossTestSprm();
     return 0;
 }
