@@ -253,8 +253,12 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
         case 30500:
             puts("等比数列ランキング選択 (対数表記), 2人っ子一様交叉, ランダム突然変異");
             //CMN_RATIO_EFF = exp(CMN_RATIO_LN); // 指数を計算し公比とする
-            printf("公比: exp(%+6.3f) = %f\n", CMN_RATIO_LN, CMN_RATIO_EFF);
+            //printf("公比: exp(%+6.3f) = %f\n", CMN_RATIO_LN, CMN_RATIO_EFF);
             res_func = rankGeoProgUni2CRdS;
+            break;
+        case 30600:
+            puts("等比数列ランキング選択 (対数表記), BLX-α 交叉, ランダム突然変異");
+            res_func = rankGeoProgBLXaRdCS;
             break;
         default:
             miteigiExit(NULL);
@@ -338,10 +342,11 @@ int main(void) {
     }
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
-    //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
+    scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
     // warning 回避, ポインタの一致を確認
     printHex64(scm);
-    //printHex64(rankGeoProgUni2CRdS);
+    printHex64(rankGeoProgBLXaRdCS);
+    printHex64(rankGeoProgUni2CRdS);
     printString(format);
     //printf("条件とファイルフォーマットは合っていますか?"); kakuninExit();
     //makeFGFileSprmComp(format);
