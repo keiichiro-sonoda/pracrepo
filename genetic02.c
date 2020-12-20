@@ -400,10 +400,10 @@ Sprm blendCrossSprmComp(const Sprm *mother_p, const Sprm *father_p) {
 
 // 交叉テスト用関数
 void crossTestSprm(void) {
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
     Sprm pr1, pr2, pra[2];
-    initArrayConst(pr1.weight, SPRM_LEN, -.5000f);
-    initArrayConst(pr2.weight, SPRM_LEN, .500f);
+    initArrayConst(pr1.weight, SPRM_LEN, -.000f);
+    initArrayConst(pr2.weight, SPRM_LEN, .100f);
     printf("親1: ");
     showSprmOneLine(pr1);
     printf("親2: ");
