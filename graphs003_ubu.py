@@ -604,6 +604,9 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=False):
     path = makeJpegFileName(fff, name, x[0], x[-1])
     # 書き込み
     if path and not VIEW_ONLY:
+        if os.path.exists(path):
+            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
+                return
         fig.savefig(path, bbox_inches="tight")
         print("saved!!")
 
@@ -645,6 +648,9 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     #print(fname)
     path = makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
     if not VIEW_ONLY:
+        if os.path.exists(path):
+            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
+                return
         fig.savefig(path, bbox_inches="tight")
         print("saved!")
 
@@ -766,7 +772,7 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    #VIEW_ONLY = False
+    VIEW_ONLY = False
     #old()
     population = 50
     elite_num = 1
