@@ -79,6 +79,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     // s\0 で初期化した文字列. ここにシード以外の情報が入る?
     char info_str[BUF_LEN] = {115, 0};
     char tmp_str[BUF_LEN];
+    // 可変引数に代入された値を取り出す
+    double arg_d;
     // 適応度
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
@@ -107,7 +109,6 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     strcatSize(info_str, "_", BUF_LEN);
     // 選択
     switch (sel_id) {
-        double arg_d;
         case 2: // 等比数列ランキング選択
             // 可変長引数で公比が与えられるはずなので, 100倍した整数値を最低2桁で表示
             snprintf(tmp_str, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
@@ -134,6 +135,11 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     switch (crs_id) {
         case 5: // 一様交叉 (2人っ子)
             strcatSize(info_str, "uni2", BUF_LEN);
+            break;
+        case 6: // BLX-α 交叉
+            arg_d = va_arg(args, double);
+            snprintf(tmp_str, BUF_LEN, "blxa%4.2f", arg_d);
+            strcatSize(info_str, tmp_str, BUF_LEN);
             break;
         default:
             miteigiExit(-1);
