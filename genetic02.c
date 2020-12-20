@@ -407,11 +407,10 @@ void crossTestSprm(void) {
     showSprmOneLine(pr1);
     printf("親2: ");
     showSprmOneLine(pr2);
-    uniCrossSprm2C(&pr1, &pr2, pra);
-    printf("子1: ");
-    showSprmOneLine(pra[0]);
-    printf("子2: ");
-    showSprmOneLine(pra[1]);
+    //uniCrossSprm2C(&pr1, &pr2, pra);
+    pra[0] = blendCrossSprmComp(&pr1, &pr2);
+    printf("子1: "); showSprmOneLine(pra[0]);
+    //printf("子2: "); showSprmOneLine(pra[1]);
 }
 
 // caluculate point

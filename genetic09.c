@@ -336,5 +336,6 @@ int main(void) {
     //checkSprmFileComp(format, 0);
     //sortTest();
     //trySomeCommonRatio(-0.020, 0.021, 0.001, 101);
+    crossTestSprm();
     return 0;
 }
