@@ -772,13 +772,13 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    VIEW_ONLY = False
+    #VIEW_ONLY = False
     #old()
     population = 50
     elite_num = 1
     crln = 0.005
-    gene_num = 100
-    seed = 124
+    gene_num = 10
+    seed = 999
     viewFitnessGraph2(population, elite_num, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
     plt.show()
