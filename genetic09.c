@@ -257,7 +257,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
             res_func = rankGeoProgUni2CRdS;
             break;
         case 30600:
-            puts("等比数列ランキング選択 (対数表記), BLX-α 交叉, ランダム突然変異");
+            puts("等比数列ランキング選択 (対数表記), BLX-α 交叉, ランダム突然変異, 圧縮推奨");
             printf("BLX-α 交叉の α : %4.2f\n", ALPHA_BLX);
             res_func = rankGeoProgBLXaRdCS;
             break;
