@@ -204,6 +204,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     // 1ループで子は2つなので, 毎回2を足す
     for (count = ELITE_NUM; count < POPULATION; count += 2) {
         // ルーレット選択 (重複なし)
+        // ルーレットに使うのは等比数列
         rouletteDoubleMltDep(prob, POPULATION, parents, 2);
         // 一様交叉で2つの子を作成
         uniCrossSprm2C(current + parents[0], current + parents[1], children);
@@ -216,6 +217,23 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
             // 次の世代に追加
             next[count + i] = children[i];
         }
+    }
+}
+
+// 等比数列ランキング選択, BLX-α 交叉, ランダム突然変異, ソート済限定, 圧縮推奨
+void rankGeoProgBLXaRdCS(const int *fitness, const Sprm *current, Sprm *next) {
+    int count, parents[2];
+    Sprm child;
+    double prob[POPULATION];
+    geoProg(prob, POPULATION, 1., CMN_RATIO_EFF);
+    for (count = ELITE_NUM; count < POPULATION; count++) {
+        // 選択
+        rouletteDoubleMltDep(prob, POPULATION, parents, 2);
+        // BLX-α 交叉 (圧縮対応の値に補正)
+        child = blendCrossSprmComp(current + parents[0], current + parents[1]);
+        // ランダム突然変異 (圧縮対応乱数)
+        randMutSprmCC(&child);
+        next[count] = child;
     }
 }
 
@@ -265,9 +283,10 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
     for (int i = 0; i < n; i++) {
         // 公比計算
         loc_cr_ln = start + step * i;
-        // 選択・交叉・突然変異方法は固定する
+        // 選択方法は固定する (当然)
+        // BLX-α 交叉を試したくなってしまった
         // グローバル変数の変更も行うようにした (まとめた方が食い違いしにくそう?)
-        if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, 5, 0, MUT_RATE, SEED, loc_cr_ln) < 0) {
+        if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, CROSSOVER_ID, 0, MUT_RATE, SEED, loc_cr_ln, ALPHA_BLX) < 0) {
             puts("フォーマット作成失敗");
             return -1;
         }
