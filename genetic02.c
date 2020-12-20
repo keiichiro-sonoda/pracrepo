@@ -391,8 +391,9 @@ Sprm blendCrossSprmComp(const Sprm *mother_p, const Sprm *father_p) {
         tmp = randDoubleRange(min_a, max_a);
         // 値を範囲内に収める
         tmp = clamp(tmp, -0.5f, 0.5f);
-        // 圧縮しても値が変わらないようにする
-        child.weight[i] = tmp;
+        // 一度圧縮して元に戻すことで, 値のズレを防止
+        // 交叉直後にファイル書き込みする場合は正直不要
+        child.weight[i] = uchar2weight(weight2uchar(tmp));
     }
     return child;
 }

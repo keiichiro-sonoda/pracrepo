@@ -206,8 +206,9 @@
 #define randWeightUchar() uchar2weight(randUchar())
 
 // -0.5から0.5までの小数を符号無文字型に圧縮
-// 圧縮精度より小さい値を足せば, 切り捨てられて同じ値になる?
-#define weight2uchar(w) (((w) + 0.5000000596f) * 255)
+// 精度より小さい値を足すことで, 切り捨てによるズレを防止
+// 整数型に代入されるとは限らないため, キャストしておく
+#define weight2uchar(w) ((u_char)((w) + 0.5000000596f) * 255)
 
 // 符号無文字型の乱数配列を作成
 #define randUcharArray(A, n) for (int _ = 0; _ < (n); _++) A[_] = randUchar()
