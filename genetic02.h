@@ -50,7 +50,8 @@
 
 // 交叉識別子
 // 5: 一様交叉 (2人っ子)
-#define CROSSOVER_ID 5
+// 6: BLX-α 交叉
+#define CROSSOVER_ID 6
 
 // 突然変異識別子
 // 0: ランダム突然変異
