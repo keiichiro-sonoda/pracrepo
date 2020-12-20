@@ -228,13 +228,13 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
     switch (sel_id * 10000 + crs_id * 100 + mut_id) {
         case 20500:
             puts("等比数列ランキング選択, 2人っ子一様交叉, ランダム突然変異");
-            CMN_RATIO_EFF = CMN_RATIO; // 公比はそのまま
+            //CMN_RATIO_EFF = CMN_RATIO; // 公比はそのまま
             printf("公比: %f\n", CMN_RATIO_EFF);
             res_func = rankGeoProgUni2CRdS;
             break;
         case 30500:
             puts("等比数列ランキング選択 (対数表記), 2人っ子一様交叉, ランダム突然変異");
-            CMN_RATIO_EFF = exp(CMN_RATIO_LN); // 指数を計算し公比とする
+            //CMN_RATIO_EFF = exp(CMN_RATIO_LN); // 指数を計算し公比とする
             printf("公比: exp(%+6.3f) = %f\n", CMN_RATIO_LN, CMN_RATIO_EFF);
             res_func = rankGeoProgUni2CRdS;
             break;

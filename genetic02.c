@@ -112,6 +112,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
         case 2: // 等比数列ランキング選択
             // 可変長引数で公比が与えられるはずなので, 100倍した整数値を最低2桁で表示
             snprintf(tmp_str, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
+            // マクロをダイレクトに公比として使う
+            CMN_RATIO_EFF = CMN_RATIO;
             strcatSize(info_str, tmp_str, BUF_LEN);
             break;
         case 3: // 等比数列ランキング選択 (自然対数表記型)
