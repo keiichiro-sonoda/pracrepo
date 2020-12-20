@@ -274,6 +274,7 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
     int n, flag, gene_now;
+    scmSprmSorted scm;
     time_t t0, t1;
     // 最初の時間を取得
     time(&t0);
@@ -285,12 +286,16 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
         printf("s\atart, stop, step の値が不適切です. \n");
         return -1;
     }
+    // 関数を決定, 存在しなければエラー
+    if ((scm = detScmFuncSprmS(3, CROSSOVER_ID, 0)) == NULL) {
+        return -1;
+    }
     for (int i = 0; i < n; i++) {
         // 公比計算
         loc_cr_ln = start + step * i;
         // 選択方法は固定する (当然)
         // BLX-α 交叉を試したくなってしまった
-        // グローバル変数の変更も行うようにした (まとめた方が食い違いしにくそう?)
+        // 公比を格納するグローバル変数もここで決定
         if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, CROSSOVER_ID, 0, MUT_RATE, SEED, loc_cr_ln, ALPHA_BLX) < 0) {
             puts("フォーマット作成失敗");
             return -1;
@@ -343,7 +348,7 @@ int main(void) {
     }
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
-    scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
+    //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
     // warning 回避, ポインタの一致を確認
     printHex64(scm);
     //printHex64(rankGeoProgBLXaRdCS); printHex64(rankGeoProgUni2CRdS);
