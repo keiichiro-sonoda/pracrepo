@@ -324,7 +324,7 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
             return -1;
         }
         // 各公比, 指定した世代までループ (安全装置なし)
-        if (nGeneSprmCompLoop(rankGeoProgUni2CRdS, format, 0, gene_now, gene_max) < 0) {
+        if (nGeneSprmCompLoop(scm, format, 0, gene_now, gene_max) < 0) {
             return -1;
         }
         time(&t1);
@@ -364,7 +364,7 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
-    trySomeCommonRatio(-0.020, 0.021, 0.001, 101);
+    //trySomeCommonRatio(-0.020, 0.021, 0.001, 101);
     //crossTestSprm();
     return 0;
 }
