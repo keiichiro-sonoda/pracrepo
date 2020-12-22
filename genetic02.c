@@ -1484,6 +1484,7 @@ int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id
         }
     }
     if (c) {
+        printf("公比の対数 %+6.3f で検索\n", lncr);
         printf("初期世代があるシード値: ");
         printDecimalArray(seed_arr, c);
     } else {
