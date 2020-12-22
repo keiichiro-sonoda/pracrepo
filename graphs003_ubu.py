@@ -184,7 +184,7 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
 # 強調マスを指定できるようにする
 def makeSDGraph(ax, x, ys, emphasize):
     # まずは注目マス以外
-    for i in range(SPRM_LEN):
+    for i in range(sl.SPRM_LEN):
         if i in emphasize:
             continue
         ax.plot(x, ys[i],
@@ -533,11 +533,15 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         fig.savefig(path, bbox_inches="tight")
         print("saved!")
 
-# フォーマットを自動作成し, あとは本家適応度描画関数におまかせ
+# フォーマットを自動作成し, あとは本家適応度-世代数グラフ作成関数におまかせ
 def viewFitnessGraph3(loc_pop, smp_num, loc_eln, lncr, loc_seed, g_min, g_max, grid=False):
     # 0 世代でファイル名作成, 世代を可変にし, fitness を付加
     fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0)))
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
+
+# 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
+def viewFitnessGraph4(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, g_min, g_max, grid=False):
+    pass
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -660,7 +664,7 @@ def main():
     seed = 999
     viewFitnessGraph2(population, elite_num, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    plt.show()
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
