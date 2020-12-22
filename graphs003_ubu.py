@@ -9,131 +9,15 @@ import math
 import statistics as stat
 from matplotlib import pyplot as plt
 # ctypes とのインターフェースのつもり
-import share_lib01
+import share_lib01 as sl
 
-slw = share_lib01.ShareLibWrap()
+slw = sl.ShareLibWrap()
 
 # シード値
 SEED = 123
 
 # グラフ描画のみ (画像を保存したい場合は False にする)
 VIEW_ONLY = True
-
-# シンプルパラメータの長さ
-SPRM_LEN = 10
-
-FILENAME_MAX = 4096
-
-# 共有ライブラリ読み込み(カレントディレクトリを想定)
-# ubuntu用であることに注意
-share02_ubu = cdll.LoadLibrary(".//share02_ubu.so")
-
-# 配列型定義
-FloatArray10 = c_float * 10
-FloatArray64 = c_float * 64
-IntArray3 = c_int32 * 3
-# なんとなく c の FILENAME_MAX に合わせてみた
-CharArray4096 = c_char * FILENAME_MAX
-
-# 適応度代入用
-# 100 は最大の個体数と考える, 必要があれば調整
-# 可変にできないものか…
-IntArray100 = c_int32 * 100
-
-# 初期化関数を実行 (バグの温床)
-share02_ubu.initPy()
-
-# 全個体の平均値
-# 第四引数に圧縮フラグを設定
-getFamilyMeans = share02_ubu.getFamilyMeansPy
-getFamilyMeans.restype = c_int32
-getFamilyMeans.argtypes = (c_char_p, FloatArray10, c_int32, c_int32)
-
-# 全個体の標準偏差
-# 第四引数に圧縮フラグを設定
-getFamilySD = share02_ubu.getFamilySDPy
-getFamilySD.restype = c_int32
-getFamilySD.argtypes = (c_char_p, FloatArray10, c_int32, c_int32)
-
-# あるファイルの先頭の要素
-getTopSprm = share02_ubu.getTopSprmPy
-getTopSprm.restype = c_int32
-getTopSprm.argtypes = (c_char_p, FloatArray64)
-
-# あるファイルの先頭要素をランダムAIと対戦させ, その結果を取得
-getTopSprmGameRsltVSRand = share02_ubu.getTopSprmGameRsltVSRandPy
-getTopSprmGameRsltVSRand.restype = c_int32
-getTopSprmGameRsltVSRand.argtypes = (c_char_p, c_int32, c_int32, c_int32, c_int32, IntArray3)
-
-# 適応度取得関数
-getFitness = share02_ubu.getFitnessPy
-getFitness.restype = c_int32
-getFitness.argtypes = (c_char_p, IntArray100, c_int32)
-
-# ファイル名決定関数
-makeSprmFileNameRankGeoProg = share02_ubu.makeSprmFileNameRankGeoProgPy
-makeSprmFileNameRankGeoProg.restype = c_int32
-makeSprmFileNameRankGeoProg.argtypes = (CharArray4096, c_int32, c_int32, c_int32, c_int32, c_int32, c_double, c_int32)
-
-# 各種ラッパー関数
-# n は個体数を指定 (過小はいいがオーバーに注意)
-# 圧縮フラグを追加
-def getFamilyMeansWrap(fnamer, n, compressed):
-    f_arr_c = FloatArray10()
-    flag = getFamilyMeans(fnamer.encode(), f_arr_c, n, compressed)
-    res_list = []
-    # 読み込み成功
-    if flag >= 0:
-        res_list = list(f_arr_c)
-    return res_list
-
-# 圧縮フラグを追加
-def getFamilySDWrap(fnamer, n, compressed):
-    f_arr_c = FloatArray10()
-    flag = getFamilySD(fnamer.encode(), f_arr_c, n, compressed)
-    if flag < 0:
-        return []
-    return list(f_arr_c)
-
-def getTopSprmWrap(fnamer):
-    f_arr_c = FloatArray64()
-    if getTopSprm(fnamer.encode(), f_arr_c) < 0:
-        return []
-    return list(f_arr_c)
-
-# 適応度取得
-def getFitnessWrap(fnamer, n):
-    # int配列, 余裕を持って多めに確保
-    i_arr_c = IntArray100()
-    res_list = []
-    # エラーじゃなければ必要なサイズにスライスして戻り値とする
-    if getFitness(fnamer.encode(), i_arr_c, n) >= 0:
-        res_list = list(i_arr_c)[:n]
-    return res_list
-
-# あるファイルの先頭要素とランダムAIとの試合結果を取得
-# [勝ち数, 引き分け数, 負け数] の順のリストを返す
-# エラーなら [0, 0, 0]
-# 指し手決定関数も指定するように変更
-# 0: 固定, 1: ルーレット
-def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
-    # 戻り値保存用
-    i_arr_c = IntArray3()
-    if getTopSprmGameRsltVSRand(fnamer.encode(), color, loc_pop, game_num, decNxt_id, i_arr_c) < 0:
-        return [0, 0, 0]
-    return list(i_arr_c)
-
-# ファイル名作成
-# 個体数, エリート数, 選択ID, 公比, 世代数を与える
-# 選択ID: 2: 公比そのまま, 3: 公比自然対数
-def makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num):
-    c_arr_c = CharArray4096()
-    res_str = ""
-    str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
-    # 作成に成功したら, バイト型にして複合
-    if str_len > 0:
-        res_str = bytes(c_arr_c[:str_len]).decode()
-    return res_str
 
 # グラフ用の色
 LINE_COLORS = [
@@ -346,11 +230,11 @@ def makeSDGraph(ax, x, ys, emphasize):
 def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]):
     x = []
     # 10 マス分のデータの配列を用意
-    ys = [[] for i in range(SPRM_LEN)]
+    ys = [[] for i in range(sl.SPRM_LEN)]
     c = 0
     for i in range(x_min, x_max + 1):
         # i 世代全個体の標準偏差を取り出す
-        tprm = getFamilySDWrap(fname_format.format(i), population, compressed)
+        tprm = slw.getFamilySDWrap(fname_format.format(i), population, compressed)
         # 空リストがの場合（読み込み失敗）
         if not tprm:
             c += 1
@@ -378,7 +262,7 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]
             # 添字に変換 (-1)
             ind = i - 1
             # 範囲外か重複
-            if (ind < 0 or SPRM_LEN <= ind or ind in e_valid):
+            if (ind < 0 or sl.SPRM_LEN <= ind or ind in e_valid):
                 continue
             e_valid.insert(0, ind)
         # 有効なマスが存在
@@ -406,13 +290,13 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
     for i in range(g_min, g_max + 1):
         fname = fname_format.format(i)
         # i 世代全個体の平均値
-        tmp1 = getFamilyMeansWrap(fname, population, compressed)
+        tmp1 = slw.getFamilyMeansWrap(fname, population, compressed)
         # 空リストがの場合（読み込み失敗）
         # 平均値が読み込める=標準偏差も読み込めると考える
         if not tmp1:
             continue
         # 標準偏差も読み込む
-        tmp2 = getFamilySDWrap(fname, population, compressed)
+        tmp2 = slw.getFamilySDWrap(fname, population, compressed)
         # x は読み込めた整数全て
         g.append(i)
         # それぞれのマスの評価値に代入!
@@ -437,7 +321,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
 # パラメータの画像表示
 def imgTest(fname_format, generation):
     fname = fname_format.format(generation)
-    l = getTopSprmWrap(fname)
+    l = slw.getTopSprmWrap(fname)
     z = np.zeros((8, 8))
     for i in range(8):
         for j in range(8):
@@ -471,7 +355,7 @@ def makeJsonFileName(fname_format, decNxt_id):
 def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
     # シードは直前に設定することにする
     # ランダムAIとの対戦なので一応再現性を確保
-    share02_ubu.setSeedPy(SEED)
+    sl.share02_ubu.setSeedPy(SEED)
     # 書き込みファイル名作成
     json_fname = makeJsonFileName(fname_format, decNxt_id)
     if os.path.exists(json_fname):
@@ -486,9 +370,9 @@ def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
         # 読み込みファイル名
         fname = fname_format.format(i)
         # 失敗したら[0, 0, 0]が帰ってくる
-        rslt = getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
+        rslt = slw.getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
         tmpd["black"] = rslt
-        rslt = getTopSprmGameRsltVSRandWrap(fname, 2, loc_pop, decNxt_id, game_num)
+        rslt = slw.getTopSprmGameRsltVSRandWrap(fname, 2, loc_pop, decNxt_id, game_num)
         tmpd["white"] = rslt
         wcd[i] = tmpd
         print(wcd)
@@ -582,7 +466,7 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=False):
     c = 0
     for i in range(g_min, g_max + 1):
         # i 世代の適応度を取り出す
-        fl = getFitnessWrap(fff.format(i), loc_pop)
+        fl = slw.getFitnessWrap(fff.format(i), loc_pop)
         if not fl:
             c += 1
             if c >= 10:
@@ -624,7 +508,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     for i in range(n + 1):
         lncr = lncr_start + lncr_step * i
         # ファイル名作成 (適応度ファイルではない)
-        fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, gene_num)
+        fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, gene_num)
         # 適応度取得
         fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         if fl:
@@ -661,7 +545,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
 # フォーマットを自動作成し, あとは本家適応度描画関数におまかせ
 def viewFitnessGraph3(loc_pop, smp_num, loc_eln, lncr, loc_seed, g_min, g_max, grid=False):
     # 0 世代でファイル名作成, 世代を可変にし, fitness を付加
-    fff = makeFitnessFileFormat(makeGeneVariable(makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0)))
+    fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0)))
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # ファイルフォーマットのリスト
