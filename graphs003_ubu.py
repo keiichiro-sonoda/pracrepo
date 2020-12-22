@@ -548,7 +548,7 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, grid=False):
     medi = loc_pop // 2
-    div_num = 5
+    div_num = 10
     groupl = [[] for _ in range(div_num)]
     # 境界 (0 と 200 は除く)
     borders = np.linspace(0, 200, div_num, False)[1:]
