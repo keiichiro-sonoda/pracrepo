@@ -545,19 +545,21 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, grid=False):
     medi = loc_pop // 2
+    groupl = [[], []]
     for lncr in np.arange(lncr_start, lncr_stop + lncr_step, lncr_step):
         for gene_num in range(g_min, g_max + 1):
             fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num)
             #print(fname)
             fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
-            #print(fl)
             if loc_pop & 1:
                 medf = fl[medi]
             else:
                 medf = (fl[medi - 1] + fl[medi]) / 2
-            #print(medf, stat.median(fl))
-            if (medf != stat.median(fl)):
-                print("ちがう")
+            if medf < 100:
+                groupl[0].append([lncr, gene_num])
+            else:
+                groupl[1].append([lncr, gene_num])
+    print(groupl[0])
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
