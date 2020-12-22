@@ -666,7 +666,7 @@ def main():
     seed = 124
     viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    plt.show()
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
