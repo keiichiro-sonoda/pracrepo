@@ -667,8 +667,8 @@ def main():
     elite_num = 1
     crln = 0.005
     gene_num = 10
-    crs_id = 6
-    seed = 124
+    crs_id = 5
+    seed = 123
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
     viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 10, seed, grid=True)
