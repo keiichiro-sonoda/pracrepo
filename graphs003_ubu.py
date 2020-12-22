@@ -559,7 +559,8 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
                 groupl[0].append([lncr, gene_num])
             else:
                 groupl[1].append([lncr, gene_num])
-    print(groupl[0])
+    #print(groupl[0])
+    print(*np.array(groupl[1]).T)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
