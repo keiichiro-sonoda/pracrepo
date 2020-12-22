@@ -16,6 +16,9 @@ slw = sl.ShareLibWrap()
 # シード値 (ランダム対戦ファイル作成用)
 SEED = 123
 
+# 適応度の最大値
+FITNESS_MAX = 200
+
 # グラフ描画のみ (画像を保存したい場合は False にする)
 VIEW_ONLY = True
 
@@ -545,7 +548,10 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, grid=False):
     medi = loc_pop // 2
-    groupl = [[], []]
+    div_num = 3
+    groupl = [[] for _ in range(div_num)]
+    # 境界 (0 と 200 は除く)
+    borders = np.linspace(0, 200, div_num, False)[1:]
     for lncr in np.arange(lncr_start, lncr_stop + lncr_step, lncr_step):
         for gene_num in range(g_min, g_max + 1):
             fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num)
@@ -555,10 +561,14 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
                 medf = fl[medi]
             else:
                 medf = (fl[medi - 1] + fl[medi]) / 2
-            if medf < 100:
-                groupl[0].append([lncr, gene_num])
+            # 境界を見てグループ分け
+            for i, b in enumerate(borders):
+                if medf < b:
+                    groupl[i].append([lncr, gene_num])
+                    break
             else:
-                groupl[1].append([lncr, gene_num])
+                groupl[div_num - 1].append([lncr, gene_num])
+
     #print(groupl[0])
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
@@ -687,7 +697,7 @@ def main():
     seed = 365
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 10, seed, grid=True)
+    viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 20, seed, grid=True)
     plt.show()
     print("終わり")
 
