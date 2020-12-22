@@ -113,7 +113,7 @@ class ShareLibWrap():
     # ファイル名作成
     # 個体数, エリート数, 選択ID, 公比, 世代数を与える
     # 選択ID: 2: 公比そのまま, 3: 公比自然対数
-    # 交叉ID: 5: 2人っ子一様交叉, 6: BLX-α 交叉
+    # 交叉ID: 5: 2人っ子一様交叉, 6: BLX-α 交叉 (α = 0.3)
     def makeSprmFileNameRankGeoProgWrap(self, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num):
         c_arr_c = CharArray4096()
         res_str = ""
@@ -125,3 +125,5 @@ class ShareLibWrap():
 
 if __name__ == "__main__":
     print("Hello!")
+    slw = ShareLibWrap()
+    print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
