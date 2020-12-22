@@ -366,5 +366,6 @@ int main(void) {
     //sortTest();
     //trySomeCommonRatio(-0.020, 0.021, 0.001, 101);
     //crossTestSprm();
+    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, CMN_RATIO_LN);
     return 0;
 }
