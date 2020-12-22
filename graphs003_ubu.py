@@ -558,18 +558,19 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
             #print(fname)
             fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
             if not fl:
-                medfl = -1
+                medf = -1
                 c += 1
                 if c >= 10:
                     print("有効なパラメータを指定してください")
                     return
             else:
                 c = 0
-            if loc_pop & 1:
-                medf = fl[medi]
-            else:
-                medf = (fl[medi - 1] + fl[medi]) / 2
+                if loc_pop & 1:
+                    medf = fl[medi]
+                else:
+                    medf = (fl[medi - 1] + fl[medi]) / 2
             medfl.append(medf)
+        
     X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
     fig = plt.figure(figsize=(8, 5))
@@ -708,7 +709,7 @@ def main():
     crln = 0.005
     gene_num = 10
     crs_id = 5
-    seed = 365
+    seed = 999
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
     viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 100, seed)
