@@ -27,7 +27,7 @@
 #endif
 
 #ifndef POPULATION
-#define POPULATION 50 // 個体数
+#define POPULATION 10 // 個体数
 #endif
 
 #ifndef MUT_RATE
