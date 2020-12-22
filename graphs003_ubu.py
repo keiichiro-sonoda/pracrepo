@@ -545,7 +545,8 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, loc_seed, g_min, 
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, grid=False):
     for lncr in np.arange(lncr_start, lncr_stop + lncr_step, lncr_step):
-        print(lncr, type(lncr))
+        for gene_num in range(g_min, g_max + 1):
+            print(lncr, gene_num)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -669,7 +670,7 @@ def main():
     seed = 124
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 100, grid=True)
+    viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 10, grid=True)
     #plt.show()
     print("終わり")
 
