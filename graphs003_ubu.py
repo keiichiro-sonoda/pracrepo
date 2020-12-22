@@ -551,7 +551,6 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     medfl = []
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
-    X, Y = np.meshgrid(x, y)
     c = 0
     for lncr in x:
         for gene_num in y:
@@ -571,9 +570,12 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
             else:
                 medf = (fl[medi - 1] + fl[medi]) / 2
             medfl.append(medf)
+    X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
+    ax.set_xlabel("the natural log of common ratio", fontsize=15)
+    ax.set_ylabel("generation", fontsize=15)
     cm = plt.cm.get_cmap("RdYlGn")
     mappable = ax.pcolor(X, Y, Z, vmin=-0, vmax=FITNESS_MAX, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
