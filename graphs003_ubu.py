@@ -571,7 +571,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     for i in range(div_num):
-        ax.scatter(*(np.array(groupl[i]).T), s=3)
+        ax.scatter(*(np.array(groupl[i]).T), s=3, c=[_ for _ in range(len(groupl[i]))], cmap="Blues")
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
