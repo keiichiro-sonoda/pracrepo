@@ -2,7 +2,7 @@ import ctypes
 
 # シンプルパラメータの長さ
 SPRM_LEN = 10
-
+# ファイル (パス) 名の長さの最大値を適当に決めておく (c のマクロと同じ?)
 FILENAME_MAX = 4096
 
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
@@ -56,65 +56,71 @@ makeSprmFileNameRankGeoProg = share02_ubu.makeSprmFileNameRankGeoProgPy
 makeSprmFileNameRankGeoProg.restype = ctypes.c_int32
 makeSprmFileNameRankGeoProg.argtypes = (CharArray4096, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_double, ctypes.c_int32)
 
-# 各種ラッパー関数
-# n は個体数を指定 (過小はいいがオーバーに注意)
-# 圧縮フラグを追加
-def getFamilyMeansWrap(fnamer, n, compressed):
-    f_arr_c = FloatArray10()
-    flag = getFamilyMeans(fnamer.encode(), f_arr_c, n, compressed)
-    res_list = []
-    # 読み込み成功
-    if flag >= 0:
-        res_list = list(f_arr_c)
-    return res_list
+# ラッパー関数の集まり
+class ShareLibWrap():
+    
+    def __init__(self):
+        pass
 
-# 圧縮フラグを追加
-def getFamilySDWrap(fnamer, n, compressed):
-    f_arr_c = FloatArray10()
-    flag = getFamilySD(fnamer.encode(), f_arr_c, n, compressed)
-    if flag < 0:
-        return []
-    return list(f_arr_c)
+    # 各種ラッパー関数
+    # n は個体数を指定 (過小はいいがオーバーに注意)
+    # 圧縮フラグを追加
+    def getFamilyMeansWrap(self, fnamer, n, compressed):
+        f_arr_c = FloatArray10()
+        flag = getFamilyMeans(fnamer.encode(), f_arr_c, n, compressed)
+        res_list = []
+        # 読み込み成功
+        if flag >= 0:
+            res_list = list(f_arr_c)
+        return res_list
 
-def getTopSprmWrap(fnamer):
-    f_arr_c = FloatArray64()
-    if getTopSprm(fnamer.encode(), f_arr_c) < 0:
-        return []
-    return list(f_arr_c)
+    # 圧縮フラグを追加
+    def getFamilySDWrap(self, fnamer, n, compressed):
+        f_arr_c = FloatArray10()
+        flag = getFamilySD(fnamer.encode(), f_arr_c, n, compressed)
+        if flag < 0:
+            return []
+        return list(f_arr_c)
 
-# 適応度取得
-def getFitnessWrap(fnamer, n):
-    # int配列, 余裕を持って多めに確保
-    i_arr_c = IntArray100()
-    res_list = []
-    # エラーじゃなければ必要なサイズにスライスして戻り値とする
-    if getFitness(fnamer.encode(), i_arr_c, n) >= 0:
-        res_list = list(i_arr_c)[:n]
-    return res_list
+    def getTopSprmWrap(self, fnamer):
+        f_arr_c = FloatArray64()
+        if getTopSprm(fnamer.encode(), f_arr_c) < 0:
+            return []
+        return list(f_arr_c)
 
-# あるファイルの先頭要素とランダムAIとの試合結果を取得
-# [勝ち数, 引き分け数, 負け数] の順のリストを返す
-# エラーなら [0, 0, 0]
-# 指し手決定関数も指定するように変更
-# 0: 固定, 1: ルーレット
-def getTopSprmGameRsltVSRandWrap(fnamer, color, loc_pop, decNxt_id, game_num):
-    # 戻り値保存用
-    i_arr_c = IntArray3()
-    if getTopSprmGameRsltVSRand(fnamer.encode(), color, loc_pop, game_num, decNxt_id, i_arr_c) < 0:
-        return [0, 0, 0]
-    return list(i_arr_c)
+    # 適応度取得
+    def getFitnessWrap(self, fnamer, n):
+        # int配列, 余裕を持って多めに確保
+        i_arr_c = IntArray100()
+        res_list = []
+        # エラーじゃなければ必要なサイズにスライスして戻り値とする
+        if getFitness(fnamer.encode(), i_arr_c, n) >= 0:
+            res_list = list(i_arr_c)[:n]
+        return res_list
 
-# ファイル名作成
-# 個体数, エリート数, 選択ID, 公比, 世代数を与える
-# 選択ID: 2: 公比そのまま, 3: 公比自然対数
-def makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num):
-    c_arr_c = CharArray4096()
-    res_str = ""
-    str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
-    # 作成に成功したら, バイト型にして複合
-    if str_len > 0:
-        res_str = bytes(c_arr_c[:str_len]).decode()
-    return res_str
+    # あるファイルの先頭要素とランダムAIとの試合結果を取得
+    # [勝ち数, 引き分け数, 負け数] の順のリストを返す
+    # エラーなら [0, 0, 0]
+    # 指し手決定関数も指定するように変更
+    # 0: 固定, 1: ルーレット
+    def getTopSprmGameRsltVSRandWrap(self, fnamer, color, loc_pop, decNxt_id, game_num):
+        # 戻り値保存用
+        i_arr_c = IntArray3()
+        if getTopSprmGameRsltVSRand(fnamer.encode(), color, loc_pop, game_num, decNxt_id, i_arr_c) < 0:
+            return [0, 0, 0]
+        return list(i_arr_c)
+
+    # ファイル名作成
+    # 個体数, エリート数, 選択ID, 公比, 世代数を与える
+    # 選択ID: 2: 公比そのまま, 3: 公比自然対数
+    def makeSprmFileNameRankGeoProgWrap(self, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num):
+        c_arr_c = CharArray4096()
+        res_str = ""
+        str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, loc_seed, cmn_ratio, gene_num)
+        # 作成に成功したら, バイト型に復号, 長さも調整
+        if str_len > 0:
+            res_str = bytes(c_arr_c[:str_len]).decode()
+        return res_str
 
 if __name__ == "__main__":
     print("Hello!")
