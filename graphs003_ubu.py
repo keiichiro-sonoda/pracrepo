@@ -567,7 +567,8 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
             medfl.append(medf)
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
-    ax.scatter(xl, yl, s=3, c=medfl, cmap="Blues")
+    mappable = ax.scatter(xl, yl, s=3, c=medfl, cmap="Blues")
+    fig.colorbar(mappable, ax=ax)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
