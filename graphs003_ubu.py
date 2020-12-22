@@ -573,7 +573,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     ax = fig.add_subplot(111)
     cm = plt.cm.get_cmap("RdYlGn")
     #mappable = ax.scatter(xl, yl, s=3, c=medfl, cmap=cm)
-    mappable = ax.pcolor(X, Y, Z, cmap=cm)
+    mappable = ax.pcolor(X, Y, Z, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     name = "fit_map_rexp{:+5.3f}{:+5.3f}".format(lncr_start, lncr_stop)
     path = makeJpegFileName(fname, name, yl[0], yl[-1])
