@@ -554,15 +554,13 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
     X, Y = np.meshgrid(x, y)
-    print(X)
-    print(Y)
     for lncr in np.arange(lncr_start, lncr_stop + lncr_step, lncr_step):
         for gene_num in range(g_min, g_max + 1):
             fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num)
             #print(fname)
             fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
             if not fl:
-                continue
+                medfl = -1
             if loc_pop & 1:
                 medf = fl[medi]
             else:
@@ -570,11 +568,12 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
             xl.append(lncr)
             yl.append(gene_num)
             medfl.append(medf)
+    Z = np.array(medfl).reshape(len(y), len(x))
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     cm = plt.cm.get_cmap("RdYlGn")
-    mappable = ax.scatter(xl, yl, s=3, c=medfl, cmap=cm)
-    #mappable = ax.pcolor(xl, yl, medfl, cmap=cm)
+    #mappable = ax.scatter(xl, yl, s=3, c=medfl, cmap=cm)
+    mappable = ax.pcolor(X, Y, Z, cmap=cm)
     fig.colorbar(mappable, ax=ax)
     name = "fit_map_rexp{:+5.3f}{:+5.3f}".format(lncr_start, lncr_stop)
     path = makeJpegFileName(fname, name, yl[0], yl[-1])
