@@ -568,12 +568,10 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
                     break
             else:
                 groupl[div_num - 1].append([lncr, gene_num])
-
-    #print(groupl[0])
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
-    ax.scatter(*(np.array(groupl[0]).T))
-    ax.scatter(*(np.array(groupl[1]).T))
+    for i in range(div_num):
+        ax.scatter(*(np.array(groupl[i]).T))
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
