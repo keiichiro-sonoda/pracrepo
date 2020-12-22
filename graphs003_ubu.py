@@ -548,30 +548,26 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, grid=False):
     medi = loc_pop // 2
-    div_num = 10
-    groupl = [[] for _ in range(div_num)]
-    # 境界 (0 と 200 は除く)
-    borders = np.linspace(0, 200, div_num, False)[1:]
+    xl = []
+    yl = []
+    medfl = []
     for lncr in np.arange(lncr_start, lncr_stop + lncr_step, lncr_step):
         for gene_num in range(g_min, g_max + 1):
             fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num)
             #print(fname)
             fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
+            if not fl:
+                continue
             if loc_pop & 1:
                 medf = fl[medi]
             else:
                 medf = (fl[medi - 1] + fl[medi]) / 2
-            # 境界を見てグループ分け
-            for i, b in enumerate(borders):
-                if medf < b:
-                    groupl[i].append([lncr, gene_num])
-                    break
-            else:
-                groupl[div_num - 1].append([lncr, gene_num])
+            xl.append(lncr)
+            yl.append(gene_num)
+            medfl.append(medf)
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
-    for i in range(div_num):
-        ax.scatter(*(np.array(groupl[i]).T), s=3, c=[_ for _ in range(len(groupl[i]))], cmap="Blues")
+    ax.scatter(xl, yl, s=3, c=medfl, cmap="Blues")
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
