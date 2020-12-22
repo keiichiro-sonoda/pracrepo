@@ -491,7 +491,8 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=False):
 
 # 横軸公比の自然対数, 縦軸適応度のグラフを作成
 # 世代数は固定, グリッド線をオプションで追加
-def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed, grid=False):
+# 交叉方法も指定
+def viewFitnessGraph2(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed, grid=False):
     x = []
     ys = [[], [], []]
     n = int((lncr_stop - lncr_start) / lncr_step)
@@ -499,7 +500,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
     for i in range(n + 1):
         lncr = lncr_start + lncr_step * i
         # ファイル名作成 (適応度ファイルではない)
-        fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, gene_num)
+        fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num)
         # 適応度取得
         fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         if fl:
@@ -534,9 +535,9 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         print("saved!")
 
 # フォーマットを自動作成し, あとは本家適応度-世代数グラフ作成関数におまかせ
-def viewFitnessGraph3(loc_pop, smp_num, loc_eln, lncr, loc_seed, g_min, g_max, grid=False):
+def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, loc_seed, g_min, g_max, grid=False):
     # 0 世代でファイル名作成, 世代を可変にし, fitness を付加
-    fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, 0)))
+    fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, 0)))
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
@@ -661,10 +662,11 @@ def main():
     elite_num = 1
     crln = 0.005
     gene_num = 10
-    seed = 999
-    viewFitnessGraph2(population, elite_num, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
+    crs_id = 6
+    seed = 124
+    viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    #plt.show()
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
