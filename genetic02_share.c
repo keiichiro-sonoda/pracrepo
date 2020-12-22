@@ -18,7 +18,8 @@
 int makeSprmFileNameRankGeoProgPy(char *dst, int dst_size, int loc_pop, int loc_eln, int sel_id, int crs_id, int loc_seed, double cmn_ratio, int gene_num) {
     char tmp_str[FILENAME_MAX];
     // 固定: 対ランダム (指し手最大), 圧縮, 一様交叉, ランダム突然変異1%
-    if (makeSprmFileFormatAuto(tmp_str, FILENAME_MAX, 0b10, 1, loc_pop, loc_eln, sel_id, crs_id, 0, .01, loc_seed, cmn_ratio) < 0) {
+    // BLX-α 交叉の α は今のところ固定
+    if (makeSprmFileFormatAuto(tmp_str, FILENAME_MAX, 0b10, 1, loc_pop, loc_eln, sel_id, crs_id, 0, .01, loc_seed, cmn_ratio, ALPHA_BLX) < 0) {
         return -1;
     }
     int l;
