@@ -571,7 +571,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     for i in range(div_num):
-        ax.scatter(*(np.array(groupl[i]).T))
+        ax.scatter(*(np.array(groupl[i]).T), s=3)
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -695,7 +695,7 @@ def main():
     seed = 365
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 20, seed, grid=True)
+    viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 100, seed, grid=True)
     plt.show()
     print("終わり")
 
