@@ -491,13 +491,15 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=False):
 
 # 横軸公比の自然対数, 縦軸適応度のグラフを作成
 # 世代数は固定, グリッド線をオプションで追加
+# stop も含める! 多分
 # 交叉方法も指定
 def viewFitnessGraph2(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed, grid=False):
     x = []
     ys = [[], [], []]
-    n = int((lncr_stop - lncr_start) / lncr_step)
+    # stop まで含めた数
+    n = int((lncr_stop - lncr_start) / lncr_step) + 1
     c = 0
-    for i in range(n + 1):
+    for i in range(n):
         lncr = lncr_start + lncr_step * i
         # ファイル名作成 (適応度ファイルではない)
         fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num)
@@ -542,7 +544,8 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, loc_seed, g_min, 
 
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, grid=False):
-    print(np.arange(lncr_start, lncr_stop, lncr_step))
+    for lncr in np.arange(lncr_start, lncr_stop + lncr_step, lncr_step):
+        print(lncr, type(lncr))
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
