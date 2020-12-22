@@ -568,7 +568,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
             xl.append(lncr)
             yl.append(gene_num)
             medfl.append(medf)
-    Z = np.array(medfl).reshape(len(y), len(x))
+    Z = np.array(medfl).reshape(len(x), -1).T
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     cm = plt.cm.get_cmap("RdYlGn")
