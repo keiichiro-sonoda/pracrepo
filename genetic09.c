@@ -346,6 +346,7 @@ int main(void) {
         puts("フォーマット作成失敗");
         return -1;
     }
+    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.);
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
     //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
@@ -366,6 +367,5 @@ int main(void) {
     //sortTest();
     //trySomeCommonRatio(-0.020, 0.021, 0.001, 101);
     //crossTestSprm();
-    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, 0, 5, MUTATION_ID, MUT_RATE, 0);
     return 0;
 }

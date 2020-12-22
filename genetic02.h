@@ -23,7 +23,7 @@
 #define CMN_RATIO_LN -.005 
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 1 // エリート数
+#define ELITE_NUM 0 // エリート数
 #endif
 
 #ifndef POPULATION
@@ -51,7 +51,7 @@
 // 交叉識別子
 // 5: 一様交叉 (2人っ子)
 // 6: BLX-α 交叉
-#define CROSSOVER_ID 6
+#define CROSSOVER_ID 5
 
 // 突然変異識別子
 // 0: ランダム突然変異
