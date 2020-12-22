@@ -541,8 +541,8 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, loc_seed, g_min, 
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
-def viewFitnessGraph4(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, g_min, g_max, grid=False):
-    pass
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, grid=False):
+    print(np.arange(lncr_start, lncr_stop, lncr_step))
 
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
@@ -664,8 +664,9 @@ def main():
     gene_num = 10
     crs_id = 6
     seed = 124
-    viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
+    #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
+    viewFitnessGraph4(population, elite_num, crs_id, -0.020, 0.020, 0.001, 0, 100, grid=True)
     #plt.show()
     print("終わり")
 
