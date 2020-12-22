@@ -3,7 +3,6 @@
 import json
 import re
 import os
-from ctypes import *
 import numpy as np
 import math
 import statistics as stat
@@ -11,9 +10,10 @@ from matplotlib import pyplot as plt
 # ctypes とのインターフェースのつもり
 import share_lib01 as sl
 
+# ラッパー関数の集まりのインスタンス
 slw = sl.ShareLibWrap()
 
-# シード値
+# シード値 (ランダム対戦ファイル作成用)
 SEED = 123
 
 # グラフ描画のみ (画像を保存したい場合は False にする)
@@ -123,19 +123,10 @@ def makeMeansGraph(ax, x, ys):
         if i in [0, 4]:
             lw = 4
         # ラベル付け
-        ax.plot(x, ys[i],
-            label="{:d}".format(i + 1),
-            color=lc,
-            linewidth=lw
-        )
+        ax.plot(x, ys[i], label="{:d}".format(i + 1), color=lc, linewidth=lw)
     #plt.legend(loc="best")
     # 凡例調節
-    ax.legend(
-        bbox_to_anchor=(1.01, 1),
-        loc='upper left',
-        borderaxespad=0,
-        fontsize=10
-    )
+    ax.legend(bbox_to_anchor=(1.01, 1), loc='upper left', borderaxespad=0, fontsize=10)
     #ax.grid()
     # ラベル指定
     ax.set_xlabel("generation", fontsize=15)
@@ -161,7 +152,7 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
     c = 0
     for i in range(x_min, x_max + 1):
         # i 世代全個体の平均値を取り出す
-        tprm = getFamilyMeansWrap(fname_format.format(i), population, compressed)
+        tprm = slw.getFamilyMeansWrap(fname_format.format(i), population, compressed)
         # 読み込みエラー
         if not tprm:
             c += 1
