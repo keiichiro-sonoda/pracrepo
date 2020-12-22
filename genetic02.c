@@ -1472,6 +1472,7 @@ int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id
     // 適当にバッファを作る
     int c, seed_arr[BUF_LEN];
     c = 0;
+    printf("公比の対数 %+6.3f で検索\n", lncr);
     // 3桁の値を全てチェック
     for (int s = 0; s < 1000; s++) {
         makeSprmFileFormatAuto(format, FILENAME_MAX, eff_id, is_comp, loc_pop, loc_eln, 3, crs_id, mut_id, loc_mr, s, lncr, ALPHA_BLX);
@@ -1484,7 +1485,6 @@ int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id
         }
     }
     if (c) {
-        printf("公比の対数 %+6.3f で検索\n", lncr);
         printf("初期世代があるシード値: ");
         printDecimalArray(seed_arr, c);
     } else {
