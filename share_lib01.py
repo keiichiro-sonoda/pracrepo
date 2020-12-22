@@ -89,12 +89,12 @@ class ShareLibWrap():
         return list(f_arr_c)
 
     # 適応度取得
-    def getFitnessWrap(self, fnamer, n):
+    def getFitnessWrap(self, fnamef, n):
         # int配列, 余裕を持って多めに確保
         i_arr_c = IntArray100()
         res_list = []
         # エラーじゃなければ必要なサイズにスライスして戻り値とする
-        if getFitness(fnamer.encode(), i_arr_c, n) >= 0:
+        if getFitness(fnamef.encode(), i_arr_c, n) >= 0:
             res_list = list(i_arr_c)[:n]
         return res_list
 
