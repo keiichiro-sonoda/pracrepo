@@ -562,6 +562,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     #print(groupl[0])
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
+    ax.scatter(*(np.array(groupl[0]).T))
     ax.scatter(*(np.array(groupl[1]).T))
 
 # ファイルフォーマットのリスト
