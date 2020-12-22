@@ -1483,7 +1483,11 @@ int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id
             seed_arr[c++] = s;
         }
     }
-    printf("seeds: ");
-    printDecimalArray(seed_arr, c);
+    if (c) {
+        printf("初期世代があるシード値: ");
+        printDecimalArray(seed_arr, c);
+    } else {
+        puts("シードが見つかりません");
+    }
     return 0;
 }
