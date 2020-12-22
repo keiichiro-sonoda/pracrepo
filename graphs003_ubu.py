@@ -8,6 +8,10 @@ import numpy as np
 import math
 import statistics as stat
 from matplotlib import pyplot as plt
+# ctypes とのインターフェースのつもり
+import share_lib01
+
+slw = share_lib01.ShareLibWrap()
 
 # シード値
 SEED = 123
@@ -622,7 +626,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, lncr_start, lncr_stop, lncr_step, gene_n
         # ファイル名作成 (適応度ファイルではない)
         fname = makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, loc_seed, lncr, gene_num)
         # 適応度取得
-        fl = getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
+        fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         if fl:
             c = 0
             x.append(lncr)
