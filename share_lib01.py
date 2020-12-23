@@ -56,6 +56,11 @@ makeSprmFileNameRankGeoProg = share02_ubu.makeSprmFileNameRankGeoProgPy
 makeSprmFileNameRankGeoProg.restype = ctypes.c_int32
 makeSprmFileNameRankGeoProg.argtypes = (CharArray4096, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_double, ctypes.c_int32)
 
+# 使う Sprm を設定
+setSPRM_EFF = share02_ubu.setSPRM_EFFPy
+setSPRM_EFF.restype = ctypes.c_int32
+setSPRM_EFF.argtypes = (ctypes.c_char_p, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32)
+
 # ラッパー関数の集まり
 class ShareLibWrap():
     
@@ -122,6 +127,10 @@ class ShareLibWrap():
         if str_len > 0:
             res_str = bytes(c_arr_c[:str_len]).decode()
         return res_str
+    
+    # 使う Sprm を設定
+    def setSPRM_EFFWrap(self, fnamer, compressed, loc_pop, rank):
+        pass
 
 if __name__ == "__main__":
     print("Hello!")
