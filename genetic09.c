@@ -210,8 +210,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
         rouletteDoubleMltDep(prob, POPULATION, parents, 2);
         // 一様交叉で2つの子を作成
         uniCrossSprm2C(current + parents[0], current + parents[1], children);
-        for (i = 0; i < 2; i++)
-            counter[parents[i]]++; // 選ばれた親の添字をカウント
+        for (i = 0; i < 2; i++) counter[parents[i]]++; // 選ばれた親の添字をカウント
         // 子の数くり返し (0 と 1)
         // ここでオーバーフローも検知
         // 外の for 文と二重検知で効率は悪いかも
@@ -220,6 +219,14 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
             randMutSprmCC(children + i);
             // 次の世代に追加
             next[count + i] = children[i];
+        }
+        if (count == ELITE_NUM) {
+            puts("親");
+            showSprmOneLine(current[parents[0]]);
+            showSprmOneLine(current[parents[1]]);
+            puts("子");
+            showSprmOneLine(next[count]);
+            showSprmOneLine(next[count + 1]);
         }
     }
     printDecimalArray(counter, POPULATION);
