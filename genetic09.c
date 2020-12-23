@@ -367,6 +367,8 @@ int main(void) {
     //sortTest();
     //trySomeCommonRatio(-2.0, 2.09, 0.05, 101);
     //crossTestSprm();
-    _makeFGFileSprmComp(FNAME_TEST);
+    Sprm pra[POPULATION];
+    loadSprmFileCompDirect(FNAME_TEST, pra, POPULATION);
+    showFamilyPart(pra);
     return 0;
 }
