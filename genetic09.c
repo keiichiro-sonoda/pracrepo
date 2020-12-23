@@ -260,13 +260,13 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
     switch (sel_id * 10000 + crs_id * 100 + mut_id) {
         case 20500:
             puts("等比数列ランキング選択, 2人っ子一様交叉, ランダム突然変異");
-            //CMN_RATIO_EFF = CMN_RATIO; // 公比はそのまま
+            CMN_RATIO_EFF = CMN_RATIO; // 公比はそのまま
             printf("公比: %f\n", CMN_RATIO_EFF);
             res_func = rankGeoProgUni2CRdS;
             break;
         case 30500:
             puts("等比数列ランキング選択 (対数表記), 2人っ子一様交叉, ランダム突然変異");
-            //CMN_RATIO_EFF = exp(CMN_RATIO_LN); // 指数を計算し公比とする
+            CMN_RATIO_EFF = exp(CMN_RATIO_LN); // 指数を計算し公比とする
             //printf("公比: exp(%+6.3f) = %f\n", CMN_RATIO_LN, CMN_RATIO_EFF);
             res_func = rankGeoProgUni2CRdS;
             break;
@@ -284,7 +284,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
 // いくつかの公比を試す
 // 公比は自然対数で与える
 // stop は含まない予定だが, double型 の誤差でどうなるかわからない
-int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
+int trySomeCommonRatio(double start, double stop, double step, int gene_max, int resume) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
     int n, flag, gene_now;
@@ -309,11 +309,13 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
         loc_cr_ln = start + step * i;
         // 選択方法は固定する (当然)
         // BLX-α 交叉を試したくなってしまった
-        // 公比を格納するグローバル変数もここで決定
+        // 公比を格納するグローバル変数をここで変えるといろいろ面倒なのでやめておく
         if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, CROSSOVER_ID, 0, MUT_RATE, SEED, loc_cr_ln, ZAKO_FIRST, ALPHA_BLX) < 0) {
             puts("フォーマット作成失敗");
             return -1;
         }
+        // 公比はここで決定する
+        CMN_RATIO_EFF = exp(loc_cr_ln);
         printf("公比: exp(%+6.3f) = %f\n", loc_cr_ln, CMN_RATIO_EFF);
         printf("フォーマット: %s\n", format);
         // 現世代は 0 から (例外あり)
@@ -322,14 +324,21 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
         // 第二引数 -1 は, 初期世代作成スルーモード
         // 正常にスルーしたら -2 が返る
         if ((flag = makeFGFileSprmCompMkdir(format, -1)) == -2) {
-            // 進んでいる世代数を獲得
-            // 最大世代以前なら, そこから再開
-            if ((gene_now = getGeneNumComp(format, POPULATION)) < gene_max) {
-                printf("%d 世代目から再開します.\n", gene_now);
+            // 再開フラグが与えられている
+            if (resume) {
+                // 進んでいる世代数を獲得
+                // 最大世代以前なら, そこから再開
+                if ((gene_now = getGeneNumComp(format, POPULATION)) < gene_max) {
+                    printf("%d 世代目から再開します.\n", gene_now);
+                }
+                // 最大世代を過ぎていたら, 次の公比へ
+                else {
+                    continue;
+                }
             }
-            // 最大世代を過ぎていたら, 次の公比へ
+            // 再開フラグがなければ, ファイルがあっても問答無用で初期世代作成
             else {
-                continue;
+                if (makeFGFileSprmComp(format) < 0) return -1;
             }
         }
         // 普通に失敗
@@ -379,6 +388,6 @@ int main(void) {
     //nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    trySomeCommonRatio(-2.0, 0.1, 0.1, 101);
+    trySomeCommonRatio(-2.0, -1.7, 0.1, 3, 0);
     return 0;
 }

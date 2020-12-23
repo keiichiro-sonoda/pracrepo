@@ -114,7 +114,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             // 可変長引数で公比が与えられるはずなので, 100倍した整数値を最低2桁で表示
             snprintf(tmp_str, BUF_LEN, "rkg%02d", (int)(va_arg(args, double) * 100));
             // マクロをダイレクトに公比として使う
-            CMN_RATIO_EFF = CMN_RATIO;
+            //CMN_RATIO_EFF = CMN_RATIO;
             strcatSize(info_str, tmp_str, BUF_LEN);
             break;
         case 3: // 等比数列ランキング選択 (自然対数表記型)
@@ -125,8 +125,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             } else {
                 snprintf(tmp_str, BUF_LEN, "rkgexp%+6.3f", arg_d);
             }
-            // ここで公比を決定する
-            CMN_RATIO_EFF = exp(arg_d);
+            // ここで公比を決定するのは問題が発生したのでやめる
+            //CMN_RATIO_EFF = exp(arg_d);
             //printFloatExp(arg_d);
             strcatSize(info_str, tmp_str, BUF_LEN);
             break;
