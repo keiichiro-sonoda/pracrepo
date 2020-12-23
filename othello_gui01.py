@@ -774,10 +774,7 @@ class Widget(QWidget):
         c_sub = getActPrm1L(i_arr_c, self.turn)
         # 文字列に変換
         # ord("h") = 104, ord("8") = 56
-        tag = chr(104 - c_sub % 16 // 2) + chr(56 - c_sub // 16)
-        return tag
-
-
+        return chr(104 - c_sub % 16 // 2) + chr(56 - c_sub // 16)
 
 class Application(QApplication):
     def __init__(self):

@@ -655,7 +655,7 @@ int wrapNegaMaxAB(Board b, int color, int height) {
     if (nc == 0) return -1;
     // opponent's turn
     for (index = 0; index < nc; index++) {
-        pt = negaMaxAB(nba[index], opc, 4, 0, -BILLION, -alpha);
+        pt = negaMaxAB(nba[index], opc, height, 0, -BILLION, -alpha);
         te = cpa[index];
         // 角の斜め内側はなんとなく避ける (終盤は逆効果説あり)
         if (te == 18 || te == 28 || te == 98 || te == 108) {
@@ -972,6 +972,14 @@ void board2arraySymmetry(Board src, int *dst) {
                 dst[i] = 0;
         }
     }
+}
+
+// 要素が 0, 1, 2 の配列をBoard型に変換
+void array2board(const int *src, Board *dst) {
+    emptyBoard(dst);
+    // 要素をひとつずつ加える
+    for (int i = 0; i < MASU_NUM; i++)
+        putKoma(dst, i * 2, src[i]);
 }
 
 // 標準入力で y を入力して許可してほしいけど, 関数を抜けたくない場合

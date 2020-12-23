@@ -336,7 +336,8 @@ void getSPRM_EFFPy(float f_pointer[MASU_NUM]) {
 // ネガマックス αβ
 // SPRM_EFF を使うので評価値は float 型
 float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, float beta) {
-    int i, tp, nc, opc, cpa[NEXT_MAX], kc[3];
+    int i, nc, opc, cpa[NEXT_MAX], kc[3];
+    float tp;
     opc = color ^ 0b11;
     Board nba[NEXT_MAX];
     // 次の盤面を計算し, 指し手がある場合
@@ -347,7 +348,7 @@ float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, floa
         } // 途中なら次の深さへ
         else {
             for (i = 0; i < nc; i++) {
-                tp = negaMaxAB(nba[i], opc, depth - 1, 0, -beta, -alpha);
+                tp = negaMaxABSprmPy(nba[i], opc, depth - 1, 0, -beta, -alpha);
                 alpha = getMax(tp, alpha);
                 if (alpha >= beta) break;
             }
@@ -359,9 +360,36 @@ float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, floa
             alpha = (kc[color] - kc[opc]) * MILLION;
         } // パスの場合はパスフラグを立て, 深さを変えずに次を探索
         else {
-            alpha = negaMaxAB(b, opc, depth, 1, -beta, -alpha);
+            alpha = negaMaxABSprmPy(b, opc, depth, 1, -beta, -alpha);
         }
     } 
     // 評価値を反転させて返す
     return -alpha;
+}
+
+// pythonから与えられた盤面に対し, Sprm を使ったαβで手を選択する
+// 盤面配列, 最大深さ, ターン (1 か 2)
+int getBestActABSprmPy(int b_arr[MASU_NUM], int depth_max, int turn) {
+    printString("debugging");
+    int n, kc[3], cpa[NEXT_MAX], best_te;
+    float alpha, tp;
+    Board b, nba[NEXT_MAX];
+    // 配列を盤面に変換
+    array2board(b_arr, &b);
+    alpha = -FLT_MAX;
+    // 指し手が存在する
+    if ((n = canPutPP(b, turn, cpa, nba, kc))) {
+        for (int i = 0; i < n; i++) {
+            tp = negaMaxABSprmPy(nba[i], turn ^ 0b11, depth_max, 0, -FLT_MAX, -alpha);
+            if (tp > alpha) {
+                alpha = tp;
+                best_te = cpa[i];
+            }
+        }
+    } // 指し手がなければエラー
+    else {
+        best_te = -1;
+    }
+    // 最良の手? を返す
+    return best_te;
 }

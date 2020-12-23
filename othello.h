@@ -390,6 +390,9 @@ int nextBoardNormal2(Board b, Board *next_boards, int *koma_count);
 // black: +1, empty: 0, white: -1
 void board2arraySymmetry(Board src, int *dst);
 
+// 要素が 0, 1, 2 の配列をBoard型に変換
+void array2board(const int *src, Board *dst);
+
 // 標準入力で y を入力して許可してほしいけど, 関数を抜けたくない場合
 int kakunin(void);
 
