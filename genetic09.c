@@ -201,6 +201,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     // 等比数列を作成 (初項は0以外ならなんでもいい?)
     // グローバル変数がファイル名と対応しているか要注意
     geoProg(prob, POPULATION, 1., CMN_RATIO_EFF);
+    printFloatArrayExp(prob, POPULATION);
     // 1ループで子は2つなので, 毎回2を足す
     for (count = ELITE_NUM; count < POPULATION; count += 2) {
         // ルーレット選択 (重複なし)
@@ -346,7 +347,8 @@ int main(void) {
         puts("フォーマット作成失敗");
         return -1;
     }
-    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, -0.005);
+    // シードを探したいとき
+    //searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, -0.005);
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
     //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
@@ -361,11 +363,8 @@ int main(void) {
     //checkSprmFileComp(format, 0);
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    //checkSprmFileComp(format, 0);
-    //sortTest();
-    //trySomeCommonRatio(-2.0, 2.2, 0.2, 101);
-    //crossTestSprm();
     return 0;
 }
