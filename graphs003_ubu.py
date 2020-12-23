@@ -496,7 +496,7 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=False):
 # 世代数は固定, グリッド線をオプションで追加
 # stop も含める! 多分
 # 交叉方法も指定
-def viewFitnessGraph2(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed, grid=False):
+def viewFitnessGraph2(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, gene_num, loc_seed, fg=0, grid=False):
     x = []
     ys = [[], [], []]
     # stop まで含めた数
@@ -540,9 +540,10 @@ def viewFitnessGraph2(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
         print("saved!")
 
 # フォーマットを自動作成し, あとは本家適応度-世代数グラフ作成関数におまかせ
-def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc_seed, grid=False):
+def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc_seed, fg=0, grid=False):
     # 0 世代でファイル名作成, 世代を可変にし, fitness を付加
-    fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, 0)))
+    fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, 0, fg)))
+    print(fff)
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # 公比と世代数を軸とし, 適応度に応じて色を変える
@@ -706,13 +707,13 @@ def main():
     #old()
     population = 50
     elite_num = 0
-    crln = 0.005
+    lncr = -2
     gene_num = 10
     crs_id = 5
     seed = 123
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
-    #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    viewFitnessGraph4(population, elite_num, crs_id, -2.0, 2.0, 0.2, 0, 100, seed, 1)
+    viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
+    #viewFitnessGraph4(population, elite_num, crs_id, -2.0, 2.0, 0.2, 0, 100, seed, 1)
     plt.show()
     print("終わり")
 
