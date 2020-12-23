@@ -149,6 +149,8 @@ class ShareLibWrap():
         getSPRM_EFF(f_arr_c)
         return list(f_arr_c)
 
+WASSHOI = 47389
+
 if __name__ == "__main__":
     print("Hello!")
     slw = ShareLibWrap()
