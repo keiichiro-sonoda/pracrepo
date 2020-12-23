@@ -365,11 +365,7 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     //checkSprmFileComp(format, 0);
     //sortTest();
-    //trySomeCommonRatio(-2.0, 2.09, 0.05, 101);
+    trySomeCommonRatio(-2.0, 2.8, 0.4, 51);
     //crossTestSprm();
-    _makeFGFileSprmComp(FNAME_TEST);
-    Sprm pra[POPULATION];
-    loadSprmFileCompDirect(FNAME_TEST, pra, POPULATION);
-    showFamilyPart(pra);
     return 0;
 }
