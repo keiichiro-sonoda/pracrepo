@@ -143,8 +143,8 @@ class Widget(QWidget):
         self.test_flag = False
         # グラフ設定 (必ず盤面初期化の後に行う)
         self.setGraphs()
-        # テスト画像初期化
-        self.setTestImage()
+        self.setTestImage()        # テスト画像初期化
+        self.setComboBoxes()
         # シード値設定
         setSeed(self.seed)
     
@@ -193,7 +193,7 @@ class Widget(QWidget):
     def setButtons(self):
         self.test_button = QPushButton("test", self)
         self.test_button.move(100, 820)
-        self.test_button.setStyleSheet("            font-size:20pt;            font-weight:bold;            font-family:Monotype Corsiva;            background:#ffffff")
+        self.test_button.setStyleSheet("font-size:20pt; font-weight:bold; font-family:Monotype Corsiva; background:#ffffff")
         self.test_button.resize(140, 50)
         # クリックされたときに実行
         self.test_button.clicked.connect(self.testClicked)
@@ -321,6 +321,13 @@ class Widget(QWidget):
         self.timer.setSingleShot(True)            # 一発ずつ実行
         self.timer.timeout.connect(self.AIAction) # 実行する関数を指定
         self.wait_time = 1000                     # 待ち時間(ミリ秒)
+    
+    # コンボボックスを設定
+    def setComboBoxes(self):
+        self.cbox1 = QComboBox(self)
+        for i in range(8):
+            self.cbox1.addItem(str(i + 1))
+        self.cbox1.move(1000, 500)
     
     # ラジオボタンが変更されたとき実行
     def detPlayer(self, index):
