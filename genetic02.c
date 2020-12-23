@@ -645,7 +645,7 @@ int _makeFGFileSprmComp(const char *fnamew) {
         char formatr[FILENAME_MAX];
         Sprm pra1[50], pra2[POPULATION];
         // 公比1以上代表
-        makeSprmFileFormatAuto(formatr, FILENAME_MAX, 0b10, 1, 50, 0, 3, 5, 0, 0.05, 123u, 0.1);
+        makeSprmFileFormatAuto(formatr, FILENAME_MAX, 0b10, 1, 50, 0, 3, 5, 0, 0.01, 123u, 0.1);
         puts(formatr);
         loadSprmFileComp(formatr, 100, pra1, 50);
         // 全て最下位の個体にする
