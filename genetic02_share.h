@@ -99,4 +99,8 @@ void getSPRM_EFFPy(float f_pointer[MASU_NUM]);
 // SPRM_EFF を使う
 float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, float beta);
 
+// pythonから与えられた盤面に対し, Sprm を使ったαβで手を選択する
+// 盤面配列, 最大深さ, ターン (1 か 2)
+int getBestActABSprmPy(int *b_arr, int depth_max, int turn);
+
 #endif
