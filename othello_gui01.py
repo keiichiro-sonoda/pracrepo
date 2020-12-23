@@ -316,15 +316,11 @@ class Widget(QWidget):
         self.rbutton3.toggled.connect(lambda : self.detPlayer(1))
     
     # タイマー設定関数
-    # 複数形だけど今のところひとつ
     def setTimers(self):
         self.timer = QTimer(self)
-        # 一発ずつ実行
-        self.timer.setSingleShot(True)
-        # 関数を繋げる
-        self.timer.timeout.connect(self.randomAction)
-        # 待ち時間(ミリ秒)
-        self.wait_time = 1000
+        self.timer.setSingleShot(True)            # 一発ずつ実行
+        self.timer.timeout.connect(self.AIAction) # 実行する関数を指定
+        self.wait_time = 1000                     # 待ち時間(ミリ秒)
     
     # ラジオボタンが変更されたとき実行
     def detPlayer(self, index):
@@ -436,14 +432,15 @@ class Widget(QWidget):
     
     # QtCore.QPoint のオブジェクトを与えると, 該当するタグを返す
     def pos2tag(self, pos):
+        # 範囲外の場合の戻り値
+        tag = "z0"
+        # x, y の順番でチェック
         nx = (pos.x() - self.margin) // self.SQLEN
-        if (nx < 0 or 7 < nx):
-            return "z0"
-        ny = (pos.y() - self.margin) // self.SQLEN
-        if (ny < 0 or 7 < ny):
-            return "z0"
-        # ASCII で元に戻す
-        return chr(nx + 97) + chr(ny + 49)
+        if (0 <= nx and nx <= 7):
+            ny = (pos.y() - self.margin) // self.SQLEN
+            if (0 <= ny and ny <= 7):
+                tag = chr(nx + 97) + chr(ny + 49)
+        return tag
     
     # タグから添え字に変換する
     def tag2sub(self, tag):
@@ -533,6 +530,7 @@ class Widget(QWidget):
             # さらに空辞書の場合, 終了処理
             if not cand_local:
                 self.end_flag = True
+                self.update() # 描画処理も挟む
                 self.resultPopup()
         # 候補手辞書をクラス内変数に代入
         self.candidates = cand_local
@@ -604,9 +602,8 @@ class Widget(QWidget):
             QMessageBox.Ok
         )
     
-    # 候補手からランダムに選択
-    # ランダムとか言いつつそれ以外も担当している
-    def randomAction(self):
+    # AI のアクション
+    def AIAction(self):
         cand_list = list(self.candidates.keys())
         # 候補手が存在しない
         if not cand_list:
@@ -618,7 +615,7 @@ class Widget(QWidget):
         # Prm1L による手の決定
         #tag = self.getActWithCFunc()
         # シンプルパラメータを使った αβ による最善手
-        tag = slw.getBestActABSprmWrap(self.board_info, 10, self.turn)
+        tag = slw.getBestActABSprmWrap(self.board_info, 6, self.turn)
         # 盤面更新
         self.updateBoard(tag)
         # 次が人ならターンをロック解除
@@ -674,10 +671,9 @@ class Widget(QWidget):
     def evaluationByPrm1L(self):
         return self._evaluationByPrm1L(self.board_info, self.turn)
 
-    # クラス内変数の候補手ディクショナリは書き換えないように候補手を探索
-    # 引数には盤面情報リスト、手番(ターン)を与える
-    # パス処理はこの関数のラッパー関数で行なう予定
-    # やっぱり盤面情報の引継ぎとかめんどいから一関数でまとめてみよう
+    # クラス内変数の候補手ディクショナリは書き換えないように, 候補手を探索
+    # 引数には盤面情報リスト、ターンを与える
+    # パス処理はこの関数のラッパー関数で行う
     def getCandidatesLocal(self, board, teban):
         # 候補初期化
         cand_local = dict()
