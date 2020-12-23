@@ -154,7 +154,19 @@ class ShareLibWrap():
         getSPRM_EFF(f_arr_c)
         return list(f_arr_c)
     
-
+    # Sprm を使った αβ で指し手を取得
+    def getBestActABSprmWrap(self, board_info, depth, turn):
+        board_list = []
+        # 番兵を排除して要素を64にする
+        for i in range(9, 81, 9):
+            for j in range(1, 9):
+                board_list.append(board_info[i + j])
+        # スターで分解して C の整数配列に変換
+        # C で定義しているアドレスで指し手取得
+        c_sub = getBestActABSprm(IntArray64(*board_list), depth, turn)
+        # 文字列に変換
+        # ord("h") = 104, ord("8") = 56
+        return chr(104 - c_sub % 16 // 2) + chr(56 - c_sub // 16)
 
 if __name__ == "__main__":
     print("Hello!")
