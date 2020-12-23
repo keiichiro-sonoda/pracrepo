@@ -9,8 +9,11 @@
 // othello.h も包含している
 #include "genetic02.h"
 
+// 大域変数
+// pythonで使うシンプルパラメータ
+extern Sprm SPRM_EFF;
+
 // functions
-// パラメータの表示
 
 // Sprm のファイルフォーマットを自動生成する関数
 // Python 用
@@ -81,5 +84,9 @@ void showStartPy(void);
 // 適応度ファイルを Python から読み取る
 // fitness には loc_pop 以上の領域を確保すること
 int getFitnessPy(const char*, int*, int);
+
+// 使うパラメータを大域変数に格納
+// ファイル名, 圧縮フラグ, 個体数, 順位 (1オリジン) を与える
+int setSPRM_EFFPy(const char *fnamer, int comp, int loc_pop, int rank);
 
 #endif

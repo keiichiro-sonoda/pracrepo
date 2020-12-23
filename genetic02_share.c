@@ -8,6 +8,8 @@
 #include "sort01.h"
 
 // global variables
+// pythonで使うシンプルパラメータ
+Sprm SPRM_EFF;
 
 // functions
 
@@ -78,7 +80,7 @@ void checkSprmFileFlex(const char *format, int gene_num, int n) {
     showSprm(pra[0]);
 }
 
-// pythonでパラメータを読み取りたい
+// pythonからトップのパラメータを読み取る関数
 // 値を代入するための float のポインタを与える(長さ64の配列)
 // ファイル名も指定する
 int getTopSprmPy(const char *fnamer, float f_pointer[MASU_NUM]) {
@@ -127,9 +129,6 @@ void getTop10AveFlexPy(const char *fnamer, float f_pointer[SPRM_LEN]) {
 
 // 世代全体の平均値を取得
 // 個体数は可変にしたいので長さも引数として与える
-// 無効なファイル名が渡されたときの処理も追加
-// pythonでいちいち関数増やすのもだるいので, 圧縮版も兼ねてしまおう
-// 引数を一つ増やして識別したほうが簡単そうだ…多分
 // compressed が0なら非圧縮, 0以外なら圧縮
 int getFamilyMeansPy(const char *fnamer, float f_pointer[SPRM_LEN], int n, int compressed) {
     Sprm family[n];
@@ -301,5 +300,21 @@ void showStartPy(void) {
 int getFitnessPy(const char *fname, int *fitness, int loc_pop) {
     // マクロで自動読み取り, エラーなら -1 を返す
     loadFitnessShortDirectExit(fname, fitness, loc_pop);
+    return 0;
+}
+
+// 使うパラメータを大域変数に格納
+// ファイル名, 圧縮フラグ, 個体数, 順位 (1オリジン) を与える
+int setSPRM_EFFPy(const char *fnamer, int comp, int loc_pop, int rank) {
+    Sprm family[loc_pop];
+    if (comp) {
+        if (loadSprmFileCompDirect(fnamer, family, loc_pop) < 0)
+            return -1;
+    } else {
+        loadFileDirectExit(fnamer, family, sizeof family);
+    }
+    // 一応順位は範囲内に収める
+    rank = clamp(rank, 1, loc_pop);
+    SPRM_EFF = family[rank - 1];
     return 0;
 }

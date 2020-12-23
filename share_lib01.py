@@ -21,7 +21,7 @@ CharArray4096 = ctypes.c_char * FILENAME_MAX
 # 可変にできないものか…
 IntArray100 = ctypes.c_int32 * 100
 
-# 初期化関数を実行 (バグの温床)
+# 初期化関数を実行 (import 時に実行してくれるかな?)
 share02_ubu.initPy()
 
 # 全個体の平均値
@@ -51,7 +51,7 @@ getFitness = share02_ubu.getFitnessPy
 getFitness.restype = ctypes.c_int32
 getFitness.argtypes = (ctypes.c_char_p, IntArray100, ctypes.c_int32)
 
-# ファイル名決定関数
+# ファイル名決定関数 (引数の数がエグい)
 makeSprmFileNameRankGeoProg = share02_ubu.makeSprmFileNameRankGeoProgPy
 makeSprmFileNameRankGeoProg.restype = ctypes.c_int32
 makeSprmFileNameRankGeoProg.argtypes = (CharArray4096, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_double, ctypes.c_int32)
