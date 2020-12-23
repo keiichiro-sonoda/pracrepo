@@ -61,6 +61,11 @@ setSPRM_EFF = share02_ubu.setSPRM_EFFPy
 setSPRM_EFF.restype = ctypes.c_int32
 setSPRM_EFF.argtypes = (ctypes.c_char_p, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32)
 
+# 使う Sprm を見る
+showSPRM_EFF = share02_ubu.showSPRM_EFFPy
+showSPRM_EFF.restype = None
+showSPRM_EFF.argtypes = None
+
 # ラッパー関数の集まり
 class ShareLibWrap():
     
@@ -128,11 +133,14 @@ class ShareLibWrap():
             res_str = bytes(c_arr_c[:str_len]).decode()
         return res_str
     
-    # 使う Sprm を設定
+    # 使う Sprm を設定 (ファイル名をバイト型にして渡すだけ)
     def setSPRM_EFFWrap(self, fnamer, compressed, loc_pop, rank):
-        pass
+        return setSPRM_EFF(fnamer.encode(), compressed, loc_pop, rank)
 
 if __name__ == "__main__":
     print("Hello!")
     slw = ShareLibWrap()
-    print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
+    #print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
+    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, 0.01, 100)
+    print(fname)
+    showSPRM_EFF()
