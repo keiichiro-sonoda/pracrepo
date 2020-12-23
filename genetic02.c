@@ -1479,7 +1479,7 @@ int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id
     printf("公比の対数 %+6.3f で検索\n", lncr);
     // 3桁の値を全てチェック
     for (int s = 0; s < 1000; s++) {
-        makeSprmFileFormatAuto(format, FILENAME_MAX, eff_id, is_comp, loc_pop, loc_eln, 3, crs_id, mut_id, loc_mr, s, lncr, ALPHA_BLX);
+        makeSprmFileFormatAuto(format, FILENAME_MAX, eff_id, is_comp, loc_pop, loc_eln, 3, crs_id, mut_id, loc_mr, s, lncr, ALPHA_BLX, ZAKO_FIRST);
         // 初期世代ファイル名でチェック
         snprintf(fname, FILENAME_MAX, format, 0);
         // 読み込み専用で開けたら, シードを表示
