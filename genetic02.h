@@ -20,7 +20,7 @@
 
 // 公比の自然対数表記バージョン
 // 頻繁に動かすパラメータなので, マクロはほぼ使わない
-#define CMN_RATIO_LN 1.
+#define CMN_RATIO_LN -0.01
 
 #ifndef ELITE_NUM
 #define ELITE_NUM 0 // エリート数
