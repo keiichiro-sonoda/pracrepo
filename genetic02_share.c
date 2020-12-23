@@ -10,6 +10,9 @@
 // global variables
 // pythonで使うシンプルパラメータ
 Sprm SPRM_EFF;
+// 駒の差の価値 (最終評価で用いる)
+// 負けたい場合は正負逆転させる?
+float DIF_VALUE = 1000000.f;
 
 // functions
 
@@ -357,8 +360,8 @@ float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, floa
     else {
         // 前のターンでもパスだった場合, 葉ノードなので最終評価 (駒の差×100万は適当)
         if (pass) {
-            alpha = (kc[color] - kc[opc]) * MILLION;
-        } // パスの場合はパスフラグを立て, 深さを変えずに次を探索
+            alpha = (float)(kc[color] - kc[opc]) * DIF_VALUE;
+        } // パスの場合はパスフラグを立て, 手番だけ入れ替えて次を探索
         else {
             alpha = negaMaxABSprmPy(b, opc, depth, 1, -beta, -alpha);
         }

@@ -12,6 +12,8 @@
 // 大域変数
 // pythonで使うシンプルパラメータ
 extern Sprm SPRM_EFF;
+// 駒の差の価値 (最終評価で用いる)
+extern float DIF_VALUE;
 
 // functions
 
