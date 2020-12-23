@@ -80,6 +80,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     char info_str[BUF_LEN] = {115, 0};
     char tmp_str[BUF_LEN];
     // 可変引数に代入された値を取り出す
+    int arg_i;
     double arg_d;
     // 適応度
     switch (eff_id & 0b10) {
@@ -157,6 +158,10 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             default:
                 miteigiExit(-1);
         }
+    }
+    // 初期世代雑魚フラグ
+    if ((arg_i = va_arg(args, int)) == 1) {
+        strcatSize(info_str, "_zako", BUF_LEN);
     }
     // パスを作成 (ディレクトリ名とファイル名の共通部分が info_str)
     snprintf(dst, dst_size, "prm/%s/%s", info_str, info_str);

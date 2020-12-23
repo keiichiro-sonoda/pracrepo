@@ -63,6 +63,8 @@
 
 #define COMPRESS 1 // 圧縮するか否か
 
+#define ZAKO_FIRST 1 // 全て同一の弱い個体の集団から始めるフラグ
+
 #define SPRM_LEN 10 // 区別できるマスの数 (個体の配列長)
 
 #define SURVIVE_NUM 10 // 陳腐化したマクロ
