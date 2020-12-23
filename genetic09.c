@@ -296,7 +296,7 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max) {
         // 選択方法は固定する (当然)
         // BLX-α 交叉を試したくなってしまった
         // 公比を格納するグローバル変数もここで決定
-        if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, CROSSOVER_ID, 0, MUT_RATE, SEED, loc_cr_ln, ALPHA_BLX) < 0) {
+        if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, CROSSOVER_ID, 0, MUT_RATE, SEED, loc_cr_ln, ZAKO_FIRST, ALPHA_BLX) < 0) {
             puts("フォーマット作成失敗");
             return -1;
         }
