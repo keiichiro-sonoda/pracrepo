@@ -220,6 +220,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
             // 次の世代に追加
             next[count + i] = children[i];
         }
+        /*
         if (count == ELITE_NUM) {
             puts("親");
             showSprmOneLine(current[parents[0]]);
@@ -228,6 +229,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
             showSprmOneLine(next[count]);
             showSprmOneLine(next[count + 1]);
         }
+        */
     }
     printDecimalArray(counter, POPULATION);
 }
@@ -374,8 +376,9 @@ int main(void) {
     //checkSprmFileComp(format, 0);
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
+    //nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
+    trySomeCommonRatio(-2.0, 0.1, 0.1, 101);
     return 0;
 }
