@@ -339,6 +339,7 @@ void getSPRM_EFFPy(float f_pointer[MASU_NUM]) {
 // ネガマックス αβ
 // SPRM_EFF を使うので評価値は float 型
 float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, float beta) {
+    printf("depth: %d, alpha: %f, beta: %f\n", depth, alpha, beta);
     int i, nc, opc, cpa[NEXT_MAX], kc[3];
     float tp;
     opc = color ^ 0b11;
@@ -365,7 +366,7 @@ float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, floa
         else {
             alpha = negaMaxABSprmPy(b, opc, depth, 1, -beta, -alpha);
         }
-    } 
+    }
     // 評価値を反転させて返す
     return -alpha;
 }
