@@ -339,7 +339,7 @@ void getSPRM_EFFPy(float f_pointer[MASU_NUM]) {
 // ネガマックス αβ
 // SPRM_EFF を使うので評価値は float 型
 float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, float beta) {
-    printf("depth: %d, alpha: %f, beta: %f\n", depth, alpha, beta);
+    //printf("depth: %d, alpha: %f, beta: %f\n", depth, alpha, beta);
     int i, nc, opc, cpa[NEXT_MAX], kc[3];
     float tp;
     opc = color ^ 0b11;
@@ -374,7 +374,6 @@ float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, floa
 // pythonから与えられた盤面に対し, Sprm を使ったαβで手を選択する
 // 盤面配列, 最大深さ, ターン (1 か 2)
 int getBestActABSprmPy(int b_arr[MASU_NUM], int depth_max, int turn) {
-    printString("debugging");
     int n, kc[3], cpa[NEXT_MAX], best_te;
     float alpha, tp;
     Board b, nba[NEXT_MAX];
