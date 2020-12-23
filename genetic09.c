@@ -389,6 +389,6 @@ int main(void) {
     //nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    trySomeCommonRatio(-2.0, -1.7, 0.1, 3, 1);
+    trySomeCommonRatio(-4.0, 0.1, 0.1, 101, 0);
     return 0;
 }
