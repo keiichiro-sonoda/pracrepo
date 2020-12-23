@@ -89,4 +89,7 @@ int getFitnessPy(const char*, int*, int);
 // ファイル名, 圧縮フラグ, 個体数, 順位 (1オリジン) を与える
 int setSPRM_EFFPy(const char *fnamer, int comp, int loc_pop, int rank);
 
+// 有効な Sprm を確認
+void showSPRM_EFFPy(void);
+
 #endif

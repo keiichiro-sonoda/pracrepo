@@ -276,6 +276,8 @@ void initPy(void) {
     setCORR_TABLE();
     // 念のため
     initBoard();
+    // 乱数で初期化
+    randSprm(&SPRM_EFF);
 }
 
 // シード値設定
@@ -317,4 +319,9 @@ int setSPRM_EFFPy(const char *fnamer, int comp, int loc_pop, int rank) {
     rank = clamp(rank, 1, loc_pop);
     SPRM_EFF = family[rank - 1];
     return 0;
+}
+
+// 有効な Sprm を確認
+void showSPRM_EFFPy(void) {
+    showSprmOneLine(SPRM_EFF);
 }
