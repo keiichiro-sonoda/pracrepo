@@ -545,8 +545,8 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, 0)))
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
-# 公比と世代数を軸とし, 適応度に応じてプロットする点の形や色を変えてみたい
-def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed):
+# 公比と世代数を軸とし, 適応度に応じて色を変える
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, fg=0):
     medi = loc_pop // 2
     medfl = []
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
@@ -554,7 +554,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     c = 0
     for lncr in x:
         for gene_num in y:
-            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num)
+            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, fg)
             #print(fname)
             fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
             if not fl:
@@ -712,7 +712,7 @@ def main():
     seed = 123
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    viewFitnessGraph4(population, elite_num, crs_id, -2.0, 2.0, 0.05, 0, 100, seed)
+    viewFitnessGraph4(population, elite_num, crs_id, -2.0, -0.2, 0.2, 0, 100, seed, 1)
     plt.show()
     print("終わり")
 
