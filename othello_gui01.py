@@ -530,8 +530,6 @@ class Widget(QWidget):
             # さらに空辞書の場合, 終了処理
             if not cand_local:
                 self.end_flag = True
-                self.update() # 描画処理も挟む
-                self.resultPopup()
         # 候補手辞書をクラス内変数に代入
         self.candidates = cand_local
 
@@ -569,7 +567,7 @@ class Widget(QWidget):
         # 盤面情報表示
         self.printBoard()
         # ターンを変更して候補手探し
-        # 次がパスならターンが元に戻る可能性あり
+        # パスの場合, ターンは勝手に修正される
         self.turn ^= 3
         self.getCandidates()
         # 次の候補手を色塗り
@@ -583,6 +581,9 @@ class Widget(QWidget):
         self.curve.setData(self.progress_list, self.points)
         # 描画適用
         self.update()
+        # もろもろ処理をした後, 結果表示
+        if self.end_flag:
+            self.resultPopup()
     
     # 結果のポップアップ
     def resultPopup(self):
