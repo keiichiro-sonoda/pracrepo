@@ -384,7 +384,8 @@ int getBestActABSprmPy(int b_arr[MASU_NUM], int depth_max, int turn) {
     // 指し手が存在する
     if ((n = canPutPP(b, turn, cpa, nba, kc))) {
         for (int i = 0; i < n; i++) {
-            if ((tp = negaMaxABSprmPy(nba[i], turn ^ 0b11, depth_max, 0, -FLT_MAX, -alpha)) > alpha) {
+            // 既に 1 手先の盤面は見ているため, 深さは1減らして渡す
+            if ((tp = negaMaxABSprmPy(nba[i], turn ^ 0b11, depth_max - 1, 0, -FLT_MAX, -alpha)) > alpha) {
                 alpha = tp;
                 best_te = cpa[i];
             }
