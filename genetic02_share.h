@@ -92,4 +92,7 @@ int setSPRM_EFFPy(const char *fnamer, int comp, int loc_pop, int rank);
 // 有効な Sprm を確認
 void showSPRM_EFFPy(void);
 
+// 有効な Sprm を長さ64に整形して取得
+void getSPRM_EFFPy(float f_pointer[MASU_NUM]);
+
 #endif

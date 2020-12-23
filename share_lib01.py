@@ -36,7 +36,7 @@ getFamilySD = share02_ubu.getFamilySDPy
 getFamilySD.restype = ctypes.c_int32
 getFamilySD.argtypes = (ctypes.c_char_p, FloatArray10, ctypes.c_int32, ctypes.c_int32)
 
-# あるファイルの先頭の要素
+# あるファイルのトップを長さ64に並び替えた配列で取得
 getTopSprm = share02_ubu.getTopSprmPy
 getTopSprm.restype = ctypes.c_int32
 getTopSprm.argtypes = (ctypes.c_char_p, FloatArray64)

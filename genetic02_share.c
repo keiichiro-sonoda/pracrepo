@@ -325,3 +325,10 @@ int setSPRM_EFFPy(const char *fnamer, int comp, int loc_pop, int rank) {
 void showSPRM_EFFPy(void) {
     showSprmOneLine(SPRM_EFF);
 }
+
+// 有効な Sprm を長さ64に整形して取得
+void getSPRM_EFFPy(float f_pointer[MASU_NUM]) {
+    // 適切な位置にパラメータを配置
+    for (int i = 0; i < MASU_NUM; i++)
+        f_pointer[i] = SPRM_EFF.weight[CORR_TABLE[i]];
+}
