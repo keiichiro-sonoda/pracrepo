@@ -66,6 +66,11 @@ showSPRM_EFF = share02_ubu.showSPRM_EFFPy
 showSPRM_EFF.restype = None
 showSPRM_EFF.argtypes = None
 
+# 使う Sprm を長さ64の配列で取得
+getSPRM_EFF = share02_ubu.getSPRM_EFFPy
+getSPRM_EFF.restype = None
+getSPRM_EFF.argtypes = (FloatArray64,)
+
 # ラッパー関数の集まり
 class ShareLibWrap():
     
@@ -92,6 +97,7 @@ class ShareLibWrap():
             return []
         return list(f_arr_c)
 
+    # トップパラメータを長さ64のリストで取得
     def getTopSprmWrap(self, fnamer):
         f_arr_c = FloatArray64()
         if getTopSprm(fnamer.encode(), f_arr_c) < 0:
@@ -137,11 +143,22 @@ class ShareLibWrap():
     def setSPRM_EFFWrap(self, fnamer, compressed, loc_pop, rank):
         return setSPRM_EFF(fnamer.encode(), compressed, loc_pop, rank)
 
+    # 使う Sprm を長さ64のリストで返す
+    def getSPRM_EFFWrap(self):
+        f_arr_c = FloatArray64()
+        getSPRM_EFF(f_arr_c)
+        return list(f_arr_c)
+
 if __name__ == "__main__":
     print("Hello!")
     slw = ShareLibWrap()
     #print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
-    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.7, 100)
+    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.1, 100)
     print(fname)
     print(slw.setSPRM_EFFWrap(fname, 1, 50, 1))
     showSPRM_EFF()
+    spe = slw.getSPRM_EFFWrap()
+    for i in range(8):
+        for j in range(8):
+            print("{:+5.2f} ".format(spe[i * 8 + j]), end="")
+        print()
