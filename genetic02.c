@@ -119,8 +119,8 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             break;
         case 3: // 等比数列ランキング選択 (自然対数表記型)
             // 可変長引数で公比の自然対数が与えられるとし, 符号付きで1の位から小数第3位まで表示
-            if ((arg_d = va_arg(args, double)) == 0.) {
-                // 0.0 は + に統一
+            if (-0.0005 < (arg_d = va_arg(args, double)) && arg_d < 0.0005) {
+                // 小数第4位を四捨五入して 0.0000 になる場合は + に統一
                 snprintf(tmp_str, BUF_LEN, "rkgexp%+6.3f", .0);
             } else {
                 snprintf(tmp_str, BUF_LEN, "rkgexp%+6.3f", arg_d);
