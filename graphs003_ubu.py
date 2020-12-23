@@ -712,7 +712,7 @@ def main():
     seed = 123
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crln, seed, 0, 100, grid=True)
-    viewFitnessGraph4(population, elite_num, crs_id, -2.0, 1.95, 0.05, 0, 100, seed)
+    viewFitnessGraph4(population, elite_num, crs_id, -2.0, 2.0, 0.05, 0, 100, seed)
     plt.show()
     print("終わり")
 
