@@ -644,9 +644,9 @@ int _makeFGFileSprmComp(const char *fnamew) {
     if (ZAKO_FIRST == 1) {
         char formatr[FILENAME_MAX];
         Sprm pra1[50], pra2[POPULATION];
-        // 公比1以上代表
+        // 公比1以上代表. ここで公比が書き換えられてしまった.
         makeSprmFileFormatAuto(formatr, FILENAME_MAX, 0b10, 1, 50, 0, 3, 5, 0, 0.01, 123u, 0.1);
-        puts(formatr);
+        //puts(formatr);
         loadSprmFileComp(formatr, 100, pra1, 50);
         // 全て最下位の個体にする
         for (int i = 0; i < POPULATION; i++) {
@@ -719,9 +719,12 @@ int makeFGFileSprmCompMkdir(const char *format, int safety) {
             putchar(10);
             return -2;
         }
-        // 上書き警告, 許可が得られなければ抜ける
-        printf("上書きしますか?");
-        kakuninExit();
+        // -2 の場合は問答無用で初期世代作成
+        if (safety != -2) {
+            // 上書き警告, 許可が得られなければ抜ける
+            printf("上書きしますか?");
+            kakuninExit();
+        }
     }
     // 読み込み失敗
     // ファイルが存在しない? ので上書きを気にせず書き込み専用で開く

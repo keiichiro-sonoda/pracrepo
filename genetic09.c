@@ -287,7 +287,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
 int trySomeCommonRatio(double start, double stop, double step, int gene_max, int resume) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
-    int n, flag, gene_now;
+    int n, flag, gene_now, safety;
     scmSprmSorted scm;
     time_t t0, t1;
     // 最初の時間を取得
@@ -320,25 +320,24 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max, int
         printf("フォーマット: %s\n", format);
         // 現世代は 0 から (例外あり)
         gene_now = 0;
+        // 途中から続行するか否か
+        if (resume) {
+            safety = -1;
+        } else {
+            safety = -2;
+        }
         // 初期世代作成, 必要ならばディレクトリも作成
         // 第二引数 -1 は, 初期世代作成スルーモード
         // 正常にスルーしたら -2 が返る
-        if ((flag = makeFGFileSprmCompMkdir(format, -1)) == -2) {
-            // 再開フラグが与えられている
-            if (resume) {
-                // 進んでいる世代数を獲得
-                // 最大世代以前なら, そこから再開
-                if ((gene_now = getGeneNumComp(format, POPULATION)) < gene_max) {
-                    printf("%d 世代目から再開します.\n", gene_now);
-                }
-                // 最大世代を過ぎていたら, 次の公比へ
-                else {
-                    continue;
-                }
+        if ((flag = makeFGFileSprmCompMkdir(format, safety)) == -2) {
+            // 進んでいる世代数を獲得
+            // 最大世代以前なら, そこから再開
+            if ((gene_now = getGeneNumComp(format, POPULATION)) < gene_max) {
+                printf("%d 世代目から再開します.\n", gene_now);
             }
-            // 再開フラグがなければ, ファイルがあっても問答無用で初期世代作成
+            // 最大世代を過ぎていたら, 次の公比へ
             else {
-                if (makeFGFileSprmComp(format) < 0) return -1;
+                continue;
             }
         }
         // 普通に失敗
