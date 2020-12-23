@@ -13,13 +13,13 @@ share02_ubu = ctypes.cdll.LoadLibrary(".//share02_ubu.so")
 FloatArray10 = ctypes.c_float * 10
 FloatArray64 = ctypes.c_float * 64
 IntArray3 = ctypes.c_int32 * 3
+# 盤面情報代入用
+IntArray64 = ctypes.c_int32 * 64
+# 適応度代入用 (100 は今まで扱った個体数の最大値)
+IntArray100 = ctypes.c_int32 * 100
+
 # なんとなく c の FILENAME_MAX に合わせてみた
 CharArray4096 = ctypes.c_char * FILENAME_MAX
-
-# 適応度代入用
-# 100 は最大の個体数と考える, 必要があれば調整
-# 可変にできないものか…
-IntArray100 = ctypes.c_int32 * 100
 
 # 初期化関数を実行 (import 時に実行してくれるかな?)
 share02_ubu.initPy()
@@ -71,9 +71,14 @@ getSPRM_EFF = share02_ubu.getSPRM_EFFPy
 getSPRM_EFF.restype = None
 getSPRM_EFF.argtypes = (FloatArray64,)
 
+# Sprm を使った αβ で最善手を取得
+getBestActABSprm = share02_ubu.getBestActABSprmPy
+getBestActABSprm.restype = ctypes.c_int32
+getBestActABSprm.argtypes = (IntArray64, ctypes.c_int32, ctypes.c_int32)
+
 # ラッパー関数の集まり
 class ShareLibWrap():
-    
+
     def __init__(self):
         pass
 
@@ -148,6 +153,8 @@ class ShareLibWrap():
         f_arr_c = FloatArray64()
         getSPRM_EFF(f_arr_c)
         return list(f_arr_c)
+    
+
 
 if __name__ == "__main__":
     print("Hello!")
