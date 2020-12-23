@@ -273,8 +273,7 @@ class Widget(QWidget):
         # テキストの位置を指定
         self.label1.move(x, 470)
         # テキストの詳細設定
-        self.label1.setStyleSheet("            font-size:10pt;            font-weight:500;            color:#000000;\
-            ")
+        self.label1.setStyleSheet("font-size:10pt; font-weight:500; color:#000000;")
         # 箱の大きさ変更?
         self.label1.resize(150, 30)
         # 左揃え

@@ -422,12 +422,11 @@ void crossTestSprm(void) {
     //printf("子2: "); showSprmOneLine(pra[1]);
 }
 
+// Sprm で盤面を評価
 // caluculate point
 float evaluationSimple(Board b, Sprm pr) {
     float pt = 0;
-    int i;
-    // board array
-    int ba[MASU_NUM];
+    int i, ba[MASU_NUM];
     // Board -> int array
     board2arraySymmetry(b, ba);
     //showDecimalArray(ba, MASU_NUM);

@@ -332,3 +332,36 @@ void getSPRM_EFFPy(float f_pointer[MASU_NUM]) {
     for (int i = 0; i < MASU_NUM; i++)
         f_pointer[i] = SPRM_EFF.weight[CORR_TABLE[i]];
 }
+
+// ネガマックス αβ
+// SPRM_EFF を使う
+float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, float beta) {
+    int i, tp, nc, opc, cpa[NEXT_MAX], kc[3];
+    opc = color ^ 0b11;
+    Board nba[NEXT_MAX];
+    // 次の盤面を計算し, 指し手がある場合
+    if ((nc = canPutPP(b, color, cpa, nba, kc))) {
+        // 指定した深さに到達したら, Sprmで評価
+        if (depth <= 0) {
+            alpha = evaluationSimple(b, SPRM_EFF);
+        } // 途中なら次の深さへ
+        else {
+            for (i = 0; i < nc; i++) {
+                tp = negaMaxAB(nba[i], opc, depth - 1, 0, -beta, -alpha);
+                alpha = getMax(tp, alpha);
+                if (alpha >= beta) break;
+            }
+        }
+    } // 指し手がない
+    else {
+        // 前のターンでもパスだった場合, 葉ノードなので最終評価 (駒の差×100万は適当)
+        if (pass) {
+            alpha =  (kc[color] - kc[opc]) * MILLION;
+        } // パスの場合はパスフラグを立て, 深さを変えずに次を探索
+        else {
+            alpha = negaMaxAB(b, opc, depth, 1, -beta, -alpha);
+        }
+    } 
+    // 評価値を反転させて返す
+    return -alpha;
+}

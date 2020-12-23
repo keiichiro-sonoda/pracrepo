@@ -95,4 +95,8 @@ void showSPRM_EFFPy(void);
 // 有効な Sprm を長さ64に整形して取得
 void getSPRM_EFFPy(float f_pointer[MASU_NUM]);
 
+// ネガマックス αβ
+// SPRM_EFF を使う
+float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, float beta);
+
 #endif
