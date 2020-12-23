@@ -195,13 +195,14 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
 // 適応度は使わないが互換性のため
 // 研究対象
 void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
-    int i, count, parents[2];
+    int i, count, parents[2], counter[POPULATION];
     Sprm children[2];
     double prob[POPULATION];
     // 等比数列を作成 (初項は0以外ならなんでもいい?)
     // グローバル変数がファイル名と対応しているか要注意
     geoProg(prob, POPULATION, 1., CMN_RATIO_EFF);
     printFloatArrayExp(prob, POPULATION);
+    zeros(counter, POPULATION);
     // 1ループで子は2つなので, 毎回2を足す
     for (count = ELITE_NUM; count < POPULATION; count += 2) {
         // ルーレット選択 (重複なし)
@@ -209,6 +210,8 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
         rouletteDoubleMltDep(prob, POPULATION, parents, 2);
         // 一様交叉で2つの子を作成
         uniCrossSprm2C(current + parents[0], current + parents[1], children);
+        for (i = 0; i < 2; i++)
+            counter[parents[i]]++; // 選ばれた親の添字をカウント
         // 子の数くり返し (0 と 1)
         // ここでオーバーフローも検知
         // 外の for 文と二重検知で効率は悪いかも
@@ -219,6 +222,7 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
             next[count + i] = children[i];
         }
     }
+    printDecimalArray(counter, POPULATION);
 }
 
 // 等比数列ランキング選択, BLX-α 交叉, ランダム突然変異, ソート済限定, 圧縮推奨
