@@ -618,7 +618,7 @@ class Widget(QWidget):
         # Prm1L による手の決定
         #tag = self.getActWithCFunc()
         # シンプルパラメータを使った αβ による最善手
-        tag = slw.getBestActABSprmWrap(self.board_info, 8, self.turn)
+        tag = slw.getBestActABSprmWrap(self.board_info, 10, self.turn)
         # 盤面更新
         self.updateBoard(tag)
         # 次が人ならターンをロック解除
