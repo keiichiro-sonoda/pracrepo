@@ -367,5 +367,6 @@ int main(void) {
     //sortTest();
     //trySomeCommonRatio(-2.0, 2.09, 0.05, 101);
     //crossTestSprm();
+    _makeFGFileSprmComp(FNAME_TEST);
     return 0;
 }

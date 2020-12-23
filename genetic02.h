@@ -100,6 +100,7 @@
 
 // test file format
 #define FNF_TEST "prm/test/test%03d.bin"
+#define FNAME_TEST "prm/test/wasshoi.bin"
 
 // 050: population
 // 06: the number of elite

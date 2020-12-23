@@ -638,13 +638,28 @@ int makeFirstGeneFileFlex(const char *format) {
 }
 
 // 上書き注意をせず, ファイル名直接指定
-// Sprm を経由せず直接書き込む
+// 最初の世代を少し柔軟にする
 int _makeFGFileSprmComp(const char *fnamew) {
     u_char uca[SPRM_FILE_SIZE_COMP];
-    // シードセット!
-    srand(SEED);
-    // ただの符号無文字型乱数配列を作成
-    randUcharArray(uca, SPRM_FILE_SIZE_COMP);
+    if (ZAKO_FIRST == 1) {
+        char formatr[FILENAME_MAX];
+        Sprm pra1[50], pra2[POPULATION];
+        // 公比1以上代表
+        makeSprmFileFormatAuto(formatr, FILENAME_MAX, 0b10, 1, 50, 0, 3, 5, 0, 0.05, 123u, 0.1);
+        puts(formatr);
+        loadSprmFileComp(formatr, 100, pra1, 50);
+        // 全て最下位の個体にする
+        for (int i = 0; i < POPULATION; i++) {
+            pra2[i] = pra1[49];
+        }
+        // 圧縮
+        compSprmArray(pra2, uca, POPULATION);
+    }
+    else {
+        // シード設定後, ただの符号無文字型乱数配列を作成
+        srand(SEED);
+        randUcharArray(uca, SPRM_FILE_SIZE_COMP);
+    }
     // 末尾はフラグ0で初期化
     uca[SPRM_FILE_SIZE_COMP - 1] = 0;
     // そのまま書き込み, 失敗したら -1 で抜ける
@@ -656,7 +671,6 @@ int _makeFGFileSprmComp(const char *fnamew) {
 
 // 圧縮版Sprm初期世代ファイルを作成
 // マクロ SEED でシード設定してファイル名とシードを対応させる
-// ファイル名が正しく設定されていることは前提だが
 int makeFGFileSprmComp(const char *format) {
     puts("初期世代作成");
     char fnamew[FILENAME_MAX];
