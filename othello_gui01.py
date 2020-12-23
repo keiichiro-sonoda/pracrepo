@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
-
 import sys
 import time
 import random as rd
@@ -15,18 +12,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import pyqtgraph as pg
-
 import share_lib01 as sl
 
-
-# In[3]:
-
-
 slw = sl.ShareLibWrap()
-
-
-# In[4]:
-
 
 # 共有ライブラリ読み込み
 # このライブラリがある場所に移動して実行する
@@ -140,16 +128,7 @@ class Widget(QWidget):
         
         # 初期盤面設定
         self.setInitBoard(imgcanvas)
-        # 評価値リストを入手
-        # ファイル名指定
-        # クラス内変数で所持
-        #self.use_sprm = getTopSprmWrap("prm//simple_prm100.bin")
-        #self.use_sprm = getTopSprmWrap("prm//sprm_not_mutate020.bin")
-        #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5_100.bin")
-        #self.use_sprm = getTopSprmWrap("prm//sprm_vsrand//sprm_vsrand100.bin")
-        #self.use_sprm = getTopSprmWrap("prm//sprm_corner0.5neg_100.bin")
-        #self.use_sprm = getTopSprmWrap("prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g100.bin")
-        #self.use_sprm = getVectorWrap()
+        # 評価値リストを入手, ファイル名を指定し, クラス内変数で所持
         fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, 0.01, 100)
         print(fname)
         slw.setSPRM_EFFWrap(fname, 1, 50, 1)
@@ -800,8 +779,6 @@ class Widget(QWidget):
         return tag
 
 
-# In[5]:
-
 
 class Application(QApplication):
     def __init__(self):
@@ -828,7 +805,7 @@ class Application(QApplication):
         # 全画面ボタン
         self.show_full_button = QPushButton("全画面", self.gui)
         self.show_full_button.move(550, y)
-        self.show_full_button.setStyleSheet("            font-size:10pt;            font-weight:600;            font-family:游ゴシック;            background:#ffff00")
+        self.show_full_button.setStyleSheet("font-size: 10pt; font-weight: 600; font-family: 游ゴシック; background:#ffff00")
         self.show_full_button.resize(100, 50)
         self.show_full_button.clicked.connect(self.gui.showFullScreen)
 
