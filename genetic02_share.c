@@ -334,7 +334,7 @@ void getSPRM_EFFPy(float f_pointer[MASU_NUM]) {
 }
 
 // ネガマックス αβ
-// SPRM_EFF を使う
+// SPRM_EFF を使うので評価値は float 型
 float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, float beta) {
     int i, tp, nc, opc, cpa[NEXT_MAX], kc[3];
     opc = color ^ 0b11;
@@ -356,7 +356,7 @@ float negaMaxABSprmPy(Board b, int color, int depth, int pass, float alpha, floa
     else {
         // 前のターンでもパスだった場合, 葉ノードなので最終評価 (駒の差×100万は適当)
         if (pass) {
-            alpha =  (kc[color] - kc[opc]) * MILLION;
+            alpha = (kc[color] - kc[opc]) * MILLION;
         } // パスの場合はパスフラグを立て, 深さを変えずに次を探索
         else {
             alpha = negaMaxAB(b, opc, depth, 1, -beta, -alpha);
