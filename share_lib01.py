@@ -54,7 +54,7 @@ getFitness.argtypes = (ctypes.c_char_p, IntArray100, ctypes.c_int32)
 # ファイル名決定関数 (引数の数がエグい)
 makeSprmFileNameRankGeoProg = share02_ubu.makeSprmFileNameRankGeoProgPy
 makeSprmFileNameRankGeoProg.restype = ctypes.c_int32
-makeSprmFileNameRankGeoProg.argtypes = (CharArray4096, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_double, ctypes.c_int32)
+makeSprmFileNameRankGeoProg.argtypes = (CharArray4096, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_double, ctypes.c_int32, ctypes.c_int32)
 
 # 使う Sprm を設定
 setSPRM_EFF = share02_ubu.setSPRM_EFFPy
@@ -135,10 +135,10 @@ class ShareLibWrap():
     # 個体数, エリート数, 選択ID, 公比, 世代数を与える
     # 選択ID: 2: 公比そのまま, 3: 公比自然対数
     # 交叉ID: 5: 2人っ子一様交叉, 6: BLX-α 交叉 (α = 0.3)
-    def makeSprmFileNameRankGeoProgWrap(self, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num):
+    def makeSprmFileNameRankGeoProgWrap(self, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num, fg=0):
         c_arr_c = CharArray4096()
         res_str = ""
-        str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num)
+        str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num, fg)
         # 作成に成功したら, バイト型に復号, 長さも調整
         if str_len > 0:
             res_str = bytes(c_arr_c[:str_len]).decode()
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     print("Hello!")
     slw = ShareLibWrap()
     #print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
-    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.1, 100)
+    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.4, 100, fg=1)
     print(fname)
     print(slw.setSPRM_EFFWrap(fname, 1, 50, 1))
     showSPRM_EFF()
