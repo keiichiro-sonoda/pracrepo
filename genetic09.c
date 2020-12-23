@@ -304,6 +304,14 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max, int
     if ((scm = detScmFuncSprmS(3, CROSSOVER_ID, 0)) == NULL) {
         return -1;
     }
+    // 途中から続行するか否か
+    if (resume) {
+        safety = -1;
+    } else {
+        printf("強制的に初期世代ファイルが作成される設定です. 続行しますか?");
+        kakuninExit();
+        safety = -2;
+    }
     for (int i = 0; i < n; i++) {
         // 公比計算
         loc_cr_ln = start + step * i;
@@ -320,12 +328,6 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max, int
         printf("フォーマット: %s\n", format);
         // 現世代は 0 から (例外あり)
         gene_now = 0;
-        // 途中から続行するか否か
-        if (resume) {
-            safety = -1;
-        } else {
-            safety = -2;
-        }
         // 初期世代作成, 必要ならばディレクトリも作成
         // 第二引数 -1 は, 初期世代作成スルーモード
         // 正常にスルーしたら -2 が返る
@@ -387,6 +389,6 @@ int main(void) {
     //nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    trySomeCommonRatio(-2.0, -1.7, 0.1, 3, 0);
+    trySomeCommonRatio(-2.0, -1.7, 0.1, 3, 1);
     return 0;
 }

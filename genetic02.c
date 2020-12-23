@@ -719,12 +719,13 @@ int makeFGFileSprmCompMkdir(const char *format, int safety) {
             putchar(10);
             return -2;
         }
-        // -2 の場合は問答無用で初期世代作成
         if (safety != -2) {
             // 上書き警告, 許可が得られなければ抜ける
             printf("上書きしますか?");
             kakuninExit();
         }
+        // -2 の場合はそのまま初期世代作成へ
+        putchar(10);
     }
     // 読み込み失敗
     // ファイルが存在しない? ので上書きを気にせず書き込み専用で開く
