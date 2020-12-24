@@ -422,7 +422,7 @@ Board getBoardForBlackSimpleRoulette(const Board *next_boards, int n, const Sprm
 int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp);
 
 // 正規化いらないと思う
-int SprmVSRandom(decNxtSprm dnfunc, const Sprm *prp, int my_color);
+int SprmVSRandom(const Sprm *prp, int my_color);
 
 // play against random
 // return winner

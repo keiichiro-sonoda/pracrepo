@@ -534,7 +534,8 @@ int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp) 
 }
 
 // 正規化いらないと思う
-int SprmVSRandom(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
+// 指し手は最良を選ぶ
+int SprmVSRandom(const Sprm *prp, int my_color) {
     Board main_board, nba[NEXT_MAX];
     int i, winner, n, dif, pass, turn, cpa[NEXT_MAX], kc[3], best_i;
     float best_p, temp_p;
