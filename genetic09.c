@@ -386,6 +386,7 @@ int main(void) {
     //checkSprmFileComp(format, 0);
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
+    CMN_RATIO_EFF = exp(-0.001);
     nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 5);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
