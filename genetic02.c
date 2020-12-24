@@ -942,8 +942,8 @@ void evalFitnessSprmVSRand(decNxtSprm dnfunc, const Sprm *family, int *result, i
             for (j = 0; j < gn; j++) {
                 // 勝者を取得
                 // 個体の勝利 (勝ち点2)
-                //winner = SprmVSRandom(family + i, color);
-                winner = SprmVSRandomNormal(dnfunc, family + i, color);
+                winner = SprmVSRandom(family + i, color);
+                //winner = SprmVSRandomNormal(dnfunc, family + i, color);
                 if (winner == color) {
                     result[i] += 2;
                 }
