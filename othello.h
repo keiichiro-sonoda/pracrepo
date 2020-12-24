@@ -35,8 +35,8 @@
 #define kugiri(n) do {for (int _ = 0; _ < (n); _++) putchar('-'); putchar(10);} while (0)
 #define printString(s) printf("%s\n", s)
 // キャストで汎用性を高めた? 符号付き32ビット限定
-#define printDecimal(x) printf("%d\n", (int)x)
-#define printUDecimal(x) printf("%u\n", (unsigned)x)
+#define printDecimal(x) printf("%d\n", (int)(x))
+#define printUDecimal(x) printf("%u\n", (unsigned)(x))
 // 16進法表示 (あえて符号なしにする意味はあったか?)
 // 関数ポインタの表示に役立つ?
 #define printHex64(x) printf("%lx\n", (u_long)x)

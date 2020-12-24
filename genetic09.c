@@ -395,6 +395,7 @@ int main(void) {
     //sortOnlySprmComp(scm, format, 0);
     //trySomeCommonRatio(-2000, 0, 20, 51, 1);
     CMN_RATIO_EFF = exp(-0.001);
-    printFloat(log(CMN_RATIO_EFF));
+    CMN_RATIO_EFF = 0.1;
+    printDecimal(log10(CMN_RATIO_EFF) * MILLION);
     return 0; 
 }

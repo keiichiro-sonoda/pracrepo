@@ -1475,7 +1475,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     // 対戦・ソート用シード作成用シード
     srand(seed1);
     // 対戦・ソート用シード
-    srand(seed1 = (unsigned)rand() * (unsigned)(log(CMN_RATIO_EFF) * 100000) ^ (unsigned)FIRST_RAND);
+    srand(seed1 = (unsigned)rand() * (unsigned)(log(CMN_RATIO_EFF) * MILLION) ^ (unsigned)FIRST_RAND);
     printf("対戦用シード: %u\n", seed1);
     // 適応度評価とファイルのソート
     // さらに適応度ファイルの読み書きも行う
