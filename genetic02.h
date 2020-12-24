@@ -9,7 +9,7 @@
 #include "othello.h"
 
 #ifndef SEED
-#define SEED 123U // シード値
+#define SEED 555U // シード値
 #endif
 
 // ランキング選択で, 等比数列で確率を決定する場合の公比
