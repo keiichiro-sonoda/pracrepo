@@ -393,6 +393,6 @@ int main(void) {
     */
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    trySomeCommonRatio(0, -2000, -100, 101, 1);
+    trySomeCommonRatio(0, -2000, -100, 31, 0);
     return 0; 
 }
