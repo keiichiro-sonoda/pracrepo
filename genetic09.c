@@ -387,6 +387,9 @@ int main(void) {
     */
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    //trySomeCommonRatio(-2000, 0, 50, 101, 1);
+    trySomeCommonRatio(-20, 20, 1, 101, 1);
+    trySomeCommonRatio(-100, 100, 5, 101, 1);
+    trySomeCommonRatio(-2000, 2000, 100, 101, 1);
+    trySomeCommonRatio(-8000, 8000, 400, 101, 1);
     return 0; 
 }
