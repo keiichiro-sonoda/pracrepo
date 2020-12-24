@@ -551,9 +551,9 @@ int SprmVSRandom(const Sprm *prp, int my_color) {
                 continue;
             }
             pass = 0;
-            if (turn == 0b01) {
+            if (turn == 0b01) { // 黒
                 best_p = -FLT_MAX;
-                for (i = 0; i < n; i++) {
+                for (i = 0; i < n; i++) { // 大きいほど良い
                     if ((temp_p = evaluationSimple(nba[i], *prp)) > best_p) {
                         best_p = temp_p;
                         best_i = i;
@@ -561,8 +561,7 @@ int SprmVSRandom(const Sprm *prp, int my_color) {
                 }
                 main_board = nba[best_i];
             } else {
-                //main_board = nba[randInt(n)];
-                main_board = nba[0];
+                main_board = nba[randInt(n)];
             }
             turn ^= 0b11;
         }
@@ -575,9 +574,9 @@ int SprmVSRandom(const Sprm *prp, int my_color) {
                 continue;
             }
             pass = 0;
-            if (turn == 0b10) {
+            if (turn == 0b10) { // 白
                 best_p = FLT_MAX;
-                for (i = 0; i < n; i++) {
+                for (i = 0; i < n; i++) { // 小さいほど良い
                     if ((temp_p = evaluationSimple(nba[i], *prp)) < best_p) {
                         best_p = temp_p;
                         best_i = i;
@@ -585,8 +584,7 @@ int SprmVSRandom(const Sprm *prp, int my_color) {
                 }
                 main_board = nba[best_i];
             } else {
-                //main_board = nba[randInt(n)];
-                main_board = nba[0];
+                main_board = nba[randInt(n)];
             }
             turn ^= 0b11;
         }
