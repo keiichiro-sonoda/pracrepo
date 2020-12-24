@@ -582,7 +582,8 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     mappable = ax.pcolor(X, Y, Z, vmin=-0, vmax=FITNESS_MAX, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
-    name = "fit_med_map_rexp{:+5.3f}{:+5.3f}".format(lncr_start, lncr_stop)
+    # 解像度? もファイル名に加える
+    name = "fit_med_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     path = makeJpegFileName(fname, name, g_min, g_max)
     if not VIEW_ONLY:
         if os.path.exists(path):
@@ -713,7 +714,7 @@ def main():
     seed = 123
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
-    viewFitnessGraph4(population, elite_num, crs_id, -2.0, 0.0, 0.1, 0, 30, seed, 1)
+    viewFitnessGraph4(population, elite_num, crs_id, -2.0, 0.0, 0.1, 0, 30, seed, 0b01)
     plt.show()
     print("終わり")
 
