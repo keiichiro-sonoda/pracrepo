@@ -704,6 +704,8 @@ int extractDirPath(const char *fname, char *dir, int dir_size) {
 }
 
 // 初期世代作成, 必要に応じてディレクトリを作成
+// safety が -1 で初期世代が存在した場合, 何もしない
+// -2 の場合は強制的に作る
 int makeFGFileSprmCompMkdir(const char *format, int safety) {
     puts("初期世代作成");
     FILE *fp;
@@ -1366,6 +1368,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     int flag, fitness[POPULATION];
     // 対戦・ソート用シード
     srand(seed1);
+    printf("対戦用シード: %u\n", seed1);
     // 適応度評価とファイルのソート
     // さらに適応度ファイルの読み書きも行う
     // 適応度評価方法はグローバル変数から参照 (マクロで決まる)
@@ -1375,10 +1378,22 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     if (flag == 1) {
         printf("%s is already sorted!\n", fnames);
     }
-    // 選択・交叉・突然変異用シード
+    int smp_num = 3;
+    int smp[smp_num];
+    u_int seed3;
+    // 選択・交叉・突然変異用シード作成用シード
     srand(seed2);
     // ソート済み適応度を表示
     printDecimalArray(fitness, POPULATION);
+    // 個体番号からいくつか抽出
+    randIntMltDep(smp, smp_num, 0, POPULATION - 1);
+    seed3 = seed2;
+    // 無作為? に選んだ適応度をシード2に掛ける
+    for (int i = 0; i < smp_num; i++) {
+        seed3 *= fitness[smp[i]];
+    }
+    srand(seed3);
+    printf("選択・交叉・突然変異用シード: %u\n", seed3);
     // 合計値を確認 (適応度評価法が判断できるかも?)
     printf("適応度合計: %d\n", sumInt(fitness, POPULATION));
     // 今世代と次世代の個体配列を宣言
@@ -1426,7 +1441,8 @@ int nGeneSprmCompLoop(scmSprmSorted scm, const char *format, int safety, int sta
         // s2はs1に依存する
         // 排他的論理和で乱数改変
         // 和を計算したときのオーバーフローを回避?
-        printf("seed1: %d, seed2: %d\n", s1, s2 = rand() ^ SEED);
+        s2 = rand() ^ SEED;
+        //printf("seed1: %d, seed2: %d\n", s1, s2 = rand() ^ SEED);
         // 次の世代へ!
         if (nGeneSprmComp(scm, format, gene_num, s1, s2, safety) < 0)
             return -1;

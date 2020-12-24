@@ -386,16 +386,9 @@ int main(void) {
     //checkSprmFileComp(format, 0);
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
-    //nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 5);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     //trySomeCommonRatio(-4.0, 0.1, 0.1, 101, 0);
-    int p = 0xffffffff;
-    printDecimal(p);
-    printUDecimal(p);
-    for (int i = 0; i < 40; i++) {
-        p >>= 2;
-        printDecimal(p);
-    }
     return 0; 
 }
