@@ -191,23 +191,23 @@ void allMutation(const int *fitness, const int *numbers, const Sprm *current, Sp
         randSprm(next + count);
 }
 
+// 毎回等比数列作るのもだるくね?
+double PROB_ARR[POPULATION];
+
 // 等比数列ランキング選択, 一様交叉, ランダム突然変異, ソート済み限定, 圧縮推奨
 // 適応度は使わないが互換性のため
 // 研究対象
 void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
     int i, count, parents[2], counter[POPULATION];
     Sprm children[2];
-    double prob[POPULATION];
-    // 等比数列を作成 (初項は0以外ならなんでもいい?)
-    // グローバル変数がファイル名と対応しているか要注意
-    geoProg(prob, POPULATION, 1., CMN_RATIO_EFF);
-    printFloatArrayExp(prob, POPULATION);
+    // 既に作られている等比数列を見る
+    printFloatArrayExp(PROB_ARR, POPULATION);
     zeros(counter, POPULATION);
     // 1ループで子は2つなので, 毎回2を足す
     for (count = ELITE_NUM; count < POPULATION; count += 2) {
         // ルーレット選択 (重複なし)
         // ルーレットに使うのは等比数列
-        rouletteDoubleMltDep(prob, POPULATION, parents, 2);
+        rouletteDoubleMltDep(PROB_ARR, POPULATION, parents, 2);
         // 一様交叉で2つの子を作成
         uniCrossSprm2C(current + parents[0], current + parents[1], children);
         for (i = 0; i < 2; i++) counter[parents[i]]++; // 選ばれた親の添字をカウント
@@ -238,11 +238,9 @@ void rankGeoProgUni2CRdS(const int *fitness, const Sprm *current, Sprm *next) {
 void rankGeoProgBLXaRdCS(const int *fitness, const Sprm *current, Sprm *next) {
     int count, parents[2];
     Sprm child;
-    double prob[POPULATION];
-    geoProg(prob, POPULATION, 1., CMN_RATIO_EFF);
     for (count = ELITE_NUM; count < POPULATION; count++) {
         // 選択
-        rouletteDoubleMltDep(prob, POPULATION, parents, 2);
+        rouletteDoubleMltDep(PROB_ARR, POPULATION, parents, 2);
         // BLX-α 交叉 (圧縮対応の値に補正)
         child = blendCrossSprmComp(current + parents[0], current + parents[1]);
         // ランダム突然変異 (圧縮対応乱数)
@@ -322,8 +320,9 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max, int
             puts("フォーマット作成失敗");
             return -1;
         }
-        // 公比はここで決定する
+        // 公比はここで決定する. 等比数列も決定する.
         CMN_RATIO_EFF = exp(loc_cr_ln);
+        geoProg(PROB_ARR, POPULATION, 1., CMN_RATIO_EFF);
         printf("公比: exp(%+6.3f) = %f\n", loc_cr_ln, CMN_RATIO_EFF);
         printf("フォーマット: %s\n", format);
         // 現世代は 0 から (例外あり)
@@ -387,6 +386,7 @@ int main(void) {
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
     CMN_RATIO_EFF = exp(-0.001);
+    geoProg(PROB_ARR, POPULATION, 1., CMN_RATIO_EFF);
     makeFGFileSprmComp(FNF_TEST);
     nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 4);
     // 修正用
