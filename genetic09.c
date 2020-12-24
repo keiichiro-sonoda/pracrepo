@@ -385,6 +385,8 @@ int main(void) {
     makeFGFileSprmComp(FNF_TEST);
     nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 4);
     */
+   makeFGFileSprmComp(FNF_TEST);
+   checkSprmFileComp(FNF_TEST, 0);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     /*
