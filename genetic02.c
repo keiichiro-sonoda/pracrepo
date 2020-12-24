@@ -37,6 +37,8 @@ double CMN_RATIO_EFF;
 void initSprm(void) {
     srand(SEED);
     FIRST_RAND = rand();
+    // 謎の初期化
+    CMN_RATIO_EFF = (double)FIRST_RAND / RAND_MAX;
     srand(SEED);
     setCORR_TABLE();
     initBoard();
@@ -1470,8 +1472,10 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     if (safety) warnOverwritingExit(fnamew);
     // ソートフラグと, 引き渡し用適応度配列
     int flag, fitness[POPULATION];
-    // 対戦・ソート用シード
+    // 対戦・ソート用シード作成用シード
     srand(seed1);
+    // 対戦・ソート用シード
+    srand(seed1 = (unsigned)rand() * (unsigned)(log(CMN_RATIO_EFF) * 100000) ^ (unsigned)FIRST_RAND);
     printf("対戦用シード: %u\n", seed1);
     // 適応度評価とファイルのソート
     // さらに適応度ファイルの読み書きも行う
