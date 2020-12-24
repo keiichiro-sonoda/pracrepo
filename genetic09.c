@@ -370,7 +370,7 @@ int main(void) {
         return -1;
     }
     // シードを探したいとき
-    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, -0.005);
+    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.00);
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
     //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
@@ -393,6 +393,6 @@ int main(void) {
     */
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    trySomeCommonRatio(-10, 10, 1, 51, 1);
+    //trySomeCommonRatio(-2000, 0, 20, 51, 1);
     return 0; 
 }

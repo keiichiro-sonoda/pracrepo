@@ -708,7 +708,7 @@ def main():
     #VIEW_ONLY = False
     #old()
     population = 50
-    elite_num = 0
+    elite_num = 1
     lncr = -2
     gene_num = 10
     crs_id = 5
