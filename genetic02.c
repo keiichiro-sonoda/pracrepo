@@ -74,6 +74,13 @@ void initSprm(void) {
             DET_FUNC = getBoardForBlackSimpleRoulette;
             printf(" (指し手ルーレット)\n");
     }
+    printf("初期世代            : ");
+    if (ZAKO_FIRST == 1) {
+        printf("全て劣悪個体");
+    } else {
+        printf("ランダム");
+    }
+    putchar(10);
 }
 
 // Sprm のファイルフォーマットを自動生成する関数
