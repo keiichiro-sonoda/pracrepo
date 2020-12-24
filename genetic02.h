@@ -23,7 +23,7 @@
 #define CMN_RATIO_LN -0.05
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 1 // エリート数
+#define ELITE_NUM 0 // エリート数
 #endif
 
 #ifndef POPULATION
@@ -42,7 +42,7 @@
 // 1bit目: 指し手関数識別子 (0: 固定, それ以外: ルーレット)
 // 2bit目: 対ランダム or リーグ戦 (0: リーグ戦, それ以外: 対ランダム)
 // 3bit目: 正規化かどうか
-#define EF_FUNC_ID 0b110
+#define EF_FUNC_ID 0b010
 
 // 選択識別子
 // 2: 等比数列ランキング選択
@@ -64,7 +64,7 @@
 
 #define COMPRESS 1 // 圧縮するか否か
 
-#define ZAKO_FIRST 0 // 全て同一の弱い個体の集団から始めるフラグ
+#define ZAKO_FIRST 1 // 全て同一の弱い個体の集団から始めるフラグ
 
 #define SPRM_LEN 10 // 区別できるマスの数 (個体の配列長)
 
