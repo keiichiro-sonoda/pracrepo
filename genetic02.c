@@ -1504,9 +1504,8 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     for (int i = 0; i < smp_num; i++) {
         seed3 += fitness[smp[i]];
     }
-    // 更にもう一個
-    seed3 ^= seed2 ^ seed1;
-    srand(seed3);
+    // 更にもうひと工夫
+    srand(seed3 ^= seed2 ^ seed1);
     printf("選択・交叉・突然変異用シード: %u\n", seed3);
     // 合計値を確認 (適応度評価法が判断できるかも?)
     printf("適応度合計: %d\n", sumInt(fitness, POPULATION));
