@@ -47,6 +47,13 @@ void initSprm(void) {
     printf("parameter file size : %4d\n", SPRM_FILE_SIZE_COMP);
     printf("seed                : %4d\n", SEED);
     printf("適応度評価方法      : ");
+    // 3 bit目を見る
+    switch ((EF_FUNC_ID >> 2) & 1) {
+        case 0: // 非正規化
+            printf("非");
+        default:
+            printf("正規化, ");
+    }
     // 2bit目を見る
     switch ((EF_FUNC_ID >> 1) & 1) {
         case 0: // リーグ戦
@@ -67,13 +74,6 @@ void initSprm(void) {
             DET_FUNC = getBoardForBlackSimpleRoulette;
             printf(" (指し手ルーレット)\n");
     }
-    // 3 bit目を見る
-    switch ((EF_FUNC_ID >> 2) & 1) {
-        case 0: // 非正規化
-            printf("非");
-        default:
-            puts("正規化");
-    }
 }
 
 // Sprm のファイルフォーマットを自動生成する関数
@@ -87,12 +87,21 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     char info_str[BUF_LEN] = {115, 0};
     char tmp_str[BUF_LEN];
     // 可変引数に代入された値を取り出す
-    int arg_i;
+    int arg_i, denorm;
     double arg_d;
     // 適応度
+    switch (eff_id & 0b100) {
+        case 0: // 非正規化
+            strcatSize(info_str, "d", BUF_LEN);
+            denorm = 1;
+            break;
+        default:
+            denorm = 0;
+    }
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
             strcatSize(info_str, "l", BUF_LEN);
+            if (denorm) miteigiExit(-1);
             break;
         default: // 対ランダム
             strcatSize(info_str, "rd", BUF_LEN);
@@ -103,6 +112,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
             break;
         default: // 指し手ルーレット
             strcatSize(info_str, "r", BUF_LEN);
+            if (denorm) miteigiExit(-1);
     }
     // 圧縮するかどうか
     if (is_comp) strcatSize(info_str, "c", BUF_LEN);
