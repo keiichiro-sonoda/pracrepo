@@ -389,6 +389,20 @@ int main(void) {
     //nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 10);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    trySomeCommonRatio(-4.0, 0.1, 0.1, 101, 0);
+    //trySomeCommonRatio(-4.0, 0.1, 0.1, 101, 0);
+    u_int p;
+    p = 1;
+    p *= 180;
+    printDecimal(p);
+    p *= 38;
+    printDecimal(p);
+    p *= 47;
+    printDecimal(p);
+    p *= 120;
+    printDecimal(p);
+    p *= 112;
+    printUDecimal(p);
+    p *= 2;
+    printUDecimal(p);
     return 0;
 }
