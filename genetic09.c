@@ -310,7 +310,7 @@ int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int
         safety = -2;
     }
     count = 0;
-    for (int loc_cr_ln_th = start_th; count < n; (loc_cr_ln_th += step_th, count++)) {
+    for (int loc_cr_ln_th = start_th; count <= n; (loc_cr_ln_th += step_th, count++)) {
         // 公比計算 (同じ整数を 1000 で割れば同じ値になるだろう)
         loc_cr_ln = (double)loc_cr_ln_th / 1000;
         // 選択方法は固定する (当然)
@@ -393,6 +393,6 @@ int main(void) {
     */
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    trySomeCommonRatio(0, -2000, -100, 31, 0);
+    //trySomeCommonRatio(0, -2000, -100, 31, 1);
     return 0; 
 }
