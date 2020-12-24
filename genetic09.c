@@ -286,7 +286,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
 int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int resume) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
-    int n, flag, gene_now, safety;
+    int count, n, flag, gene_now, safety;
     scmSprmSorted scm;
     time_t t0, t1;
     // 最初の時間を取得
@@ -309,9 +309,10 @@ int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int
         kakuninExit();
         safety = -2;
     }
-    for (int i = start_th; i <= stop_th; i += step_th) {
+    count = 0;
+    for (int loc_cr_ln_th = start_th; count < n; (loc_cr_ln_th += step_th, count++)) {
         // 公比計算 (同じ整数を 1000 で割れば同じ値になるだろう)
-        loc_cr_ln = (double)i / 1000;
+        loc_cr_ln = (double)loc_cr_ln_th / 1000;
         // 選択方法は固定する (当然)
         // BLX-α 交叉を試したくなってしまった
         // 公比を格納するグローバル変数をここで変えるといろいろ面倒なのでやめておく
