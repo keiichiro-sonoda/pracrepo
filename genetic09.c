@@ -385,12 +385,10 @@ int main(void) {
     //checkSprmFileComp(format, 0);
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
-    /*
     CMN_RATIO_EFF = exp(-0.001);
     geoProg(PROB_ARR, POPULATION, 1., CMN_RATIO_EFF);
-    makeFGFileSprmComp(FNF_TEST);
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 4);
-    */
+    //makeFGFileSprmComp(FNF_TEST);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 2, 4);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     //trySomeCommonRatio(-2000, 0, 20, 51, 1);
