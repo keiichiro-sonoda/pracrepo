@@ -717,7 +717,8 @@ def main():
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
-    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 365, 0b10)
+    #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 365, 0b10)
+    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, 0b10)
     plt.show()
     print("終わり")
 
