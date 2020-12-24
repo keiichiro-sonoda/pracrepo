@@ -387,7 +387,8 @@ int main(void) {
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
     CMN_RATIO_EFF = exp(-0.001);
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 5);
+    //makeFGFileSprmComp(FNF_TEST);
+    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 2, 5);
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     //trySomeCommonRatio(-4.0, 0.1, 0.1, 101, 0);
