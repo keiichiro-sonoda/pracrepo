@@ -708,15 +708,15 @@ def main():
     #VIEW_ONLY = False
     #old()
     population = 50
-    elite_num = 1
+    elite_num = 0
     lncr = -2
     gene_num = 10
     crs_id = 5
     seed = 123
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
-    #viewFitnessGraph4(population, elite_num, crs_id, -2.0, 0.0, 0.05, 0, 50, seed, 0b01)
-    viewFitnessGraph4(population, elite_num, crs_id, -0.01, 0.01, 0.001, 0, 50, 400, 0b00)
+    viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
+    #viewFitnessGraph4(population, elite_num, crs_id, -0.01, 0.01, 0.001, 0, 50, 400, 0b00)
     plt.show()
     print("終わり")
 
