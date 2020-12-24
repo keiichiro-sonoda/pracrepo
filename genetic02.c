@@ -561,7 +561,8 @@ int SprmVSRandom(const Sprm *prp, int my_color) {
                 }
                 main_board = nba[best_i];
             } else {
-                main_board = nba[randInt(n)];
+                //main_board = nba[randInt(n)];
+                main_board = nba[0];
             }
             turn ^= 0b11;
         }
@@ -584,7 +585,8 @@ int SprmVSRandom(const Sprm *prp, int my_color) {
                 }
                 main_board = nba[best_i];
             } else {
-                main_board = nba[randInt(n)];
+                //main_board = nba[randInt(n)];
+                main_board = nba[0];
             }
             turn ^= 0b11;
         }
@@ -628,16 +630,14 @@ int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
             continue;
         }
         pass = 0;
-        // determine a next board
         // parameter's turn
         if (turn == my_color) {
-            //printf("Sprm のターン: %d\n", turn);
             main_board = dnfunc(nba, n, prp);
         } // random turn
         else {
             // randomly choose a next board
-            //printf("ランダムのターン: %d\n", turn);
-            main_board = nba[randInt(n)];
+            //main_board = nba[randInt(n)];
+            main_board = nba[0];
         }
         // switch turn
         turn ^= 0b11;
