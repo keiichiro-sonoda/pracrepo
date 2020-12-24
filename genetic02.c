@@ -942,28 +942,43 @@ void leagueMatchSprmFlex(decNxtSprm dnfunc, const Sprm *generation, int *result)
 // ランダムな手を選ぶ相手との対戦で, 適応度を決める
 // 勝点の計算は今まで同様とする
 // 試合数を引数で渡す以外は, リーグ戦の引数と同様
-void evalFitnessSprmVSRand(decNxtSprm dnfunc, const Sprm *family, int *result, int gn) {
+void evalFitnessSprmVSRand(decNxtSprm dnfunc, const Sprm *family, int *result, int gn, int norm) {
     int i, j, color, winner;
     // 結果配列は 0 で初期化
     zeros(result, POPULATION);
-    // 個体を順番に評価
-    for (i = 0; i < POPULATION; i++) {
-        // 手番は黒(1)と白(2)両方
-        for (color = 1; color <= 2; color++) {
-            // 各個体, 各色毎に渡された試合数だけくり返す
-            for (j = 0; j < gn; j++) {
-                // 勝者を取得
-                // 個体の勝利 (勝ち点2)
-                winner = SprmVSRandom(family + i, color);
-                //winner = SprmVSRandomNormal(dnfunc, family + i, color);
-                if (winner == color) {
-                    result[i] += 2;
+    if (norm) { // 正規化する
+        // 個体を順番に評価
+        for (i = 0; i < POPULATION; i++) {
+            // 手番は黒(1)と白(2)両方
+            for (color = 1; color <= 2; color++) {
+                // 各個体, 各色毎に渡された試合数だけくり返す
+                for (j = 0; j < gn; j++) {
+                    // 勝者を取得
+                    // 個体の勝利 (勝ち点2)
+                    if ((winner = SprmVSRandomNormal(dnfunc, family + i, color)) == color) {
+                        result[i] += 2;
+                    }
+                    // 引き分け (勝ち点1)
+                    else if (winner == 0) {
+                        result[i]++;
+                    }
+                    // 負けは何もしない
                 }
-                // 引き分け (勝ち点1)
-                else if (winner == 0) {
-                    result[i]++;
+            }
+        }
+    } else { // 正規化しない
+        for (i = 0; i < POPULATION; i++) {
+            for (color = 1; color <= 2; color++) {
+                for (j = 0; j < gn; j++) {
+                    if ((winner = SprmVSRandom(family + i, color)) == color) {
+                        result[i] += 2;
+                    }
+                    // 引き分け (勝ち点1)
+                    else if (winner == 0) {
+                        result[i]++;
+                    }
+                    // 負けは何もしない
                 }
-                // 負けは何もしない
             }
         }
     }
@@ -972,7 +987,8 @@ void evalFitnessSprmVSRand(decNxtSprm dnfunc, const Sprm *family, int *result, i
 // 試合数が固定されたバージョン (fix the nubmer of games)
 // リーグ戦関数と型を合わせるため
 void evalFitnessSprmVSRandFGN(decNxtSprm dnfunc, const Sprm *family, int *result) {
-    evalFitnessSprmVSRand(dnfunc, family, result, GAME_NUM);
+    // 正規化, 非正規化もここで渡す
+    evalFitnessSprmVSRand(dnfunc, family, result, GAME_NUM, EF_FUNC_ID >> 2);
 }
 
 // calculate distance

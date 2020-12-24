@@ -486,7 +486,7 @@ void leagueMatchSprmFlex(decNxtSprm, const Sprm*, int*);
 // ランダムな手を選ぶ相手との対戦で, 適応度を決める
 // 勝点の計算は今まで同様とする
 // 試合数を引数で渡す以外は, リーグ戦の引数と同様
-void evalFitnessSprmVSRand(decNxtSprm, const Sprm*, int*, int);
+void evalFitnessSprmVSRand(decNxtSprm dnfunc, const Sprm *family, int *result, int gn, int norm);
 
 // 試合数が固定されたバージョン (fix the nubmer of games)
 // リーグ戦関数と型を合わせるため
