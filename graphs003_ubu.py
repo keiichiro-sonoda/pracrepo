@@ -705,7 +705,7 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    VIEW_ONLY = False
+    #VIEW_ONLY = False
     #old()
     population = 50
     elite_num = 0
@@ -724,6 +724,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -8.0, 8.0, 0.4, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
+    viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00)
     plt.show()
     print("終わり")
 
