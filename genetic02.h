@@ -23,7 +23,7 @@
 #define CMN_RATIO_LN -0.05
 
 #ifndef ELITE_NUM
-#define ELITE_NUM 0 // エリート数
+#define ELITE_NUM 1 // エリート数
 #endif
 
 #ifndef POPULATION
