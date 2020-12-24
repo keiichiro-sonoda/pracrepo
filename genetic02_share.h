@@ -17,11 +17,12 @@ extern float DIF_VALUE;
 
 // functions
 
-// Sprm のファイルフォーマットを自動生成する関数
-// Python 用
+// Sprm のファイルフォーマットを自動生成する関数 (Python用)
 // ただし研究対象ということで等比数列ランキング選択に限る
 // 書き込み対象文字列, サイズ, 個体数, エリート数, 選択方法, シード値, 公比 (対数かどうかは sel_id 依存)
-int makeSprmFileNameRankGeoProgPy(char*, int, int, int, int, int, int, double, int, int);
+// 交叉 ID も指定可能にする
+// 引数にオプションを与える (引数増やすの面倒になった)
+int makeSprmFileNameRankGeoProgPy(char *dst, int dst_size, int loc_pop, int loc_eln, int sel_id, int crs_id, int loc_seed, double cmn_ratio, int gene_num, int options);
 
 // make first file
 void makeFirstSprmsFile(void);

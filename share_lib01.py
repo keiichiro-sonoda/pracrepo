@@ -135,10 +135,11 @@ class ShareLibWrap():
     # 個体数, エリート数, 選択ID, 公比, 世代数を与える
     # 選択ID: 2: 公比そのまま, 3: 公比自然対数
     # 交叉ID: 5: 2人っ子一様交叉, 6: BLX-α 交叉 (α = 0.3)
-    def makeSprmFileNameRankGeoProgWrap(self, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num, fg=0):
+    # デフォルトオプションは正規化 & 初期世代ランダム
+    def makeSprmFileNameRankGeoProgWrap(self, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num, options=0b10):
         c_arr_c = CharArray4096()
         res_str = ""
-        str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num, fg)
+        str_len = makeSprmFileNameRankGeoProg(c_arr_c, FILENAME_MAX, loc_pop, loc_eln, sel_id, crs_id, loc_seed, cmn_ratio, gene_num, options)
         # 作成に成功したら, バイト型に復号, 長さも調整
         if str_len > 0:
             res_str = bytes(c_arr_c[:str_len]).decode()
@@ -172,7 +173,7 @@ if __name__ == "__main__":
     print("Hello!")
     slw = ShareLibWrap()
     #print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
-    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.4, 100, fg=1)
+    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.4, 100, options=0b01)
     print(fname)
     print(slw.setSPRM_EFFWrap(fname, 1, 50, 1))
     showSPRM_EFF()

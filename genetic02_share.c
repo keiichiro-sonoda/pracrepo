@@ -20,11 +20,16 @@ float DIF_VALUE = 1000000.f;
 // ただし研究対象ということで等比数列ランキング選択に限る
 // 書き込み対象文字列, サイズ, 個体数, エリート数, 選択方法, シード値, 公比 (対数かどうかは sel_id 依存)
 // 交叉 ID も指定可能にする
-int makeSprmFileNameRankGeoProgPy(char *dst, int dst_size, int loc_pop, int loc_eln, int sel_id, int crs_id, int loc_seed, double cmn_ratio, int gene_num, int zako) {
+// 引数にオプションを与える (引数増やすの面倒になった)
+int makeSprmFileNameRankGeoProgPy(char *dst, int dst_size, int loc_pop, int loc_eln, int sel_id, int crs_id, int loc_seed, double cmn_ratio, int gene_num, int options) {
     char tmp_str[FILENAME_MAX];
+    int zako, norm;
+    // オプションから読み取り
+    zako = options & 1;
+    norm = (options & 0b10) << 1;
     // 固定: 対ランダム (指し手最大), 圧縮, 一様交叉, ランダム突然変異1%
     // BLX-α 交叉の α は今のところ固定
-    if (makeSprmFileFormatAuto(tmp_str, FILENAME_MAX, 0b10, 1, loc_pop, loc_eln, sel_id, crs_id, 0, .01, loc_seed, cmn_ratio, ALPHA_BLX, zako) < 0) {
+    if (makeSprmFileFormatAuto(tmp_str, FILENAME_MAX, 0b10 | norm, 1, loc_pop, loc_eln, sel_id, crs_id, 0, .01, loc_seed, cmn_ratio, ALPHA_BLX, zako) < 0) {
         return -1;
     }
     int l;
