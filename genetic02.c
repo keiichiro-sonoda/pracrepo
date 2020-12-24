@@ -67,6 +67,13 @@ void initSprm(void) {
             DET_FUNC = getBoardForBlackSimpleRoulette;
             printf(" (指し手ルーレット)\n");
     }
+    // 3 bit目を見る
+    switch ((EF_FUNC_ID >> 2) & 1) {
+        case 0: // 非正規化
+            printf("非");
+        default:
+            puts("正規化");
+    }
 }
 
 // Sprm のファイルフォーマットを自動生成する関数
@@ -247,8 +254,7 @@ void randSprm(Sprm *prp) {
 // calculate average
 Sprm makeChildAverageSprm(Sprm mother, Sprm father) {
     Sprm child;
-    int i;
-    for (i = 0; i < SPRM_LEN; i++) {
+    for (int i = 0; i < SPRM_LEN; i++) {
         child.weight[i] = (mother.weight[i] + father.weight[i]) / 2;
     }
     return child;
@@ -256,14 +262,12 @@ Sprm makeChildAverageSprm(Sprm mother, Sprm father) {
 
 // give mutant rate
 float fcrossMFlex(float a, float b, float rate) {
-    // 0.0 ~ 1.0
+    // 0.0 - 1.0
     float r = randFloat();
-    // mutated!
     if (r <= rate) {
         return randFloat() - 0.5;
     }
     r = randFloat();
-    // 50 : 50
     if (r < 0.5) return a;
     return b;
 }
