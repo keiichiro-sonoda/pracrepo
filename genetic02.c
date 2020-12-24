@@ -634,8 +634,8 @@ int SprmVSRandomNormal(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
         } // random turn
         else {
             // randomly choose a next board
-            //main_board = nba[randInt(n)];
-            main_board = nba[0];
+            main_board = nba[randInt(n)];
+            //main_board = nba[0];
         }
         // switch turn
         turn ^= 0b11;
@@ -1449,15 +1449,21 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     u_int seed3;
     // 選択・交叉・突然変異用シード作成用シード
     srand(seed2);
+    seed3 = rand();
     // ソート済み適応度を表示
     printDecimalArray(fitness, POPULATION);
     // 個体番号からいくつか抽出
     randIntMltDep(smp, smp_num, 0, POPULATION - 1);
-    seed3 = seed2;
-    // 無作為? に選んだ適応度をシード2に掛ける
+    // 無作為? に選んだ適応度を乱数に掛ける
     for (int i = 0; i < smp_num; i++) {
         seed3 *= fitness[smp[i]];
     }
+    // 掛けて 0 の場合も考慮
+    for (int i = 0; i < smp_num; i++) {
+        seed3 += fitness[smp[i]];
+    }
+    // 更にもう一個
+    seed3 ^= seed2;
     srand(seed3);
     printf("選択・交叉・突然変異用シード: %u\n", seed3);
     // 合計値を確認 (適応度評価法が判断できるかも?)
@@ -1475,20 +1481,6 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     // 現世代の個体の一部と統計値を確認
     showFamilyPart(current);
     checkSprmStatistics(current, POPULATION);
-    /*
-    乱数に影響が出ないように次世代を作ったら勝率計算 (たまーに)
-    ループ関数じゃなくてこっちでやった方がロードの手間は少ない
-    適応度に対ランダム勝ち点を使う場合はわざわざ確認しなくてもよさそう
-    if (!(gene_num % 20)) {
-        kugiri(100);
-        int game_num = 500;
-        printf("the number of games: %d x 2\n", game_num);
-        printf("the strongest:\n");
-        calcWinRateSprmVSRandTotal(current[0], game_num);
-        printf("the weakest:\n");
-        calcWinRateSprmVSRandTotal(current[POPULATION - 1], game_num);
-    }
-    */
     // ソート済みフラグは立てずに書き込み
     dumpSprmFileCompDirectExit(fnamew, next, 0);
     return 0;
