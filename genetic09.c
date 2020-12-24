@@ -281,8 +281,9 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
 
 // いくつかの公比を試す
 // 公比は自然対数で与える
-// stop は含まない予定だが, double型 の誤差でどうなるかわからない
-int trySomeCommonRatio(double start, double stop, double step, int gene_max, int resume) {
+// 1000 倍した int 型で与え, 1000で割ることにより同じ誤差にする?
+// stop_th まで含めて実行する
+int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int resume) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
     int n, flag, gene_now, safety;
@@ -290,10 +291,8 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max, int
     time_t t0, t1;
     // 最初の時間を取得
     time(&t0);
-    // ループ回数を計算
-    n = (stop - start) / step;
-    if (n > 0) {
-        printf("試す公比の数: %d\n", n);
+    if ((n = (stop_th - start_th) / step_th) >= 0) {
+        printf("試す公比の数: %d\n", n + 1);
     } else {
         printf("s\atart, stop, step の値が不適切です. \n");
         return -1;
@@ -310,9 +309,9 @@ int trySomeCommonRatio(double start, double stop, double step, int gene_max, int
         kakuninExit();
         safety = -2;
     }
-    for (int i = 0; i < n; i++) {
-        // 公比計算
-        loc_cr_ln = start + step * i;
+    for (int i = start_th; i <= stop_th; i += step_th) {
+        // 公比計算 (同じ整数を 1000 で割れば同じ値になるだろう)
+        loc_cr_ln = (double)i / 1000;
         // 選択方法は固定する (当然)
         // BLX-α 交叉を試したくなってしまった
         // 公比を格納するグローバル変数をここで変えるといろいろ面倒なのでやめておく
@@ -385,12 +384,14 @@ int main(void) {
     //checkSprmFileComp(format, 0);
     // ループ
     //nGeneSprmCompLoop(scm, format, 1, 0, 101);
+    /*
     CMN_RATIO_EFF = exp(-0.001);
     geoProg(PROB_ARR, POPULATION, 1., CMN_RATIO_EFF);
     makeFGFileSprmComp(FNF_TEST);
     nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 4);
+    */
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
-    //trySomeCommonRatio(-4.0, 0.1, 0.1, 101, 0);
+    trySomeCommonRatio(-2000, 0, 100, 101, 1);
     return 0; 
 }
