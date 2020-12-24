@@ -540,9 +540,10 @@ def viewFitnessGraph2(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
         print("saved!")
 
 # フォーマットを自動作成し, あとは本家適応度-世代数グラフ作成関数におまかせ
-def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc_seed, fg=0, grid=False):
+# オプションでは正規化フラグ, 初期世代設定フラグを与える
+def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc_seed, options=0b10, grid=False):
     # 0 世代でファイル名作成, 世代を可変にし, fitness を付加
-    fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, 0, fg)))
+    fff = makeFitnessFileFormat(makeGeneVariable(slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, 0, options)))
     print(fff)
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
