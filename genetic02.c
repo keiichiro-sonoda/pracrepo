@@ -1475,7 +1475,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     // 対戦・ソート用シード作成用シード
     srand(seed1);
     // 対戦・ソート用シード
-    srand(seed1 = (unsigned)rand() * (unsigned)(log(CMN_RATIO_EFF) * MILLION) ^ (unsigned)FIRST_RAND);
+    srand(seed1 = (unsigned)rand() * (unsigned)(log10(CMN_RATIO_EFF) * MILLION) ^ (unsigned)FIRST_RAND);
     printf("対戦用シード: %u\n", seed1);
     // 適応度評価とファイルのソート
     // さらに適応度ファイルの読み書きも行う
@@ -1486,7 +1486,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
     if (flag == 1) {
         printf("%s is already sorted!\n", fnames);
     }
-    int smp_num = 3;
+    int smp_num = 5;
     int smp[smp_num];
     u_int seed3;
     // 選択・交叉・突然変異用シード作成用シード
@@ -1505,7 +1505,7 @@ int nGeneSprmComp(scmSprmSorted scm, const char *format, int gene_num, u_int see
         seed3 += fitness[smp[i]];
     }
     // 更にもう一個
-    seed3 ^= seed2;
+    seed3 ^= seed2 ^ seed1;
     srand(seed3);
     printf("選択・交叉・突然変異用シード: %u\n", seed3);
     // 合計値を確認 (適応度評価法が判断できるかも?)
