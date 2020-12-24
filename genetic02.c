@@ -533,6 +533,71 @@ int oneToOneNormalSprmFlex(decNxtSprm dnfunc, const Sprm *spp, const Sprm *gpp) 
     return 0;
 }
 
+// 正規化いらないと思う
+int SprmVSRandom(decNxtSprm dnfunc, const Sprm *prp, int my_color) {
+    Board main_board, nba[NEXT_MAX];
+    int i, winner, n, dif, pass, turn, cpa[NEXT_MAX], kc[3], best_i;
+    float best_p, temp_p;
+    pass = 0;
+    turn = 0b01;
+    main_board = START;
+    if (my_color == 0b01) { // 黒
+        while (1) {
+            if ((n = canPutPP(main_board, turn, cpa, nba, kc)) == 0) {
+                if (pass) break;
+                turn ^= 0b11;
+                pass = 1;
+                continue;
+            }
+            pass = 0;
+            if (turn == 0b01) {
+                best_p = -FLT_MAX;
+                for (i = 0; i < n; i++) {
+                    if ((temp_p = evaluationSimple(nba[i], *prp)) > best_p) {
+                        best_p = temp_p;
+                        best_i = i;
+                    }
+                }
+                main_board = nba[best_i];
+            } else {
+                main_board = nba[randInt(n)];
+            }
+            turn ^= 0b11;
+        }
+    } else { // 白
+        while (1) {
+            if ((n = canPutPP(main_board, turn, cpa, nba, kc)) == 0) {
+                if (pass) break;
+                turn ^= 0b11;
+                pass = 1;
+                continue;
+            }
+            pass = 0;
+            if (turn == 0b10) {
+                best_p = FLT_MAX;
+                for (i = 0; i < n; i++) {
+                    if ((temp_p = evaluationSimple(nba[i], *prp)) < best_p) {
+                        best_p = temp_p;
+                        best_i = i;
+                    }
+                }
+                main_board = nba[best_i];
+            } else {
+                main_board = nba[randInt(n)];
+            }
+            turn ^= 0b11;
+        }
+    }
+    if ((dif = kc[1] - kc[2]) > 0) {
+        winner = 1;
+    } else if (dif < 0) {
+        winner = 2;
+    } else {
+        winner = 0;
+    }
+    return winner;
+}
+
 // play against random
 // return winner
 // 引数で指し手決定関数を変更可能にした
