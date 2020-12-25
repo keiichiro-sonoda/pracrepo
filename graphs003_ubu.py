@@ -553,6 +553,9 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     if stat_option == "median":
         name += "med"
         stat_func = stat.median
+    elif stat_option == "stdev":
+        name += "SD"
+        stat_func = stat.stdev
     else:
         print("不明な統計値")
         return
@@ -729,7 +732,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -8.0, 8.0, 0.4, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
-    viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="median")
+    viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="stdev")
     plt.show()
     print("終わり")
 
