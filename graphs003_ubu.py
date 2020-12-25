@@ -548,10 +548,11 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # 公比と世代数を軸とし, 適応度に応じて色を変える
-def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat="median"):
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median"):
     name = "fit_"
-    if stat == "median":
+    if stat_option == "median":
         name += "med"
+        stat_func = stat.median
     else:
         print("不明な統計値")
         return
@@ -573,10 +574,8 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
                     return
             else:
                 c = 0
-                if loc_pop & 1:
-                    medf = fl[medi]
-                else:
-                    medf = (fl[medi - 1] + fl[medi]) / 2
+                medf = stat_func(fl)
+            
             medfl.append(medf)
         
     X, Y = np.meshgrid(x, y)
@@ -730,7 +729,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -8.0, 8.0, 0.4, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
-    viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat="a")
+    viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="median")
     plt.show()
     print("終わり")
 
