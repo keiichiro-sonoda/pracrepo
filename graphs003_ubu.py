@@ -548,7 +548,7 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # 公比と世代数を軸とし, 適応度に応じて色を変える
-def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, fg=0):
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat="median"):
     medi = loc_pop // 2
     medfl = []
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
@@ -556,7 +556,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     c = 0
     for lncr in x:
         for gene_num in y:
-            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, fg)
+            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
             #print(fname)
             fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
             if not fl:
@@ -583,8 +583,14 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     mappable = ax.pcolor(X, Y, Z, vmin=-0, vmax=FITNESS_MAX, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
+    name = "fit_"
+    if stat == "median":
+        name += "med"
+    else:
+        print("不明な統計値")
+        return
     # 解像度? もファイル名に加える
-    name = "fit_med_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     path = makeJpegFileName(fname, name, g_min, g_max)
     if not VIEW_ONLY:
         if os.path.exists(path):
