@@ -628,6 +628,7 @@ def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
             else:
                 c = 0
                 sdm = stat.mean(sdl)
+                #sdm = max(sdl)
             sdml.append(sdm)
     X, Y = np.meshgrid(x, y)
     Z = np.array(sdml).reshape(len(x), -1).T
@@ -635,7 +636,9 @@ def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
     ax = fig.add_subplot(111)
     ax.set_xlabel("the natural log of common ratio", fontsize=15)
     ax.set_ylabel("generation", fontsize=15)
-    mappable = ax.pcolor(X, Y, Z, vmin=0, vmax=max(sdml), cmap="plasma", shading="nearest")
+    v_max = max(sdml)
+    #v_max = 0.1
+    mappable = ax.pcolor(X, Y, Z, vmin=0, vmax=v_max, cmap="plasma", shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
     name = "wsdm_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
@@ -775,7 +778,10 @@ def main():
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, 0b10)
     #viewFitnessGraph4(50, 0, 5, -0.01, 0.01, 0.001, 0, 50, 400, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
-    viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
+    #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
+    #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
+    #viewWeightSDMeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
+    viewWeightSDMeansMap(50, 0, 5, -8, 8, 0.4, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -8.0, 8.0, 0.4, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00, stat_option="median")
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
