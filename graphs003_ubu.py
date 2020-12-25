@@ -608,6 +608,45 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
         fig.savefig(path, bbox_inches="tight")
         print("saved!")
 
+# 各重みの標準偏差の平均値を見たい
+# 多様性として捉えていいのか?
+def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00):
+    x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
+    y = np.arange(g_min, g_max + 1, 1, np.int32)
+    sdml = []
+    c = 0
+    for lncr in x:
+        for gene_num in y:
+            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
+            sdl = slw.getFamilySDWrap(fname, loc_pop, 1)
+            if not sdl:
+                c += 1
+                sdm = -1
+                if c >= 10:
+                    print("有効なパラメータを設定してください")
+                    return
+            else:
+                c = 0
+                sdm = stat.mean(sdl)
+            sdml.append(sdm)
+    X, Y = np.meshgrid(x, y)
+    Z = np.array(sdml).reshape(len(x), -1).T
+    fig = plt.figure(figsize=(8, 5))
+    ax = fig.add_subplot(111)
+    ax.set_xlabel("the natural log of common ratio", fontsize=15)
+    ax.set_ylabel("generation", fontsize=15)
+    mappable = ax.pcolor(X, Y, Z, vmin=0, vmax=max(sdml), cmap="plasma", shading="nearest")
+    fig.colorbar(mappable, ax=ax)
+    fig.tight_layout()
+    name = "wsdm_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+    path = makeJpegFileName(fname, name, g_min, g_max)
+    if path and not VIEW_ONLY:
+        if os.path.exists(path):
+            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
+                return
+        fig.savefig(path, bbox_inches="tight")
+        print("saved!!")
+
 # ファイルフォーマットのリスト
 FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
                 # 00. 最初 (指し手固定)
@@ -720,7 +759,7 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    VIEW_ONLY = False
+    #VIEW_ONLY = False
     #old()
     population = 50
     elite_num = 0
@@ -735,9 +774,10 @@ def main():
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 365, 0b10)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, 0b10)
     #viewFitnessGraph4(50, 0, 5, -0.01, 0.01, 0.001, 0, 50, 400, 0b00)
-    #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01)
+    #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
+    viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -8.0, 8.0, 0.4, 0, 100, 555, 0b00)
-    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00, stat_option="stdev")
+    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00, stat_option="median")
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="variance")
     plt.show()
