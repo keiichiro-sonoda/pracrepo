@@ -553,13 +553,16 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     if stat_option == "median":
         name += "med"
         stat_func = stat.median
+        cm = plt.cm.get_cmap("RdYlGn")
+        v_min = 0
+        v_max = FITNESS_MAX
     elif stat_option == "stdev":
         name += "SD"
         stat_func = stat.stdev
+        cm = plt.cm.get_cmap("inferno")
     else:
         print("不明な統計値")
         return
-    medi = loc_pop // 2
     medfl = []
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
@@ -578,17 +581,17 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
             else:
                 c = 0
                 medf = stat_func(fl)
-            
             medfl.append(medf)
-        
+    if stat_option == "stdev":
+        v_min = 0
+        v_max = max(medfl)
     X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     ax.set_xlabel("the natural log of common ratio", fontsize=15)
     ax.set_ylabel("generation", fontsize=15)
-    cm = plt.cm.get_cmap("RdYlGn")
-    mappable = ax.pcolor(X, Y, Z, vmin=-0, vmax=FITNESS_MAX, cmap=cm, shading="nearest")
+    mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
     # 解像度? もファイル名に加える
