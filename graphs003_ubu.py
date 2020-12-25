@@ -549,6 +549,12 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
 
 # 公比と世代数を軸とし, 適応度に応じて色を変える
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat="median"):
+    name = "fit_"
+    if stat == "median":
+        name += "med"
+    else:
+        print("不明な統計値")
+        return
     medi = loc_pop // 2
     medfl = []
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
@@ -583,12 +589,6 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     mappable = ax.pcolor(X, Y, Z, vmin=-0, vmax=FITNESS_MAX, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
-    name = "fit_"
-    if stat == "median":
-        name += "med"
-    else:
-        print("不明な統計値")
-        return
     # 解像度? もファイル名に加える
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     path = makeJpegFileName(fname, name, g_min, g_max)
@@ -730,7 +730,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -8.0, 8.0, 0.4, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
-    viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00)
+    viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat="a")
     plt.show()
     print("終わり")
 
