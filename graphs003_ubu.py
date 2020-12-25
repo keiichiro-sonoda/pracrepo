@@ -560,6 +560,10 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
         name += "SD"
         stat_func = stat.stdev
         cm = plt.cm.get_cmap("inferno")
+    elif stat_option == "variance":
+        name += "variance"
+        stat_func = stat.variance
+        cm = plt.cm.get_cmap("inferno")
     else:
         print("不明な統計値")
         return
@@ -582,7 +586,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
                 c = 0
                 medf = stat_func(fl)
             medfl.append(medf)
-    if stat_option == "stdev":
+    if stat_option in ("stdev", "variance"):
         v_min = 0
         v_max = max(medfl)
     X, Y = np.meshgrid(x, y)
@@ -716,7 +720,7 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    #VIEW_ONLY = False
+    VIEW_ONLY = False
     #old()
     population = 50
     elite_num = 0
