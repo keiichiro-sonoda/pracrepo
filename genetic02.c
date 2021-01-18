@@ -925,7 +925,9 @@ void checkSprmFileComp(const char *format, int gene_num) {
 void checkSprmFileCompUChar(const char *format, int gene_num) {
     const int loc_size = SPRM_LEN * POPULATION + 1;
     u_char prac[loc_size];
-    printSize(prac);
+    char fnamer[FILENAME_MAX];
+    snprintf(fnamer, FILENAME_MAX, format, gene_num);
+    puts(fnamer);
 }
 
 // use Sprm[100]
