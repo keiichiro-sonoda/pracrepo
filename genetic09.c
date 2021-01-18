@@ -395,5 +395,6 @@ int main(void) {
     */
     makeFGFileSprmCompMkdir(FNF_TEST, 0);
     checkSprmFileComp(FNF_TEST, 0);
+    printf("%.2f\n", .006f);
     return 0; 
 }
