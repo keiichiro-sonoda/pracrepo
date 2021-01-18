@@ -938,7 +938,7 @@ int checkSprmFileCompUChar(const char *format, int gene_num) {
         printf("}\n");
     }
     puts("                  ...");
-    printDecimalArrayDig(prac, SPRM_LEN, 3);
+    printDecimalArrayDig(prac, SPRM_LEN, 5);
     return 0;
 }
 
