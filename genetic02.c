@@ -931,9 +931,9 @@ int checkSprmFileCompUChar(const char *format, int gene_num) {
     printf("確認するファイル: %s\n", fnamer);
     loadFileDirectExit(fnamer, prac, loc_size);
     for (i = 0; i < 3; i++) {
-        printDecimalArrayDig(prac + i * SPRM_LEN, SPRM_LEN, 1);
+        printDecimalArrayDig(prac + i * SPRM_LEN, SPRM_LEN, 3);
     }
-    puts("                  ...");
+    puts("                       ...");
     printDecimalArrayDig(prac, SPRM_LEN, 5);
     return 0;
 }
