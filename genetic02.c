@@ -815,7 +815,9 @@ int makeFGFileSprmCompMkdir(const char *format, int safety) {
             kakuninExit();
         }
         // -2 の場合はそのまま初期世代作成へ
-        putchar(10);
+        else {
+            putchar(10);
+        }
     }
     // 読み込み失敗
     // ファイルが存在しない? ので上書きを気にせず書き込み専用で開く
