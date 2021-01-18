@@ -393,7 +393,7 @@ int main(void) {
     trySomeCommonRatio(-2000, 2000, 100, 101, 1);
     trySomeCommonRatio(-8000, 8000, 400, 101, 1);
     */
-    //makeFGFileSprmCompMkdir(FNF_TEST, 0);
+    makeFGFileSprmCompMkdir(FNF_TEST, 0);
     checkSprmFileComp(FNF_TEST, 0);
     checkSprmFileCompUChar(FNF_TEST, 0);
     return 0; 
