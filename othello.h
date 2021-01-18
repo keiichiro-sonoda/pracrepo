@@ -50,8 +50,13 @@
 #define printElapsedTime(sec) do {long _tmp = (sec); printf("%02ld 時間 %02ld 分 %02ld 秒\n", _tmp / 3600, _tmp % 3600 / 60, _tmp % 60);} while (0)
 // 桁数も指定できる10進配列表示関数を作りたい
 #define printDecimalArrayDig(A, n, d) do {\
-    \
+    char _ff1[BUF_LEN], _ff2[BUF_LEN];\
+    snprintf(_ff1, BUF_LEN, "{%%%dd", d);\
+    snprintf(_ff2, BUF_LEN, ", %%%dd", d);\
+    puts(_ff1);\
+    puts(_ff2);\
 } while (0)
+
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
