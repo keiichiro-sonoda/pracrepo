@@ -931,10 +931,11 @@ int checkSprmFileCompUChar(const char *format, int gene_num) {
     printf("確認するファイル: %s\n", fnamer);
     loadFileDirectExit(fnamer, prac, loc_size);
     for (i = 0; i < 3; i++) {
-        for (j = 0; j < SPRM_LEN; j++) {
-            printf("%d ", (int)prac[i * SPRM_LEN + j]);
+        printf("{%3d", (int)prac[i * SPRM_LEN]);
+        for (j = 1; j < SPRM_LEN; j++) {
+            printf(", %3d", (int)prac[i * SPRM_LEN + j]);
         }
-        putchar(10);
+        printf("}\n");
     }
     printSize(prac);
     return 0;
