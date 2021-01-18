@@ -922,13 +922,22 @@ void checkSprmFileComp(const char *format, int gene_num) {
 }
 
 // 圧縮された値のまま表示
-void checkSprmFileCompUChar(const char *format, int gene_num) {
+int checkSprmFileCompUChar(const char *format, int gene_num) {
+    int i, j;
     const int loc_size = SPRM_LEN * POPULATION + 1;
     u_char prac[loc_size];
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
     printf("確認するファイル: %s\n", fnamer);
+    loadFileDirectExit(fnamer, prac, loc_size);
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < SPRM_LEN; j++) {
+            printf("%d ", (int)prac[i * SPRM_LEN + j]);
+        }
+        putchar(10);
+    }
     printSize(prac);
+    return 0;
 }
 
 // use Sprm[100]

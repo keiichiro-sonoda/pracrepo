@@ -480,7 +480,7 @@ void checkSprmFile(const char *format, int gene_num);
 void checkSprmFileComp(const char *format, int gene_num);
 
 // 圧縮された値のまま表示
-void checkSprmFileCompUChar(const char *format, int gene_num);
+int checkSprmFileCompUChar(const char *format, int gene_num);
 
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
