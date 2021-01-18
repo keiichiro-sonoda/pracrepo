@@ -937,6 +937,7 @@ int checkSprmFileCompUChar(const char *format, int gene_num) {
         }
         printf("}\n");
     }
+    puts("                  ...");
     printSize(prac);
     return 0;
 }

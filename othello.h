@@ -48,7 +48,10 @@
 // 大きすぎる値や, 負の値は考慮しない
 // 一時変数で型を柔軟にする? さらに同じ式を何度も繰り返すのも回避?
 #define printElapsedTime(sec) do {long _tmp = (sec); printf("%02ld 時間 %02ld 分 %02ld 秒\n", _tmp / 3600, _tmp % 3600 / 60, _tmp % 60);} while (0)
-
+// 桁数も指定できる10進配列表示関数を作りたい
+#define printDecimalArrayDig(A, n, d) do {\
+    \
+} while (0)
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
