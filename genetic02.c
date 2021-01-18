@@ -927,7 +927,8 @@ void checkSprmFileCompUChar(const char *format, int gene_num) {
     u_char prac[loc_size];
     char fnamer[FILENAME_MAX];
     snprintf(fnamer, FILENAME_MAX, format, gene_num);
-    puts(fnamer);
+    printf("確認するファイル: %s\n", fnamer);
+    printSize(prac);
 }
 
 // use Sprm[100]
