@@ -923,7 +923,7 @@ void checkSprmFileComp(const char *format, int gene_num) {
 
 // 圧縮された値のまま表示
 int checkSprmFileCompUChar(const char *format, int gene_num) {
-    int i, j;
+    int i;
     const int loc_size = SPRM_LEN * POPULATION + 1;
     u_char prac[loc_size];
     char fnamer[FILENAME_MAX];
@@ -931,11 +931,7 @@ int checkSprmFileCompUChar(const char *format, int gene_num) {
     printf("確認するファイル: %s\n", fnamer);
     loadFileDirectExit(fnamer, prac, loc_size);
     for (i = 0; i < 3; i++) {
-        printf("{%3d", (int)prac[i * SPRM_LEN]);
-        for (j = 1; j < SPRM_LEN; j++) {
-            printf(", %3d", (int)prac[i * SPRM_LEN + j]);
-        }
-        printf("}\n");
+        printDecimalArrayDig(prac + i * SPRM_LEN, SPRM_LEN, 1);
     }
     puts("                  ...");
     printDecimalArrayDig(prac, SPRM_LEN, 5);
