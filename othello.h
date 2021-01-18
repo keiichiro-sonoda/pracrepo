@@ -53,8 +53,9 @@
     char _ff1[BUF_LEN], _ff2[BUF_LEN];\
     snprintf(_ff1, BUF_LEN, "{%%%dd", d);\
     snprintf(_ff2, BUF_LEN, ", %%%dd", d);\
-    puts(_ff1);\
-    puts(_ff2);\
+    printf(_ff1, (int)(A)[0]);\
+    for (int _ = 1; _ < (n); _++) printf(_ff2, (int)(A)[_]);\
+    printf("}\n");\
 } while (0)
 
 // get the smaller number
