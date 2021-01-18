@@ -313,8 +313,7 @@ int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int
     for (int loc_cr_ln_th = start_th; count <= n; (loc_cr_ln_th += step_th, count++)) {
         // 公比計算 (同じ整数を 1000 で割れば同じ値になるだろう)
         loc_cr_ln = (double)loc_cr_ln_th / 1000;
-        // 選択方法は固定する (当然)
-        // BLX-α 交叉を試したくなってしまった
+        // 選択方法は固定
         // 公比を格納するグローバル変数をここで変えるといろいろ面倒なのでやめておく
         if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, 3, CROSSOVER_ID, 0, MUT_RATE, SEED, loc_cr_ln, ZAKO_FIRST, ALPHA_BLX) < 0) {
             puts("フォーマット作成失敗");
