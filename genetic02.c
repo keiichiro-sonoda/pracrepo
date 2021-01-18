@@ -791,9 +791,9 @@ int extractDirPath(const char *fname, char *dir, int dir_size) {
     return 0;
 }
 
-// 初期世代作成, 必要に応じてディレクトリを作成
-// safety が -1 で初期世代が存在した場合, 何もしない
-// -2 の場合は強制的に作る
+// 初期世代作成, 必要に応じてディレクトリを作成.
+// safety が -1 で初期世代が存在した場合, 何もしない.
+// -2 の場合は強制的に上書きする.
 int makeFGFileSprmCompMkdir(const char *format, int safety) {
     puts("初期世代作成");
     FILE *fp;

@@ -450,8 +450,9 @@ int _makeFGFileSprmComp(const char *fnamew);
 // 圧縮版Sprm初期世代ファイルを作成
 int makeFGFileSprmComp(const char *format);
 
-// 初期世代作成, 必要に応じてディレクトリを作成
-// ファイルフォーマット, ディレクトリ作成の安全装置フラグ
+// 初期世代作成, 必要に応じてディレクトリを作成.
+// safety が -1 で初期世代が存在した場合, 何もしない.
+// -2 の場合は強制的に上書きする.
 int makeFGFileSprmCompMkdir(const char*, int);
 
 // 圧縮ファイルからロード
