@@ -921,6 +921,13 @@ void checkSprmFileComp(const char *format, int gene_num) {
     showFamilyPart(pra);
 }
 
+// 圧縮された値のまま表示
+void checkSprmFileCompUChar(const char *format, int gene_num) {
+    const int loc_size = SPRM_LEN * POPULATION + 1;
+    u_char prac[loc_size];
+    printSize(prac);
+}
+
 // use Sprm[100]
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
