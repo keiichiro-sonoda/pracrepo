@@ -24,7 +24,7 @@ float DIF_VALUE = 1000000.f;
 int makeSprmFileNameRankGeoProgPy(char *dst, int dst_size, int loc_pop, int loc_eln, int sel_id, int crs_id, int loc_seed, double cmn_ratio, int gene_num, int options) {
     char tmp_str[FILENAME_MAX];
     int zako, norm;
-    // オプションから読み取り
+    // オプションから読み取り (1ビット目: 初期世代情報, 2ビット目: 正規化情報)
     zako = options & 1;
     norm = (options & 0b10) << 1;
     // 固定: 対ランダム (指し手最大), 圧縮, 一様交叉, ランダム突然変異1%
