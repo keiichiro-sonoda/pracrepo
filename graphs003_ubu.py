@@ -807,19 +807,19 @@ def main():
     # 画像保存する場合はこのコメントアウトを外す
     VIEW_ONLY = False
     #old()
-    population = 50
-    elite_num = 0
-    lncr = -2
-    gene_num = 10
-    crs_id = 5
-    seed = 123
+    #population = 50
+    #elite_num = 0
+    #lncr = -2
+    #gene_num = 10
+    #crs_id = 5
+    #seed = 123
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 365, 0b10)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, 0b10)
-    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, options=0b10, stat_option="stdev")
+    #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, options=0b10, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -0.01, 0.01, 0.001, 0, 50, 400, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
@@ -834,6 +834,8 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00, stat_option="median")
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="variance")
+    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
+    path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf")
     plt.show()
     print("終わり")
 
