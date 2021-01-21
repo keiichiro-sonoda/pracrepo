@@ -602,7 +602,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig.tight_layout()
     # 解像度? もファイル名に加える
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    path = makeGraphsFileName(fname, name, g_min, g_max, x_type="common_ratio", extention="pdf")
+    path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf")
     if not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
