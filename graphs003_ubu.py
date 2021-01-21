@@ -32,7 +32,7 @@ LINE_COLORS = [
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
 # シードが無い場合のグラフを新たに作ると, 旧ファイル名と異なるファイル名になる (_no_seedが付与される)
-def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg"):
+def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg"):
     # シード関係なく共通する部分
     # 最初のふるい落とし
     single = False
@@ -179,7 +179,7 @@ def viewMeansGraph(fname_format, population, x_min, x_max, compressed):
     fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     makeMeansGraph(ax, x, ys)
-    path = makeJpegFileName(fname_format, "means{:03d}".format(population), x[0], x[-1])
+    path = makeGraphsFileName(fname_format, "means{:03d}".format(population), x[0], x[-1])
     if path and not VIEW_ONLY:
     # 出力画像の周囲の境界ボックス?を消す
         fig.savefig(path, bbox_inches="tight")
@@ -269,7 +269,7 @@ def viewSDGraph(fname_format, population, x_min, x_max, compressed, emphasize=[]
                 name += "_{:d}".format(e_valid[ind] + 1)
     makeSDGraph(ax, x, ys, e_valid)
     # フォーマットやグラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fname_format, name.format(population), x[0], x[-1])
+    path = makeGraphsFileName(fname_format, name.format(population), x[0], x[-1])
     # 書き込み
     if path and not VIEW_ONLY:
         fig.savefig(path, bbox_inches="tight")
@@ -420,7 +420,7 @@ def viewWinRateGraph(fname_format, decNxt_id):
     ax.set_yticks(np.linspace(0.0, 1.0, 11))
     ax.grid()
     # game_num は最後に計算したものを使う
-    path = makeJpegFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
+    path = makeGraphsFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
     fig.savefig(path, bbox_inches="tight")
 
 # 適応度のグラフを作成
@@ -485,7 +485,7 @@ def viewFitnessGraph(fff, loc_pop, g_min, g_max, grid=False):
     name = "fitness{:03d}".format(loc_pop)
     makeFitnessGraph(ax, x, ys, grid=grid)
     # フォーマット, データの種類, グラフの範囲に合わせたパスを作成
-    path = makeJpegFileName(fff, name, x[0], x[-1])
+    path = makeGraphsFileName(fff, name, x[0], x[-1])
     # 書き込み
     if path and not VIEW_ONLY:
         if os.path.exists(path):
@@ -533,7 +533,7 @@ def viewFitnessGraph2(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
         name += "_grid"
     # 最後のファイル名をパス作成に使う (公比は範囲に置き換えられる)
     #print(fname)
-    path = makeJpegFileName(fname, name, x[0], x[-1], x_type="common_ratio")
+    path = makeGraphsFileName(fname, name, x[0], x[-1], x_type="common_ratio")
     if not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
@@ -549,7 +549,7 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     print(fff)
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
-# 公比と世代数を軸とし, 適応度に応じて色を変える
+# 公比と世代数を軸とし, 適応度に応じて色が異なるカラーマップを作成
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median"):
     name = "fit_"
     if stat_option == "median":
@@ -602,7 +602,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig.tight_layout()
     # 解像度? もファイル名に加える
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    path = makeJpegFileName(fname, name, g_min, g_max)
+    path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf")
     if not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
@@ -644,7 +644,7 @@ def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
     name = "wsdm_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    path = makeJpegFileName(fname, name, g_min, g_max)
+    path = makeGraphsFileName(fname, name, g_min, g_max)
     if path and not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
@@ -685,7 +685,7 @@ def viewWeight1MeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_st
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
     name = "w01mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    path = makeJpegFileName(fname, name, g_min, g_max)
+    path = makeGraphsFileName(fname, name, g_min, g_max)
     if path and not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
@@ -819,11 +819,12 @@ def main():
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 365, 0b10)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, 0b10)
+    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, options=0b10, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -0.01, 0.01, 0.001, 0, 50, 400, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    viewWeight1MeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
+    #viewWeight1MeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
