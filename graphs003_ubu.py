@@ -603,10 +603,12 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
     #fig = plt.figure(figsize=(8, 5))
-    fig = plt.figure(figsize=(5, 3.125))
+    magnitude = 0.7
+    fig = plt.figure(figsize=(8 * magnitude, 5 * magnitude))
+    #fig = plt.figure(figsize=(5, 3.125))
     ax = fig.add_subplot(111)
-    ax.set_xlabel("the natural log of common ratio", fontsize=15)
-    ax.set_ylabel("generation", fontsize=15)
+    ax.set_xlabel("the natural log of common ratio", fontsize=15*magnitude)
+    ax.set_ylabel("generation", fontsize=15*magnitude)
     mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
