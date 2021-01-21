@@ -603,7 +603,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
     #fig = plt.figure(figsize=(8, 5))
-    fig = plt.figure(figsize=(6, 3.75))
+    fig = plt.figure(figsize=(5, 3.125))
     ax = fig.add_subplot(111)
     ax.set_xlabel("the natural log of common ratio", fontsize=15)
     ax.set_ylabel("generation", fontsize=15)
@@ -612,7 +612,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig.tight_layout()
     # 解像度? もファイル名に加える
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    name += "small"
+    name += "_small"
     path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
     if not VIEW_ONLY:
         if os.path.exists(path):
