@@ -611,7 +611,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig.tight_layout()
     # 解像度? もファイル名に加える
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf")
+    path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
     if not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
@@ -828,7 +828,7 @@ def main():
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 365, 0b10)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, 0b10)
-    #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, options=0b10, stat_option="stdev")
+    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 124, options=0b10, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -0.01, 0.01, 0.001, 0, 50, 400, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
@@ -843,8 +843,9 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00, stat_option="median")
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="variance")
-    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
-    path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
+    # ファイル名作成テスト
+    #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
+    #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
     plt.show()
     print("終わり")
 
