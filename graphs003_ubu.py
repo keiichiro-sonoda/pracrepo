@@ -60,9 +60,9 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
         path = "//home//sonoda//Pictures//Graphs"
     # 世代が横軸. ただしカラーマップの場合は例外となる (ごめんなさい).
     if x_type == "generation":
-        # カラーマップの場合, 固定された公比の部分は排除
+        # カラーマップの場合, 固定された公比の部分は排除 (ランキングの部分は残す).
         if c_map:
-            m3 = re.match(r'(.*)(rkgexp[+-][0-9]\.[0-9]{3})(.*)', mg1[0])
+            m3 = re.match(r'(.*rkg)(exp[+-][0-9]\.[0-9]{3})(.*)', mg1[0])
             if m3:
                 mg3 = m3.groups()
                 print(mg3)
