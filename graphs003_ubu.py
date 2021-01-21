@@ -65,7 +65,7 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
             m3 = re.match(r'(.*rkg)(exp[+-][0-9]\.[0-9]{3})(.*)', mg1[0])
             if m3:
                 mg3 = m3.groups()
-                print(mg3)
+                #print(mg3)
                 path += mg3[0] + mg3[2] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp
             else:
                 path = ""
