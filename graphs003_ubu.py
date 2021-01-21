@@ -32,7 +32,7 @@ LINE_COLORS = [
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
 # シードが無い場合のグラフを新たに作ると, 旧ファイル名と異なるファイル名になる (_no_seedが付与される)
-def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation"):
+def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg"):
     # シード関係なく共通する部分
     # 最初のふるい落とし
     single = False
@@ -61,7 +61,7 @@ def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation"):
     # x 軸の種類
     # 世代が横軸
     if x_type == "generation":
-        path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp + ".jpg"
+        path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp
     # 公比が横軸
     elif x_type == "common_ratio":
         #print(mg1[0])
@@ -70,11 +70,13 @@ def makeJpegFileName(fname_format, name, x_min, x_max, x_type="generation"):
         if m3:
             mg3 = m3.groups()
             #print(mg3)
-            path += mg3[0] + "{0:+5.3f}{1:+5.3f}".format(float(x_min), float(x_max)) + mg3[2] + name + sp + ".jpg"
+            path += mg3[0] + "{0:+5.3f}{1:+5.3f}".format(float(x_min), float(x_max)) + mg3[2] + name + sp
         else:
             path = ""
     else:
         path = ""
+    # 拡張子を付加
+    path += "." + extention
     print(path)
     return path
 
