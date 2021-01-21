@@ -32,7 +32,7 @@ LINE_COLORS = [
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
 # シードが無い場合のグラフを新たに作ると, 旧ファイル名と異なるファイル名になる (_no_seedが付与される)
-def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg"):
+def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg", c_map=False):
     # シード関係なく共通する部分
     # 最初のふるい落とし
     single = False
@@ -58,10 +58,19 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
         path = "/home/sonoda/Pictures/Graphs"
     else:
         path = "//home//sonoda//Pictures//Graphs"
-    # x 軸の種類
-    # 世代が横軸
+    # 世代が横軸. ただしカラーマップの場合は例外となる (ごめんなさい).
     if x_type == "generation":
-        path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp
+        # カラーマップの場合, 固定された公比の部分は排除
+        if c_map:
+            m3 = re.match(r'(.*)(rkgexp[+-][0-9]\.[0-9]{3})(.*)', mg1[0])
+            if m3:
+                mg3 = m3.groups()
+                print(mg3)
+                path += mg3[0] + mg3[2] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp
+            else:
+                path = ""
+        else:
+            path += mg1[0] + "_" + name + "_g{0:03d}-{1:03d}".format(int(x_min), int(x_max)) + sp
     # 公比が横軸
     elif x_type == "common_ratio":
         #print(mg1[0])
@@ -835,7 +844,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="variance")
     fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
-    path = makeGraphsFileName(fname, "dummy", 0, 100, x_type="common_ratio", extention="pdf")
+    path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
     plt.show()
     print("終わり")
 
