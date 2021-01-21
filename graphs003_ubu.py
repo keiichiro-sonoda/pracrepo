@@ -603,7 +603,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
     magnitude = 1
-    magnitude = 0.3
+    magnitude = 0.7
     # デフォルトフォントサイズの設定
     plt.rcParams["font.size"] = 15 * magnitude
     fig = plt.figure(figsize=(8 * magnitude, 5 * magnitude))
@@ -611,8 +611,8 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     ax = fig.add_subplot(111)
     ax.set_xlabel("the natural log of common ratio", fontsize=15*magnitude)
     ax.set_ylabel("generation", fontsize=15*magnitude)
-    plt.xticks(fontsize=15*magnitude)
-    plt.yticks(fontsize=15*magnitude)
+    plt.xticks(fontsize=13*magnitude)
+    plt.yticks(fontsize=13*magnitude)
     mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
