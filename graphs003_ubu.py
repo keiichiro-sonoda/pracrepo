@@ -69,7 +69,7 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
         m3 = re.match(r'(.*rkgexp)([+-][0-9]\.[0-9]{3})(.*)', mg1[0])
         if m3:
             mg3 = m3.groups()
-            #print(mg3)
+            print(mg3)
             path += mg3[0] + "{0:+5.3f}{1:+5.3f}".format(float(x_min), float(x_max)) + mg3[2] + name + sp
         else:
             path = ""
@@ -602,7 +602,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig.tight_layout()
     # 解像度? もファイル名に加える
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf")
+    path = makeGraphsFileName(fname, name, g_min, g_max, x_type="common_ratio", extention="pdf")
     if not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
@@ -835,7 +835,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="variance")
     fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
-    path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf")
+    path = makeGraphsFileName(fname, "dummy", 0, 100, x_type="common_ratio", extention="pdf")
     plt.show()
     print("終わり")
 
