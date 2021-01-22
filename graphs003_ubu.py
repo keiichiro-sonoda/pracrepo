@@ -28,6 +28,9 @@ LINE_COLORS = [
     "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
 ]
 
+# LaTeX で使う図を保存するパス
+FIGURES_PATH = "/home/sonoda/GitHub/HelloGitHub/LaTeX/figures"
+
 # グラフを保存するファイル名を決定する関数
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
@@ -55,7 +58,8 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
         print("シードを含みません")
     # スラッシュ単体の場合の処理
     if single:
-        path = "/home/sonoda/Pictures/Graphs"
+        #path = "/home/sonoda/Pictures/Graphs"
+        path = FIGURES_PATH
     else:
         path = "//home//sonoda//Pictures//Graphs"
     # 世代が横軸. ただしカラーマップの場合は例外となる (ごめんなさい).
@@ -602,7 +606,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
         v_max = max(medfl)
     X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
-    magnitude = 1
+    magnitude = 1.0
     magnitude = 0.7
     # デフォルトフォントサイズの設定
     plt.rcParams["font.size"] = 15 * magnitude
@@ -611,14 +615,13 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     ax = fig.add_subplot(111)
     ax.set_xlabel("the natural log of common ratio", fontsize=15*magnitude)
     ax.set_ylabel("generation", fontsize=15*magnitude)
-    plt.xticks(fontsize=13*magnitude)
-    plt.yticks(fontsize=13*magnitude)
+    plt.xticks(fontsize=5*magnitude)
+    plt.yticks(fontsize=5*magnitude)
     mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap=cm, shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
-    # 解像度? もファイル名に加える
-    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    name += "_small"
+    # グラフのサイズの倍率もファイル名に加える
+    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}_size{:4.2f}".format(lncr_start, lncr_stop, lncr_step, magnitude)
     path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
     if not VIEW_ONLY:
         if os.path.exists(path):
