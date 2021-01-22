@@ -607,7 +607,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     X, Y = np.meshgrid(x, y)
     Z = np.array(medfl).reshape(len(x), -1).T
     magnitude = 1.0
-    magnitude = 0.7
+    magnitude = 0.65
     # デフォルトフォントサイズの設定
     plt.rcParams["font.size"] = 12 * magnitude
     fig = plt.figure(figsize=(8 * magnitude, 5 * magnitude))
