@@ -467,6 +467,20 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         f = open(json_fname, "w")
         json.dump(pt_list, f)
         f.close()
+    x = [i / 1000 for i in range(start_cr_th, stop_cr_th, step_cr_th)]
+    x.append(stop_cr_th / 1000)
+    magnitude = 0.65
+    # デフォルトフォントサイズの設定
+    plt.rcParams["font.size"] = 12 * magnitude
+    fig = plt.figure(figsize=(8 * magnitude, 5 * magnitude))
+    ax = fig.add_subplot(111)
+    ax.set_xlabel("the natural log of common ratio", fontsize=15*magnitude)
+    ax.set_ylabel("point", fontsize=15*magnitude)
+    plt.xticks(fontsize=12*magnitude)
+    ax.set_xticks([j for i, j in enumerate(x) if i % 5 == 0])
+    plt.yticks(fontsize=12*magnitude)
+    ax.plot(x, pt_list)
+    fig.tight_layout()
 
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
