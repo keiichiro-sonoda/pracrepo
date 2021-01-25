@@ -131,6 +131,6 @@ int main(void) {
     //puts(format);
     test = loadRepSprmComp(format, 100, 50);
     showSprmOneLine(test);
-    vsOtherCommonRatio(-2000, 2000, 100, 100);
+    vsOtherCommonRatio(-2000, 0, 100, 100);
     return 0;
 }
