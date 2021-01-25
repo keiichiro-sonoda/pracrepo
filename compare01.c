@@ -23,8 +23,11 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
         makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, COMPARE_SEED, loc_cr_ln, 0);
         puts(format);
         rep_pra[count] = loadRepSprmComp(format, gene_num, loc_pop);
-        showSprmOneLine(rep_pra[count]);
         putchar(10);
+    }
+    for (i = 0; i < loc_pop; i++) {
+        printf("%2d ", i);
+        showSprmOneLine(rep_pra[i]);
     }
 }
 
