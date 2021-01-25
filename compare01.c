@@ -201,7 +201,7 @@ int main(void) {
     //puts(format);
     //Sprm test = loadRepSprmComp(format, 100, 50);
     //showSprmOneLine(test);
-    decNxtSprmC dnfuncc = getBestBoardSprm;
+    //decNxtSprmC dnfuncc = getBestBoardSprm;
     //dnfuncc = getBoardSprmRoulette;
     srand(VS_SEED);
     //vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc, 10);

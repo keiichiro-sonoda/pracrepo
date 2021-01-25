@@ -24,6 +24,8 @@ share02.so: genetic02_win.o  othello_win.o  sort01_win.o
 	gcc genetic02_win.o othello_win.o sort01_win.o -o share02.so -shared -fPIC -lm
 share02_ubu.so: genetic02_share.o genetic02.o othello.o sort01.o
 	gcc genetic02_share.o genetic02.o othello.o sort01.o -o share02_ubu.so -shared -fPIC -Wall -lm
+compare01_share_ubu.so: compare01.c genetic02.o othello.o sort01.o
+	gcc compare01.c genetic02.o othello.o sort01.o -o compare01_share_ubu.so -shared -fPIC -Wall -lm
 othello_win.exe: othello_win.c othello_win.h
 	gcc othello_win.c -o othello_win.exe -fPIC -Wall
 test01: test01.c genetic01.o othello.o sort01.o
