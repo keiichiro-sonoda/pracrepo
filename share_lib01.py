@@ -190,12 +190,5 @@ if __name__ == "__main__":
     print("Hello!")
     slw = ShareLibWrap()
     #print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
-    fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.4, 100, options=0b01)
-    print(fname)
-    print(slw.setSPRM_EFFWrap(fname, 1, 50, 1))
-    showSPRM_EFF()
-    spe = slw.getSPRM_EFFWrap()
-    for i in range(8):
-        for j in range(8):
-            print("{:+5.2f} ".format(spe[i * 8 + j]), end="")
-        print()
+    #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.4, 100, options=0b01)
+    print(slw.vsOtherCommonRatioWrap(50, 1, 555, -2000, 2000, 100, 100, 123, 10, 0))
