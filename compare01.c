@@ -44,7 +44,7 @@ int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
     // set initial board
     main_board = START;
     while (1) {
-        //showBoard(main_board);
+        showBoard(main_board);
         // calculate next
         // can't put a piece anywhere
         if ((n = canPutPP(main_board, 0b01, cpa, nba, kc)) == 0) {
@@ -123,6 +123,7 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
 }
 
 int main(void) {
+    initSprm();
     Sprm test;
     char format[FILENAME_MAX];
     makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.01, 0);
