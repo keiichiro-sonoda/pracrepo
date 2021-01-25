@@ -189,7 +189,6 @@ int vsOtherCommonRatioPy(int *result, int start_th, int step_th, int rep_pop, in
     } else { // 指し手ルーレットリーグ戦. 複数
         leagueMatchSprmMlt(rep_pra, result, rep_pop, loop, loc_vs_seed);
     }
-    printDecimalArray(result, rep_pop);
     return 0;
 }
 
@@ -208,7 +207,9 @@ int main(void) {
     //vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc, 10);
     // 公比1以下のみ
     //vsOtherCommonRatio(-2000, 0, 100, 100, dnfuncc, 20);
-    int result[41];
-    vsOtherCommonRatioPy(result, -2000, 100, 41, 100, 1, 10, 555, VS_SEED);
+    int n = 41;
+    int result[n];
+    vsOtherCommonRatioPy(result, -2000, 100, n, 100, 1, 10, 555, VS_SEED);
+    printDecimalArray(result, n);
     return 0;
 }
