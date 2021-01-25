@@ -57,7 +57,7 @@ int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
         }
         pass = 0;
         // determine a next board
-        dnfuncc(nba, n, pra[turn - 1], turn);
+        main_board = dnfuncc(nba, n, pra[turn - 1], turn);
         // switch turn
         turn ^= 0b11;
     }
@@ -114,9 +114,10 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
     for (i = start_th, count = 0; i <= stop_th; i += step_th, count++) {
         loc_cr_ln = (double)i / 1000;
         makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, COMPARE_SEED, loc_cr_ln, 0);
-        puts(format);
+        //puts(format);
         rep_pra[count] = loadRepSprmComp(format, gene_num, loc_pop);
     }
+    // リーグ戦
     leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, loc_pop);
     printDecimalArray(result, loc_pop);
 }
@@ -125,6 +126,7 @@ int main(void) {
     Sprm test;
     char format[FILENAME_MAX];
     makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.01, 0);
+    puts(format);
     //puts(format);
     test = loadRepSprmComp(format, 100, 50);
     showSprmOneLine(test);
