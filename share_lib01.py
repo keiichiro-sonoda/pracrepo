@@ -25,6 +25,8 @@ CharArray4096 = ctypes.c_char * FILENAME_MAX
 
 # 初期化関数を実行 (import 時に実行してくれるかな?)
 share02_ubu.initPy()
+# こっちの初期化関数も
+compare01_share_ubu.initPy2()
 
 # 全個体の平均値
 # 第四引数に圧縮フラグを設定
@@ -181,7 +183,8 @@ class ShareLibWrap():
     def vsOtherCommonRatioWrap(self, loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id):
         i_arr_c = IntArray100()
         # 対象の公比の数を計算. 適切に与えられていれば割り切れるはず.
-        rep_pop = (stop_cr_th - start_cr_th) // step_cr_th
+        # 植木算? で +1
+        rep_pop = (stop_cr_th - start_cr_th) // step_cr_th + 1
         # 対戦
         vsOtherCommonRatio(i_arr_c, start_cr_th, step_cr_th, rep_pop, gene_num, dnfunc_id, loop, loc_seed, vs_seed)
         return list(i_arr_c)[:rep_pop]
