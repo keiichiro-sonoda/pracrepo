@@ -46,6 +46,8 @@ Board getBoardSprmRoulette(const Board *next_boards, int n, const Sprm *prp, int
     // 黒なら10, 白なら-10
     int mag;
     mag = (-2 * color + 3) * 10;
+    if (color == 0b01) mag = 10;
+    else mag = -10;
     for (int i = 0; i < n; i++) {
         // evaluate all next boards
         // and calculate the power of e (to make numbers positive)
