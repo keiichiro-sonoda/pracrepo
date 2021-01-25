@@ -8,9 +8,10 @@
 // まずは白黒1回ずつ, 手は最大評価値確定でいこう
 void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
     int i;
-    float loc_cr_ln;
+    double loc_cr_ln;
     for (i =  start_th; i <= stop_th; i += step_th) {
-        printDecimal(i);
+        loc_cr_ln = (double)i / 1000;
+        printFloat(loc_cr_ln);
     }
 }
 
