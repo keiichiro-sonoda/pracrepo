@@ -1,9 +1,7 @@
 // 共有ライブラリ用ソースからもincludeすることにした
 #include <time.h>
-#include <math.h>
 
 #include "genetic02.h"
-#include "sort01.h"
 
 // global variables
 // declarations are required

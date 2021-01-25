@@ -37,17 +37,17 @@ Board getBestBoardSprm(const Board *next_boards, int n, const Sprm *prp, int col
 // use simple parameter
 // decide next board by roulette
 Board getBoardSprmRoulette(const Board *next_boards, int n, const Sprm *prp, int color) {
-    float exp_points[n];
-    float s;
+    double exp_points[n];
     int choosed;
+    // 黒なら評価値そのまま, 白なら評価値反転
+    int inv;
+    inv = -2 * color + 3;
     for (int i = 0; i < n; i++) {
         // evaluate all next boards
         // and calculate the power of e (to make numbers positive)
-        // sign inversion!
-        exp_points[i] = expf(-evaluationSimple(next_boards[i], *prp) * 10);
+        exp_points[i] = expf(evaluationSimple(next_boards[i], *prp) * 10 * inv);
     }
-    s = sumFloat(exp_points, n);
-    choosed = rouletteFloat(exp_points, n, s);
+    choosed = rouletteDouble(exp_points, n, sumDouble(exp_points, n));
     return next_boards[choosed];
 }
 

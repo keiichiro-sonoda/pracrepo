@@ -1,12 +1,15 @@
 #ifndef GENETIC02_H
 #define GENETIC02_H
 
-// to use MASU_NUM
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <float.h>
+*/
 #include <stdarg.h> // 可変長引数を実現するためのライブラリ?
 #include "othello.h"
+#include "sort01.h"
 
 #ifndef SEED
 #define SEED 555U // シード値
