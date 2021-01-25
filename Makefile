@@ -32,6 +32,8 @@ test02: test02.c genetic02.o othello.o sort01.o
 	gcc test02.c genetic02.o othello.o sort01.o -o test02 -lm -Wall
 compare: compare.c genetic01.o genetic02.o othello.o sort01.o
 	gcc compare.c genetic01.o genetic02.o othello.o sort01.o -o compare -lm
+compare01: compare01.c genetic02.o othello.o sort01.o
+	gcc compare01.c genetic02.o othello.o sort01.o -o compare01 -lm -Wall
 test_win.exe: test_win.c genetic02_win.o othello_win.o sort01_win.o
 	gcc test_win.c genetic02_win.o othello_win.o sort01_win.o -o test_win.exe
 othello.o: othello.c othello.h
