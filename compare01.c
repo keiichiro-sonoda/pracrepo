@@ -5,8 +5,10 @@
 
 int main(void) {
     Sprm test;
-    char fname[FILENAME_MAX];
-    makeSprmFileFormatAuto(fname, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, 0.01f, 555, 0.001);
-    puts(fname);
+    char format[FILENAME_MAX];
+    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, 0.01f, 555, 0.001);
+    puts(format);
+    test = loadRepSprmComp(format, 100, 50);
+    showSprmOneLine(test);
     return 0;
 }
