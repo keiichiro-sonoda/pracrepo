@@ -448,7 +448,9 @@ def viewWinRateGraph(fname_format, decNxt_id):
     fig.savefig(path, bbox_inches="tight")
 
 # 他の公比と対戦したときの勝ち点
-def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=""):
+def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako, name=""):
+    if zako:
+        name += "_zako"
     json_fname = makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=name)
     first = True
     # ファイルが存在
@@ -460,7 +462,7 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         first = False
     else:
         print("初めて")
-        pt_list = slw.vsOtherCommonRatioWrap(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id)
+        pt_list = slw.vsOtherCommonRatioWrap(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako)
     print(pt_list)
     # 初めてならファイル書き込み
     if first:
@@ -909,7 +911,7 @@ def main():
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
-    viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 1000, 1)
+    viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     plt.show()
     print("終わり")
 
