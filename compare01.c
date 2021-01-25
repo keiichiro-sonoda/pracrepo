@@ -192,6 +192,12 @@ int vsOtherCommonRatioPy(int *result, int start_th, int step_th, int rep_pop, in
     return 0;
 }
 
+// Python側初期化 (Cでも使える)
+void initPy2(void) {
+    initBoard();
+    setCORR_TABLE();
+}
+
 int main(void) {
     initBoard();
     setCORR_TABLE();
