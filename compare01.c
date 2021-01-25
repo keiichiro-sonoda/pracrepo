@@ -8,6 +8,48 @@
 // 指し手ルーレットで対戦する際のシード値
 #define VS_SEED 123
 
+// 盤面を返り値とする関数の型?
+typedef Board (*decNxtSprmC)();
+
+// 非正規化対戦
+int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
+    Board main_board, nba[NEXT_MAX];
+    int turn, pass, n, dif, kc[3], cpa[NEXT_MAX];
+    Sprm pra[2];
+    pra[0] = *bpp;
+    pra[1] = *wpp;
+    pass = 0;
+    // set turn
+    turn = 0b01;
+    // set initial board
+    main_board = START;
+    while (1) {
+        //showBoard(main_board);
+        // calculate next
+        // can't put a piece anywhere
+        if ((n = canPutPP(main_board, 0b01, cpa, nba, kc)) == 0) {
+            // can't do anything one another
+            if (pass) break;
+            // pass
+            turn ^= 0b11;
+            pass = 1;
+            continue;
+        }
+        pass = 0;
+        // determine a next board
+        dnfuncc();
+        // switch turn
+        turn ^= 0b11;
+    }
+    // difference between black and white
+    if ((dif = kc[1] - kc[2]) > 0) {
+        return 0b01;
+    } else if (dif < 0) {
+        return 0b10;
+    }
+    return 0b00;
+}
+
 // 個体数を指定できるリーグ戦関数
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
