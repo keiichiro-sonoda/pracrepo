@@ -84,7 +84,7 @@ getBestActABSprm.argtypes = (IntArray64, ctypes.c_int32, ctypes.c_int32)
 # 公比の数は100を超えないこと前提
 vsOtherCommonRatio = compare01_share_ubu.vsOtherCommonRatioPy
 vsOtherCommonRatio.restype = ctypes.c_int32
-vsOtherCommonRatio.argtypes = (IntArray100, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_uint32, ctypes.c_uint32)
+vsOtherCommonRatio.argtypes = (IntArray100, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_uint32, ctypes.c_uint32)
 
 # ラッパー関数の集まり
 class ShareLibWrap():
@@ -186,7 +186,7 @@ class ShareLibWrap():
         # 植木算? で +1
         rep_pop = (stop_cr_th - start_cr_th) // step_cr_th + 1
         # 対戦
-        vsOtherCommonRatio(i_arr_c, start_cr_th, step_cr_th, rep_pop, gene_num, dnfunc_id, loop, loc_seed, vs_seed)
+        vsOtherCommonRatio(i_arr_c, loc_pop, loc_eln, start_cr_th, step_cr_th, rep_pop, gene_num, dnfunc_id, loop, loc_seed, vs_seed)
         return list(i_arr_c)[:rep_pop]
 
 if __name__ == "__main__":
@@ -194,4 +194,4 @@ if __name__ == "__main__":
     slw = ShareLibWrap()
     #print(slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 6, 124, 0.001, 10))
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 0, 3, 5, 123, -0.4, 100, options=0b01)
-    print(slw.vsOtherCommonRatioWrap(50, 1, 555, -2000, 2000, 100, 100, 123, 10, 0))
+    print(slw.vsOtherCommonRatioWrap(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1))
