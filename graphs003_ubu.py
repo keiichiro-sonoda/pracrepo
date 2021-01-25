@@ -894,7 +894,7 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    #VIEW_ONLY = False
+    VIEW_ONLY = False
     #old()
     #population = 50
     #elite_num = 0
@@ -934,8 +934,8 @@ def main():
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 127, 0, 0, 1)
-    #plt.show()
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1)
+    plt.show()
     print("終わり")
 
 if __name__ == "__main__":
