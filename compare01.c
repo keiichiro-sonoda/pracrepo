@@ -121,7 +121,8 @@ void leagueMatchSprmFF(decNxtSprmC dnfuncc, const Sprm *pra, int *result, int lo
 // 公比どうしリーグ戦?
 // 公比の自然対数は1000倍した整数値で与える
 // まずは白黒1回ずつ, 手は最大評価値確定でいこう
-void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
+// 指し手決定関数は引数で与える
+void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, decNxtSprmC dnfuncc) {
     int i, loc_pop, count;
     double loc_cr_ln;
     char format[FILENAME_MAX];
@@ -138,7 +139,7 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
         rep_pra[count] = loadRepSprmComp(format, gene_num, loc_pop);
     }
     // リーグ戦
-    leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, loc_pop);
+    leagueMatchSprmFF(dnfuncc, rep_pra, result, loc_pop);
     printDecimalArray(result, loc_pop);
 }
 
@@ -151,6 +152,6 @@ int main(void) {
     //puts(format);
     test = loadRepSprmComp(format, 100, 50);
     showSprmOneLine(test);
-    vsOtherCommonRatio(-2000, 2000, 100, 100);
+    vsOtherCommonRatio(-2000, 2000, 100, 100, getBoardSprmRoulette);
     return 0;
 }
