@@ -47,7 +47,7 @@ int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
         showBoard(main_board);
         // calculate next
         // can't put a piece anywhere
-        if ((n = canPutPP(main_board, 0b01, cpa, nba, kc)) == 0) {
+        if ((n = canPutPP(main_board, turn, cpa, nba, kc)) == 0) {
             // can't do anything one another
             if (pass) break;
             // pass
@@ -57,7 +57,7 @@ int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
         }
         pass = 0;
         // determine a next board
-        main_board = dnfuncc(nba, n, pra[turn - 1], turn);
+        main_board = dnfuncc(nba, n, pra + turn - 1, turn);
         // switch turn
         turn ^= 0b11;
     }
@@ -118,7 +118,7 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
         rep_pra[count] = loadRepSprmComp(format, gene_num, loc_pop);
     }
     // リーグ戦
-    leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, loc_pop);
+    leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, 2);
     printDecimalArray(result, loc_pop);
 }
 
