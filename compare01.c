@@ -170,7 +170,7 @@ int vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, dec
 // 公比同士リーグ戦 Python から呼び出し
 // 公比の自然対数は1000倍した整数値で与える
 // 代入用の結果配列, 初期公比, 公比間隔, 公比数, 世代数, 指し手識別子, ループ数, ファイルのシード, 対戦シード
-int vsOtherCommonRatioPy(int *result, int loc_pop, int loc_eln, int start_th, int step_th, int rep_pop, int gene_num, int dnfunc_id, int loop, unsigned loc_seed, unsigned loc_vs_seed) {
+int vsOtherCommonRatioPy(int *result, int loc_pop, int loc_eln, int start_th, int step_th, int rep_pop, int gene_num, int dnfunc_id, int loop, unsigned loc_seed, unsigned loc_vs_seed, int zako) {
     int count;
     double loc_cr_ln;
     char format[FILENAME_MAX];
@@ -179,7 +179,7 @@ int vsOtherCommonRatioPy(int *result, int loc_pop, int loc_eln, int start_th, in
     for (count = 0; count < rep_pop; count++) {
         // 公比の自然対数を計算
         loc_cr_ln = (double)(start_th + step_th * count) / 1000;
-        makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, loc_pop, loc_eln, 3, 5, 0, .01, loc_seed, loc_cr_ln, 0);
+        makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, loc_pop, loc_eln, 3, 5, 0, .01, loc_seed, loc_cr_ln, zako);
         //puts(format);
         rep_pra[count] = loadRepSprmComp(format, gene_num, rep_pop);
     }
@@ -215,7 +215,7 @@ int main(void) {
     //vsOtherCommonRatio(-2000, 0, 100, 100, dnfuncc, 20);
     int n = 41;
     int result[n];
-    vsOtherCommonRatioPy(result, 50, 1, -2000, 100, n, 100, 1, 10, 555, VS_SEED);
+    vsOtherCommonRatioPy(result, 50, 1, -2000, 100, n, 100, 1, 10, 555, VS_SEED, 1);
     printDecimalArray(result, n);
     return 0;
 }
