@@ -7,7 +7,7 @@
 #define COMPARE_SEED 555
 
 // 指し手ルーレットで対戦する際のシード値
-#define VS_SEED 124
+#define VS_SEED 125
 
 // 配列Aの各要素に配列Bの各要素を足す
 #define addArray(A, B, n) for (int _ = 0; _ < (n); _++) (A)[_] += (B)[_]
@@ -164,7 +164,8 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, de
 }
 
 int main(void) {
-    initSprm();
+    initBoard();
+    setCORR_TABLE();
     Sprm test;
     char format[FILENAME_MAX];
     makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.01, 0);
@@ -176,6 +177,8 @@ int main(void) {
     dnfuncc = getBestBoardSprm;
     //dnfuncc = getBoardSprmRoulette;
     srand(VS_SEED);
-    vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc);
+    //vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc);
+    // 公比1以下のみ
+    vsOtherCommonRatio(-2000, 0, 100, 100, dnfuncc);
     return 0;
 }
