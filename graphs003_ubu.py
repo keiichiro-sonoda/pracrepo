@@ -121,8 +121,18 @@ def makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_
         json_fname += "d"
     else:
         json_fname += "r_vseed{:03d}_loop{:04d}".format(vs_seed, loop)
+    json_fname += ".json"
     print(json_fname)
     return json_fname
+
+# 公比同士対戦結果のグラフを保存するファイル名
+# デフォの拡張子は pdf
+def makePVSOCRGraphFileName(json_fname, extention="pdf"):
+    path = FIGURES_PATH
+    m1 = re.match(r'(json)(/.*)', json_fname)
+    mg1 = m1.groups()
+    print(mg1)
+    return path
 
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
@@ -483,6 +493,13 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
     plt.yticks(fontsize=12*magnitude)
     ax.plot(x, pt_list)
     fig.tight_layout()
+    path = makePVSOCRGraphFileName(json_fname)
+    if not VIEW_ONLY:
+        if os.path.exists(path):
+            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
+                return
+        fig.savefig(path, bbox_inches="tight")
+        print("saved!")
 
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
@@ -873,7 +890,7 @@ def old():
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    VIEW_ONLY = False
+    #VIEW_ONLY = False
     #old()
     #population = 50
     #elite_num = 0
@@ -912,8 +929,9 @@ def main():
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    plt.show()
+    #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 127, 0, 0, 1)
+    #plt.show()
     print("終わり")
 
 if __name__ == "__main__":
