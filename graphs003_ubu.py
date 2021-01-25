@@ -447,6 +447,27 @@ def viewWinRateGraph(fname_format, decNxt_id):
     path = makeGraphsFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
     fig.savefig(path, bbox_inches="tight")
 
+# 他の公比と対戦したときの勝ち点
+def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=""):
+    json_fname = makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=name)
+    first = True
+    # ファイルが存在
+    if os.path.exists(json_fname):
+        print("既存")
+        f = open(json_fname, "r")
+        pt_list = json.load(f)
+        f.close()
+        first = False
+    else:
+        print("初めて")
+        pt_list = slw.vsOtherCommonRatioWrap(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id)
+    print(pt_list)
+    # 初めてならファイル書き込み
+    if first:
+        f = open(json_fname, "w")
+        json.dump(pt_list, f)
+        f.close()
+
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
 # 横軸も指定可能, 縦軸の凡例も指定可能 (データと数が合うように!)
@@ -873,7 +894,8 @@ def main():
     # ファイル名作成テスト
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
-    makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
+    #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
+    viewPointVSOtherCR(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 0)
     plt.show()
     print("終わり")
 
