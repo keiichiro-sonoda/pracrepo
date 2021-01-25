@@ -78,6 +78,12 @@ getBestActABSprm = share02_ubu.getBestActABSprmPy
 getBestActABSprm.restype = ctypes.c_int32
 getBestActABSprm.argtypes = (IntArray64, ctypes.c_int32, ctypes.c_int32)
 
+# 公比同士対戦関数
+# 公比の数は100を超えないこと前提
+vsOtherCommonRatio = compare01_share_ubu.vsOtherCommonRatioPy
+vsOtherCommonRatio.restype = ctypes.c_int32
+vsOtherCommonRatio.argtypes = (IntArray100, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_uint32, ctypes.c_uint32)
+
 # ラッパー関数の集まり
 class ShareLibWrap():
 
@@ -170,6 +176,15 @@ class ShareLibWrap():
         # 文字列に変換
         # ord("h") = 104, ord("8") = 56
         return chr(104 - c_sub % 16 // 2) + chr(56 - c_sub // 16)
+    
+    # 公比同士対戦ラッパー関数
+    def vsOtherCommonRatioWrap(self, loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id):
+        i_arr_c = IntArray100()
+        # 対象の公比の数を計算. 適切に与えられていれば割り切れるはず.
+        rep_pop = (stop_cr_th - start_cr_th) // step_cr_th
+        # 対戦
+        vsOtherCommonRatio(i_arr_c, start_cr_th, step_cr_th, rep_pop, gene_num, dnfunc_id, loop, loc_seed, vs_seed)
+        return list(i_arr_c)[:rep_pop]
 
 if __name__ == "__main__":
     print("Hello!")
