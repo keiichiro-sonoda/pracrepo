@@ -140,7 +140,7 @@ void leagueMatchSprmMlt(const Sprm *pra, int *result, int loc_pop, int n, unsign
 // 公比の自然対数は1000倍した整数値で与える
 // まずは白黒1回ずつ, 手は最大評価値確定でいこう
 // 指し手決定関数は引数で与える (ルーレットの場合は回数指定)
-void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, decNxtSprmC dnfuncc, int loop) {
+int vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, decNxtSprmC dnfuncc, int loop) {
     int i, loc_pop, count;
     double loc_cr_ln;
     char format[FILENAME_MAX];
@@ -163,6 +163,7 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, de
         leagueMatchSprmMlt(rep_pra, result, loc_pop, loop, VS_SEED);
     }
     printDecimalArray(result, loc_pop);
+    return 0;
 }
 
 int main(void) {
@@ -176,9 +177,9 @@ int main(void) {
     //showSprmOneLine(test);
     decNxtSprmC dnfuncc;
     dnfuncc = getBestBoardSprm;
-    //dnfuncc = getBoardSprmRoulette;
+    dnfuncc = getBoardSprmRoulette;
     srand(VS_SEED);
-    vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc, 100);
+    vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc, 10);
     // 公比1以下のみ
     //vsOtherCommonRatio(-2000, 0, 100, 100, dnfuncc, 20);
     return 0;
