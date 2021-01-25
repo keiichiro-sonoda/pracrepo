@@ -44,7 +44,7 @@ int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
     // set initial board
     main_board = START;
     while (1) {
-        showBoard(main_board);
+        //showBoard(main_board);
         // calculate next
         // can't put a piece anywhere
         if ((n = canPutPP(main_board, turn, cpa, nba, kc)) == 0) {
@@ -118,7 +118,7 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
         rep_pra[count] = loadRepSprmComp(format, gene_num, loc_pop);
     }
     // リーグ戦
-    leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, 2);
+    leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, loc_pop);
     printDecimalArray(result, loc_pop);
 }
 
