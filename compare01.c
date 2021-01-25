@@ -1,5 +1,6 @@
 /*
-異なる公比で進化させた個体どうしを対戦させてみたい
+異なる公比で進化させた個体どうしを対戦させる
+Pythonから呼び出す用の共有ライブラリも作りたい
 */
 #include "genetic02.h"
 
@@ -166,6 +167,32 @@ int vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, dec
     return 0;
 }
 
+// 公比同士リーグ戦 Python から呼び出し
+// 公比の自然対数は1000倍した整数値で与える
+// 代入用の結果配列, 初期公比, 公比間隔, 公比数, 世代数, 指し手識別子, ループ数, ファイルのシード, 対戦シード
+int vsOtherCommonRatioPy(int *result, int start_th, int step_th, int rep_pop, int gene_num, int dnfunc_id, int loop, unsigned loc_seed, unsigned loc_vs_seed) {
+    int count;
+    double loc_cr_ln;
+    char format[FILENAME_MAX];
+    // 代表者配列
+    Sprm rep_pra[rep_pop];
+    for (count = 0; count < rep_pop; count++) {
+        // 公比の自然対数を計算
+        loc_cr_ln = (double)(start_th + step_th * count) / 1000;
+        makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, loc_seed, loc_cr_ln, 0);
+        //puts(format);
+        rep_pra[count] = loadRepSprmComp(format, gene_num, rep_pop);
+    }
+    // リーグ戦 (指し手固定)
+    if (dnfunc_id == 0) {
+        leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, rep_pop);
+    } else { // 指し手ルーレットリーグ戦. 複数
+        leagueMatchSprmMlt(rep_pra, result, rep_pop, loop, loc_vs_seed);
+    }
+    printDecimalArray(result, rep_pop);
+    return 0;
+}
+
 int main(void) {
     initBoard();
     setCORR_TABLE();
@@ -175,12 +202,13 @@ int main(void) {
     //puts(format);
     //Sprm test = loadRepSprmComp(format, 100, 50);
     //showSprmOneLine(test);
-    decNxtSprmC dnfuncc;
-    dnfuncc = getBestBoardSprm;
-    dnfuncc = getBoardSprmRoulette;
+    decNxtSprmC dnfuncc = getBestBoardSprm;
+    //dnfuncc = getBoardSprmRoulette;
     srand(VS_SEED);
-    vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc, 10);
+    //vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc, 10);
     // 公比1以下のみ
     //vsOtherCommonRatio(-2000, 0, 100, 100, dnfuncc, 20);
+    int result[41];
+    vsOtherCommonRatioPy(result, -2000, 100, 41, 100, 1, 10, 555, VS_SEED);
     return 0;
 }
