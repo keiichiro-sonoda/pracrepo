@@ -9,6 +9,9 @@
 // 指し手ルーレットで対戦する際のシード値
 #define VS_SEED 123
 
+// 配列Aの各要素に配列Bの各要素を足す
+#define addArray(A, B, n) for (int _ = 0; _ < (n); _++) (A)[_] += (B)[_]
+
 // 盤面を返り値とする関数の型 (引数は自由?)
 typedef Board (*decNxtSprmC)();
 
@@ -119,6 +122,20 @@ void leagueMatchSprmFF(decNxtSprmC dnfuncc, const Sprm *pra, int *result, int lo
     }
 }
 
+// 複数回対戦するリーグ戦関数 (指し手はルーレット選択で固定)
+// 対戦数, シード値も与える
+// win: +2, draw: +1, lose: 0
+void leagueMatchSprmMlt(const Sprm *pra, int *result, int loc_pop, int n, unsigned loc_seed) {
+    int tmp_rslt[loc_pop];
+    zeros(result, loc_pop);
+    // シード設定
+    srand(loc_seed);
+    for (int k = 0; k < n; k++) { // 指定した数だけ
+        leagueMatchSprmFF(getBoardSprmRoulette, pra, tmp_rslt, loc_pop);
+        addArray(result, tmp_rslt, loc_pop);
+    }
+}
+
 // 公比どうしリーグ戦?
 // 公比の自然対数は1000倍した整数値で与える
 // まずは白黒1回ずつ, 手は最大評価値確定でいこう
@@ -141,6 +158,8 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, de
     }
     // リーグ戦
     leagueMatchSprmFF(dnfuncc, rep_pra, result, loc_pop);
+    printDecimalArray(result, loc_pop);
+    leagueMatchSprmMlt(rep_pra, result, loc_pop, 10, VS_SEED);
     printDecimalArray(result, loc_pop);
 }
 
