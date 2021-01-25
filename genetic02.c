@@ -883,6 +883,7 @@ int loadSprmFileComp(const char *format, int gene_num, Sprm *pra, int loc_pop) {
 }
 
 // load a representative of Sprm
+// Sprm の代表者選出 (指定した世代のトップ?)
 Sprm loadRepSprm(const char *format, int gene_num, int loc_pop) {
     Sprm pra[loc_pop];
     if (loadSprmFile(format, gene_num, pra, sizeof pra) < 0) {
@@ -892,6 +893,22 @@ Sprm loadRepSprm(const char *format, int gene_num, int loc_pop) {
     }
     // return the top parameter
     return *pra;
+}
+
+// Sprm の代表者選出 (圧縮バージョン)
+Sprm loadRepSprmComp(const char *format, int gene_num, int loc_pop) {
+    Sprm pra[loc_pop];
+    int flag;
+    if ((flag = loadSprmFileComp(format, gene_num, pra, loc_pop)) < 0) {
+        // 失敗ならランダムでいいや
+        puts("乱数");
+        randSprm(pra);
+    } else if (!flag) {
+        // 未ソートは警告
+        puts("未ソート");
+    }
+    // ソート済ならそのまま
+    return pra[0];
 }
 
 // check parameter in a file

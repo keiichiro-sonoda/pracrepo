@@ -342,10 +342,9 @@ extern double CMN_RATIO_EFF;
 // パラメータも表示
 void initSprm(void);
 
-// Sprm のファイルフォーマットを自動生成する関数 (予定)
-// 各種要素を引数で指定
-// 書き込み対象文字列, サイズ, 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, その他オプション
-int makeSprmFileFormatAuto(char*, int, int, int, int, int, int, int, int, double, int, ...);
+// Sprm のファイルフォーマットを自動生成する関数
+// 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, シード値, その他
+int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, int loc_seed, ...);
 
 // print a simple parameter
 void showSprm(Sprm pr);
@@ -470,6 +469,9 @@ int loadSprmFileComp(const char*, int, Sprm*, int);
 
 // load representative of Sprm
 Sprm loadRepSprm(const char *format, int gene_num, int loc_pop);
+
+// Sprm の代表者選出 (圧縮バージョン)
+Sprm loadRepSprmComp(const char *format, int gene_num, int loc_pop);
 
 // check parameter in a file
 // give the file name format and generation number
