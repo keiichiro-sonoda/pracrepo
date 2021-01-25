@@ -93,6 +93,37 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
     print(path)
     return path
 
+# パラメータが保存されているファイルのフォーマットをjsonファイルのフォーマットに変更
+# 指し手決定関数のidも与える
+def makeJsonFileName(fname_format, decNxt_id):
+    # json ファイルのフォーマットに使う部分を取得
+    m = re.match(r"(prm//.*)//", fname_format)
+    if not m:
+        print("一致するパターンがありません")
+        return ""
+    # マッチオブジェクトから文字列に変換
+    json_fname = m.groups()[0]
+    if decNxt_id == 0:
+        json_fname += "_best"
+    else:
+        json_fname += "_rlt"
+    # 先頭の "prm" のみ "json" に書き換え (ディレクトリ変更)
+    # 文字列の最後に "_wc.json" と付け加える (wc は win count の意)
+    json_fname = json_fname.replace("prm", "json", 1) + "_wc.json"
+    print(json_fname)
+    return json_fname
+
+# でたらめなファイル名を作る
+# 最後に付加できるように引数を追加しておく
+def makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=""):
+    json_fname = "json/wp{:03d}_{:02d}_seed{:03d}_{:+05d}_{:+05d}_{:04d}_{:03d}_".format(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num) + name + "_"
+    if (dnfunc_id == 0):
+        json_fname += "d"
+    else:
+        json_fname += "r_vseed{:03d}_loop{:04d}".format(vs_seed, loop)
+    print(json_fname)
+    return json_fname
+
 # フォーマットにシードも追加
 # genetic02 のマクロ名と同じ
 def formatPlusSeed(fname_format, seed):
@@ -338,26 +369,6 @@ def imgTest(fname_format, generation):
     plt.imshow(z, cmap='viridis')
     plt.colorbar()
     plt.show()
-
-# パラメータが保存されているファイルのフォーマットをjsonファイルのフォーマットに変更
-# 指し手決定関数のidも与える
-def makeJsonFileName(fname_format, decNxt_id):
-    # json ファイルのフォーマットに使う部分を取得
-    m = re.match(r"(prm//.*)//", fname_format)
-    if not m:
-        print("一致するパターンがありません")
-        return ""
-    # マッチオブジェクトから文字列に変換
-    json_fname = m.groups()[0]
-    if decNxt_id == 0:
-        json_fname += "_best"
-    else:
-        json_fname += "_rlt"
-    # 先頭の "prm" のみ "json" に書き換え (ディレクトリ変更)
-    # 文字列の最後に "_wc.json" と付け加える (wc は win count の意)
-    json_fname = json_fname.replace("prm", "json", 1) + "_wc.json"
-    print(json_fname)
-    return json_fname
 
 # 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
 # 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
@@ -845,7 +856,7 @@ def main():
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01)
-    viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="stdev")
+    #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
@@ -862,6 +873,7 @@ def main():
     # ファイル名作成テスト
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
+    makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     plt.show()
     print("終わり")
 
