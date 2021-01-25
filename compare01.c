@@ -7,7 +7,7 @@
 #define COMPARE_SEED 555
 
 // 指し手ルーレットで対戦する際のシード値
-#define VS_SEED 123
+#define VS_SEED 124
 
 // 配列Aの各要素に配列Bの各要素を足す
 #define addArray(A, B, n) for (int _ = 0; _ < (n); _++) (A)[_] += (B)[_]
@@ -175,6 +175,7 @@ int main(void) {
     decNxtSprmC dnfuncc;
     dnfuncc = getBestBoardSprm;
     //dnfuncc = getBoardSprmRoulette;
+    srand(VS_SEED);
     vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc);
     return 0;
 }
