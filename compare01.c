@@ -17,12 +17,9 @@ Board getBestBoardSprm(const Board *next_boards, int n, const Sprm *prp, int col
     float mx_point = -FLT_MAX;
     float t_point;
     Board best_board;
-    int inv = 1;
+    int inv;
     // 1 -> 1, 2 -> -1
-    //inv = -2 * color + 3;
-    if (color == 0b10) {
-        inv = -1;
-    }
+    inv = -2 * color + 3;
     for (int i = 0; i < n; i++) {
         // sign inversion!!
         t_point = evaluationSimple(next_boards[i], *prp) * inv;
