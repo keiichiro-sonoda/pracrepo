@@ -8,6 +8,8 @@ FILENAME_MAX = 4096
 # 共有ライブラリ読み込み(カレントディレクトリを想定)
 # ubuntu用であることに注意
 share02_ubu = ctypes.cdll.LoadLibrary(".//share02_ubu.so")
+# 公比同士対専用
+compare01_share_ubu = ctypes.cdll.LoadLibrary(".//compare01_share_ubu.so")
 
 # 配列型定義
 FloatArray10 = ctypes.c_float * 10
