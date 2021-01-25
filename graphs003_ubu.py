@@ -129,9 +129,13 @@ def makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_
 # デフォの拡張子は pdf
 def makePVSOCRGraphFileName(json_fname, extention="pdf"):
     path = FIGURES_PATH
-    m1 = re.match(r'(json)(/.*)', json_fname)
+    m1 = re.match(r'(json)(/.*)(\.json)', json_fname)
+    if not m1:
+        return ""
     mg1 = m1.groups()
-    print(mg1)
+    #print(mg1)
+    path += mg1[1] + "." + extention
+    print(path)
     return path
 
 # フォーマットにシードも追加
