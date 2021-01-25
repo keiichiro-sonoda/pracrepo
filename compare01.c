@@ -5,10 +5,11 @@
 
 // 比較対象のシード値
 #define COMPARE_SEED 555
+
 // 指し手ルーレットで対戦する際のシード値
 #define VS_SEED 123
 
-// 盤面を返り値とする関数の型
+// 盤面を返り値とする関数の型 (引数は自由?)
 typedef Board (*decNxtSprmC)();
 
 // Sprm で計算された最善手を選ぶ
@@ -16,9 +17,12 @@ Board getBestBoardSprm(const Board *next_boards, int n, const Sprm *prp, int col
     float mx_point = -FLT_MAX;
     float t_point;
     Board best_board;
-    int inv;
+    int inv = 1;
     // 1 -> 1, 2 -> -1
-    inv = -2 * color + 3;
+    //inv = -2 * color + 3;
+    if (color == 0b10) {
+        inv = -1;
+    }
     for (int i = 0; i < n; i++) {
         // sign inversion!!
         t_point = evaluationSimple(next_boards[i], *prp) * inv;
@@ -29,6 +33,25 @@ Board getBestBoardSprm(const Board *next_boards, int n, const Sprm *prp, int col
         }
     }
     return best_board;
+}
+
+// 手をルーレット選択で決める
+// n: the number of next boards
+// use simple parameter
+// decide next board by roulette
+Board getBoardSprmRoulette(const Board *next_boards, int n, const Sprm *prp, int color) {
+    float exp_points[n];
+    float s;
+    int choosed;
+    for (int i = 0; i < n; i++) {
+        // evaluate all next boards
+        // and calculate the power of e (to make numbers positive)
+        // sign inversion!
+        exp_points[i] = expf(-evaluationSimple(next_boards[i], *prp) * 10);
+    }
+    s = sumFloat(exp_points, n);
+    choosed = rouletteFloat(exp_points, n, s);
+    return next_boards[choosed];
 }
 
 // 非正規化対戦
@@ -131,6 +154,6 @@ int main(void) {
     //puts(format);
     test = loadRepSprmComp(format, 100, 50);
     showSprmOneLine(test);
-    vsOtherCommonRatio(-2000, 0, 100, 100);
+    vsOtherCommonRatio(-2000, 2000, 100, 100);
     return 0;
 }
