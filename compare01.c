@@ -1,3 +1,6 @@
+/*
+異なる公比で進化させた個体どうしを対戦させてみたい
+*/
 #include "genetic02.h"
 
 int main(void) {
