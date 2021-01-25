@@ -57,7 +57,7 @@ int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
         }
         pass = 0;
         // determine a next board
-        dnfuncc();
+        dnfuncc(nba, n, pra[turn - 1], turn);
         // switch turn
         turn ^= 0b11;
     }
@@ -73,13 +73,14 @@ int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {
 // 個体数を指定できるリーグ戦関数
 // win: +2, draw: +1, lose: 0
 // give a function pointer to decide the next board
-void leagueMatchSprmFF(decNxtSprm dnfunc, const Sprm *generation, int *result, int loc_pop) {
+void leagueMatchSprmFF(decNxtSprmC dnfuncc, const Sprm *pra, int *result, int loc_pop) {
     int j;
     zeros(result, loc_pop);
     for (int i = 0; i < loc_pop; i++) { // 黒側の添字
         for (j = 0; j < loc_pop; j++) { // 白側の添字
             if (i == j) continue;
-            switch(oneToOneNormalSprmFlex(dnfunc, generation + i, generation + j)) {
+            // 非正規化対戦
+            switch(oneToOneSprm(dnfuncc, pra + i, pra + j)) {
                 // black won
                 case 1:
                     result[i] += 2;
@@ -116,6 +117,8 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
         puts(format);
         rep_pra[count] = loadRepSprmComp(format, gene_num, loc_pop);
     }
+    leagueMatchSprmFF(getBestBoardSprm, rep_pra, result, loc_pop);
+    printDecimalArray(result, loc_pop);
 }
 
 int main(void) {
