@@ -13,8 +13,7 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num) {
     int i, loc_pop, count;
     double loc_cr_ln;
     char format[FILENAME_MAX];
-    loc_pop = 0;
-    for (i = start_th; i <= stop_th; i += step_th) loc_pop++;
+    for (i = start_th, loc_pop = 0; i <= stop_th; i += step_th, loc_pop++);
     printDecimal(loc_pop);
     // 代表者配列
     Sprm rep_pra[loc_pop];
