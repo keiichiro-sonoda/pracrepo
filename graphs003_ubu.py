@@ -464,8 +464,11 @@ def viewWinRateGraph(fname_format, decNxt_id):
 # 他の公比と対戦したときの勝ち点
 def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako, name=""):
     if zako:
-        name += "_zako"
-    json_fname = makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=name)
+        name2 = name + "_zako"
+    else:
+        name2 = name
+    json_fname = makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=name2)
+    del name2
     first = True
     # ファイルが存在
     if os.path.exists(json_fname):
@@ -498,6 +501,8 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
     ax.plot(x, pt_list)
     fig.tight_layout()
     path = makePVSOCRGraphFileName(json_fname)
+    if name == "grid":
+        ax.grid()
     if not VIEW_ONLY:
         if os.path.exists(path):
             if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
@@ -934,7 +939,7 @@ def main():
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1)
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="grid")
     plt.show()
     print("終わり")
 
