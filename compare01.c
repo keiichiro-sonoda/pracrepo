@@ -8,8 +8,28 @@
 // 指し手ルーレットで対戦する際のシード値
 #define VS_SEED 123
 
-// 盤面を返り値とする関数の型?
+// 盤面を返り値とする関数の型
 typedef Board (*decNxtSprmC)();
+
+// Sprm で計算された最善手を選ぶ
+Board getBestBoardSprm(const Board *next_boards, int n, const Sprm *prp, int color) {
+    float mx_point = -FLT_MAX;
+    float t_point;
+    Board best_board;
+    int inv;
+    // 1 -> 1, 2 -> -1
+    inv = -2 * color + 3;
+    for (int i = 0; i < n; i++) {
+        // sign inversion!!
+        t_point = evaluationSimple(next_boards[i], *prp) * inv;
+        if (mx_point < t_point) {
+            // update
+            mx_point = t_point;
+            best_board = next_boards[i];
+        }
+    }
+    return best_board;
+}
 
 // 非正規化対戦
 int oneToOneSprm(decNxtSprmC dnfuncc, const Sprm *bpp, const Sprm *wpp) {

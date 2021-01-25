@@ -1,6 +1,5 @@
 // 共有ライブラリ用ソースからもincludeすることにした
 #include <time.h>
-#include <float.h>
 #include <math.h>
 
 #include "genetic02.h"
