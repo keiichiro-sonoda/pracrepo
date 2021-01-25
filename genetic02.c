@@ -185,7 +185,7 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
                 miteigiExit(-1);
         }
     }
-    // 初期世代雑魚フラグ
+    // 初期世代雑魚フラグ (可変引数の第一整数?)
     if ((arg_i = va_arg(args, int)) == 1) {
         strcatSize(info_str, "_zako", BUF_LEN);
     }
