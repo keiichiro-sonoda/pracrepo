@@ -168,19 +168,18 @@ void vsOtherCommonRatio(int start_th, int stop_th, int step_th, int gene_num, de
 int main(void) {
     initBoard();
     setCORR_TABLE();
-    Sprm test;
-    char format[FILENAME_MAX];
-    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.01, 0);
-    puts(format);
+    //char format[FILENAME_MAX];
+    //makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.01, 0);
     //puts(format);
-    test = loadRepSprmComp(format, 100, 50);
-    showSprmOneLine(test);
+    //puts(format);
+    //Sprm test = loadRepSprmComp(format, 100, 50);
+    //showSprmOneLine(test);
     decNxtSprmC dnfuncc;
     dnfuncc = getBestBoardSprm;
-    dnfuncc = getBoardSprmRoulette;
+    //dnfuncc = getBoardSprmRoulette;
     srand(VS_SEED);
-    //vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc);
+    vsOtherCommonRatio(-2000, 2000, 100, 100, dnfuncc, 100);
     // 公比1以下のみ
-    vsOtherCommonRatio(-2000, 0, 100, 100, dnfuncc, 20);
+    //vsOtherCommonRatio(-2000, 0, 100, 100, dnfuncc, 20);
     return 0;
 }
