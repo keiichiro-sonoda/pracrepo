@@ -593,6 +593,8 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
             stat_option = m1.groups()[1]
             if stat_option == "median":
                 selDatFunc = lambda l: stat.median(l)
+            elif stat_option == "mean":
+                selDatFunc = lambda l: stat.mean(l)
             elif stat_option == "SD":
                 selDatFunc = lambda l: stat.stdev(l)
             else:
@@ -632,20 +634,17 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
         f.close()
     return (x, y, z)
 
-# 公比と世代数を軸とし, 適応度に応じて色が異なるカラーマップを作成
+# 公比と世代数を軸とし, 適応度の統計値に応じて色が異なるカラーマップを作成
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65):
     name1 = "fit_"
-    if stat_option == "median":
+    if stat_option == "median": # 中央値
         name1 += "med"
-        cm = plt.cm.get_cmap("RdYlGn")
-        v_min = 0
-        v_max = FITNESS_MAX
-    elif stat_option == "stdev":
+    elif stat_option == "mean": # 平均値
+        name1 += "mean"
+    elif stat_option == "stdev": # 標準偏差
         name1 += "SD"
-        cm = plt.cm.get_cmap("inferno")
     elif stat_option == "variance":
         name1 += "variance"
-        cm = plt.cm.get_cmap("inferno")
     else:
         print("不明な統計値")
         return
@@ -658,6 +657,11 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     if stat_option in ("stdev", "variance"):
         v_min = 0
         v_max = max(z)
+        cm = plt.cm.get_cmap("inferno")
+    else:
+        v_min = 0
+        v_max = FITNESS_MAX
+        cm = plt.cm.get_cmap("RdYlGn")
     fig = makeCmap(x, y, z, v_min, v_max, mag=mag, c_pattern=cm)[0]
     # グラフのサイズの倍率もファイル名に加える
     name3 = name2 + "_size{:4.2f}".format(mag)
@@ -748,9 +752,10 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, stat_option="stdev")
     # エリート数1
-    viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=0, focus="bia", sd=True)
-    #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="stdev")
+    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="mean")
+    #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=0, focus="bia", sd=True)
+    #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="stdev")
