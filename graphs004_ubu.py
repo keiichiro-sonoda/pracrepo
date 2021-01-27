@@ -572,9 +572,12 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
             getDatFunc = lambda fname, loc_pop: slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         # いずれかの重みが欲しい時
         else:
-            # 現状は平均値だけ扱う
-            getDatFunc = lambda fname, loc_pop: slw.getFamilyMeansWrap(fname, loc_pop, 1)
-            selDatFunc = lambda l: l[w_idx]
+            if data_option == "w_SD": # 各重みごとの標準偏差の平均値
+                getDatFunc = lambda fname, loc_pop: slw.getFamilySDWrap(fname, loc_pop, 1)
+                selDatFunc = lambda l: stat.mean(l)
+            elif data_option == "w_mean": # 指定した重みの平均値
+                getDatFunc = lambda fname, loc_pop: slw.getFamilyMeansWrap(fname, loc_pop, 1)
+                selDatFunc = lambda l: l[w_idx]
         if forced:
             print("強制")
         else:
@@ -643,45 +646,16 @@ def saveFigWrap(fig, path):
 
 # 各重みの標準偏差の平均値を見たい
 # 多様性として捉えていいのか?
-def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00):
-    x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
-    y = np.arange(g_min, g_max + 1, 1, np.int32)
-    sdml = []
-    c = 0
-    for lncr in x:
-        for gene_num in y:
-            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
-            sdl = slw.getFamilySDWrap(fname, loc_pop, 1)
-            if not sdl:
-                c += 1
-                sdm = -1
-                if c >= 10:
-                    print("有効なパラメータを設定してください")
-                    return
-            else:
-                c = 0
-                sdm = stat.mean(sdl)
-                #sdm = max(sdl)
-            sdml.append(sdm)
-    X, Y = np.meshgrid(x, y)
-    Z = np.array(sdml).reshape(len(x), -1).T
-    fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(111)
-    ax.set_xlabel("the natural log of common ratio", fontsize=15)
-    ax.set_ylabel("generation", fontsize=15)
-    v_max = max(sdml)
-    #v_max = 0.1
-    mappable = ax.pcolor(X, Y, Z, vmin=0, vmax=v_max, cmap="plasma", shading="nearest")
-    fig.colorbar(mappable, ax=ax)
-    fig.tight_layout()
-    name = "wsdm_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    path = makeGraphsFileName(fname, name, g_min, g_max)
-    if path and not VIEW_ONLY:
-        if os.path.exists(path):
-            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
-                return
-        fig.savefig(path, bbox_inches="tight")
-        print("saved!!")
+def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, mag=0.65):
+    # json ファイル名作成
+    fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
+    name1 = "wsdm_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+    json_fname = makeGraphsFileName(fname, name1, g_min, g_max, c_map=True, extention="json", dir_path="./json")
+    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option="w_SD")
+    fig = makeCmap(x, y, z, 0, max(z), mag=mag, c_pattern="plasma")[0]
+    name2 = name1 + "_size{:4.2f}".format(mag)
+    path = makeGraphsFileName(fname, name2, g_min, g_max)
+    saveFigWrap(fig, path)
 
 # 指定した重みの平均値を見たい
 # w_num は重み番号 (1 から 10 を与える)
@@ -736,8 +710,9 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
+    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
+    viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
@@ -748,7 +723,6 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
-    #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
