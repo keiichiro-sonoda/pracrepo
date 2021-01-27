@@ -756,9 +756,12 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
         return
     # 重み, 公比情報
     name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step)
-    # ダミーファイル名作成
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
-    makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf", dir_path="./json")
+    json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf", dir_path="./json")
+    if os.path.exists(json_fname):
+        print("既存")
+    else:
+        print("初めて")
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
     sdml = []
