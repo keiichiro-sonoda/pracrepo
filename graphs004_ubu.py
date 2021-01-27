@@ -53,7 +53,7 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
     m2 = re.match(r'.+(_s[0-9]+)', mg1[1])
     sp = "_no_seed"
     if m2:
-        print("シードを含みます")
+        #print("シードを含みます")
         sp = m2.groups()[0]
     else:
         print("シードを含みません")
@@ -705,6 +705,15 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
         fig.savefig(path, bbox_inches="tight")
         print("saved!")
 
+# 確認とかいろいろしてから図を保存
+def saveFigWrap(fig, path):
+    if not VIEW_ONLY and path:
+        if os.path.exists(path):
+            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
+                return
+        fig.savefig(path, bbox_inches="tight")
+        print("保存されました")
+
 # 各重みの標準偏差の平均値を見たい
 # 多様性として捉えていいのか?
 def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00):
@@ -793,17 +802,13 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
     path = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf")
-    if path and not VIEW_ONLY:
-        if os.path.exists(path):
-            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
-                return
-        fig.savefig(path, bbox_inches="tight")
-        print("saved!!")
+    # 図の保存 (グローバル変数や標準入力で上書き警告などする)
+    saveFigWrap(fig, path)
 
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    #VIEW_ONLY = False
+    VIEW_ONLY = False
     #population = 50
     #elite_num = 0
     #lncr = -2
