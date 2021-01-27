@@ -371,6 +371,10 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
     makeSDGraph(ax2, g, SD, emphasize)
     plt.show()
 
+# 全ての要素が等しいかどうかを確認
+def allSame(arr):
+    return len(set(arr)) <= 1
+
 # 他の公比と対戦したときの勝ち点
 # 中央値との関係も調べたい
 def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name="", grid=True):
@@ -421,9 +425,10 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
     if grid:
         ax.grid()
     path = makePVSOCRGraphFileName(json_fname)
-    # 相関係数の計算
-    coef = np.corrcoef(x, y)
-    print(coef)
+    # 相関係数の計算 (要素が全て同じだと0割になる)
+    if not (allSame(x) or allSame(y)):
+        coef = np.corrcoef(x, y)
+        print(coef)
     saveFigWrap(fig, path)
 
 # 単純な2次元グラフを作成
@@ -431,8 +436,8 @@ def makeSimpleGraph(x, y, mag=0.65, x_label="median fitness", y_label="mean weig
     plt.rcParams["font.size"] = 12 * mag
     fig = plt.figure(figsize=(8 * mag, 5 * mag))
     ax = fig.add_subplot(111)
-    ax.set_xlabel("the natural log of common ratio", fontsize=15*mag)
-    ax.set_ylabel("point", fontsize=15*mag)
+    ax.set_xlabel(x_label, fontsize=15*mag)
+    ax.set_ylabel(y_label, fontsize=15*mag)
     plt.xticks(fontsize=12*mag)
     #ax.set_xticks([j for i, j in enumerate(x) if i % 5 == 0])
     plt.yticks(fontsize=12*mag)
