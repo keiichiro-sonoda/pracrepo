@@ -666,13 +666,13 @@ def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
 
 # 指定した重みの平均値を見たい
 # w_num は重み番号 (1 から 10 を与える)
-def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00):
+def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65):
     w_num = int(w_num) - 1 # 添字に変換
     if w_num < 0 or 9 < w_num:
         print("有効な重み番号を指定してください")
         return
-    # 重み, 公比情報
-    name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step)
+    # 重み, 公比, 倍率情報
+    name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:5.3f}_size{:4.2f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step, mag)
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
     json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     # 軸となる配列
@@ -706,21 +706,28 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
         f = open(json_fname, "w")
         json.dump(sdml, f)
         f.close()
-    X, Y = np.meshgrid(x, y)
-    Z = np.array(sdml).reshape(len(x), -1).T
-    fig = plt.figure(figsize=(8, 5))
-    ax = fig.add_subplot(111)
-    ax.set_xlabel("the natural log of common ratio", fontsize=15)
-    ax.set_ylabel("generation", fontsize=15)
-    #v_max = max(sdml)
-    v_max = 0.5
-    v_min = -0.5
-    mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap="RdYlBu", shading="nearest")
-    fig.colorbar(mappable, ax=ax)
-    fig.tight_layout()
+    fig, ax = makeCmap(x, y, sdml, -0.5, 0.5, mag=mag, c_pattern="RdYlBu")
     path = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf")
     # 図の保存 (グローバル変数や標準入力で上書き警告などする)
     saveFigWrap(fig, path)
+
+# カラーマップの作成
+def makeCmap(x, y, z, z_min, z_max, mag=0.65, c_pattern="RdYlGn"):
+    X, Y = np.meshgrid(x, y)
+    Z = np.array(z).reshape(len(x), -1).T
+    plt.rcParams["font.size"] = 12 * mag
+    fig = plt.figure(figsize=(8 * mag, 5 * mag))
+    ax = fig.add_subplot(111)
+    ax.set_xlabel("the natural log of common ratio", fontsize=15*mag)
+    ax.set_ylabel("generation", fontsize=15*mag)
+    plt.xticks(fontsize=12*mag)
+    ax.set_xticks([j for i, j in enumerate(x) if i % 5 == 0])
+    plt.yticks(fontsize=12*mag)
+    mappable = ax.pcolor(X, Y, Z, vmin=z_min, vmax=z_max, cmap=c_pattern, shading="nearest")
+    fig.colorbar(mappable, ax=ax)
+    fig.tight_layout()
+    # 図と座標? を返す
+    return fig, ax
 
 def main():
     global VIEW_ONLY
