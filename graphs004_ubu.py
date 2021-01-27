@@ -428,7 +428,7 @@ def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
     name1 = "fit_med_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     json_fname1 = makeGraphsFileName(fname, name1, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     fmedl = makeOrLoadCmapData(json_fname1, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options)[2]
-    print(fmedl[:101])
+    print(fmedl[:102])
 
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
