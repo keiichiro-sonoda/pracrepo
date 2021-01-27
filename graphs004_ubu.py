@@ -790,7 +790,7 @@ def main():
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=100, focus="bia", sd=False)
     # 幅5倍
-    viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, extention="jpg", stat_option="median")
+    viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, stat_option="stdev")
