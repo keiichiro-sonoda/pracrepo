@@ -463,7 +463,7 @@ def makeSimpleGraph(x, y, mag=0.65, x_label="median fitness", y_label="mean weig
 # ついでに標準偏差も調べる
 def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65, focus="normal", sd=False):
     w_idx = int(w_num) - 1 # 添字に変換
-    if not sd and w_idx < 0 or 9 < w_idx:
+    if (not sd) and (w_idx < 0 or 9 < w_idx):
         if w_num == 100:
             print("全ての重みの相関係数")
         else:
@@ -810,7 +810,7 @@ def main():
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="median", extention="jpg")
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r", extention="jpg")
-    viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=100, options=0b01, focus="bias", sd=False)
+    viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=11, options=0b01, focus="bias", sd=True)
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
