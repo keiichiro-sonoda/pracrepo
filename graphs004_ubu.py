@@ -803,14 +803,14 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
     # さらに幅20倍 (最小から100倍)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
-    #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, stat_option="stdev")
+    viewFitMedWMeanGraph(50, 0, 5, -2, 2, 0.1, 0, 100, 555, w_num=4, focus="bia", sd=False)
     # エリート数1
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="median", extention="jpg")
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="median", extention="jpg")
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r", extention="jpg")
-    viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=11, options=0b01, focus="bias", sd=True)
+    #viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=11, options=0b01, focus="bias", sd=True)
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
