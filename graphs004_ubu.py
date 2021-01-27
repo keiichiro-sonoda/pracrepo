@@ -455,6 +455,8 @@ def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
     json_fname2 = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     wml = makeOrLoadCmapData(json_fname2, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option="w_mean", w_idx=w_idx)[2]
     makeSimpleGraph(fmedl, wml)
+    coef = np.corrcoef(fmedl, wml)
+    print(coef)
 
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
