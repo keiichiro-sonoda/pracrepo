@@ -421,12 +421,14 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         fmed_json_fname = makeGraphsFileName(fname, name3, gene_num, gene_num, c_map=True, extention="json", dir_path="./json")
         fmedl = makeOrLoadCmapData(fmed_json_fname, loc_pop, loc_eln, 5, lncr_start, lncr_stop, lncr_step, gene_num, gene_num, loc_seed, options=options)[2]
         x = np.array(fmedl)
+        print(x)
         x_label = "median fitness"
         g_opt = "scatter"
     else:
         x_label="the natural log of common ratio"
         g_opt = "plot"
     y = np.array(pt_list)
+    #print(y)
     fig, ax = makeSimpleGraph(x, y, x_label=x_label, y_label="point", option=g_opt)
     if grid:
         ax.grid()
@@ -805,7 +807,7 @@ def main():
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="median", extention="jpg")
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="a", extention="jpg")
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r", extention="jpg")
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=9, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
