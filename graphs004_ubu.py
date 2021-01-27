@@ -416,9 +416,9 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         g_opt = "plot"
     y = np.array(pt_list)
     fig, ax = makeSimpleGraph(x, y, x_label="the natural log of common ratio", y_label="point", option=g_opt)
-    path = makePVSOCRGraphFileName(json_fname)
     if grid:
         ax.grid()
+    path = makePVSOCRGraphFileName(json_fname)
     # 相関係数の計算
     coef = np.corrcoef(x, y)
     print(coef)
@@ -813,7 +813,7 @@ def main():
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 1, zako=1, name="fmed_r")
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 0, 123, 10, 1, zako=1, name="fmed_r")
     #viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 124, 10, 1, zako=0)
     plt.show()
     print("終わり")
