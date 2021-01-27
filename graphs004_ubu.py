@@ -370,96 +370,6 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
     makeSDGraph(ax2, g, SD, emphasize)
     plt.show()
 
-# 関数テスト
-# パラメータの画像表示
-def imgTest(fname_format, generation):
-    fname = fname_format.format(generation)
-    l = slw.getTopSprmWrap(fname)
-    z = np.zeros((8, 8))
-    for i in range(8):
-        for j in range(8):
-            z[i, j] = l[i + j * 8]
-    plt.imshow(z, cmap='viridis')
-    plt.colorbar()
-    plt.show()
-
-# 各世代の代表者がランダムAIと対戦した結果の辞書を作ってjson形式で保存したい
-# 世代番号をキーとし, 値は結果の辞書とする (白と黒それぞれの対戦結果)
-def makeWinCountFile(fname_format, loc_pop, decNxt_id, game_num, g_min, g_max):
-    # シードは直前に設定することにする
-    # ランダムAIとの対戦なので一応再現性を確保
-    sl.share02_ubu.setSeedPy(SEED)
-    # 書き込みファイル名作成
-    json_fname = makeJsonFileName(fname_format, decNxt_id)
-    if os.path.exists(json_fname):
-        res = input(json_fname + "は存在します. 書き換えますか? (yes\\n)")
-        if res != "yes":
-            return
-    # 保存するディクショナリ初期化
-    wcd = {}
-    # 指定した世代幅くり返し
-    for i in range(g_min, g_max + 1):
-        tmpd = {}
-        # 読み込みファイル名
-        fname = fname_format.format(i)
-        # 失敗したら[0, 0, 0]が帰ってくる
-        rslt = slw.getTopSprmGameRsltVSRandWrap(fname, 1, loc_pop, decNxt_id, game_num)
-        tmpd["black"] = rslt
-        rslt = slw.getTopSprmGameRsltVSRandWrap(fname, 2, loc_pop, decNxt_id, game_num)
-        tmpd["white"] = rslt
-        wcd[i] = tmpd
-        print(wcd)
-    f = open(json_fname, "w")
-    json.dump(wcd, f)
-    f.close()
-
-# ランダムAIと対戦したときの勝率のグラフを作りたい
-# 白黒は試合数が同じものとし, 平等に扱う
-# とりあえず引き分けは考慮せず勝ちだけ考えよう
-# 全ての世代で試合数は等しいと仮定 (違ったら同じグラフにするのおかしくね?)
-def viewWinRateGraph(fname_format, decNxt_id):
-    json_fname = makeJsonFileName(fname_format, decNxt_id)
-    # ファイルの存在確認
-    if not os.path.exists(json_fname):
-        print(json_fname, "doesn't exist.")
-        return
-    f = open(json_fname, "r")
-    wcd = json.load(f)
-    f.close()
-    # (世代番号, 勝率) のタプルのリスト
-    wrl = []
-    for k, v in wcd.items():
-        # 試合数計算 (全て等しいと思うが毎回行う)
-        game_num = sum(v["black"]) + sum(v["white"])
-        # 勝率計算
-        wr = (v["black"][0] + v["white"][0]) / game_num
-        # キーはintにしてタプル化
-        wrl.append((int(k), wr))
-    # 辞書に順番という概念がないため一応ソート
-    wrl.sort()
-    # numpy配列に変換
-    wra = np.array(wrl)
-    # 世代数と勝率を別々の配列に分ける
-    x = wra[:, 0]
-    y = wra[:, 1]
-    # ソートされているので最小値と最大値を取得
-    x_min = int(x[0])
-    x_max = int(x[-1])
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.plot(x, y)
-    # ラベル指定
-    ax.set_xlabel("generation", fontsize=15)
-    ax.set_ylabel("win rate", fontsize=15)
-    # 横幅指定（読み込めたデータだけ）
-    ax.set_xticks(np.linspace(x_min, x_max, 11))
-    # 縦幅指定（固定）
-    ax.set_yticks(np.linspace(0.0, 1.0, 11))
-    ax.grid()
-    # game_num は最後に計算したものを使う
-    path = makeGraphsFileName(fname_format, "wr{:04d}".format(game_num), x_min, x_max)
-    fig.savefig(path, bbox_inches="tight")
-
 # 他の公比と対戦したときの勝ち点
 def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako, name=""):
     if zako:
@@ -765,28 +675,37 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step)
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
     json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf", dir_path="./json")
-    if os.path.exists(json_fname):
-        print("既存")
-    else:
-        print("初めて")
+    # 軸となる配列
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
-    sdml = []
-    c = 0
-    for lncr in x:
-        for gene_num in y:
-            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
-            sdl = slw.getFamilyMeansWrap(fname, loc_pop, 1)
-            if not sdl:
-                c += 1
-                sdm = -1
-                if c >= 10:
-                    print("有効なパラメータを設定してください")
-                    return
-            else:
-                c = 0
-                sdm = sdl[w_num] # 先頭要素だけ見る (角の平均値)
-            sdml.append(sdm)
+    if os.path.exists(json_fname):
+        print("既存")
+        # ファイル読み込み
+        f = open(json_fname, "r")
+        sdml = json.load(f)
+        f.close()
+    else:
+        print("初めて")
+        sdml = []
+        c = 0
+        for lncr in x:
+            for gene_num in y:
+                fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
+                sdl = slw.getFamilyMeansWrap(fname, loc_pop, 1)
+                if not sdl:
+                    c += 1
+                    sdm = -1
+                    if c >= 10:
+                        print("有効なパラメータを設定してください")
+                        return
+                else:
+                    c = 0
+                    sdm = sdl[w_num] # 先頭要素だけ見る (角の平均値)
+                sdml.append(sdm)
+        # ファイル書き込み
+        f = open(json_fname, "w")
+        json.dump(sdml, f)
+        f.close()
     X, Y = np.meshgrid(x, y)
     Z = np.array(sdml).reshape(len(x), -1).T
     fig = plt.figure(figsize=(8, 5))
