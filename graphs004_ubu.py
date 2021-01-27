@@ -450,6 +450,7 @@ def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
         fwna = np.array(fwnal)
         #print(fwna)
         coef = np.corrcoef(fwna)
+        print(coef[0][1:])
     else:
         if sd: # 縦軸標準偏差モード
             name2 = "fit_SD_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
@@ -461,7 +462,7 @@ def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
         wml = makeOrLoadCmapData(json_fname2, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=d_opt, w_idx=w_idx)[2]
         makeSimpleGraph(fmedl, wml)
         coef = np.corrcoef(fmedl, wml)
-    print(coef)
+        print(coef)
 
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
