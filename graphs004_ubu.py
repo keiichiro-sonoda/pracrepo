@@ -421,6 +421,15 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         fig.savefig(path, bbox_inches="tight")
         print("saved!")
 
+# 適応度の中央値と, 重みの平均値とのグラフを作りたい
+# 相関を確かめるため
+def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65):
+    fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
+    name1 = "fit_med_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+    json_fname1 = makeGraphsFileName(fname, name1, g_min, g_max, c_map=True, extention="json", dir_path="./json")
+    fmedl = makeOrLoadCmapData(json_fname1, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options)[2]
+    print(fmedl[:101])
+
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
 # 横軸も指定可能, 縦軸の凡例も指定可能 (データと数が合うように!)
@@ -712,7 +721,8 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
-    viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
+    #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
+    viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
