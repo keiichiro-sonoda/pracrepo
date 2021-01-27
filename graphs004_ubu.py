@@ -373,7 +373,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
 
 # 他の公比と対戦したときの勝ち点
 # 中央値との関係も調べたい
-def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name=""):
+def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name="", grid=True):
     if zako:
         options=0b01
         name2 = name + "_zako"
@@ -411,9 +411,12 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         fmed_json_fname = makeGraphsFileName(fname, name3, gene_num, gene_num, c_map=True, extention="json", dir_path="./json")
         fmedl = makeOrLoadCmapData(fmed_json_fname, loc_pop, loc_eln, 5, lncr_start, lncr_stop, lncr_step, gene_num, gene_num, loc_seed, options=options)[2]
         x = np.array(fmedl)
-    fig, ax = makeSimpleGraph(x, pt_list, x_label="the natural log of common ratio", y_label="point", option="plot")
+        g_opt = "scatter"
+    else:
+        g_opt = "plot"
+    fig, ax = makeSimpleGraph(x, pt_list, x_label="the natural log of common ratio", y_label="point", option=g_opt)
     path = makePVSOCRGraphFileName(json_fname)
-    if name == "grid":
+    if grid:
         ax.grid()
     saveFigWrap(fig, path)
 
