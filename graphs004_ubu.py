@@ -567,31 +567,41 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     else:
         print("不明な統計値")
         return
-    medfl = []
+    # json ファイル名作りたい
+    fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
+    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}_size{:4.2f}".format(lncr_start, lncr_stop, lncr_step, mag)
+    json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
-    c = 0
-    for lncr in x:
-        for gene_num in y:
-            fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
-            #print(fname)
-            fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
-            if not fl:
-                medf = -1
-                c += 1
-                if c >= 10:
-                    print("有効なパラメータを指定してください")
-                    return
-            else:
-                c = 0
-                medf = stat_func(fl)
-            medfl.append(medf)
+    if os.path.exists(json_fname):
+        print("既存")
+        f = open(json_fname, "r")
+        medfl = json.load(f)
+        f.close()
+    else:
+        print("初めて")
+        medfl = []
+        c = 0
+        for lncr in x:
+            for gene_num in y:
+                fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
+                fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
+                if not fl:
+                    medf = -1
+                    c += 1
+                    if c >= 10:
+                        print("有効なパラメータを指定してください")
+                        return
+                else:
+                    c = 0
+                    medf = stat_func(fl)
+                medfl.append(medf)
     if stat_option in ("stdev", "variance"):
         v_min = 0
         v_max = max(medfl)
-    fig, ax = makeCmap(x, y, medfl, v_min, v_max, mag=mag, c_pattern=cm)
+    fig = makeCmap(x, y, medfl, v_min, v_max, mag=mag, c_pattern=cm)[0]
     # グラフのサイズの倍率もファイル名に加える
-    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}_size{:4.2f}".format(lncr_start, lncr_stop, lncr_step, mag)
+    name += "_size{:4.2f}".format(mag)
     path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
     saveFigWrap(fig, path)
 
@@ -728,8 +738,8 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
-    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2, options=0b00)
+    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
+    #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
