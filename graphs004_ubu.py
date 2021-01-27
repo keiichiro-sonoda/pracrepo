@@ -787,120 +787,10 @@ def viewWeight1MeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_st
         fig.savefig(path, bbox_inches="tight")
         print("saved!!")
 
-# ファイルフォーマットのリスト
-FILE_FORMATS = [# 00. から10. は選ばれた10個体のみファイルに保存
-                # 00. 最初 (指し手固定)
-                "prm//simple_prm//simple_prm{:03d}.bin",
-                # 01. 突然変異無し (20世代まで)
-                "prm//sprm_not_mutate//sprm_not_mutate{:03d}.bin",
-                # 02. 角固定
-                "prm//sprm_corner0.5//sprm_corner0.5_{:03d}.bin",
-                # 03. ランダム対戦
-                "prm//sprm_vsrand//sprm_vsrand{:03d}.bin",
-                # 04. 角固定-0.5
-                "prm//sprm_corner0.5neg//sprm_corner0.5neg_{:03d}.bin",
-                # 以下, 指し手をルーレット選択
-                # 05. 最初
-                "prm//sprm_roulette//sprm_roulette{:03d}.bin",
-                # 06.  勝ち点で直接ルーレット
-                "prm//sprm_rltrlt//sprm_rltrlt{:03d}.bin",
-                # 07. 最低点を引いて+1した値でルーレット
-                "prm//sprm_rr_submin//sprm_rr_submin{:03d}.bin",
-                # 08. 100引く順位（線形）に比例した確率でランキング選択
-                "prm//sprm_rrank//sprm_rrank{:03d}.bin",
-                # 09. 0.9 ^ 順位（指数）に比例した確率でランキング選択
-                "prm//sprm_rrank_exp//sprm_rrank_exp{:03d}.bin",
-                # 10. 適応度評価を行わない（比較用）
-                "prm//sprm_nofit//sprm_nofit{:03d}.bin",
-                # 以下, 全個体ファイルに保存
-                # 11. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
-                "prm//sprm050_06_rlt_uni_rd005//sprm050_06_rlt_uni_rd005_g{:03d}.bin",
-                # 12. 個体数100, エリート10, 非独立ランダム選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
-                "prm//sprm100_10_rd_au_rd005//sprm100_10_rd_au_rd005_g{:03d}.bin",
-                # 13. 個体数50, エリート6, 非独立ランダム選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
-                "prm//sprm050_06_rd_au_rd005//sprm050_06_rd_au_rd005_g{:03d}.bin",
-                # 14. 個体数50, エリート6, 非独立ルーレット選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
-                "prm//sprm050_06_rlt_au_rd005//sprm050_06_rlt_au_rd005_g{:03d}.bin",
-                # 15. 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突然変異5%
-                "prm//sprm050_06_rd_uni_rd005//sprm050_06_rd_uni_rd005_g{:03d}.bin",
-                # 16. 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
-                "prm//sprm050_06_rlt_1p_rd005//sprm050_06_rlt_1p_rd005_g{:03d}.bin",
-                # 17. 指し手固定, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
-                "prm//sprmdef050_06_rlt_uni_rd005//sprmdef050_06_rlt_uni_rd005_g{:03d}.bin",
-                # 18. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, 制限無シフト突然変異5%
-                "prm//sprm050_06_rlt_uni_sft005//sprm050_06_rlt_uni_sft005_g{:03d}.bin",
-                # 19. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, 制限有シフト突然変異5%
-                "prm//sprm050_06_rlt_uni_sftl005//sprm050_06_rlt_uni_sftl005_g{:03d}.bin",
-                # 20. 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限有シフト突変5%
-                "prm//sprm050_06_rlt_uni_rdsftl005//sprm050_06_rlt_uni_rdsftl005_g{:03d}.bin",
-                # 21. 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
-                "prm//sprm050_06_rlt_uni_rdsft005//sprm050_06_rlt_uni_rdsft005_g{:03d}.bin",
-                # 22. 指し手固定, 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
-                "prm//sprmdef050_06_rd_uni_rdsft005//sprmdef050_06_rd_uni_rdsft005_g{:03d}.bin",
-                # 23. 指し手ルーレット, 個体数50, エリート6, 非独立ランダム選択, 一様交叉, ランダム突変5%のあとに制限無シフト突変5%
-                "prm//sprm050_06_rd_uni_rdsft005//sprm050_06_rd_uni_rdsft005_g{:03d}.bin",
-                # 24. 指し手ルーレット, 個体数50, エリート6, ランダム突然変異100% (今更だけどエリートは突然変異しないよ)
-                "prm//sprm050_06___rd100//sprm050_06___rd100_g{:03d}.bin",
-                # 25. 指し手ルーレット, 個体数100, エリート10, 非独立ルーレット選択, 平均と一様一回ずつ, 一様のみランダム突然変異5%
-                "prm//sprm100_10_rlt_au_rd005//sprm100_10_rlt_au_rd005_g{:03d}.bin",
-                # 26. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一様交叉, ランダム突然変異5%
-                # gの付け忘れ!
-                "prm//srltc050_06_rlt_uni_rd005//srltc050_06_rlt_uni_rd005_{:03d}.bin",
-                # 27. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 一点交叉, ランダム突然変異5%
-                "prm//srltc050_06_rlt_1p_rd005//srltc050_06_rlt_1p_rd005_g{:03d}.bin",
-                # 28. 圧縮版, 指し手ルーレット, 個体数50, エリート6, 非独立ルーレット選択, 平均と一様一回ずつ, それぞれランダム突然変異5%
-                "prm//srltc050_06_rlt_aue_rd005//srltc050_06_rlt_aue_rd005_g{:03d}.bin",
-                # 29. 圧縮版, 対ランダム, 指し手固定, 個体数50, エリートなし, 等比数列ランキング選択公比0.90, 2人っ子一様交叉, ラン突1%
-                "prm//srddc050__rkg90_uni2_rd001//srddc050__rkg90_uni2_rd001_g{:03d}.bin",
-                # 30. 圧縮版, 対ランダム, 指し手固定, 個体数50, エリートなし, 等比数列ランキング選択公比0.80, 2人っ子一様交叉, ラン突1%
-                "prm//srddc050__rkg80_uni2_rd001//srddc050__rkg80_uni2_rd001_g{:03d}.bin",
-                # 31. 圧縮版, 対ランダム, 指し手固定, 個体数50, エリートなし, 等比数列ランキング選択公比0.50, 2人っ子一様交叉, ラン突1%
-                "prm//srddc050__rkg50_uni2_rd001//srddc050__rkg50_uni2_rd001_g{:03d}.bin",
-                # 32. 公比0.20
-                "prm//srddc050__rkg20_uni2_rd001//srddc050__rkg20_uni2_rd001_g{:03d}.bin",
-                # 33. 公比0.99
-                "prm//srddc050__rkg99_uni2_rd001//srddc050__rkg99_uni2_rd001_g{:03d}.bin",
-                # 34. 公比 exp(-0.005)
-                "prm//srddc050__rkgexp-0.005_uni2_rd001//srddc050__rkgexp-0.005_uni2_rd001_g{:03d}.bin",
-                # 35. 公比 exp(-0.020)
-                "prm//srddc050__rkgexp-0.020_uni2_rd001//srddc050__rkgexp-0.020_uni2_rd001_g{:03d}.bin"]
-
-# 圧縮版ファイルのフォーマットの添字はこのリストに加えていく
-# そろそろめんどい
-COMPRESSED_INDICES = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
-
-# 各フォーマットでどのシードを使ったのか記録
-# フォーマットにシードが付いているかの判定に使える
-SEED_DICT = {27: (123, 365, 999), 28: (365,), 29: (123, 999), 30: (123,), 31: (123,), 32: (123,), 33: (123,), 34: (123,), 35: (123,)}
-
-def old():
-    ind = 17
-    loc_pop = 50
-    start_g = 0
-    stop_g = 100
-    chumoku = []
-    # シードをつけるか否か
-    if ind in SEED_DICT:
-        # シードがある場合はここで指定
-        active_format = formatPlusSeed(FILE_FORMATS[ind], SEED_DICT[ind][0])
-    else:
-        active_format = FILE_FORMATS[ind]
-    print("フォーマット: ", active_format)
-    # 圧縮添字リストを見てどちらを使うか判断
-    if ind in COMPRESSED_INDICES:
-        viewMeansGraph(active_format, loc_pop, start_g, stop_g, 1)
-        viewSDGraph(active_format, loc_pop, start_g, stop_g, 1, chumoku)
-        # 圧縮版なら適応度ファイルもあるやろ多分
-        viewFitnessGraph(makeFitnessFileFormat(active_format), loc_pop, start_g, stop_g)
-    else:
-        viewMeansGraph(active_format, loc_pop, start_g, stop_g, 0)
-        viewSDGraph(active_format, loc_pop, start_g, stop_g, 0, chumoku)
-
 def main():
     global VIEW_ONLY
     # 画像保存する場合はこのコメントアウトを外す
-    VIEW_ONLY = False
-    #old()
+    #VIEW_ONLY = False
     #population = 50
     #elite_num = 0
     #lncr = -2
@@ -910,8 +800,9 @@ def main():
     #viewFitnessGraph2(population, elite_num, crs_id, -0.02, 0.02, 0.001, gene_num, seed, grid=True)
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
+    # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
+    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
@@ -939,7 +830,7 @@ def main():
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="grid")
+    #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="grid")
     plt.show()
     print("終わり")
 
