@@ -33,9 +33,7 @@ FIGURES_PATH = "/home/sonoda/GitHub/HelloGitHub/LaTeX/figures"
 
 # グラフを保存するファイル名を決定する関数
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
-# シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
-# シードが無い場合のグラフを新たに作ると, 旧ファイル名と異なるファイル名になる (_no_seedが付与される)
-# ディレクトリのパスも追加
+# ディレクトリのパスも追加, 拡張子を与えることで, 様々なファイル形式に対応可能?
 def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg", c_map=False, dir_path=FIGURES_PATH):
     # シード関係なく共通する部分
     # 最初のふるい落とし
