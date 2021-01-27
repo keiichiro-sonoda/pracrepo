@@ -548,36 +548,46 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # カラーマップデータを作るか, ロードする
-def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, data_option="fit_median"):
-    if data_option == "fit_median":
-        stat_func = stat.median
-    elif data_option == "fit_stdev":
-        stat_func = stat.stdev
+def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, data_option="fit_median", w_num=1, forced=False):
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
-    if os.path.exists(json_fname):
+    # ファイルが既存ならロードして戻るだけ
+    if not forced and os.path.exists(json_fname):
         print("既存")
         f = open(json_fname, "r")
         z = json.load(f)
         f.close()
     else:
+        # 適応度が欲しいとき
+        m1 = re.match(r'(fit_)(.*)', data_option)
+        if m1:
+            stat_option = m1.groups()[1]
+            if stat_option == "median":
+                stat_func = stat.median
+            elif stat_option == "stdev":
+                stat_func = stat.stdev
+            else:
+                print("無効な統計値")
+            getDatFunc = lambda fname, loc_pop : slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
+        else:
+            pass
         print("初めて")
         z = []
         c = 0
         for lncr in x:
             for gene_num in y:
                 fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
-                fl = slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
-                if not fl:
-                    medf = -1
+                tmpl = getDatFunc(fname, loc_pop)
+                if not tmpl:
+                    zi = -1
                     c += 1
                     if c >= 10:
                         print("有効なパラメータを指定してください")
                         return
                 else:
                     c = 0
-                    medf = stat_func(fl)
-                z.append(medf)
+                    zi = stat_func(tmpl)
+                z.append(zi)
         f = open(json_fname, "w")
         json.dump(z, f)
         f.close()
@@ -605,7 +615,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     d_opt = "fit_" + stat_option
-    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=d_opt)
+    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=d_opt, forced=True)
     if stat_option in ("stdev", "variance"):
         v_min = 0
         v_max = max(z)
