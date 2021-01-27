@@ -596,6 +596,9 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
                     c = 0
                     medf = stat_func(fl)
                 medfl.append(medf)
+        f = open(json_fname, "w")
+        json.dump(medfl, f)
+        f.close()
     if stat_option in ("stdev", "variance"):
         v_min = 0
         v_max = max(medfl)
