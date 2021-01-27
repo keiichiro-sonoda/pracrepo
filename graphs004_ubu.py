@@ -425,9 +425,10 @@ def makeSimpleGraph(x, y, mag=0.65, x_label="median fitness", y_label="mean weig
 # 適応度の中央値と, 重みの平均値とのグラフを作りたい
 # 相関を確かめるため
 # 中央値の偏り (100からの離れ具合) でも調査してみたい
-def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65, focus="normal"):
+# ついでに標準偏差も調べる
+def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65, focus="normal", sd=False):
     w_idx = int(w_num) - 1 # 添字に変換
-    if w_idx < 0 or 9 < w_idx:
+    if not sd and w_idx < 0 or 9 < w_idx:
         print("有効な重み番号を指定してください")
         return
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
@@ -436,10 +437,15 @@ def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
     fmedl = np.array(makeOrLoadCmapData(json_fname1, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options)[2])
     if focus == "bias": # 100からの距離に切り替え
         fmedl = np.abs(fmedl - 100)
-    # 重み, 公比情報
-    name2 = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:5.3f}".format(w_idx + 1, lncr_start, lncr_stop, lncr_step)
+    if sd: # 標準偏差もついでに
+        name2 = "fit_SD_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+        d_opt = "fit_SD"
+    else:
+        # 重み, 公比情報
+        name2 = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:5.3f}".format(w_idx + 1, lncr_start, lncr_stop, lncr_step)
+        d_opt = "w_mean"
     json_fname2 = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="json", dir_path="./json")
-    wml = makeOrLoadCmapData(json_fname2, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option="w_mean", w_idx=w_idx)[2]
+    wml = makeOrLoadCmapData(json_fname2, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=d_opt, w_idx=w_idx)[2]
     makeSimpleGraph(fmedl, wml)
     coef = np.corrcoef(fmedl, wml)
     print(coef)
@@ -736,7 +742,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, focus="bias")
+    viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=0, focus="bia", sd=True)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
