@@ -629,7 +629,7 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
 def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, data_option="fit_med", w_idx=0, forced=False):
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
-    forced = True
+    #forced = True
     # ファイルが既存ならロードして戻るだけ
     if not forced and os.path.exists(json_fname):
         print("既存")
@@ -670,7 +670,7 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
         for lncr in x:
             for gene_num in y:
                 fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
-                print(fname)
+                #print(fname)
                 tmpl = getDatFunc(fname, loc_pop)
                 if not tmpl:
                     zi = -1
@@ -809,9 +809,9 @@ def main():
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="median", extention="jpg")
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r", extention="jpg")
+    #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r", extention="jpg")
+    viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=100, options=0b01, focus="bias", sd=False)
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
-    #viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=9, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
