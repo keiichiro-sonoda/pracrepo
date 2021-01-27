@@ -373,7 +373,7 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
     plt.show()
 
 # 他の公比と対戦したときの勝ち点
-def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako, name=""):
+def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name=""):
     if zako:
         name2 = name + "_zako"
     else:
@@ -399,27 +399,11 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         f.close()
     x = [i / 1000 for i in range(start_cr_th, stop_cr_th, step_cr_th)]
     x.append(stop_cr_th / 1000)
-    magnitude = 0.65
-    # デフォルトフォントサイズの設定
-    plt.rcParams["font.size"] = 12 * magnitude
-    fig = plt.figure(figsize=(8 * magnitude, 5 * magnitude))
-    ax = fig.add_subplot(111)
-    ax.set_xlabel("the natural log of common ratio", fontsize=15*magnitude)
-    ax.set_ylabel("point", fontsize=15*magnitude)
-    plt.xticks(fontsize=12*magnitude)
-    ax.set_xticks([j for i, j in enumerate(x) if i % 5 == 0])
-    plt.yticks(fontsize=12*magnitude)
-    ax.plot(x, pt_list)
-    fig.tight_layout()
+    fig, ax = makeSimpleGraph(x, pt_list, x_label="the natural log of common ratio", y_label="point", option="plot")
     path = makePVSOCRGraphFileName(json_fname)
     if name == "grid":
         ax.grid()
-    if not VIEW_ONLY:
-        if os.path.exists(path):
-            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
-                return
-        fig.savefig(path, bbox_inches="tight")
-        print("saved!")
+    saveFigWrap(fig, path)
 
 # 単純な2次元グラフを作成
 def makeSimpleGraph(x, y, mag=0.65, x_label="median fitness", y_label="mean weight", option="scatter"):
@@ -760,7 +744,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="stdev")
-    viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
+    #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=9, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
@@ -779,6 +763,7 @@ def main():
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="grid")
+    viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 123, 10, 0, zako=0)
     plt.show()
     print("終わり")
 
