@@ -421,14 +421,40 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         fig.savefig(path, bbox_inches="tight")
         print("saved!")
 
+# 単純な2次元グラフを作成
+def makeSimpleGraph(x, y, mag=0.65, x_label="median fitness", y_label="mean weight", option="scatter"):
+    plt.rcParams["font.size"] = 12 * mag
+    fig = plt.figure(figsize=(8 * mag, 5 * mag))
+    ax = fig.add_subplot(111)
+    ax.set_xlabel("the natural log of common ratio", fontsize=15*mag)
+    ax.set_ylabel("point", fontsize=15*mag)
+    plt.xticks(fontsize=12*mag)
+    #ax.set_xticks([j for i, j in enumerate(x) if i % 5 == 0])
+    plt.yticks(fontsize=12*mag)
+    # 散布図
+    if option == "scatter":
+        ax.scatter(x, y)
+    else:
+        ax.plot(x, y)
+    fig.tight_layout()
+    return (fig, ax)
+
 # 適応度の中央値と, 重みの平均値とのグラフを作りたい
 # 相関を確かめるため
 def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65):
+    w_idx = int(w_num) - 1 # 添字に変換
+    if w_idx < 0 or 9 < w_idx:
+        print("有効な重み番号を指定してください")
+        return
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
     name1 = "fit_med_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     json_fname1 = makeGraphsFileName(fname, name1, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     fmedl = makeOrLoadCmapData(json_fname1, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options)[2]
-    print(fmedl[:102])
+    # 重み, 公比情報
+    name2 = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:5.3f}".format(w_idx + 1, lncr_start, lncr_stop, lncr_step)
+    json_fname2 = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="json", dir_path="./json")
+    wml = makeOrLoadCmapData(json_fname2, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option="w_mean", w_idx=w_idx)[2]
+    makeSimpleGraph(fmedl, wml)
 
 # 適応度のグラフを作成
 # データとグラフオブジェクト? を渡す
