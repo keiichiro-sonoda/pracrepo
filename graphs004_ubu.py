@@ -807,11 +807,11 @@ def main():
     #viewFitMedWMeanGraph(50, 0, 5, -2, 2, 0.1, 0, 100, 555, w_num=4, focus="bia", sd=False)
     # エリート数1
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="median", extention="jpg")
-    viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
+    #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="median", extention="jpg")
-    #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r", extention="jpg")
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_", extention="jpg")
     #viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=100, options=0b01, focus="bas", sd=False)
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
