@@ -30,11 +30,13 @@ LINE_COLORS = [
 
 # LaTeX で使う図を保存するパス
 FIGURES_PATH = "/home/sonoda/GitHub/HelloGitHub/LaTeX/figures"
+# テスト用
+FIGURES_TEST_PATH = "./fig_test"
 
 # グラフを保存するファイル名を決定する関数
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # ディレクトリのパスも追加, 拡張子を与えることで, 様々なファイル形式に対応可能?
-def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg", c_map=False, dir_path=FIGURES_PATH):
+def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg", c_map=False, dir_path=FIGURES_TEST_PATH):
     # シード関係なく共通する部分
     # 最初のふるい落とし
     single = False
@@ -606,12 +608,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     # グラフのサイズの倍率もファイル名に加える
     name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}_size{:4.2f}".format(lncr_start, lncr_stop, lncr_step, magnitude)
     path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
-    if not VIEW_ONLY:
-        if os.path.exists(path):
-            if input(path + " は存在します. 上書きしますか? (y\\n): ") != "y":
-                return
-        fig.savefig(path, bbox_inches="tight")
-        print("saved!")
+    saveFigWrap(fig, path)
 
 # 確認とかいろいろしてから図を保存
 def saveFigWrap(fig, path):
@@ -746,8 +743,8 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
-    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2, options=0b00)
+    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
+    #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
