@@ -35,7 +35,8 @@ FIGURES_PATH = "/home/sonoda/GitHub/HelloGitHub/LaTeX/figures"
 # グラフの種類 (平均値や標準偏差), 描画する世代の範囲 (int型) を与える
 # シードを含む方をグラフファイル名に使わないと同一扱いされてしまう
 # シードが無い場合のグラフを新たに作ると, 旧ファイル名と異なるファイル名になる (_no_seedが付与される)
-def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg", c_map=False):
+# ディレクトリのパスも追加
+def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", extention="jpg", c_map=False, dir_path=FIGURES_PATH):
     # シード関係なく共通する部分
     # 最初のふるい落とし
     single = False
@@ -59,7 +60,7 @@ def makeGraphsFileName(fname_format, name, x_min, x_max, x_type="generation", ex
     # スラッシュ単体の場合の処理
     if single:
         #path = "/home/sonoda/Pictures/Graphs"
-        path = FIGURES_PATH
+        path = dir_path
     else:
         path = "//home//sonoda//Pictures//Graphs"
     # 世代が横軸. ただしカラーマップの場合は例外となる (ごめんなさい).
@@ -757,7 +758,7 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step)
     # ダミーファイル名作成
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
-    makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf")
+    makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf", dir_path="./json")
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
     sdml = []
