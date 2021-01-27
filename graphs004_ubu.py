@@ -548,7 +548,7 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # 公比と世代数を軸とし, 適応度に応じて色が異なるカラーマップを作成
-def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median"):
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65):
     name = "fit_"
     if stat_option == "median":
         name += "med"
@@ -589,24 +589,9 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     if stat_option in ("stdev", "variance"):
         v_min = 0
         v_max = max(medfl)
-    X, Y = np.meshgrid(x, y)
-    Z = np.array(medfl).reshape(len(x), -1).T
-    magnitude = 1.0
-    magnitude = 0.65
-    # デフォルトフォントサイズの設定
-    plt.rcParams["font.size"] = 12 * magnitude
-    fig = plt.figure(figsize=(8 * magnitude, 5 * magnitude))
-    ax = fig.add_subplot(111)
-    ax.set_xlabel("the natural log of common ratio", fontsize=15*magnitude)
-    ax.set_ylabel("generation", fontsize=15*magnitude)
-    plt.xticks(fontsize=12*magnitude)
-    ax.set_xticks([j for i, j in enumerate(x) if i % 5 == 0])
-    plt.yticks(fontsize=12*magnitude)
-    mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap=cm, shading="nearest")
-    fig.colorbar(mappable, ax=ax)
-    fig.tight_layout()
+    fig, ax = makeCmap(x, y, medfl, v_min, v_max, mag=mag, c_pattern=cm)
     # グラフのサイズの倍率もファイル名に加える
-    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}_size{:4.2f}".format(lncr_start, lncr_stop, lncr_step, magnitude)
+    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}_size{:4.2f}".format(lncr_start, lncr_stop, lncr_step, mag)
     path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
     saveFigWrap(fig, path)
 
@@ -726,7 +711,7 @@ def makeCmap(x, y, z, z_min, z_max, mag=0.65, c_pattern="RdYlGn"):
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
     # 図と座標? を返す
-    return fig, ax
+    return (fig, ax)
 
 def main():
     global VIEW_ONLY
