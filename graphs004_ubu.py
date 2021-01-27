@@ -128,14 +128,13 @@ def makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_
 
 # 公比同士対戦結果のグラフを保存するファイル名
 # デフォの拡張子は pdf
-def makePVSOCRGraphFileName(json_fname, extention="pdf"):
-    path = FIGURES_PATH
+def makePVSOCRGraphFileName(json_fname, extention="pdf", dir_path=FIGURES_TEST_PATH):
     m1 = re.match(r'(json)(/.*)(\.json)', json_fname)
     if not m1:
         return ""
     mg1 = m1.groups()
     #print(mg1)
-    path += mg1[1] + "." + extention
+    path = dir_path + mg1[1] + "." + extention
     print(path)
     return path
 
@@ -763,7 +762,7 @@ def main():
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="grid")
-    viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 123, 10, 0, zako=0)
+    viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 123, 10, 1, zako=0)
     plt.show()
     print("終わり")
 
