@@ -372,10 +372,13 @@ def viewStatGraphs(fname_format, population, g_min, g_max, compressed, emphasize
     plt.show()
 
 # 他の公比と対戦したときの勝ち点
+# 中央値との関係も調べたい
 def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name=""):
     if zako:
+        options=0b01
         name2 = name + "_zako"
     else:
+        options=0b00
         name2 = name
     json_fname = makeJsonFileName2(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, name=name2)
     del name2
@@ -398,6 +401,16 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         f.close()
     x = [i / 1000 for i in range(start_cr_th, stop_cr_th, step_cr_th)]
     x.append(stop_cr_th / 1000)
+    if name == "fmed_r":
+        # 中央値のデータも取り出したい
+        lncr_start = start_cr_th / 1000
+        lncr_stop = stop_cr_th / 1000
+        lncr_step = step_cr_th / 1000
+        fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, 5, loc_seed, 0.0, 0, options=options)
+        name3 = "fit_med_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+        fmed_json_fname = makeGraphsFileName(fname, name3, gene_num, gene_num, c_map=True, extention="json", dir_path="./json")
+        fmedl = makeOrLoadCmapData(fmed_json_fname, loc_pop, loc_eln, 5, lncr_start, lncr_stop, lncr_step, gene_num, gene_num, loc_seed, options=options)[2]
+        x = np.array(fmedl)
     fig, ax = makeSimpleGraph(x, pt_list, x_label="the natural log of common ratio", y_label="point", option="plot")
     path = makePVSOCRGraphFileName(json_fname)
     if name == "grid":
@@ -762,7 +775,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=100, focus="bia", sd=False)
+    #viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=100, focus="bia", sd=False)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
@@ -793,7 +806,7 @@ def main():
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="grid")
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="fmed_r")
     #viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 124, 10, 1, zako=0)
     plt.show()
     print("終わり")
