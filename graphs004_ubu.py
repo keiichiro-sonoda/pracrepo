@@ -626,9 +626,10 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
 # カラーマップデータを作るか, ロードする
-def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, data_option="fit_median", w_idx=0, forced=False):
+def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, data_option="fit_med", w_idx=0, forced=False):
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
+    forced = True
     # ファイルが既存ならロードして戻るだけ
     if not forced and os.path.exists(json_fname):
         print("既存")
@@ -650,7 +651,7 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
                 selDatFunc = lambda l: stat.variance(l)
             else:
                 print("無効な統計値")
-                return
+                return [0, 0, 0]
             getDatFunc = lambda fname, loc_pop: slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         # いずれかの重みが欲しい時
         else:
@@ -669,6 +670,7 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
         for lncr in x:
             for gene_num in y:
                 fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
+                print(fname)
                 tmpl = getDatFunc(fname, loc_pop)
                 if not tmpl:
                     zi = -1
