@@ -569,7 +569,9 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
             else:
                 print("無効な統計値")
             getDatFunc = lambda fname, loc_pop: slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
+        # いずれかの重みが欲しい時
         else:
+            # 現状は平均値だけ扱う
             getDatFunc = lambda fname, loc_pop: slw.getFamilyMeansWrap(fname, loc_pop, 1)
             selDatFunc = lambda l: l[w_num]
         if forced:
@@ -694,35 +696,8 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     # 軸となる配列
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
-    if os.path.exists(json_fname):
-        print("既存")
-        # ファイル読み込み
-        f = open(json_fname, "r")
-        sdml = json.load(f)
-        f.close()
-    else:
-        print("初めて")
-        sdml = []
-        c = 0
-        for lncr in x:
-            for gene_num in y:
-                fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, lncr, gene_num, options=options)
-                sdl = slw.getFamilyMeansWrap(fname, loc_pop, 1)
-                if not sdl:
-                    c += 1
-                    sdm = -1
-                    if c >= 10:
-                        print("有効なパラメータを設定してください")
-                        return
-                else:
-                    c = 0
-                    sdm = sdl[w_num] # 先頭要素だけ見る (角の平均値)
-                sdml.append(sdm)
-        # ファイル書き込み
-        f = open(json_fname, "w")
-        json.dump(sdml, f)
-        f.close()
-    fig, ax = makeCmap(x, y, sdml, -0.5, 0.5, mag=mag, c_pattern="RdYlBu")
+    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option="w_mean", w_num=1, forced=True)
+    fig = makeCmap(x, y, z, -0.5, 0.5, mag=mag, c_pattern="RdYlBu")[0]
     # 倍率情報の付加
     name2 = name1 + "_size{:4.2f}".format(mag)
     path = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="pdf")
@@ -761,9 +736,9 @@ def main():
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
-    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
+    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
-    #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2, options=0b00)
+    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
