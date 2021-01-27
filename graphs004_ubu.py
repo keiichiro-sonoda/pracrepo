@@ -414,10 +414,14 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         g_opt = "scatter"
     else:
         g_opt = "plot"
-    fig, ax = makeSimpleGraph(x, pt_list, x_label="the natural log of common ratio", y_label="point", option=g_opt)
+    y = np.array(pt_list)
+    fig, ax = makeSimpleGraph(x, y, x_label="the natural log of common ratio", y_label="point", option=g_opt)
     path = makePVSOCRGraphFileName(json_fname)
     if grid:
         ax.grid()
+    # 相関係数の計算
+    coef = np.corrcoef(x, y)
+    print(coef)
     saveFigWrap(fig, path)
 
 # 単純な2次元グラフを作成
