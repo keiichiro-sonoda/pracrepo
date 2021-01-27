@@ -377,7 +377,7 @@ def allSame(arr):
 
 # 他の公比と対戦したときの勝ち点
 # 中央値との関係も調べたい
-def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name="", grid=True):
+def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name="", grid=True, extention="jpg"):
     # 有効な名前かどうかの判定
     valid_names = ("fmed_r",)
     if name and name not in valid_names:
@@ -429,7 +429,7 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
     fig, ax = makeSimpleGraph(x, y, x_label=x_label, y_label="point", option=g_opt)
     if grid:
         ax.grid()
-    path = makePVSOCRGraphFileName(json_fname)
+    path = makePVSOCRGraphFileName(json_fname, extention=extention)
     # 相関係数の計算 (要素が全て同じだと0割になる)
     if not (allSame(x) or allSame(y)):
         coef = np.corrcoef(x, y)
@@ -804,7 +804,7 @@ def main():
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="median", extention="jpg")
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="a")
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="a", extention="jpg")
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=9, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
