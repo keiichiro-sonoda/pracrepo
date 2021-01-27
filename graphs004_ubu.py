@@ -760,7 +760,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01)
     # 初期雑魚
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01, stat_option="stdev")
-    viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=1, options=0b01)
+    viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=8, options=0b01)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
