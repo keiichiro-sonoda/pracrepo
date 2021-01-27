@@ -547,40 +547,22 @@ def viewFitnessGraph3(loc_pop, smp_num, loc_eln, crs_id, lncr, g_min, g_max, loc
     print(fff)
     viewFitnessGraph(fff, smp_num, g_min, g_max, grid=grid)
 
-# 公比と世代数を軸とし, 適応度に応じて色が異なるカラーマップを作成
-def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65):
-    name = "fit_"
-    if stat_option == "median":
-        name += "med"
+# カラーマップデータを作るか, ロードする
+def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, data_option="fit_median"):
+    if data_option == "fit_median":
         stat_func = stat.median
-        cm = plt.cm.get_cmap("RdYlGn")
-        v_min = 0
-        v_max = FITNESS_MAX
-    elif stat_option == "stdev":
-        name += "SD"
+    elif data_option == "fit_stdev":
         stat_func = stat.stdev
-        cm = plt.cm.get_cmap("inferno")
-    elif stat_option == "variance":
-        name += "variance"
-        stat_func = stat.variance
-        cm = plt.cm.get_cmap("inferno")
-    else:
-        print("不明な統計値")
-        return
-    # json ファイル名作成
-    fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
-    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
     if os.path.exists(json_fname):
         print("既存")
         f = open(json_fname, "r")
-        medfl = json.load(f)
+        z = json.load(f)
         f.close()
     else:
         print("初めて")
-        medfl = []
+        z = []
         c = 0
         for lncr in x:
             for gene_num in y:
@@ -595,14 +577,39 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
                 else:
                     c = 0
                     medf = stat_func(fl)
-                medfl.append(medf)
+                z.append(medf)
         f = open(json_fname, "w")
-        json.dump(medfl, f)
+        json.dump(z, f)
         f.close()
+    return (x, y, z)
+
+# 公比と世代数を軸とし, 適応度に応じて色が異なるカラーマップを作成
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65):
+    name = "fit_"
+    if stat_option == "median":
+        name += "med"
+        cm = plt.cm.get_cmap("RdYlGn")
+        v_min = 0
+        v_max = FITNESS_MAX
+    elif stat_option == "stdev":
+        name += "SD"
+        cm = plt.cm.get_cmap("inferno")
+    elif stat_option == "variance":
+        name += "variance"
+        cm = plt.cm.get_cmap("inferno")
+    else:
+        print("不明な統計値")
+        return
+    # json ファイル名作成
+    fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
+    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+    json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
+    d_opt = "fit_" + stat_option
+    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=d_opt)
     if stat_option in ("stdev", "variance"):
         v_min = 0
-        v_max = max(medfl)
-    fig = makeCmap(x, y, medfl, v_min, v_max, mag=mag, c_pattern=cm)[0]
+        v_max = max(z)
+    fig = makeCmap(x, y, z, v_min, v_max, mag=mag, c_pattern=cm)[0]
     # グラフのサイズの倍率もファイル名に加える
     name += "_size{:4.2f}".format(mag)
     path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
