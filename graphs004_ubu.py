@@ -597,6 +597,8 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
                 selDatFunc = lambda l: stat.mean(l)
             elif stat_option == "SD":
                 selDatFunc = lambda l: stat.stdev(l)
+            elif stat_option == "variance":
+                selDatFunc = lambda l: stat.variance(l)
             else:
                 print("無効な統計値")
                 return
@@ -753,7 +755,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, stat_option="stdev")
     # エリート数1
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="stdev")
-    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="mean")
+    viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="variance")
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=0, focus="bia", sd=True)
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, 0b00)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, options=0b01)
