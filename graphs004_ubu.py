@@ -694,9 +694,7 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
     json_fname = makeGraphsFileName(fname, name1, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     # 軸となる配列
-    x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
-    y = np.arange(g_min, g_max + 1, 1, np.int32)
-    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option="w_mean", w_idx=w_idx, forced=True)
+    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option="w_mean", w_idx=w_idx)
     fig = makeCmap(x, y, z, -0.5, 0.5, mag=mag, c_pattern="RdYlBu")[0]
     # 倍率情報の付加
     name2 = name1 + "_size{:4.2f}".format(mag)
@@ -738,7 +736,7 @@ def main():
     # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
-    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=3, options=0b00)
+    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
