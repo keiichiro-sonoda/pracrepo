@@ -749,7 +749,8 @@ def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
 # 指定した重みの平均値を見たい
 # w_num は重み番号 (1 から 10 を与える)
 def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00):
-    if w_num < 1 or 10 < w_num:
+    w_num = int(w_num) - 1 # 添字に変換
+    if w_num < 0 or 9 < w_num:
         print("有効な重み番号を指定してください")
         return
     # ダミーファイル名作成
@@ -771,7 +772,7 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
                     return
             else:
                 c = 0
-                sdm = sdl[w_num - 1] # 先頭要素だけ見る (角の平均値)
+                sdm = sdl[w_num] # 先頭要素だけ見る (角の平均値)
             sdml.append(sdm)
     X, Y = np.meshgrid(x, y)
     Z = np.array(sdml).reshape(len(x), -1).T
@@ -785,7 +786,7 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap="RdYlBu", shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
-    name = "w01mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+    name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step)
     path = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf")
     if path and not VIEW_ONLY:
         if os.path.exists(path):
@@ -810,7 +811,7 @@ def main():
     # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
-    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
+    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
