@@ -411,11 +411,13 @@ def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step
         fmed_json_fname = makeGraphsFileName(fname, name3, gene_num, gene_num, c_map=True, extention="json", dir_path="./json")
         fmedl = makeOrLoadCmapData(fmed_json_fname, loc_pop, loc_eln, 5, lncr_start, lncr_stop, lncr_step, gene_num, gene_num, loc_seed, options=options)[2]
         x = np.array(fmedl)
+        x_label = "median fitness"
         g_opt = "scatter"
     else:
+        x_label="the natural log of common ratio"
         g_opt = "plot"
     y = np.array(pt_list)
-    fig, ax = makeSimpleGraph(x, y, x_label="the natural log of common ratio", y_label="point", option=g_opt)
+    fig, ax = makeSimpleGraph(x, y, x_label=x_label, y_label="point", option=g_opt)
     if grid:
         ax.grid()
     path = makePVSOCRGraphFileName(json_fname)
@@ -621,13 +623,13 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
         z = json.load(f)
         f.close()
     else:
-        # 適応度が欲しいとき
+        # 適応度関連
         m1 = re.match(r'(fit_)(.*)', data_option)
         if m1:
             stat_option = m1.groups()[1]
-            if stat_option == "median":
+            if stat_option == "median": # 中央値
                 selDatFunc = lambda l: stat.median(l)
-            elif stat_option == "mean":
+            elif stat_option == "mean": # 平均値
                 selDatFunc = lambda l: stat.mean(l)
             elif stat_option == "SD":
                 selDatFunc = lambda l: stat.stdev(l)
@@ -813,7 +815,7 @@ def main():
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 0, 123, 10, 1, zako=1, name="fmed_r")
+    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 0, 123, 10, 0, zako=1, name="fmed_r")
     #viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 124, 10, 1, zako=0)
     plt.show()
     print("終わり")
