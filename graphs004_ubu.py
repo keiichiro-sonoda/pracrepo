@@ -564,10 +564,11 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
             stat_option = m1.groups()[1]
             if stat_option == "median":
                 selDatFunc = lambda l: stat.median(l)
-            elif stat_option == "stdev":
+            elif stat_option == "SD":
                 selDatFunc = lambda l: stat.stdev(l)
             else:
                 print("無効な統計値")
+                return
             getDatFunc = lambda fname, loc_pop: slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         # いずれかの重みが欲しい時
         else:
@@ -601,34 +602,34 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
 
 # 公比と世代数を軸とし, 適応度に応じて色が異なるカラーマップを作成
 def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65):
-    name = "fit_"
+    name1 = "fit_"
     if stat_option == "median":
-        name += "med"
+        name1 += "med"
         cm = plt.cm.get_cmap("RdYlGn")
         v_min = 0
         v_max = FITNESS_MAX
     elif stat_option == "stdev":
-        name += "SD"
+        name1 += "SD"
         cm = plt.cm.get_cmap("inferno")
     elif stat_option == "variance":
-        name += "variance"
+        name1 += "variance"
         cm = plt.cm.get_cmap("inferno")
     else:
         print("不明な統計値")
         return
     # json ファイル名作成
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
-    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
-    json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
-    d_opt = "fit_" + stat_option
-    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=d_opt, forced=True)
+    name2 = name1 + "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
+    json_fname = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="json", dir_path="./json")
+    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=name1)
+    # 標準偏差, 分散の最大値は可変
     if stat_option in ("stdev", "variance"):
         v_min = 0
         v_max = max(z)
     fig = makeCmap(x, y, z, v_min, v_max, mag=mag, c_pattern=cm)[0]
     # グラフのサイズの倍率もファイル名に加える
-    name += "_size{:4.2f}".format(mag)
-    path = makeGraphsFileName(fname, name, g_min, g_max, extention="pdf", c_map=True)
+    name3 = name2 + "_size{:4.2f}".format(mag)
+    path = makeGraphsFileName(fname, name3, g_min, g_max, extention="pdf", c_map=True)
     saveFigWrap(fig, path)
 
 # 確認とかいろいろしてから図を保存
@@ -735,8 +736,8 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
-    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
+    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
+    #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
