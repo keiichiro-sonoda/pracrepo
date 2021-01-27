@@ -671,10 +671,10 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     if w_num < 0 or 9 < w_num:
         print("有効な重み番号を指定してください")
         return
-    # 重み, 公比, 倍率情報
-    name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:5.3f}_size{:4.2f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step, mag)
+    # 重み, 公比情報
+    name1 = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:5.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step, mag)
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
-    json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
+    json_fname = makeGraphsFileName(fname, name1, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     # 軸となる配列
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
@@ -707,7 +707,9 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
         json.dump(sdml, f)
         f.close()
     fig, ax = makeCmap(x, y, sdml, -0.5, 0.5, mag=mag, c_pattern="RdYlBu")
-    path = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf")
+    # 倍率情報の付加
+    name2 = name1 + "_size{:4.2f}".format(mag)
+    path = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="pdf")
     # 図の保存 (グローバル変数や標準入力で上書き警告などする)
     saveFigWrap(fig, path)
 
