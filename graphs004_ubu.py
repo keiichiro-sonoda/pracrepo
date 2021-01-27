@@ -678,7 +678,7 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
     return (x, y, z)
 
 # 公比と世代数を軸とし, 適応度の統計値に応じて色が異なるカラーマップを作成
-def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65):
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65, extention="pdf"):
     name1 = "fit_"
     if stat_option == "median": # 中央値
         name1 += "med"
@@ -708,7 +708,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fig = makeCmap(x, y, z, v_min, v_max, mag=mag, c_pattern=cm)[0]
     # グラフのサイズの倍率もファイル名に加える
     name3 = name2 + "_size{:4.2f}".format(mag)
-    path = makeGraphsFileName(fname, name3, g_min, g_max, extention="pdf", c_map=True)
+    path = makeGraphsFileName(fname, name3, g_min, g_max, extention=extention, c_map=True)
     saveFigWrap(fig, path)
 
 # 確認とかいろいろしてから図を保存
@@ -785,7 +785,7 @@ def main():
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
-    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
+    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, extention="jpg")
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
@@ -820,7 +820,7 @@ def main():
     #makeJsonFileName2(50, 0, 555, -2000, 2000, 100, 100, 123, 10, 1)
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
-    viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r")
+    #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 10, 0, zako=1, name="fmed_r")
     #viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 124, 10, 1, zako=0)
     plt.show()
     print("終わり")
