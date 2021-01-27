@@ -567,9 +567,9 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     else:
         print("不明な統計値")
         return
-    # json ファイル名作りたい
+    # json ファイル名作成
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
-    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}_size{:4.2f}".format(lncr_start, lncr_stop, lncr_step, mag)
+    name += "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     json_fname = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
