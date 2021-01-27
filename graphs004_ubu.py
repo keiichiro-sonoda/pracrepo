@@ -433,7 +433,7 @@ def makeSimpleGraph(x, y, mag=0.65, x_label="median fitness", y_label="mean weig
     plt.yticks(fontsize=12*mag)
     # 散布図
     if option == "scatter":
-        ax.scatter(x, y)
+        ax.scatter(x, y, s=3)
     else:
         ax.plot(x, y)
     fig.tight_layout()
