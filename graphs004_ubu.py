@@ -377,6 +377,7 @@ def allSame(arr):
 
 # 他の公比と対戦したときの勝ち点
 # 中央値との関係も調べたい
+# 図の大きさは現状固定になっている
 def viewPointVSOtherCR(loc_pop, loc_eln, loc_seed, start_cr_th, stop_cr_th, step_cr_th, gene_num, vs_seed, loop, dnfunc_id, zako=0, name="", grid=True, extention="jpg"):
     # 有効な名前かどうかの判定
     valid_names = ("fmed_r",)
