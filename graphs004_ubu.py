@@ -746,8 +746,12 @@ def viewWeightSDMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
         fig.savefig(path, bbox_inches="tight")
         print("saved!!")
 
-# 重み番号1の平均値を見たい
-def viewWeight1MeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00):
+# 指定した重みの平均値を見たい
+# w_num は重み番号 (1 から 10 を与える)
+def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00):
+    if w_num < 1 or 10 < w_num:
+        print("有効な重み番号を指定してください")
+        return
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
     sdml = []
@@ -764,7 +768,7 @@ def viewWeight1MeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_st
                     return
             else:
                 c = 0
-                sdm = sdl[0] # 先頭要素だけ見る (角の平均値)
+                sdm = sdl[w_num - 1] # 先頭要素だけ見る (角の平均値)
             sdml.append(sdm)
     X, Y = np.meshgrid(x, y)
     Z = np.array(sdml).reshape(len(x), -1).T
@@ -802,7 +806,8 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
+    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
+    viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=5, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
@@ -814,7 +819,6 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, 0b01, stat_option="stdev")
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    #viewWeight1MeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewWeight1MeansMap(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
