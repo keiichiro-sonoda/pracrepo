@@ -424,7 +424,8 @@ def makeSimpleGraph(x, y, mag=0.65, x_label="median fitness", y_label="mean weig
 
 # 適応度の中央値と, 重みの平均値とのグラフを作りたい
 # 相関を確かめるため
-def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65):
+# 中央値の偏り (100からの離れ具合) でも調査してみたい
+def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, w_num=1, options=0b00, mag=0.65, focus="normal"):
     w_idx = int(w_num) - 1 # 添字に変換
     if w_idx < 0 or 9 < w_idx:
         print("有効な重み番号を指定してください")
@@ -432,7 +433,9 @@ def viewFitMedWMeanGraph(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_s
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
     name1 = "fit_med_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     json_fname1 = makeGraphsFileName(fname, name1, g_min, g_max, c_map=True, extention="json", dir_path="./json")
-    fmedl = makeOrLoadCmapData(json_fname1, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options)[2]
+    fmedl = np.array(makeOrLoadCmapData(json_fname1, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options)[2])
+    if focus == "bias": # 100からの距離に切り替え
+        fmedl = np.abs(fmedl - 100)
     # 重み, 公比情報
     name2 = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:5.3f}".format(w_idx + 1, lncr_start, lncr_stop, lncr_step)
     json_fname2 = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="json", dir_path="./json")
@@ -733,7 +736,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
-    #viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=2)
+    viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, focus="bias")
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, stat_option="stdev")
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
@@ -762,7 +765,7 @@ def main():
     #viewPointVSOtherCR(50, 0, 555, -100, 100, 5, 100, 365, 10, 1, 0)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 100, 1, 1)
     #viewPointVSOtherCR(50, 0, 555, -2000, 0, 50, 100, 123, 0, 0, 1, name="grid")
-    viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 123, 10, 1, zako=0)
+    #viewPointVSOtherCR(50, 0, 555, -8000, 8000, 400, 100, 124, 10, 1, zako=0)
     plt.show()
     print("終わり")
 
