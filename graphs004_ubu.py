@@ -563,15 +563,19 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
         if m1:
             stat_option = m1.groups()[1]
             if stat_option == "median":
-                stat_func = stat.median
+                selDatFunc = lambda l: stat.median(l)
             elif stat_option == "stdev":
-                stat_func = stat.stdev
+                selDatFunc = lambda l: stat.stdev(l)
             else:
                 print("無効な統計値")
-            getDatFunc = lambda fname, loc_pop : slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
+            getDatFunc = lambda fname, loc_pop: slw.getFitnessWrap(makeFitnessFileFormat(fname), loc_pop)
         else:
-            pass
-        print("初めて")
+            getDatFunc = lambda fname, loc_pop: slw.getFamilyMeansWrap(fname, loc_pop, 1)
+            selDatFunc = lambda l: l[w_num]
+        if forced:
+            print("強制")
+        else:
+            print("初めて")
         z = []
         c = 0
         for lncr in x:
@@ -586,7 +590,7 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
                         return
                 else:
                     c = 0
-                    zi = stat_func(tmpl)
+                    zi = selDatFunc(tmpl)
                 z.append(zi)
         f = open(json_fname, "w")
         json.dump(z, f)
