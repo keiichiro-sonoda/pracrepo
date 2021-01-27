@@ -753,9 +753,11 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     if w_num < 0 or 9 < w_num:
         print("有効な重み番号を指定してください")
         return
+    # 重み, 公比情報
+    name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step)
     # ダミーファイル名作成
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
-    makeGraphsFileName(fname, "yeah", g_min, g_max, c_map=True, extention="pdf")
+    makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf")
     x = np.arange(lncr_start, lncr_stop + lncr_step, lncr_step)
     y = np.arange(g_min, g_max + 1, 1, np.int32)
     sdml = []
@@ -786,7 +788,6 @@ def viewWeightMeansMap(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_ste
     mappable = ax.pcolor(X, Y, Z, vmin=v_min, vmax=v_max, cmap="RdYlBu", shading="nearest")
     fig.colorbar(mappable, ax=ax)
     fig.tight_layout()
-    name = "w{:02d}mean_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(w_num + 1, lncr_start, lncr_stop, lncr_step)
     path = makeGraphsFileName(fname, name, g_min, g_max, c_map=True, extention="pdf")
     if path and not VIEW_ONLY:
         if os.path.exists(path):
