@@ -801,9 +801,10 @@ def main():
     #viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=100, focus="bia", sd=False)
     # 幅5倍
     #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
+    viewFitMedWMeanGraph(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, w_num=100, focus="bia", sd=False)
     # さらに幅20倍 (最小から100倍)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
-    viewFitMedWMeanGraph(50, 0, 5, -2, 2, 0.1, 0, 100, 555, w_num=4, focus="bia", sd=False)
+    #viewFitMedWMeanGraph(50, 0, 5, -2, 2, 0.1, 0, 100, 555, w_num=4, focus="bia", sd=False)
     # エリート数1
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="median", extention="jpg")
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
