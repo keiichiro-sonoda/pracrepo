@@ -693,7 +693,7 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
     return (x, y, z)
 
 # 公比と世代数を軸とし, 適応度の統計値に応じて色が異なるカラーマップを作成
-def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65, extention="pdf", prm_dir="."):
+def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=0b00, stat_option="median", mag=0.65, extention="pdf", prm_dir=".", renew=False):
     name1 = "fit_"
     if stat_option == "median": # 中央値
         name1 += "med"
@@ -710,7 +710,7 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     fname = slw.makeSprmFileNameRankGeoProgWrap(loc_pop, loc_eln, 3, crs_id, loc_seed, 0.0, 0, options=options)
     name2 = name1 + "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     json_fname = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="json", dir_path="./json")
-    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=name1, prm_dir=prm_dir)
+    x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=name1, prm_dir=prm_dir, forced=renew)
     # 標準偏差, 分散の最大値は可変
     if stat_option in ("stdev", "variance"):
         v_min = 0
