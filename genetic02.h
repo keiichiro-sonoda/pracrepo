@@ -12,7 +12,7 @@
 #include "sort01.h"
 
 #ifndef SEED
-#define SEED 555U // シード値
+#define SEED 777U // シード値
 #endif
 
 // ランキング選択で, 等比数列で確率を決定する場合の公比
@@ -67,7 +67,7 @@
 
 #define COMPRESS 1 // 圧縮するか否か
 
-#define ZAKO_FIRST 1 // 全て同一の弱い個体の集団から始めるフラグ
+#define ZAKO_FIRST 0 // 全て同一の弱い個体の集団から始めるフラグ
 
 #define SPRM_LEN 10 // 区別できるマスの数 (個体の配列長)
 
