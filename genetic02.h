@@ -85,6 +85,7 @@
 
 #define DIR00 "." // デフォルトはカレントディレクトリ
 #define DIR01 "/home/sonoda/Internet/GoogleDrive" // どうにかGoogleDrive に同期させたい
+#define DIR02 "/home/sonoda/GitHub/dat"
 
 // choose randomly either a or b
 #ifndef alternative

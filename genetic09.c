@@ -366,7 +366,7 @@ int main(void) {
     //srand((unsigned)time(NULL));
     // フォーマット自動作成 (シードまで)
     char format[FILENAME_MAX];
-    const char dir_path[] = DIR01; // ディレクトリの指定
+    const char dir_path[] = DIR02; // ディレクトリの指定
     if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, ZAKO_FIRST, CMN_RATIO_LN, ALPHA_BLX) < 0) {
         puts("フォーマット作成失敗");
         return -1;
@@ -390,6 +390,6 @@ int main(void) {
     trySomeCommonRatio(-2000, 2000, 100, 101, 1);
     trySomeCommonRatio(-8000, 8000, 400, 101, 1);
     */
-   trySomeCommonRatio(-40, 0, 1, 3, 1, dir_path);
+    trySomeCommonRatio(-40, 0, 1, 3, 1, dir_path);
     return 0; 
 }
