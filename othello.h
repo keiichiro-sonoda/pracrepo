@@ -12,7 +12,7 @@
 #include <sys/types.h>
 
 // const char のポインタ型を定義してみた
-typedef const char* c_char;
+typedef const char* c_char_p;
 
 // maximum number of next boards
 #define NEXT_MAX 32
