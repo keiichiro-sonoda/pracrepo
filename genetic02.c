@@ -204,7 +204,7 @@ void changeDirPath(char *fname, int fname_size, const char *dir_path) {
     char tmp[fname_size];
     // ただのコピー
     snprintf(tmp, fname_size, "%s", fname);
-    snprintf(fname, fname_size, "%s/%s", tmp, dir_path);
+    snprintf(fname, fname_size, "%s/%s", dir_path, tmp);
 }
 
 // print a simple parameter
