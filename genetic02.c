@@ -197,6 +197,16 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     return 0;
 }
 
+// ディレクトリのパスを変更 (最後のスラッシュは自動付加なので重複させないように)
+// ただしprmからは共通
+// 元のファイル名の文字列をそのまま書き換える
+void changeDirPath(char *fname, int fname_size, const char *dir_path) {
+    char tmp[fname_size];
+    // ただのコピー
+    snprintf(tmp, fname_size, "%s", fname);
+    snprintf(fname, fname_size, "%s/%s", tmp, dir_path);
+}
+
 // print a simple parameter
 void showSprm(Sprm pr) {
     for (int i = 0; i < MASU_NUM; i++) {

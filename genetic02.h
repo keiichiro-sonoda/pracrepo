@@ -83,6 +83,9 @@
 #define FNF_TEST "prm/test/test%03d.bin"
 #define FNAME_TEST "prm/test/wasshoi.bin"
 
+#define DIR00 "." // デフォルトはカレントディレクトリ
+#define DIR01 "/home/sonoda/Internet/GoogleDrive" // どうにかGoogleDrive に同期させたい
+
 // choose randomly either a or b
 #ifndef alternative
 #define alternative(a, b) (randBit() ? (a) : (b))
@@ -254,6 +257,11 @@ void initSprm(void);
 // Sprm のファイルフォーマットを自動生成する関数
 // 適応度ID, 圧縮判定, 個体数, エリート数, 選択ID, 交叉ID, 突変ID, 突変率, シード値, その他
 int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int loc_pop, int loc_eln, int sel_id, int crs_id, int mut_id, double loc_mr, int loc_seed, ...);
+
+// ディレクトリのパスを変更 (最後のスラッシュは自動付加なので重複させないように)
+// ただしprmからは共通
+// 元のファイル名の文字列をそのまま書き換える
+void changeDirPath(char *fname, int fname_size, const char *dir_path);
 
 // print a simple parameter
 void showSprm(Sprm pr);
