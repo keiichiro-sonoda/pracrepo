@@ -494,7 +494,7 @@ void sortOnlySprmComp(scmSprmSorted scm, const char *format, int gene_num);
 int getGeneNumComp(const char *format, int loc_pop);
 
 // Sprm の条件を与え, ファイル名を作成し, どの存在するシードを表示させたい
-// 適応度ID, 圧縮判定, 個体数, エリート数, 交叉ID, 突変ID, 突変率, 公比の自然対数
-int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id, int mut_id, double loc_mr, double lncr);
+// 適応度ID, 圧縮判定, 個体数, エリート数, 交叉ID, 突変ID, 突変率, その他
+int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id, int mut_id, double loc_mr, double lncr, c_char dir_path);
 
 #endif

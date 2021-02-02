@@ -283,7 +283,8 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
 // 公比は自然対数で与える
 // 1000 倍した int 型で与え, 1000で割ることにより同じ誤差にする?
 // stop_th まで含めて実行する
-int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int resume) {
+// 保存するディレクトリ名も与える
+int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int resume, const char *dir_path) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
     int count, n, flag, gene_now, safety;
@@ -319,6 +320,7 @@ int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int
             puts("フォーマット作成失敗");
             return -1;
         }
+        changeDirPath(format, FILENAME_MAX, dir_path); // ディレクトリの変更
         // 公比はここで決定する. 等比数列も決定する.
         CMN_RATIO_EFF = exp(loc_cr_ln);
         geoProg(PROB_ARR, POPULATION, 1., CMN_RATIO_EFF);
@@ -371,7 +373,7 @@ int main(void) {
     changeDirPath(format, FILENAME_MAX, DIR01);
     puts(format);
     // シードを探したいとき
-    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.00);
+    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.00, DIR01);
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
     //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
@@ -379,13 +381,6 @@ int main(void) {
     printHex64(scm);
     //printHex64(rankGeoProgBLXaRdCS); printHex64(rankGeoProgUni2CRdS);
     printString(format);
-    // ループ
-    /*
-    CMN_RATIO_EFF = exp(-0.002);
-    geoProg(PROB_ARR, POPULATION, 1., CMN_RATIO_EFF);
-    makeFGFileSprmComp(FNF_TEST);
-    nGeneSprmCompLoop(rankGeoProgUni2CRdS, FNF_TEST, 0, 0, 4);
-    */
     // 修正用
     //sortOnlySprmComp(scm, format, 0);
     /*
@@ -394,9 +389,5 @@ int main(void) {
     trySomeCommonRatio(-2000, 2000, 100, 101, 1);
     trySomeCommonRatio(-8000, 8000, 400, 101, 1);
     */
-    //makeFGFileSprmCompMkdir(FNF_TEST, 0);
-    
-    checkSprmFileComp(FNF_TEST, 0);
-    checkSprmFileCompUChar(FNF_TEST, 0);
     return 0; 
 }
