@@ -1645,6 +1645,7 @@ int getGeneNumComp(const char *format, int loc_pop) {
 }
 
 // Sprm の条件を与え, ファイル名を作成し, どの存在するシードを表示させたい
+// シードは3桁の10進数前提
 // 適応度ID, 圧縮判定, 個体数, エリート数, 交叉ID, 突変ID, 突変率, その他
 int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id, int mut_id, double loc_mr, double lncr, c_char_p dir_path) {
     char format[FILENAME_MAX], fname[FILENAME_MAX];
@@ -1653,10 +1654,8 @@ int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id
     int c, seed_arr[BUF_LEN];
     c = 0;
     printf("公比の対数 %+6.3f で検索\n", lncr);
-    putchar(10);
     // 3桁の値を全てチェック
     for (int s = 0; s < 1000; s++) {
-        printf("\r%d", s);
         makeSprmFileFormatAuto(format, FILENAME_MAX, eff_id, is_comp, loc_pop, loc_eln, 3, crs_id, mut_id, loc_mr, s, lncr, ALPHA_BLX, ZAKO_FIRST);
         changeDirPath(format, FILENAME_MAX, dir_path);
         // 初期世代ファイル名でチェック
@@ -1667,7 +1666,6 @@ int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id
             seed_arr[c++] = s;
         }
     }
-    putchar(10);
     if (c) {
         printf("初期世代があるシード値: ");
         printDecimalArray(seed_arr, c);

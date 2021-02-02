@@ -284,7 +284,7 @@ scmSprmSorted detScmFuncSprmS(int sel_id, int crs_id, int mut_id) {
 // 1000 倍した int 型で与え, 1000で割ることにより同じ誤差にする?
 // stop_th まで含めて実行する
 // 保存するディレクトリ名も与える
-int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int resume, const char *dir_path) {
+int trySomeCommonRatio(int start_th, int stop_th, int step_th, int gene_max, int resume, c_char_p dir_path) {
     double loc_cr_ln;
     char format[FILENAME_MAX];
     int count, n, flag, gene_now, safety;
@@ -366,6 +366,7 @@ int main(void) {
     //srand((unsigned)time(NULL));
     // フォーマット自動作成 (シードまで)
     char format[FILENAME_MAX];
+    const char dir_path[] = DIR01; // ディレクトリの指定
     if (makeSprmFileFormatAuto(format, FILENAME_MAX, EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, SELECTION_ID, CROSSOVER_ID, MUTATION_ID, MUT_RATE, SEED, ZAKO_FIRST, CMN_RATIO_LN, ALPHA_BLX) < 0) {
         puts("フォーマット作成失敗");
         return -1;
@@ -373,7 +374,7 @@ int main(void) {
     changeDirPath(format, FILENAME_MAX, DIR01);
     puts(format);
     // シードを探したいとき
-    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.00, ".");
+    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.00, dir_path);
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
     //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
@@ -389,5 +390,6 @@ int main(void) {
     trySomeCommonRatio(-2000, 2000, 100, 101, 1);
     trySomeCommonRatio(-8000, 8000, 400, 101, 1);
     */
+   trySomeCommonRatio(-40, 0, 1, 3, 1, dir_path);
     return 0; 
 }
