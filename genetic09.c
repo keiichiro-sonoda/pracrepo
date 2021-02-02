@@ -390,6 +390,6 @@ int main(void) {
     trySomeCommonRatio(-2000, 2000, 100, 101, 1);
     trySomeCommonRatio(-8000, 8000, 400, 101, 1);
     */
-    //trySomeCommonRatio(-40, 0, 1, 100, 1, dir_path);
+    //trySomeCommonRatio(-40, 0, 1, 101, 1, dir_path);
     return 0; 
 }
