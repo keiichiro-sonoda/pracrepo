@@ -800,7 +800,7 @@ def main():
     #viewFitnessGraph3(population, 50, elite_num, crs_id, lncr, 0, 100, seed, grid=True, fg=1)
     #viewFitnessGraph4(50, 0, 5, -2.0, 0.0, 0.02, 0, 50, seed, 0b01)
     # 標準・幅最小
-    viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
+    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
     #viewFitMedWMeanGraph(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=100, focus="bia", sd=False)
     #viewWeightMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, w_num=1, options=0b00)
     #viewWeightSDMeansMap(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, options=0b00)
@@ -820,15 +820,8 @@ def main():
     #viewFitMedWMeanGraph(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=100, options=0b01, focus="bas", sd=False)
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
-    #viewWeight1MeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
-    #viewWeightSDMeansMap(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, options=0b00)
-    #viewWeight1MeansMap(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00)
-    #viewWeightSDMeansMap(50, 0, 5, -8, 8, 0.4, 0, 100, 555, options=0b00)
-    #viewWeight1MeansMap(50, 0, 5, -8, 8, 0.4, 0, 100, 555, options=0b00)
-    #viewFitnessGraph4(50, 0, 5, -8.0, 8.0, 0.4, 0, 100, 555, 0b00)
-    #viewFitnessGraph4(50, 0, 5, -0.02, 0.02, 0.001, 0, 100, 555, 0b00, stat_option="median")
-    #viewFitnessGraph4(50, 0, 5, -0.1, 0.1, 0.005, 0, 100, 555, 0b00)
-    #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, 0b00, stat_option="variance")
+    # 初期雑魚で範囲-0.040から0.000まで0.001ずつ
+    viewFitnessGraph4(50, 0, 5, -0.040, 0.000, 0.001, 0, 100, 555, options=0b01, stat_option="median", extention="jpg", prm_dir=PRM_DIR01)
     # ファイル名作成テスト
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
