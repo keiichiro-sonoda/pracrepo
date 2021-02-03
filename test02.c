@@ -13,7 +13,7 @@ int main(void) {
     int i, j;
     int loc_pop = 50, count = 0, loop = 1000000;
     int parents[2], rslt[loc_pop];
-    double cr = exp(-4.0), geo_prog[loc_pop];
+    double cr = exp(8.0), geo_prog[loc_pop];
     geoProg(geo_prog, loc_pop, 1., cr);
     printFloatArrayExp(geo_prog, loc_pop);
     parents[1] = 49;
