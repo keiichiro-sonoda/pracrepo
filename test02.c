@@ -9,6 +9,10 @@
 
 int main(void) {
     initSprm();
+    int loc_pop = 50;
+    double cr = .1, geo_prog[loc_pop];
+    geoProg(geo_prog, loc_pop, 1., cr);
+    printFloatArrayExp(geo_prog, loc_pop);
     printString("debugging");
     return 0;
 }
