@@ -9,10 +9,20 @@
 
 int main(void) {
     initSprm();
-    int loc_pop = 50;
+    srand(time(NULL));
+    int loc_pop = 50, count = 0, loop = 10000;
+    int parents[2];
     double cr = .1, geo_prog[loc_pop];
     geoProg(geo_prog, loc_pop, 1., cr);
     printFloatArrayExp(geo_prog, loc_pop);
-    printString("debugging");
+    for (int i = 0; i < loop; i++) {
+        rouletteDoubleMltDep(geo_prog, loc_pop, parents, 2);
+        randomizedQuicksortAll(parents, 2);
+        if (parents[0] == 0 && parents[1] == 1) {
+            count++;
+        }
+    }
+    printf("%d / %d\n", count, loop);
+    puts("デバッグ中");
     return 0;
 }
