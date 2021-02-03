@@ -18,7 +18,7 @@ int main(void) {
     for (int i = 0; i < loop; i++) {
         rouletteDoubleMltDep(geo_prog, loc_pop, parents, 2);
         randomizedQuicksortAll(parents, 2);
-        if (parents[0] == 3 || parents[1] == 3) {
+        if (parents[0] == 5 || parents[1] == 5) {
             count++;
         }
     }
