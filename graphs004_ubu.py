@@ -682,7 +682,7 @@ def makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_st
                     c += 1
                     if c >= 10:
                         print("有効なパラメータを指定してください")
-                        return
+                        return (x, y, [])
                 else:
                     c = 0
                     zi = selDatFunc(tmpl)
@@ -711,6 +711,8 @@ def viewFitnessGraph4(loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step
     name2 = name1 + "_map_rexp{:+5.3f}{:+5.3f}_res{:4.3f}".format(lncr_start, lncr_stop, lncr_step)
     json_fname = makeGraphsFileName(fname, name2, g_min, g_max, c_map=True, extention="json", dir_path="./json")
     x, y, z = makeOrLoadCmapData(json_fname, loc_pop, loc_eln, crs_id, lncr_start, lncr_stop, lncr_step, g_min, g_max, loc_seed, options=options, data_option=name1, prm_dir=prm_dir, forced=renew)
+    if not z:
+        return
     # 標準偏差, 分散の最大値は可変
     if stat_option in ("stdev", "variance"):
         v_min = 0
@@ -821,9 +823,12 @@ def main():
     #viewWeightMeansMap(50, 0, 5, -2.0, 0.0, 0.05, 0, 100, 555, w_num=6, options=0b01)
     #viewWeightSDMeansMap(50, 0, 5, -2.0, 2.0, 0.1, 0, 100, 555, options=0b00)
     # 初期雑魚比較対象のランダム初期世代
-    viewFitnessGraph4(50, 0, 5, -2.000, 0.000, 0.050, 0, 100, 777, options=0b00, stat_option="median", extention="jpg", prm_dir=PRM_DIR01)
+    #viewFitnessGraph4(50, 0, 5, -2.000, 0.000, 0.050, 0, 100, 777, options=0b00, stat_option="median", extention="jpg", prm_dir=PRM_DIR01)
     # 初期雑魚で範囲-0.040から0.000まで0.001ずつ
     #viewFitnessGraph4(50, 0, 5, -0.040, 0.000, 0.001, 0, 100, 555, options=0b01, stat_option="stdev", extention="jpg", prm_dir=PRM_DIR01)
+    # エリート数1で初期雑魚
+    viewFitnessGraph4(50, 0, 5, -0.020, 0.020, 0.001, 0, 100, 3, options=0b01, stat_option="median", extention="jpg", prm_dir=PRM_DIR01)
+
     # ファイル名作成テスト
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
