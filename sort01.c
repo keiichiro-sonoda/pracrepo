@@ -248,11 +248,13 @@ void rouletteDoubleMltDep(const double *A, int A_len, int *rslt, int rslt_len) {
         // 候補の中からルーレット選択
         rslt[i] = rouletteDouble(cand, A_len, s);
         // 合計値から選ばれた値を引く
-        s -= cand[rslt[i]];
+        //s -= cand[rslt[i]];
         // 要素を排除 (左詰め)
         delElement(cand, A_len, rslt[i]);
         // 仮引数 A_len は候補の長さとして扱い, ループ毎にデクリメント
         A_len--;
+        // 合計値再計算
+        s = sumDouble(cand, A_len);
     }
     // 左詰めした添字は元に戻す
     fixIndices(rslt, rslt_len);
