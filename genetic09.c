@@ -392,5 +392,7 @@ int main(void) {
     */
     //trySomeCommonRatio(-40, 0, 1, 101, 1, dir_path);
     //trySomeCommonRatio(-2000, 0, 50, 101, 1, dir_path);
+    //trySomeCommonRatio(-20, 20, 1, 101, 1, dir_path);
+    //trySomeCommonRatio(-100, 100, 5, 101, 1, dir_path);
     return 0; 
 }
