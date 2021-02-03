@@ -826,9 +826,10 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2.000, 0.000, 0.050, 0, 100, 777, options=0b00, stat_option="median", extention="jpg", prm_dir=PRM_DIR01)
     # 初期雑魚で範囲-0.040から0.000まで0.001ずつ
     #viewFitnessGraph4(50, 0, 5, -0.040, 0.000, 0.001, 0, 100, 555, options=0b01, stat_option="stdev", extention="jpg", prm_dir=PRM_DIR01)
-    # エリート数1で初期雑魚
-    viewFitnessGraph4(50, 1, 5, -0.020, 0.020, 0.001, 0, 100, 3, options=0b01, stat_option="stdev", extention="jpg", prm_dir=PRM_DIR01)
-
+    # エリート数1で初期雑魚, 最小幅
+    #viewFitnessGraph4(50, 1, 5, -0.020, 0.020, 0.001, 0, 100, 3, options=0b01, stat_option="stdev", extention="jpg", prm_dir=PRM_DIR01)
+    # 同上0.005間隔
+    viewFitnessGraph4(50, 1, 5, -0.100, 0.100, 0.005, 0, 100, 3, options=0b01, stat_option="stdev", extention="jpg", prm_dir=PRM_DIR01)
     # ファイル名作成テスト
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
