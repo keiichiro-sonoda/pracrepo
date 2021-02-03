@@ -80,9 +80,6 @@ void initSprm(void) {
         printf("ランダム");
     }
     putchar(10);
-    for (int i = 0; i < 10000000; i++) {
-        printf("\r%d", i);
-    }
 }
 
 // Sprm のファイルフォーマットを自動生成する関数

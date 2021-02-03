@@ -258,19 +258,6 @@ void rouletteDoubleMltDep(const double *A, int A_len, int *rslt, int rslt_len) {
     fixIndices(rslt, rslt_len);
 }
 
-// check if rouletteFloat workes as expected
-void rouletteFloatTest(const float *A, int n) {
-    float s = sumFloat(A, n);
-    int loop = s * 10000;
-    printDecimal(loop);
-    int results[n];
-    // initialize
-    zeros(results, n);
-    for (int i = 0; i < loop; i++)
-        results[rouletteFloat(A, n, s)]++;
-    printDecimalArray(results, n);
-}
-
 // 降順
 // 基準は A[r] で固定される
 int partitionDD(int *A, int *B, int p, int r) {

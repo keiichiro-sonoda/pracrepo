@@ -116,9 +116,6 @@ void rouletteFloatMltDep(const float *A, int A_len, int *rslt, int rslt_len);
 // 選ばれた要素は選択肢から排除
 void rouletteDoubleMltDep(const double *A, int A_len, int *rslt, int rslt_len);
 
-// check if rouletteFloat workes as expected
-void rouletteFloatTest(const float *A, int n);
-
 // 乱択版パーティション (昇順)
 int randomizedPartition(int *A, int p, int r);
 
