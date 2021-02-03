@@ -10,7 +10,7 @@
 int main(void) {
     initSprm();
     srand(time(NULL));
-    int loc_pop = 50, count = 0, loop = 10000;
+    int loc_pop = 50, count = 0, loop = 100000;
     int parents[2];
     double cr = .1, geo_prog[loc_pop];
     geoProg(geo_prog, loc_pop, 1., cr);
@@ -18,7 +18,7 @@ int main(void) {
     for (int i = 0; i < loop; i++) {
         rouletteDoubleMltDep(geo_prog, loc_pop, parents, 2);
         randomizedQuicksortAll(parents, 2);
-        if (parents[0] == 0) {
+        if (parents[0] == 3 || parents[1] == 3) {
             count++;
         }
     }
