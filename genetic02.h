@@ -398,8 +398,7 @@ Sprm loadRepSprmComp(c_char_p format, int gene_num, int loc_pop, int idx);
 void checkSprmFile(const char *format, int gene_num);
 
 // 圧縮ファイルからパラメータを読み取って確認
-// ファイル名作成のルーチンを省略したいところだが...
-void checkSprmFileComp(const char *format, int gene_num);
+void checkSprmFileComp(const char *format, int gene_num, int loc_pop);
 
 // 圧縮された値のまま表示
 int checkSprmFileCompUChar(const char *format, int gene_num);

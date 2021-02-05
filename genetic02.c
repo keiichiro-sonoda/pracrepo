@@ -932,10 +932,10 @@ void checkSprmFile(const char *format, int gene_num) {
 }
 
 // 圧縮ファイルからパラメータを読み取って確認
-void checkSprmFileComp(const char *format, int gene_num) {
+void checkSprmFileComp(const char *format, int gene_num, int loc_pop) {
     Sprm pra[POPULATION];
-    int flag = loadSprmFileComp(format, gene_num, pra, POPULATION);
-    if (flag < 0) return;
+    int flag;
+    if ((flag = loadSprmFileComp(format, gene_num, pra, loc_pop)) < 0) return;
     printf("確認するファイル: ");
     printf(format, gene_num);
     if (flag == 1) {
