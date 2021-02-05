@@ -48,7 +48,7 @@ int main(void) {
     //checkSprmFileComp(format, 100, 50);
     Sprm pr = loadRepSprmComp(format, 100, 50, 0);
     showSprmOneLine(pr);
-    detColor(pr.weight[0]);
+    detColor(-0.25);
     puts("デバッグ中");
     return 0;
 }
