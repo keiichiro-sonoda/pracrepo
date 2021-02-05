@@ -7,6 +7,9 @@
 #include "sort01.h"
 #include "genetic02.h"
 
+typedef char* char_p;
+
+// 選択のデモ用関数
 void selDemo(double cr, int loc_pop, int n) {
     puts("選択のデモ");
     int parents[2];
@@ -22,7 +25,9 @@ int main(void) {
     setCORR_TABLE();
     initBoard();
     srand(time(NULL));
-    selDemo(exp(-10), 50, 3);
+    char format[FILENAME_MAX];
+    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b00, 1, 50, 0, 3, 5, 0, .01, 123);
+    puts(format);
     puts("デバッグ中");
     return 0;
 }
