@@ -34,6 +34,7 @@ void detColor(float weight) {
         }
     }
     printHexArrayDig(color, 3, 2);
+    printDecimalArrayDig(color, 3, 3);
 }
 
 int main(void) {
