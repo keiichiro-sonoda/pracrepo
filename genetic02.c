@@ -912,9 +912,11 @@ Sprm loadRepSprmComp(c_char_p format, int gene_num, int loc_pop, int idx) {
     int flag;
     if ((flag = loadSprmFileComp(format, gene_num, pra, loc_pop)) < 0) {
         puts("乱数で代用");
-        randSprm(pra);
+        randSprm(pra + idx);
     } else if (!flag) {
         puts("未ソート"); // 未ソートは警告
+    } else {
+        printf("%2d位の重み\n", idx + 1);
     }
     return pra[idx]; // ソート済なら順位通り
 }
