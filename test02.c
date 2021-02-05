@@ -19,9 +19,10 @@ void selDemo(double cr, int loc_pop, int n) {
 }
 
 int main(void) {
-    initSprm();
+    setCORR_TABLE();
+    initBoard();
     srand(time(NULL));
-    selDemo(exp(-0.1), 50, 3);
+    selDemo(exp(-10), 50, 3);
     puts("デバッグ中");
     return 0;
 }
