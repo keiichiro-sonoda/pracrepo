@@ -374,7 +374,7 @@ int main(void) {
     changeDirPath(format, FILENAME_MAX, dir_path);
     puts(format);
     // シードを探したいとき
-    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.00, dir_path);
+    searchSeedSprm(EF_FUNC_ID, COMPRESS, POPULATION, ELITE_NUM, CROSSOVER_ID, MUTATION_ID, MUT_RATE, 0.00, ZAKO_FIRST, dir_path);
     // マクロのIDで関数決定
     scmSprmSorted scm = NULL;
     //scm = detScmFuncSprmS(SELECTION_ID, CROSSOVER_ID, MUTATION_ID);
