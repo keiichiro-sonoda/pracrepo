@@ -41,7 +41,7 @@ int main(void) {
     initBoard();
     srand(time(NULL));
     char format[FILENAME_MAX];
-    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, 0.025, 0);
+    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.025, 0);
     changeDirPath(format, FILENAME_MAX, DIR00);
     puts(format);
     //checkSprmFileComp(format, 100, 50);
