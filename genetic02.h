@@ -389,7 +389,9 @@ int loadSprmFileComp(const char*, int, Sprm*, int);
 Sprm loadRepSprm(const char *format, int gene_num, int loc_pop);
 
 // Sprm の代表者選出 (圧縮バージョン)
-Sprm loadRepSprmComp(const char *format, int gene_num, int loc_pop);
+// 代表者は1位に限らないということで, 添字も引数で指定
+// 添字 + 1 = 順位
+Sprm loadRepSprmComp(c_char_p format, int gene_num, int loc_pop, int idx);
 
 // check parameter in a file
 // give the file name format and generation number

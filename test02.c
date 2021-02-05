@@ -30,7 +30,7 @@ int main(void) {
     changeDirPath(format, FILENAME_MAX, DIR00);
     puts(format);
     Sprm pr;
-    pr = loadRepSprmComp(format, 100, 50);
+    pr = loadRepSprmComp(format, 100, 50, 49);
     showSprmOneLine(pr);
     //searchSeedSprm(0b010, 1, 50, 3, 5, 0, .01, 0.0, 0, DIR00);
     puts("デバッグ中");

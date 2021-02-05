@@ -905,19 +905,18 @@ Sprm loadRepSprm(const char *format, int gene_num, int loc_pop) {
 }
 
 // Sprm の代表者選出 (圧縮バージョン)
-Sprm loadRepSprmComp(const char *format, int gene_num, int loc_pop) {
+// 代表者は1位に限らないということで, 添字も引数で指定
+// 添字 + 1 = 順位
+Sprm loadRepSprmComp(c_char_p format, int gene_num, int loc_pop, int idx) {
     Sprm pra[loc_pop];
     int flag;
     if ((flag = loadSprmFileComp(format, gene_num, pra, loc_pop)) < 0) {
-        // 失敗ならランダムでいいや
-        puts("乱数");
+        puts("乱数で代用");
         randSprm(pra);
     } else if (!flag) {
-        // 未ソートは警告
-        puts("未ソート");
+        puts("未ソート"); // 未ソートは警告
     }
-    // ソート済ならそのまま
-    return pra[0];
+    return pra[idx]; // ソート済なら順位通り
 }
 
 // check parameter in a file
