@@ -499,5 +499,4 @@ int getGeneNumComp(const char *format, int loc_pop);
 // 適応度ID, 圧縮判定, 個体数, エリート数, 交叉ID, 突変ID, 突変率, 初期雑魚, パス
 int searchSeedSprm(int eff_id, int is_comp, int loc_pop, int loc_eln, int crs_id, int mut_id, double loc_mr, double lncr, int f_weak, c_char_p dir_path);
 
-
 #endif

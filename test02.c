@@ -26,10 +26,13 @@ int main(void) {
     initBoard();
     srand(time(NULL));
     char format[FILENAME_MAX];
-    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 123, -0.1, 0);
+    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.1, 0);
     changeDirPath(format, FILENAME_MAX, DIR00);
     puts(format);
-    searchSeedSprm(0b010, 1, 50, 3, 5, 0, .01, 0.0, 0, DIR00);
+    Sprm pr;
+    pr = loadRepSprmComp(format, 100, 50);
+    showSprmOneLine(pr);
+    //searchSeedSprm(0b010, 1, 50, 3, 5, 0, .01, 0.0, 0, DIR00);
     puts("デバッグ中");
     return 0;
 }
