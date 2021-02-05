@@ -63,6 +63,9 @@ typedef const char* c_char_p;
     printf("}\n");\
 } while (0)
 
+// 桁数を指定できる16進配列表示マクロ
+#define printHexArrayDig(A, n, d) do {char _f1[10], _f2[10]; snprintf(_f1, 10, "{%%%dlx", d); snprintf(_f2, 10, ", %%%dlx", d); printf(_f1, (u_long)(A)[0]); for (int _ = 1; _ < (n); _++) printf(_f2, (u_long)(A)[_]); printf("}\n");} while (0)
+
 // get the smaller number
 #define getMin(a, b) ((a) < (b) ? (a) : (b))
 
