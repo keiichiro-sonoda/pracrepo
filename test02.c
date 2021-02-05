@@ -31,6 +31,7 @@ int main(void) {
     puts(format);
     Sprm pr;
     pr = loadRepSprmComp(format, 100, 50, 49);
+    checkSprmFileComp(format, 100);
     showSprmOneLine(pr);
     //searchSeedSprm(0b010, 1, 50, 3, 5, 0, .01, 0.0, 0, DIR00);
     puts("デバッグ中");
