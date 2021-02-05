@@ -92,7 +92,6 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     // s\0 で初期化した文字列. ここにシード以外の情報が入る?
     char info_str[BUF_LEN] = {115, 0};
     char tmp_str[BUF_LEN];
-    // 可変引数に代入された値を取り出す
     int arg_i, denorm;
     double arg_d;
     // 適応度
@@ -107,7 +106,10 @@ int makeSprmFileFormatAuto(char *dst, int dst_size, int eff_id, int is_comp, int
     switch (eff_id & 0b10) {
         case 0b00: // リーグ戦
             strcatSize(info_str, "l", BUF_LEN);
-            if (denorm) miteigiExit(-1);
+            if (denorm) {
+                puts("非正規化のリーグ戦は未定義");
+                return -1;
+            }
             break;
         default: // 対ランダム
             strcatSize(info_str, "rd", BUF_LEN);
