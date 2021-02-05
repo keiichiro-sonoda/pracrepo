@@ -27,6 +27,7 @@ int main(void) {
     srand(time(NULL));
     char format[FILENAME_MAX];
     makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 123, -0.1, 0);
+    changeDirPath(format, FILENAME_MAX, DIR02);
     puts(format);
     puts("デバッグ中");
     return 0;
