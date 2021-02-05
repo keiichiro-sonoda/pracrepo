@@ -42,13 +42,14 @@ int main(void) {
     initBoard();
     srand(time(NULL));
     char format[FILENAME_MAX];
-    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, -0.025, 0);
+    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, 0.025, 0);
     changeDirPath(format, FILENAME_MAX, DIR00);
     puts(format);
     //checkSprmFileComp(format, 100, 50);
-    Sprm pr = loadRepSprmComp(format, 100, 50, 0);
+    Sprm pr = loadRepSprmComp(format, 100, 50, 49);
     showSprmOneLine(pr);
     for (int i = 0; i < SPRM_LEN; i++) {
+        printf("%2d ", i + 1);
         detColor(pr.weight[i]);
     }
     puts("デバッグ中");
