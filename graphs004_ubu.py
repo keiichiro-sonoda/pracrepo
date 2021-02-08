@@ -812,6 +812,8 @@ def main():
     # さらに幅20倍 (最小から100倍)
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
     #viewFitMedWMeanGraph(50, 0, 5, -2, 2, 0.1, 0, 100, 555, w_num=4, focus="bia", sd=False)
+    # さらに幅2倍 (最小から200倍)
+    viewFitnessGraph4(50, 0, 5, -4, 4, 0.2, 0, 100, 555, options=0b00, extention="jpg", stat_option="median")
     # エリート数1
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="median", extention="jpg")
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
@@ -829,7 +831,7 @@ def main():
     # エリート数1で初期雑魚, 最小幅
     #viewFitnessGraph4(50, 1, 5, -0.020, 0.020, 0.001, 0, 100, 3, options=0b01, stat_option="stdev", extention="jpg", prm_dir=PRM_DIR01)
     # 同上0.005間隔
-    viewFitnessGraph4(50, 1, 5, -0.100, 0.100, 0.005, 0, 100, 3, options=0b01, stat_option="median", extention="jpg", prm_dir=PRM_DIR01)
+    #viewFitnessGraph4(50, 1, 5, -0.100, 0.100, 0.005, 0, 100, 3, options=0b01, stat_option="median", extention="jpg", prm_dir=PRM_DIR01)
     # ファイル名作成テスト
     #fname = slw.makeSprmFileNameRankGeoProgWrap(50, 1, 3, 5, 123, 2.0, 100, options=0b10)
     #path = makeGraphsFileName(fname, "dummy", 0, 100, extention="pdf", c_map=True)
