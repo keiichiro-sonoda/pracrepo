@@ -23,7 +23,9 @@ void selDemo(double cr, int loc_pop, int n) {
 
 // 色を決める
 void detColor(float weight) {
-    u_char rep_colors[3][3] = {{0xe0, 0x66, 0x66}, {0xff, 0xf2, 0xcc}, {0x6f, 0xa8, 0xdc}}, color[3], i;
+    u_char color[3], i;
+    //u_char rep_colors[3][3] = {{0xe0, 0x66, 0x66}, {0xff, 0xf2, 0xcc}, {0x6f, 0xa8, 0xdc}};
+    u_char rep_colors[3][3] = {{0xff, 0x00, 0x00}, {0x00, 0x00, 0x00}, {0x00, 0x00, 0xff}};
     if (weight >= 0) {
         for (i = 0; i < 3; i++) {
             color[i] = rep_colors[1][i] + (rep_colors[0][i] - rep_colors[1][i]) * weight * 2.f;
@@ -40,6 +42,7 @@ void detColor(float weight) {
 int main(void) {
     setCORR_TABLE();
     initBoard();
+    makeSprmSample2();
     srand(time(NULL));
     char format[FILENAME_MAX];
     makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, 0.025, 0);
@@ -47,6 +50,7 @@ int main(void) {
     puts(format);
     //checkSprmFileComp(format, 100, 50);
     Sprm pr = loadRepSprmComp(format, 100, 50, 49);
+    pr = SAMP_SPRM2;
     showSprmOneLine(pr);
     for (int i = 0; i < SPRM_LEN; i++) {
         printf("%2d ", i + 1);

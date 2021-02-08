@@ -13,6 +13,8 @@ int CORR_TABLE[MASU_NUM];
 const int SPRM_FILE_SIZE_COMP = SPRM_LEN * POPULATION + 1;
 
 Sprm SAMP_PRM;
+// スライドで使うパラメータのサンプル
+Sprm SAMP_SPRM2;
 
 // 指し手決定関数 (マクロのIDによって決まる)
 decNxtSprm DET_FUNC;
@@ -40,6 +42,7 @@ void initSprm(void) {
     setCORR_TABLE();
     initBoard();
     makeSprmSample();
+    makeSprmSample2();
     printf("population          : %4d\n", POPULATION);
     printf("the number of elites: %4d\n", ELITE_NUM);
     printf("mutation rate       : %4.2f\n", MUT_RATE);
