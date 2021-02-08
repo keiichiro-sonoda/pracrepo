@@ -52,6 +52,7 @@ int main(void) {
     puts(format);
     //checkSprmFileComp(format, 100, 50);
     Sprm pr = loadRepSprmComp(format, 100, 50, 49);
+    checkSprmFileCompUChar(format, 100);
     showSprmOneLine(pr);
     for (int i = 0; i < SPRM_LEN; i++) {
         printf("%2d ", i + 1);
