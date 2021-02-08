@@ -76,7 +76,7 @@
 // parameter sample
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
 // スライドで使うパラメータのサンプル
-#define SAMP_SPRM_NUMS2 {.5f, -.1f, .4f -.2f, -.4f, -.3f, .1f, .2f, .3f, .0f}
+#define SAMP_SPRM_NUMS2 {.5f, -.1f, .4f, -.2f, -.4f, -.3f, .1f, .2f, .3f, .0f}
 
 // 謎の値
 #define BUF_LEN 256
