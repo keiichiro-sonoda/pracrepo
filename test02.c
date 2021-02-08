@@ -45,12 +45,13 @@ int main(void) {
     makeSprmSample2();
     srand(time(NULL));
     char format[FILENAME_MAX];
-    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, 0.025, 0);
+    //makeSprmFileFormatAuto(format, FILENAME_MAX, 0b010, 1, 50, 0, 3, 5, 0, .01, 555, 0.025, 0);
+    // 初期雑魚元ファイル (多分復元不能)
+    makeSprmFileFormatAuto(format, FILENAME_MAX, 0b110, 1, 50, 0, 3, 5, 0, 0.01, 123u, 0.1);
     changeDirPath(format, FILENAME_MAX, DIR00);
     puts(format);
     //checkSprmFileComp(format, 100, 50);
     Sprm pr = loadRepSprmComp(format, 100, 50, 49);
-    pr = SAMP_SPRM2;
     showSprmOneLine(pr);
     for (int i = 0; i < SPRM_LEN; i++) {
         printf("%2d ", i + 1);
