@@ -77,6 +77,8 @@
 #define SAMP_PRM_NUMS 0.50, -0.20, 0.0, -0.02, -0.25, -0.05, -0.05, 0.0, -0.02, -0.02
 // スライドで使うパラメータのサンプル
 #define SAMP_SPRM_NUMS2 {.5f, -.1f, .4f, -.2f, -.4f, -.3f, .1f, .2f, .3f, .0f}
+// 初期雑魚で使うパラメータの圧縮版
+#define ZAKO_NUMS_UCHAR {  2,  89,  99,   2,  72, 158, 113,  56, 247,  99}
 
 // 謎の値
 #define BUF_LEN 256
@@ -208,6 +210,9 @@
 // Sprmのランダム突然変異 (圧縮対応乱数限定)
 // 引数にはSprmのポインタ型を与える
 #define randMutSprmCC(prp) do {float *_flp; _flp = (prp)->weight; randMutArrayCC(_flp, SPRM_LEN);} while (0)
+
+// 弱いシンプルパラメータを作成
+#define makeZakoSprm(prp) do {u_char _tmp[] = ZAKO_NUMS_UCHAR; uchar2weightArray(_tmp, (prp)->weight, SPRM_LEN);} while(0)
 
 // 型の定義
 // simple parameter
