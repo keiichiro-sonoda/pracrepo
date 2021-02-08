@@ -741,16 +741,17 @@ int makeFirstGeneFileFlex(const char *format) {
 int _makeFGFileSprmComp(const char *fnamew) {
     u_char uca[SPRM_FILE_SIZE_COMP];
     if (ZAKO_FIRST == 1) {
-        char formatr[FILENAME_MAX];
-        Sprm pra1[50], pra2[POPULATION];
+        //char formatr[FILENAME_MAX];
+        Sprm zako_pr, pra2[POPULATION];
         // 公比1以上代表. ここで公比が書き換えられてしまった.
-        // 正規化フラグを入れなければならない
-        makeSprmFileFormatAuto(formatr, FILENAME_MAX, 0b110, 1, 50, 0, 3, 5, 0, 0.01, 123u, 0.1);
-        //puts(formatr);
-        loadSprmFileComp(formatr, 100, pra1, 50);
-        // 全て最下位の個体にする
+        // 正規化していた頃のデータ
+        //makeSprmFileFormatAuto(formatr, FILENAME_MAX, 0b110, 1, 50, 0, 3, 5, 0, 0.01, 123u, 0.1);
+        //loadSprmFileComp(formatr, 100, pra1, 50);
+        // 適応度の低い代表の個体はマクロで保持
+        makeZakoSprm(&zako_pr);
+        // 全て同じ個体
         for (int i = 0; i < POPULATION; i++) {
-            pra2[i] = pra1[49];
+            pra2[i] = zako_pr;
         }
         // 圧縮
         compSprmArray(pra2, uca, POPULATION);
