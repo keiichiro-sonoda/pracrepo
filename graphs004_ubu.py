@@ -813,7 +813,7 @@ def main():
     #viewFitnessGraph4(50, 0, 5, -2, 2, 0.1, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
     #viewFitMedWMeanGraph(50, 0, 5, -2, 2, 0.1, 0, 100, 555, w_num=4, focus="bia", sd=False)
     # さらに幅4倍 (最小から400倍)
-    viewFitnessGraph4(50, 0, 5, -8, 8, 0.4, 0, 100, 555, options=0b00, extention="jpg", stat_option="median")
+    viewFitnessGraph4(50, 0, 5, -8, 8, 0.4, 0, 100, 555, options=0b00, extention="jpg", stat_option="stdev")
     # エリート数1
     #viewFitnessGraph4(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, options=0b00, stat_option="median", extention="jpg")
     #viewFitMedWMeanGraph(50, 1, 5, -0.02, 0.02, 0.001, 0, 100, 123, w_num=100, focus="bia", sd=False)
